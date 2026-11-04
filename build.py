@@ -5,7 +5,8 @@
   python build.py --push   # 재생성 후 GitHub에 커밋·푸시 (1~2분 뒤 사이트 반영)
 
 type: company(기업분석) / call(컨콜) / industry(산업) / market(시장)
-새 리포트 추가 = 기업리포트 폴더에 HTML 저장 → build.py --push.
+새 리포트 추가 = 기업리포트\기업분석|컨콜|산업|시장 폴더에 HTML 저장 → build.py --push.
+  (폴더가 곧 구분. 기업리포트 바로 아래에 둔 파일은 파일명으로 구분을 추정)
 자동 등록된 항목은 sector가 "미분류"이므로 catalog.json에서 섹터만 고치면 된다.
 공개하지 않을 파일은 catalog.json에 {"src": "...", "exclude": "사유"} 로 남긴다.
 """
@@ -24,6 +25,7 @@ DOCS = ROOT / "docs"
 OUT_R = DOCS / "r"
 OUT_DATA = DOCS / "data"
 TEXT_CAP = 40000
+FOLDERS = {"기업분석": "company", "컨콜": "call", "산업": "industry", "시장": "market"}
 
 
 def load_catalog():
@@ -101,15 +103,38 @@ def ensure_head(raw):
 
 def build():
     cat = load_catalog()
-    known = {e["src"] for e in cat}
-    added = []
+    by_name = {Path(e["src"]).name: e for e in cat}
+    added, moved = [], []
+
+    # 1) 분류 폴더(기업분석·컨콜·산업·시장)에 넣은 파일: 폴더가 곧 구분이고, 넣는 것 자체가 '공개' 의사
+    for folder, typ in FOLDERS.items():
+        d = SRC_DIR / folder
+        if not d.is_dir():
+            continue
+        for p in sorted(d.glob("*.html")):
+            rel = f"{folder}/{p.name}"
+            e = by_name.get(p.name)
+            if e is None:
+                e = guess_entry(p, p.read_text(encoding="utf-8", errors="replace"))
+                e.update(src=rel, type=typ)
+                cat.append(e); by_name[p.name] = e; added.append(e)
+            elif e["src"] != rel or e.get("type") != typ or e.get("exclude"):
+                if "id" not in e:  # 예전에 제외만 해둔 항목
+                    g = guess_entry(p, p.read_text(encoding="utf-8", errors="replace"))
+                    e.update({k: v for k, v in g.items() if k not in e})
+                e.update(src=rel, type=typ)
+                e.pop("exclude", None)
+                moved.append(e)
+
+    # 2) 기업리포트 폴더 바로 아래 파일: 이름으로 구분 추정
     for p in sorted(SRC_DIR.glob("*.html")):
-        if p.name not in known:
+        if p.name not in by_name:
             e = guess_entry(p, p.read_text(encoding="utf-8", errors="replace"))
-            cat.append(e)
-            added.append(e)
-    if added:
+            cat.append(e); by_name[p.name] = e; added.append(e)
+    if added or moved:
         save_catalog(cat)
+    for e in moved:
+        print(f"[폴더 반영] {e['src']} → {e['type']}")
 
     OUT_R.mkdir(parents=True, exist_ok=True)
     OUT_DATA.mkdir(parents=True, exist_ok=True)
