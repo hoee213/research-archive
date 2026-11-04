@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<title>프로텍 기업리포트</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@600;700&family=Noto+Sans+KR:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+:root{
+  color-scheme:light;
+  --bg:#F3F4F7; --surface:#FFFFFF; --surface2:#F7F8FB; --surface3:#E9EBF2;
+  --ink:#15172B; --ink2:#454A61; --muted:#737A90;
+  --line:#D8DCE6; --line2:#BFC5D3;
+  --accent:#1F5F8B; --accent-soft:#E3EEF7;
+  --pos:#1B6E52; --neg:#B23A2C;
+  --c1:#1F5F8B; --c2:#E8792B; --c3:#1baf7a; --c4:#8B93A7; --c5:#7B4FB3;
+  --c1-soft:rgba(31,95,139,.12); --c2-soft:rgba(232,121,43,.14);
+  --shadow:0 1px 2px rgba(21,23,43,.06), 0 10px 28px rgba(21,23,43,.06);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#0F1118; --surface:#171A24; --surface2:#1D2130; --surface3:#252A3B;
+    --ink:#ECEEF5; --ink2:#B4BACB; --muted:#8D94A8;
+    --line:#2A2F40; --line2:#3B4155;
+    --accent:#7FB5E0; --accent-soft:#1E2E3E;
+    --pos:#4FB58C; --neg:#E07A5F;
+    --c1:#5B9BD5; --c2:#F08A3E; --c3:#2BC48E; --c4:#7C8499; --c5:#A283D6;
+    --c1-soft:rgba(91,155,213,.16); --c2-soft:rgba(240,138,62,.18);
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 28px rgba(0,0,0,.3);
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#0F1118; --surface:#171A24; --surface2:#1D2130; --surface3:#252A3B;
+  --ink:#ECEEF5; --ink2:#B4BACB; --muted:#8D94A8;
+  --line:#2A2F40; --line2:#3B4155;
+  --accent:#7FB5E0; --accent-soft:#1E2E3E;
+  --pos:#4FB58C; --neg:#E07A5F;
+  --c1:#5B9BD5; --c2:#F08A3E; --c3:#2BC48E; --c4:#7C8499; --c5:#A283D6;
+  --c1-soft:rgba(91,155,213,.16); --c2-soft:rgba(240,138,62,.18);
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 28px rgba(0,0,0,.3);
+}
+html{color-scheme:light dark}
+*{box-sizing:border-box}
+body{margin:0; background:var(--bg); color:var(--ink);
+  font-family:"Noto Sans KR","Malgun Gothic",system-ui,sans-serif; font-size:15.5px; line-height:1.75;
+  -webkit-text-size-adjust:100%}
+img{max-width:100%} [hidden]{display:none!important}
+.mono{font-family:"IBM Plex Mono","Consolas",ui-monospace,monospace; font-variant-numeric:tabular-nums}
+.serif{font-family:"Noto Serif KR","Noto Serif","Batang",serif}
+.wrap{max-width:920px; margin:0 auto; padding:0 22px 90px}
+a{color:var(--accent)}
+p{margin:0 0 14px} .lede{font-size:16.5px; color:var(--ink2)}
+ul,ol{margin:0 0 14px; padding-left:20px} li{margin-bottom:7px}
+strong,b{font-weight:700}
+.small{font-size:13px; color:var(--muted); line-height:1.6}
+.pos{color:var(--pos)} .neg{color:var(--neg)}
+
+.mast{background:var(--surface); border-bottom:1px solid var(--line)}
+.mast-in{max-width:920px; margin:0 auto; padding:34px 22px 26px}
+.eyebrow{font-family:"IBM Plex Mono",monospace; font-size:11.5px; letter-spacing:.06em; color:var(--muted)}
+h1{font-family:"Noto Serif KR",serif; font-size:clamp(30px,6.6vw,48px); line-height:1.18; margin:.3em 0 .15em; font-weight:700; letter-spacing:-.015em; text-wrap:balance}
+h1 .em{color:var(--accent)}
+.sub{color:var(--ink2); font-size:15.5px; max-width:64ch; margin:.4em 0 0}
+.tickerline{display:flex; flex-wrap:wrap; gap:6px 16px; align-items:baseline; margin-top:14px; font-family:"IBM Plex Mono",monospace; font-size:12.5px; color:var(--muted)}
+.tickerline b{color:var(--ink); font-weight:600}
+.stats{display:grid; grid-template-columns:repeat(auto-fit,minmax(138px,1fr)); gap:1px; background:var(--line); border:1px solid var(--line); margin-top:24px}
+.stat{background:var(--surface); padding:13px 14px 14px; min-width:0}
+.stat .k{font-family:"IBM Plex Mono",monospace; font-size:11px; letter-spacing:.02em; color:var(--muted)}
+.stat .v{font-family:"IBM Plex Mono",monospace; font-weight:600; font-size:clamp(19px,4.6vw,24px); line-height:1.25; margin-top:5px; overflow-wrap:anywhere}
+.stat .n{font-size:11.5px; color:var(--muted); margin-top:2px; line-height:1.4}
+.toc{display:flex; flex-wrap:wrap; gap:8px; margin:22px 0 0}
+.toc a{font-size:12.5px; text-decoration:none; color:var(--ink2); background:var(--surface); border:1px solid var(--line); padding:5px 11px; border-radius:999px}
+.toc a:hover{border-color:var(--accent); color:var(--accent)}
+
+section{margin-top:56px; scroll-margin-top:16px}
+.sec-h{display:flex; gap:14px; align-items:baseline; border-bottom:2px solid var(--ink); padding-bottom:9px; margin-bottom:20px}
+.sec-n{font-family:"IBM Plex Mono",monospace; font-size:12px; font-weight:600; color:var(--accent); letter-spacing:.06em; padding-top:4px}
+.sec-h h2{margin:0; font-family:"Noto Serif KR",serif; font-size:clamp(20px,4.2vw,26px); font-weight:700; letter-spacing:-.01em; text-wrap:balance; flex:1; min-width:0}
+h3{font-size:17px; font-weight:700; margin:32px 0 8px; letter-spacing:-.01em}
+h4{font-size:14.5px; font-weight:700; margin:20px 0 6px; color:var(--ink2)}
+
+.take{border-left:3px solid var(--accent); background:var(--surface2); padding:14px 16px; margin:18px 0; font-size:14.5px}
+.take .lbl{font-family:"IBM Plex Mono",monospace; font-size:11px; letter-spacing:.03em; color:var(--accent); display:block; margin-bottom:5px; font-weight:600}
+.take p:last-child{margin-bottom:0}
+.keypoints{display:grid; gap:1px; background:var(--line); border:1px solid var(--line); margin:22px 0}
+.kp{background:var(--surface); padding:15px 17px; display:grid; grid-template-columns:30px 1fr; gap:12px}
+.kp .num{font-family:"IBM Plex Mono",monospace; font-size:12px; color:var(--accent); font-weight:600; padding-top:3px}
+.kp .txt{min-width:0} .kp .t{font-weight:700; margin-bottom:2px} .kp .d{font-size:14px; color:var(--ink2)}
+.grid2{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:16px 0}
+.pane{background:var(--surface); border:1px solid var(--line); padding:14px 16px; min-width:0}
+.pane h4{margin-top:0}
+.pane.yes{border-top:3px solid var(--pos)} .pane.no{border-top:3px solid var(--neg)}
+.pane ul{margin-bottom:0; padding-left:18px} .pane li{font-size:14px; margin-bottom:6px}
+
+.vc{display:grid; grid-template-columns:repeat(6,1fr); gap:6px; margin:16px 0}
+.vc .c{background:var(--surface); border:1px solid var(--line); padding:10px 9px; font-size:12.5px; line-height:1.45; min-width:0}
+.vc .c b{display:block; font-size:13px; margin-bottom:3px}
+.vc .c.me{border:2px solid var(--accent); background:var(--accent-soft)}
+.vc .c .who{color:var(--muted); font-size:11.5px; margin-top:4px}
+
+.tbl-scroll{overflow-x:auto; margin:16px -22px 20px; padding:0 22px; -webkit-overflow-scrolling:touch}
+table{border-collapse:collapse; width:100%; min-width:560px; font-size:13.5px}
+caption{caption-side:top; text-align:left; font-family:"IBM Plex Mono",monospace; font-size:11.5px; letter-spacing:.02em; color:var(--muted); padding-bottom:8px}
+th,td{padding:8px 10px; border-bottom:1px solid var(--line); text-align:left; vertical-align:top}
+th.num,td.num{text-align:right; white-space:nowrap; font-family:"IBM Plex Mono",monospace; font-variant-numeric:tabular-nums}
+thead th{border-bottom:1.5px solid var(--line2); font-weight:600; color:var(--ink2); font-size:12.5px}
+tbody tr:hover{background:var(--surface2)}
+tfoot td{border-top:1.5px solid var(--line2); font-weight:600}
+td.hl{background:var(--accent-soft)}
+tr.sum td{font-weight:700; background:var(--surface2)}
+.tnote{font-size:12.5px; color:var(--muted); margin-top:-10px; margin-bottom:16px; line-height:1.55}
+.bar{display:inline-block; height:9px; background:var(--c1); vertical-align:middle; border-radius:2px; margin-right:6px}
+.bar.o{background:var(--c2)}
+
+.chart{background:var(--surface); border:1px solid var(--line); padding:14px 14px 10px; margin:16px 0 8px}
+.chart .ct{font-weight:700; font-size:14.5px; margin:0 0 2px}
+.chart .cs{font-size:12.5px; color:var(--muted); margin:0 0 8px}
+.chart svg{display:block; width:100%; height:auto; touch-action:pan-y}
+.chart text{font-family:"IBM Plex Mono",monospace; font-size:11px; fill:var(--ink2)}
+.chart text.lab{font-family:"Noto Sans KR",sans-serif; fill:var(--ink)}
+.chart text.mut{fill:var(--muted)}
+.chart .grid{stroke:var(--line); stroke-width:1}
+.chart .axis{stroke:var(--line2); stroke-width:1}
+.legend{display:flex; flex-wrap:wrap; gap:6px 16px; font-size:12px; color:var(--ink2); margin:6px 0 4px}
+.legend i{display:inline-block; width:12px; height:12px; border-radius:2px; vertical-align:-1px; margin-right:6px}
+.tip{position:fixed; z-index:50; pointer-events:none; background:var(--ink); color:var(--bg); font-size:12px; line-height:1.5; padding:7px 10px; border-radius:4px; max-width:min(260px,calc(100vw - 20px)); box-shadow:var(--shadow); display:none; font-family:"IBM Plex Mono",monospace}
+.tip b{font-weight:600}
+
+.risk{display:grid; gap:10px; margin:14px 0}
+.risk .r{display:grid; grid-template-columns:64px 1fr; gap:12px; background:var(--surface); border:1px solid var(--line); padding:12px 14px}
+.chip{font-family:"IBM Plex Mono",monospace; font-size:10.5px; letter-spacing:.08em; padding:3px 7px; border-radius:3px; display:inline-block; text-align:center; align-self:start; white-space:nowrap}
+.chip.h{background:var(--neg); color:#fff} .chip.m{background:var(--c2); color:#fff} .chip.l{background:var(--c4); color:#fff} .chip.u{background:var(--pos); color:#fff}
+.risk .t{font-weight:700} .risk .d{font-size:14px; color:var(--ink2)}
+
+.qs{display:grid; gap:12px; margin:16px 0}
+.q{background:var(--surface); border:1px solid var(--line); border-left:4px solid var(--accent); padding:13px 16px}
+.q .qh{display:flex; gap:10px; align-items:baseline}
+.q .qn{font-family:"IBM Plex Mono",monospace; font-size:12px; color:var(--accent); font-weight:600}
+.q .qt{font-weight:700; font-size:15px}
+.q .why{font-size:13.5px; color:var(--ink2); margin:6px 0 0}
+.q .why b{color:var(--ink)}
+.tl{list-style:none; padding:0; margin:14px 0}
+.tl li{display:grid; grid-template-columns:96px 1fr; gap:12px; padding:8px 0; border-bottom:1px solid var(--line); font-size:14px}
+.tl .d{font-family:"IBM Plex Mono",monospace; font-size:12px; color:var(--muted); padding-top:3px}
+.check li{margin-bottom:9px}
+.src{font-size:12.5px; color:var(--muted); line-height:1.6} .src li{margin-bottom:4px}
+.foot{margin-top:60px; padding-top:18px; border-top:1px solid var(--line); font-size:12.5px; color:var(--muted); line-height:1.6}
+
+@media (max-width:620px){
+  body{font-size:14.5px}
+  .wrap{padding:0 14px 70px} .mast-in{padding:26px 14px 20px}
+  table{min-width:0; font-size:12.5px} th,td{padding:7px 7px}
+  .tbl-scroll{margin:14px -14px 18px; padding:0 14px}
+  .grid2{grid-template-columns:1fr}
+  .vc{grid-template-columns:repeat(2,1fr)}
+  .risk .r{grid-template-columns:56px 1fr}
+  .kp{grid-template-columns:24px 1fr; gap:9px}
+  .chart{padding:12px 10px 8px}
+  .tl li{grid-template-columns:78px 1fr}
+  .bar{display:none}
+}
+@media (max-width:400px){
+  .wrap{padding:0 11px 60px} .mast-in{padding:22px 11px 18px}
+  .tbl-scroll{margin:14px -11px 18px; padding:0 11px}
+  .stats{grid-template-columns:repeat(2,1fr)}
+}
+@media (prefers-reduced-motion:reduce){ *{transition:none!important; animation:none!important} }
+</style>
+</head>
+<body>
+<div class="tip" id="tip"></div>
+<header class="mast"><div class="mast-in">
+  <div class="eyebrow">기업리포트 · 프로텍 053610 · 2026-09-28 · 기준가 9/23 KRX 종가 · 탐방 전 점검용 · 2차본(리포트 아카이브 반영)</div>
+  <h1 class="serif">프로텍, <span class="em">영업이익의 9.5배</span>에 거래되는 후공정 장비사</h1>
+  <p class="sub">디스펜서 국내 점유율 약 80%에 레이저 본더와 어태치 장비를 얹어 상반기 영업이익이 3배가 됐다. 같은 업종의 한미반도체·이오테크닉스·피에스케이홀딩스는 영업이익의 45~99배에 거래된다. 이 차이가 기회인지 이유 있는 할인인지를 가르는 것은 세 가지다. 실적이 분기마다 크게 흔들리는 주문생산 구조, 대표이사 1심 유죄로 이어진 공시 누락 이력, 그리고 회사 돈으로 상장주식을 반년에 700억어치 사고판 자금 운용이다. DART 정기보고서 11개년과 반기보고서 주석, 프로텍 전용 증권사 리포트 29건, 다른 회사·산업 리포트 62건의 본문 언급, 웹 자료를 대조해 확인된 것과 탐방에서 물어야 할 것을 나눴다.</p>
+  <div class="tickerline"><span>종가 <b>76,000원</b> (9/23)</span><span>시가총액 <b>6,840억</b></span><span>발행주식 <b>900만주</b></span><span>순현금 <b>약 1,305억</b></span><span>PBR <b>1.72배</b></span><span>외국인 <b>6.6%</b></span></div>
+  <div class="stats">
+    <div class="stat"><div class="k">52주 고점 대비</div><div class="v neg">-25.4%</div><div class="n">101,900원 (5/26 장중)</div></div>
+    <div class="stat"><div class="k">52주 저점 대비</div><div class="v pos">+162%</div><div class="n">29,000원 (25-11-05 장중)</div></div>
+    <div class="stat"><div class="k">1H26 매출</div><div class="v">1,397억</div><div class="n">+47.3% YoY. 2Q 773억</div></div>
+    <div class="stat"><div class="k">1H26 영업이익</div><div class="v pos">385억</div><div class="n">+202% YoY. 2Q OPM 29.9%</div></div>
+    <div class="stat"><div class="k">1H26 지배순이익</div><div class="v">533억</div><div class="n">주식 매매차익(세전) 245억 포함</div></div>
+    <div class="stat"><div class="k">최근 4분기 영업이익</div><div class="v">721억</div><div class="n">3Q25~2Q26. 시총의 1/9.5</div></div>
+  </div>
+  <nav class="toc">
+    <a href="#s1">한 장 요약</a><a href="#s2">바로잡을 숫자</a><a href="#s3">주가</a><a href="#s4">비즈니스 모델</a><a href="#s5">10년 실적</a><a href="#s6">1H26 해부</a><a href="#s7">제품·고객</a><a href="#s8">자회사</a><a href="#s9">산업</a><a href="#s10">경쟁사</a><a href="#s18">증권사 시각</a><a href="#s11">해자 검증</a><a href="#s12">지배구조</a><a href="#s13">밸류에이션</a><a href="#s14">리스크</a><a href="#s15"><b>탐방 질문 40</b></a><a href="#s16">체크리스트</a><a href="#s17">출처</a>
+  </nav>
+</div></header>
+
+<main class="wrap">
+
+<section id="s1">
+  <div class="sec-h"><span class="sec-n">01</span><h2>한 장 요약</h2></div>
+  <p class="lede">프로텍은 1997년 법인 설립, 2001년 코스닥에 상장한 <b>반도체 후공정(패키징) 장비</b> 회사다. 칩과 기판 사이에 접착제·보강재를 정량으로 쏘는 디스펜서가 주력이고, 방열판을 붙이는 히트슬러그 어태치, 칩을 집어 놓는 어태치(다이본더), 레이저로 솔더를 녹이는 레이저 본더를 판다. 삼성전자·SK하이닉스와 앰코·ASE·JCET 같은 패키징 외주사(OSAT)가 고객이다. 공압부품(피앤엠), 볼 플레이서(일본 미나미), 프로브카드(피엠티, 코스닥 상장), 투자회사 두 곳을 종속회사로 둔다. 모회사는 차입금이 없고 연결 순현금이 약 1,305억이다.</p>
+  <div class="keypoints">
+    <div class="kp"><span class="num">1</span><div class="txt"><div class="t">본업 이익이 실제로 커졌다: 별도 영업이익률 21.0% → 32.6%</div><div class="d">1H26 연결 매출 1,397억(+47.3%), 영업이익 385억(+202%). 모회사만 보면 매출 964억(+29.5%), 영업이익 314억(+101%)이다. 2분기 별도 매출은 534억으로 전년 동기 544억과 같은 수준인데 매출총이익률이 28.1%에서 40.7%로 올랐다. 물량이 아니라 품목 구성이 바뀐 것이고, 회사가 공시한 장비 평균 판가도 3.29억(2024) → 3.36억(2025) → 3.89억(1H26)으로 올랐다.</div></div></div>
+    <div class="kp"><span class="num">2</span><div class="txt"><div class="t">연결 이익 증가분 258억 중 100억은 자회사 쪽에서 나왔다</div><div class="d">피엠티는 2025년 영업손실 204억을 냈고 1H26에 영업이익 14억으로 돌아섰다. 연결 영업이익에서 모회사 몫을 뺀 나머지는 1H25 -29억에서 1H26 +71억으로 100억 개선됐다. 피엠티의 흑자는 이익률 4%의 얇은 흑자이고, 프로텍은 6월 유상증자에 185억을 넣었으며 대여금 180억과 지급보증 22억이 따로 있다.</div></div></div>
+    <div class="kp"><span class="num">3</span><div class="txt"><div class="t">순이익 539억에는 주식 매매차익이 들어 있다</div><div class="d">상반기 영업이익은 385억인데 세전이익은 693억이다. 차이 308억의 대부분은 <b>상장주식 처분이익 284억</b>이다. 반년 동안 상장주식을 703억 매입하고 장부가 577억어치를 팔았다. 판 종목은 공시에 없다. 네이버에 표시되는 PER 9.2배는 이 차익이 들어간 숫자다. 주식 손익을 빼면 최근 4분기 기준 PER은 약 10배, 영업이익 기준 배수는 9.5배다. LS증권은 8월 리포트에서 "2분기 중 보유하던 금융자산을 대부분 매각"한 일회성이라고 썼다.</div></div></div>
+    <div class="kp"><span class="num">4</span><div class="txt"><div class="t">이익은 늘었는데 현금은 영업에서 나오지 않았다</div><div class="d">1H26 영업현금흐름은 -52억이다. 매출채권이 340억, 재고가 176억 늘었고 법인세 114억을 냈다. 재공품이 437억에서 645억으로 늘어 납품 대기 장비가 쌓여 있다는 신호로 읽을 수 있지만 회사 설명은 없다. 수주잔고도 공시하지 않는다(16~24주 단기 발주라는 이유). 하반기 매출을 가늠할 공식 숫자는 재공품과 선수금(39억 → 77억) 두 개뿐이다.</div></div></div>
+    <div class="kp"><span class="num">5</span><div class="txt"><div class="t">이 회사의 실적은 두 번 반토막 난 적이 있다</div><div class="d">매출은 2019년 1,798억에서 2020년 865억으로, 2022년 1,988억에서 2023년 1,561억으로 꺾였다. 영업이익은 2022년 601억에서 2024년 134억까지 내려갔다. 증권사 추정도 크게 빗나갔다. 유진투자증권은 2024년 영업이익을 328~440억으로 봤고 실제는 134억이었다. 올해는 반대로 LS증권의 2026년 영업이익 추정이 1월 420억에서 8월 746억으로 뒤따라 올라왔다. 시장 집계 추정은 2026년 이익을 올리면서 2027년 증가율은 7.3%로 내렸다. 지금 배수는 '올해가 고점'이라는 가정의 값이다.</div></div></div>
+    <div class="kp"><span class="num">6</span><div class="txt"><div class="t">할인의 가장 분명한 이유는 지배구조다</div><div class="d">2013~2019년 특수관계자 거래 945억과 지급보증 내역을 주석에서 빠뜨려 2022년 증선위 제재와 한 달 거래정지를 받았고, 2025년 12월 24일 1심에서 대표이사가 징역 1년(집행유예 2년)을 선고받았다. 항소가 제기돼 있다. 2대 주주 엘파텍(18.15%)은 대표와 최대주주가 모두 프로텍 전직 임원인 회사다. 반대편에는 4월 자사주 200만주(18.2%) 전량 소각과 VIP자산운용의 7.82% 취득이 있다.</div></div></div>
+  </div>
+  <div class="take"><span class="lbl">결론</span><p><b>본업의 개선은 확인되고, 가격은 업종 안에서 가장 싸며, 싼 이유도 확인된다.</b> 디스펜서 1위 Nordson의 같은 사업부가 최근 분기 매출 +28%, 마진 30%로 분기 최고를 냈고 ASE는 올해 투자를 105억 달러로 올렸다. 수요는 회사 밖 자료로 교차 확인된다. 반면 이 회사는 수주잔고를 공개하지 않고, 제품별 매출도 공시하지 않으며, 이익의 상당 부분을 주식 매매로 냈고, 대표이사가 공시 누락으로 유죄를 받았다. 탐방에서 풀어야 할 것은 네 가지다. (1) 하반기 납품 일정과 재공품 645억의 내용, (2) 레이저 장비 매출에서 리플로우와 본더의 비중, 재구매 고객 수, 삼성전자에 들어간 장비의 정체, (3) 주식 운용의 의사결정 주체와 한도, (4) 항소심 일정과 대표이사 유고 시 승계 계획. 하방 참고선은 코스닥이 고점 대비 47% 내렸던 7월 30일의 종가 48,300원(시총 4,347억), 상방은 증권사 2027년 영업이익 추정 800~879억이 실현되는 경우다. 본 리포트는 투자 권유가 아니다.</p></div>
+</section>
+
+<section id="s2">
+  <div class="sec-h"><span class="sec-n">02</span><h2>분석에 앞서 바로잡을 숫자 열 개</h2></div>
+  <p>원자료끼리 대조하다 나온 불일치다. 시세 사이트와 증권사 리포트를 그대로 옮기면 틀리는 항목이므로 먼저 정리한다.</p>
+  <div class="tbl-scroll"><table>
+    <caption>자료 간 불일치와 본 리포트가 쓴 값</caption>
+    <thead><tr><th>어디에</th><th>적힌 값</th><th>본 리포트 값</th><th>근거</th></tr></thead>
+    <tbody>
+      <tr><td>네이버 PER</td><td class="num">9.19배<br>(EPS 8,182원)</td><td class="num hl">7.8배 / 약 10배</td><td>와이즈리포트는 같은 날 17.55배(2025년 EPS 4,331원, 1,100만주 기준)로 표시한다. 최근 4분기 지배순이익 871.7억 ÷ 900만주 = 9,686원으로 계산하면 7.8배, 주식 매매손익을 빼면 약 10배(14장)</td></tr>
+      <tr><td>네이버 52주 최고가</td><td class="num">104,200원</td><td class="num hl">101,900원</td><td>일별 시세 전수 확인 결과 장중 최고는 5/26의 101,900원. 와이즈리포트도 101,900원. 종가 최고는 5/21의 96,400원(대신증권 표기와 일치)</td></tr>
+      <tr><td>네이버 일별 종가 9/23</td><td class="num">76,100원</td><td class="num hl">76,000원</td><td>네이버 일별 시세에는 넥스트레이드(NXT) 체결가가 섞인다. 와이즈리포트 전일종가 76,000원이 KRX 정규장 종가</td></tr>
+      <tr><td>LS증권 5/15 리포트<br>표지 시가총액</td><td class="num">9,757억<br>(1,100만주)</td><td class="num hl">7,983억</td><td>자사주 200만주는 4/29 소각 효력이 발생했다. 88,700원 × 900만주 = 7,983억. 같은 리포트의 EPS 7,041원은 900만주 기준이라 표지와 본문의 주식수가 다르다</td></tr>
+      <tr><td>LS증권 8/18 리포트<br>주주 구성</td><td class="num">엘파텍 7.8%<br>자사주 18.2%</td><td class="num hl">엘파텍 18.15%<br>자사주 0</td><td>반기보고서(8/14 제출) 기준. 7.8%는 VIP자산운용의 지분율(7.82%)이 엘파텍 칸에 들어간 것으로 보인다. 같은 리포트는 피엠티 지분율도 46.1%(실제 48.54%)로 적었다</td></tr>
+      <tr><td>한국IR협의회 제너셈 리포트<br>프로텍 2025년 PER</td><td class="num">24.8배</td><td class="num hl">12.5배</td><td>시총 5,958억(900만주) ÷ 2025년 지배순이익 476.4억. 24.8배는 소각 전 주식수 기준 EPS와 소각 후 시총을 섞은 값으로 보인다</td></tr>
+      <tr><td>피엠티 지분율</td><td class="num">42.73% / 46.1%<br>47.87% / 51.6%</td><td class="num hl">48.54%</td><td>반기보고서 기준 24년 말 42.73% → 25년 말 46.07% → 26년 6월 말 48.54%. 51.6%는 6/19 최초 공시의 최대 청약 가정이고, 6/29 정정공시로 4,527,708주(185.4억), 48.5%로 확정</td></tr>
+      <tr><td>피엠티 증자 참여 금액</td><td class="num">약 211억</td><td class="num hl">185.4억</td><td>위와 같은 정정공시. 다수 기사가 최초 공시 금액을 인용</td></tr>
+      <tr><td>삼성전자 2024-09 계약</td><td class="num">약 250억<br>Attach 장비</td><td class="num hl">243.8억<br>장비명 미기재</td><td>공시 금액은 24,380,000,000원(부가세 별도)이고 품목은 '반도체 제조장비'로만 적혀 있다. 기사는 선별 장비(Sorter) 약 20대, 한국IR협의회는 HBM향 Attach라고 썼다. 탐방 확인 항목</td></tr>
+      <tr><td>반기보고서<br>전반기 A사 매출</td><td class="num">565.2억</td><td class="num hl">판단 보류</td><td>2025년 반기보고서가 당시 공시한 A사는 375.1억이다. 565.2억은 1H25 연결 매출 948.6억의 59.6%에 해당한다. 고객 표기가 보고서마다 재배열되는 것으로 보이나 원인 미확인</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">그 밖에 대신증권 7/7 리포트는 본문(2026년 매출 2,826억·영업이익 771억)과 같은 쪽 표(2,772억·756억)가 다르고, 2025년 실적은 잠정 2,302억과 확정 2,305억이 자료마다 섞여 있다. 미공시 매입·매출 규모를 '1,500억'으로 쓴 기사는 제공받은 지급보증 1,559.9억과 혼동한 것으로 보이며 증선위 발표 기준 거래 누락액은 945억이다.</p>
+</section>
+
+<section id="s3">
+  <div class="sec-h"><span class="sec-n">03</span><h2>주가: 코스닥이 47% 내린 석 달, 그리고 그 전후</h2></div>
+  <div class="chart" id="ch-px"><p class="ct">일별 종가와 사건</p><p class="cs">2023-01-02 ~ 2026-09-23. 회색 선은 코스닥 지수를 2023년 첫 거래일의 프로텍 종가(21,200원)에 맞춰 환산한 것. 번호는 아래 표. 네이버 일별 시세(NXT 체결 포함) 기준</p><div class="legend"><span><i style="background:var(--c1)"></i>프로텍</span><span><i style="background:var(--c4)"></i>코스닥 (환산)</span></div><svg></svg></div>
+  <ul class="tl">
+    <li><span class="d">① 23-07-14</span><span>장중 70,900원. 레이저 장비 독점 공급계약 해제 보도(6/5) 뒤 6/7 하루 +30%, 첨단 패키징 테마가 겹친 시기. 12월 코스닥150 편입</span></li>
+    <li><span class="d">② 24-04-03</span><span>회계처리기준 위반으로 회사·대표이사·임원 기소 공시. 다음 날 장중 40,500원까지 하락 후 46,000원 마감. 이후 연말 21,850원까지 내려갔다</span></li>
+    <li><span class="d">③ 24-09-13</span><span>삼성전자와 243.8억 장비 공급계약 공시(2023년 매출의 15.6%). 당일 종가 25,000원</span></li>
+    <li><span class="d">④ 25-12-24</span><span>1심 선고. 12/26 공시. 주가는 32,700원 → 33,450원으로 거의 움직이지 않았다</span></li>
+    <li><span class="d">⑤ 26-01-30</span><span>2025년 잠정실적(영업이익 +244%) 공시. 하루 +27.5%, 51,000원. 거래량 97만주</span></li>
+    <li><span class="d">⑥ 26-03-05</span><span>자사주 200만주 소각과 주당 400원 배당 결정. 하루 +20.7%, 55,500원</span></li>
+    <li><span class="d">⑦ 26-05-21</span><span>종가 기준 최고 96,400원. 5/14 1분기 실적 발표, 같은 날 VIP자산운용 5% 이상 취득. 5/26 장중 101,900원</span></li>
+    <li><span class="d">⑧ 26-07-30</span><span>종가 48,300원. 고점 종가 대비 -49.9%. 같은 기간 코스닥은 1,106 → 645로 -41.7%. 7/28~29 이틀 -23.1%도 코스닥 -13.4%와 함께였다. 종목 고유 악재는 없었다</span></li>
+    <li><span class="d">⑨ 26-08-14</span><span>반기보고서 제출. 2분기 영업이익 231억은 LS증권 추정 177억을 30% 웃돌았다. 종가 69,100원</span></li>
+    <li><span class="d">⑩ 26-09-23</span><span>76,000원. 9/22~23 이틀 +11%. 오늘(9/28) 오전 10시 기준 75,200원 부근</span></li>
+  </ul>
+  <div class="tbl-scroll"><table>
+    <caption>구간별 수익률 (네이버 일별 종가 기준)</caption>
+    <thead><tr><th>구간</th><th class="num">프로텍</th><th class="num">코스닥</th><th class="num">차이</th><th>비고</th></tr></thead>
+    <tbody>
+      <tr><td>2025년 말 → 5/21 (종가 고점)</td><td class="num pos">+182.3%</td><td class="num pos">+19.5%</td><td class="num">+162.8%p</td><td>잠정실적, 소각, 1분기 실적</td></tr>
+      <tr><td>5/21 → 7/30 (저점)</td><td class="num neg">-49.9%</td><td class="num neg">-41.7%</td><td class="num">-8.2%p</td><td>코스닥 4/27 고점 1,226 → 7/30 645</td></tr>
+      <tr><td>7/30 → 9/23</td><td class="num pos">+57.6%</td><td class="num pos">+31.0%</td><td class="num">+26.6%p</td><td>8/14 반기 실적</td></tr>
+      <tr class="sum"><td>2025년 말 → 9/23</td><td class="num pos">+122.8%</td><td class="num neg">-8.8%</td><td class="num">+131.6%p</td><td></td></tr>
+    </tbody>
+  </table></div>
+  <div class="take"><span class="lbl">읽는 법</span><p>이 종목은 <b>공시 두 번에 하루 20% 이상씩</b> 올랐고(잠정실적, 자사주 소각) 시장이 47% 내리는 동안 시장보다 8%p 더 내렸다가 회복은 27%p 더 했다. 올해 주가는 시장이 아니라 실적이 끌었다. 거래대금이 하루 10억 아래로 줄어드는 날이 있어(9/15 약 4.6억) 수급 한쪽이 쏠리면 가격이 크게 움직인다. 증권사 목표주가는 2025년 5월 유진투자증권의 32,000원이 마지막이고 2026년 리포트 7건은 전부 목표주가가 없다. 가격의 기준점을 제시하는 곳이 시장에 없다는 뜻이다.</p></div>
+</section>
+
+<section id="s4">
+  <div class="sec-h"><span class="sec-n">04</span><h2>비즈니스 모델: 칩을 기판에 붙이는 구간에서 네 가지 장비를 판다</h2></div>
+  <p>반도체 후공정을 여섯 칸으로 나누면 프로텍의 장비는 세 번째에서 다섯 번째 칸에 걸쳐 있다. 웨이퍼를 자르거나(다이싱) 최종 검사하는 장비는 만들지 않는다. <b>칩을 집어서 놓고, 솔더를 녹여 붙이고, 그 틈을 수지로 채우고, 방열판을 덮는</b> 구간이다. 자회사 피엠티의 프로브카드만 앞 단계인 웨이퍼 검사에 쓰인다.</p>
+  <div class="vc">
+    <div class="c"><b>① 웨이퍼 검사</b>프로브 스테이션, 프로브카드<div class="who">피엠티(자회사) · 폼팩터, 티에스이</div></div>
+    <div class="c"><b>② 절단·선별</b>다이싱, 소터<div class="who">디스코, 한미반도체 · 프로텍 BIN SORTER</div></div>
+    <div class="c me"><b>③ 칩 부착</b>다이본더, 어태치, 솔더볼·구리핀 부착<div class="who">프로텍 PCA·BP·CPA · Besi, ASMPT, 신카와</div></div>
+    <div class="c me"><b>④ 접합</b>매스 리플로우, TC 본더, 레이저 본더<div class="who">프로텍 LAB·LCB · 한미반도체, 피에스케이홀딩스, 레이저쎌</div></div>
+    <div class="c me"><b>⑤ 도포·방열</b>언더필, 댐앤필, 히트슬러그 부착<div class="who">프로텍 디스펜서 · Nordson, Musashi, Mycronic</div></div>
+    <div class="c"><b>⑥ 몰딩·검사</b>몰딩, 외관검사, 최종 테스트<div class="who">토와, 인텍플러스, 테크윙</div></div>
+  </div>
+  <h3>네 가지 장비군과 돈이 들어오는 방식</h3>
+  <div class="tbl-scroll"><table>
+    <caption>제품별 매출은 회사가 공시하지 않는다. 금액은 한국IR협의회(2026-02-04) 서술이며 회사 확인 전 수치다</caption>
+    <thead><tr><th>장비군</th><th>하는 일</th><th>주 고객·공정</th><th class="num">2025년 매출(추정)</th><th>경쟁사</th></tr></thead>
+    <tbody>
+      <tr><td><b>디스펜서</b></td><td>에폭시·언더필·플럭스를 정량 도포. 분사 최대 600Hz, 최소 토출 0.0013mg(회사 사양)</td><td>OSAT와 메모리사의 플립칩·2.5D 언더필, 스마트폰 기판, LED</td><td class="num">매출의 약 50%</td><td>Nordson, Musashi, Vermes, Mycronic(Axxon)</td></tr>
+      <tr><td><b>어태치·히트슬러그</b></td><td>칩 또는 방열판을 정렬해 부착. 정밀도 ±7μm</td><td>삼성전자 HBM 공정(2024-09 계약 243.8억), OSAT의 CPU·GPU 패키지</td><td class="num">약 300억<br>(이전 연 50~100억)</td><td>Besi, ASMPT, EVG, 신카와</td></tr>
+      <tr><td><b>레이저 본더</b></td><td>레이저로 솔더만 1~3초 가열. 리플로우형(LAB)과 가압형(LCB)</td><td>한국·대만 OSAT의 2.5D 패키지. 대형 인터포저 접합</td><td class="num">약 250억<br>(2016년 10억, 2022년 120억, 2023년 55억)</td><td>한미반도체(2.5D TC 본더), 레이저쎌, 피에스케이홀딩스</td></tr>
+      <tr><td><b>솔더볼·구리핀 부착, AGV</b></td><td>Ø45μm 이상 미세 볼 부착(미나미 공동 개발), 라인 내 무인 운반</td><td>기판사, OSAT</td><td class="num">미공개</td><td>시부야, 다원넥스뷰</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">레이저 장비의 과거 매출은 그로쓰리서치(2024-06), 가격은 "리플로우의 3~4배 이상"(대신증권 2024-06 탐방)이다. 디스펜서는 HBM 안에서는 쓰임이 제한된다. 삼성전자 방식(TC-NCF)은 필름을 써서 언더필 공정이 없고 SK하이닉스 방식(MR-MUF)에서만 쓰이며, HBM을 기판에 올리는 2.5D 단계에서 본격적으로 쓰인다(대신증권 2025-04). 회사 공시상 분류는 '장비'(1H26 766억)와 '부품 및 상품'(198억) 두 줄뿐이다. 부품·상품은 설치된 장비의 소모품과 교체 부품으로 2024년 290억 → 2025년 368억 → 1H26 198억으로 꾸준히 늘었다. 별도 매출의 약 20%가 반복 매출이라는 뜻이다.</p>
+  <h3>주문에서 현금까지</h3>
+  <div class="grid2">
+    <div class="pane"><h4>공시로 확인되는 것</h4><ul>
+      <li>전량 주문생산. 주문은 납품 16~24주 전에 들어온다</li>
+      <li>매출은 진행률이 아니라 <b>납품 시점</b>에 인식한다. 회사가 직접 "분기별 매출 기복이 심하게 나타날 수 있다"고 썼다</li>
+      <li>삼성전자 계약 조건은 납품 시 90%, 설치 완료 시 10%</li>
+      <li>설계와 조립만 직접 하고 가공은 외부에 맡긴다. 모회사 설비투자는 2025년 6억, 1H26 1.8억</li>
+      <li>공압부품은 100% 자회사 피앤엠에서 산다. 1H26 매입 197억</li>
+      <li>연구개발비 2025년 160억(매출의 6.9%), 전액 비용 처리. 특허 318건</li>
+    </ul></div>
+    <div class="pane"><h4>공시에 없는 것</h4><ul>
+      <li>수주잔고와 신규 수주(작성하지 않는다고 명시)</li>
+      <li>제품별 매출과 판매 대수. 평균 판가만 공시(1H26 3.89억)</li>
+      <li>고객 실명별 매출. 10% 이상 고객을 A사·B사로만 표기</li>
+      <li>생산능력과 가동률("산출이 어렵다"며 생략)</li>
+      <li>2024-12-21 해외 A사와 맺은 기술 사용료 계약의 요율과 대상 장비</li>
+      <li>연구 인력 수(조직도가 이미지로만 첨부)</li>
+    </ul></div>
+  </div>
+  <div class="take"><span class="lbl">판가로 역산한 판매 대수</span><p>장비 매출을 평균 판가로 나누면 대략의 대수가 나온다. 2024년 1,014억 ÷ 3.29억 = 약 308대, 2025년 1,480억 ÷ 3.36억 = 약 440대, 1H26 766억 ÷ 3.89억 = 약 197대다. 회사는 평균 판가를 "일부 대표 품목으로 선정한 자료"라고 밝혔으므로 정확한 대수가 아니라 방향만 읽어야 한다. 방향은 분명하다. <b>2025년은 대수가 늘어서, 2026년 상반기는 대당 가격이 올라서</b> 매출이 늘었다. 레이저 본더가 리플로우 장비의 3~4배 가격이라는 보도와 맞는 흐름이다.</p></div>
+</section>
+
+<section id="s5">
+  <div class="sec-h"><span class="sec-n">05</span><h2>10년 실적: 세 번의 고점은 매번 다른 고객이 만들었다</h2></div>
+  <div class="chart" id="ch-ann"><p class="ct">연결 매출과 영업이익</p><p class="cs">억원. 진한 막대는 실적(2015~2025), 옅은 막대는 LS증권 8/18 추정(2026~2027). 선은 영업이익. 막대를 누르면 별도 실적이 나온다</p><div class="legend"><span><i style="background:var(--c1)"></i>매출 실적</span><span><i style="background:var(--c1);opacity:.35"></i>매출 추정</span><span><i style="background:var(--c2)"></i>영업이익</span></div><svg></svg></div>
+  <div class="tbl-scroll"><table>
+    <caption>연결·별도 실적 (DART 재무제표, 억원)</caption>
+    <thead><tr><th>연도</th><th class="num">연결 매출</th><th class="num">연결 영업이익</th><th class="num">OPM</th><th class="num">별도 매출</th><th class="num">별도 영업이익</th><th class="num">별도 OPM</th><th class="num">연결−별도<br>영업이익</th><th class="num">수출 비중</th></tr></thead>
+    <tbody>
+      <tr><td>2015</td><td class="num">751.0</td><td class="num">123.2</td><td class="num">16.4%</td><td class="num">703.0</td><td class="num">121.3</td><td class="num">17.3%</td><td class="num">+1.9</td><td class="num">51.0%</td></tr>
+      <tr><td>2016</td><td class="num">948.4</td><td class="num">150.0</td><td class="num">15.8%</td><td class="num">893.2</td><td class="num">173.5</td><td class="num">19.4%</td><td class="num neg">-23.5</td><td class="num">56.7%</td></tr>
+      <tr><td>2017</td><td class="num">1,498.0</td><td class="num">300.9</td><td class="num">20.1%</td><td class="num">1,457.3</td><td class="num">322.0</td><td class="num">22.1%</td><td class="num neg">-21.1</td><td class="num">30.9%</td></tr>
+      <tr><td>2018</td><td class="num">1,539.9</td><td class="num">321.3</td><td class="num">20.9%</td><td class="num">1,500.9</td><td class="num">387.9</td><td class="num">25.8%</td><td class="num neg">-66.6</td><td class="num">51.3%</td></tr>
+      <tr class="sum"><td>2019</td><td class="num">1,797.8</td><td class="num">460.1</td><td class="num">25.6%</td><td class="num">1,750.1</td><td class="num">462.1</td><td class="num">26.4%</td><td class="num neg">-2.0</td><td class="num">65.6%</td></tr>
+      <tr><td>2020</td><td class="num">865.0</td><td class="num">154.0</td><td class="num">17.8%</td><td class="num">726.6</td><td class="num">141.6</td><td class="num">19.5%</td><td class="num">+12.4</td><td class="num">26.3%</td></tr>
+      <tr><td>2021</td><td class="num">1,740.0</td><td class="num">503.3</td><td class="num">28.9%</td><td class="num">1,567.7</td><td class="num">442.4</td><td class="num">28.2%</td><td class="num">+60.9</td><td class="num">35.0%</td></tr>
+      <tr class="sum"><td>2022</td><td class="num">1,987.7</td><td class="num">600.7</td><td class="num">30.2%</td><td class="num">1,783.5</td><td class="num">531.6</td><td class="num">29.8%</td><td class="num">+69.1</td><td class="num">32.9%</td></tr>
+      <tr><td>2023</td><td class="num">1,560.7</td><td class="num">174.3</td><td class="num">11.2%</td><td class="num">1,077.4</td><td class="num">215.0</td><td class="num">20.0%</td><td class="num neg">-40.7</td><td class="num">29.9%</td></tr>
+      <tr><td>2024</td><td class="num">1,702.9</td><td class="num">134.4</td><td class="num">7.9%</td><td class="num">1,310.5</td><td class="num">219.0</td><td class="num">16.7%</td><td class="num neg">-84.6</td><td class="num">26.8%</td></tr>
+      <tr><td>2025</td><td class="num">2,305.4</td><td class="num">463.1</td><td class="num">20.1%</td><td class="num">1,847.6</td><td class="num">526.7</td><td class="num">28.5%</td><td class="num neg">-63.6</td><td class="num">34.3%</td></tr>
+      <tr class="sum"><td>1H26</td><td class="num">1,397.3</td><td class="num">385.2</td><td class="num">27.6%</td><td class="num">964.3</td><td class="num">313.9</td><td class="num">32.6%</td><td class="num">+71.3</td><td class="num">39.7%</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">'연결−별도 영업이익'은 종속회사 손익과 내부거래 조정을 합친 값이다. 2023~2025년에 연결 이익률이 별도보다 9~10%p 낮았던 이유가 이 열에 있다. 피엠티가 2022년 12월 31일 종속회사로 편입된 뒤 3년간 영업손실 53억 → 131억 → 204억을 냈다.</p>
+  <h3>세 번의 고점을 고객과 지역으로 풀면</h3>
+  <div class="tbl-scroll"><table>
+    <thead><tr><th>고점</th><th class="num">매출</th><th>무엇이 끌었나</th><th>숫자로 본 증거</th><th>다음 해</th></tr></thead>
+    <tbody>
+      <tr><td><b>2017</b></td><td class="num">1,498억</td><td>국내 스마트폰 제조 설비</td><td>한국 매출 411억 → 1,036억. 1위 고객 한 곳이 459억(30.7%)을 샀다. 회사 설명은 "스마트폰 제조용 설비"</td><td>그 고객 매출 132억으로 감소. 해외가 메워 전체는 +2.8%</td></tr>
+      <tr><td><b>2019</b></td><td class="num">1,798억</td><td>해외 스마트폰 패키징 투자</td><td>디스펜서·다이본더 수출 656억 → 1,023억. 수출 비중 65.6%, 1억불 수출탑. 디스펜서 분기 매출 1Q19 666억, 2Q19 427억(유안타증권)</td><td>디스펜서 분기 매출 3Q19 136억 → 1Q20 37억. 수출 1,023억 → 90억(-91%). 매출 -51.9%</td></tr>
+      <tr><td><b>2022</b></td><td class="num">1,988억</td><td>국내 반도체 패키징 증설</td><td>한국 매출 638억 → 1,131억 → 1,322억. 히트슬러그 26억 → 206억 → 248억</td><td>지배회사 장비 1,460억 → 781억(-46.5%). 피엠티 편입으로 연결은 -21.5%</td></tr>
+      <tr class="sum"><td><b>2025~</b></td><td class="num">2,305억</td><td>첨단 패키징용 고사양 장비</td><td>장비 평균 판가 2.57억(2023) → 3.89억(1H26). 1위 고객 761억(33.0%). 원재료 '기타제품(본더외)' 매입 90억 → 360억</td><td>?</td></tr>
+    </tbody>
+  </table></div>
+  <div class="chart" id="ch-mix"><p class="ct">지배회사 장비 매출</p><p class="cs">억원. 디스펜서·다이본더·레이저 리플로우·솔더볼 어태치·물류설비 합계(부품·상품과 종속회사 제외). 회사가 2023년 보고서부터 소급해 공시한 분류. 1H26은 반기 실적</p><svg></svg></div>
+  <div class="take"><span class="lbl">읽는 법</span><p>이 회사 매출은 <b>소수 고객의 증설 프로젝트</b>에 따라 움직인다. 1위 고객은 2017년, 2019년, 2021년, 2022년, 2025년에 모두 다른 회사였고(전기 금액 대조로 추적한 결과), 1위 고객의 비중은 15~33%다. 이번 고점이 과거와 다른 점은 두 가지다. 첫째, 대수보다 판가가 매출을 끌고 있다. 둘째, 주문을 받고 납품하기까지의 기간이 8~12주(2021년까지)에서 16~24주(2023년 이후)로 길어졌다. 장비가 크고 비싸졌다는 뜻이고, 그만큼 분기 실적의 출렁임은 커진다. 2023년에 1,460억이 781억이 되는 데 1년이 걸렸다는 점은 그대로 남는다.</p></div>
+</section>
+
+<section id="s6">
+  <div class="sec-h"><span class="sec-n">06</span><h2>1H26 해부: 영업이익 385억과 세전이익 693억 사이</h2></div>
+  <div class="chart" id="ch-q"><p class="ct">분기 연결 매출과 별도 영업이익률</p><p class="cs">막대는 연결 매출(억원, 왼쪽 축), 선은 모회사 별도 영업이익률(오른쪽 축). 4분기는 연간에서 3분기 누적을 뺀 값</p><div class="legend"><span><i style="background:var(--c1)"></i>연결 매출</span><span><i style="background:var(--c2)"></i>별도 영업이익률</span></div><svg></svg></div>
+  <div class="tbl-scroll"><table>
+    <caption>최근 6개 분기 (억원)</caption>
+    <thead><tr><th>항목</th><th class="num">1Q25</th><th class="num">2Q25</th><th class="num">3Q25</th><th class="num">4Q25</th><th class="num">1Q26</th><th class="num">2Q26</th></tr></thead>
+    <tbody>
+      <tr><td>연결 매출</td><td class="num">304.0</td><td class="num">644.5</td><td class="num">510.4</td><td class="num">846.4</td><td class="num">624.1</td><td class="num hl">773.1</td></tr>
+      <tr><td>연결 영업이익</td><td class="num">29.2</td><td class="num">98.3</td><td class="num">155.5</td><td class="num">180.1</td><td class="num">154.2</td><td class="num hl">231.0</td></tr>
+      <tr><td>연결 OPM</td><td class="num">9.6%</td><td class="num">15.3%</td><td class="num">30.5%</td><td class="num">21.3%</td><td class="num">24.7%</td><td class="num hl">29.9%</td></tr>
+      <tr><td>별도 매출</td><td class="num">201.2</td><td class="num">543.7</td><td class="num">395.3</td><td class="num">707.4</td><td class="num">430.1</td><td class="num">534.2</td></tr>
+      <tr><td>별도 영업이익</td><td class="num">39.1</td><td class="num">117.1</td><td class="num">138.8</td><td class="num">231.7</td><td class="num">134.9</td><td class="num">179.0</td></tr>
+      <tr><td>별도 매출총이익률</td><td class="num">34.2%</td><td class="num">28.1%</td><td class="num">45.7%</td><td class="num">38.9%</td><td class="num">41.7%</td><td class="num">40.7%</td></tr>
+      <tr><td>별도 OPM</td><td class="num">19.4%</td><td class="num">21.5%</td><td class="num">35.1%</td><td class="num">32.8%</td><td class="num">31.4%</td><td class="num">33.5%</td></tr>
+      <tr><td>연결 − 별도 영업이익</td><td class="num neg">-9.9</td><td class="num neg">-18.8</td><td class="num">+16.7</td><td class="num neg">-51.6</td><td class="num">+19.3</td><td class="num">+52.0</td></tr>
+      <tr><td>연결 순이익</td><td class="num">24.2</td><td class="num">62.0</td><td class="num">118.7</td><td class="num">148.8</td><td class="num">189.8</td><td class="num hl">349.4</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">별도 매출총이익률이 3Q25부터 네 분기 연속 39~46%다. 그 전 여섯 분기(1Q24~2Q25)는 -7.6~35.5%였다. 이익률이 한 단계 올라선 시점은 3Q25이고, 회사가 말한 '신규장비 판매 다양화'가 숫자로 나타난 시점이다.</p>
+  <h3>영업외이익 308억의 구성</h3>
+  <div class="chart" id="ch-bridge"><p class="ct">1H26 영업이익에서 세전이익까지</p><p class="cs">억원. 연결 반기보고서 주석 28·29와 현금흐름표 조정 항목으로 재구성</p><svg></svg></div>
+  <div class="grid2">
+    <div class="pane"><h4>주식 운용으로 확인된 것</h4><ul>
+      <li>상반기 상장주식 매입 702.9억, 처분(장부가) 576.6억, 처분으로 들어온 현금 860.0억</li>
+      <li>처분이익 284.5억, 처분손실 6.0억, 평가이익 14.6억, 평가손실 48.0억. <b>순액 +245.1억</b></li>
+      <li>이 중 모회사분 처분이익 222.1억. 나머지는 프로텍인베스트먼트 등 종속회사</li>
+      <li>전년 상반기 매입은 22.5억, 처분이익은 1.3억이었다. 규모가 30배로 커졌다</li>
+      <li>6월 말 모회사 보유: 삼성전자 61.8억(3/27 첫 매수), 현대모비스 25.0억, 유비쿼스홀딩스 15.4억, 삼성물산 11.7억</li>
+      <li>연결 상장주식 잔액 252.0억. 취득원가 264.6억으로 6월 말 기준 평가손 상태</li>
+    </ul></div>
+    <div class="pane"><h4>확인되지 않는 것</h4><ul>
+      <li>처분한 종목. 반년 만에 장부가 577억어치를 팔아 284억을 남겼다면 수익률이 49%다</li>
+      <li>2분기 3개월 동안의 처분이익과 평가손익 구분</li>
+      <li>운용 주체, 투자 한도, 이사회 승인 여부. 정기보고서에 자금 운용 규정이 없다</li>
+      <li>종속회사가 보유한 상장주식 138억의 종목</li>
+      <li>LS증권 8/18 리포트는 "2분기 중 보유하던 금융자산을 대부분 매각"했다고 썼다. 그런데 6월 말에도 상장주식 252억이 남아 있고 삼성물산·현대모비스는 6월 9일에 새로 샀다. 매각 후 다시 사고 있다는 뜻이다</li>
+      <li>주석에는 주식 손실 54억이 '당기손익인식금융<b>부채</b>'로 표기돼 있다. 현금흐름표의 주식 평가손실 48.0억 + 처분손실 6.0억과 정확히 같아 표기 오류로 보인다</li>
+    </ul></div>
+  </div>
+  <h3>이익과 현금이 갈라진 이유</h3>
+  <div class="tbl-scroll"><table>
+    <caption>연결 재무상태표와 현금흐름 (억원)</caption>
+    <thead><tr><th>항목</th><th class="num">2025-12-31</th><th class="num">2026-06-30</th><th class="num">증감</th><th>비고</th></tr></thead>
+    <tbody>
+      <tr><td>현금및현금성자산</td><td class="num">581.1</td><td class="num">1,384.2</td><td class="num pos">+803.1</td><td>단기금융상품 776억 → 105억을 현금으로 전환한 영향이 크다</td></tr>
+      <tr><td>단기금융상품</td><td class="num">776.3</td><td class="num">105.3</td><td class="num neg">-671.0</td><td></td></tr>
+      <tr><td>당기손익 금융자산(유동)</td><td class="num">158.7</td><td class="num">242.0</td><td class="num">+83.3</td><td>상장주식 중심</td></tr>
+      <tr><td>매출채권및기타채권</td><td class="num">572.4</td><td class="num">938.5</td><td class="num neg">+366.1</td><td>2분기 매출 773억의 1.2배. 달러 매출채권 2,206만 → 4,860만 달러</td></tr>
+      <tr><td>재고자산</td><td class="num">720.5</td><td class="num">881.1</td><td class="num neg">+160.6</td><td>재공품 436.8억 → 644.8억. 평가충당금 118.3억</td></tr>
+      <tr><td>선수금(계약부채)</td><td class="num">39.3</td><td class="num">76.6</td><td class="num">+37.3</td><td></td></tr>
+      <tr><td>차입금</td><td class="num">438.4</td><td class="num">426.6</td><td class="num">-11.8</td><td>전액 종속회사. 산업은행 시설대 210억(2.43%, 2035년 만기) 포함</td></tr>
+      <tr><td>지배기업 소유주지분</td><td class="num">3,486.5</td><td class="num">3,975.0</td><td class="num">+488.5</td><td>주당 44,167원</td></tr>
+      <tr><td>비지배지분</td><td class="num">54.5</td><td class="num">284.4</td><td class="num">+229.9</td><td>피엠티 증자의 외부 주주 납입분</td></tr>
+      <tr class="sum"><td>영업활동현금흐름 (반기)</td><td class="num">1H25 +4.0</td><td class="num neg">-51.9</td><td class="num"></td><td>매출채권 -339.9, 재고 -176.4, 법인세 납부 -114.4</td></tr>
+    </tbody>
+  </table></div>
+  <div class="take"><span class="lbl">순현금 계산</span><p>현금 1,384.2억 + 단기금융상품 105.3억 + 유동 당기손익 금융자산 242.0억 − 차입금 426.6억 = <b>1,304.9억</b>(시가총액의 19.1%). 다만 이 안에는 피엠티가 6월 말 증자로 받은 돈이 들어 있고 그중 절반 이상은 외부 주주 몫이다. 모회사만 보면 현금 813.9억, 상장주식 113.9억, 차입금 0이고, 여기에 피엠티 대여금 180억이 별도로 있다. 달러 환율이 10% 오르면 세전이익이 74.5억 늘어나는 구조(회사 공시 민감도)여서 상반기 외환이익 53억은 환율이 되돌아가면 손실로 바뀐다.</p></div>
+</section>
+
+<section id="s7">
+  <div class="sec-h"><span class="sec-n">07</span><h2>제품과 고객: 디스펜서 회사에서 본더 회사로 가는 중간</h2></div>
+  <h3>레이저 본더의 이력</h3>
+  <ul class="tl">
+    <li><span class="d">2015~17</span><span>앰코와 레이저 리플로우(LAB) 공동 개발. 2016년 첫 매출 10억(그로쓰리서치)</span></li>
+    <li><span class="d">2018</span><span>사업보고서에 Laser Assisted Bonding 첫 등장. "세계 최초" 출시, 그해 매출 발생</span></li>
+    <li><span class="d">2020</span><span>애플 M1 패키지 공정에 LAB 도입, 장비는 프로텍이 공급했다는 보도(KIPOST). 공시 아님</span></li>
+    <li><span class="d">2022</span><span>2세대. 독일 등에서 수입하던 레이저 소스와 컨트롤러를 자체 개발품으로 교체. 레이저 리플로우 매출 120억, 이듬해 55억(그로쓰리서치)</span></li>
+    <li><span class="d">2023-05</span><span>글로벌 OSAT 한 곳과의 약 10년 독점 공급 계약 종료(디일렉 인터뷰). 당시 레이저 매출 비중 약 5%</span></li>
+    <li><span class="d">2024</span><span>기판 아래에서 레이저를 쏘는 레이저 본더 개발. 사업보고서는 "GPU 로직칩 또는 HBM을 인터포저나 기판에 접합"하는 장비로 기재. 연초 앰코에 데모 납품, 상반기 시험 매출 1대(그로쓰리서치, 대신증권 탐방). 12/21 해외 A사와 기술 사용료 계약</span></li>
+    <li><span class="d">2025</span><span>ASE 납품 보도(4월, 회사 관계자 "수주 발생은 사실"), 2.5D용 가압형 레이저 본더(LCB) 양산 공급 계약 보도(9월, 고객 미공개). 레이저 장비 매출 약 250억(한국IR협의회)</span></li>
+    <li><span class="d">2026</span><span>LS증권 "한국·대만 OSAT, 비메모리에 강점". 대신증권 "HBM 적층 대체보다 대형 인터포저 접합에서 TC 본더를 보완"</span></li>
+  </ul>
+  <div class="tbl-scroll"><table>
+    <caption>접합 방식 비교 (앰코·JCET 기술 기고와 업계 보도 기준)</caption>
+    <thead><tr><th>구분</th><th>매스 리플로우</th><th>레이저 본더(LAB·LCB)</th><th>TC 본더</th><th>하이브리드 본더</th></tr></thead>
+    <tbody>
+      <tr><td>가열</td><td>오븐 전체, 5~7분</td><td>레이저 국소 가열, 1~3초</td><td>본딩 헤드 가열과 가압</td><td>범프 없이 구리 직접 접합</td></tr>
+      <tr><td>생산성</td><td>가장 높음</td><td>리플로우의 약 절반, TC 본더의 2~3배</td><td>낮음</td><td>낮고 고가</td></tr>
+      <tr><td>기판 휨</td><td>큼</td><td>매우 작음</td><td>작음</td><td>-</td></tr>
+      <tr><td>주 용도</td><td>범용 플립칩(피치 120μm 이상)</td><td>얇은 기판, 대면적 칩, 2.5D</td><td>HBM 적층, 2.5D</td><td>3D 적층</td></tr>
+      <tr><td>주요 업체</td><td>피에스케이홀딩스, 에스티아이, 헬러</td><td class="hl">프로텍, 레이저쎌, PacTech, 비아트론(개발 중)</td><td>한미반도체, ASMPT, K&amp;S</td><td>Besi</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">삼성전자와 SK하이닉스가 하이브리드 본딩 도입을 16단 HBM4E 이후로 미뤘다는 보도(TrendForce 2026-07-07)는 범프 기반 공정 장비 전체의 수명을 늘린다. 반면 한미반도체가 2026년 6월 '2.5D TC 본더 40'을 내고 9월에 대형 인터포저용 본더를 출하한 것은 프로텍 LCB가 노리는 자리에 TC 본더 1위가 직접 들어온다는 뜻이다. 디스플레이 장비사 비아트론도 2026년 사업보고서에 LAB와 하이브리드 본더를 개발 품목으로 올렸다(아리스, 한양증권). 증권사 리포트 가운데 한미반도체 본더와 프로텍 LCB를 직접 비교한 것은 한 건도 없다.</p>
+  <h3>고객</h3>
+  <div class="tbl-scroll"><table>
+    <caption>매출 10% 이상 고객과 지역 (연결, 억원)</caption>
+    <thead><tr><th>기간</th><th class="num">1위 고객</th><th class="num">비중</th><th class="num">2위 고객</th><th class="num">한국</th><th class="num">중국</th><th class="num">기타</th></tr></thead>
+    <tbody>
+      <tr><td>2022</td><td class="num">312.8</td><td class="num">15.7%</td><td class="num">249.6</td><td class="num">1,322.3</td><td class="num">291.4</td><td class="num">374.1</td></tr>
+      <tr><td>2023</td><td class="num">350.4</td><td class="num">22.5%</td><td class="num">171.7</td><td class="num">1,093.9</td><td class="num">170.7</td><td class="num">296.2</td></tr>
+      <tr><td>2024</td><td class="num">415.8</td><td class="num">24.4%</td><td class="num">223.3</td><td class="num">1,247.0</td><td class="num">108.7</td><td class="num">347.1</td></tr>
+      <tr><td>2025</td><td class="num">761.4</td><td class="num">33.0%</td><td class="num">268.4</td><td class="num">1,513.8</td><td class="num">249.6</td><td class="num">542.0</td></tr>
+      <tr class="sum"><td>1H26</td><td class="num">342.0</td><td class="num">24.5%</td><td class="num">248.7</td><td class="num">843.2</td><td class="num">222.8</td><td class="num">331.3</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">고객명은 공시에 없다. 2025년부터는 10% 이상 고객 두 곳만 공시한다. 1H26 2위 고객(248.7억)은 전년 동기 31.4억에서 8배가 됐고, 중국 매출은 92.7억에서 222.8억으로 2.4배가 됐다. 모회사 별도 기준으로는 10% 이상 고객이 네 곳(246.6억, 114.3억, 106.7억, 104.9억)이어서 연결 1위 고객 342억에는 자회사 매출(피엠티의 프로브카드 등)이 합쳐져 있을 가능성이 있다.</p>
+  <div class="grid2">
+    <div class="pane"><h4>실명이 확인되는 거래</h4><ul>
+      <li><b>삼성전자</b>: 2024-09-12 수주 243.8억, 계약기간 2025-12-31까지(공시). 2019-01에도 163억 계약(기사)</li>
+      <li><b>피엠티 → 삼성 중국 반도체법인</b>: 2026-05-20 프로브카드 65.5억(공시 인용 기사)</li>
+      <li>사업보고서 거래처 목록: 삼성전자, SK하이닉스, 앰코테크놀로지코리아, 제이셋스태츠칩팩코리아, LG전자, LG이노텍, 삼성전기, ASE, AMKOR, SPIL</li>
+      <li>감사와 사외이사 1인이 앰코테크놀로지코리아 상무 출신(2025-03 선임)</li>
+    </ul></div>
+    <div class="pane"><h4>보도·리포트에만 있는 것</h4><ul>
+      <li>ASE 레이저 본더 납품(뉴시스 2025-04-29, 회사 관계자 발언)</li>
+      <li>대만 최상위 OSAT에 LCB 매출 발생(한국IR협의회, 대신증권)</li>
+      <li>Intel 신규 거래처 확보(한국IR협의회). 그로쓰리서치(2024-06)는 "미국 I사 후공정 1차 벤더 선정"이라고 썼다. 공시·회사 발표 없음</li>
+      <li>해외 파운드리에 레이저 본더 데모 납품(대신증권 2025-04, LS증권 2026-01)</li>
+      <li>삼성전자 HBM 공정에 들어간 장비를 특정한 리포트는 아카이브 91건 중 한국IR협의회 한 건뿐이다</li>
+      <li>TSMC 공급 가능성(2023년 기사). 납품 여부 확인 안 됨</li>
+      <li>마이크론: 관련 보도 없음. SK하이닉스: 고객 목록에만 있고 장비·금액 미상</li>
+      <li>2025~2026년 모회사의 단일판매·공급계약 공시는 한 건도 없다</li>
+    </ul></div>
+  </div>
+</section>
+
+<section id="s8">
+  <div class="sec-h"><span class="sec-n">08</span><h2>자회사: 이익을 내는 피앤엠, 돈이 들어가는 피엠티, 주식을 사는 투자회사</h2></div>
+  <div class="tbl-scroll"><table>
+    <caption>종속회사 요약 (반기보고서 주석, 억원)</caption>
+    <thead><tr><th>회사</th><th class="num">지분</th><th>사업</th><th class="num">1H26 매출</th><th class="num">1H26 순손익</th><th class="num">2025 매출</th><th class="num">2025 순손익</th><th class="num">6월 말 자본</th></tr></thead>
+    <tbody>
+      <tr><td><b>피앤엠</b></td><td class="num">100%</td><td>공압실린더, 프로텍 장비용 부품</td><td class="num">255.5</td><td class="num pos">50.1</td><td class="num">479.1</td><td class="num pos">101.7</td><td class="num">356.1</td></tr>
+      <tr><td><b>피엠티</b> (코스닥 147760)</td><td class="num">48.54%</td><td>NAND 프로브카드</td><td class="num">343.5</td><td class="num pos">9.2</td><td class="num">252.9</td><td class="num neg">-224.8</td><td class="num">474.7</td></tr>
+      <tr><td>미나미 (일본)</td><td class="num">100%</td><td>스크린프린터, 볼 플레이서</td><td class="num">42.3</td><td class="num pos">4.0</td><td class="num">138.0</td><td class="num pos">20.9</td><td class="num">94.1</td></tr>
+      <tr><td>프로텍인베스트먼트</td><td class="num">90%</td><td>신기술사업금융(등록 신청 중)</td><td class="num">-</td><td class="num pos">25.9</td><td class="num">40.9</td><td class="num pos">41.2</td><td class="num">355.1</td></tr>
+      <tr><td>프로텍벤처스</td><td class="num">(손자회사)</td><td>벤처캐피탈</td><td class="num">0.9</td><td class="num neg">-2.1</td><td class="num">1.6</td><td class="num neg">-2.3</td><td class="num">36.4</td></tr>
+      <tr><td>프로텍엘앤에이치</td><td class="num">96.88%</td><td>산업용 전자기기</td><td class="num">-</td><td class="num neg">-1.7</td><td class="num">-</td><td class="num neg">-3.0</td><td class="num neg">-86.6</td></tr>
+    </tbody>
+  </table></div>
+  <h3>피엠티: 6년간 458억을 넣었다</h3>
+  <div class="tbl-scroll"><table>
+    <thead><tr><th>연도</th><th class="num">매출</th><th class="num">영업이익</th><th class="num">프로텍 지분</th><th>사건</th></tr></thead>
+    <tbody>
+      <tr><td>2020</td><td class="num">510</td><td class="num">49</td><td class="num">27.8%</td><td>6월 최초 취득(당시 마이크로프랜드), 170.7억</td></tr>
+      <tr><td>2021</td><td class="num">605</td><td class="num">102</td><td class="num">32.34%</td><td>매출의 60% 이상이 삼성전자 NAND용 3D 제품. 연말 납품분에서 품질 문제, 주문 급감. 가동률 86.9%</td></tr>
+      <tr><td>2022</td><td class="num">382</td><td class="num neg">-52</td><td class="num">41.76%</td><td>12/31 종속회사 편입. 그해 프로텍 장부에서 평가손실 75.5억</td></tr>
+      <tr><td>2023</td><td class="num">330</td><td class="num neg">-53</td><td class="num">41.76%</td><td>사명 변경. 2D 공정 전환에 약 80억 투자, 생산능력 매출 기준 연 720억. 당초 2Q23 매출 기대(한국IR협의회)</td></tr>
+      <tr><td>2024</td><td class="num">244</td><td class="num neg">-131</td><td class="num">42.73%</td><td>2D 납품 지연. 가동률 26.2%. 프로텍 장부 손상 32.5억</td></tr>
+      <tr><td>2025</td><td class="num">253</td><td class="num neg">-204</td><td class="num">46.07%</td><td>7월 고객 재승인, 8월 2D 납품 재개. 매출원가율 149.3%, 가동률 49.3%. 프로텍이 130억 대여, 손상 48.2억. 연말 자본 89억</td></tr>
+      <tr class="sum"><td>1H26</td><td class="num">343.5</td><td class="num pos">14.2</td><td class="num">48.54%</td><td>유상증자 375.9억(프로텍 185.4억). 프로텍 추가 대여 50억, 지분 매입 8.0억</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">2020~2025년 매출·영업이익은 한국IR협의회와 LS증권 표, 1H26은 피엠티 반기보고서(별도). 누적 투입액 = 지분 취득 273.0억 + 2026년 증자 185.4억 = 458.4억. 여기에 대여금 잔액 180억과 지급보증 22억이 더 있다. 프로텍 보유 9,707,708주의 9/23 시장가치는 3,810원 기준 369.9억이다.</p>
+  <div class="grid2">
+    <div class="pane yes"><h4>좋아진 것</h4><ul>
+      <li>반기 매출이 2025년 연간을 넘었다(343.5억 vs 252.9억)</li>
+      <li>경쟁 두 곳이 HBM·DRAM 프로브카드로 옮겨가 NAND 물량이 넘어왔다는 설명(LS증권)</li>
+      <li>증자로 자본 89억 → 475억. 관리종목 우려 해소</li>
+      <li>분기 손익분기 매출 130~140억(대신증권)을 1·2분기 모두 넘었다(159억, 185억)</li>
+      <li>가동률 2025년 49.3% → 2026년 하반기 96.7% 전망(메리츠증권 9/23)</li>
+    </ul></div>
+    <div class="pane no"><h4>남은 것</h4><ul>
+      <li>영업이익률 4.1%. LS증권 2026년 영업이익 추정은 11억(이익률 1.9%)</li>
+      <li>메리츠증권(9/23)은 3분기 매출 134억(전 분기 대비 -27.5%), 영업이익 2억으로 하반기 둔화를 가정했다. LS증권도 4분기 124억</li>
+      <li>2026년 영업이익 추정: LS증권 29억, 메리츠증권 22억. 2021년 이익률 16.9%와 달리 2027년 추정도 4.5~8.8%다</li>
+      <li>회복 이유가 자체 경쟁력보다 경쟁사의 DRAM 이동이다. 품질 문제로 주문이 끊긴 이력이 있다</li>
+      <li>증자 자금 용도는 클린룸·자동화 설비 증설(2026년 3분기~2027년 4분기). 감가상각 부담이 뒤따른다</li>
+      <li>지분 48.54%로 과반이 아니다. 이익은 절반만 지배주주 몫인데 대여와 보증은 프로텍이 혼자 섰다</li>
+    </ul></div>
+  </div>
+  <h3>피앤엠: 토지 265억의 주인으로 추정된다</h3>
+  <p>2025년 연결 유형자산 취득 359억 중 312억이 건설중인자산으로 들어갔다가 <b>토지로 265.2억</b>이 대체됐다. 회사는 "종속회사의 유형자산 취득"이라고만 썼고 회사명, 소재지, 용도는 어디에도 없다. 피앤엠의 자산이 254억에서 574억으로, 부채가 49억에서 268억으로 늘었고 산업은행 시설대 210억이 같은 해 새로 생겼으므로 피앤엠으로 보는 것이 자연스럽다. 건설중인자산은 그 뒤에도 48억 → 88억으로 쌓이고 있다. 피앤엠은 매출의 상당 부분이 프로텍에 파는 부품이다(프로텍의 피앤엠 매입액 2025년 389억, 1H26 197억). 자기자본의 7.5%에 해당하는 토지 취득이 주요사항보고서 없이 지나갔다는 점은 탐방에서 물을 항목이다.</p>
+</section>
+
+<section id="s9">
+  <div class="sec-h"><span class="sec-n">09</span><h2>산업: 고객의 투자는 회사 밖 자료로 확인된다</h2></div>
+  <div class="tbl-scroll"><table>
+    <caption>고객사 설비투자 (각 사 실적 발표와 보도)</caption>
+    <thead><tr><th>회사</th><th>2026년 계획</th><th>프로텍과의 접점</th></tr></thead>
+    <tbody>
+      <tr><td><b>ASE</b></td><td>105억 달러(85억에서 상향). 설비 65억, 건물 40억. 첨단 패키징 매출 2026년 37억 → 2027년 75억 달러 이상 목표</td><td>디스펜서 고객. 레이저 본더 납품 보도</td></tr>
+      <tr><td><b>Amkor</b></td><td>25억~30억 달러. 65~70%가 건물(애리조나 등). 인천 송도에 2,660억 3개 라인 증설</td><td>LAB 공동 개발사. 한국 법인이 주 고객</td></tr>
+      <tr><td><b>JCET</b></td><td>약 100억 위안으로 상향</td><td>디스펜서·AGV 고객(제이셋스태츠칩팩코리아)</td></tr>
+      <tr><td><b>SK하이닉스</b></td><td>40조 원대 후반. 청주 P&amp;T7(HBM 후공정) 19조</td><td>고객 목록에 있음. 장비·금액 미상</td></tr>
+      <tr><td><b>삼성전자</b></td><td>시설투자와 연구개발 합산 110조 이상. 천안·온양 패키징 증설</td><td>2024년 243.8억 계약. 피엠티의 NAND 프로브카드 고객</td></tr>
+      <tr><td><b>TSMC</b></td><td>CoWoS 생산능력 2026년 말 월 13만 장 → 2028년 말 26만 장</td><td>직접 거래 확인 안 됨. OSAT 외주 물량을 통해 간접 수혜</td></tr>
+    </tbody>
+  </table></div>
+  <div class="tbl-scroll"><table>
+    <caption>같은 시장의 해외 업체 실적</caption>
+    <thead><tr><th>회사</th><th>최근 실적</th><th>의미</th></tr></thead>
+    <tbody>
+      <tr><td><b>Nordson</b> ATS 부문<br>(디스펜서 1위)</td><td>FY2026 3분기(7월 말) 매출 2.20억 달러(+28%), EBITDA 마진 30%로 부문 분기 최고. 9개월 누계 +20.5%. 전사 수주잔고 +35%</td><td>"수요의 상당 부분이 아시아"라고 언급. 프로텍과 같은 수요. 다만 FY2027은 "한 자릿수 중반 성장"으로 보수적</td></tr>
+      <tr><td><b>Mycronic</b><br>(Axxon 보유)</td><td>2026년 2분기 매출 24.2억 크로나(+17%), EBIT 마진 29%. 연간 전망 상향</td><td>AI 서버 방열용 디스펜싱과 광모듈 조립 수요 언급</td></tr>
+      <tr><td><b>SEMI</b> 전망<br>(2026-07-14)</td><td>조립·패키징 장비 2025년 +20.8%, 2026년 67억 달러(+9.6%), 2028년 86억 달러</td><td>테스트(+31.0%)와 전공정(+23.1%)보다 성장률이 낮다. 7월 개정에서도 상향되지 않았다</td></tr>
+    </tbody>
+  </table></div>
+  <div class="take"><span class="lbl">읽는 법</span><p>프로텍의 상반기 별도 매출 증가율 +29.5%는 Nordson 같은 사업부의 최근 분기 증가율 +28%와 비슷한 크기다. 즉 <b>매출 증가는 시장과 같이 간 것이고, 이익률 개선(21% → 33%)이 회사 고유의 변화</b>다. 시장 규모는 조사기관마다 정의가 달라 언더필 디스펜서만 3억~6억 달러, 반도체용 유체 도포 전체는 48억 달러(Dataintelo, 단일 출처)로 편차가 크다. 프로텍의 점유율 "글로벌 약 10%, 한국 약 80%"는 한국IR협의회 리포트의 서술이고 회사는 11년 동안 점유율을 한 번도 공시하지 않았다. 유리기판, 패널 레벨 패키징(FOPLP), 광 패키징(CPO)에서는 프로텍의 공개된 납품 사례를 찾지 못했다. 이 영역의 사례는 레이저쎌(대만 PTI 31억, CPO 모듈사 양산 1호기)이 먼저 쌓고 있다.</p></div>
+</section>
+
+<section id="s10">
+  <div class="sec-h"><span class="sec-n">10</span><h2>경쟁사 비교: 이익률은 상위권, 배수는 최하위</h2></div>
+  <div class="chart" id="ch-pop"><p class="ct">시가총액 ÷ 최근 4분기 영업이익</p><p class="cs">배. 9/23 종가, 3Q25~2Q26 연결 영업이익. 영업적자 기업은 제외</p><svg></svg></div>
+  <div class="tbl-scroll"><table>
+    <caption>국내 후공정 장비·부품 상장사 (DART 연결, 억원, 9/23 종가)</caption>
+    <thead><tr><th>회사</th><th class="num">시총</th><th class="num">매출<br>(4분기 합)</th><th class="num">영업이익<br>(4분기 합)</th><th class="num">1H26<br>매출 증가</th><th class="num">1H26<br>GPM</th><th class="num">1H26<br>OPM</th><th class="num">PSR</th><th class="num">시총÷<br>영업이익</th><th class="num">PER</th><th class="num">PBR</th></tr></thead>
+    <tbody>
+            <tr class="sum"><td><b>프로텍</b></td><td class="num">6,840</td><td class="num">2,754</td><td class="num">721</td><td class="num">+47.3%</td><td class="num">38.4%</td><td class="num">27.6%</td><td class="num">2.5</td><td class="num hl">9.5</td><td class="num">8.5</td><td class="num">1.72</td></tr>
+      <tr><td>한미반도체</td><td class="num">232,085</td><td class="num">5,513</td><td class="num">2,342</td><td class="num neg">-7.7%</td><td class="num">60.6%</td><td class="num">45.9%</td><td class="num">42.1</td><td class="num">99.1</td><td class="num">104.5</td><td class="num">31.07</td></tr>
+      <tr><td>이오테크닉스</td><td class="num">59,319</td><td class="num">4,447</td><td class="num">1,093</td><td class="num">+35.6%</td><td class="num">40.1%</td><td class="num">28.4%</td><td class="num">13.3</td><td class="num">54.3</td><td class="num">54.7</td><td class="num">7.93</td></tr>
+      <tr><td>피에스케이홀딩스</td><td class="num">35,189</td><td class="num">2,173</td><td class="num">784</td><td class="num">+14.4%</td><td class="num">62.3%</td><td class="num">30.5%</td><td class="num">16.2</td><td class="num">44.9</td><td class="num">34.1</td><td class="num">6.55</td></tr>
+      <tr><td>테크윙</td><td class="num">18,212</td><td class="num">1,848</td><td class="num">299</td><td class="num">+30.8%</td><td class="num">42.8%</td><td class="num">20.3%</td><td class="num">9.8</td><td class="num">60.9</td><td class="num">적자</td><td class="num">8.67</td></tr>
+      <tr><td>와이씨</td><td class="num">11,692</td><td class="num">2,916</td><td class="num">332</td><td class="num">+15.9%</td><td class="num">35.2%</td><td class="num">13.8%</td><td class="num">4.0</td><td class="num">35.2</td><td class="num">23.2</td><td class="num">3.03</td></tr>
+      <tr><td>예스티</td><td class="num">6,928</td><td class="num">1,077</td><td class="num">64</td><td class="num">+42.2%</td><td class="num">22.1%</td><td class="num">11.0%</td><td class="num">6.4</td><td class="num">109.1</td><td class="num">80.4</td><td class="num">4.82</td></tr>
+      <tr><td>인텍플러스</td><td class="num">7,101</td><td class="num">720</td><td class="num neg">-79</td><td class="num neg">-45.0%</td><td class="num">44.3%</td><td class="num neg">-32.3%</td><td class="num">9.9</td><td class="num">적자</td><td class="num">적자</td><td class="num">16.65</td></tr>
+      <tr><td>펨트론</td><td class="num">3,200</td><td class="num">830</td><td class="num">63</td><td class="num">+47.3%</td><td class="num">49.8%</td><td class="num">0.9%</td><td class="num">3.9</td><td class="num">50.9</td><td class="num">300↑</td><td class="num">6.10</td></tr>
+      <tr><td>제너셈</td><td class="num">989</td><td class="num">598</td><td class="num">14</td><td class="num">+11.2%</td><td class="num">43.2%</td><td class="num">5.7%</td><td class="num">1.6</td><td class="num">71.7</td><td class="num">300↑</td><td class="num">2.01</td></tr>
+      <tr><td>레이저쎌</td><td class="num">793</td><td class="num">58</td><td class="num neg">-97</td><td class="num">+51.6%</td><td class="num">25.2%</td><td class="num neg">-84.7%</td><td class="num">13.7</td><td class="num">적자</td><td class="num">적자</td><td class="num">3.43</td></tr>
+      <tr><td>제우스</td><td class="num">3,985</td><td class="num">3,229</td><td class="num neg">-315</td><td class="num neg">-30.6%</td><td class="num">22.5%</td><td class="num neg">-19.5%</td><td class="num">1.2</td><td class="num">적자</td><td class="num">적자</td><td class="num">1.25</td></tr>
+      <tr><td>피엠티</td><td class="num">762</td><td class="num">476</td><td class="num neg">-106</td><td class="num">+185.8%</td><td class="num">14.1%</td><td class="num">4.1%</td><td class="num">1.6</td><td class="num">적자</td><td class="num">적자</td><td class="num">1.61</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">시장 추정 기준으로도 같은 그림이다. 하나증권 9/1 표에서 2026년 예상 PER은 프로텍 8.2배, 패키징 장비 평균 28.4배, 한미반도체 59.3배, 이오테크닉스 42.1배, 피에스케이홀딩스 19.2배다. 계산 근거: 최근 4분기 = 2025년 연간 − 1H25 + 1H26(DART fnlttSinglAcntAll). 시총 = 9/23 종가 × 발행주식. PSR = 시총 ÷ 매출, PER = 시총 ÷ 연결 순이익(비지배 포함), PBR = 시총 ÷ 6월 말 지배주주 자본. 피엠티는 별도 재무제표. 프로텍의 PER 8.5배에는 주식 매매차익이 들어 있고 지배주주 기준은 7.8배, 매매손익 제외는 약 10배다(14장). 직접 경쟁자가 아닌 회사가 많으므로 '밸류체인 인접군'으로 읽어야 한다. 디스펜서의 직접 경쟁자는 Nordson·Musashi(비상장)·Mycronic이고, 레이저 본더는 레이저쎌, 2.5D 접합은 한미반도체, 리플로우는 피에스케이홀딩스다.</p>
+  <div class="tbl-scroll"><table>
+    <caption>해외 직접 경쟁사 (한국IR협의회 2026-02-04, 1/29 종가와 시장 추정치 기준)</caption>
+    <thead><tr><th>회사</th><th>사업</th><th class="num">2026년 예상 PER</th><th class="num">PBR</th><th>비고</th></tr></thead>
+    <tbody>
+      <tr><td>Nordson (미국)</td><td>디스펜서 1위, 검사장비, 산업용 도포</td><td class="num">24.4</td><td class="num">4.6</td><td>2025년 매출 27.9억 달러, 영업이익률 25%대</td></tr>
+      <tr><td>Besi (네덜란드)</td><td>다이 어태치, 하이브리드 본더</td><td class="num">48.2</td><td class="num">24.6</td><td>어태치 시장 약 16억 달러의 선두</td></tr>
+      <tr><td>Mycronic (스웨덴)</td><td>마스크 라이터, 디스펜서(Axxon)</td><td class="num">33.8</td><td class="num">7.3</td><td>LS증권 5/15 표 기준</td></tr>
+      <tr class="sum"><td>프로텍</td><td></td><td class="num">10.8~12.3</td><td class="num">1.72</td><td>9/23 종가 ÷ LS증권 EPS 7,041원, 대신증권 EPS 6,157원</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="s18">
+  <div class="sec-h"><span class="sec-n">11</span><h2>증권사가 본 프로텍 7년: 추정은 매번 늦었고 기대는 매번 일렀다</h2></div>
+  <p>리포트 아카이브에서 프로텍 전용 리포트 29건과, 다른 회사·산업·전략 리포트 62건의 본문에 묻힌 언급을 읽었다. 회사가 공시하지 않는 숫자는 대부분 여기서 나왔고, 같은 자료가 증권사 추정의 신뢰도도 보여 준다.</p>
+  <h3>추정과 실제</h3>
+  <div class="tbl-scroll"><table>
+    <caption>영업이익 추정과 실제 (억원). 추정은 해당 연도 초중반에 나온 것</caption>
+    <thead><tr><th>대상 연도</th><th>추정 (증권사, 시점)</th><th class="num">추정 영업이익</th><th class="num">실제</th><th class="num">오차</th></tr></thead>
+    <tbody>
+      <tr><td>2020</td><td>KB증권 2020-02 / 2020-05</td><td class="num">473 / 400</td><td class="num">154</td><td class="num neg">3.1배 / 2.6배 과대</td></tr>
+      <tr><td>2021</td><td>교보증권 2021-09</td><td class="num">550</td><td class="num">503</td><td class="num">+9%</td></tr>
+      <tr><td>2022</td><td>유안타증권 2022-05</td><td class="num">588</td><td class="num">601</td><td class="num">-2%</td></tr>
+      <tr><td>2023</td><td>유안타증권 2022-05 / 리딩투자증권 2023-04</td><td class="num">668 / 541</td><td class="num">174</td><td class="num neg">3.8배 / 3.1배 과대</td></tr>
+      <tr><td>2024</td><td>유진투자증권 2024-02 / 부국증권 2024-02</td><td class="num">587 / 486</td><td class="num">134</td><td class="num neg">4.4배 / 3.6배 과대</td></tr>
+      <tr><td>2025</td><td>대신증권 2025-04 / 유진투자증권 2025-05</td><td class="num">258 / 249</td><td class="num">463</td><td class="num pos">44~46% 과소</td></tr>
+      <tr class="sum"><td>2026</td><td>LS증권 1월 → 2월 → 4월 → 5월 → 8월</td><td class="num">420 → 605 → 685 → 712 → 746</td><td class="num">1H 385</td><td class="num">상향 중</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">꺾이는 해(2020, 2023, 2024)에는 3~4배 과대했고 돌아서는 해(2025)에는 절반 가까이 과소했다. 유진투자증권은 2026년 1월 27일, 잠정실적 발표 사흘 전에도 4Q25 영업이익을 88억으로 봤고 실제는 180억이었다. 회사가 가이던스를 주지 않고("가이던스는 따로 제공해드리고 있지 않다", 대신증권 2024-06 탐방) 수주잔고도 공시하지 않으니 증권사도 분기 실적을 본 뒤에 따라간다.</p>
+  <h3>레이저 본더 기대 시점의 이동</h3>
+  <ul class="tl">
+    <li><span class="d">2020-02</span><span>KB증권 "레이저 리플로우 매출 본격화 기대". 5월에는 레이저 본딩 장비 "개발 완료"</span></li>
+    <li><span class="d">2023-06</span><span>하나증권. 독점 공급계약 해제 보도(6/5) 뒤 6/7 주가 +30%. "대만 T사 진입 기대감"</span></li>
+    <li><span class="d">2023-10</span><span>유진투자증권 커버리지 개시, 목표주가 60,000원. "레이저 리플로우만으로 이미 100억 원대 매출", "본더 시장은 리플로우의 6배"</span></li>
+    <li><span class="d">2024-02</span><span>부국증권 "2025년 레이저 본딩 매출 기대". 데모 장비 테스트 중</span></li>
+    <li><span class="d">2024-06</span><span>그로쓰리서치 탐방. 회사 발언 "레퍼런스가 아직 없다", "개발검증 단계", "메모리보다 비메모리가 타깃". 대신증권 탐방은 시험 매출 1대 확인</span></li>
+    <li><span class="d">2024-08</span><span>NICE디앤비 "2024년 말 양산". 10월 유진투자증권 "기여는 내후년(2026)"</span></li>
+    <li><span class="d">2025-06</span><span>유진투자증권 하반기 전망에서 프로텍을 추천주에서 제외. "HBM이 TC 본딩을 먼저 도입해 레이저 본딩 개화가 늦어지는 중", "높은 비용과 고객의 보수적 도입"</span></li>
+    <li><span class="d">2025-10</span><span>유진투자증권 "레이저 본딩 매출은 아직 기여도 낮음"</span></li>
+    <li><span class="d">2026-02</span><span>한국IR협의회 "2025년 레이저 장비 매출 250억". 리플로우와 본더의 구분은 없다</span></li>
+    <li><span class="d">2026-07</span><span>대신증권 "LCB는 2025년부터 글로벌 OSAT에 일부 매출". 2025년 4월의 "TC 본더와 경쟁 관계"에서 "TC 본더를 보완"으로 표현이 바뀌었다</span></li>
+  </ul>
+  <div class="tbl-scroll"><table>
+    <caption>유진투자증권 목표주가와 의견 (유일하게 목표주가를 유지한 곳)</caption>
+    <thead><tr><th>날짜</th><th class="num">목표주가</th><th class="num">당시 주가</th><th>근거와 위치</th></tr></thead>
+    <tbody>
+      <tr><td>2023-10-16</td><td class="num">60,000</td><td class="num">44,900</td><td>12개월 예상 EPS 2,466원 × 23.7배. 신규 매수</td></tr>
+      <tr><td>2024-07-19</td><td class="num">38,000</td><td class="num">25,500</td><td>EPS 3,064원 × 12.3배. "신규 장비 진입이 더뎌짐"</td></tr>
+      <tr><td>2024-11-27</td><td class="num">38,000</td><td class="num">25,100</td><td>2025년 소부장 최선호주 두 종목 중 하나</td></tr>
+      <tr><td>2025-05-15</td><td class="num">32,000</td><td class="num">24,700</td><td>1분기 실적 부진. 국내 고객의 고사양 메모리 투자 지연</td></tr>
+      <tr><td>2025-10-22</td><td class="num">39,000</td><td class="num">32,700</td><td>EPS 2,822원 × 13.8배. 차선호주</td></tr>
+      <tr><td>2026-01-27</td><td class="num">48,000</td><td class="num">38,250</td><td>EPS 2,734원 × 17.5배. 이후 갱신 리포트 없음</td></tr>
+    </tbody>
+  </table></div>
+  <h3>시장 집계 추정이 말하는 것</h3>
+  <div class="grid2">
+    <div class="pane"><h4>하나증권 주간 표의 집계 추정 변화</h4><ul>
+      <li>2026년 주당순이익 증가율: 51.8%(5월) → 47.0%(7월) → <b>65.3%</b>(8월 말)</li>
+      <li>2027년 주당순이익 증가율: 20.2% → 21.3% → <b>7.3%</b></li>
+      <li>2026년 예상 PER: 14.3배(5/26) → 9.1배(8/3) → 9.1배(9/21)</li>
+      <li>같은 표의 패키징 장비 평균 28.4배, 한미반도체 59.3배, 이오테크닉스 42.1배, 피에스케이홀딩스 19.2배(9/1)</li>
+      <li>신한투자증권이 8월에 쓴 국내 후공정 장비 12개월 예상 PER 평균은 16.4배</li>
+    </ul></div>
+    <div class="pane"><h4>다른 리포트가 프로텍을 부르는 이름</h4><ul>
+      <li>공정별 기업 표에서 <b>디스펜서·언더필 칸은 프로텍 혼자</b>다(LS증권 2024-11, 유진투자증권 2023-10)</li>
+      <li>유진·LS증권은 "비메모리 주력", "메모리는 상대적으로 후발"로 쓴다</li>
+      <li>한국IR협의회 제너셈 리포트: "멀티플 격차는 공정 내 병목 장비 지위와 HBM 노출도 차이에서 비롯"</li>
+      <li>2019~2023년 LS증권 월보에서는 '순현금·저평가' 목록(PER 4~5배), 2026년에는 '수익률 상위·실적 개선' 목록</li>
+      <li>소각 전에는 자사주 18.2%가 반복 거론됐다. SK증권(2025-04)은 주가 부진 기업으로, LS증권(2025-02)은 행동주의 대상 후보 18곳 중 하나로 꼽았다</li>
+      <li>코스닥150에는 2023년 12월 편입됐고 2026년 6월 기준으로는 빠져 있다. LS증권은 재편입 기대 종목으로 분류</li>
+    </ul></div>
+  </div>
+  <div class="take"><span class="lbl">읽는 법</span><p>시장은 2026년 이익을 올려 잡으면서 2027년 성장률은 7.3%로 내려 잡았다. <b>지금 배수 8~10배는 "2026년이 고점"이라는 가정의 값</b>이다. 과거 기록으로 보면 이 가정이 틀릴 때는 크게 틀렸다. 2025년 초에는 아무도 그해 영업이익 463억을 예상하지 못했고, 2023년 초에는 아무도 174억을 예상하지 못했다. 방향을 먼저 아는 방법은 추정치가 아니라 회사 안의 숫자(재공품, 선수금, 납품 일정)이고 그것이 탐방의 목적이다.</p></div>
+</section>
+
+<section id="s11">
+  <div class="sec-h"><span class="sec-n">12</span><h2>해자 검증: 찬성 근거와 반증</h2></div>
+  <div class="grid2">
+    <div class="pane yes"><h4>해자가 있다는 근거</h4><ul>
+      <li><b>설치 기반</b>: 국내 디스펜서 점유율 약 80%(한국IR협의회). 부품·상품 매출이 2024년 290억 → 2025년 368억으로 장비 경기와 무관하게 늘었다</li>
+      <li><b>이익률</b>: 별도 영업이익률 11년(2015~2025) 평균 23.1%, 장비 매출이 반토막 난 2023년에도 20.0%. 1H26 32.6%는 이오테크닉스(28.4%), 피에스케이홀딩스(30.5%)보다 높다</li>
+      <li><b>고객 인증</b>: 삼성전자·SK하이닉스·앰코·ASE·JCET 양산 라인에 들어가 있다. 후공정 장비는 한 번 공정에 들어가면 같은 제품 세대 동안 바뀌지 않는다</li>
+      <li><b>공동 개발 이력</b>: 레이저 본더를 앰코와 함께 만들어 약 10년 독점 공급했다. 고객이 개발 단계부터 부른 회사라는 뜻이다</li>
+      <li><b>핵심 부품 내재화</b>: 2022년 레이저 소스와 컨트롤러 자체 개발, 공압부품은 100% 자회사 조달</li>
+      <li><b>특허와 개발비</b>: 특허 142건(2015) → 318건(1H26). 연구개발비 전액 비용 처리, 자산화 0</li>
+      <li><b>가벼운 자산</b>: 모회사 연간 설비투자 1~12억. 매출이 늘어도 돈이 묶이지 않는다</li>
+    </ul></div>
+    <div class="pane no"><h4>해자가 약하다는 반증</h4><ul>
+      <li><b>글로벌 점유율 약 10%</b>. Nordson, Musashi가 40~50년 주도해 온 시장에서 3위권이고, 회사는 판매 전략을 "가격경쟁력을 강점으로 부각"이라고 직접 썼다</li>
+      <li><b>이익이 고객 투자에 종속</b>: 2019 → 2020년 매출 -51.9%, 2022 → 2023년 장비 매출 -46.5%. 해자가 있어도 주문이 끊기면 매출이 사라진다</li>
+      <li><b>1위 고객이 매년 바뀐다</b>: 한 고객과의 관계가 반복 매출이 아니라 프로젝트 단위다</li>
+      <li><b>독점 계약 10년의 이면</b>: 그 기간 TSMC 등 다른 고객에 팔지 못했고(디일렉 인터뷰) 2023년 당시 레이저 매출 비중은 약 5%였다</li>
+      <li><b>2.5D 접합에 한미반도체 진입</b>: 2026년 2.5D TC 본더 출시, 글로벌 파운드리·OSAT에 양산 공급 발표</li>
+      <li><b>레이저 빔 균일도</b>: 프로텍 사양 80% 이상, 레이저쎌 주장 90% 이상. 신규 패키징(FOPLP·CPO·유리기판) 공개 사례는 레이저쎌이 앞선다</li>
+      <li><b>사라진 신제품</b>: 갱본더(2019년 개발)는 7년째 매출 없음. EMI 차폐 스프레이, 카메라모듈 장비, LED 장비는 증권사 리포트에서 사라졌다</li>
+      <li><b>HBM 안에서는 주역이 아니다</b>: HBM 적층은 TC 본더가 표준이고 삼성전자 방식은 언더필이 없다. 몰딩과 언더필을 합치는 공정(MUF)이 퍼지면 디스펜서 수요가 줄 수 있다(대신증권 2025-04)</li>
+      <li><b>레이저 본더는 8년째 '곧'이었다</b>: 2018년 출시 뒤 기대 시점이 2020 → 2024 → 2026으로 밀렸고 2023년 레이저 매출은 55억으로 전년의 절반이었다</li>
+      <li><b>기술 사용료 지급</b>: 2024-12 해외 A사 기술을 쓰고 사용료를 내는 계약. 핵심 기술 일부가 회사 것이 아닐 수 있다</li>
+    </ul></div>
+  </div>
+  <div class="take"><span class="lbl">판단</span><p><b>디스펜서는 국내에서 해자가 있고, 본더는 아직 검증 중이다.</b> 디스펜서의 근거는 80% 점유율과 부품 매출의 꾸준한 증가이고, 이 부분이 불황에도 별도 영업이익률 16.7~20%를 지켜 줬다. 지금 주가를 움직이는 것은 그 위에 얹힌 레이저 본더와 어태치인데, 이 둘은 매출 규모(각 250억, 300억)가 증권사 서술로만 확인되고 고객 수와 재구매 여부를 알 수 없다. 해자 판단의 핵심 질문은 "2025년에 산 고객이 2026년에 또 샀는가"이다.</p></div>
+</section>
+
+<section id="s12">
+  <div class="sec-h"><span class="sec-n">13</span><h2>지배구조: 공시 누락, 엘파텍, 그리고 자사주 소각</h2></div>
+  <div class="tbl-scroll"><table>
+    <caption>주주 구성 (반기보고서, 대량보유 보고서)</caption>
+    <thead><tr><th>주주</th><th class="num">주식수</th><th class="num">지분율</th><th>비고</th></tr></thead>
+    <tbody>
+      <tr><td>최승환 (대표이사 회장, 1955년생)</td><td class="num">3,355,000</td><td class="num">37.28%</td><td>설립 이후 최대주주. 2024-07 장내매수 66,000주(25,039~26,278원). 소각 전 30.50%</td></tr>
+      <tr><td>㈜엘파텍</td><td class="num">1,633,500</td><td class="num">18.15%</td><td>인천 남동구 소재 자동화기기 부품사. 2023-06 장내매도 361,400주(평균 36,640원)</td></tr>
+      <tr><td>VIP자산운용</td><td class="num">703,526</td><td class="num">7.82%</td><td>5/14 5% 이상 신규 보고(6.55%) → 8/7 기준 7.82%. 단순투자</td></tr>
+      <tr><td>그 외</td><td class="num">3,307,974</td><td class="num">36.75%</td><td>외국인 6.6% 포함. 2025년 말 소액주주 12,125명</td></tr>
+      <tr class="sum"><td>합계</td><td class="num">9,000,000</td><td class="num">100%</td><td>자기주식 0. 4/29 200만주 소각</td></tr>
+    </tbody>
+  </table></div>
+  <h3>회계처리기준 위반 사건</h3>
+  <ul class="tl">
+    <li><span class="d">2013~19</span><span>주석에서 빠진 것 세 가지. ① 엘파텍과의 거래(매입 29억 → 137억, 7년 합계 945억), ② ㈜수동자연마을에 제공한 지급보증 21.6억(2016~18), ③ 대표이사로부터 받은 지급보증 101억~286억</span></li>
+    <li><span class="d">2021-08</span><span>별건. 2020년 사업보고서 정정. 이연법인세자산 27.0억 과대계상 수정</span></li>
+    <li><span class="d">2022-04-06</span><span>증권선물위원회 의결. 과징금 5.13억, 감사인 지정 2년, 담당임원 해임권고, 검찰 통보. 같은 날 거래정지, 상장적격성 실질심사 사유 발생</span></li>
+    <li><span class="d">2022-05-04</span><span>실질심사 대상 제외, 5/6 거래 재개. 같은 날 자사주 42만주(122.8억) 매입 결정</span></li>
+    <li><span class="d">2022-05-18</span><span>2013~2019년 사업보고서 7건 일괄 정정. 재무제표 숫자는 바뀌지 않았다</span></li>
+    <li><span class="d">2024-04-03</span><span>회사·대표이사·담당임원 기소</span></li>
+    <li><span class="d">2025-12-24</span><span>서울남부지법 1심. 회사 벌금 5,000만 원, 대표이사 징역 1년(집행유예 2년), 담당임원 징역 8개월(집행유예 2년)</span></li>
+    <li><span class="d">2026</span><span>반기보고서 "제일심 판결에 대해 항소를 제기하였습니다". 항소 주체와 2심 일정은 기재 없음</span></li>
+  </ul>
+  <h3>엘파텍은 어떤 회사인가</h3>
+  <p>공시에서 확인되는 사실만 적으면 이렇다. 엘파텍의 <b>최대주주는 '정원한 외 3'(지분 100%)</b>이고 정원한은 프로텍에서 20년 넘게 구매를 담당한 임원이다. 대표이사 홍승민은 프로텍 연구개발 담당 임원이었다. 엘파텍 본점은 프로텍 인천공장과 같은 도로(함박뫼로)에 있다. 프로텍은 2019년 원재료 매입의 약 24%(137억)를 엘파텍에서 샀다. 엘파텍은 2013년 프로텍이 발행한 신주인수권 70억을 가지고 있다가 2019년 주당 8,157원에 전부 행사했다. 2023년 자료 기준 자산 467억, 부채 3.5억, 자본금 1억인 회사다.</p>
+  <p>2020년 공압부품 사업을 피앤엠으로 넘기면서 엘파텍 매입은 0이 됐고, 2023년에 "특수관계자 요건이 해소"돼 공시 대상에서 빠졌다. <b>최승환 대표와 엘파텍 주주 사이의 관계는 공시에 없다.</b> 두 주주를 합치면 55.4%다.</p>
+  <div class="grid2">
+    <div class="pane yes"><h4>주주에게 좋았던 결정</h4><ul>
+      <li>자사주 200만주(18.18%, 장부가 328.4억) 전량 소각. 주총 찬성률 99.6%</li>
+      <li>2022년 자사주 76.8만주를 평균 26,905원에 매입(206.6억). 지금 주가의 35%</li>
+      <li>2022년 차등배당(최대주주 250원, 일반주주 500원)</li>
+      <li>대표이사가 2024년 7월 25,000원대에 장내매수</li>
+      <li>결산배당 19년 연속. 모회사 무차입</li>
+      <li>2025-03 감사와 사외이사를 앰코 출신으로 교체</li>
+    </ul></div>
+    <div class="pane no"><h4>주주가 물어야 할 결정</h4><ul>
+      <li>배당은 주당 400원 고정. 이익이 2.2배가 된 2025년 배당성향 7.56%. 수치 목표 없음</li>
+      <li>상장주식 단기 매매 703억. 자금 운용 규정 미공시</li>
+      <li>프로텍인베스트먼트 설립 250억(2022), 추가 출자 20억(2026), 벤처캐피탈 인수 34.5억(2024). 본업과의 관련 설명 없음</li>
+      <li>자본잠식 자회사 프로텍엘앤에이치(자본 -86.6억)를 대표이사가 겸직하며 유지</li>
+      <li>임직원 대여금 1.05억 → 9.93억. 단기대여금 대손 5억 발생</li>
+      <li>해임권고를 받은 담당임원의 거취가 공시로 확인되지 않는다</li>
+      <li>대표이사 70세. 승계 계획 공시 없음. 등기임원 중 가족 없음</li>
+    </ul></div>
+  </div>
+  <p class="tnote">참고: 회사 홈페이지 IR 게시판의 "회사 소개 자료(2026)"(6/12 게시) 첨부파일이 소개 자료가 아니라 원격 명령 실행 기능이 있는 PHP 스크립트였다(조사 중 확인, 실행하지 않고 삭제). 홈페이지가 침해됐을 가능성이 있으니 해당 첨부파일은 내려받지 말고, IR 자료는 탐방에서 직접 받는 편이 안전하다. 회사에 알려 줄 만한 사항이다.</p>
+</section>
+
+<section id="s13">
+  <div class="sec-h"><span class="sec-n">14</span><h2>밸류에이션: 어떤 이익을 쓰느냐에 따라 7.8배에서 12.3배</h2></div>
+  <div class="tbl-scroll"><table>
+    <caption>시가총액 6,840억(76,000원 × 900만주) 기준. 계산 근거를 함께 적었다</caption>
+    <thead><tr><th>기준</th><th class="num">이익(억)</th><th class="num">배수</th><th>계산 근거</th></tr></thead>
+    <tbody>
+      <tr><td>최근 4분기 지배순이익</td><td class="num">871.7</td><td class="num">7.8</td><td>2025년 476.4 − 1H25 137.5 + 1H26 532.8. 주당 9,686원</td></tr>
+      <tr class="sum"><td>주식 매매손익 제외</td><td class="num">681.0</td><td class="num">10.0</td><td>1H26 주식 처분·평가 순이익 245.1억 × (1 − 실효세율 22.2%) = 190.7억 차감. 2H25 분은 조정하지 않음</td></tr>
+      <tr><td>최근 4분기 영업이익</td><td class="num">720.8</td><td class="num">9.5</td><td>3Q25 155.5 + 4Q25 180.1 + 1Q26 154.2 + 2Q26 231.0</td></tr>
+      <tr><td>기업가치 ÷ 영업이익</td><td class="num">720.8</td><td class="num">8.1</td><td>시총 6,840 + 비지배지분 284.4 − 순현금 1,304.9 = 5,819.5억</td></tr>
+      <tr><td>LS증권 2026년 추정 (8/18)</td><td class="num">787</td><td class="num">8.7</td><td>EPS 8,744원. 영업이익 746억. 2분기 주식 매각 차익 포함</td></tr>
+      <tr><td>LS증권 2026년 추정 (5/15)</td><td class="num">634</td><td class="num">10.8</td><td>EPS 7,041원. 영업이익 712억. 2분기 실적과 주식 차익 반영 전</td></tr>
+      <tr><td>대신증권 2026년 추정 (7/7)</td><td class="num">554</td><td class="num">12.3</td><td>EPS 6,157원. 영업이익 756억(표 기준). 2분기 실적 반영 전</td></tr>
+      <tr><td>LS증권 2027년 추정 (8/18)</td><td class="num">703</td><td class="num">9.7</td><td>EPS 7,812원. 영업이익 800억. 별도 매출 증가율 가정 6.6%</td></tr>
+      <tr><td>2022년 고점 이익</td><td class="num">435.1</td><td class="num">15.7</td><td>지배순이익. 당시 영업이익 600.7억 대비 시총은 11.4배</td></tr>
+      <tr><td>2024년 저점 이익</td><td class="num">216.8</td><td class="num">31.5</td><td>영업이익 134.4억 대비 시총은 50.9배</td></tr>
+      <tr><td>순자산</td><td class="num">3,975.0</td><td class="num">1.72</td><td>6월 말 지배주주 자본. 주당 44,167원</td></tr>
+    </tbody>
+  </table></div>
+  <h3>증권사 추정과 상반기 실적</h3>
+  <div class="tbl-scroll"><table>
+    <thead><tr><th>추정</th><th class="num">2026년 매출</th><th class="num">2026년 영업이익</th><th class="num">하반기 필요 매출</th><th class="num">하반기 필요 영업이익</th><th>2H25 실적 대비</th></tr></thead>
+    <tbody>
+      <tr><td>LS증권 1/21</td><td class="num">2,297</td><td class="num">420</td><td class="num">900</td><td class="num">35</td><td>상반기에 이미 92% 달성</td></tr>
+      <tr><td>한국IR협의회 2/4</td><td class="num">2,571</td><td class="num">576</td><td class="num">1,174</td><td class="num">191</td><td>영업이익 -43%여도 달성</td></tr>
+      <tr><td>LS증권 5/15</td><td class="num">2,856</td><td class="num">712</td><td class="num">1,459</td><td class="num">327</td><td>매출 +7.5%, 영업이익 -2.6%</td></tr>
+      <tr><td>대신증권 7/7 (표)</td><td class="num">2,772</td><td class="num">756</td><td class="num">1,375</td><td class="num">371</td><td>매출 +1.3%, 영업이익 +10.5%</td></tr>
+      <tr class="sum"><td>LS증권 8/18</td><td class="num">2,825</td><td class="num">746</td><td class="num">1,428</td><td class="num">361</td><td>매출 +5.2%, 영업이익 +7.5%. 3분기 681억·171억, 4분기 746억·189억</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">2H25 실적은 매출 1,356.8억, 영업이익 335.6억. LS증권은 4분기 별도 매출을 566억(전년 동기 -20.0%)으로 봤다. 작년 4분기 707억이 워낙 컸기 때문이다. 가장 높은 추정(대신증권)도 하반기에 작년 하반기보다 영업이익 10%만 더 내면 된다. <b>시장 추정은 하반기 성장을 거의 요구하지 않는다.</b> 그런데도 배수가 10배 안팎이라는 것은 시장이 2026년 이익을 고점으로 보고 있다는 뜻이다. 집계 추정의 2027년 주당순이익 증가율 7.3%가 같은 말을 한다(11장).</p>
+  <div class="grid2">
+    <div class="pane"><h4>고점 이익으로 본다면</h4><ul>
+      <li>과거 두 번 고점 다음 해에 영업이익이 67%(2020), 71%(2023) 줄었다</li>
+      <li>같은 일이 생기면 영업이익 721억 → 210~240억, 시총 대비 28~33배</li>
+      <li>2022년 고점 때 주가 범위는 19,600~35,150원으로 당시 주당순이익 4,834원의 4~7배였다. 배수가 낮다는 것만으로는 하락을 막지 못했다</li>
+      <li>하방 참고: 순자산 주당 44,167원, 7/30 종가 48,300원(코스닥 -47% 구간의 저점)</li>
+      <li>유진투자증권의 마지막 목표주가는 48,000원(1/27)으로 지금 주가보다 낮다. 다만 당시 2026년 영업이익 추정이 430억이었다</li>
+    </ul></div>
+    <div class="pane"><h4>구조 변화로 본다면</h4><ul>
+      <li>리드타임 16~24주, 판가 3.89억, 매출총이익률 40%대가 네 분기 이어졌다</li>
+      <li>하이브리드 본딩 지연, CoWoS 2028년까지 2배 증설이 확인된다</li>
+      <li>피엠티가 연 200억 적자에서 손익분기로 돌아왔다</li>
+      <li>인접 기업 배수의 1/5~1/10. 피에스케이홀딩스 수준(45배)의 절반만 받아도 시총 1.6조</li>
+      <li>상방 참고: 5/21 종가 96,400원(당시 시총 8,676억)</li>
+    </ul></div>
+  </div>
+  <div class="take"><span class="lbl">무엇이 배수를 바꾸는가</span><p>배수가 낮은 이유를 순서대로 놓으면 ① 실적 변동성(과거 두 번의 급감), ② 정보 부족(수주잔고·제품별 매출 미공시, 목표주가 제시 증권사 0곳), ③ 지배구조(1심 유죄, 엘파텍), ④ 이익의 질(주식 매매차익, 영업현금흐름 마이너스)이다. ③과 ④는 회사가 결정하면 바꿀 수 있고 ②도 그렇다. ①만이 사업 고유의 성격이다. 탐방에서 확인할 것은 회사가 ②~④를 바꿀 의사가 있는지다.</p></div>
+</section>
+
+<section id="s14">
+  <div class="sec-h"><span class="sec-n">15</span><h2>리스크</h2></div>
+  <div class="risk">
+    <div class="r"><span class="chip h">HIGH</span><div><div class="t">고객 투자 주기에 따른 매출 급감</div><div class="d">2020년 -51.9%, 2023년 장비 매출 -46.5%. 수주잔고를 공시하지 않아 꺾이는 시점을 실적 발표 전에 알 수 없다. 1위 고객 비중 24~33%</div></div></div>
+    <div class="r"><span class="chip h">HIGH</span><div><div class="t">대표이사 형사재판 항소심</div><div class="d">1심 징역 1년·집행유예 2년. 2심에서 형이 유지되거나 무거워질 경우의 경영 공백과 거래소 조치 가능성. 2024-04 기소 공시 다음 날 장중 -18%</div></div></div>
+    <div class="r"><span class="chip h">HIGH</span><div><div class="t">주식 운용 손실 가능성</div><div class="d">반년에 703억을 매입하는 규모면 시장 하락 시 분기 영업이익의 상당 부분을 잃을 수 있다. 6월 말 상장주식은 이미 취득원가 대비 -12.6억. 7월 반도체주 급락 구간의 손익은 3분기 보고서에서 드러난다</div></div></div>
+    <div class="r"><span class="chip m">MID</span><div><div class="t">피엠티 추가 지원</div><div class="d">출자 458억, 대여 180억, 보증 22억. 이익률 4%에서 증설에 들어간다. NAND 업황이 꺾이면 다시 적자와 손상</div></div></div>
+    <div class="r"><span class="chip m">MID</span><div><div class="t">2.5D 접합 경쟁</div><div class="d">한미반도체의 2.5D TC 본더, 레이저쎌의 패널·CPO 사례. 대신증권은 LCB를 TC 본더의 대체가 아닌 보완으로 평가</div></div></div>
+    <div class="r"><span class="chip m">MID</span><div><div class="t">매출채권과 재공품 증가</div><div class="d">매출채권 938억(2분기 매출의 1.2배), 재공품 645억, 재고 평가충당금 118억. 상반기 매출채권 대손 8.4억, 단기대여금 대손 5억</div></div></div>
+    <div class="r"><span class="chip m">MID</span><div><div class="t">환율</div><div class="d">달러 순자산 약 4,835만 달러(745억). 환율 10% 하락 시 세전이익 -74.5억(회사 공시). 상반기 외환이익 53억은 되돌려질 수 있다</div></div></div>
+    <div class="r"><span class="chip m">MID</span><div><div class="t">공시 품질</div><div class="d">과거 주석 누락 외에도 이번 조사에서 주석 표기 오류, 비교 수치 불일치(A사 565억 vs 375억), 감자 공시의 '3월 37일', 설명 없는 토지 265억이 나왔다</div></div></div>
+    <div class="r"><span class="chip l">LOW</span><div><div class="t">엘파텍 지분 매도</div><div class="d">2023년 6월 36,640원에 36만주를 장내에서 팔았다. 남은 163만주(18.15%)는 9/23 종가로 1,241억</div></div></div>
+    <div class="r"><span class="chip m">MID</span><div><div class="t">시장 급락 시 낙폭과 유동성</div><div class="d">코스닥이 41.7% 내린 5/21~7/30에 49.9% 내렸다. 일 거래대금이 5억 아래로 내려가는 날이 있고 코스닥150에서 빠져 있어 지수 자금의 받침이 없다</div></div></div>
+    <div class="r"><span class="chip m">MID</span><div><div class="t">공정 변화</div><div class="d">몰딩과 언더필을 합치는 공정(MUF), 필름 방식(TC-NCF) 확산은 디스펜서 수요를 줄인다. 하이브리드 본딩이 예정보다 빨리 오면 레이저 본더의 기회 구간이 짧아진다</div></div></div>
+    <div class="r"><span class="chip u">UP</span><div><div class="t">상방 요인</div><div class="d">3분기 실적이 와이즈리포트 집계 추정(영업이익 171억)을 넘는 경우, 모회사 공급계약 공시, 배당 정책 변경, 항소심 감형, 증권사 목표주가 재개</div></div></div>
+  </div>
+</section>
+
+<section id="s15">
+  <div class="sec-h"><span class="sec-n">16</span><h2>탐방 질문 32개</h2></div>
+  <p>질문은 40개이고 ★ 표시 14개가 우선이다. Q33~Q40은 리포트 아카이브에서 나온 미해결 쟁점이다. 각 질문 아래에 왜 묻는지와 답을 어떻게 읽을지를 적었다. 회사가 공시하지 않는 숫자를 묻는 질문이 많으므로 정확한 값 대신 범위나 방향이라도 받는 것이 목표다.</p>
+
+  <h3>A. 하반기 실적과 수주</h3>
+  <div class="qs">
+    <div class="q"><div class="qh"><span class="qn">★ Q1</span><span class="qt">6월 말 재공품 645억은 어떤 장비이고 언제 납품되나? 3분기와 4분기 중 어느 쪽에 더 몰려 있나?</span></div><p class="why"><b>왜</b> 재공품이 반년에 208억 늘었다. 수주잔고를 공시하지 않는 회사에서 하반기 매출을 가늠할 유일한 숫자다. <b>읽는 법</b> 대부분 3분기 납품이면 3분기 매출이 800억대도 가능하다. 특정 고객 한 곳의 물량이면 그 고객의 일정 변경이 곧 실적 변동이다.</p></div>
+    <div class="q"><div class="qh"><span class="qn">★ Q2</span><span class="qt">현재 수주잔고는 작년 같은 시점과 비교해 늘었나 줄었나? 2027년 상반기 납품분 주문이 이미 들어와 있나?</span></div><p class="why"><b>왜</b> 리드타임이 16~24주면 지금 받는 주문은 내년 1분기 매출이다. <b>읽는 법</b> "가시성이 내년 1분기까지"라는 답은 정상이다. 늘었다·줄었다를 말하지 않으면 줄었을 가능성을 열어 둔다.</p></div>
+    <div class="q"><div class="qh"><span class="qn">Q3</span><span class="qt">2분기 별도 매출은 534억으로 작년 2분기(544억)와 같은데 매출총이익률은 28%에서 41%가 됐다. 무엇이 바뀌었나?</span></div><p class="why"><b>왜</b> 이익률 개선의 원인이 품목 구성인지, 판가 인상인지, 원가 절감(레이저 소스 내재화)인지에 따라 지속성이 다르다. <b>읽는 법</b> 품목 구성이면 레이저·어태치 비중을 이어서 묻는다(Q7).</p></div>
+    <div class="q"><div class="qh"><span class="qn">Q4</span><span class="qt">매출채권이 938억으로 늘었다. 결제 조건이 바뀌었나? 6개월 넘은 채권 비중은?</span></div><p class="why"><b>왜</b> 상반기 영업현금흐름이 -52억이다. 2025년 말에는 6개월 이하가 91.6%였다. <b>읽는 법</b> 납품 시 90%·설치 후 10% 조건이 유지된다면 분기 말 납품이 몰린 것이고 3분기에 회수된다.</p></div>
+    <div class="q"><div class="qh"><span class="qn">Q5</span><span class="qt">2023년에 장비 매출이 1,460억에서 781억으로 줄었다. 이번에는 무엇이 다른가? 같은 일이 생긴다면 어떤 신호가 먼저 보이나?</span></div><p class="why"><b>왜</b> 회사가 스스로 생각하는 선행지표를 듣기 위해서다. <b>읽는 법</b> 견적 요청 건수, 고객의 설치 일정 연기 같은 구체적 지표를 말하면 관리가 되고 있다는 뜻이다.</p></div>
+  </div>
+
+  <h3>B. 제품과 고객</h3>
+  <div class="qs">
+    <div class="q"><div class="qh"><span class="qn">★ Q6</span><span class="qt">2025년 장비 매출 1,480억을 디스펜서, 어태치·히트슬러그, 레이저 리플로우, 레이저 본더(LCB), 기타로 나누면 각각 얼마인가? 올해 상반기는?</span></div><p class="why"><b>왜</b> 제품별 매출은 공시에 없고 한국IR협의회 리포트의 서술(디스펜서 약 50%, 어태치 약 300억, 레이저 약 250억)이 전부다. 레이저 250억이 리플로우인지 본더인지도 구분되지 않는다. 히트슬러그는 2022년 248억 이후 수치가 사라졌다. <b>읽는 법</b> 디스펜서 비중이 60% 이상이면 본더 회사로의 전환은 아직 초입이다.</p></div>
+    <div class="q"><div class="qh"><span class="qn">★ Q7</span><span class="qt">레이저 본더(LAB·LCB)를 산 고객은 몇 곳이고, 그중 두 번 이상 주문한 곳은 몇 곳인가? 대당 가격대는?</span></div><p class="why"><b>왜</b> 해자 판단의 핵심이다. 데모와 첫 양산 주문은 재구매와 다르다. <b>읽는 법</b> 재구매 고객이 있으면 공정에 채택된 것이다. 가격은 "리플로우의 3~4배"라는 보도가 있다.</p></div>
+    <div class="q"><div class="qh"><span class="qn">★ Q8</span><span class="qt">2024년 9월 삼성전자 계약 243.8억의 장비는 무엇인가? 기사는 선별 장비, 리포트는 HBM용 어태치라고 썼다. 후속 주문이 있었나?</span></div><p class="why"><b>왜</b> 계약기간이 2025-12-31에 끝났고 이후 모회사 공급계약 공시가 없다. <b>읽는 법</b> 후속 주문이 공시 기준(전년 매출의 10%, 약 230억) 아래로 나뉘어 들어오고 있을 수 있다.</p></div>
+    <div class="q"><div class="qh"><span class="qn">Q9</span><span class="qt">상반기 2위 고객 매출이 31억에서 249억이 됐다. 메모리인가 OSAT인가, 국내인가 해외인가?</span></div><p class="why"><b>왜</b> 새로 커진 고객이 누구인지가 다음 주기의 방향이다. 같은 기간 중국 매출도 93억에서 223억이 됐다. <b>읽는 법</b> 중국 OSAT라면 수출 규제와 대금 회수를 함께 묻는다.</p></div>
+    <div class="q"><div class="qh"><span class="qn">Q10</span><span class="qt">한미반도체가 2.5D TC 본더를 냈다. LCB와 같은 입찰에서 만난 적이 있나? 고객은 무엇을 기준으로 고르나?</span></div><p class="why"><b>왜</b> 대신증권은 LCB가 TC 본더를 대체하기보다 보완한다고 봤다. <b>읽는 법</b> "공정이 다르다"는 답이면 시장 크기가 생각보다 작을 수 있다.</p></div>
+    <div class="q"><div class="qh"><span class="qn">Q11</span><span class="qt">2024-12-21 해외 A사와 맺은 기술 사용료 계약은 어떤 장비에 해당하나? 사용료는 매출의 몇 %인가?</span></div><p class="why"><b>왜</b> "계약상대방 외 추가 판매 목적"이라고 적혀 있다. 공동 개발한 레이저 기술을 다른 고객에 팔기 위한 대가일 수 있다. <b>읽는 법</b> 그렇다면 레이저 본더 이익률에 상한이 생긴다.</p></div>
+    <div class="q"><div class="qh"><span class="qn">Q12</span><span class="qt">Intel, TSMC, 마이크론, SK하이닉스 중 현재 매출이 나는 곳은? 평가 중인 곳은?</span></div><p class="why"><b>왜</b> Intel은 리포트에만, TSMC는 기사에만 나온다. <b>읽는 법</b> 실명 확인을 피하면 장비 종류와 지역만이라도 받는다.</p></div>
+    <div class="q"><div class="qh"><span class="qn">Q13</span><span class="qt">유리기판, 패널 레벨 패키징, 광 패키징용 장비는 고객 평가가 진행 중인가? 갱본더는 어떻게 됐나?</span></div><p class="why"><b>왜</b> 공개 사례는 레이저쎌이 앞선다. 갱본더는 2019년 개발 뒤 매출이 없다. <b>읽는 법</b> 신제품을 끝까지 상용화하는 회사인지 본다.</p></div>
+    <div class="q"><div class="qh"><span class="qn">Q14</span><span class="qt">부품·상품 매출(2025년 368억)의 이익률은 장비보다 높은가? 설치 대수가 늘면 비례해 느는가?</span></div><p class="why"><b>왜</b> 불황 때 이익을 지켜 주는 부분이다. <b>읽는 법</b> 이익률이 장비보다 높다면 2023년 별도 이익률 20%가 설명된다.</p></div>
+  </div>
+
+  <h3>C. 자금 운용과 주주환원</h3>
+  <div class="qs">
+    <div class="q"><div class="qh"><span class="qn">★ Q15</span><span class="qt">상반기에 상장주식을 703억 사고 577억을 팔아 284억을 벌었다. 누가 결정하고 한도는 얼마이며 이사회 승인을 받나?</span></div><p class="why"><b>왜</b> 작년 상반기 매입은 22억이었다. 본업 이익의 74%에 해당하는 차익이 운용에서 나왔다. <b>읽는 법</b> 규정과 한도가 있으면 관리되는 위험이다. 대표이사 개인 판단이면 지배구조 할인의 이유가 하나 더 생긴다.</p></div>
+    <div class="q"><div class="qh"><span class="qn">★ Q16</span><span class="qt">7월 반도체주 급락 때 보유 주식 손익은 어땠나? 3분기에 평가손실이 나오나?</span></div><p class="why"><b>왜</b> 6월 말 상장주식 252억은 이미 취득원가 아래였다. <b>읽는 법</b> 3분기 순이익이 영업이익보다 작게 나올 가능성을 미리 확인한다.</p></div>
+    <div class="q"><div class="qh"><span class="qn">★ Q17</span><span class="qt">배당은 3년째 주당 400원이고 배당성향이 7.6%다. 자사주를 모두 소각한 지금 다음 주주환원은 무엇인가?</span></div><p class="why"><b>왜</b> 순현금 1,305억, 모회사 설비투자 연 10억 미만이다. <b>읽는 법</b> 배당성향 목표나 추가 매입 계획을 말하면 배수가 바뀔 수 있는 재료다. 기업가치 제고 계획 공시 여부도 묻는다.</p></div>
+    <div class="q"><div class="qh"><span class="qn">Q18</span><span class="qt">프로텍인베스트먼트에 270억, 벤처캐피탈 인수에 34.5억을 썼다. 본업과 어떤 관계인가? 3월 증자에 들어온 외부 주주(10%)는 누구인가?</span></div><p class="why"><b>왜</b> 신기술사업금융업 등록이 2022년 설립 이후 아직 "신청 중"이다. <b>읽는 법</b> 외부 주주가 특수관계인이면 추가 확인이 필요하다.</p></div>
+    <div class="q"><div class="qh"><span class="qn">Q19</span><span class="qt">2025년에 종속회사가 산 토지 265억은 어느 회사가, 어디에, 무슨 용도로 샀나? 건설중인자산 88억은 무엇을 짓고 있나?</span></div><p class="why"><b>왜</b> 자기자본의 7.5%인데 주요사항보고서도, 사업보고서 설명도 없다. <b>읽는 법</b> 피앤엠 신공장이라면 완공 시점과 생산능력, 외부 매출 계획을 묻는다.</p></div>
+    <div class="q"><div class="qh"><span class="qn">Q20</span><span class="qt">임직원 대여금이 1억에서 10억으로 늘었고 단기대여금에서 대손 5억이 났다. 누구에게 빌려준 것인가?</span></div><p class="why"><b>왜</b> 금액은 작지만 과거 제재 사유가 특수관계자 거래 누락이었다. <b>읽는 법</b> 임원 대여가 포함돼 있는지 확인한다.</p></div>
+  </div>
+
+  <h3>D. 피엠티와 자회사</h3>
+  <div class="qs">
+    <div class="q"><div class="qh"><span class="qn">★ Q21</span><span class="qt">피엠티 상반기 매출 343억은 하반기에도 유지되나? 영업이익률 4%는 언제 두 자릿수가 되나?</span></div><p class="why"><b>왜</b> LS증권은 3분기 156억, 4분기 115억으로 하반기 감소를 가정했다. <b>읽는 법</b> 증설 뒤 감가상각을 감안한 목표 이익률을 받는다.</p></div>
+    <div class="q"><div class="qh"><span class="qn">Q22</span><span class="qt">피엠티 대여금 180억은 증자 대금으로 상환받나? 추가 지원 계획이 있나?</span></div><p class="why"><b>왜</b> 증자 자금 용도는 설비 증설이라고 공시됐다. <b>읽는 법</b> 상환 일정이 없으면 사실상 출자다.</p></div>
+    <div class="q"><div class="qh"><span class="qn">Q23</span><span class="qt">피엠티 지분을 50% 넘게 올릴 계획이 있나? 합병이나 매각은 검토했나?</span></div><p class="why"><b>왜</b> 48.54%로 위험은 전부 지고 이익은 절반만 갖는 구조다. 6월 공시의 취득 목적은 "지배력 강화"였다.</p></div>
+    <div class="q"><div class="qh"><span class="qn">Q24</span><span class="qt">피앤엠 매출 479억 중 프로텍에 파는 비중과 외부 매출은? 외부 매출의 이익률은?</span></div><p class="why"><b>왜</b> 프로텍의 피앤엠 매입이 389억이다. 피앤엠 순이익 102억의 대부분이 내부 이익이면 연결 기준으로는 원가 절감일 뿐이다.</p></div>
+    <div class="q"><div class="qh"><span class="qn">Q25</span><span class="qt">자본잠식 상태인 프로텍엘앤에이치(자본 -87억)는 왜 유지하나?</span></div><p class="why"><b>왜</b> 매출이 없고 부채 87억이 있다. 대표이사가 이 회사 대표를 겸한다. <b>읽는 법</b> 부채의 상대방이 누구인지 확인한다.</p></div>
+  </div>
+
+  <h3>E. 지배구조</h3>
+  <div class="qs">
+    <div class="q"><div class="qh"><span class="qn">★ Q26</span><span class="qt">항소는 누가 했고 2심 선고는 언제로 예상하나? 형이 확정되면 대표이사직에 영향이 있나?</span></div><p class="why"><b>왜</b> 반기보고서에는 "항소를 제기하였습니다"만 있다. <b>읽는 법</b> 검찰도 항소했다면 형이 무거워질 수 있다. 회사의 비상 계획 유무를 본다.</p></div>
+    <div class="q"><div class="qh"><span class="qn">★ Q27</span><span class="qt">엘파텍과 대표이사는 어떤 관계인가? 엘파텍은 지분 18%를 계속 보유하나? 현재 거래가 있나?</span></div><p class="why"><b>왜</b> 엘파텍 주주와 대표가 프로텍 전직 임원이고 2023년에 특수관계자에서 빠졌다. <b>읽는 법</b> 우호 지분이면 실질 지배력 55%, 아니면 잠재 매도 물량 1,241억이다.</p></div>
+    <div class="q"><div class="qh"><span class="qn">Q28</span><span class="qt">2022년 해임권고를 받은 담당임원은 지금 어떤 직책인가? 내부회계관리 체계는 무엇이 바뀌었나?</span></div><p class="why"><b>왜</b> 공시로는 거취를 확인할 수 없다. <b>읽는 법</b> 같은 사람이 내부회계관리를 맡고 있다면 개선으로 보기 어렵다.</p></div>
+    <div class="q"><div class="qh"><span class="qn">Q29</span><span class="qt">대표이사가 70세다. 승계 계획은? 연구소장과 영업 부사장 다음 세대는 누구인가?</span></div><p class="why"><b>왜</b> 등기임원 세 명이 모두 10년 이상 재직했고 부사장은 28년째다.</p></div>
+    <div class="q"><div class="qh"><span class="qn">Q30</span><span class="qt">수주잔고와 제품별 매출을 공시하거나 IR 자료로 낼 계획이 있나? 실적 설명회는?</span></div><p class="why"><b>왜</b> 2026년 리포트 7건이 전부 목표주가가 없다. 정보가 없어 값을 매기지 못하는 상태다. <b>읽는 법</b> VIP자산운용이 7.8%를 들고 있어 요구가 있었을 수 있다.</p></div>
+  </div>
+
+  <h3>F. 비용과 인력</h3>
+  <div class="qs">
+    <div class="q"><div class="qh"><span class="qn">Q31</span><span class="qt">원재료 매입이 매출의 56%까지 올랐다(과거 32~45%). '기구' 매입이 72억에서 447억이 된 이유는?</span></div><p class="why"><b>왜</b> 본더류는 기구물 비중이 높아 재료비율이 디스펜서와 다를 수 있다. <b>읽는 법</b> 재고로 쌓인 것인지 원가 구조가 바뀐 것인지 구분한다.</p></div>
+    <div class="q"><div class="qh"><span class="qn">Q32</span><span class="qt">직원이 310명에서 326명으로 늘었다. 설치·서비스 인력이 납품 속도를 제한하나? 해외 설치는 누가 하나?</span></div><p class="why"><b>왜</b> 매출이 납품·설치 시점에 잡히므로 인력이 분기 매출의 상한이 될 수 있다.</p></div>
+  </div>
+
+  <h3>G. 리포트 아카이브에서 나온 미해결 쟁점</h3>
+  <div class="qs">
+    <div class="q"><div class="qh"><span class="qn">★ Q33</span><span class="qt">국내 메모리 고객에 나가는 디스펜서는 어느 공정에 쓰이나? HBM 적층 안인가, HBM을 기판에 올리는 2.5D 단계인가?</span></div><p class="why"><b>왜</b> 삼성전자 방식은 언더필이 없고 SK하이닉스 방식에서만 쓰인다는 분석(대신증권)과 "국내 메모리 고객사향 디스펜서 공급 확대"(LS증권)가 같이 있다. <b>읽는 법</b> 특정 고객의 특정 공정에 묶여 있으면 그 고객이 공정을 바꿀 때 매출이 사라진다.</p></div>
+    <div class="q"><div class="qh"><span class="qn">★ Q34</span><span class="qt">몰딩과 언더필을 합치는 공정(MUF)이 2.5D 패키지에도 들어오고 있나? 회사는 어떻게 대응하나?</span></div><p class="why"><b>왜</b> 디스펜서가 아직 매출의 절반이다. <b>읽는 법</b> "대면적 패키지는 여전히 액상 언더필"이라는 답이면 근거(고객, 패키지 크기)를 함께 받는다.</p></div>
+    <div class="q"><div class="qh"><span class="qn">★ Q35</span><span class="qt">2024년 해외 파운드리에 넣은 레이저 본더 데모는 어떻게 됐나? 양산 주문으로 이어졌나?</span></div><p class="why"><b>왜</b> 대신증권과 LS증권이 데모 납품을 썼고 그 뒤 소식이 없다. 2023년에는 "대만 T사 진입 기대"로 주가가 하루 30% 올랐다. <b>읽는 법</b> OSAT를 거치지 않는 파운드리 직납이 생기면 시장 크기가 달라진다.</p></div>
+    <div class="q"><div class="qh"><span class="qn">Q36</span><span class="qt">2023년 레이저 리플로우 매출이 120억에서 55억으로 줄었던 이유는? 독점 계약이 풀린 해였다</span></div><p class="why"><b>왜</b> 독점 해제가 호재로 읽혔는데 매출은 반대로 갔다. <b>읽는 법</b> 독점 고객의 주문이 줄어든 것이라면 그 고객과의 관계가 지금 어떤지 묻는다.</p></div>
+    <div class="q"><div class="qh"><span class="qn">Q37</span><span class="qt">"미국 I사 후공정 1차 벤더"(2024년 리포트)는 지금 매출이 나는가? 어떤 장비인가?</span></div><p class="why"><b>왜</b> 2년이 지났고 한국IR협의회는 2026년에도 "신규 거래처"라고 썼다. 앰코 인천이 인텔 EMIB 외주 물량을 받는다는 서술과 이어질 수 있다.</p></div>
+    <div class="q"><div class="qh"><span class="qn">Q38</span><span class="qt">2분기에 판 금융자산은 무엇이었고, 판 뒤에 다시 주식을 산 이유는? 2024년에 640억을 투자자산에 넣었던 것과 같은 자금인가?</span></div><p class="why"><b>왜</b> LS증권은 "대부분 매각"이라고 썼는데 6월 9일에 삼성물산과 현대모비스를 새로 샀다. <b>읽는 법</b> Q15의 연장이다. 일회성인지 상시 운용인지 가른다.</p></div>
+    <div class="q"><div class="qh"><span class="qn">Q39</span><span class="qt">피엠티 하반기 매출을 메리츠증권은 3분기 134억으로 봤다. 상반기보다 줄어드는 이유가 있나? 2D 생산능력 720억은 증설 후 얼마가 되나?</span></div><p class="why"><b>왜</b> LS증권의 2027년 매출 추정 763억은 기존 생산능력을 넘는다. 가동률 96.7% 전망과 하반기 매출 감소 가정이 서로 맞지 않는다.</p></div>
+    <div class="q"><div class="qh"><span class="qn">Q40</span><span class="qt">코스닥150 재편입과 증권사 커버리지 확대를 위해 회사가 하는 일이 있나?</span></div><p class="why"><b>왜</b> 목표주가를 내는 증권사가 없고 유진투자증권은 1월 이후 갱신이 없다. 지수에서 빠져 있어 시장 급락 때 받치는 자금이 없다.</p></div>
+  </div>
+</section>
+
+<section id="s16">
+  <div class="sec-h"><span class="sec-n">17</span><h2>투자 전 확인할 것</h2></div>
+  <ul class="check">
+    <li><b>11월 중순 3분기 보고서</b>: 기준선은 LS증권 추정 매출 681억, 영업이익 171억(별도 445억, 133억). ① 별도 매출총이익률이 40% 안팎을 유지하는지, ② 재공품 645억이 매출로 넘어갔는지, ③ 금융수익·금융원가의 주식 손익, ④ 매출채권 회수와 영업현금흐름, ⑤ 피엠티 영업이익률</li>
+    <li><b>모회사 단일판매·공급계약 공시</b>: 2024년 9월 이후 0건. 230억 이상 계약이 나오면 고객과 장비가 드러난다</li>
+    <li><b>항소심</b>: 선고 일정과 결과. 회사는 '투자판단 관련 주요경영사항'으로 공시해 왔다</li>
+    <li><b>엘파텍과 VIP자산운용의 지분 변동 보고</b>: 엘파텍 매도는 2023년 6월이 마지막</li>
+    <li><b>2026년 결산 배당(내년 2~3월)</b>: 400원을 넘는지. 자사주 매입 재개 여부</li>
+    <li><b>고객사 지표</b>: ASE·Amkor 분기 실적의 설비투자 집행액, Nordson ATS 부문 매출(다음 발표 12월 중순), SEMI 12월 전망</li>
+    <li><b>경쟁</b>: 한미반도체 2.5D TC 본더 수주 공시, 레이저쎌 분기 흑자 전환 여부</li>
+    <li><b>시세 자료</b>: 네이버 PER·52주 최고가·일별 종가는 그대로 쓰지 말고 발행주식 900만주와 KRX 종가로 다시 계산</li>
+  </ul>
+</section>
+
+<section id="s17">
+  <div class="sec-h"><span class="sec-n">18</span><h2>출처와 한계</h2></div>
+  <ul class="src">
+    <li><b>DART</b>: 사업보고서 FY2015~FY2025(정정본 포함), 분기·반기보고서 2025~2026, 주요사항보고서(감자 2026-03-05, 자기주식 취득 2022년 3건, 합병 2건), 타법인주식 취득결정(2022-05-31, 2026-06-19, 06-29 정정), 단일판매·공급계약(2024-09-13), 대량보유 보고서(최승환 2026-05-07, VIP자산운용 05-21·08-10, 엘파텍 2023-06-16), 재무제표 API(연결·별도, 2015~2026 전 분기)</li>
+    <li><b>프로텍 전용 리포트 29건</b>(리포트 아카이브 본문, 2020~2026): LS증권 6건(2026-01-21 ~ 08-18), 대신증권 3건(2024-06-28 탐방, 2025-04-03, 2026-07-07), 유진투자증권 7건(2023-10-17 ~ 2026-01-27), 한국IR협의회 2건, KB증권 3건(2020), 유안타증권 2건(2022), 교보증권, 리딩투자증권, 부국증권, 그로쓰리서치, NICE디앤비, 하나증권 코멘트. 한경컨센서스에서 2019년 KB증권·하나금융투자 6건 추가</li>
+    <li><b>다른 리포트 속 언급 62건</b>(아카이브 전문 검색 216건 중 언급 2회 이상 또는 2026년 6월 이후): 하나증권 주간 표 15건과 후공정 인뎁스(2026-09-02), LS증권 월보 10건, SK증권 자기주식 보고서, 유안타증권 전략, 삼성증권 지수 변경, 메리츠증권 피엠티(2026-09-23) 등. 기술 키워드 검색 116건 별도</li>
+    <li><b>시세</b>: 네이버 금융 일별 시세와 종목 API, 와이즈리포트(KRX 종가 확인)</li>
+    <li><b>해외 기업</b>: Nordson 8-K(FY2025 4분기, FY2026 3분기), Amkor 8-K(2026년 2분기), Mycronic 실적 발표, SEMI 장비 전망(2025-12, 2026-07-14), TrendForce(ASE 투자 2026-07-31, CoWoS 2026-09-14, 하이브리드 본딩 2026-07-07)</li>
+    <li><b>보도</b>: 디일렉(독점 계약 종료 인터뷰), KIPOST(LAB 채택 2022-01-14, LC 본더 2025-09-12), 전자신문(2022-07-06, 2024-03-05), 뉴시스(2025-04-29), 이데일리·이투데이·헤럴드경제(제재·기소·선고), IB토마토(피엠티 증자 2026-06-23), ZDNet(한미반도체·레이저쎌), Semiconductor Engineering(앰코 기술 기고)</li>
+    <li><b>회사</b>: protec21.co.kr 제품 사양과 연혁</li>
+  </ul>
+  <p class="small"><b>한계.</b> ① 아카이브는 본문 텍스트 검색이다. 표와 도식은 추출 과정에서 행이 밀릴 수 있어 전후 주와 맞지 않는 값(하나증권 6/28 표)은 쓰지 않았다. 이미지로만 된 리포트는 검색되지 않는다. 디아이 자회사 '프로텍코퍼레이션' 등 동명 오탐은 제외했다. ② 제품별 매출, 고객 실명, 점유율은 회사 공시가 아니라 증권사 서술과 보도다. 본문에 출처 성격을 구분해 적었다. ③ 피엠티 지분 취득 관련 개별 공시, 2022년 제재 공시 본문, 2025-12-26 공시 본문은 읽지 못했고 정기보고서의 요약 기재를 썼다. ④ 고객 추적(1위 고객이 매년 바뀐다)은 전기 금액 대조로 추정한 것이다. ⑤ 판매 대수는 매출을 평균 판가로 나눈 계산값이며 회사는 평균 판가를 "일부 대표 품목" 기준이라고 밝혔다. ⑥ 해외 시장 규모 수치는 조사기관마다 정의가 달라 범위로만 인용했다.</p>
+  <div class="foot">본 자료는 공개된 공시와 보도를 정리한 참고 자료이며 특정 종목의 매수·매도를 권유하지 않는다. 수치는 2026-09-28 오전 기준으로 수집했고 이후 공시로 달라질 수 있다. 투자 판단과 그 결과의 책임은 투자자 본인에게 있다.</div>
+</section>
+
+</main>
+<script type="application/json" id="cd">{"daily":[["20230102",21200],["20230103",21350],["20230104",21950],["20230105",21400],["20230106",21700],["20230109",21800],["20230110",22000],["20230111",22050],["20230112",22100],["20230113",22200],["20230116",22000],["20230117",21600],["20230118",21600],["20230119",21850],["20230120",21850],["20230125",22950],["20230126",23100],["20230127",23050],["20230130",22500],["20230131",22700],["20230201",22500],["20230202",23250],["20230203",23400],["20230206",23100],["20230207",23500],["20230208",23750],["20230209",23400],["20230210",23000],["20230213",24700],["20230214",28000],["20230215",28600],["20230216",28300],["20230217",29000],["20230220",28950],["20230221",28450],["20230222",29000],["20230223",30200],["20230224",29450],["20230227",28200],["20230228",27800],["20230302",27400],["20230303",27300],["20230306",27400],["20230307",26800],["20230308",26050],["20230309",26600],["20230310",27100],["20230313",26050],["20230314",25100],["20230315",24850],["20230316",26600],["20230317",26650],["20230320",27750],["20230321",26650],["20230322",27450],["20230323",27400],["20230324",29400],["20230327",28450],["20230328",29300],["20230329",29550],["20230330",29850],["20230331",30850],["20230403",29750],["20230404",28650],["20230405",28700],["20230406",27800],["20230407",28650],["20230410",27950],["20230411",29000],["20230412",28150],["20230413",27400],["20230414",27350],["20230417",27350],["20230418",26500],["20230419",26550],["20230420",25700],["20230421",26300],["20230424",25300],["20230425",24850],["20230426",25000],["20230427",25000],["20230428",24500],["20230502",24600],["20230503",25100],["20230504",24550],["20230508",25600],["20230509",25800],["20230510",25750],["20230511",25450],["20230512",25100],["20230515",22650],["20230516",23000],["20230517",23400],["20230518",23950],["20230519",25200],["20230522",26200],["20230523",26600],["20230524",27800],["20230525",28750],["20230526",28550],["20230530",28200],["20230531",28150],["20230601",28150],["20230602",27650],["20230605",27000],["20230607",35100],["20230608",34750],["20230609",34500],["20230612",41400],["20230613",41450],["20230614",40800],["20230615",44550],["20230616",45100],["20230619",42550],["20230620",43950],["20230621",41050],["20230622",40850],["20230623",46350],["20230626",46050],["20230627",42300],["20230628",45900],["20230629",48600],["20230630",51300],["20230703",61200],["20230704",61100],["20230705",58500],["20230706",54100],["20230707",56000],["20230710",58300],["20230711",60000],["20230712",60200],["20230713",62800],["20230714",58500],["20230717",58600],["20230718",55800],["20230719",54000],["20230720",58600],["20230721",55100],["20230724",52000],["20230725",51100],["20230726",48050],["20230727",52800],["20230728",55000],["20230731",55300],["20230801",53600],["20230802",50000],["20230803",47750],["20230804",46700],["20230807",45900],["20230808",45350],["20230809",44700],["20230810",42750],["20230811",43250],["20230814",42700],["20230816",41700],["20230817",43050],["20230818",44200],["20230821",45000],["20230822",41950],["20230823",42400],["20230824",45050],["20230825",43200],["20230828",42600],["20230829",43600],["20230830",45350],["20230831",47750],["20230901",51300],["20230904",52200],["20230905",53900],["20230906",50300],["20230907",50700],["20230908",48900],["20230911",52200],["20230912",51700],["20230913",48200],["20230914",52900],["20230915",52300],["20230918",49100],["20230919",46100],["20230920",44750],["20230921",42700],["20230922",42450],["20230925",42250],["20230926",42750],["20230927",44150],["20231004",42300],["20231005",42000],["20231006",42350],["20231010",41100],["20231011",43050],["20231012",44900],["20231013",45750],["20231016",44750],["20231017",48550],["20231018",48200],["20231019",44400],["20231020",46100],["20231023",44500],["20231024",47950],["20231025",49100],["20231026",46200],["20231027",45850],["20231030",45250],["20231031",42500],["20231101",42450],["20231102",48150],["20231103",48100],["20231106",49200],["20231107",50300],["20231108",51000],["20231109",51400],["20231110",52500],["20231113",48500],["20231114",49700],["20231115",52300],["20231116",53600],["20231117",52600],["20231120",51500],["20231121",50500],["20231122",50500],["20231123",48100],["20231124",49250],["20231127",49600],["20231128",52800],["20231129",51900],["20231130",53200],["20231201",52100],["20231204",49950],["20231205",47100],["20231206",47050],["20231207",46400],["20231208",47850],["20231211",47700],["20231212",48200],["20231213",49450],["20231214",49950],["20231215",47800],["20231218",48100],["20231219",47150],["20231220",46300],["20231221",44900],["20231222",44900],["20231226",44150],["20231227",45100],["20231228",45650],["20240102",46000],["20240103",44500],["20240104",43350],["20240105",43150],["20240108",43600],["20240109",44450],["20240110",44000],["20240111",44300],["20240112",42300],["20240115",41950],["20240116",40500],["20240117",40850],["20240118",40900],["20240119",44450],["20240122",45100],["20240123",43350],["20240124",45400],["20240125",44850],["20240126",43450],["20240129",42350],["20240130",43550],["20240131",41900],["20240201",41250],["20240202",43050],["20240205",42050],["20240206",43500],["20240207",43350],["20240208",43900],["20240213",45550],["20240214",45850],["20240215",44950],["20240216",44100],["20240219",44600],["20240220",47100],["20240221",46750],["20240222",48250],["20240223",47100],["20240226",47400],["20240227",46150],["20240228",48000],["20240229",46850],["20240304",49100],["20240305",52800],["20240306",52600],["20240307",50500],["20240308",53300],["20240311",53200],["20240312",53100],["20240313",51100],["20240314",51200],["20240315",50000],["20240318",51000],["20240319",49050],["20240320",49300],["20240321",49550],["20240322",48800],["20240325",48200],["20240326",49650],["20240327",51000],["20240328",51500],["20240329",52000],["20240401",52200],["20240402",50500],["20240403",49250],["20240404",46000],["20240405",44900],["20240408",42700],["20240409",41800],["20240411",43350],["20240412",42050],["20240415",42900],["20240416",41300],["20240417",41800],["20240418",42350],["20240419",39950],["20240422",37750],["20240423",36650],["20240424",39250],["20240425",38400],["20240426",39400],["20240429",40650],["20240430",39050],["20240502",39300],["20240503",40050],["20240507",40800],["20240508",40600],["20240509",40200],["20240510",38950],["20240513",39350],["20240514",38900],["20240516",36450],["20240517",36300],["20240520",36100],["20240521",36500],["20240522",35750],["20240523",35250],["20240524",34300],["20240527",34000],["20240528",32850],["20240529",32350],["20240530",31500],["20240531",31600],["20240603",32150],["20240604",32150],["20240605",32500],["20240607",31850],["20240610",32300],["20240611",32150],["20240612",32650],["20240613",32800],["20240614",32200],["20240617",32500],["20240618",31550],["20240619",31900],["20240620",31600],["20240621",30050],["20240624",29950],["20240625",29050],["20240626",29200],["20240627",28600],["20240628",29550],["20240701",29050],["20240702",28000],["20240703",27350],["20240704",28150],["20240705",27350],["20240708",28000],["20240709",27400],["20240710",26950],["20240711",27150],["20240712",26900],["20240715",26600],["20240716",26450],["20240717",25500],["20240718",25500],["20240719",26700],["20240722",26200],["20240723",26250],["20240724",26300],["20240725",26450],["20240726",26000],["20240729",27000],["20240730",26400],["20240731",27550],["20240801",27950],["20240802",25650],["20240805",21750],["20240806",24500],["20240807",24450],["20240808",24900],["20240809",25250],["20240812",26200],["20240813",26500],["20240814",29500],["20240816",30400],["20240819",30450],["20240820",31800],["20240821",30700],["20240822",29950],["20240823",29500],["20240826",27900],["20240827",28200],["20240828",28800],["20240829",27150],["20240830",27100],["20240902",26600],["20240903",25850],["20240904",24150],["20240905",24800],["20240906",23700],["20240909",25650],["20240910",25000],["20240911",25350],["20240912",24850],["20240913",25000],["20240919",24000],["20240920",24400],["20240923",25850],["20240924",26900],["20240925",28500],["20240926",29900],["20240927",30750],["20240930",30600],["20241002",30650],["20241004",31150],["20241007",32450],["20241008",33150],["20241010",33250],["20241011",32850],["20241014",33200],["20241015",33250],["20241016",33150],["20241017",33400],["20241018",32150],["20241021",32050],["20241022",31650],["20241023",32500],["20241024",31650],["20241025",31800],["20241028",32150],["20241029",33600],["20241030",32800],["20241031",33650],["20241101",32800],["20241104",33800],["20241105",33750],["20241106",33100],["20241107",31700],["20241108",30850],["20241111",29500],["20241112",28150],["20241113",28550],["20241114",28000],["20241115",27350],["20241118",25600],["20241119",25850],["20241120",24950],["20241121",24400],["20241122",24800],["20241125",25200],["20241126",25100],["20241127",23800],["20241128",23600],["20241129",22800],["20241202",22500],["20241203",22300],["20241204",21150],["20241205",23250],["20241206",22500],["20241209",21400],["20241210",21350],["20241211",21700],["20241212",22700],["20241213",23050],["20241216",23200],["20241217",23700],["20241218",23550],["20241219",23000],["20241220",21700],["20241223",22800],["20241224",22600],["20241226",22300],["20241227",21700],["20241230",21850],["20250102",22400],["20250103",23450],["20250106",24350],["20250107",25050],["20250108",25700],["20250109",24900],["20250110",24950],["20250113",24250],["20250114",24250],["20250115",25250],["20250116",25750],["20250117",26850],["20250120",26400],["20250121",26550],["20250122",26900],["20250123",25900],["20250124",28800],["20250131",26500],["20250203",23950],["20250204",24950],["20250205",24700],["20250206",25350],["20250207",25900],["20250210",26900],["20250211",26300],["20250212",25700],["20250213",26200],["20250214",26600],["20250217",27350],["20250218",26900],["20250219",28000],["20250220",27000],["20250221",27700],["20250224",26700],["20250225",25800],["20250226",25750],["20250227",25350],["20250228",24200],["20250304",24200],["20250305",24600],["20250306",24050],["20250307",23800],["20250310",23550],["20250311",23650],["20250312",24000],["20250313",23500],["20250314",24250],["20250317",24550],["20250318",24050],["20250319",24650],["20250320",24950],["20250321",25000],["20250324",24500],["20250325",23650],["20250326",23750],["20250327",23350],["20250328",22200],["20250331",21600],["20250401",22250],["20250402",22000],["20250403",21950],["20250404",22000],["20250407",20500],["20250408",20500],["20250409",20050],["20250410",21800],["20250411",21550],["20250414",22100],["20250415",22000],["20250416",21300],["20250417",21650],["20250418",21950],["20250421",21550],["20250422",21450],["20250423",22950],["20250424",23800],["20250425",23850],["20250428",23500],["20250429",25400],["20250430",23950],["20250502",24650],["20250507",23700],["20250508",23800],["20250509",23550],["20250512",24500],["20250513",24350],["20250514",24700],["20250515",23900],["20250516",23300],["20250519",23000],["20250520",22800],["20250521",22800],["20250522",22550],["20250523",22300],["20250526",22550],["20250527",22200],["20250528",22900],["20250529",23450],["20250530",22950],["20250602",22700],["20250604",23500],["20250605",24000],["20250609",24950],["20250610",24500],["20250611",25300],["20250612",25500],["20250613",24550],["20250616",24200],["20250617",24350],["20250618",24650],["20250619",24500],["20250620",24800],["20250623",23800],["20250624",24850],["20250625",24800],["20250626",24850],["20250627",24400],["20250630",24500],["20250701",24950],["20250702",24600],["20250703",25350],["20250704",24850],["20250707",24500],["20250708",24450],["20250709",24900],["20250710",25000],["20250711",25250],["20250714",25400],["20250715",26000],["20250716",28000],["20250717",28500],["20250718",28000],["20250721",27400],["20250722",25850],["20250723",26400],["20250724",25900],["20250725",25850],["20250728",27500],["20250729",27850],["20250730",27500],["20250731",26800],["20250801",25900],["20250804",26050],["20250805",26400],["20250806",26650],["20250807",26900],["20250808",28200],["20250811",28750],["20250812",28600],["20250813",29000],["20250814",28150],["20250818",26800],["20250819",26750],["20250820",26900],["20250821",26850],["20250822",26800],["20250825",26700],["20250826",26750],["20250827",27100],["20250828",27150],["20250829",27750],["20250901",27150],["20250902",26600],["20250903",26700],["20250904",26950],["20250905",27150],["20250908",27850],["20250909",28500],["20250910",28900],["20250911",28950],["20250912",29550],["20250915",30200],["20250916",30700],["20250917",30600],["20250918",31000],["20250919",31450],["20250922",31100],["20250923",31200],["20250924",30900],["20250925",31100],["20250926",30050],["20250929",31300],["20250930",30600],["20251001",31400],["20251002",32800],["20251010",33900],["20251013",33500],["20251014",32200],["20251015",33500],["20251016",33050],["20251017",33200],["20251020",33500],["20251021",32700],["20251022",32850],["20251023",32450],["20251024",32300],["20251027",32300],["20251028",31950],["20251029",32000],["20251030",31600],["20251031",31300],["20251103",31050],["20251104",31750],["20251105",30650],["20251106",31000],["20251107",30850],["20251110",31950],["20251111",32800],["20251112",33150],["20251113",33950],["20251114",35800],["20251117",37400],["20251118",36100],["20251119",35050],["20251120",35000],["20251121",32200],["20251124",32600],["20251125",32800],["20251126",33150],["20251127",32500],["20251128",33550],["20251201",34350],["20251202",35100],["20251203",35550],["20251204",34650],["20251205",34500],["20251208",33950],["20251209",35000],["20251210",34800],["20251211",34600],["20251212",33650],["20251215",33850],["20251216",32500],["20251217",32850],["20251218",32600],["20251219",32550],["20251222",33550],["20251223",33350],["20251224",32700],["20251226",33450],["20251229",33100],["20251230",34150],["20260102",36350],["20260105",37100],["20260106",37100],["20260107",36000],["20260108",35400],["20260109",34750],["20260112",35900],["20260113",37200],["20260114",35800],["20260115",35750],["20260116",35350],["20260119",36500],["20260120",35900],["20260121",35700],["20260122",37300],["20260123",37300],["20260126",38250],["20260127",39350],["20260128",40000],["20260129",40000],["20260130",51000],["20260202",49850],["20260203",53500],["20260204",53200],["20260205",49800],["20260206",53700],["20260209",53000],["20260210",51400],["20260211",55400],["20260212",55400],["20260213",56700],["20260219",59600],["20260220",59300],["20260223",57300],["20260224",57900],["20260225",57500],["20260226",61000],["20260227",58600],["20260303",53700],["20260304",46000],["20260305",55500],["20260306",59100],["20260309",54500],["20260310",55400],["20260311",54300],["20260312",55600],["20260313",55500],["20260316",55500],["20260317",55700],["20260318",58700],["20260319",59100],["20260320",57900],["20260323",53500],["20260324",54200],["20260325",62000],["20260326",56300],["20260327",54900],["20260330",52200],["20260331",51600],["20260401",55800],["20260402",52400],["20260403",52500],["20260406",51500],["20260407",52200],["20260408",55300],["20260409",53300],["20260410",55300],["20260413",59400],["20260414",62700],["20260415",64100],["20260416",62400],["20260417",66900],["20260420",66900],["20260421",74100],["20260422",74400],["20260423",73900],["20260424",77900],["20260427",77800],["20260428",77600],["20260429",81200],["20260430",82200],["20260504",82300],["20260506",81000],["20260507",80800],["20260508",86500],["20260511",86200],["20260512",86600],["20260513",89500],["20260514",88700],["20260515",82800],["20260518",92100],["20260519",92100],["20260520",88200],["20260521",96400],["20260522",93700],["20260526",93800],["20260527",86700],["20260528",88200],["20260529",78300],["20260601",79000],["20260602",75000],["20260604",80300],["20260605",73900],["20260608",66200],["20260609",75600],["20260610",77000],["20260611",84500],["20260612",89300],["20260615",88300],["20260616",86800],["20260617",85100],["20260618",88900],["20260619",83400],["20260622",84100],["20260623",77600],["20260624",80700],["20260625",77800],["20260626",74400],["20260629",73600],["20260630",81300],["20260701",82700],["20260702",69700],["20260703",70400],["20260706",68300],["20260707",64000],["20260708",58800],["20260709",59500],["20260710",66200],["20260713",64800],["20260714",63200],["20260715",68800],["20260716",66600],["20260720",62600],["20260721",63300],["20260722",64300],["20260723",65200],["20260724",63400],["20260727",64800],["20260728",57200],["20260729",49850],["20260730",48300],["20260731",57700],["20260803",57900],["20260804",59100],["20260805",64800],["20260806",61700],["20260807",59900],["20260810",63800],["20260811",63400],["20260812",63800],["20260813",64800],["20260814",69100],["20260818",66900],["20260819",63600],["20260820",63400],["20260821",59200],["20260824",58500],["20260825",61700],["20260826",61500],["20260827",62900],["20260828",60700],["20260831",60700],["20260901",58700],["20260902",58500],["20260903",58100],["20260904",60000],["20260907",64800],["20260908",60700],["20260909",60800],["20260910",62900],["20260911",62000],["20260914",60000],["20260915",61200],["20260916",62500],["20260917",65000],["20260918",65200],["20260921",68400],["20260922",72900],["20260923",76100]],"events":[["20230714",1,-18],["20240403",2,-22],["20240913",3,20],["20251224",4,22],["20260130",5,-18],["20260305",6,24],["20260521",7,-14],["20260730",8,20],["20260814",9,-22],["20260923",10,-18]],"annual":[{"y":2015,"rev":751.0,"op":123.2,"srev":703.0,"sop":121.3},{"y":2016,"rev":948.4,"op":150.0,"srev":893.2,"sop":173.5},{"y":2017,"rev":1498.0,"op":300.9,"srev":1457.3,"sop":322.0},{"y":2018,"rev":1539.9,"op":321.3,"srev":1500.9,"sop":387.9},{"y":2019,"rev":1797.8,"op":460.1,"srev":1750.1,"sop":462.1},{"y":2020,"rev":865.0,"op":154.0,"srev":726.6,"sop":141.6},{"y":2021,"rev":1740.0,"op":503.3,"srev":1567.7,"sop":442.4},{"y":2022,"rev":1987.7,"op":600.7,"srev":1783.5,"sop":531.6},{"y":2023,"rev":1560.7,"op":174.3,"srev":1077.4,"sop":215.0},{"y":2024,"rev":1702.9,"op":134.4,"srev":1310.5,"sop":219.0},{"y":2025,"rev":2305.4,"op":463.1,"srev":1847.6,"sop":526.7},{"y":2026,"rev":2825,"op":746,"e":1},{"y":2027,"rev":3055,"op":800,"e":1}],"quarterly":[{"q":"2021Q1","rev":329.2,"op":104.7,"opm":31.8,"srev":280.6,"sop":79.3,"sopm":28.3,"sgpm":36.4},{"q":"2021Q2","rev":618.8,"op":196.2,"opm":31.7,"srev":568.1,"sop":174.1,"sopm":30.6,"sgpm":36.9},{"q":"2021Q3","rev":392.8,"op":89.5,"opm":22.8,"srev":372.1,"sop":98.3,"sopm":26.4,"sgpm":37.6},{"q":"2021Q4","rev":399.2,"op":112.9,"opm":28.3,"srev":346.8,"sop":90.7,"sopm":26.2,"sgpm":35.0},{"q":"2022Q1","rev":421.3,"op":123.9,"opm":29.4,"srev":367.7,"sop":101.6,"sopm":27.6,"sgpm":35.3},{"q":"2022Q2","rev":574.6,"op":181.9,"opm":31.7,"srev":509.1,"sop":153.9,"sopm":30.2,"sgpm":37.3},{"q":"2022Q3","rev":415.6,"op":123.0,"opm":29.6,"srev":378.6,"sop":114.3,"sopm":30.2,"sgpm":40.4},{"q":"2022Q4","rev":576.2,"op":172.0,"opm":29.9,"srev":528.2,"sop":161.8,"sopm":30.6,"sgpm":36.0},{"q":"2023Q1","rev":247.7,"op":9.0,"opm":3.6,"srev":175.2,"sop":13.8,"sopm":7.9,"sgpm":29.0},{"q":"2023Q2","rev":377.5,"op":60.5,"opm":16.0,"srev":260.4,"sop":76.7,"sopm":29.5,"sgpm":38.9},{"q":"2023Q3","rev":357.8,"op":27.1,"opm":7.6,"srev":215.2,"sop":26.6,"sopm":12.4,"sgpm":29.3},{"q":"2023Q4","rev":577.7,"op":77.8,"opm":13.5,"srev":426.7,"sop":98.0,"sopm":23.0,"sgpm":29.6},{"q":"2024Q1","rev":253.0,"op":-47.5,"opm":-18.8,"srev":148.0,"sop":-29.0,"sopm":-19.6,"sgpm":-7.6},{"q":"2024Q2","rev":525.8,"op":117.3,"opm":22.3,"srev":434.0,"sop":119.3,"sopm":27.5,"sgpm":35.5},{"q":"2024Q3","rev":431.2,"op":40.3,"opm":9.3,"srev":305.6,"sop":41.2,"sopm":13.5,"sgpm":22.4},{"q":"2024Q4","rev":492.9,"op":24.5,"opm":5.0,"srev":422.9,"sop":87.4,"sopm":20.7,"sgpm":29.9},{"q":"2025Q1","rev":304.0,"op":29.2,"opm":9.6,"srev":201.2,"sop":39.1,"sopm":19.4,"sgpm":34.2},{"q":"2025Q2","rev":644.5,"op":98.3,"opm":15.3,"srev":543.7,"sop":117.1,"sopm":21.5,"sgpm":28.1},{"q":"2025Q3","rev":510.4,"op":155.5,"opm":30.5,"srev":395.3,"sop":138.8,"sopm":35.1,"sgpm":45.7},{"q":"2025Q4","rev":846.4,"op":180.1,"opm":21.3,"srev":707.4,"sop":231.7,"sopm":32.8,"sgpm":38.9},{"q":"2026Q1","rev":624.1,"op":154.2,"opm":24.7,"srev":430.1,"sop":134.9,"sopm":31.4,"sgpm":41.7},{"q":"2026Q2","rev":773.1,"op":231.0,"opm":29.9,"srev":534.2,"sop":179.0,"sopm":33.5,"sgpm":40.7}],"bridge":[["영업이익",385.2,"연결 반기 영업이익","영업이익",1],["주식 처분이익",284.5,"상장주식 등 당기손익 금융자산 처분이익. 처분 장부가 581.6억, 유입 현금 860.0억","주식 처분이익",0],["주식 처분·평가손실",-54.0,"평가손실 48.0억 + 처분손실 6.0억. 주석에는 '금융부채'로 표기","주식 손실",0],["주식 평가이익",14.6,"6월 말 보유분 평가이익","주식 평가이익",0],["외환 순이익",53.1,"외환차익·환산이익 57.3억 − 차손·환산손실 4.2억. 전년 동기 -17.1억","외환",0],["이자·배당 순액",9.2,"이자수익 11.9억 + 배당 1.4억 − 이자비용 4.0억","이자·배당",0],["기타",0.7,"잡이익, 임대료, 단기대여금 대손 5억 등","기타",0],["세전이익",693.3,"법인세 154.1억 차감 후 순이익 539.2억","세전이익",1]],"mix":[["2021",1295,"평균 판가 2.02억 · 역산 약 641대",0],["2022",1460,"평균 판가 2.79억 · 역산 약 523대",0],["2023",781,"평균 판가 2.57억 · 역산 약 304대",0],["2024",1014,"평균 판가 3.29억 · 역산 약 308대",0],["2025",1480,"평균 판가 3.36억 · 역산 약 440대",0],["1H26",766,"반기. 평균 판가 3.89억 · 역산 약 197대",1]],"kq":[21200,21309,21584,21466,21750,22138,21975,22408,22441,22473,22633,22406,22470,22506,22667,23121,23329,23402,23319,23378,23708,24140,24208,24036,24397,24624,24770,24386,24390,24612,24166,24774,24487,24906,25049,24578,24729,24590,24635,24991,24852,25333,25778,25754,25697,25548,24897,24906,23932,24662,24688,25174,25326,25336,25681,25641,26018,26131,26314,26644,26850,26757,26992,27062,27541,27327,27784,28028,28380,28117,28232,28535,28713,28698,28704,27962,27429,27000,26479,26218,26842,26609,27012,26620,26679,26591,26388,26195,26031,25965,25715,25785,26336,26390,26574,26899,27124,27007,26763,26621,26882,27054,27270,27405,27475,27805,27660,27899,27964,28313,27524,27720,28033,28054,27985,27646,27668,27619,27766,27597,27371,27207,27411,28075,28098,28135,27483,27380,27162,27742,27778,28195,28296,28360,28860,29162,29411,29505,29358,29675,28433,27902,28847,29549,29666,28722,29055,28995,28357,28172,28697,28770,28799,28467,27728,27973,27698,28057,28203,27873,28469,28394,28710,28926,29165,29310,29037,29018,29092,28980,28614,28861,28810,28352,27868,28397,28383,28139,27905,27868,27172,27067,26493,26135,26552,25490,25289,25774,25099,25797,26377,25976,25589,25900,25537,24753,24286,24110,24779,24336,23484,23630,23903,23239,23338,24399,24690,26502,26026,25604,25347,24919,24449,25073,25552,25607,25227,25669,25794,25718,25761,25730,25580,25776,25965,26257,26116,26157,25679,25873,25673,26215,26369,26504,26182,26538,26466,26865,27097,27245,27133,26981,26783,27144,27358,27748,27516,27348,27729,27761,27929,27639,27862,27406,27142,26988,26300,26530,26604,26510,26523,26400,26006,26432,25861,25852,25233,25216,25723,25509,25478,25633,26096,26682,26939,27126,27075,27102,27346,27279,27470,27421,27384,26953,27258,27244,27560,27352,27488,27257,27567,27654,28089,28096,28020,27797,28239,28158,28144,28549,28539,28846,28922,28769,28731,28587,28807,28148,27781,27874,27539,27169,27130,27091,27166,26911,26292,26299,27013,26580,26703,26691,27221,26938,27050,27458,27433,27387,27327,27506,27543,27471,27282,26975,27219,27478,26995,26743,26725,26700,26727,26501,26772,26867,26470,26266,26519,26668,26704,26859,27346,27299,27415,27488,27508,27220,27118,27118,27188,27072,26919,26567,26582,26586,26477,26533,26745,26201,26396,26545,26756,27128,27164,27105,26911,26847,26926,26507,26185,25966,26163,25571,25639,25706,25171,25179,25509,25376,25356,25684,24604,21824,23137,23632,23529,24134,24395,24147,24525,24825,24545,24860,24621,24419,24412,24208,24150,24073,23869,24236,24284,24005,23102,22898,22307,22556,22295,22397,23079,23148,23347,23625,23840,24226,23972,24599,24451,24116,24061,24277,24657,24570,24482,24340,24318,24430,24176,24153,23780,23992,23310,23526,23191,22965,23377,23494,23305,23459,23017,23807,23735,23467,23158,23469,23010,22432,21773,21517,21639,21770,21661,21560,21489,21374,21999,21883,21847,21922,21411,21337,21809,21378,21182,20879,19795,20887,21339,21574,21901,22053,21925,22023,21606,21099,21444,21472,21330,21025,21411,21677,22281,22666,22677,22719,22842,22664,22359,22669,22466,22865,22879,22973,22922,23119,22857,23007,22993,22219,22728,23078,23372,23454,23668,23665,23526,23655,23878,24261,24425,24570,24255,24456,24415,24291,24354,24336,23487,23296,23582,23202,22974,22915,22778,23030,22819,23181,23473,23537,23310,22893,22712,22738,22455,22620,22336,21902,21242,21830,21621,21578,21701,20562,20788,20312,21525,21960,22383,22476,22071,22470,22660,22587,22608,22923,22923,23037,22712,22935,22644,22790,22820,23034,22810,22901,23106,23332,23149,22891,22534,22590,22845,22657,22604,22897,22955,23008,23245,23184,23371,23685,23875,24127,24347,24824,24923,24273,24539,24488,24617,24704,24989,24776,25286,25200,24876,24674,24672,24741,24694,25046,24493,24576,24759,24952,25184,25271,25237,25663,25643,25833,25909,25941,25666,25685,25569,25476,25395,25397,25372,25422,24397,24753,25212,25367,25440,25549,25631,25484,25702,25738,25195,24876,24550,24538,24704,25194,25309,25311,25207,25159,24783,25067,25156,25428,25616,25844,26040,26298,26354,26743,26920,26893,26694,27060,27249,27604,27536,27180,26913,26367,26731,26582,26688,26969,27135,27166,26771,27300,27322,27136,27649,27545,27755,27531,27879,28499,28518,28464,28125,28427,28873,29252,28473,28356,27681,28046,27917,28619,28994,28347,28498,27741,27508,28159,27275,27038,27025,27698,27784,28814,29120,29311,29424,29355,29195,29291,29403,29519,29507,29592,29639,28922,28763,28456,28896,29334,29031,28893,29035,29442,29218,29852,30229,30181,29910,29805,29926,29986,29960,29745,30029,30137,30572,30825,30033,30635,31379,33604,34178,35786,36761,36289,34676,36127,36288,34993,34121,35597,35208,35197,35548,34920,36644,36433,36369,36780,36788,37511,37657,35918,30890,35246,36454,34800,35917,35890,36256,36400,35937,35894,36760,36100,36670,34630,35405,36608,35884,36038,34950,33225,35239,33349,33583,33066,32730,34407,33970,34527,34723,35418,36383,36716,36939,37091,37223,37289,37074,38006,38711,38377,38524,37643,38319,38206,37859,38128,38116,37231,37156,37603,35669,35078,34234,33341,34916,36658,37017,35774,34865,33932,33150,32392,33141,31648,28773,30554,30044,31474,32488,32645,32160,32580,31600,30516,30573,28146,28707,28029,26878,29063,28924,29340,27363,27416,26743,26242,24783,25067,26438,25236,24751,26186,24999,23667,23783,23712,24950,23622,24147,22284,20921,20356,22723,23279,24648,25244,25309,25219,26976,27083,27116,27194,27298,26336,26029,26547,25318,25677,26114,26105,26445,26469,26339,25927,25382,24947,25683,25957,25632,26215,26422,25908,25471,25648,25761,25957,26113,26402,26342,26661],"kqraw":[671.5,675.0,683.7,679.9,688.9,701.2,696.0,709.8,710.8,711.8,716.9,709.7,711.8,712.9,718.0,732.4,738.9,741.2,738.6,740.5,751.0,764.6,766.8,761.3,772.8,780.0,784.6,772.4,772.5,779.6,765.5,784.7,775.6,788.9,793.4,778.5,783.3,778.9,780.3,791.6,787.2,802.4,816.5,815.8,814.0,809.2,788.6,788.9,758.0,781.2,782.0,797.4,802.2,802.5,813.4,812.2,824.1,827.7,833.5,843.9,850.5,847.5,855.0,857.2,872.4,865.6,880.1,887.8,898.9,890.6,894.2,903.8,909.5,909.0,909.2,885.7,868.8,855.2,838.7,830.4,850.2,842.8,855.6,843.2,845.1,842.3,835.9,829.7,824.5,822.4,814.5,816.8,834.2,835.9,841.7,852.0,859.2,855.5,847.7,843.2,851.5,856.9,863.8,868.1,870.3,880.7,876.1,883.7,885.8,896.8,871.8,878.0,888.0,888.6,886.4,875.7,876.4,874.8,879.5,874.1,867.0,861.8,868.2,889.3,890.0,891.2,870.5,867.3,860.4,878.7,879.9,893.1,896.3,898.3,914.1,923.7,931.6,934.6,929.9,940.0,900.6,883.8,913.7,936.0,939.7,909.8,920.3,918.4,898.2,892.3,909.0,911.3,912.2,901.7,878.3,886.0,877.3,888.7,893.3,882.9,901.7,899.4,909.4,916.2,923.8,928.4,919.7,919.2,921.5,918.0,906.4,914.2,912.5,898.0,882.7,899.5,899.0,891.3,883.9,882.7,860.7,857.4,839.2,827.8,841.0,807.4,801.0,816.4,795.0,817.1,835.5,822.8,810.5,820.4,808.9,784.0,769.2,763.7,784.9,770.8,743.9,748.5,757.1,736.1,739.2,772.8,782.0,839.5,824.4,811.0,802.9,789.3,774.4,794.2,809.4,811.1,799.1,813.1,817.0,814.6,816.0,815.0,810.2,816.4,822.4,831.7,827.2,828.5,813.4,819.5,813.2,830.4,835.2,839.5,829.3,840.6,838.3,851.0,858.3,863.0,859.4,854.6,848.3,859.8,866.6,878.9,871.6,866.2,878.3,879.3,884.6,875.5,882.5,868.1,859.7,854.8,833.0,840.3,842.7,839.7,840.1,836.2,823.7,837.2,819.1,818.9,799.2,798.7,814.8,808.0,807.0,811.9,826.6,845.1,853.3,859.2,857.6,858.5,866.2,864.1,870.1,868.6,867.4,853.8,863.4,863.0,873.0,866.4,870.7,863.4,873.2,875.9,889.7,889.9,887.5,880.5,894.5,891.9,891.5,904.3,904.0,913.7,916.1,911.2,910.0,905.5,912.5,891.6,880.0,882.9,872.3,860.6,859.3,858.1,860.5,852.4,832.8,833.0,855.6,841.9,845.8,845.4,862.2,853.3,856.8,869.7,868.9,867.5,865.6,871.3,872.4,870.1,864.2,854.4,862.1,870.4,855.1,847.1,846.5,845.7,846.6,839.4,848.0,851.0,838.5,832.0,840.0,844.7,845.8,850.8,866.2,864.7,868.4,870.7,871.3,862.2,859.0,859.0,861.2,857.5,852.7,841.5,842.0,842.1,838.6,840.4,847.1,829.9,836.1,840.8,847.5,859.3,860.4,858.5,852.4,850.4,852.9,839.6,829.4,822.5,828.7,810.0,812.1,814.2,797.3,797.6,808.0,803.8,803.1,813.5,779.3,691.3,732.9,748.5,745.3,764.4,772.7,764.9,776.8,786.3,777.5,787.4,779.9,773.5,773.3,766.8,765.0,762.5,756.0,767.7,769.2,760.4,731.8,725.3,706.6,714.5,706.2,709.4,731.0,733.2,739.5,748.3,755.1,767.4,759.3,779.2,774.5,763.9,762.1,769.0,781.0,778.2,775.5,771.0,770.3,773.8,765.8,765.1,753.2,760.0,738.3,745.2,734.6,727.4,740.5,744.2,738.2,743.1,729.0,754.1,751.8,743.3,733.5,743.4,728.8,710.5,689.6,681.6,685.4,689.5,686.1,682.9,680.7,677.0,696.8,693.1,692.0,694.4,678.2,675.8,690.8,677.1,670.9,661.3,627.0,661.6,675.9,683.4,693.7,698.5,694.5,697.6,684.4,668.3,679.2,680.1,675.6,666.0,678.2,686.6,705.8,718.0,718.3,719.6,723.5,717.9,708.2,718.0,711.6,724.2,724.7,727.7,726.1,732.3,724.0,728.7,728.3,703.8,719.9,731.0,740.3,742.9,749.7,749.6,745.2,749.3,756.3,768.5,773.6,778.3,768.3,774.6,773.3,769.4,771.4,770.9,744.0,737.9,747.0,734.9,727.7,725.8,721.5,729.5,722.8,734.3,743.5,745.5,738.4,725.1,719.4,720.2,711.3,716.5,707.5,693.8,672.9,691.5,684.9,683.5,687.4,651.3,658.5,643.4,681.8,695.6,709.0,711.9,699.1,711.8,717.8,715.5,716.1,726.1,726.1,729.7,719.4,726.5,717.2,721.9,722.8,729.6,722.5,725.4,731.9,739.0,733.2,725.1,713.8,715.5,723.6,717.7,716.0,725.3,727.1,728.8,736.3,734.4,740.3,750.2,756.2,764.2,771.2,786.3,789.5,768.9,777.3,775.6,779.7,782.5,791.5,784.8,800.9,798.2,788.0,781.6,781.5,783.7,782.2,793.3,775.8,778.5,784.2,790.4,797.7,800.5,799.4,812.9,812.2,818.3,820.7,821.7,813.0,813.6,809.9,807.0,804.4,804.5,803.7,805.2,772.8,784.1,798.6,803.5,805.8,809.3,811.9,807.2,814.1,815.3,798.0,788.0,777.6,777.2,782.5,798.0,801.7,801.7,798.4,796.9,785.0,794.0,796.8,805.4,811.4,818.6,824.8,833.0,834.8,847.1,852.7,851.8,845.5,857.1,863.1,874.4,872.2,860.9,852.5,835.2,846.7,842.0,845.3,854.2,859.5,860.5,848.0,864.7,865.4,859.5,875.8,872.5,879.1,872.0,883.1,902.7,903.3,901.6,890.9,900.4,914.5,926.6,901.9,898.2,876.8,888.4,884.3,906.5,918.4,897.9,902.7,878.7,871.3,891.9,864.0,856.4,856.0,877.3,880.1,912.7,922.4,928.4,932.0,929.8,924.7,927.8,931.4,935.0,934.6,937.3,938.8,916.1,911.1,901.3,915.3,929.1,919.6,915.2,919.7,932.6,925.5,945.6,957.5,956.0,947.4,944.1,947.9,949.8,949.0,942.2,951.2,954.6,968.4,976.4,951.3,970.4,993.9,1064.4,1082.6,1133.5,1164.4,1149.4,1098.4,1144.3,1149.4,1108.4,1080.8,1127.5,1115.2,1114.9,1126.0,1106.1,1160.7,1154.0,1152.0,1165.0,1165.2,1188.2,1192.8,1137.7,978.4,1116.4,1154.7,1102.3,1137.7,1136.8,1148.4,1153.0,1138.3,1136.9,1164.4,1143.5,1161.5,1096.9,1121.4,1159.5,1136.6,1141.5,1107.0,1052.4,1116.2,1056.3,1063.8,1047.4,1036.7,1089.8,1076.0,1093.6,1099.8,1121.9,1152.4,1163.0,1170.0,1174.8,1179.0,1181.1,1174.3,1203.8,1226.2,1215.6,1220.3,1192.3,1213.7,1210.2,1199.2,1207.7,1207.3,1179.3,1176.9,1191.1,1129.8,1111.1,1084.4,1056.1,1106.0,1161.1,1172.5,1133.1,1104.4,1074.8,1050.0,1026.0,1049.7,1002.4,911.4,967.8,951.6,996.9,1029.0,1034.0,1018.7,1032.0,1000.9,966.6,968.4,891.5,909.3,887.8,851.4,920.6,916.2,929.4,866.7,868.4,847.1,831.2,785.0,794.0,837.4,799.4,784.0,829.4,791.8,749.6,753.3,751.1,790.3,748.2,764.9,705.9,662.7,644.8,719.8,737.4,780.7,799.6,801.7,798.8,854.5,857.8,858.9,861.4,864.6,834.2,824.5,840.9,801.9,813.3,827.1,826.9,837.6,838.4,834.3,821.2,804.0,790.2,813.5,822.2,811.9,830.4,836.9,820.6,806.8,812.4,816.0,822.2,827.1,836.3,834.4,844.5],"pop":[["프로텍",9.5,"시총 6,840억 ÷ 영업이익 721억"],["와이씨",35.2,"시총 11,692억 ÷ 영업이익 332억"],["피에스케이홀딩스",44.9,"시총 35,189억 ÷ 영업이익 784억"],["펨트론",50.9,"시총 3,200억 ÷ 영업이익 63억"],["이오테크닉스",54.3,"시총 59,319억 ÷ 영업이익 1,093억"],["테크윙",60.9,"시총 18,212억 ÷ 영업이익 299억"],["제너셈",71.7,"시총 989억 ÷ 영업이익 14억"],["한미반도체",99.1,"시총 232,085억 ÷ 영업이익 2,342억"],["예스티",109.1,"시총 6,928억 ÷ 영업이익 64억"]]}</script>
+<script>
+(function(){
+const CD = JSON.parse(document.getElementById('cd').textContent);
+const tip = document.getElementById('tip');
+function showTip(html, x, y){
+  tip.innerHTML = html; tip.style.display='block';
+  const r = tip.getBoundingClientRect();
+  let L = x + 14, T = y + 14;
+  if (L + r.width > window.innerWidth - 8) L = x - r.width - 14;
+  if (L < 8) L = 8;
+  if (T + r.height > window.innerHeight - 8) T = y - r.height - 14;
+  if (T < 8) T = 8;
+  tip.style.left = L + 'px'; tip.style.top = T + 'px';
+}
+function hideTip(){ tip.style.display='none'; }
+window.addEventListener('scroll', hideTip, {passive:true});
+document.addEventListener('pointerdown', e => { if (!e.target.closest('.chart svg')) hideTip(); });
+const fmtN = v => v == null ? '-' : v.toLocaleString('ko-KR');
+const d1 = v => v == null ? '-' : v.toFixed(1);
+const sg = v => (v > 0 ? '+' : '') + v.toFixed(1);
+function bindHits(svg, onHit){
+  if (svg._bound) { svg._onHit = onHit; return; }
+  svg._bound = true; svg._onHit = onHit;
+  let down = false;
+  const handler = e => { const t = e.target.closest('[data-hit]'); if (!t){ hideTip(); return; } svg._onHit(t, e); };
+  svg.addEventListener('pointerdown', e => { down = true; handler(e); });
+  svg.addEventListener('pointermove', e => { if (e.pointerType === 'mouse' || down) handler(e); });
+  ['pointerup','pointercancel','pointerleave'].forEach(ev => svg.addEventListener(ev, () => { down=false; if (ev!=='pointerup') hideTip(); }));
+}
+function responsive(id, draw){
+  const box = document.getElementById(id); if (!box) return; const svg = box.querySelector('svg');
+  let t;
+  const render = () => { const W = Math.max(280, Math.floor(box.clientWidth - (parseFloat(getComputedStyle(box).paddingLeft)*2))); const H = draw(svg, W); svg.setAttribute('viewBox', `0 0 ${W} ${H}`); svg.setAttribute('height', H); };
+  render();
+  new ResizeObserver(() => { clearTimeout(t); t = setTimeout(render, 120); }).observe(box);
+}
+
+/* ---------- price ---------- */
+responsive('ch-px', (svg, W) => {
+  const narrow = W < 560;
+  const ML = narrow ? 34 : 46, MR = 10, MT = 24, MB = 26;
+  const Hh = narrow ? 270 : 350; const ph = Hh - MT - MB, pw = W - ML - MR;
+  const D = CD.daily; const n = D.length; const yMax = 100000;
+  const x = i => ML + i/(n-1)*pw; const y = v => MT + (yMax - v)/yMax*ph;
+  let s = '';
+  [0,20000,40000,60000,80000,100000].forEach(v => { s += `<line class="${v===0?'axis':'grid'}" x1="${ML}" x2="${W-MR}" y1="${y(v)}" y2="${y(v)}"/><text x="${ML-4}" y="${y(v)+4}" text-anchor="end" class="mut" style="font-size:${narrow?9.5:11}px">${v? v/10000+'만':'0'}</text>`; });
+  let lastY = '';
+  D.forEach((d,i) => { const yy = d[0].slice(0,4); if (yy !== lastY){ lastY = yy; s += `<line class="grid" x1="${x(i)}" x2="${x(i)}" y1="${MT}" y2="${MT+ph}"/><text x="${x(i)+3}" y="${Hh-8}" class="mut" style="font-size:${narrow?9:11}px">${yy}</text>`; } });
+  if (CD.kq) s += `<path d="${CD.kq.map((v,i) => (i?'L':'M') + x(i).toFixed(1) + ' ' + y(v).toFixed(1)).join(' ')}" fill="none" stroke="var(--c4)" stroke-width="1.2"/>`;
+  const path = D.map((d,i) => (i?'L':'M') + x(i).toFixed(1) + ' ' + y(d[1]).toFixed(1)).join(' ');
+  s += `<path d="${path} L${x(n-1).toFixed(1)} ${y(0)} L${x(0)} ${y(0)} Z" fill="var(--c1-soft)"/><path d="${path}" fill="none" stroke="var(--c1)" stroke-width="1.5"/>`;
+  CD.events.forEach(([dt, num, off]) => { let idx = D.findIndex(d => d[0] >= dt); if (idx < 0) idx = n-1; const px = Math.min(Math.max(x(idx), ML+8), W-MR-8), py = y(D[idx][1]); const cy = Math.max(MT+8, py+off);
+    s += `<line x1="${px}" x2="${px}" y1="${py}" y2="${cy}" stroke="var(--c2)" stroke-width="1"/><circle cx="${px}" cy="${cy}" r="${narrow?7:8}" fill="var(--c2)"/><text x="${px}" y="${cy+3.5}" text-anchor="middle" style="font-size:${narrow?8.5:10}px; fill:#fff; font-weight:600">${num}</text>`; });
+  const step = Math.max(1, Math.floor(n / Math.max(60, Math.floor(pw/3))));
+  for (let i = 0; i < n; i += step) s += `<rect data-hit="${i}" x="${x(i) - pw/(n-1)*step/2}" y="${MT}" width="${pw/(n-1)*step}" height="${ph}" fill="transparent"/>`;
+  svg.innerHTML = s;
+  bindHits(svg, (t, e) => { const i = +t.dataset.hit; const d = D[i]; const last = D[n-1][1];
+    showTip(`<b>${d[0].slice(0,4)}-${d[0].slice(4,6)}-${d[0].slice(6)}</b><br>종가 ${fmtN(d[1])}원<br>시총 ${fmtN(Math.round(d[1]*(d[0] >= '20260429' ? 9 : 11)/100))}억 (${d[0] >= '20260429' ? '900' : '1,100'}만주)<br>9/23 종가 대비 ${sg((last/d[1]-1)*100)}%${CD.kqraw ? '<br>코스닥 ' + CD.kqraw[i].toFixed(1) : ''}`, e.clientX, e.clientY); });
+  return Hh;
+});
+
+/* ---------- annual ---------- */
+responsive('ch-ann', (svg, W) => {
+  const narrow = W < 560; const A = CD.annual;
+  const ML = narrow ? 38 : 48, MR = 10, MT = 18, MB = 28;
+  const Hh = narrow ? 270 : 340; const ph = Hh - MT - MB, pw = W - ML - MR;
+  const yMax = 3500, yMin = 0; const y = v => MT + (yMax - v)/(yMax - yMin)*ph;
+  const gw = pw/A.length; const bw = Math.min(narrow ? 16 : 30, gw*0.62);
+  let s = '';
+  [0,500,1000,1500,2000,2500,3000,3500].forEach(v => s += `<line class="${v===0?'axis':'grid'}" x1="${ML}" x2="${W-MR}" y1="${y(v)}" y2="${y(v)}"/><text x="${ML-4}" y="${y(v)+4}" text-anchor="end" class="mut" style="font-size:${narrow?9:11}px">${fmtN(v)}</text>`);
+  A.forEach((a,i) => { const xc = ML + i*gw + gw/2;
+    s += `<rect x="${xc-bw/2}" y="${y(a.rev)}" width="${bw}" height="${y(0)-y(a.rev)}" fill="var(--c1)" opacity="${a.e?0.35:1}" rx="1"/>`;
+    if (!narrow || i%2===0 || i===A.length-1) s += `<text x="${xc}" y="${y(a.rev)-5}" text-anchor="middle" style="font-size:${narrow?8.5:10.5}px">${fmtN(Math.round(a.rev))}</text>`;
+    s += `<text x="${xc}" y="${Hh-10}" text-anchor="middle" class="mut" style="font-size:${narrow?8.5:11}px">${"'"+String(a.y).slice(2)}${a.e?'E':''}</text>`;
+    s += `<rect data-hit="${i}" x="${ML+i*gw}" y="${MT}" width="${gw}" height="${ph}" fill="transparent"/>`; });
+  const pts = A.map((a,i) => [ML + i*gw + gw/2, y(a.op)]);
+  const k = A.findIndex(a => a.e);
+  s += `<path d="${pts.slice(0,k).map((p,i)=>(i?'L':'M')+p[0]+' '+p[1]).join(' ')}" fill="none" stroke="var(--c2)" stroke-width="2"/>`;
+  s += `<path d="${pts.slice(k-1).map((p,i)=>(i?'L':'M')+p[0]+' '+p[1]).join(' ')}" fill="none" stroke="var(--c2)" stroke-width="2" stroke-dasharray="5 3"/>`;
+  pts.forEach(p => s += `<circle cx="${p[0]}" cy="${p[1]}" r="3.2" fill="var(--c2)"/>`);
+  svg.innerHTML = s;
+  bindHits(svg, (t, e) => { const a = A[+t.dataset.hit]; showTip(`<b>${a.y}${a.e?' (LS증권 8/18 추정)':''}</b><br>매출 ${fmtN(a.rev)}억<br>영업이익 ${fmtN(a.op)}억 (OPM ${(a.op/a.rev*100).toFixed(1)}%)` + (a.srev!=null?`<br>별도 매출 ${fmtN(a.srev)}억 · 영업이익 ${fmtN(a.sop)}억<br>연결 − 별도 영업이익 ${sg(a.op-a.sop)}억`:''), e.clientX, e.clientY); });
+  return Hh;
+});
+
+/* ---------- quarterly ---------- */
+responsive('ch-q', (svg, W) => {
+  const narrow = W < 560; const Q = CD.quarterly;
+  const ML = narrow ? 30 : 40, MR = narrow ? 28 : 36, MT = 18, MB = 30;
+  const Hh = narrow ? 250 : 320; const ph = Hh - MT - MB, pw = W - ML - MR;
+  const yMax = 1000; const y = v => MT + (yMax - v)/yMax*ph;
+  const oMax = 50, oMin = -25; const yo = v => MT + (oMax - v)/(oMax - oMin)*ph;
+  const gw = pw/Q.length; const bw = Math.min(narrow ? 8 : 16, gw*0.7);
+  let s = '';
+  [0,200,400,600,800,1000].forEach(v => s += `<line class="${v===0?'axis':'grid'}" x1="${ML}" x2="${W-MR}" y1="${y(v)}" y2="${y(v)}"/><text x="${ML-4}" y="${y(v)+4}" text-anchor="end" class="mut" style="font-size:${narrow?9:11}px">${v}</text>`);
+  [-25,0,25,50].forEach(v => s += `<text x="${W-MR+4}" y="${yo(v)+4}" class="mut" style="font-size:${narrow?9:10.5}px; fill:var(--c2)">${v}%</text>`);
+  s += `<line x1="${ML}" x2="${W-MR}" y1="${yo(0)}" y2="${yo(0)}" stroke="var(--c2)" stroke-width="1" stroke-dasharray="2 3" opacity=".6"/>`;
+  Q.forEach((q,i) => { const xc = ML + i*gw + gw/2;
+    s += `<rect x="${xc-bw/2}" y="${y(q.rev)}" width="${bw}" height="${y(0)-y(q.rev)}" fill="var(--c1)" rx="1"/>`;
+    if (q.q.endsWith('Q1')) s += `<text x="${xc}" y="${Hh-10}" text-anchor="middle" class="mut" style="font-size:${narrow?9:11}px">${narrow ? "'"+q.q.slice(2,4) : q.q.slice(0,4)}</text>`;
+    s += `<rect data-hit="${i}" x="${ML+i*gw}" y="${MT}" width="${gw}" height="${ph}" fill="transparent"/>`; });
+  s += `<path d="${Q.map((q,i)=>(i?'L':'M')+(ML+i*gw+gw/2).toFixed(1)+' '+yo(q.sopm).toFixed(1)).join(' ')}" fill="none" stroke="var(--c2)" stroke-width="1.8"/>`;
+  Q.forEach((q,i) => s += `<circle cx="${ML+i*gw+gw/2}" cy="${yo(q.sopm)}" r="${narrow?1.8:2.4}" fill="var(--c2)"/>`);
+  svg.innerHTML = s;
+  bindHits(svg, (t, e) => { const i = +t.dataset.hit; const q = Q[i]; const py = Q[i-4]; showTip(`<b>${q.q.replace('Q',' Q')}</b><br>연결 매출 ${d1(q.rev)}억${py?` (YoY ${sg((q.rev/py.rev-1)*100)}%)`:''}<br>연결 영업이익 ${d1(q.op)}억 (OPM ${d1(q.opm)}%)<br>별도 매출 ${d1(q.srev)}억 · 영업이익 ${d1(q.sop)}억<br>별도 OPM ${d1(q.sopm)}% · GPM ${d1(q.sgpm)}%<br>연결 − 별도 영업이익 ${sg(q.op-q.sop)}억`, e.clientX, e.clientY); });
+  return Hh;
+});
+
+/* ---------- generic horizontal bars ---------- */
+function hbars(id, rows, opt){
+  responsive(id, (svg, W) => {
+    const narrow = W < 560;
+    const ML = narrow ? opt.mlN : opt.ml, MR = narrow ? 50 : 64, MT = 6, rowH = narrow ? opt.rowN||30 : opt.row||34;
+    const Hh = MT + rows.length*rowH + 18; const pw = W - ML - MR; const min = opt.min||0; const x = v => ML + (v-min)/(opt.max-min)*pw;
+    let s = '';
+    opt.ticks.forEach(v => s += `<line class="${v===0?'axis':'grid'}" x1="${x(v)}" x2="${x(v)}" y1="${MT}" y2="${Hh-18}"/><text x="${x(v)}" y="${Hh-5}" text-anchor="middle" class="mut" style="font-size:${narrow?9:10.5}px">${v}${opt.unit||''}</text>`);
+    rows.forEach((r,i) => { const y0 = MT + i*rowH; const bh = narrow ? 13 : 15; const v = Math.min(r.val, opt.max);
+      s += `<text x="${ML-6}" y="${y0+rowH/2+4}" text-anchor="end" class="lab" style="font-size:${narrow?10.5:12}px; font-weight:${r.me?700:400}">${narrow && r.short ? r.short : r.label}</text>`;
+      const x0 = Math.min(x(0), x(v)), w = Math.abs(x(v) - x(0));
+      s += `<rect x="${x0}" y="${y0+rowH/2-bh/2}" width="${w}" height="${bh}" fill="${r.fill||'var(--c1)'}" rx="2"/>`;
+      s += `<text x="${(v<0 ? x(0) : x(v))+5}" y="${y0+rowH/2+4}" style="font-size:${narrow?10:11}px">${r.txt}</text>`;
+      s += `<rect data-hit="${i}" x="0" y="${y0}" width="${W}" height="${rowH}" fill="transparent"/>`; });
+    svg.innerHTML = s;
+    bindHits(svg, (t, e) => showTip(rows[+t.dataset.hit].tip, e.clientX, e.clientY));
+    return Hh;
+  });
+}
+hbars('ch-bridge', CD.bridge.map(b => ({label:b[0], short:b[3], val:b[1], fill:b[1]<0?'var(--neg)':(b[4]?'var(--c4)':'var(--c1)'), me:!!b[4], txt:sg(b[1])+'억', tip:`<b>${b[0]}</b><br>${sg(b[1])}억<br>${b[2]}`})), {ml:170, mlN:104, min:-100, max:700, ticks:[0,200,400,600], row:32, rowN:30});
+hbars('ch-pop', CD.pop.map(p => ({label:p[0], val:p[1], me:p[0]==='프로텍', fill:p[0]==='프로텍'?'var(--accent)':'var(--c4)', txt:p[1].toFixed(1)+'배', tip:`<b>${p[0]}</b><br>시총 ÷ 최근 4분기 영업이익 = ${p[1].toFixed(1)}배<br>${p[2]}`})), {ml:130, mlN:96, max:110, ticks:[0,25,50,75,100], row:28, rowN:26});
+hbars('ch-mix', CD.mix.map(m => ({label:m[0], val:m[1], fill:m[3]?'var(--c2)':'var(--c1)', txt:fmtN(m[1])+'억', tip:`<b>${m[0]}</b><br>지배회사 장비 매출 ${fmtN(m[1])}억<br>${m[2]}`})), {ml:70, mlN:56, max:1700, ticks:[0,500,1000,1500], row:28, rowN:26});
+})();
+
+</script>
+</body>
+</html>

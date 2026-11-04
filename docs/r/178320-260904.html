@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<title>서진시스템 해부</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Noto+Serif+KR:wght@500;700;900&display=swap">
+<style>
+:root{
+  --paper:#f4f5f2; --card:#fbfbf9; --ink:#14181d; --ink-2:#39414b; --grey:#6b7480;
+  --line:#dcdfd9; --line-2:#c8ccc4;
+  --steel:#2d5f7c; --steel-soft:#e4edf2; --copper:#a35c2a; --copper-soft:#f3e7dd;
+  --pos:#1c6f54; --neg:#a93226; --warn:#8a6410;
+  --pos-soft:#e0efe8; --neg-soft:#f6e3e0; --warn-soft:#f5ecd6;
+  --shadow:0 1px 2px rgba(20,24,29,.05), 0 8px 24px -14px rgba(20,24,29,.18);
+  --measure:min(100%, 68ch);
+  --f-disp:"Noto Serif KR",Georgia,"Apple SD Gothic Neo",serif;
+  --f-body:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+  --f-mono:"IBM Plex Mono","SFMono-Regular",Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#0f1216; --card:#161a20; --ink:#e7eaec; --ink-2:#b6bdc5; --grey:#8b939d;
+    --line:#272d35; --line-2:#39414b;
+    --steel:#7db4d0; --steel-soft:#17303d; --copper:#d99361; --copper-soft:#33241a;
+    --pos:#5cc79f; --neg:#e8837a; --warn:#d7b05a;
+    --pos-soft:#14312a; --neg-soft:#361f1d; --warn-soft:#312817;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 28px -16px rgba(0,0,0,.8);
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0f1216; --card:#161a20; --ink:#e7eaec; --ink-2:#b6bdc5; --grey:#8b939d;
+  --line:#272d35; --line-2:#39414b;
+  --steel:#7db4d0; --steel-soft:#17303d; --copper:#d99361; --copper-soft:#33241a;
+  --pos:#5cc79f; --neg:#e8837a; --warn:#d7b05a;
+  --pos-soft:#14312a; --neg-soft:#361f1d; --warn-soft:#312817;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 28px -16px rgba(0,0,0,.8);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; background:var(--paper); color:var(--ink);
+  font-family:var(--f-body); font-weight:400; font-size:16px; line-height:1.72;
+  letter-spacing:-.005em; overflow-x:hidden;
+}
+.wrap{max-width:960px; margin:0 auto; padding:0 26px 96px}
+p,ul,ol{max-width:var(--measure)}
+h1,h2,h3{text-wrap:balance; margin:0}
+a{color:var(--steel)}
+:focus-visible{outline:2px solid var(--steel); outline-offset:2px; border-radius:3px}
+
+/* ---------- masthead ---------- */
+.mast{border-bottom:1px solid var(--line-2); padding:40px 0 22px; margin-bottom:34px}
+.kicker{font-family:var(--f-mono); font-size:11.5px; letter-spacing:.18em;
+  text-transform:uppercase; color:var(--copper); font-weight:600}
+.mast h1{font-family:var(--f-disp); font-weight:900; font-size:clamp(32px,6.6vw,52px);
+  line-height:1.16; letter-spacing:-.02em; margin:12px 0 6px}
+.mast .sub{font-family:var(--f-disp); font-weight:500; font-size:clamp(16px,3.2vw,20px);
+  color:var(--ink-2); line-height:1.5; max-width:34ch}
+.meta{display:flex; flex-wrap:wrap; gap:6px 20px; margin-top:20px;
+  font-family:var(--f-mono); font-size:12px; color:var(--grey)}
+.meta b{color:var(--ink-2); font-weight:500}
+
+/* ---------- stat strip ---------- */
+.stats{display:grid; grid-template-columns:repeat(auto-fit,minmax(148px,1fr));
+  gap:1px; background:var(--line); border:1px solid var(--line);
+  border-radius:3px; overflow:hidden; margin:30px 0 40px}
+.stat{background:var(--card); padding:15px 16px 16px}
+.stat .l{font-size:11.5px; color:var(--grey); letter-spacing:.02em; display:block}
+.stat .v{font-family:var(--f-mono); font-weight:600; font-variant-numeric:tabular-nums;
+  font-size:clamp(20px,5vw,26px); line-height:1.24; margin-top:5px; overflow-wrap:anywhere}
+.stat .d{font-size:11.5px; color:var(--grey); margin-top:3px; font-family:var(--f-mono)}
+.v.neg{color:var(--neg)} .v.pos{color:var(--pos)}
+
+/* ---------- thesis ---------- */
+.thesis{border-left:3px solid var(--copper); padding:4px 0 4px 20px; margin:0 0 42px}
+.thesis p{font-family:var(--f-disp); font-weight:500; font-size:clamp(17px,3.4vw,21px);
+  line-height:1.62; margin:0; color:var(--ink)}
+.thesis p+p{margin-top:14px}
+
+/* ---------- sections ---------- */
+section{margin:0 0 54px; scroll-margin-top:70px}
+.snum{font-family:var(--f-mono); font-size:11.5px; letter-spacing:.16em;
+  color:var(--copper); font-weight:600; display:block; margin-bottom:7px}
+h2{font-family:var(--f-disp); font-weight:700; font-size:clamp(22px,4.4vw,30px);
+  line-height:1.3; letter-spacing:-.02em; margin-bottom:16px;
+  padding-bottom:12px; border-bottom:1px solid var(--line)}
+h3{font-size:16.5px; font-weight:600; margin:30px 0 10px; color:var(--ink)}
+p{margin:0 0 15px}
+.lede{font-size:17px; color:var(--ink-2)}
+strong{font-weight:600}
+mark{background:var(--copper-soft); color:inherit; padding:.06em .28em; border-radius:2px}
+.num{font-family:var(--f-mono); font-variant-numeric:tabular-nums; font-weight:500}
+
+/* ---------- full-bleed data slabs ---------- */
+.slab{margin:26px 0 30px}
+.slab-h{display:flex; align-items:baseline; justify-content:space-between;
+  gap:14px; flex-wrap:wrap; margin-bottom:11px}
+.slab-t{font-size:13.5px; font-weight:600; letter-spacing:-.01em}
+.slab-s{font-family:var(--f-mono); font-size:11.5px; color:var(--grey)}
+.panel{background:var(--card); border:1px solid var(--line); border-radius:4px;
+  padding:16px 14px 12px}
+
+/* ---------- tables ---------- */
+.tbl-scroll{overflow-x:auto; -webkit-overflow-scrolling:touch;
+  border:1px solid var(--line); border-radius:4px; background:var(--card)}
+table{border-collapse:collapse; width:100%; min-width:520px;
+  font-size:13.5px; font-variant-numeric:tabular-nums}
+th,td{padding:9px 12px; text-align:right; border-bottom:1px solid var(--line);
+  white-space:nowrap}
+th{font-size:11.5px; font-weight:600; color:var(--grey); letter-spacing:.03em;
+  background:var(--paper); position:sticky; top:0}
+th:first-child,td:first-child{text-align:left; white-space:normal; min-width:118px}
+td.n{font-family:var(--f-mono)}
+tbody tr:last-child td{border-bottom:none}
+tr.hl td{background:var(--steel-soft); font-weight:600}
+tr.tot td{border-top:2px solid var(--line-2); font-weight:600}
+.d-neg{color:var(--neg)} .d-pos{color:var(--pos)}
+
+/* ---------- charts ---------- */
+.chart{width:100%; display:block; touch-action:pan-y}
+.tip{position:fixed; z-index:60; pointer-events:none; opacity:0;
+  transition:opacity .12s; background:var(--card); color:var(--ink);
+  border:1px solid var(--line-2); border-radius:5px; padding:8px 11px;
+  font-family:var(--f-mono); font-size:11.5px; line-height:1.6;
+  box-shadow:var(--shadow); max-width:min(280px, calc(100vw - 20px))}
+.tip b{font-weight:600} .tip .k{color:var(--grey)}
+.legend{display:flex; flex-wrap:wrap; gap:6px 16px; margin-top:12px;
+  font-size:11.5px; color:var(--ink-2); font-family:var(--f-mono)}
+.legend i{width:11px; height:11px; border-radius:2px; display:inline-block;
+  margin-right:6px; vertical-align:-1px}
+
+/* ---------- moat / risk ---------- */
+.duo{display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:20px 0 8px}
+.duo>div{border:1px solid var(--line); border-radius:4px; padding:15px 16px;
+  background:var(--card)}
+.duo h4{margin:0 0 10px; font-size:12px; letter-spacing:.09em; text-transform:uppercase;
+  font-family:var(--f-mono); font-weight:600}
+.for h4{color:var(--pos)} .against h4{color:var(--neg)}
+.duo ul{margin:0; padding-left:17px; font-size:14.5px; line-height:1.66}
+.duo li{margin-bottom:9px} .duo li:last-child{margin-bottom:0}
+
+.risk{border:1px solid var(--line); border-radius:4px; background:var(--card);
+  padding:14px 16px; margin-bottom:10px; display:grid;
+  grid-template-columns:auto 1fr; gap:4px 13px; align-items:start}
+.tag{font-family:var(--f-mono); font-size:10.5px; font-weight:600; letter-spacing:.07em;
+  padding:3px 8px; border-radius:3px; white-space:nowrap; align-self:start}
+.t-hi{background:var(--neg-soft); color:var(--neg)}
+.t-md{background:var(--warn-soft); color:var(--warn)}
+.t-lo{background:var(--steel-soft); color:var(--steel)}
+.risk .rt{font-weight:600; font-size:14.5px; grid-column:2}
+.risk .rb{grid-column:2; font-size:14px; color:var(--ink-2); line-height:1.62}
+
+/* ---------- checklist ---------- */
+.check{list-style:none; padding:0; margin:16px 0 0; max-width:var(--measure)}
+.check li{position:relative; padding:12px 0 12px 34px; border-bottom:1px solid var(--line);
+  font-size:14.8px; line-height:1.6}
+.check li:last-child{border-bottom:none}
+.check li::before{content:""; position:absolute; left:2px; top:17px; width:13px; height:13px;
+  border:1.5px solid var(--line-2); border-radius:3px}
+
+/* ---------- notes ---------- */
+.note{font-size:13px; color:var(--grey); line-height:1.66; max-width:var(--measure)}
+.srcs{border-top:1px solid var(--line); padding-top:22px; margin-top:60px}
+.srcs h2{border:none; padding:0; font-size:19px; margin-bottom:12px}
+.srcs dl{display:grid; grid-template-columns:auto 1fr; gap:7px 16px;
+  font-size:13px; margin:0; color:var(--ink-2)}
+.srcs dt{font-family:var(--f-mono); color:var(--grey); white-space:nowrap; font-size:12px}
+.srcs dd{margin:0}
+.disc{margin-top:26px; padding:14px 16px; border:1px dashed var(--line-2);
+  border-radius:4px; font-size:12.5px; color:var(--grey); line-height:1.66}
+
+@media (max-width:620px){
+  body{font-size:15.5px}
+  .wrap{padding:0 14px 72px}
+  table{min-width:480px; font-size:12.5px}
+  th,td{padding:7px 9px}
+  .tbl-scroll{margin:0 -14px; border-radius:0; border-left:none; border-right:none}
+  .duo{grid-template-columns:1fr}
+  .stat{padding:12px 13px 13px}
+  .srcs dl{grid-template-columns:1fr; gap:2px}
+  .srcs dd{margin-bottom:9px}
+}
+@media (max-width:400px){
+  .wrap{padding:0 11px 64px}
+  .tbl-scroll{margin:0 -11px}
+  .meta{gap:4px 13px; font-size:11.5px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important; animation:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="mast">
+  <span class="kicker">기업 분석 · 코스닥 178320</span>
+  <h1>서진시스템 해부</h1>
+  <p class="sub">매출은 사상 최대인데 이익은 사라졌다. 그 사이에 무엇이 있었나.</p>
+  <div class="meta">
+    <span>작성 <b>2026-09-04</b></span>
+    <span>종가 <b>33,650원</b> (9/4)</span>
+    <span>시가총액 <b>2조 1,418억</b></span>
+    <span>발행주식 <b>63,650,737주</b></span>
+  </div>
+</header>
+
+<div class="stats">
+  <div class="stat"><span class="l">1H26 매출</span><span class="v">6,904억</span><span class="d">전년 +27.9%</span></div>
+  <div class="stat"><span class="l">1H26 영업손익</span><span class="v neg">-523억</span><span class="d">전년 +149억</span></div>
+  <div class="stat"><span class="l">2Q26 매출</span><span class="v">4,102억</span><span class="d">분기 사상 최대</span></div>
+  <div class="stat"><span class="l">FY25 매출총이익률</span><span class="v">10.4%</span><span class="d">인접군 최저</span></div>
+  <div class="stat"><span class="l">PBR</span><span class="v">2.17배</span><span class="d">BPS 15,499원</span></div>
+</div>
+
+<div class="thesis">
+  <p>서진시스템은 ESS 성장주로 거래되지만, 2026년 상반기 매출의 <mark>1위 부문은 이미 반도체장비(44.7%)</mark>이고 ESS는 29.9%다. 그리고 ESS 매출의 <mark>99.7%가 내수로 잡힌다</mark> — 최종 시장은 미국이지만 회사는 중간 고객에게 판다.</p>
+  <p>2026년 신규 수주 7,828억은 실재한다. 문제는 그 수주를 받아내는 과정에서 <mark>매출총이익률이 10.4%까지 내려앉고 반년 만에 3,800억을 조달</mark>했다는 것이다. 이 리포트는 그 교환의 조건을 따진다.</p>
+</div>
+
+<section id="bm">
+  <span class="snum">Ⅰ</span>
+  <h2>무엇을 파는 회사인가</h2>
+  <p class="lede">알루미늄·철재를 깎고 용접해 <strong>금속 함체(enclosure)와 구조물</strong>을 만든다. 그 안에 무엇이 들어가느냐에 따라 전방산업 이름이 바뀔 뿐, 회사가 하는 일은 20년째 같다.</p>
+  <p>2015년 텍슨을 인수해 구동장치·시스템 설계 역량을 더했고, 생산은 <strong>베트남</strong>이 주력이다. 전방은 시대를 따라 옮겨 다녔다 — 통신장비(5G 기지국 함체) → 휴대폰 메탈케이스 → 반도체 장비 구조물 → ESS 컨테이너·인클로저. 지금은 여기에 데이터센터용 PCS와 연료전지가 붙는 중이다.</p>
+
+  <h3>밸류체인에서 어느 칸인가</h3>
+  <p>ESS 밸류체인은 대략 <span class="num">셀 → 모듈/팩 → 인클로저·컨테이너 → PCS·EMS → 시스템통합(SI) → EPC·발전사업자</span>로 이어진다. 서진시스템은 <strong>세 번째 칸</strong>, 금속 구조물이다. 셀도 안 만들고 시스템도 안 판다.</p>
+  <p>이 위치가 실적의 성격을 결정한다. 공시에 적힌 그대로다 — <strong>“고객사의 생산계획에 의한 주문 생산방식이며, 통상 2주에서 2개월 이전에 주문을 접수하는 단기발주”</strong>라 <mark>수주잔고를 아예 기재하지 않는다</mark>. 미래 실적을 수주잔고로 가늠할 수 없고, 개별 공급계약 공시로만 추정해야 한다.</p>
+  <div class="note">※ 사업보고서(2025.12) “Ⅱ. 사업의 내용 – 4. 매출 및 수주상황”. 수주잔고 미기재는 회사의 선택이 아니라 사업 구조상 존재하지 않기 때문이다.</div>
+</section>
+
+<section id="mix">
+  <span class="snum">Ⅱ</span>
+  <h2>매출 구성의 지각변동</h2>
+  <p class="lede">시장은 이 회사를 ESS로 부르지만, 매출 1위 부문은 2026년 상반기에 <strong>반도체장비로 바뀌었다.</strong></p>
+
+  <div class="slab">
+    <div class="slab-h">
+      <span class="slab-t">부문별 매출 구성</span>
+      <span class="slab-s">연결 · 사업보고서/반기보고서 기재</span>
+    </div>
+    <div class="panel"><svg id="c-mix" class="chart" role="img" aria-label="부문별 매출 구성 변화"></svg></div>
+    <div class="legend" id="l-mix"></div>
+  </div>
+
+  <div class="tbl-scroll">
+    <table>
+      <thead><tr><th>부문</th><th>FY23</th><th>FY24</th><th>FY25</th><th>1H26</th><th>FY25 증감</th></tr></thead>
+      <tbody>
+        <tr class="hl"><td>ESS 장비</td><td class="n">2,744</td><td class="n">6,360</td><td class="n">3,978</td><td class="n">2,067</td><td class="n d-neg">-37.5%</td></tr>
+        <tr class="hl"><td>반도체 장비</td><td class="n">1,394</td><td class="n">1,943</td><td class="n">2,913</td><td class="n">3,086</td><td class="n d-pos">+49.9%</td></tr>
+        <tr><td>통신장비</td><td class="n">1,385</td><td class="n">1,232</td><td class="n">1,316</td><td class="n">672</td><td class="n d-pos">+6.8%</td></tr>
+        <tr><td>전기차·배터리</td><td class="n">1,048</td><td class="n">1,122</td><td class="n">718</td><td class="n">468</td><td class="n d-neg">-36.0%</td></tr>
+        <tr><td>기타</td><td class="n">1,215</td><td class="n">1,480</td><td class="n">1,739</td><td class="n">611</td><td class="n d-pos">+17.5%</td></tr>
+        <tr class="tot"><td>합계</td><td class="n">7,787</td><td class="n">12,138</td><td class="n">10,663</td><td class="n">6,904</td><td class="n d-neg">-12.1%</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="note" style="margin-top:9px">단위 억원. 공시는 백만원 단위이며 억원으로 환산했다. 부문 합계는 네 기간 모두 연결 매출액과 일치함을 확인했다.</div>
+
+  <h3>ESS 매출은 어디로 팔리나</h3>
+  <p>여기서 가장 자주 오해되는 지점이다. FY25 ESS 매출 3,978억 중 <mark>내수가 3,967억, 수출은 11억</mark>이다. 수출 비중 0.3%.</p>
+  <p>회사가 미국에 안 판다는 뜻이 아니다. <strong>중간 고객에게 국내에서 팔기 때문</strong>이다. 최종 목적지는 미국·유럽이지만 매출은 내수로 인식된다. 이 구조가 다음 장의 수주 분석과 직결된다.</p>
+</section>
+
+<section id="pl">
+  <span class="snum">Ⅲ</span>
+  <h2>매출은 늘고 이익은 사라졌다</h2>
+  <p class="lede">2Q26 매출 <span class="num">4,102억</span>은 창사 이래 최대 분기 매출이다. 같은 분기 영업손익은 <span class="num d-neg">-194억</span>, 두 분기 연속 적자다.</p>
+
+  <div class="slab">
+    <div class="slab-h">
+      <span class="slab-t">분기 매출과 영업이익률</span>
+      <span class="slab-s">막대=매출(억원) · 선=영업이익률(%)</span>
+    </div>
+    <div class="panel"><svg id="c-q" class="chart" role="img" aria-label="분기 매출과 영업이익률"></svg></div>
+  </div>
+
+  <div class="tbl-scroll">
+    <table>
+      <thead><tr><th>구분</th><th>FY23</th><th>FY24</th><th>FY25</th><th>1H25</th><th>1H26</th></tr></thead>
+      <tbody>
+        <tr><td>매출액</td><td class="n">7,787</td><td class="n">12,138</td><td class="n">10,663</td><td class="n">5,398</td><td class="n">6,904</td></tr>
+        <tr><td>매출총이익</td><td class="n">1,379</td><td class="n">2,134</td><td class="n">1,105</td><td class="n">—</td><td class="n">—</td></tr>
+        <tr><td>매출총이익률</td><td class="n">17.7%</td><td class="n">17.6%</td><td class="n d-neg">10.4%</td><td class="n">—</td><td class="n">—</td></tr>
+        <tr class="hl"><td>영업손익</td><td class="n">490</td><td class="n">1,087</td><td class="n">11</td><td class="n d-pos">149</td><td class="n d-neg">-523</td></tr>
+        <tr><td>영업이익률</td><td class="n">6.3%</td><td class="n">9.0%</td><td class="n">0.1%</td><td class="n">2.8%</td><td class="n d-neg">-7.6%</td></tr>
+        <tr><td>당기순손익</td><td class="n d-neg">-227</td><td class="n">843</td><td class="n d-neg">-1,024</td><td class="n">—</td><td class="n d-neg">-815</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="note" style="margin-top:9px">단위 억원. 반기 매출총이익은 반기보고서에 별도 기재가 없어 생략. 1H26 순손실은 1Q(-205억)+2Q(-610억).</div>
+
+  <h3>672억이 어디서 사라졌나</h3>
+  <p>1H25 영업이익 +149억에서 1H26 -523억으로, <strong>1년 만에 672억이 증발했다.</strong> 같은 기간 매출은 1,505억 늘었다. 매출이 늘면서 이익이 줄었다는 건 <mark>증분 마진이 음수</mark>라는 뜻이다.</p>
+  <p>증권사들이 지목한 원인은 대체로 일치한다. iM투자증권(8/20)은 <strong>“미국 내 ESS 조립공장 구축 과정의 일회성 비용, 생산인력 확충에 따른 인건비, 자동화 설비 셋업 지연”</strong>을 들었고, SK증권(8/27)은 <strong>“원부자재·운반포장비 증가와 투자 확대에 따른 감가상각비”</strong>를 꼽았다.</p>
+  <p>재무제표에서 이 설명과 맞물리는 항목이 재고다. FY25 재고자산은 <span class="num">8,497억</span>으로 <mark>총자산의 36.8%</mark>, 재고자산회전율은 <span class="num">1.18회</span>로 전년 1.44회에서 낮아졌다. 특히 원재료 재고가 4,483억 → 5,689억으로 늘었다. <strong>생산을 위한 선제 비축인지, 팔리지 않고 쌓인 것인지가 이 회사의 향방을 가른다.</strong> 유진투자증권(8/18)은 2Q26 매출 증분(+46.4% QoQ) 대비 매출원가 증분(+39.7%)이 낮은 점을 들어 고정비 흡수가 시작됐다고 봤다.</p>
+</section>
+
+<section id="order">
+  <span class="snum">Ⅳ</span>
+  <h2>수주는 진짜다. 다만 고객이 하나다</h2>
+  <p class="lede">2026년 들어 공시된 신규 공급계약은 <strong>7,828억</strong>, FY25 매출의 <strong>73.4%</strong>에 해당한다. 규모는 의심할 여지가 없다.</p>
+
+  <div class="tbl-scroll">
+    <table>
+      <thead><tr><th>공시일</th><th>계약상대방</th><th>내용</th><th>지역</th><th>금액</th><th>매출대비</th><th>종료</th></tr></thead>
+      <tbody>
+        <tr><td>2026-03-17</td><td>에이스엔지니어링</td><td>ESS 장비</td><td>미국</td><td class="n">2,702억</td><td class="n">22.3%</td><td class="n">2027-12</td></tr>
+        <tr><td>2026-04-28</td><td>에이스엔지니어링</td><td>ESS 장비</td><td>미국·유럽</td><td class="n">1,206억</td><td class="n">11.3%</td><td class="n">2027-01</td></tr>
+        <tr><td>2026-05-18</td><td>에이스엔지니어링</td><td>ESS·데이터센터 PCS</td><td>미국</td><td class="n">1,870억</td><td class="n">17.5%</td><td class="n">2027-12</td></tr>
+        <tr><td>2026-07-01</td><td>에이스엔지니어링</td><td>ESS·데이터센터 PCS</td><td>미국</td><td class="n">728억</td><td class="n">6.8%</td><td class="n">2027-12</td></tr>
+        <tr><td>2026-07-08</td><td>에이스엔지니어링</td><td>ESS 장비</td><td>미국·유럽</td><td class="n">537억</td><td class="n">5.0%</td><td class="n">2026-12</td></tr>
+        <tr class="hl"><td>2026-07-15</td><td>Bloom Energy</td><td>고체산화물 연료전지(SOFC)</td><td>미국</td><td class="n">785억</td><td class="n">7.4%</td><td class="n">2027-03</td></tr>
+        <tr class="tot"><td>2026년 합계</td><td>—</td><td>—</td><td>—</td><td class="n">7,828억</td><td class="n">73.4%</td><td>—</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="note" style="margin-top:9px">2026-08-07 공시 1,853억은 2025-11-26 계약의 기재정정이라 신규에서 제외했다. ‘매출대비’는 공시 기재값(직전 사업연도 연결 매출 기준).</div>
+
+  <h3>단일 고객 구조</h3>
+  <p>2023년 3월 이후 공시된 <strong>ESS 공급계약 23건이 전부 ㈜에이스엔지니어링 한 곳</strong>이다. 예외는 2026년 7월 Bloom Energy 건 하나뿐이고, 그건 ESS가 아니라 연료전지다.</p>
+  <p>에이스엔지니어링은 ESS 설계·개발·제조를 하는 <strong>비상장사</strong>다(2024년 11월 코스닥 상장 철회). 서진시스템 계약 공시에 기재된 이 회사의 2024년 매출은 6,340억. 즉 서진시스템의 ESS 사업은 <mark>자기 매출의 절반 규모인 비상장 회사 한 곳의 발주에 통째로 달려 있다</mark>. 모든 계약이 <strong>외주생산 ‘해당’</strong>으로 표기된 점도 함께 봐야 한다 — 서진시스템은 이 체인에서 제조를 맡는 쪽이다.</p>
+  <p>다만 2026년 하반기에 고객 다변화 신호가 나왔다. 언론과 증권사 리포트에 따르면 <strong>삼성SDI와 5년 기한의 북미 ESS용 배터리 인클로저 임가공 계약</strong>을 맺어, 베트남에서 인클로저를 만들고 미국 인디애나에서 삼성SDI 배터리를 탑재·최종조립하는 구조를 준비 중이다.</p>
+  <div class="note">※ 교차확인 결과: 삼성SDI 건은 DART 단일판매·공급계약 공시에서 확인되지 않는다(임가공 계약이라 공시 요건에 해당하지 않은 것으로 보인다). 하나증권 2차전지 Weekly(7/6, 8/6)와 iM투자증권 월간자료(9/1)에 기재된 내용으로, <strong>공시로 확정된 사실이 아니라 업계·언론 확인 사항</strong>임을 구분해 둔다. 별도로 한 증권사 자료에는 ‘서진시스템–Fluence 5년 계약(2025.12)’ 언급이 있으나 이 역시 공시에서 확인되지 않아 여기서는 근거로 쓰지 않았다.</div>
+</section>
+
+<section id="fund">
+  <span class="snum">Ⅴ</span>
+  <h2>반년에 3,800억을 조달했다</h2>
+  <p class="lede">수주를 받아내려면 설비와 운전자본이 필요하다. 2026년 조달 규모는 시가총액의 <strong>17.7%</strong>에 해당한다.</p>
+
+  <div class="tbl-scroll">
+    <table>
+      <thead><tr><th>시점</th><th>수단</th><th>금액</th><th>가격</th><th>자금용도</th><th>잠재주식</th></tr></thead>
+      <tbody>
+        <tr><td>2026-04-22</td><td>유상증자(제3자배정)</td><td class="n">1,800억</td><td class="n">44,700원</td><td>시설 1,400억·운영 400억</td><td class="n">4,026,846주<br><span style="color:var(--grey)">(발행완료)</span></td></tr>
+        <tr><td>2026-08-24</td><td>CB 39·41회차</td><td class="n">1,000억</td><td class="n">33,255원</td><td>시설 700억·운영 300억</td><td class="n">3,007,067주</td></tr>
+        <tr><td>2026-08-24</td><td>CB 40·42회차</td><td class="n">1,000억</td><td class="n">36,950원</td><td>시설 중심</td><td class="n">2,706,360주</td></tr>
+        <tr class="tot"><td>합계</td><td>—</td><td class="n">3,800억</td><td>—</td><td>—</td><td class="n">—</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p style="margin-top:16px">전환사채 2,000억이 전부 주식으로 바뀌면 <strong>5,713,427주</strong>가 새로 생긴다. 현재 발행주식 63,650,737주 대비 <mark>9.0% 희석</mark>이다.</p>
+  <p>주목할 것은 <strong>전환가격의 위치</strong>다. 33,255원과 36,950원인데 <strong>현재 주가가 33,650원</strong>이다. 낮은 쪽 전환가는 이미 실질 등가이고, 4월 유상증자 발행가 44,700원은 현재가보다 <span class="num d-neg">25% 높다</span>. 4월에 제3자배정으로 들어온 투자자는 현재 평가손 상태다.</p>
+  <p class="note">계산 근거 — 잠재주식수 = 사채 권면총액 ÷ 전환가액. (1,000억÷33,255) + (1,000억÷36,950) = 3,007,067 + 2,706,360 = 5,713,427주. 희석률 = 5,713,427 ÷ 63,650,737 = 8.98%. 조달/시총 = 3,800억 ÷ 21,418억 = 17.7%.</p>
+</section>
+
+<section id="peer">
+  <span class="snum">Ⅵ</span>
+  <h2>밸류체인 인접군과의 비교</h2>
+  <p class="lede">서진시스템과 사업 구성이 같은 상장사는 없다. 아래는 직접 경쟁자가 아니라 <strong>ESS·전력 밸류체인에서 인접한 위치에 있는 기업군</strong>이며, 성격이 서로 다르다는 전제로 읽어야 한다.</p>
+
+  <div class="tbl-scroll">
+    <table>
+      <thead><tr><th>기업</th><th>밸류체인 위치</th><th>시가총액</th><th>FY25 매출</th><th>GPM</th><th>영업이익</th><th>OPM</th><th>PSR</th><th>PBR</th></tr></thead>
+      <tbody>
+        <tr class="hl"><td>서진시스템</td><td>금속 함체·구조물</td><td class="n">21,418억</td><td class="n">10,663억</td><td class="n d-neg">10.4%</td><td class="n">11억</td><td class="n d-neg">0.1%</td><td class="n">2.01</td><td class="n">2.17</td></tr>
+        <tr><td>한중엔시에스</td><td>ESS 수냉식 냉각</td><td class="n">3,621억</td><td class="n">1,753억</td><td class="n">17.7%</td><td class="n">40억</td><td class="n">2.3%</td><td class="n">2.07</td><td class="n">3.82</td></tr>
+        <tr><td>신성에스티</td><td>배터리 부품</td><td class="n">2,301억</td><td class="n">1,169억</td><td class="n">18.1%</td><td class="n">23억</td><td class="n">1.9%</td><td class="n">1.97</td><td class="n">2.10</td></tr>
+        <tr><td>상신이디피</td><td>배터리 케이스</td><td class="n">2,786억</td><td class="n">2,501억</td><td class="n">14.7%</td><td class="n">87억</td><td class="n">3.5%</td><td class="n">1.11</td><td class="n">1.56</td></tr>
+        <tr><td>세방전지</td><td>배터리·패키징</td><td class="n">8,967억</td><td class="n">21,421억</td><td class="n">15.7%</td><td class="n">1,538억</td><td class="n">7.2%</td><td class="n">0.42</td><td class="n">0.51</td></tr>
+        <tr><td>HD현대일렉트릭</td><td>전력기기(변압기)</td><td class="n">257,016억</td><td class="n">40,795억</td><td class="n d-pos">34.1%</td><td class="n">9,953억</td><td class="n d-pos">24.4%</td><td class="n">6.30</td><td class="n">11.38</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="note" style="margin-top:9px">FY25 연결 기준(DART 원문). PSR·PBR은 2026-09-04 종가 기준으로 직접 계산했다. PSR = 시가총액 ÷ FY25 매출. 서진시스템 PSR = 21,418 ÷ 10,663 = 2.01배. PER은 서진시스템이 적자라 비교에서 제외했다.</div>
+
+  <p style="margin-top:16px">이 표에서 읽을 것은 두 가지다. 첫째, <mark>서진시스템의 매출총이익률 10.4%는 이 그룹에서 가장 낮다.</mark> 매출 규모는 부품사들의 4~9배인데 남기는 비율은 절반 수준이다. 둘째, 그럼에도 PSR 2.01배로 <strong>부품사들과 비슷한 배수</strong>를 받고 있다. 시장은 현재 이익이 아니라 2027년 이후의 외형과 마진 회복을 사고 있다는 뜻이다.</p>
+  <p>비교 대상 맨 아래 HD현대일렉트릭은 같은 ‘전력’ 테마지만 OPM 24.4%다. <strong>전력 밸류체인 안에서도 어디에 서 있느냐가 마진을 결정한다</strong>는 것을 보여주는 대조군으로 넣었다.</p>
+</section>
+
+<section id="moat">
+  <span class="snum">Ⅶ</span>
+  <h2>해자가 있는가</h2>
+  <p class="lede">이 회사의 강점으로 거론되는 것은 <strong>베트남 대규모 생산능력과 다품종 금속가공 역량</strong>이다. 근거와 반증을 나란히 놓는다.</p>
+
+  <div class="duo">
+    <div class="for">
+      <h4>해자가 있다는 근거</h4>
+      <ul>
+        <li><strong>베트남 생산기지의 규모와 연차.</strong> 2015년 이후 축적된 설비와 숙련 인력은 단기간에 복제되지 않는다. SK증권은 “베트남이라는 쉽지 않은 환경에서 글로벌 기업들이 먼저 손 내미는 제조 경쟁력”이라 평가했다.</li>
+        <li><strong>전방 전환 이력이 실제로 반복됐다.</strong> 통신 → 휴대폰 → 반도체 → ESS로 주력을 네 번 갈아탔고 그때마다 매출을 키웠다. 특정 산업이 꺾여도 설비를 다른 곳에 돌릴 수 있다는 증거다.</li>
+        <li><strong>고객이 최종조립까지 맡긴다.</strong> 삼성SDI 인클로저 건은 베트남 생산 + 미국 현지 최종조립 구조로, 단순 임가공보다 한 단계 위의 역할이다.</li>
+        <li><strong>탈중국 공급망 규제의 반사이익.</strong> 미국의 중국산 ESS 배제 흐름에서 비중국 제조 캐파는 그 자체로 희소자원이다.</li>
+      </ul>
+    </div>
+    <div class="against">
+      <h4>해자를 의심할 근거</h4>
+      <ul>
+        <li><strong>마진이 해자를 부정한다.</strong> 진입장벽이 있다면 가격에 반영돼야 한다. GPM 10.4%는 인접군 최저이고 FY24 17.6%에서 <span class="num">7.2%p</span> 떨어졌다. 수요가 폭증한 해에 마진이 급락했다는 건 <mark>협상력이 없다는 신호</mark>다.</li>
+        <li><strong>고객 집중도가 극단적이다.</strong> ESS 계약 23건이 전부 한 비상장사다. 교섭력의 방향이 어디인지는 이 사실 하나로 충분하다.</li>
+        <li><strong>수주잔고가 존재하지 않는다.</strong> 2주~2개월 단기발주 구조는 고객이 언제든 물량을 조절할 수 있다는 뜻이다. 계약 공시가 있어도 실행은 별개다.</li>
+        <li><strong>자본집약적인데 자본이 계속 필요하다.</strong> 성장할 때마다 증자와 CB로 자금을 조달해야 한다면, 그 성장은 주주 지분을 대가로 산 것이다. 2026년에만 9% 희석이 예약돼 있다.</li>
+      </ul>
+    </div>
+  </div>
+  <p style="margin-top:18px"><strong>판단</strong> — 해자라기보다 <strong>규모의 우위</strong>에 가깝다. 대체는 어렵지만 가격 결정권은 없는 위치다. 이 구조에서 주주가 돈을 벌려면 마진율이 아니라 <em>가동률</em>이 올라야 한다. 즉 <mark>물량이 계속 늘어나는 동안에만 작동하는 모델</mark>이고, 그래서 수주 흐름이 끊기는 순간 고정비가 그대로 손실이 된다. 실제로 FY25에 그 일이 벌어졌다.</p>
+</section>
+
+<section id="price">
+  <span class="snum">Ⅷ</span>
+  <h2>주가와 시장의 기대</h2>
+
+  <div class="slab">
+    <div class="slab-h">
+      <span class="slab-t">주가 추이 (2024-09 ~ 2026-09)</span>
+      <span class="slab-s">주간 종가 · 원</span>
+    </div>
+    <div class="panel"><svg id="c-px" class="chart" role="img" aria-label="주가 추이"></svg></div>
+  </div>
+
+  <p>2년 사이 저점 <span class="num">18,260원</span>에서 고점 <span class="num">77,300원</span>까지 갔다가 현재 <span class="num">33,650원</span>이다. 고점 대비 <span class="num d-neg">-56%</span>. 변동성이 이 종목의 기본 성질이다.</p>
+
+  <div class="tbl-scroll">
+    <table>
+      <thead><tr><th>증권사</th><th>날짜</th><th>의견</th><th>목표주가</th><th>당시 주가</th><th>현재가 대비</th></tr></thead>
+      <tbody>
+        <tr><td>SK증권</td><td class="n">2026-08-27</td><td>매수</td><td class="n">55,000원</td><td class="n">37,200원</td><td class="n d-pos">+63%</td></tr>
+        <tr><td>유진투자증권</td><td class="n">2026-08-18</td><td>BUY</td><td class="n">67,500원</td><td class="n">36,950원</td><td class="n d-pos">+101%</td></tr>
+        <tr><td>iM투자증권</td><td class="n">2026-08-20</td><td>Buy</td><td>미기재</td><td class="n">—</td><td>—</td></tr>
+        <tr><td>삼성증권</td><td class="n">2026-04-10</td><td>보유</td><td>미제시</td><td class="n">43,800원</td><td>—</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="note" style="margin-top:9px">유진투자증권 목표주가 궤적: 38,500원(1월) → 41,000원(2월) → 70,000원(3월) → 79,000원(6월) → 67,500원(7월·8월). 6개월 만에 2배로 올렸다가 다시 낮췄다. 목표주가가 주가를 따라다닌 흔적으로 읽는 편이 안전하다.</p>
+  <p style="margin-top:16px">커버리지 대부분이 매수 의견이고 목표가는 현재가보다 60~100% 높다. 다만 <strong>이 목표가들은 모두 2027년 흑자 전환과 마진 정상화를 전제</strong>로 한다. 유진투자증권 추정 기준 2026년 3~4분기 매출은 5,750억·6,266억으로, <mark>2Q26(4,102억)보다 40~53% 더 큰 분기 매출</mark>을 가정하고 있다.</p>
+</section>
+
+<section id="risk">
+  <span class="snum">Ⅸ</span>
+  <h2>리스크</h2>
+
+  <div class="risk"><span class="tag t-hi">높음</span><span class="rt">단일 고객 의존</span>
+    <span class="rb">ESS 매출의 사실상 전부가 비상장사 ㈜에이스엔지니어링 한 곳을 통한다. 이 고객의 수주 상황·재무·상장 여부를 외부에서 확인할 방법이 제한적이다. 2024년 11월 코스닥 상장을 철회한 이력이 있다.</span></div>
+
+  <div class="risk"><span class="tag t-hi">높음</span><span class="rt">마진 회복이 지연되면 적자가 누적된다</span>
+    <span class="rb">2개 분기 연속 영업적자, 1H26 -523억. 증권사들은 3분기부터 회복을 전망하지만 자동화 설비 셋업 지연과 미국 공장 구축비용이 언제 끝나는지는 외부에서 검증할 수 없다. 3Q26 실적이 이 가설의 첫 시험대다.</span></div>
+
+  <div class="risk"><span class="tag t-hi">높음</span><span class="rt">재고 8,497억의 성격</span>
+    <span class="rb">총자산의 36.8%가 재고이고 회전율은 1.18회로 낮아졌다. 원재료가 1,206억 늘었다. 수주 대응을 위한 선제 비축이면 정상이지만, 평가손실로 돌아오면 이미 적자인 손익을 추가로 훼손한다. 재고자산 일부에는 USD 1,200만 규모의 차입 담보가 설정돼 있다.</span></div>
+
+  <div class="risk"><span class="tag t-md">중간</span><span class="rt">9% 희석과 전환가 부근의 주가</span>
+    <span class="rb">CB 2,000억의 전환가 33,255원·36,950원에 대해 현재가는 33,650원이다. 주가가 오르면 곧바로 전환 물량이 나올 수 있는 구간이다. 반대로 주가가 더 빠지면 전환가 조정(리픽싱) 조건에 따라 희석이 더 커질 여지도 확인이 필요하다.</span></div>
+
+  <div class="risk"><span class="tag t-md">중간</span><span class="rt">낮은 최대주주 지분</span>
+    <span class="rb">SK증권 자료 기준 전동규 외 8인 16.00%, 네오솔루션즈 외 2인 12.32%. 반복적인 증자·CB 발행이 지분을 더 희석시키는 구조다.</span></div>
+
+  <div class="risk"><span class="tag t-md">중간</span><span class="rt">정책 의존적 수요</span>
+    <span class="rb">미국 ESS 수요는 IRA 세액공제와 탈중국 공급망 규제(PFE)에 크게 기대고 있다. 2026년 8월 전력설비 행정명령은 우호적이지만, 세부 규정은 향후 3개월 내 나온다. 정책 방향이 바뀌면 수주 파이프라인 전체가 영향을 받는다.</span></div>
+
+  <div class="risk"><span class="tag t-lo">낮음</span><span class="rt">환율·원자재</span>
+    <span class="rb">알루미늄·철재를 수입에 의존(FY25 매입 6,571억 중 수입 4,463억)하고 수출 대금은 달러다. 통화스왑·통화옵션으로 일부 헤지하고 있으나 환율 급변 시 손익 변동 요인이다.</span></div>
+</section>
+
+<section id="check">
+  <span class="snum">Ⅹ</span>
+  <h2>투자 전 확인할 것</h2>
+  <ul class="check">
+    <li><strong>3Q26 영업손익이 흑자로 돌아섰는가.</strong> 증권사 전망의 핵심 전제다. 적자가 이어지면 목표주가들은 근거를 잃는다.</li>
+    <li><strong>3Q26 매출이 5,000억을 넘었는가.</strong> 유진투자증권 추정치는 5,750억이다. 2Q26(4,102억) 대비 큰 폭 증가가 실현되는지 본다.</li>
+    <li><strong>매출총이익률이 10%대에서 반등했는가.</strong> FY24 수준(17.6%)까지는 아니어도 방향이 위인지가 관건이다.</li>
+    <li><strong>재고자산이 줄었는가, 매출이 재고를 따라잡았는가.</strong> 회전율 1.18회가 개선되는지 확인한다.</li>
+    <li><strong>에이스엔지니어링 외 고객의 공급계약이 공시로 나왔는가.</strong> 삼성SDI 건이 정식 공시로 확인되면 고객 집중 리스크가 실질적으로 완화된다.</li>
+    <li><strong>CB 전환청구가 시작됐는가.</strong> 전환 물량이 시장에 나오는 속도와 규모를 본다.</li>
+    <li><strong>CB의 전환가 조정(리픽싱) 조항을 원문에서 확인했는가.</strong> 하한 전환가에 따라 최대 희석 규모가 달라진다.</li>
+    <li><strong>미국 전력설비 행정명령의 세부 규정이 어떻게 나왔는가.</strong> 중국산 배제 범위가 컨테이너·시스템 전체로 확대되는지가 수혜 강도를 결정한다.</li>
+  </ul>
+</section>
+
+<div class="srcs">
+  <h2>데이터 출처와 계산 근거</h2>
+  <dl>
+    <dt>재무</dt><dd>DART 전자공시 <span class="num">fnlttSinglAcntAll</span> API, 2015~2026년 연도×보고서코드 38건 수집. 연결(CFS) 기준. 분기 수치는 <span class="num">thstrm_amount</span>(당분기 3개월)이며, 누적치(<span class="num">thstrm_add_amount</span>)와 대조해 성격을 확정했다.</dd>
+    <dt>사업·부문</dt><dd>사업보고서(2025.12, 접수 20260323) 및 반기보고서(2026.06, 접수 20260814) <span class="num">document.xml</span> 원문 평문화.</dd>
+    <dt>계약·자금조달</dt><dd>2023-01 이후 전체 공시 369건 중 단일판매·공급계약, 전환사채·유상증자 결정 36건 원문 파싱.</dd>
+    <dt>시세</dt><dd>네이버 금융 <span class="num">integration</span> API 및 <span class="num">siseJson</span> (2026-09-04 종가 기준).</dd>
+    <dt>증권사 시각</dt><dd>텔레그램 리포트 아카이브 93,588건 전문검색. 2026년 서진시스템 언급 77건, 이 중 전용 커버리지 15건을 본문까지 확인했다.</dd>
+    <dt>교차검증</dt><dd>이 문서에 실린 파생 수치 <b>37개 항목</b>을 원자료에서 재계산해 대조했고 <b>불일치 0건</b>을 확인한 뒤 게시했다. 부문별 매출 합계가 연결 매출과 일치하는지, 시가총액이 주가×주식수와 맞는지, CB 희석주식수가 권면÷전환가와 맞는지 등을 포함한다.</dd>
+    <dt>확인 못한 것</dt><dd>삼성SDI 인클로저 계약과 Fluence 계약은 공시로 확인되지 않아 ‘업계·언론 확인 사항’으로 구분했다. 에이스엔지니어링은 비상장이며 DART 재무 데이터가 없어 서진시스템 계약 공시에 기재된 2024년 매출(6,340억)만 인용했다.</dd>
+  </dl>
+  <div class="disc">이 문서는 공개된 공시·시세·증권사 자료를 정리한 개인 분석 기록이며 <strong>투자권유가 아니다</strong>. 특정 종목의 매수·매도를 권하지 않는다. 수치는 작성 시점(2026-09-04) 기준이며 이후 공시로 달라질 수 있다. 투자 판단과 그 결과는 투자자 본인에게 귀속된다.</div>
+</div>
+
+</div>
+
+<div class="tip" id="tip" role="status" aria-live="polite"></div>
+
+<script>
+(function(){
+"use strict";
+var css = getComputedStyle(document.documentElement);
+function T(n){ return css.getPropertyValue(n).trim(); }
+function tok(){ return {
+  ink:T('--ink'), ink2:T('--ink-2'), grey:T('--grey'), line:T('--line'),
+  line2:T('--line-2'), steel:T('--steel'), copper:T('--copper'),
+  pos:T('--pos'), neg:T('--neg'), card:T('--card'), paper:T('--paper')
+};}
+var C = tok();
+var SEG_COLORS = ['#2d5f7c','#a35c2a','#5b8c6e','#8a7ca8','#9aa3ac'];
+var SEG_DARK   = ['#7db4d0','#d99361','#8fc4a4','#b3a6d0','#7d858f'];
+function segColors(){
+  var dark = matchMedia('(prefers-color-scheme: dark)').matches;
+  var stamp = document.documentElement.getAttribute('data-theme');
+  if (stamp === 'dark') dark = true;
+  if (stamp === 'light') dark = false;
+  return dark ? SEG_DARK : SEG_COLORS;
+}
+function el(tag, attrs, text){
+  var e = document.createElementNS('http://www.w3.org/2000/svg', tag);
+  for (var k in attrs) e.setAttribute(k, attrs[k]);
+  if (text != null) e.textContent = text;
+  return e;
+}
+function fmt(n){ return n.toLocaleString('ko-KR'); }
+
+/* ---------------- tooltip ---------------- */
+var tip = document.getElementById('tip'), tipOn = false;
+function showTip(html, x, y){
+  tip.innerHTML = html; tip.style.opacity = '1'; tipOn = true;
+  var r = tip.getBoundingClientRect();
+  var left = x + 14, top = y - r.height - 12;
+  if (left + r.width > innerWidth - 10) left = x - r.width - 14;
+  if (left < 10) left = 10;
+  if (top < 10) top = y + 18;
+  if (top + r.height > innerHeight - 10) top = innerHeight - r.height - 10;
+  tip.style.left = left + 'px'; tip.style.top = top + 'px';
+}
+function hideTip(){ if (tipOn){ tip.style.opacity = '0'; tipOn = false; } }
+addEventListener('scroll', hideTip, {passive:true});
+addEventListener('pointerdown', function(e){
+  if (!e.target.closest || !e.target.closest('.chart')) hideTip();
+}, true);
+
+function bindHits(svg, hits){
+  var down = false;
+  function at(e){
+    var best = null, bd = 1e9;
+    var r = svg.getBoundingClientRect();
+    var px = e.clientX - r.left, py = e.clientY - r.top;
+    for (var i=0;i<hits.length;i++){
+      var h = hits[i];
+      var dx = px - h.x, dy = py - h.y;
+      var d = h.band ? Math.abs(dx) : Math.sqrt(dx*dx + dy*dy);
+      if (d < bd){ bd = d; best = h; }
+    }
+    if (best && bd < (best.band ? best.band : 34)) showTip(best.html, e.clientX, e.clientY);
+    else hideTip();
+  }
+  svg.addEventListener('pointerdown', function(e){ down = true; at(e); });
+  svg.addEventListener('pointermove', function(e){
+    if (e.pointerType === 'mouse' || down) at(e);
+  });
+  svg.addEventListener('pointerup', function(){ down = false; });
+  svg.addEventListener('pointercancel', function(){ down = false; hideTip(); });
+  svg.addEventListener('pointerleave', function(e){
+    if (e.pointerType === 'mouse') hideTip();
+    down = false;
+  });
+}
+
+/* ---------------- chart 1: 부문 구성 ---------------- */
+var MIX = {
+  labels: ['FY23','FY24','FY25','1H26'],
+  series: [
+    {name:'ESS 장비',    v:[2744, 6360, 3978, 2067]},
+    {name:'반도체 장비',  v:[1394, 1943, 2913, 3086]},
+    {name:'통신장비',    v:[1385, 1232, 1316,  672]},
+    {name:'전기차·배터리',v:[1048, 1122,  718,  468]},
+    {name:'기타',       v:[1215, 1480, 1739,  611]}
+  ]
+};
+function drawMix(svg, W){
+  svg.textContent = '';
+  var narrow = W < 560;
+  var padL = narrow ? 8 : 12, padR = narrow ? 8 : 12;
+  var padT = 16, labelH = 46, barH = narrow ? 30 : 34, gap = narrow ? 26 : 30;
+  var n = MIX.labels.length;
+  var H = padT + n*(barH + gap) + 6;
+  var innerW = W - padL - padR;
+  var cols = segColors();
+  var hits = [];
+  svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+  svg.setAttribute('height', H);
+
+  for (var i=0;i<n;i++){
+    var tot = 0, s;
+    for (s=0;s<MIX.series.length;s++) tot += MIX.series[s].v[i];
+    var y = padT + i*(barH + gap) + 18;
+    svg.appendChild(el('text', {x:padL, y:y-6, fill:C.ink2,
+      'font-size':narrow?11.5:12.5, 'font-weight':600,
+      'font-family':'IBM Plex Mono, monospace'}, MIX.labels[i]));
+    svg.appendChild(el('text', {x:W-padR, y:y-6, fill:C.grey,
+      'font-size':narrow?11:11.5, 'text-anchor':'end',
+      'font-family':'IBM Plex Mono, monospace'}, fmt(tot) + '억'));
+    var x = padL;
+    for (s=0;s<MIX.series.length;s++){
+      var v = MIX.series[s].v[i];
+      var w = innerW * v / tot;
+      svg.appendChild(el('rect', {x:x, y:y, width:Math.max(w,0.6), height:barH,
+        fill:cols[s], rx:1.5}));
+      var pct = v/tot*100;
+      if (w > (narrow ? 42 : 50)){
+        svg.appendChild(el('text', {x:x + w/2, y:y + barH/2 + 4.5,
+          fill:'#fff', 'font-size':narrow?10.5:11.5, 'text-anchor':'middle',
+          'font-weight':600, 'font-family':'IBM Plex Mono, monospace'},
+          pct.toFixed(1) + '%'));
+      }
+      hits.push({x:x + w/2, y:y + barH/2, band:Math.max(w/2, 9),
+        html:'<b>' + MIX.labels[i] + ' · ' + MIX.series[s].name + '</b><br>' +
+             '<span class="k">매출</span> ' + fmt(v) + '억<br>' +
+             '<span class="k">비중</span> ' + pct.toFixed(1) + '%'});
+      x += w;
+    }
+  }
+  bindHits(svg, hits);
+  var lg = document.getElementById('l-mix');
+  if (!lg.dataset.done){
+    for (var s2=0;s2<MIX.series.length;s2++){
+      var sp = document.createElement('span');
+      sp.innerHTML = '<i style="background:' + cols[s2] + '"></i>' + MIX.series[s2].name;
+      lg.appendChild(sp);
+    }
+    lg.dataset.done = '1';
+  } else {
+    var is = lg.querySelectorAll('i');
+    for (var s3=0;s3<is.length;s3++) is[s3].style.background = cols[s3];
+  }
+  return H;
+}
+
+/* ---------------- chart 2: 분기 매출 · OPM ---------------- */
+var Q = [
+  {l:'1Q25', rev:2813, op:209},
+  {l:'2Q25', rev:2586, op:-60},
+  {l:'3Q25', rev:2155, op:-373},
+  {l:'4Q25', rev:3109, op:235},
+  {l:'1Q26', rev:2802, op:-330},
+  {l:'2Q26', rev:4102, op:-194}
+];
+function drawQ(svg, W){
+  svg.textContent = '';
+  var narrow = W < 560;
+  var padL = narrow ? 34 : 44, padR = narrow ? 34 : 46, padT = 18, padB = 34;
+  var H = narrow ? 232 : 268;
+  var iw = W - padL - padR, ih = H - padT - padB;
+  svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+  svg.setAttribute('height', H);
+  var maxR = 4500, minM = -14, maxM = 10;
+  var yR = function(v){ return padT + ih - (v/maxR)*ih; };
+  var yM = function(v){ return padT + ih - ((v-minM)/(maxM-minM))*ih; };
+  var bw = iw/Q.length, bar = bw * (narrow ? 0.5 : 0.44);
+  var hits = [], i, t;
+
+  var ticks = narrow ? [0,1500,3000,4500] : [0,1000,2000,3000,4000];
+  for (i=0;i<ticks.length;i++){
+    t = ticks[i];
+    svg.appendChild(el('line', {x1:padL, y1:yR(t), x2:W-padR, y2:yR(t),
+      stroke:C.line, 'stroke-width':1}));
+    svg.appendChild(el('text', {x:padL-7, y:yR(t)+4, fill:C.grey,
+      'font-size':narrow?10:11, 'text-anchor':'end',
+      'font-family':'IBM Plex Mono, monospace'}, fmt(t)));
+  }
+  svg.appendChild(el('line', {x1:padL, y1:yM(0), x2:W-padR, y2:yM(0),
+    stroke:C.line2, 'stroke-width':1, 'stroke-dasharray':'3 3'}));
+
+  var pts = [];
+  for (i=0;i<Q.length;i++){
+    var cx = padL + bw*i + bw/2;
+    var h = ih - (yR(Q[i].rev) - padT);
+    svg.appendChild(el('rect', {x:cx-bar/2, y:yR(Q[i].rev), width:bar,
+      height:Math.max(h,1), fill:C.steel, rx:2, opacity:0.88}));
+    svg.appendChild(el('text', {x:cx, y:H-padB+16, fill:C.ink2,
+      'font-size':narrow?10:11.5, 'text-anchor':'middle',
+      'font-family':'IBM Plex Mono, monospace'}, Q[i].l));
+    var m = Q[i].op / Q[i].rev * 100;
+    pts.push([cx, yM(m), m]);
+  }
+  var d = '';
+  for (i=0;i<pts.length;i++) d += (i ? ' L' : 'M') + pts[i][0] + ' ' + pts[i][1];
+  svg.appendChild(el('path', {d:d, fill:'none', stroke:C.copper, 'stroke-width':2,
+    'stroke-linejoin':'round'}));
+  for (i=0;i<pts.length;i++){
+    svg.appendChild(el('circle', {cx:pts[i][0], cy:pts[i][1], r:narrow?3.6:4.2,
+      fill:pts[i][2] < 0 ? C.neg : C.pos, stroke:C.card, 'stroke-width':1.6}));
+    svg.appendChild(el('text', {x:pts[i][0], y:pts[i][1] + (pts[i][2] < 0 ? 17 : -11),
+      fill:pts[i][2] < 0 ? C.neg : C.pos, 'font-size':narrow?9.5:10.5,
+      'text-anchor':'middle', 'font-weight':600,
+      'font-family':'IBM Plex Mono, monospace'}, pts[i][2].toFixed(1) + '%'));
+    hits.push({x:pts[i][0], y:padT + ih/2, band:bw/2,
+      html:'<b>' + Q[i].l + '</b><br>' +
+           '<span class="k">매출</span> ' + fmt(Q[i].rev) + '억<br>' +
+           '<span class="k">영업손익</span> ' + fmt(Q[i].op) + '억<br>' +
+           '<span class="k">영업이익률</span> ' + pts[i][2].toFixed(1) + '%'});
+  }
+  svg.appendChild(el('text', {x:padL, y:12, fill:C.grey, 'font-size':10.5,
+    'font-family':'IBM Plex Mono, monospace'}, '억원'));
+  svg.appendChild(el('text', {x:W-padR, y:12, fill:C.copper, 'font-size':10.5,
+    'text-anchor':'end', 'font-family':'IBM Plex Mono, monospace'}, '영업이익률'));
+  bindHits(svg, hits);
+  return H;
+}
+
+/* ---------------- chart 3: 주가 ---------------- */
+var PX = [["20240902",24650],["20240909",24250],["20240919",26250],["20240926",27400],["20241007",29350],["20241015",29700],["20241022",26000],["20241029",28350],["20241105",28400],["20241112",30050],["20241119",29100],["20241126",27450],["20241203",27950],["20241210",27900],["20241217",28800],["20241224",26600],["20250103",27950],["20250110",24650],["20250117",24350],["20250124",24900],["20250206",24000],["20250213",23300],["20250220",24100],["20250227",24000],["20250307",21350],["20250314",22450],["20250321",22900],["20250328",22100],["20250404",19280],["20250411",18260],["20250418",19910],["20250425",20850],["20250507",21400],["20250514",22400],["20250521",24100],["20250528",22450],["20250605",22600],["20250613",20550],["20250620",21150],["20250627",21150],["20250704",22000],["20250711",22350],["20250718",21000],["20250725",22350],["20250801",20500],["20250808",22350],["20250818",19120],["20250825",18860],["20250901",18780],["20250908",20200],["20250915",22350],["20250922",22250],["20250929",21850],["20251013",21900],["20251020",26900],["20251027",28650],["20251103",27050],["20251110",25000],["20251117",22900],["20251124",24800],["20251201",25700],["20251208",26450],["20251215",26500],["20251222",26500],["20251230",25300],["20260108",23950],["20260115",27450],["20260122",32050],["20260129",38200],["20260205",34400],["20260212",36850],["20260224",36750],["20260304",37400],["20260311",44900],["20260318",45200],["20260325",49000],["20260401",46500],["20260408",44350],["20260415",51300],["20260422",53200],["20260429",56700],["20260508",66100],["20260515",67000],["20260522",77300],["20260601",75100],["20260609",73600],["20260616",74300],["20260623",56700],["20260630",52500],["20260707",45750],["20260714",37700],["20260722",36250],["20260729",29550],["20260805",37500],["20260812",37250],["20260820",38800],["20260827",41350],["20260903",33200],["20260904",33650]];
+function drawPx(svg, W){
+  svg.textContent = '';
+  var narrow = W < 560;
+  var padL = narrow ? 40 : 52, padR = narrow ? 12 : 16, padT = 16, padB = 30;
+  var H = narrow ? 210 : 250;
+  var iw = W - padL - padR, ih = H - padT - padB;
+  svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+  svg.setAttribute('height', H);
+  var vals = PX.map(function(p){ return p[1]; });
+  var mx = Math.max.apply(null, vals), mn = Math.min.apply(null, vals);
+  var top = Math.ceil(mx/10000)*10000, bot = 0;
+  var X = function(i){ return padL + iw * i/(PX.length-1); };
+  var Y = function(v){ return padT + ih - (v-bot)/(top-bot)*ih; };
+  var i, t;
+  var step = narrow ? 20000 : 20000;
+  for (t=bot; t<=top; t+=step){
+    svg.appendChild(el('line', {x1:padL, y1:Y(t), x2:W-padR, y2:Y(t),
+      stroke:C.line, 'stroke-width':1}));
+    svg.appendChild(el('text', {x:padL-7, y:Y(t)+4, fill:C.grey,
+      'font-size':narrow?10:11, 'text-anchor':'end',
+      'font-family':'IBM Plex Mono, monospace'},
+      narrow ? (t/10000) + '만' : fmt(t)));
+  }
+  var d = '', a = '';
+  for (i=0;i<PX.length;i++){
+    d += (i ? ' L' : 'M') + X(i).toFixed(1) + ' ' + Y(PX[i][1]).toFixed(1);
+  }
+  a = d + ' L' + X(PX.length-1).toFixed(1) + ' ' + Y(bot) + ' L' + X(0).toFixed(1) + ' ' + Y(bot) + ' Z';
+  var gid = 'pxg';
+  var defs = el('defs', {});
+  var lg = el('linearGradient', {id:gid, x1:'0', y1:'0', x2:'0', y2:'1'});
+  lg.appendChild(el('stop', {offset:'0%', 'stop-color':C.steel, 'stop-opacity':'0.24'}));
+  lg.appendChild(el('stop', {offset:'100%', 'stop-color':C.steel, 'stop-opacity':'0'}));
+  defs.appendChild(lg); svg.appendChild(defs);
+  svg.appendChild(el('path', {d:a, fill:'url(#' + gid + ')', stroke:'none'}));
+  svg.appendChild(el('path', {d:d, fill:'none', stroke:C.steel, 'stroke-width':1.9,
+    'stroke-linejoin':'round'}));
+
+  var last = PX.length-1;
+  svg.appendChild(el('circle', {cx:X(last), cy:Y(PX[last][1]), r:4,
+    fill:C.steel, stroke:C.card, 'stroke-width':1.8}));
+
+  var yrs = {};
+  for (i=0;i<PX.length;i++){
+    var ym = PX[i][0].slice(0,4) + '-' + PX[i][0].slice(4,6);
+    if (['2025-01','2025-07','2026-01','2026-07'].indexOf(ym) >= 0 && !yrs[ym]){
+      yrs[ym] = 1;
+      svg.appendChild(el('text', {x:X(i), y:H-padB+16, fill:C.grey,
+        'font-size':narrow?10:11, 'text-anchor':'middle',
+        'font-family':'IBM Plex Mono, monospace'},
+        narrow ? ym.slice(2).replace('-','.') : ym));
+    }
+  }
+  var hits = [];
+  for (i=0;i<PX.length;i++){
+    hits.push({x:X(i), y:Y(PX[i][1]), band:iw/PX.length/2 + 3,
+      html:'<b>' + PX[i][0].slice(0,4) + '-' + PX[i][0].slice(4,6) + '-' + PX[i][0].slice(6) + '</b><br>' +
+           '<span class="k">종가</span> ' + fmt(PX[i][1]) + '원'});
+  }
+  bindHits(svg, hits);
+  return H;
+}
+
+/* ---------------- render / resize ---------------- */
+var CHARTS = [
+  {id:'c-mix', fn:drawMix},
+  {id:'c-q',   fn:drawQ},
+  {id:'c-px',  fn:drawPx}
+];
+function renderAll(){
+  C = tok();
+  for (var i=0;i<CHARTS.length;i++){
+    var svg = document.getElementById(CHARTS[i].id);
+    if (!svg) continue;
+    var W = Math.max(svg.parentNode.clientWidth, 260);
+    svg.setAttribute('width', W);
+    CHARTS[i].fn(svg, W);
+  }
+}
+renderAll();
+var rt;
+addEventListener('resize', function(){
+  clearTimeout(rt); rt = setTimeout(renderAll, 140);
+});
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change', renderAll);
+})();
+</script>
+</body>
+</html>

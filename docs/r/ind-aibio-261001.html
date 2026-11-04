@@ -1,0 +1,1062 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<title>AI바이오 밸류체인 지도</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@600;700&family=Noto+Sans+KR:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+:root{
+  color-scheme:light;
+  --bg:#F3F4F7; --surface:#FFFFFF; --surface2:#F7F8FB; --surface3:#E9EBF2;
+  --ink:#15172B; --ink2:#454A61; --muted:#737A90;
+  --line:#D8DCE6; --line2:#BFC5D3;
+  --accent:#1F5F8B; --accent-soft:#E3EEF7;
+  --pos:#1B6E52; --neg:#B23A2C;
+  --c1:#1F5F8B; --c2:#E8792B; --c3:#1baf7a; --c4:#8B93A7; --c5:#7B4FB3;
+  --c1-soft:rgba(31,95,139,.12); --c2-soft:rgba(232,121,43,.14);
+  --shadow:0 1px 2px rgba(21,23,43,.06), 0 10px 28px rgba(21,23,43,.06);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#0F1118; --surface:#171A24; --surface2:#1D2130; --surface3:#252A3B;
+    --ink:#ECEEF5; --ink2:#B4BACB; --muted:#8D94A8;
+    --line:#2A2F40; --line2:#3B4155;
+    --accent:#7FB5E0; --accent-soft:#1E2E3E;
+    --pos:#4FB58C; --neg:#E07A5F;
+    --c1:#5B9BD5; --c2:#F08A3E; --c3:#2BC48E; --c4:#7C8499; --c5:#A283D6;
+    --c1-soft:rgba(91,155,213,.16); --c2-soft:rgba(240,138,62,.18);
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 28px rgba(0,0,0,.3);
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#0F1118; --surface:#171A24; --surface2:#1D2130; --surface3:#252A3B;
+  --ink:#ECEEF5; --ink2:#B4BACB; --muted:#8D94A8;
+  --line:#2A2F40; --line2:#3B4155;
+  --accent:#7FB5E0; --accent-soft:#1E2E3E;
+  --pos:#4FB58C; --neg:#E07A5F;
+  --c1:#5B9BD5; --c2:#F08A3E; --c3:#2BC48E; --c4:#7C8499; --c5:#A283D6;
+  --c1-soft:rgba(91,155,213,.16); --c2-soft:rgba(240,138,62,.18);
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 28px rgba(0,0,0,.3);
+}
+html{color-scheme:light dark}
+*{box-sizing:border-box}
+body{margin:0; background:var(--bg); color:var(--ink);
+  font-family:"Noto Sans KR","Malgun Gothic",system-ui,sans-serif; font-size:15.5px; line-height:1.75;
+  -webkit-text-size-adjust:100%}
+img{max-width:100%} [hidden]{display:none!important}
+.mono{font-family:"IBM Plex Mono","Consolas",ui-monospace,monospace; font-variant-numeric:tabular-nums}
+.serif{font-family:"Noto Serif KR","Noto Serif","Batang",serif}
+.wrap{max-width:920px; margin:0 auto; padding:0 22px 90px}
+a{color:var(--accent)}
+p{margin:0 0 14px} .lede{font-size:16.5px; color:var(--ink2)}
+ul,ol{margin:0 0 14px; padding-left:20px} li{margin-bottom:7px}
+strong,b{font-weight:700}
+.small{font-size:13px; color:var(--muted); line-height:1.6}
+.pos{color:var(--pos)} .neg{color:var(--neg)}
+
+.mast{background:var(--surface); border-bottom:1px solid var(--line)}
+.mast-in{max-width:920px; margin:0 auto; padding:34px 22px 26px}
+.eyebrow{font-family:"IBM Plex Mono",monospace; font-size:11.5px; letter-spacing:.06em; color:var(--muted)}
+h1{font-family:"Noto Serif KR",serif; font-size:clamp(30px,6.6vw,48px); line-height:1.18; margin:.3em 0 .15em; font-weight:700; letter-spacing:-.015em; text-wrap:balance}
+h1 .em{color:var(--accent)}
+.sub{color:var(--ink2); font-size:15.5px; max-width:64ch; margin:.4em 0 0}
+.tickerline{display:flex; flex-wrap:wrap; gap:6px 16px; align-items:baseline; margin-top:14px; font-family:"IBM Plex Mono",monospace; font-size:12.5px; color:var(--muted)}
+.tickerline b{color:var(--ink); font-weight:600}
+.stats{display:grid; grid-template-columns:repeat(auto-fit,minmax(138px,1fr)); gap:1px; background:var(--line); border:1px solid var(--line); margin-top:24px}
+.stat{background:var(--surface); padding:13px 14px 14px; min-width:0}
+.stat .k{font-family:"IBM Plex Mono",monospace; font-size:11px; letter-spacing:.02em; color:var(--muted)}
+.stat .v{font-family:"IBM Plex Mono",monospace; font-weight:600; font-size:clamp(19px,4.6vw,24px); line-height:1.25; margin-top:5px; overflow-wrap:anywhere}
+.stat .n{font-size:11.5px; color:var(--muted); margin-top:2px; line-height:1.4}
+.toc{display:flex; flex-wrap:wrap; gap:8px; margin:22px 0 0}
+.toc a{font-size:12.5px; text-decoration:none; color:var(--ink2); background:var(--surface); border:1px solid var(--line); padding:5px 11px; border-radius:999px}
+.toc a:hover{border-color:var(--accent); color:var(--accent)}
+
+section{margin-top:56px; scroll-margin-top:16px}
+.sec-h{display:flex; gap:14px; align-items:baseline; border-bottom:2px solid var(--ink); padding-bottom:9px; margin-bottom:20px}
+.sec-n{font-family:"IBM Plex Mono",monospace; font-size:12px; font-weight:600; color:var(--accent); letter-spacing:.06em; padding-top:4px}
+.sec-h h2{margin:0; font-family:"Noto Serif KR",serif; font-size:clamp(20px,4.2vw,26px); font-weight:700; letter-spacing:-.01em; text-wrap:balance; flex:1; min-width:0}
+h3{font-size:17px; font-weight:700; margin:32px 0 8px; letter-spacing:-.01em}
+h4{font-size:14.5px; font-weight:700; margin:20px 0 6px; color:var(--ink2)}
+
+.take{border-left:3px solid var(--accent); background:var(--surface2); padding:14px 16px; margin:18px 0; font-size:14.5px}
+.take .lbl{font-family:"IBM Plex Mono",monospace; font-size:11px; letter-spacing:.03em; color:var(--accent); display:block; margin-bottom:5px; font-weight:600}
+.take p:last-child{margin-bottom:0}
+.keypoints{display:grid; gap:1px; background:var(--line); border:1px solid var(--line); margin:22px 0}
+.kp{background:var(--surface); padding:15px 17px; display:grid; grid-template-columns:30px 1fr; gap:12px}
+.kp .num{font-family:"IBM Plex Mono",monospace; font-size:12px; color:var(--accent); font-weight:600; padding-top:3px}
+.kp .txt{min-width:0} .kp .t{font-weight:700; margin-bottom:2px} .kp .d{font-size:14px; color:var(--ink2)}
+.grid2{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:16px 0}
+.pane{background:var(--surface); border:1px solid var(--line); padding:14px 16px; min-width:0}
+.pane h4{margin-top:0}
+.pane.yes{border-top:3px solid var(--pos)} .pane.no{border-top:3px solid var(--neg)}
+.pane ul{margin-bottom:0; padding-left:18px} .pane li{font-size:14px; margin-bottom:6px}
+
+.vc{display:grid; grid-template-columns:repeat(6,1fr); gap:6px; margin:16px 0}
+.vc .c{background:var(--surface); border:1px solid var(--line); padding:10px 9px; font-size:12.5px; line-height:1.45; min-width:0}
+.vc .c b{display:block; font-size:13px; margin-bottom:3px}
+.vc .c.me{border:2px solid var(--accent); background:var(--accent-soft)}
+.vc .c .who{color:var(--muted); font-size:11.5px; margin-top:4px}
+
+.tbl-scroll{overflow-x:auto; margin:16px -22px 20px; padding:0 22px; -webkit-overflow-scrolling:touch}
+table{border-collapse:collapse; width:100%; min-width:560px; font-size:13.5px}
+caption{caption-side:top; text-align:left; font-family:"IBM Plex Mono",monospace; font-size:11.5px; letter-spacing:.02em; color:var(--muted); padding-bottom:8px}
+th,td{padding:8px 10px; border-bottom:1px solid var(--line); text-align:left; vertical-align:top}
+th.num,td.num{text-align:right; white-space:nowrap; font-family:"IBM Plex Mono",monospace; font-variant-numeric:tabular-nums}
+thead th{border-bottom:1.5px solid var(--line2); font-weight:600; color:var(--ink2); font-size:12.5px}
+tbody tr:hover{background:var(--surface2)}
+tfoot td{border-top:1.5px solid var(--line2); font-weight:600}
+td.hl{background:var(--accent-soft)}
+tr.sum td{font-weight:700; background:var(--surface2)}
+.tnote{font-size:12.5px; color:var(--muted); margin-top:-10px; margin-bottom:16px; line-height:1.55}
+.bar{display:inline-block; height:9px; background:var(--c1); vertical-align:middle; border-radius:2px; margin-right:6px}
+.bar.o{background:var(--c2)}
+
+.chart{background:var(--surface); border:1px solid var(--line); padding:14px 14px 10px; margin:16px 0 8px}
+.chart .ct{font-weight:700; font-size:14.5px; margin:0 0 2px}
+.chart .cs{font-size:12.5px; color:var(--muted); margin:0 0 8px}
+.chart svg{display:block; width:100%; height:auto; touch-action:pan-y}
+.chart text{font-family:"IBM Plex Mono",monospace; font-size:11px; fill:var(--ink2)}
+.chart text.lab{font-family:"Noto Sans KR",sans-serif; fill:var(--ink)}
+.chart text.mut{fill:var(--muted)}
+.chart .grid{stroke:var(--line); stroke-width:1}
+.chart .axis{stroke:var(--line2); stroke-width:1}
+.legend{display:flex; flex-wrap:wrap; gap:6px 16px; font-size:12px; color:var(--ink2); margin:6px 0 4px}
+.legend i{display:inline-block; width:12px; height:12px; border-radius:2px; vertical-align:-1px; margin-right:6px}
+.tip{position:fixed; z-index:50; pointer-events:none; background:var(--ink); color:var(--bg); font-size:12px; line-height:1.5; padding:7px 10px; border-radius:4px; max-width:min(260px,calc(100vw - 20px)); box-shadow:var(--shadow); display:none; font-family:"IBM Plex Mono",monospace}
+.tip b{font-weight:600}
+
+.risk{display:grid; gap:10px; margin:14px 0}
+.risk .r{display:grid; grid-template-columns:64px 1fr; gap:12px; background:var(--surface); border:1px solid var(--line); padding:12px 14px}
+.chip{font-family:"IBM Plex Mono",monospace; font-size:10.5px; letter-spacing:.08em; padding:3px 7px; border-radius:3px; display:inline-block; text-align:center; align-self:start; white-space:nowrap}
+.chip.h{background:var(--neg); color:#fff} .chip.m{background:var(--c2); color:#fff} .chip.l{background:var(--c4); color:#fff} .chip.u{background:var(--pos); color:#fff}
+.risk .t{font-weight:700} .risk .d{font-size:14px; color:var(--ink2)}
+
+.qs{display:grid; gap:12px; margin:16px 0}
+.q{background:var(--surface); border:1px solid var(--line); border-left:4px solid var(--accent); padding:13px 16px}
+.q .qh{display:flex; gap:10px; align-items:baseline}
+.q .qn{font-family:"IBM Plex Mono",monospace; font-size:12px; color:var(--accent); font-weight:600}
+.q .qt{font-weight:700; font-size:15px}
+.q .why{font-size:13.5px; color:var(--ink2); margin:6px 0 0}
+.q .why b{color:var(--ink)}
+.tl{list-style:none; padding:0; margin:14px 0}
+.tl li{display:grid; grid-template-columns:96px 1fr; gap:12px; padding:8px 0; border-bottom:1px solid var(--line); font-size:14px}
+.tl .d{font-family:"IBM Plex Mono",monospace; font-size:12px; color:var(--muted); padding-top:3px}
+.check li{margin-bottom:9px}
+.src{font-size:12.5px; color:var(--muted); line-height:1.6} .src li{margin-bottom:4px}
+.foot{margin-top:60px; padding-top:18px; border-top:1px solid var(--line); font-size:12.5px; color:var(--muted); line-height:1.6}
+
+@media (max-width:620px){
+  body{font-size:14.5px}
+  .wrap{padding:0 14px 70px} .mast-in{padding:26px 14px 20px}
+  table{min-width:0; font-size:12.5px} th,td{padding:7px 7px}
+  .tbl-scroll{margin:14px -14px 18px; padding:0 14px}
+  .grid2{grid-template-columns:1fr}
+  .vc{grid-template-columns:repeat(2,1fr)}
+  .risk .r{grid-template-columns:56px 1fr}
+  .kp{grid-template-columns:24px 1fr; gap:9px}
+  .chart{padding:12px 10px 8px}
+  .tl li{grid-template-columns:78px 1fr}
+  .bar{display:none}
+}
+@media (max-width:400px){
+  .wrap{padding:0 11px 60px} .mast-in{padding:22px 11px 18px}
+  .tbl-scroll{margin:14px -11px 18px; padding:0 11px}
+  .stats{grid-template-columns:repeat(2,1fr)}
+}
+@media (prefers-reduced-motion:reduce){ *{transition:none!important; animation:none!important} }
+
+.wrap{padding-left:max(22px,env(safe-area-inset-left)); padding-right:max(22px,env(safe-area-inset-right))}
+.risk.verdict .r{grid-template-columns:96px 1fr}
+.stat .v.sm{font-size:clamp(15px,3.7vw,18px); line-height:1.35}
+.tl li span:last-child{min-width:0}
+@media (max-width:620px){ .wrap{padding-left:16px; padding-right:16px} .mast-in{padding-left:16px; padding-right:16px} .tbl-scroll{margin-left:-16px; margin-right:-16px; padding:0 16px} .risk.verdict .r{grid-template-columns:1fr; gap:6px} .risk.verdict .chip{justify-self:start} }
+</style>
+</head>
+<body>
+<div class="tip" id="tip" role="status" aria-live="polite"></div>
+
+<header class="mast">
+  <div class="mast-in">
+    <div class="eyebrow">INDUSTRY MAP · 미국 AI바이오 · 작성 2026-10-01</div>
+    <h1>AI바이오의 병목은 모델이 아니라 <span class="em">임상과, 데이터가 쌓이는 통로</span>다</h1>
+    <p class="sub">미국 AI바이오 밸류체인 7단계를 네 구간으로 묶고, 구간마다 널리 쓰이는 투자 논리 하나씩을 2026년 2분기 실적과 계약 원문으로 검증했다. 기업 추천이 아니라 산업 구조를 본다.</p>
+    <div class="tickerline">
+      <span>금액은 달러 기준</span>
+      <span>실적은 2026년 2분기(일부 회계분기), 시가총액은 <b>2026-09-30</b> 종가</span>
+      <span>※ 표시는 2차 출처나 단일 출처로만 확인한 수치</span>
+    </div>
+    <div class="stats">
+      <div class="stat"><div class="k">AI 발굴 신약 FDA 승인</div><div class="v">0건</div><div class="n">타깃과 분자를 모두 AI로 찾은 약 기준, 2026년 7월</div></div>
+      <div class="stat"><div class="k">임상 성공률</div><div class="v sm">1상 80~90%<br>2상 약 40%</div><div class="n">2상은 업계 평균과 같다</div></div>
+      <div class="stat"><div class="k">딜 총액 중 선급금</div><div class="v">4.1%</div><div class="n">2026년 상반기 $45.9B 중 $1.9B</div></div>
+      <div class="stat"><div class="k">10x 단일세포 소모품</div><div class="v">매출 +3%</div><div class="n">반응 수는 두 자릿수 증가. 단가 하락이 상쇄</div></div>
+      <div class="stat"><div class="k">Twist의 AI 관련 수주</div><div class="v">$25M → $50M</div><div class="n">FY25 → FY26. FY27 기대 $100M</div></div>
+      <div class="stat"><div class="k">시가총액, 연초 대비</div><div class="v sm">10x 5.7배<br>Twist 6.2배</div><div class="n">2025-12-31 → 2026-09-30</div></div>
+    </div>
+    <nav class="toc" aria-label="목차">
+      <a href="#s1">1 요약</a><a href="#s2">2 통념 바로잡기</a><a href="#s3">3 밸류체인과 돈의 흐름</a><a href="#s4">4 데이터 생산</a>
+      <a href="#s5">5 데이터 소유</a><a href="#s6">6 AI 타깃 발굴·설계</a><a href="#s7">7 검증·임상·진단</a><a href="#s8">8 정책과 자금</a>
+      <a href="#s9">9 주가가 먼저 간 곳</a><a href="#s10">10 가치는 어디에 쌓이나</a><a href="#s11">11 리스크</a><a href="#s12">12 확인할 것</a><a href="#s13">13 걸러낸 수치</a><a href="#s14">14 출처</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+<section id="s1">
+  <div class="sec-h"><span class="sec-n">01</span><h2>요약</h2></div>
+  <p class="lede">미국 AI바이오 산업을 아홉 문장으로 줄이면 다음과 같다.</p>
+  <div class="keypoints">
+    <div class="kp"><div class="num">1</div><div class="txt"><div class="t">돈을 내는 지갑은 넷이고, 구간마다 지갑이 다르다</div><div class="d">제약사 R&amp;D 예산, 미국 국립보건원(NIH), 벤처·주식시장, 보험 수가다. 2026년에 가장 빨리 크는 구간은 진단(매출 +22~45%)인데, 이 구간만 보험 수가에서 돈이 나온다. AI 열기와 성장률은 같은 방향이 아니다.</div></div></div>
+    <div class="kp"><div class="num">2</div><div class="txt"><div class="t">삽과 곡괭이 논리는 툴 전체로는 숫자에 안 보인다</div><div class="d">대형 툴 기업의 유기적 성장은 +3~7%이고 동인은 바이오공정과 임상 진단이다. Illumina는 임상 소모품 +15%, 연구용 -7%였다. 2분기 실적 자료에서 AI 수요를 금액으로 밝힌 대형 툴 기업은 없다.</div></div></div>
+    <div class="kp"><div class="num">3</div><div class="txt"><div class="t">AI용 데이터 수요는 물량을 늘리고 단가를 깎는다</div><div class="d">10x Genomics는 단일세포 반응 수가 두 자릿수로 늘었는데 소모품 매출은 +3%다. 대형 세포 아틀라스 세 곳(Arc, CZI, Tahoe)은 시퀀싱을 Illumina가 아니라 저가 도전자 Ultima에 맡겼다. 게놈당 가격은 $80~150에서 경쟁 중이다.</div></div></div>
+    <div class="kp"><div class="num">4</div><div class="txt"><div class="t">예외는 DNA 합성이다</div><div class="d">AI가 설계한 서열은 실제 DNA로 만들어야 검증된다. Twist는 AI 관련 수주를 FY25 약 $25M, FY26 약 $50M, FY27 기대 약 $100M으로 직접 밝혔다. 그래도 FY26 매출의 약 11%다.</div></div></div>
+    <div class="kp"><div class="num">5</div><div class="txt"><div class="t">데이터의 해자는 데이터셋이 아니라 통로다</div><div class="d">세포주 교란 데이터는 수억 세포가 무료로 풀렸다. 값이 유지되는 것은 환자 동의 때문에 공개될 수 없는 임상 연계 데이터와 제약사 내부의 실패 데이터다. 데이터 매출이 확인되는 상장사는 사실상 Tempus 하나이고, 그 비중도 매출의 24%다.</div></div></div>
+    <div class="kp"><div class="num">6</div><div class="txt"><div class="t">AI가 설계한 약은 1상까지만 낫다</div><div class="d">1상 성공률은 80~90%로 업계 평균(40~65%)보다 높다. 2상은 약 40%로 평균과 같다. AI는 약이 될 만한 분자를 잘 만들지만, 그 표적을 건드리면 병이 낫는지는 여전히 임상이 답한다.</div></div></div>
+    <div class="kp"><div class="num">7</div><div class="txt"><div class="t">딜 헤드라인의 96%는 아직 받지 않은 돈이다</div><div class="d">2026년 상반기 AI 신약 파트너십 총액은 $45.9B, 선급금은 $1.9B다. 그사이 Lilly는 GPU 1,016개 슈퍼컴퓨터를 가동했고 OpenAI, Anthropic, AWS가 생명과학 도구를 내놨다. 모델 접근권은 범용품이 되어 간다.</div></div></div>
+    <div class="kp"><div class="num">8</div><div class="txt"><div class="t">병목은 임상에 있고, 수혜는 고르지 않다</div><div class="d">신약개발 지출의 약 70%가 임상이다. 임상 CRO 상위(IQVIA, Medpace)는 수주가 강하지만 직접 원인은 자금 사이클이다. 동물 전임상은 FDA가 규정으로 줄이고 있다. Inotiv는 2026년 6월 파산보호를 신청했다.</div></div></div>
+    <div class="kp"><div class="num">9</div><div class="txt"><div class="t">주가는 실적보다 먼저 갔다</div><div class="d">연초 대비 시가총액이 10x 5.7배, Twist 6.2배, AbCellera 4.6배, Illumina 2.1배다. 같은 기간 10x의 매출 성장률은 +3%였다. 논리가 맞는 구간과 가격이 싼 구간은 다르다.</div></div></div>
+  </div>
+</section>
+
+<section id="s2">
+  <div class="sec-h"><span class="sec-n">02</span><h2>통념 바로잡기</h2></div>
+  <p>AI바이오를 설명할 때 자주 쓰이는 문장 가운데 단서가 필요한 것을 먼저 정리한다.</p>
+  <div class="tbl-scroll"><table>
+    <thead><tr><th>통념</th><th>확인된 사실</th><th>근거</th></tr></thead>
+    <tbody>
+      <tr><td>AI 신약개발이 늘면 툴 기업의 실험량과 매출이 함께 는다</td><td class="hl">대형 툴 기업 유기적 성장 +3~7%. 동인은 바이오공정, 임상 진단, 미국 내 생산 이전. AI 수요를 금액으로 밝힌 곳은 Twist와 GenScript뿐</td><td>각 사 2분기 실적</td></tr>
+      <tr><td>Illumina가 AI 학습용 데이터 생산의 표준 장비다</td><td class="hl">Arc, CZI, Tahoe의 대형 아틀라스는 모두 Ultima 장비로 시퀀싱했다. Illumina는 자체 아틀라스를 만들어 데이터 사업에 직접 들어갔다</td><td>각 기관 발표</td></tr>
+      <tr><td>AI가 만든 약은 임상 성공률이 높다</td><td class="hl">1상만 그렇다(80~90%). 2상은 약 40%로 평균과 같고, 3상 결과와 승인은 아직 없다</td><td>Jayatunga 외(2024), IQVIA(2026)</td></tr>
+      <tr><td>zasocitinib이 첫 AI 승인 신약이 된다</td><td class="hl">2016년경 시작한 물리 기반 계산 화학의 산물이다. 원개발사 Nimbus의 R&amp;D 대표가 "첫 AI 승인약이라는 표현은 쓰지 않겠다"고 했다</td><td>PharmaVoice 2026-09-25</td></tr>
+      <tr><td>Lilly와 Insilico가 $2.75B 계약을 맺었다</td><td class="hl">선급금은 $115M(4.2%)이다. 나머지는 개발·판매 단계에 도달해야 받는다</td><td>2026-03-29 발표</td></tr>
+      <tr><td>Tempus가 AstraZeneca에서 데이터 값으로 $200M을 받는다</td><td class="hl">$200M을 내는 쪽은 Pathos다(3년, 최대 절반은 주식 지급 가능). AstraZeneca가 내는 돈은 $35M이다</td><td>Tempus 8-K 2025-04</td></tr>
+      <tr><td>데이터가 많을수록 모델이 좋아진다</td><td class="hl">세포 2,200만 개 교란 데이터로 학습해도 딥러닝이 단순 선형 모델을 일관되게 넘지 못했다. 성능을 가른 것은 세포 수가 아니라 맥락의 다양성</td><td>Biohub·시카고대 2026-02</td></tr>
+      <tr><td>AI로 신약 개발 기간이 절반으로 줄었다</td><td class="hl">전임상 단축 수치는 전부 회사 발표다. AI 활용 기업의 창업부터 1상 진입까지 중앙값은 6.5년. 임상 기간은 업계 전체로 오히려 늘었다</td><td>ASCO 2026 초록※, IQVIA</td></tr>
+      <tr><td>BIOSECURE 법으로 중국 CDMO 일감이 미국으로 온다</td><td class="hl">WuXi AppTec 2026년 상반기 매출 +38.9%, 미국 매출 비중 약 77%※. 실제 금지는 빨라야 2028년 전후</td><td>회사 발표, Baker McKenzie</td></tr>
+      <tr><td>동물실험 축소로 전임상 CRO가 무너진다</td><td class="hl">Charles River는 수주 배율 1.19배※에 가이던스를 올렸다. 다만 영장류 비중이 큰 Inotiv는 파산했다. 기업마다 갈린다</td><td>각 사 공시</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="s3">
+  <div class="sec-h"><span class="sec-n">03</span><h2>밸류체인과 돈의 흐름</h2></div>
+  <p>환자 시료에서 시작해 데이터, 모델, 후보물질, 임상을 거쳐 다시 환자 데이터로 돌아오는 고리다. 일곱 단계를 돈을 내는 쪽이 비슷한 것끼리 네 구간으로 묶었다.</p>
+  <div class="tbl-scroll"><table>
+    <thead><tr><th>구간</th><th>하는 일</th><th>미국 중심 대표 기업</th><th>돈을 내는 쪽</th></tr></thead>
+    <tbody>
+      <tr><td><b>①② 데이터 생산</b><br><span class="small">시료·자동화, 시퀀싱·단일세포·단백질체·DNA 합성</span></td><td>생체 시료를 읽을 수 있는 데이터로 바꾸고, 설계된 서열을 실물로 만든다</td><td>Thermo Fisher, Danaher, Agilent, Illumina, 10x Genomics, PacBio, Twist, Azenta, Bruker. 비상장 Ultima, Element</td><td>제약사 R&amp;D, NIH와 대학, 병원 검사실</td></tr>
+      <tr><td><b>③ 데이터 소유·인프라</b><br><span class="small">저장·정제·표준화, 연구 소프트웨어, 컴퓨팅</span></td><td>데이터를 모으고 쓸 수 있게 다듬어 빌려주거나, 그 위에서 모델을 돌리게 한다</td><td>Tempus, Caris, Veeva, Schrödinger, Certara, NVIDIA, AWS. 비상장 Benchling, Flatiron(Roche), Dotmatics(Siemens)</td><td>제약사 R&amp;D</td></tr>
+      <tr><td><b>④⑤ AI 타깃 발굴·설계</b><br><span class="small">질병 기전, 표적, 저분자·항체·단백질 설계</span></td><td>어떤 표적을 건드릴지 정하고 약이 될 분자를 설계한다</td><td>Recursion, Relay, Absci, AbCellera, Generate. 비상장 Isomorphic, Xaira, Chai, Iambic, Lila. 빅파마 내부 조직</td><td>벤처·주식시장, 제약사 선급금</td></tr>
+      <tr><td><b>⑥⑦ 검증·임상·진단</b><br><span class="small">전임상, 임상시험, 생산, 환자 진단</span></td><td>후보물질이 안전하고 듣는지 사람에게서 확인하고, 환자를 찾아 치료한다</td><td>IQVIA, ICON, Medpace, Charles River, Labcorp, Thermo(PPD). 진단은 Natera, Guardant, Tempus, Caris</td><td>제약사 R&amp;D. 진단은 보험 수가</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>지갑이 다르면 성장률이 다르다</h3>
+  <p>같은 "AI바이오"라도 누가 돈을 내는지에 따라 2026년 성적이 갈렸다. 아래 그림은 구간별 주요 상장사의 최근 분기 매출 증가율이다. AI 신약 설계 기업은 매출이 선급금 인식에 따라 크게 흔들려서 뺐다.</p>
+  <div class="chart" id="ch-growth">
+    <p class="ct">가장 빨리 크는 곳은 보험 수가를 받는 진단이다</p>
+    <p class="cs">최근 분기 매출 증가율(전년 동기 대비, %). 보고 기준이며 괄호 안은 유기적 성장률</p>
+    <div class="legend"><span><i style="background:var(--c1)"></i>①② 데이터 생산</span><span><i style="background:var(--c5)"></i>③ 데이터 소프트웨어</span><span><i style="background:var(--c2)"></i>⑥⑦ 검증(CRO)</span><span><i style="background:var(--c3)"></i>⑦ 진단</span></div>
+    <svg role="img" aria-label="구간별 주요 상장사 최근 분기 매출 증가율 막대 그래프"></svg>
+  </div>
+  <p class="tnote">출처: 각 사 2026년 2분기 실적 발표(Agilent는 7월, Twist와 Azenta는 6월, Veeva는 7월 종료 분기). 10x는 일회성 합의금을 뺀 기준. Labcorp는 바이오제약 실험실 서비스 부문.</p>
+
+  <h3>신약 하나에 드는 돈은 어디에 쓰이나</h3>
+  <p>AI가 직접 바꾸는 단계는 발굴과 전임상이다. 그런데 돈의 대부분은 그 뒤에 쓰인다.</p>
+  <div class="tbl-scroll"><table>
+    <caption>승인 신약 1개당 실지출 구성 (DiMasi 외 2016, 2013년 달러)</caption>
+    <thead><tr><th>단계</th><th class="num">금액($M)</th><th class="num">비중</th><th>AI의 현재 영향</th></tr></thead>
+    <tbody>
+      <tr><td>발굴·전임상</td><td class="num">430</td><td class="num">31%</td><td>후보 생성과 선별을 빠르게 한다(회사 발표 기준)</td></tr>
+      <tr><td>임상 1~3상</td><td class="num">965</td><td class="num hl">69%</td><td>환자 모집과 문서 작업 일부. 기간 단축은 아직 실측이 드물다</td></tr>
+      <tr class="sum"><td>합계</td><td class="num">1,395</td><td class="num">100%</td><td>실패 비용과 자본비용을 넣으면 $2,558M</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">출처: DiMasi 외(2016)를 Knowledge Portal이 정리한 수치. 비중은 필자 계산(430 ÷ 1,395). 원 연구가 오래되어 절대 금액보다 비율을 볼 것.</p>
+  <p>상위 20개 제약사의 최근 수치도 같은 방향이다. Deloitte(2026-05)에 따르면 후기 자산 1개당 R&amp;D 비용은 2025년 $2,671M으로 전년($2,229M)보다 20% 늘어 역대 최고였다. 내부수익률은 7.0%인데 비만약(GLP-1)을 빼면 2.9%다. AI가 퍼진 지 몇 해가 지났지만 산업 전체의 개발비는 아직 내려가지 않았다.</p>
+
+  <h3>구간별 가설과 판정</h3>
+  <p>구간마다 널리 쓰이는 투자 논리를 하나씩 골라 2026년 숫자와 맞춰 봤다. 근거는 4~7장에 있다.</p>
+  <div class="risk verdict">
+    <div class="r"><span class="chip h">대체로 기각</span><div><div class="t">①② "AI가 커지면 실험량이 늘어 툴 기업이 수혜를 본다"</div><div class="d">툴 전체로는 보이지 않는다. 물량은 늘지만 단가가 내려가고, 연구용 수요는 NIH 예산이 좌우한다. DNA 합성만 회사가 숫자로 확인해 준다.</div></div></div>
+    <div class="r"><span class="chip m">부분 확인</span><div><div class="t">③ "가치는 장비가 아니라 데이터 소유자에게 쌓인다"</div><div class="d">환자 연계 데이터가 계속 들어오는 통로를 가진 곳(검사 물량, 병원망)에서만 확인된다. 공개 아틀라스가 늘면서 세포주 데이터의 값은 내려갔다.</div></div></div>
+    <div class="r"><span class="chip l">미검증</span><div><div class="t">④⑤ "AI가 설계한 약은 성공률이 높고 빨리 나온다"</div><div class="d">1상까지만 확인됐다. 2상 효능과 3상, 승인은 근거가 없다. 기간 단축은 회사 발표뿐이다.</div></div></div>
+    <div class="r"><span class="chip m">부분 확인</span><div><div class="t">⑥⑦ "병목이 검증 단계로 옮겨가 CRO와 CDMO가 수혜를 본다"</div><div class="d">병목의 위치는 맞다. 수혜는 임상 CRO 상위와 진단에 몰리고, 동물 전임상과 인력 투입형 CRO는 오히려 깎인다.</div></div></div>
+  </div>
+</section>
+
+<section id="s4">
+  <div class="sec-h"><span class="sec-n">04</span><h2>①② 데이터 생산: 물량은 늘고 단가는 내린다</h2></div>
+
+  <h3>툴 기업의 고객은 AI 기업이 아니다</h3>
+  <div class="tbl-scroll"><table>
+    <thead><tr><th>기업</th><th>수요 구성 (회사 공시)</th><th>읽는 법</th></tr></thead>
+    <tbody>
+      <tr><td>Illumina</td><td>임상이 시퀀싱 소모품 매출의 약 65%※. 2분기 임상 소모품 +15%, 연구·응용 소모품 -7%(둘 다 중국 제외)</td><td>성장은 전부 암 검사 같은 임상에서 나온다</td></tr>
+      <tr><td>Thermo Fisher</td><td>2분기 제약·바이오 한 자릿수 중반 성장(바이오공정, 임상연구 주도), 학계·정부 한 자릿수 초반※</td><td>수주 동인은 미국 내 생산 이전</td></tr>
+      <tr><td>Danaher</td><td>학계·정부 고객은 매출의 한 자릿수 초반. 2분기 바이오공정 수주 10%대 중반 증가</td><td>바이오의약품 생산 사이클을 탄다</td></tr>
+      <tr><td>10x Genomics</td><td>학계·정부가 직접 판매의 가장 큰 부분(비율 미공시)</td><td>NIH 예산에 가장 민감하다</td></tr>
+      <tr><td>Twist</td><td>회계 3분기 치료제 고객 $40.4M(+49%), 진단 $43.8M(+15%), 학계·정부 $15.5M(+32%)</td><td>치료제 고객 매출이 가장 빨리 큰다</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">출처: 각 사 10-K, 2분기 실적 발표와 콘퍼런스콜. Danaher의 학계 비중은 2025-04 GEN 기사.</p>
+
+  <h3>연구용 수요의 스위치는 NIH다</h3>
+  <ul>
+    <li><b>2026 회계연도 확정 예산</b>: 약 $47.49B로 전년 대비 +1.0%. 의회가 행정부의 삭감안과 간접비 15% 상한을 막았다. 다만 다년도 과제를 한 번에 지급하는 방식이 유지되어 신규 과제 수는 수천 건 줄었다.</li>
+    <li><b>2027 회계연도</b>: 대통령 예산안은 $41.4B로 약 $6B 삭감(약 -13%, 필자 계산)이다. 하원 세출위는 6월에 소폭 증액안을 통과시켰고 상원은 아직 심사하지 않았다.</li>
+    <li><b>현재</b>: 임시예산으로 2026년 수준을 <b>12월 11일</b>까지 유지한다. 12개 세출법안은 모두 미제정이다.</li>
+    <li><b>현장 발언</b>: 10x는 "돈이 아직 흘러나오지 않는다"고 했고, Bruker와 Tecan도 미국 학계 수요 약세를 언급했다.</li>
+  </ul>
+
+  <h3>시퀀싱: 가격 경쟁이 다시 시작됐다</h3>
+  <p>Illumina의 점유율은 추정치마다 66~80%로 여전히 압도적이다※. 그러나 2026년에 도전자가 한꺼번에 나왔다.</p>
+  <div class="tbl-scroll"><table>
+    <thead><tr><th>기업</th><th>2026년 현황</th><th class="num">게놈당 가격</th></tr></thead>
+    <tbody>
+      <tr><td>Ultima Genomics (비상장)</td><td>UG200 시리즈를 2월 공개, 2분기 출하. 장비 $850K~$1.25M. 누적 조달 $600M</td><td class="num hl">$80</td></tr>
+      <tr><td>Element Biosciences (비상장)</td><td>6월 삼성전자에서 $175M 투자 유치. 신기종 VITARI 발표</td><td class="num">$100</td></tr>
+      <tr><td>Roche</td><td>새 방식(SBX) 장비 Axelios 1을 6월 29일 출시. 연구용 한정</td><td class="num">$150※</td></tr>
+      <tr><td>PacBio (롱리드)</td><td>2분기 매출 $39.0M(약 -2%). 연간 가이던스 $155~165M</td><td class="num">-</td></tr>
+      <tr><td>Oxford Nanopore (영국)</td><td>상반기 매출 £116.7M(고정환율 +12.3%)</td><td class="num">-</td></tr>
+      <tr><td>MGI (중국)</td><td>미국 자회사 Complete Genomics 매각 발표(2월)※. 미국에서 사실상 철수</td><td class="num">-</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">출처: 각 사 발표, PacBio 8-K. Illumina의 현재 게놈당 가격은 이번 조사에서 확인하지 못했다. Illumina의 중국 장비 수출 금지는 2025년 11월 풀렸지만 "신뢰할 수 없는 기업" 명단에는 남아 있고, 2분기 대중화권 매출은 $56M(전년 $63M)이다.</p>
+
+  <h3>AI용 대형 아틀라스는 누구 장비로 만드나</h3>
+  <p>AI 모델 학습용으로 세포 수억 개를 읽는 사업이 2025년부터 잇달아 나왔다. 이 물량이 어디로 가는지가 "삽과 곡괭이" 논리의 시험대다.</p>
+  <div class="tbl-scroll"><table>
+    <thead><tr><th>프로젝트</th><th>규모</th><th>단일세포 시약</th><th>시퀀서</th></tr></thead>
+    <tbody>
+      <tr><td>Tahoe-100M</td><td>1억 세포, 공개(CC0)※</td><td>Parse Biosciences</td><td class="hl">Ultima</td></tr>
+      <tr><td>CZI Billion Cells Project</td><td>10억 세포 목표, 무료 공개 방침</td><td>10x Genomics, Scale Bio</td><td class="hl">Ultima</td></tr>
+      <tr><td>Arc Virtual Cell Atlas</td><td>3억 세포 이상, 공개</td><td>10x Genomics</td><td class="hl">Ultima</td></tr>
+      <tr><td>Illumina Billion Cell Atlas</td><td>3.5억 세포, 6PB(7월 16일). 제약·AI 6개사 회원제</td><td>Illumina 자체</td><td>Illumina</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">출처: 각 기관 발표. Parse는 2025년 12월 Qiagen이 인수했고(현금 $231M + 조건부 최대 $55M), Scale Bio는 2025년 8월 10x가 인수했다.</p>
+  <p>공개 아틀라스의 시퀀싱은 가장 싼 장비로 갔다. Illumina는 장비를 파는 대신 스스로 데이터를 만들어 파는 쪽을 택했다. 2분기 콘퍼런스콜에서 아틀라스 데이터 매출이 잡히기 시작했다고 밝혔으나 금액은 공개하지 않았다.</p>
+  <p>10x Genomics의 2분기 숫자가 이 구조를 잘 보여준다. 매출 $151.0M 가운데 단일세포 소모품은 $88.5M(+3%), 공간 소모품은 $42.3M(+16%), 장비는 $7.7M(-47%)이었다. 경영진은 "주요 데이터 생산 프로젝트 대부분이 AI 모델 학습을 목표로 기획된다"고 하면서도 AI 관련 매출은 "정량화하기 이르다"고 했다※. 연간 가이던스는 $610~630M으로, 일회성 합의금을 뺀 2025년 매출(약 $600M)보다 2~5% 많은 수준이다(필자 계산).</p>
+
+  <h3>단백질체: 매출은 대형사 품 안에 있다</h3>
+  <p>단백질을 대규모로 읽는 기술이 병목이라는 진단은 맞다. 다만 그 매출은 신생 기업이 아니라 인수된 사업부에서 나온다.</p>
+  <div class="tbl-scroll"><table>
+    <thead><tr><th>기업</th><th>현황</th></tr></thead>
+    <tbody>
+      <tr><td>Olink (Thermo Fisher)</td><td>2024년 7월 $3.1B에 인수. UK Biobank 단백질체 사업(단백질 5,400종, 60만 샘플 목표, 제약 14개사 참여)의 측정 플랫폼. 단독 실적 미공시</td></tr>
+      <tr><td>SomaLogic (Illumina)</td><td>2026년 1월 30일 인수 종결. 2분기 관련 매출 +21%※</td></tr>
+      <tr><td>Bruker (질량분석)</td><td>해당 부문 2분기 매출 $310.3M. 전사 유기적 성장 +2.8%</td></tr>
+      <tr><td>Seer</td><td>2분기 매출 $3.1M(-23%), 연간 가이던스 $16~18M</td></tr>
+      <tr><td>Quantum-Si</td><td>2분기 매출 $344K(-42%). 차세대 Proteus 출시를 2027년 2분기로 연기, 인력 약 20% 감축</td></tr>
+      <tr><td>Nautilus</td><td>2분기 첫 매출 $0.2M※. 주력 제품 출시는 2027년 이후</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">출처: 각 사 8-K와 발표. 신생 3사(Seer, Quantum-Si, Nautilus)의 분기 매출 합계는 $4M에 못 미친다.</p>
+
+  <h3>DNA 합성: AI 수요가 숫자로 잡히는 유일한 칸</h3>
+  <p>AI가 항체나 단백질 서열을 설계하면 누군가 그 DNA를 실제로 만들어야 실험할 수 있다. 설계 건수가 늘수록 합성 주문이 는다.</p>
+  <ul>
+    <li><b>Twist Bioscience</b>(회계 3분기, 6월 종료): 매출 $118.4M(+23%). DNA 합성·단백질 솔루션이 $56.6M(+39%), 유전자 검사용 패널이 $61.8M(+12%)이다. 매출총이익률 52.8%, 연간 가이던스 $456~457M.</li>
+    <li><b>AI 관련 수주</b>: FY25 약 $25M, FY26 약 $50M, FY27 기대 약 $100M. 고객은 대형 제약, 실험실 없는 AI 바이오텍, 빅테크라고 회사가 밝혔다. 수주와 매출은 다르다는 점은 감안해야 한다.</li>
+    <li><b>GenScript</b>(홍콩 상장): 상반기 매출 $404.2M(+27.3%). AI 신약개발 관련 사업이 전년의 2배라고 했으나 금액은 미공시다.</li>
+  </ul>
+
+  <h3>자동화와 자율실험실: 매출은 기존 장비사, 자금은 신생사</h3>
+  <ul>
+    <li><b>실제 매출이 있는 곳</b>: Tecan(스위스, 상반기 CHF 427.5M, 현지통화 +3.4%), Azenta(회계 3분기 $161M, +12%), Revvity 생명과학 부문($359M, 유기적 -3%), 비상장 Hamilton.</li>
+    <li><b>Ginkgo Bioworks</b>: 2분기 매출 $20M(-48%). 자율실험실로 방향을 틀어 미국 과학재단(NSF)의 클라우드 실험실 사업과 국립연구소(PNNL) $47M 사업을 수주했다.</li>
+    <li><b>Lila Sciences</b>(비상장): 누적 조달 $550M. 2026년 6월 약 $2B 조달 협의 보도가 있었으나 종결은 확인하지 못했다. 매출은 공개된 적이 없다.</li>
+  </ul>
+
+  <div class="take"><span class="lbl">이 구간의 판정</span>
+    <p>AI 수요는 실재하지만 툴 기업 매출로 옮겨지는 길이 좁다. 물량이 늘면 단가가 내려가고, 가장 큰 물량은 가장 싼 장비로 간다. 회사가 AI 매출을 숫자로 말하는지가 구분 기준이다. 지금 그 기준을 통과하는 곳은 DNA 합성뿐이고, 그마저 매출의 약 11%다.</p>
+  </div>
+</section>
+
+<section id="s5">
+  <div class="sec-h"><span class="sec-n">05</span><h2>③ 데이터 소유: 해자는 데이터셋이 아니라 통로다</h2></div>
+
+  <h3>데이터로 돈을 버는 곳은 생각보다 적다</h3>
+  <p>환자의 유전체와 진료 기록을 묶어 제약사에 빌려주는 사업이다. 암 검사 기업들이 검사를 하면서 쌓인 데이터를 판다. 상장사 가운데 데이터 매출을 따로 밝히는 곳을 모으면 다음과 같다.</p>
+  <div class="tbl-scroll"><table>
+    <caption>2026년 2분기 기준</caption>
+    <thead><tr><th>기업</th><th class="num">전사 매출</th><th class="num">데이터·제약 매출</th><th class="num">비중</th><th class="num">데이터 성장률</th></tr></thead>
+    <tbody>
+      <tr><td>Tempus</td><td class="num">$382.5M</td><td class="num">$93.2M</td><td class="num hl">24.4%</td><td class="num pos">+28%</td></tr>
+      <tr><td>Guardant</td><td class="num">$335.0M</td><td class="num">$60.9M</td><td class="num hl">18.2%</td><td class="num pos">+9%</td></tr>
+      <tr><td>Caris</td><td class="num">$263.7M</td><td class="num">$11.5M</td><td class="num hl">4.4%</td><td class="num neg">-38%</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">출처: 각 사 8-K. 비중은 필자 계산. Tempus는 Data and Applications, Guardant는 Biopharma &amp; Data, Caris는 Pharma R&amp;D 서비스 부문. Natera는 데이터 매출을 따로 밝히지 않는다.</p>
+  <p>세 회사 모두 본업은 검사이고, 검사비는 보험이 낸다. 데이터는 그 위에 얹힌 사업이다. Tempus만 데이터가 전사 매출의 4분의 1에 이르고 성장률도 진단보다 높다.</p>
+
+  <h4>Tempus를 자세히 보면</h4>
+  <ul>
+    <li><b>규모</b>: 비식별 환자 기록 860만 건 이상, 임상과 유전체가 연결된 기록 150만 건 이상(2025년 말 10-K).</li>
+    <li><b>계약</b>: 2025년 말 잔여 계약가치 $1.1B 이상, 순매출유지율 126%. 2026년 2분기 중 신규 데이터 계약 약 $200M(BioNTech, Daiichi Sankyo, Incyte 등).</li>
+    <li><b>마진</b>: 데이터 부문 매출총이익률 70.2%(전년 72.7%), 진단 부문 62.6%. 데이터가 더 높지만 차이는 8%p 안팎이고 전년보다 내렸다.</li>
+    <li><b>최대 계약의 상대방</b>: 2025년 4월의 $200M 계약은 Pathos가 내는 돈이고, 최대 절반을 Pathos 주식으로 낼 수 있다. Pathos는 Tempus 창업자와 관계된 회사로 알려져 있어※, 이 금액을 제3자 시세로 보기는 어렵다.</li>
+    <li><b>구매자가 값을 깎은 사례</b>: Recursion은 2026년 9월 15일 Tempus 데이터 계약을 고쳤다. 앞으로 2년간 최대 $84M이던 수수료를 3년간 확정 $42M으로 바꿨다. 연간으로 보면 최대 $42M에서 $14M이 됐다.</li>
+  </ul>
+
+  <h3>제약사는 데이터에 실제로 얼마를 내나</h3>
+  <div class="tbl-scroll"><table>
+    <thead><tr><th>거래</th><th>내용</th><th class="num">확정·선급</th><th class="num">조건부 포함 총액</th></tr></thead>
+    <tbody>
+      <tr><td>GSK → Tempus (2022)</td><td>환자 데이터 라이선스</td><td class="num">최소 $180M※</td><td class="num">-</td></tr>
+      <tr><td>Pathos → Tempus (2025)</td><td>데이터 라이선스, 종양 모델 공동 개발</td><td class="num">$200M (3년)</td><td class="num">-</td></tr>
+      <tr><td>Genentech → Caris (2025-12)</td><td>고형암 약 50만 샘플로 표적 발굴</td><td class="num">$25M</td><td class="num">$1.1B + 로열티</td></tr>
+      <tr><td>GSK → Noetik (2026-01)</td><td>학습된 암 모델 비독점 구독, 5년</td><td class="num">$50M</td><td class="num">연 구독료 별도</td></tr>
+      <tr><td>Regeneron → Truveta (2025-01)</td><td>지분 투자와 최대 1,000만 명 엑솜 시퀀싱</td><td class="num">$119.5M※</td><td class="num">-</td></tr>
+      <tr><td>제약 4사 → UK Biobank</td><td>50만 명 전장 유전체, 9개월 선행 접근권</td><td class="num">합계 약 £100M</td><td class="num">-</td></tr>
+      <tr><td>TTAM → 23andMe (2025-07)</td><td>파산 자산 인수. 고객 1,300만~1,500만 명</td><td class="num">$305M</td><td class="num">1인당 약 $20~23</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">출처: 각 사 공시와 보도. 23andMe 1인당 금액은 필자 계산. 파산 공표 뒤 고객 약 13%가 삭제를 요청했다※.</p>
+  <p>눈에 띄는 점은 두 가지다. 한 번 모아 둔 정적인 데이터는 싸게 거래됐다. 그리고 제약사는 데이터 덩어리보다 계속 갱신되는 접근권이나 학습된 모델에 돈을 낸다.</p>
+
+  <h3>공개 데이터와 독점 데이터의 경계</h3>
+  <div class="grid2">
+    <div class="pane no"><h4>값이 내려가는 쪽: 세포주 교란 데이터</h4>
+      <ul>
+        <li>Tahoe-100M(1억 세포)은 저작권 없이 공개됐고 약 10만 회 내려받혔다.</li>
+        <li>Arc 연구소 아틀라스는 3억 세포 이상, CZI는 10억 세포를 무료 공개 방침으로 만든다.</li>
+        <li>2026년 벤치마크 여러 건이 딥러닝 모델이 단순 선형 모델을 안정적으로 넘지 못한다고 보고했다. 양만으로는 모델이 좋아지지 않는다.</li>
+      </ul>
+    </div>
+    <div class="pane yes"><h4>값이 유지되는 쪽: 공개될 수 없는 데이터</h4>
+      <ul>
+        <li>환자 동의와 개인정보 규제 때문에 공개가 불가능한 임상 연계 종단 데이터.</li>
+        <li>제약사 내부의 실패 실험 데이터. Lilly 최고AI책임자는 공개 문헌으로는 "성공한 실험만" 배우게 된다고 했다.</li>
+        <li>제약 5개사가 독점 구조 데이터를 연합학습으로 합치자 공개 모델의 예측 정확도가 35.6%에서 52.1%로 올랐다※.</li>
+      </ul>
+    </div>
+  </div>
+  <p>Tahoe의 행보가 경계선을 보여준다. 1세대 데이터는 공개해 표준을 잡았고, 다음 10억 세포 데이터는 "단일 파트너"에게만 주겠다고 했다. Illumina의 아틀라스도 과금 구조는 밝히지 않았지만 제약·AI 6개사만 참여하는 회원제로 운영된다.</p>
+
+  <h3>연구 소프트웨어와 컴퓨팅</h3>
+  <div class="tbl-scroll"><table>
+    <thead><tr><th>기업</th><th>자리</th><th>최근 수치</th></tr></thead>
+    <tbody>
+      <tr><td>Veeva</td><td>임상·규제 문서 관리의 표준</td><td>분기 매출 $928.0M(+18%), 그중 R&amp;D·품질 구독 $419.4M</td></tr>
+      <tr><td>Benchling (비상장)</td><td>바이오텍 전자 연구노트. 고객 1,300곳 이상</td><td>연 반복매출 약 $210M(2024년, 외부 추정※)</td></tr>
+      <tr><td>Dotmatics</td><td>대형 제약 화학·분석 데이터</td><td>2025년 7월 Siemens가 $5.1B에 인수. 매출의 약 17배</td></tr>
+      <tr><td>Schrödinger</td><td>물리 기반 분자 시뮬레이션</td><td>2분기 매출 $58.9M(+8%), 소프트웨어 $32.5M(-10%)</td></tr>
+      <tr><td>Certara</td><td>약동학 모델링</td><td>2분기 매출 $93.3M(+1%), 인력 약 5% 감축</td></tr>
+      <tr><td>NVIDIA</td><td>GPU와 바이오 모델 플랫폼(BioNeMo)</td><td>Lilly와 5년 최대 $1B 공동 연구소. Roche는 GPU 3,500개 이상 배치※</td></tr>
+      <tr><td>AWS</td><td>바이오 모델 장터</td><td>2026년 4월 Amazon Bio Discovery 출시. 실험 파트너로 Twist, Ginkgo</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">출처: 각 사 실적과 발표. Dotmatics 배수는 인수가 ÷ 2025년 예상 매출 $300M(필자 계산).</p>
+  <p>Veeva를 빼면 연구 소프트웨어의 성장은 한 자릿수다. AI 붐이 연구용 소프트웨어 매출로 곧바로 이어지지는 않았다.</p>
+  <p><b>Lilly TuneLab</b>은 이 구간에서 가장 주목할 구조다. Lilly가 자기 데이터로 학습한 모델 16개를 바이오텍에 무료로 열고, 바이오텍은 원자료가 아니라 모델 개선분만 돌려준다. Lilly는 돈을 내지 않고 남의 데이터로 자기 모델을 키운다. Benchling, Schrödinger, Revvity가 유통 창구로 들어왔다.</p>
+
+  <div class="take"><span class="lbl">이 구간의 판정</span>
+    <p>"데이터를 가진 쪽이 이긴다"는 절반만 맞다. Recursion은 데이터 50PB를 갖고도 2025년 순손실이 $645M이었다. 값이 있는 것은 데이터가 계속 들어오는 통로(검사 물량, 병원망, 자동화 실험실)다. 그리고 가장 값진 데이터의 주인은 제약사 자신이다.</p>
+  </div>
+</section>
+
+<section id="s6">
+  <div class="sec-h"><span class="sec-n">06</span><h2>④⑤ AI 타깃 발굴·설계: 1상까지만 낫다</h2></div>
+
+  <h3>임상 성적표</h3>
+  <div class="chart" id="ch-phase">
+    <p class="ct">AI 발굴 약은 1상에서 앞서고 2상에서 평균으로 돌아온다</p>
+    <p class="cs">임상 단계별 성공률(%). 3상은 결과가 나온 사례가 없다</p>
+    <div class="legend"><span><i style="background:var(--c1)"></i>AI 발굴 약</span><span><i style="background:var(--c4)"></i>업계 평균</span></div>
+    <svg role="img" aria-label="AI 발굴 약과 업계 평균의 임상 단계별 성공률 비교"></svg>
+  </div>
+  <p class="tnote">출처: Jayatunga 외, Drug Discovery Today(2024). 원문은 열람이 막혀 2차 출처로 확인했다※. IQVIA 연구소(2026)도 AI 활용 프로그램의 1상 성공률 75%, 2상은 비AI와 동등이라고 보고했다. 2상 표본은 작다.</p>
+  <p>1상은 주로 안전성과 약물로서의 성질을 본다. AI는 독성이 적고 몸에 잘 흡수되는 분자를 고르는 데 강하다. 2상은 그 표적을 건드리면 병이 낫는지를 본다. 이것은 분자 설계가 아니라 질병 생물학의 문제다.</p>
+  <ul>
+    <li><b>임상에 들어간 AI 활용 자산</b>: 117개(63개사)※. 집계 기준에 따라 173개 이상이라는 수치도 있다※.</li>
+    <li><b>1상 완료</b> 60개, <b>2상 완료</b> 8개※. 창업부터 1상 진입까지 중앙값 6.5년※.</li>
+    <li><b>승인</b>: 표적과 분자를 모두 AI로 찾은 약의 FDA 승인은 없다.</li>
+  </ul>
+
+  <h3>3상과 허가 단계에 있는 것들</h3>
+  <div class="tbl-scroll"><table>
+    <thead><tr><th>약물</th><th>회사</th><th>현재 단계</th><th>단서</th></tr></thead>
+    <tbody>
+      <tr><td>Rentosertib<br><span class="small">특발성 폐섬유증</span></td><td>Insilico (홍콩 상장)</td><td>중국 3상 첫 환자 투약(2026-09-09). 320명, 52주</td><td>표적과 분자 모두 생성형 AI로 찾았다고 회사가 밝힌 첫 3상. 미국 3상 계획은 언급 없음</td></tr>
+      <tr><td>GB-0895<br><span class="small">중증 천식 항체</span></td><td>Generate Biomedicines</td><td>3상 진행. 등록 완료 목표 2028년 상반기</td><td>AI로 최적화한 항체. 반감기 약 100일※</td></tr>
+      <tr><td>Zovegalisib<br><span class="small">유방암</span></td><td>Relay Therapeutics</td><td>3상 진행. 2026년 말 등록 현황 발표</td><td>단백질 움직임 시뮬레이션 기반</td></tr>
+      <tr><td>Zasocitinib<br><span class="small">건선</span></td><td>Takeda (Nimbus 기원)</td><td>FDA 우선심사. 결정 목표 2027년 1분기</td><td>물리 기반 계산 화학. 개발사가 "AI 약" 표현을 사양</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">출처: 각 사 발표와 SEC 공시, PharmaVoice(2026-09-25).</p>
+
+  <h3>2026년에 나온 결과와 그동안의 실패</h3>
+  <div class="grid2">
+    <div class="pane yes"><h4>2026년 임상 데이터</h4>
+      <ul>
+        <li><b>8월</b> AbCellera 안면홍조 치료 항체 2상: 빈도 -83% 대 위약 -33%, 1차 지표 충족. 다만 생성형 설계가 아니라 항체 발굴 플랫폼의 산물이다.</li>
+        <li><b>8월</b> Relay 유방암 삼제 병용: 객관적 반응률 44%.</li>
+        <li><b>8월</b> Absci 탈모 항체 1상 중간: 반감기 65일 이상. 효능 중간 결과는 2026년 하반기.</li>
+        <li><b>5월</b> Recursion 가족성 용종증 2상: 용종 부담 중앙값 -43%(13주), -53%(25주), 12명. 추가 데이터는 11월 2일.</li>
+      </ul>
+    </div>
+    <div class="pane no"><h4>중단과 실패</h4>
+      <ul>
+        <li><b>Recursion</b>: 2025년 5월 임상 2개를 효능 부족으로 중단. Exscientia 합병 뒤 인력 20% 감축.</li>
+        <li><b>BenevolentAI</b>: 2023년 2상 실패, 2025년 3월 상장폐지※.</li>
+        <li><b>Schrödinger</b>: 2025년 8월 환자 2명 사망 뒤 1개 중단. 11월에 독자 임상에서 철수.</li>
+        <li><b>Absci</b>: 첫 항체의 자체 후기 개발 포기(2025년 11월).</li>
+        <li><b>Isomorphic</b>: 2025년 말 첫 투약 목표를 놓쳤고 2026년 말로 미뤘다※.</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>모델은 실제로 좋아졌나</h3>
+  <p>항체를 처음부터 설계했을 때 실험에서 결합이 확인되는 비율은 0.1% 미만에서 두 자릿수로 뛰었다. 다만 수치 대부분이 회사 발표이고 조건이 서로 달라 직접 비교할 수 없다.</p>
+  <div class="tbl-scroll"><table>
+    <thead><tr><th>모델</th><th>발표 수치</th><th>공개 여부</th></tr></thead>
+    <tbody>
+      <tr><td>Chai-2 (2025-07)</td><td>신규 항체 적중률 16%, 표적 52개 중 절반에서 성공. 미니단백질 68%</td><td>독점. 회사 프리프린트</td></tr>
+      <tr><td>Nabla JAM-2 (2025-11)</td><td>표적 16개 전부에서 결합체, 평균 39%※</td><td>독점. 회사 발표</td></tr>
+      <tr><td>BoltzGen</td><td>신규 표적 9개 중 6개에서 강한 결합체※</td><td>오픈소스(MIT 라이선스)</td></tr>
+      <tr><td>IsoDDE (Isomorphic, 2026-02)</td><td>가장 어려운 단백질-리간드 예측 50%(AlphaFold 3은 23.3%)</td><td>독점. 실험 검증 언급 없음</td></tr>
+      <tr><td>가상세포 모델 (Arc, CZI)</td><td>교란 예측에서 단순 선형 모델과 비슷하거나 못하다는 벤치마크 다수</td><td>오픈</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">출처: 각 사 발표와 프리프린트. 독립 재현은 확인하지 못했다.</p>
+  <p>오픈소스 모델이 독점 모델을 빠르게 따라붙고 있다. 분자 설계 능력은 범용품이 되어 가고, 가장 약한 고리는 여전히 표적 발굴(④)이다. AI가 찾은 새 표적으로 임상에 들어간 약은 한 자릿수이고, Recursion과 BenevolentAI의 2상 실패가 여기서 나왔다.</p>
+
+  <h3>딜: 헤드라인과 실제 수취액</h3>
+  <p>AI·머신러닝 신약 파트너십은 2024년 84건 $11.8B에서 2025년 114건 $43.4B, 2026년 상반기 70건 $45.9B로 불었다(DealForma). 그런데 2026년 상반기 선급금은 $1.9B다.</p>
+  <div class="chart" id="ch-deal">
+    <p class="ct">발표 총액 가운데 계약 때 받는 돈은 대부분 5% 아래다</p>
+    <p class="cs">주요 AI 신약 딜의 선급금 비중(선급금 ÷ 발표 총액, %)</p>
+    <svg role="img" aria-label="주요 AI 신약 딜의 선급금 비중 막대 그래프"></svg>
+  </div>
+  <div class="tbl-scroll"><table>
+    <thead><tr><th>딜</th><th class="num">선급금</th><th class="num">발표 총액</th><th class="num">선급 비중</th></tr></thead>
+    <tbody>
+      <tr class="sum"><td>2026년 상반기 AI 신약 파트너십 전체 (70건)</td><td class="num">$1.9B</td><td class="num">$45.9B</td><td class="num">4.1%</td></tr>
+      <tr><td>Sanofi–Earendil (2026-01)※</td><td class="num">$160M</td><td class="num">$2.56B</td><td class="num">6.2%</td></tr>
+      <tr><td>Lilly–Insilico (2026-03)</td><td class="num">$115M</td><td class="num">$2.75B</td><td class="num">4.2%</td></tr>
+      <tr><td>Novo–Valo (2025 확대)※</td><td class="num">$190M</td><td class="num">$4.60B</td><td class="num">4.1%</td></tr>
+      <tr><td>Novartis–Relation※</td><td class="num">$55M</td><td class="num">$1.70B</td><td class="num">3.2%</td></tr>
+      <tr><td>Novartis–Isomorphic (2024)※</td><td class="num">$37.5M</td><td class="num">$1.20B</td><td class="num">3.1%</td></tr>
+      <tr><td>Lilly–Isomorphic (2024)</td><td class="num">$45M</td><td class="num">$1.70B</td><td class="num">2.6%</td></tr>
+      <tr><td>Novartis–Monte Rosa (2025)</td><td class="num">$120M</td><td class="num">$5.40B</td><td class="num">2.2%</td></tr>
+      <tr><td>Genentech–Caris (2025-12)</td><td class="num">$25M</td><td class="num">$1.12B</td><td class="num">2.2%</td></tr>
+      <tr><td>AstraZeneca–CSPC (2025)※</td><td class="num">$110M</td><td class="num">$5.30B</td><td class="num">2.1%</td></tr>
+      <tr><td>Lilly–Creyon (2025-04)※</td><td class="num">$13M</td><td class="num">$1.00B</td><td class="num">1.3%</td></tr>
+      <tr><td>Insilico–SK바이오팜 (2026)※</td><td class="num">$5M</td><td class="num">$2.55B</td><td class="num">0.2%</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">출처: DealForma, 각 사 발표. 비중은 필자 계산. ※ 표시 딜은 2차 출처 기준. Novo–Valo의 선급 $190M은 단기 마일스톤을 포함한 금액이다.</p>
+  <p>실제 수취액을 보면 차이가 더 분명하다. Recursion이 파트너에게서 지금까지 받은 돈은 누적 $500M을 조금 넘는다. 2분기 매출은 $7.7M이고 R&amp;D 비용은 $89.6M이어서, 매출이 연구비의 9%를 덮는다. AbCellera는 2분기 매출 $4.1M에 순손실 $55.4M이다.</p>
+
+  <h3>기업 지형</h3>
+  <div class="tbl-scroll"><table>
+    <caption>현금은 2026-06-30, 시가총액은 2026-09-30</caption>
+    <thead><tr><th>기업</th><th class="num">현금</th><th class="num">시가총액</th><th>사업모델과 현황</th></tr></thead>
+    <tbody>
+      <tr><td>Recursion (RXRX)</td><td class="num">$557M</td><td class="num">$2.21B</td><td>세포 이미지 데이터와 자체 파이프라인. 현금은 2028년 초까지</td></tr>
+      <tr><td>Schrödinger (SDGR)</td><td class="num">$419M</td><td class="num">$2.32B</td><td>소프트웨어와 지분·마일스톤. 독자 임상 철수</td></tr>
+      <tr><td>Relay (RLAY)</td><td class="num">$911M</td><td class="num">$3.96B</td><td>3상 자산 보유. 현금은 2029년까지</td></tr>
+      <tr><td>AbCellera (ABCL)</td><td class="num">$567M</td><td class="num">$4.73B</td><td>항체 발굴에서 자체 임상으로 전환. 2상 성공</td></tr>
+      <tr><td>Generate (GENB)</td><td class="num">$457M</td><td class="num">$1.93B</td><td>2026년 2월 상장, 공모가 $16. 현재 주가 $15.02</td></tr>
+      <tr><td>Absci (ABSI)</td><td class="num">$201M</td><td class="num">$1.85B</td><td>항체 설계. 6월 $100M 공모(Lilly $40M 참여)</td></tr>
+      <tr><td>Isomorphic Labs (비상장)</td><td class="num">누적 $2.7B</td><td class="num">비공개</td><td>Alphabet 계열. 2026년 5월 $2.1B 조달. 아직 인체 투약 없음※</td></tr>
+      <tr><td>Chai Discovery (비상장)</td><td class="num">-</td><td class="num">$3.8B</td><td>2026년 7월 $400M 조달. 모델 개발사</td></tr>
+      <tr><td>Xaira (비상장)</td><td class="num">누적 $1.3B</td><td class="num">비공개</td><td>2026년 7월 기준 후보물질 미공개</td></tr>
+      <tr><td>Iambic (비상장)</td><td class="num">$208M</td><td class="num">-</td><td>2026년 9월 21일 상장 신청서 제출</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">출처: 각 사 SEC 공시, stockanalysis.com. Chai의 수치는 기업가치.</p>
+
+  <h3>빅파마와 빅테크가 들어왔다</h3>
+  <ul>
+    <li><b>Lilly</b>: GPU 1,016개 슈퍼컴퓨터(2026년 2월 가동), NVIDIA와 5년 최대 $1B 공동 연구소, TuneLab, 그리고 Insilico·Absci 지분과 다수의 설계 딜. 가장 깊이 내재화한 제약사다.</li>
+    <li><b>Alphabet(Isomorphic)</b>: 자체 파이프라인을 가진 직접 경쟁자. 제약사 세 곳(Lilly, Novartis, J&amp;J)과도 제휴한다.</li>
+    <li><b>도구 공급자</b>: OpenAI는 생명과학 모델 GPT-Rosalind를 2026년 4월 내놨다. Anthropic은 Claude for Life Sciences(2025년 10월)에 이어 Claude Science(2026년 6월)를 냈다※. AWS와 Microsoft도 모델 장터를 연다.</li>
+    <li><b>Lilly 최고AI책임자의 말</b>: "임상은 가속할 수 없다, 병목은 생물학"이라며 AI가 후보 생성부터 검증까지 끝까지 해내는 데 약 10년을 봤다.</li>
+  </ul>
+  <p>범용 AI 기업은 약을 직접 만들지 않는다. 그러나 제약사가 이 도구로 스스로 설계하게 되면, 모델 접근권을 파는 바이오텍의 협상력은 약해진다.</p>
+
+  <h3>어느 종류의 약에서 AI가 앞서 있나</h3>
+  <div class="tbl-scroll"><table>
+    <thead><tr><th>종류</th><th>가장 앞선 단계</th><th>판단</th></tr></thead>
+    <tbody>
+      <tr><td>저분자</td><td>3상, 허가 심사</td><td>가장 성숙. 물리 기반 계산과 머신러닝이 10년 넘게 쌓였다</td></tr>
+      <tr><td>항체 최적화</td><td>3상</td><td>기존 항체의 반감기나 결합력을 고치는 일은 임상 후기까지 왔다</td></tr>
+      <tr><td>항체·단백질 신규 설계</td><td>임상 이전</td><td>실험 적중률은 급등했지만 면역 반응과 체내 거동은 사람에게서 검증된 적이 없다</td></tr>
+      <tr><td>RNA·유전자치료 설계</td><td>임상 이전</td><td>딜은 있으나 데이터가 없다</td></tr>
+      <tr><td>표적 발굴</td><td>2상 실패 사례 다수</td><td>가장 약한 고리</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="take"><span class="lbl">이 구간의 판정</span>
+    <p>AI가 약을 더 잘 만든다는 증거는 1상까지다. 모델 접근권만 파는 사업은 매출이 비용의 10분의 1에 그친다. 2026년에 시장이 값을 쳐준 곳은 자체 임상 데이터를 낸 기업(Relay, AbCellera)이고, 제약사는 지분과 연합학습으로 바깥의 역량을 안으로 가져가고 있다.</p>
+  </div>
+</section>
+
+<section id="s7">
+  <div class="sec-h"><span class="sec-n">07</span><h2>⑥⑦ 검증·임상·진단: 병목은 맞고, 수혜는 고르지 않다</h2></div>
+
+  <h3>동물실험: FDA가 규정으로 줄이고 있다</h3>
+  <ul class="tl">
+    <li><span class="d">2025-04</span><span>FDA, 동물실험 축소 로드맵 발표</span></li>
+    <li><span class="d">2025-12</span><span>단일특이 항체의 6개월 영장류 독성시험을 줄이거나 면제하는 지침 초안. 항체 프로그램 하나에 영장류가 최대 100마리, 마리당 약 $5만이 든다</span></li>
+    <li><span class="d">2026-04</span><span>FDA "1년 차 목표 달성" 발표. AI 기반 컴퓨터 모의 도구를 처음으로 적격화</span></li>
+    <li><span class="d">2026-09-21</span><span>규정의 "동물"을 "비임상"으로 바꾸는 최종 규칙. 타당성을 소명하면 동물 아닌 방법을 쓸 수 있다※</span></li>
+  </ul>
+  <p>미국 FDA 현대화법 3.0은 상원(2025년 12월)과 하원(2026년 7월)을 통과했다. 대통령 서명 여부는 확인하지 못했다.</p>
+
+  <h3>전임상 CRO: 갈린다</h3>
+  <div class="tbl-scroll"><table>
+    <thead><tr><th>기업</th><th>2026년 2분기</th><th>읽는 법</th></tr></thead>
+    <tbody>
+      <tr><td>Charles River</td><td>매출 $1.0B(-2.7%, 유기적 +0.1%). 안전성 평가 부문 수주 배율 1.19배※, 연간 가이던스 상향. 9월에 2027~2030년 유기적 성장 연 5~7% 목표 제시</td><td>일감은 돌아오는 중. 다만 영장류 매출은 줄고, 동물 대체 사업 일부를 정리했다</td></tr>
+      <tr><td>Labcorp</td><td>바이오제약 실험실 서비스 $836M(+6.5%), 수주 배율 1.14배</td><td>중앙검사실이 끌었다(+7.6%). 초기 개발은 +2.7%</td></tr>
+      <tr><td>Inotiv</td><td>2026-06-03 파산보호 신청. 부채 약 $326M 출자전환, 기존 주식 소각</td><td>영장류 공급 비중이 큰 사업 모델이 버티지 못했다</td></tr>
+      <tr><td>Emulate (비상장)</td><td>간 장기칩의 FDA 적격화 최종 서류 제출(9월 9일)</td><td>동물 대체 기술의 첫 공식 인정 여부가 걸려 있다</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">출처: 각 사 SEC 공시와 콘퍼런스콜. Charles River 경영진은 AI가 검증 단계로 넘어오는 프로그램을 늘리는 순풍이지만 효과는 1~2년 뒤라고 했다※.</p>
+
+  <h3>임상 CRO: 수주가 돌아왔다</h3>
+  <div class="tbl-scroll"><table>
+    <caption>2026년 2분기</caption>
+    <thead><tr><th>기업</th><th class="num">매출</th><th class="num">증가율</th><th class="num">수주 배율</th><th class="num">수주잔고</th></tr></thead>
+    <tbody>
+      <tr><td>IQVIA</td><td class="num">$4,368M</td><td class="num pos">+8.7%</td><td class="num">1.22</td><td class="num">$34.2B</td></tr>
+      <tr><td>ICON</td><td class="num">$2,064M</td><td class="num pos">+1.2%</td><td class="num">1.51※</td><td class="num">$23.4B</td></tr>
+      <tr><td>Medpace</td><td class="num">$707M</td><td class="num pos">+17.2%</td><td class="num">1.13</td><td class="num">$3.0B</td></tr>
+      <tr><td>Fortrea</td><td class="num">$678M</td><td class="num neg">-4.5%</td><td class="num">1.06</td><td class="num">$7.8B</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">출처: 각 사 실적 발표. 수주 배율은 신규 수주 ÷ 매출. ICON은 2차 출처 경유.</p>
+  <p>수주 반등의 직접 원인은 AI가 아니라 자금이다. 2026년 상반기 바이오텍 상장은 13건 $4.5B로 2025년 한 해(집계에 따라 9~11건)를 넘었다. 자금이 풀리자 미뤄 둔 임상이 발주됐다. 9월 16일 연준의 금리 인상은 이 흐름에 역풍이다.</p>
+
+  <h4>AI는 임상을 얼마나 줄였나: 주장과 실측</h4>
+  <div class="tbl-scroll"><table>
+    <thead><tr><th>출처</th><th>수치</th><th>성격</th></tr></thead>
+    <tbody>
+      <tr><td>IQVIA (2026-09)</td><td>시험 개시 33% 단축, 데이터 정리 50% 단축, 환자 모집 1.7배</td><td>회사 발표. 근거 데이터 미공개</td></tr>
+      <tr><td>Medidata 설문 (2026-05)</td><td>AI를 18개월 이상 쓴 응답자의 72.9%가 기간 단축을 체감</td><td>200명 설문. 단축 폭 수치 없음</td></tr>
+      <tr><td>Paradigm과 Ochsner 병원 (2026-08)</td><td>스크리닝 역량 +41%, 수작업 75% 감소</td><td>병원 한 곳의 실측</td></tr>
+      <tr><td>Unlearn</td><td>대조군 33% 축소, 등록 4개월 단축</td><td>자사 자료. 규제 적격화 미확인</td></tr>
+      <tr><td>IQVIA 연구소 (2026)</td><td>업계 전체 임상 기간은 다시 늘었고 시험 사이 간격이 3개월 증가</td><td>산업 통계</td></tr>
+    </tbody>
+  </table></div>
+  <p>임상 운영에 AI를 쓰는 것은 CRO에게 양날이다. 효율이 오르면 마진이 좋아지지만, 인력을 투입한 시간으로 값을 받는 계약에서는 단가가 깎인다.</p>
+
+  <h3>진단: 고리의 끝이자 시작</h3>
+  <p>환자를 찾아내는 검사는 밸류체인의 마지막 칸이면서 다음 데이터가 만들어지는 첫 칸이다. 2026년에 가장 높은 성장률이 여기서 나왔다.</p>
+  <div class="tbl-scroll"><table>
+    <caption>2026년 2분기</caption>
+    <thead><tr><th>기업</th><th class="num">매출</th><th class="num">증가율</th><th>핵심 지표</th><th class="num">연간 가이던스</th></tr></thead>
+    <tbody>
+      <tr><td>Natera</td><td class="num">$753M</td><td class="num pos">+38%</td><td>암 재발 검사 약 28.3만 건(+56%)※</td><td class="num">$2.85~2.91B</td></tr>
+      <tr><td>Tempus</td><td class="num">$383M</td><td class="num pos">+22%</td><td>순이익 $5.6M으로 흑자 전환</td><td class="num">약 $1.60B</td></tr>
+      <tr><td>Guardant</td><td class="num">$335M</td><td class="num pos">+44%</td><td>대장암 혈액검사 Shield $52.9M. 순손실 $120M</td><td class="num">$1.34~1.36B</td></tr>
+      <tr><td>Caris</td><td class="num">$264M</td><td class="num pos">+45%</td><td>조정 EBITDA $55.7M</td><td class="num">$1.03~1.04B</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">출처: 각 사 8-K. Natera는 2차 출처.</p>
+  <ul>
+    <li><b>Exact Sciences</b>: Abbott가 주당 $105, 약 $21B에 인수(2026년 3월 종결)※.</li>
+    <li><b>GRAIL</b>: 다중 암 조기검사 Galleri의 영국 대규모 시험(14만 명)은 1차 지표를 채우지 못했다. 그래도 9월 23일 FDA 자문위는 편익이 위험보다 크다는 데 7대 2로 찬성했다. 최종 결정은 미정이다.</li>
+    <li><b>Tempus</b>: 유전체 검사 기업 Personalis를 약 $1.5B에 인수하기로 했다(7월 20일).</li>
+  </ul>
+
+  <h3>생산: BIOSECURE와 관세</h3>
+  <ul>
+    <li><b>BIOSECURE 법</b>: 2025년 12월 18일 국방수권법에 담겨 발효. 기업명을 법에 적지 않고 국방부 명단과 예산관리국 지정으로 정한다. BGI와 MGI는 처음부터, WuXi AppTec은 2026년 6월 8일 명단에 올랐다. 지침, 규정 개정, 유예를 거치면 실제 금지는 최대 3년 가까이 걸린다.</li>
+    <li><b>WuXi AppTec</b>: 그런데도 상반기 매출이 +38.9%였고 연간 가이던스를 올렸다. 미국 매출 비중은 약 77%다※.</li>
+    <li><b>의약품 관세</b>: 2026년 4월 2일 포고. 특허 의약품 기본 100%, 미국 내 생산 계획과 약가 협약을 맺으면 0%다. 7월 31일과 9월 29일에 단계 발효됐다.</li>
+    <li><b>미국 내 생산 투자</b>: 제약사 약속은 집계마다 $400B~$638B다. 그러나 위탁생산 업계의 2026년 상반기 공개 투자는 $3.9B로 2025년 반기 평균 약 $13B에서 줄었고, 미국 비중도 92%에서 16%로 내렸다※.</li>
+  </ul>
+
+  <div class="take"><span class="lbl">이 구간의 판정</span>
+    <p>후보물질이 늘수록 검증이 병목이 된다는 방향은 맞다. 그러나 2026년의 수주 반등은 자금 사이클이고, 수혜는 임상 CRO 상위와 진단에 몰렸다. 동물 전임상은 규제가 직접 줄이고 있고, 검증 일감은 중국으로도 간다.</p>
+  </div>
+</section>
+
+<section id="s8">
+  <div class="sec-h"><span class="sec-n">08</span><h2>정책과 자금 환경</h2></div>
+
+  <h3>자금: 돌아왔지만 한쪽으로 쏠렸다</h3>
+  <div class="tbl-scroll"><table>
+    <thead><tr><th>항목</th><th>수치</th><th>단서</th></tr></thead>
+    <tbody>
+      <tr><td>바이오텍 벤처 투자, 2026년 상반기</td><td>68개사 $9.1B. 2022년 이후 상반기 최대</td><td>76%가 $100M 이상 대형 라운드. Isomorphic 한 건이 $2.1B. 초기 단계 투자는 위축 (BioPharma Dive)</td></tr>
+      <tr><td>같은 기간, 넓은 집계</td><td>235건 $16.3B</td><td>JPMorgan 집계. 정의가 달라 수치가 다르다</td></tr>
+      <tr><td>AI·머신러닝 바이오 벤처 투자</td><td>2024년 $8.9B → 2025년 $11B → 2026년 상반기 $10.2B</td><td>DealForma. AI를 쓰는 바이오 전반을 넣은 넓은 정의</td></tr>
+      <tr><td>바이오텍 상장, 2026년 상반기</td><td>13건 $4.5B</td><td>2025년 한 해(집계에 따라 9~11건)를 넘었다</td></tr>
+      <tr><td>인수합병, 2026년 상반기</td><td>80건 $96B</td><td>JPMorgan</td></tr>
+      <tr><td>바이오텍 지수(XBI)</td><td>최근 1년 총수익 +59.3%</td><td>2026-09-30 종가 $157.68, 52주 범위 $98.87~$169.89</td></tr>
+      <tr><td>기준금리</td><td>2026-09-16 인상, 3.75~4.00%</td><td>2023년 이후 첫 인상. 적자 바이오텍에 가장 불리한 변수</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">출처: BioPharma Dive, JPMorgan, DealForma, 연준, stockanalysis.com.</p>
+
+  <h3>약가와 관세: 제약사 R&amp;D 지갑을 누르는 힘</h3>
+  <ul>
+    <li><b>최혜국 약가(MFN)</b>: 2026년 8월 말 기준 26개사, 브랜드 의약품 시장의 약 89%가 정부와 협약을 맺었다. 메디케이드 전체와 신약 출시가에 적용된다.</li>
+    <li><b>의약품 관세</b>: 협약과 미국 내 생산 계획을 맺으면 0%, 아니면 최대 100%. 제약사의 설비 투자를 미국으로 끌어오는 수단이다.</li>
+    <li><b>R&amp;D 영향</b>: 정량 합의는 없다. 다만 밸류체인의 세 구간(데이터, 설계, 검증)이 모두 제약사 R&amp;D 예산에서 돈을 받으므로, 약가 인하가 예산 축소로 이어지면 영향이 넓다.</li>
+  </ul>
+
+  <h3>FDA: 속도는 빨라지고 조직은 흔들린다</h3>
+  <ul>
+    <li><b>AI 지침</b>: 2025년 1월 초안이 아직 초안 상태다. AI가 설계한 약을 위한 별도 심사 경로는 없다.</li>
+    <li><b>내부 AI</b>: 심사 보조 AI "Elsa"를 2025년 6월 도입했고 2026년 5월 4.0판을 냈다.</li>
+    <li><b>심사 단축</b>: 국가우선바우처 제도는 목표 심사 기간이 1~2개월이다. 접수 뒤 44~61일 만에 승인된 사례가 있다※.</li>
+    <li><b>실시간 임상시험</b>: 2026년 4월 AstraZeneca, Amgen과 종양 임상 2건으로 시범 사업을 시작했다.</li>
+    <li><b>조직</b>: 전년 대비 인력이 3,000명 이상 줄었고 2,200명 채용 승인을 받았다. Makary 국장은 2026년 5월 12일 사임했다※.</li>
+  </ul>
+
+  <h3>정부의 AI·과학 사업</h3>
+  <ul>
+    <li><b>Genesis Mission</b>: 2025년 11월 행정명령. 2026년 7월 백악관이 $5B 이상, 278개 과제를 발표했고 신약 발굴과 자율실험실이 포함됐다.</li>
+    <li><b>NSF 클라우드 실험실망</b>: 2026년 7월, 약 $400M로 4년간 20개 거점. Ginkgo가 여러 거점을 수주했다.</li>
+  </ul>
+
+  <h3>중국이라는 경쟁자</h3>
+  <ul>
+    <li>2025년 제약업계 라이선스 지출의 약 3분의 1이 중국에서 나온 자산이었고, 2026년에 더 빨라졌다(Jefferies).</li>
+    <li>파이프라인 성장률은 중국 +36.2%, 미국은 거의 제자리다(MassBio).</li>
+    <li>미국 AI 바이오텍은 "더 빨리, 더 싸게"를 내세우지만, 같은 약속을 중국 바이오텍이 사람과 속도로 이미 실현하고 있다. 제약사 입장에서는 둘이 같은 예산을 놓고 경쟁한다.</li>
+  </ul>
+
+  <h3>데이터 규제</h3>
+  <ul>
+    <li><b>법무부 대량 민감정보 규칙</b>(2025년 4월 발효)※: 미국인 유전체 100명 초과분을 우려 국가로 넘기는 것을 제한한다. 비식별 데이터에도 적용된다.</li>
+    <li><b>주법</b>: 유타, 사우스다코타, 텍사스가 유전정보 보호법을 만들었다※.</li>
+    <li><b>23andMe</b>: 파산이 알려지자 고객의 약 13%가 삭제를 요청했고 28개 주가 소송을 냈다※. 동의에 기대는 데이터 자산이 얼마나 빨리 줄 수 있는지 보여준다.</li>
+  </ul>
+</section>
+
+<section id="s9">
+  <div class="sec-h"><span class="sec-n">09</span><h2>주가가 먼저 간 곳</h2></div>
+  <p>산업 논리를 따지기 전에 시장이 이미 어디에 값을 매겼는지 봐야 한다. 2025년 말과 2026년 9월 30일의 시가총액을 비교했다.</p>
+  <div class="chart" id="ch-mcap">
+    <p class="ct">실적이 가장 덜 변한 데이터 생산 구간이 가장 많이 올랐다</p>
+    <p class="cs">시가총액 배수(2026-09-30 ÷ 2025-12-31). 1.0이면 제자리</p>
+    <div class="legend"><span><i style="background:var(--c1)"></i>①② 데이터 생산</span><span><i style="background:var(--c5)"></i>③ 소프트웨어</span><span><i style="background:var(--c4)"></i>④⑤ AI 설계</span><span><i style="background:var(--c2)"></i>⑥⑦ 검증(CRO)</span><span><i style="background:var(--c3)"></i>⑦ 진단</span></div>
+    <svg role="img" aria-label="주요 상장사 시가총액 연초 대비 배수 막대 그래프"></svg>
+  </div>
+  <p class="tnote">출처: stockanalysis.com(단일 출처). 시가총액 기준이라 유상증자로 늘어난 주식도 포함한다. Absci, Relay처럼 증자가 있었던 곳은 주가 상승률이 이보다 낮다.</p>
+
+  <div class="tbl-scroll"><table>
+    <caption>시가총액과 매출 배수</caption>
+    <thead><tr><th>기업</th><th>구간</th><th class="num">2025년 말</th><th class="num">2026-09-30</th><th class="num">배수</th><th class="num">연 매출 가이던스</th><th class="num">시총 ÷ 매출</th></tr></thead>
+    <tbody>
+      <tr><td>Twist Bioscience (TWST)</td><td>①② 데이터 생산</td><td class="num">1.94</td><td class="num">12.12</td><td class="num hl">6.2배</td><td class="num">$0.46B</td><td class="num">26.5배</td></tr>
+      <tr><td>10x Genomics (TXG)</td><td>①② 데이터 생산</td><td class="num">2.06</td><td class="num">11.77</td><td class="num hl">5.7배</td><td class="num">$0.62B</td><td class="num">19.0배</td></tr>
+      <tr><td>Illumina (ILMN)</td><td>①② 데이터 생산</td><td class="num">20.04</td><td class="num">41.33</td><td class="num hl">2.1배</td><td class="num">$4.62B</td><td class="num">8.9배</td></tr>
+      <tr><td>PacBio (PACB)</td><td>①② 데이터 생산</td><td class="num">0.56</td><td class="num">0.74</td><td class="num">1.3배</td><td class="num">$0.16B</td><td class="num">4.6배</td></tr>
+      <tr><td>Thermo Fisher (TMO)</td><td>①② 데이터 생산</td><td class="num">217.7</td><td class="num">249.6</td><td class="num">1.1배</td><td class="num">$47.75B</td><td class="num">5.2배</td></tr>
+      <tr><td>Danaher (DHR)</td><td>①② 데이터 생산</td><td class="num">161.7</td><td class="num">155.8</td><td class="num">1.0배</td><td class="num">-</td><td class="num">-</td></tr>
+      <tr><td>Schrödinger (SDGR)</td><td>③ 소프트웨어</td><td class="num">1.32</td><td class="num">2.32</td><td class="num">1.8배</td><td class="num">-</td><td class="num">-</td></tr>
+      <tr><td>Veeva (VEEV)</td><td>③ 소프트웨어</td><td class="num">36.70</td><td class="num">46.22</td><td class="num">1.3배</td><td class="num">$3.68B</td><td class="num">12.5배</td></tr>
+      <tr><td>AbCellera (ABCL)</td><td>④⑤ AI 설계</td><td class="num">1.02</td><td class="num">4.73</td><td class="num hl">4.6배</td><td class="num">-</td><td class="num">-</td></tr>
+      <tr><td>Absci (ABSI)</td><td>④⑤ AI 설계</td><td class="num">0.52</td><td class="num">1.85</td><td class="num hl">3.5배</td><td class="num">-</td><td class="num">-</td></tr>
+      <tr><td>Relay (RLAY)</td><td>④⑤ AI 설계</td><td class="num">1.47</td><td class="num">3.96</td><td class="num hl">2.7배</td><td class="num">-</td><td class="num">-</td></tr>
+      <tr><td>Recursion (RXRX)</td><td>④⑤ AI 설계</td><td class="num">2.13</td><td class="num">2.21</td><td class="num">1.0배</td><td class="num">-</td><td class="num">-</td></tr>
+      <tr><td>Charles River (CRL)</td><td>⑥⑦ 검증(CRO)</td><td class="num">9.82</td><td class="num">14.08</td><td class="num">1.4배</td><td class="num">-</td><td class="num">-</td></tr>
+      <tr><td>IQVIA (IQV)</td><td>⑥⑦ 검증(CRO)</td><td class="num">38.32</td><td class="num">44.25</td><td class="num">1.2배</td><td class="num">$17.38B</td><td class="num">2.5배</td></tr>
+      <tr><td>Medpace (MEDP)</td><td>⑥⑦ 검증(CRO)</td><td class="num">15.82</td><td class="num">17.42</td><td class="num">1.1배</td><td class="num">$2.84B</td><td class="num">6.1배</td></tr>
+      <tr><td>Natera (NTRA)</td><td>⑦ 진단</td><td class="num">31.62</td><td class="num">59.58</td><td class="num">1.9배</td><td class="num">$2.88B</td><td class="num">20.7배</td></tr>
+      <tr><td>Guardant (GH)</td><td>⑦ 진단</td><td class="num">13.16</td><td class="num">23.94</td><td class="num">1.8배</td><td class="num">$1.35B</td><td class="num">17.7배</td></tr>
+      <tr><td>Tempus (TEM)</td><td>⑦ 진단</td><td class="num">10.51</td><td class="num">14.78</td><td class="num">1.4배</td><td class="num">$1.60B</td><td class="num">9.2배</td></tr>
+      <tr><td>Caris (CAI)</td><td>⑦ 진단</td><td class="num">7.61</td><td class="num">8.66</td><td class="num">1.1배</td><td class="num">$1.04B</td><td class="num">8.4배</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">시가총액 단위 $B. 매출 가이던스는 각 사 2026 회계연도 가이던스의 중간값(Twist는 9월 결산, Veeva는 2027년 1월 결산). 가이던스를 금액으로 내지 않거나 매출이 의미 없는 곳은 비웠다. 시총 ÷ 매출은 필자 계산.</p>
+
+  <p>세 가지가 보인다.</p>
+  <ul>
+    <li><b>가장 많이 오른 곳은 실적이 가장 덜 변한 곳이다.</b> 10x는 매출 성장률 +3%에 시가총액이 5.7배, 매출의 19배가 됐다. Twist는 6.2배, 매출의 27배다. 시장은 4장의 "아직 정량화하기 이르다"를 이미 정량화해서 샀다.</li>
+    <li><b>AI 설계 구간에서는 임상 데이터를 낸 곳만 올랐다.</b> AbCellera 4.6배, Relay 2.7배인 반면, 데이터 규모로 대표되던 Recursion은 1.0배다.</li>
+    <li><b>성장률이 가장 높은 진단은 배수가 중간이다.</b> Natera와 Guardant는 매출이 +38~44% 늘었고 시가총액은 1.9~1.8배다. 임상 CRO(IQVIA 1.2배, Medpace 1.1배)와 대형 툴(Thermo 1.1배, Danaher 1.0배)은 거의 움직이지 않았다.</li>
+  </ul>
+  <div class="take"><span class="lbl">읽는 법</span>
+    <p>4~7장의 판정과 이 표를 겹치면, 논리가 약한 구간(데이터 생산)에 기대가 가장 많이 실려 있고, 숫자가 확인되는 구간(진단, 임상 CRO 상위)은 상대적으로 덜 올랐다. 이것이 틀렸다는 뜻은 아니다. 시장은 2027년 이후 AI 수주가 매출로 잡히는 것을 미리 본다. 다만 그 기대가 맞는지는 다음 두세 분기의 숫자로 확인해야 한다.</p>
+  </div>
+</section>
+
+<section id="s10">
+  <div class="sec-h"><span class="sec-n">10</span><h2>가치는 어디에 쌓이나</h2></div>
+  <p>처음 글의 결론은 "핵심은 모델이 아니라 실험과 임상 결과가 다시 모델로 들어가는 닫힌 데이터 고리"였다. 이 명제를 찬성 근거와 반증으로 나눠 본다.</p>
+  <div class="grid2">
+    <div class="pane yes"><h4>찬성 근거</h4>
+      <ul>
+        <li>모델은 빠르게 범용품이 된다. 오픈소스가 독점 모델을 따라붙고, 범용 AI 기업이 도구를 판다.</li>
+        <li>독점 데이터를 더하면 성능이 오른다. 제약 5개사 연합학습에서 예측 정확도 35.6% → 52.1%※.</li>
+        <li>Tempus의 데이터 매출은 +28%, 마진 70%로 진단보다 높다.</li>
+        <li>장비 기업 Illumina가 스스로 데이터 소유자로 올라간다. 데이터 쪽 가치를 장비 기업도 인정한 셈이다.</li>
+        <li>Lilly는 TuneLab으로 남의 데이터까지 자기 고리에 넣는다.</li>
+      </ul>
+    </div>
+    <div class="pane no"><h4>반증</h4>
+      <ul>
+        <li>데이터를 가장 많이 가진 AI 바이오텍 Recursion은 50PB를 갖고 2025년에 $645M을 잃었다.</li>
+        <li>세포 아틀라스는 수억 세포가 공개됐고, 그 데이터로도 모델이 단순 선형 모델을 넘지 못했다.</li>
+        <li>구매자가 값을 깎는다. Recursion은 Tempus 데이터 비용을 연 최대 $42M에서 $14M으로 낮췄다.</li>
+        <li>정적인 데이터는 싸다. 23andMe는 1인당 약 $20에 팔렸다.</li>
+        <li>고리를 닫으려면 임상까지 가야 한다. 임상은 느리고 비싸며, 그 자본을 가진 쪽은 제약사다.</li>
+      </ul>
+    </div>
+  </div>
+  <p>정리하면 명제의 방향은 맞지만 주어가 빠져 있다. 고리를 끝까지 닫을 수 있는 쪽은 임상을 돌릴 자본이 있는 제약사와, 환자 검사가 매일 들어오는 진단 기업이다.</p>
+  <div class="tbl-scroll"><table>
+    <thead><tr><th>구간</th><th>가치가 쌓이는 쪽</th><th>깎이는 쪽</th></tr></thead>
+    <tbody>
+      <tr><td>①② 데이터 생산</td><td>설계를 실물로 바꾸는 칸(DNA 합성), 스스로 데이터를 만드는 장비사</td><td>단가 경쟁에 놓인 시퀀싱·단일세포 소모품, NIH 의존 연구용 장비</td></tr>
+      <tr><td>③ 데이터·인프라</td><td>환자 데이터가 계속 들어오는 통로를 가진 곳, GPU와 클라우드</td><td>한 번 모은 정적 데이터, 세포주 교란 데이터</td></tr>
+      <tr><td>④⑤ 설계</td><td>자체 임상 자산을 가진 곳, 내재화한 빅파마</td><td>모델 접근권만 파는 플랫폼</td></tr>
+      <tr><td>⑥⑦ 검증·진단</td><td>임상 CRO 상위, 보험 수가를 받는 진단</td><td>동물 중심 전임상, 인력 투입형 CRO</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="s11">
+  <div class="sec-h"><span class="sec-n">11</span><h2>리스크</h2></div>
+  <div class="risk">
+    <div class="r"><span class="chip h">HIGH</span><div><div class="t">금리와 자금 사이클의 반전</div><div class="d">2026년의 수주 회복과 주가 상승은 자금이 풀린 덕이 컸다. 9월 금리 인상이 이어지면 적자 바이오텍과 초기 투자부터 막히고, CRO 수주와 툴 수요가 뒤따라 꺾인다.</div></div></div>
+    <div class="r"><span class="chip h">HIGH</span><div><div class="t">기대가 실적보다 앞서 있다</div><div class="d">10x, Twist, Illumina는 연초 대비 2~6배가 됐다. AI 수주가 2027년에 매출로 잡히지 않으면 조정 폭이 클 수 있다.</div></div></div>
+    <div class="r"><span class="chip h">HIGH</span><div><div class="t">2상 효능 실패의 반복</div><div class="d">AI 발굴 약의 2상 성공률은 평균 수준이다. 주목받는 2상이 연달아 실패하면 구간 전체의 자금 조달이 어려워진다.</div></div></div>
+    <div class="r"><span class="chip m">MID</span><div><div class="t">NIH 2027 회계연도 예산</div><div class="d">임시예산이 12월 11일에 끝난다. 대통령 예산안대로 깎이면 연구용 장비와 소모품 수요가 직접 줄어든다.</div></div></div>
+    <div class="r"><span class="chip m">MID</span><div><div class="t">약가 인하가 R&amp;D 예산을 누른다</div><div class="d">최혜국 약가와 관세 대응 투자가 겹치면 제약사는 외부 지출부터 줄인다. 데이터, 설계, 검증 세 구간이 모두 이 지갑에 기댄다.</div></div></div>
+    <div class="r"><span class="chip m">MID</span><div><div class="t">빅파마 내재화와 범용 AI</div><div class="d">제약사가 자체 GPU와 범용 모델로 설계를 직접 하면 중간의 AI 바이오텍과 소프트웨어 기업의 몫이 줄어든다.</div></div></div>
+    <div class="r"><span class="chip m">MID</span><div><div class="t">중국 바이오텍</div><div class="d">라이선스 지출의 3분의 1이 이미 중국 자산이다. 미국 AI 바이오텍이 파는 "빠르고 싼 후보물질"의 대체재다.</div></div></div>
+    <div class="r"><span class="chip m">MID</span><div><div class="t">유전정보 규제와 동의 철회</div><div class="d">데이터 자산은 환자 동의에 기댄다. 주법 확산과 23andMe 같은 사건은 자산 가치를 직접 깎는다.</div></div></div>
+    <div class="r"><span class="chip l">LOW</span><div><div class="t">FDA 조직 불안</div><div class="d">인력 감소와 국장 교체가 있었지만 심사 속도는 오히려 빨라졌다. 다만 정책 방향이 사람에 따라 바뀔 수 있다.</div></div></div>
+  </div>
+</section>
+
+<section id="s12">
+  <div class="sec-h"><span class="sec-n">12</span><h2>앞으로 확인할 것</h2></div>
+  <h3>일정</h3>
+  <ul class="tl">
+    <li><span class="d">2026-11-02</span><span>Recursion, 가족성 용종증 2상 추가 데이터. AI 발굴 약의 2상 효능을 가늠할 가장 가까운 시험대</span></li>
+    <li><span class="d">2026-11 초</span><span>3분기 실적. Illumina 아틀라스 데이터 매출, 10x의 AI 매출 언급, Twist의 AI 수주, Tempus 데이터 성장률</span></li>
+    <li><span class="d">2026 하반기</span><span>Absci 탈모 항체 효능 중간 결과. AI 설계 항체의 첫 효능 신호</span></li>
+    <li><span class="d">2026-12-11</span><span>임시예산 만료. NIH 2027 회계연도 예산의 방향</span></li>
+    <li><span class="d">2026-12</span><span>예산관리국의 BIOSECURE 대상 기업 목록 시한</span></li>
+    <li><span class="d">2026 말</span><span>Isomorphic 첫 인체 투약 목표. Relay 3상 등록 현황</span></li>
+    <li><span class="d">2027 1분기</span><span>zasocitinib FDA 결정. 계산 기반 설계 약의 첫 승인 여부</span></li>
+    <li><span class="d">2027 2분기</span><span>Quantum-Si Proteus 출시 목표</span></li>
+    <li><span class="d">미정</span><span>GRAIL Galleri FDA 결정, Emulate 간 장기칩 적격화, Iambic 상장, FDA 현대화법 3.0 서명</span></li>
+  </ul>
+
+  <h3>기업을 볼 때 물을 질문</h3>
+  <ol class="check">
+    <li><b>툴 기업</b>: 회사가 AI 관련 매출이나 수주를 금액으로 말하는가. 물량 증가와 단가 하락 중 어느 쪽이 큰가. 고객 가운데 NIH에 기대는 비중이 얼마인가.</li>
+    <li><b>데이터 기업</b>: 데이터 매출이 전사의 몇 %이고 성장률이 본업보다 높은가. 가장 큰 계약의 상대방이 관계사는 아닌가. 계약이 현금인가 주식인가.</li>
+    <li><b>AI 설계 기업</b>: 발표 총액이 아니라 실제 받은 현금이 얼마인가. 현금이 몇 년 가는가. 자체 자산의 2상 데이터가 있는가.</li>
+    <li><b>CRO</b>: 수주 배율의 변화가 자금 사이클 때문인가, 구조적 수요 때문인가. 계약이 인력 시간 기준인가 성과 기준인가. 영장류 의존도가 얼마인가.</li>
+    <li><b>진단 기업</b>: 성장이 보험 급여 확대에서 오는가, 검사 건수에서 오는가. 데이터가 제약사 매출로 이어지는가.</li>
+    <li><b>가격</b>: 연초 대비 얼마나 올랐고 매출의 몇 배인가. 그 배수가 요구하는 성장률이 회사 가이던스에 있는가.</li>
+  </ol>
+</section>
+
+<section id="s13">
+  <div class="sec-h"><span class="sec-n">13</span><h2>걸러낸 수치와 충돌</h2></div>
+  <p>조사 과정에서 출처끼리 어긋나거나 그대로 옮기면 안 되는 수치가 여럿 있었다.</p>
+  <div class="tbl-scroll"><table>
+    <thead><tr><th>항목</th><th>문제</th><th>처리</th></tr></thead>
+    <tbody>
+      <tr><td>10x Genomics 연간 가이던스</td><td>$600~625M은 종전치. 8월 6일 실적 때 $610~630M으로 올렸다</td><td>SEC 8-K 원문으로 확인해 상향치 사용</td></tr>
+      <tr><td>Tempus의 $200M 계약</td><td>일부 기사는 AstraZeneca가 내는 것처럼 썼다</td><td>8-K 기준으로 지급 주체는 Pathos</td></tr>
+      <tr><td>DealForma 2025년 선급금 합계</td><td>원문에 "$67M"으로 적혀 있으나 같은 글의 개별 딜 선급금이 이보다 크다</td><td>인용하지 않음</td></tr>
+      <tr><td>"FDA AI 가속 심사 시범사업"</td><td>해당 글을 열어 보니 가상 시나리오였다</td><td>제외</td></tr>
+      <tr><td>zasocitinib "첫 AI 승인약"</td><td>개발사 임원이 그 표현을 사양했다</td><td>계산 기반 설계 약으로 표기</td></tr>
+      <tr><td>신약 비용의 전임상·임상 비중</td><td>2차 자료는 32% 대 68%로 적었으나 금액으로 다시 계산하면 31% 대 69%</td><td>재계산 값 사용</td></tr>
+      <tr><td>NIH 2027 예산안 삭감 폭</td><td>보도는 -12.3%, 확정 예산 대비 계산은 -13%</td><td>기준이 다른 것으로 보고 계산값을 "약"으로 표기</td></tr>
+      <tr><td>SomaLogic 인수가</td><td>매도자 발표 $350M + 최대 $75M, Illumina 공시 요약 약 $460M</td><td>금액을 본문에 쓰지 않음</td></tr>
+      <tr><td>시장 규모 추정</td><td>단일세포 시장 $4.5B~$8.4B. 1위 10x의 연 매출은 약 $0.62B</td><td>리서치 업체 시장 규모를 본문에 쓰지 않음</td></tr>
+      <tr><td>임상 단계 AI 약물 수</td><td>117개와 173개 이상</td><td>둘 다 표기</td></tr>
+      <tr><td>2025년 바이오텍 상장 건수</td><td>9건과 11건</td><td>범위로 표기</td></tr>
+      <tr><td>중국발 라이선스 총액(2025년)</td><td>$79B와 $135.7B</td><td>금액 대신 비중(약 3분의 1)만 사용</td></tr>
+      <tr><td>빅파마 미국 투자 약속</td><td>$400B, $480B, $638B</td><td>범위로 표기</td></tr>
+      <tr><td>Lila Sciences $2B 조달, FDA 현대화법 3.0 서명</td><td>협의·통과 보도만 있고 종결을 확인하지 못했다</td><td>미확인으로 표기</td></tr>
+    </tbody>
+  </table></div>
+  <p class="small">이 리포트의 한계: 웹에 공개된 1차 자료(SEC 공시, 회사 발표)와 2차 자료(업계 매체)로만 썼다. 증권사 리포트 아카이브는 쓰지 않았다. 열람이 막힌 논문과 기사는 2차 출처로 확인했고 ※로 표시했다. 시가총액은 단일 사이트 수치다.</p>
+</section>
+
+<section id="s14">
+  <div class="sec-h"><span class="sec-n">14</span><h2>출처</h2></div>
+  <h4>데이터 생산</h4>
+  <ul class="src">
+    <li><a href="https://www.sec.gov/Archives/edgar/data/0001770787/000162828026054273/txg-20260806xexx991.htm">10x Genomics 2분기 실적 8-K (2026-08-06)</a></li>
+    <li><a href="https://www.sec.gov/Archives/edgar/data/0001110803/000111080326000160/ilmn-20260628.htm">Illumina 10-Q (2026년 2분기)</a> · <a href="https://www.genomeweb.com/sequencing/illumina-raises-2026-guidance-after-q2-results-exceed-expectations">GenomeWeb</a></li>
+    <li><a href="https://www.sec.gov/Archives/edgar/data/0001581280/000158128026000044/twst-2026630xex991.htm">Twist Bioscience 회계 3분기 8-K</a> · <a href="https://www.fool.com/earnings/call-transcripts/2026/08/10/twist-bioscience-twst-q3-2026-earnings-call-transcript/">콘퍼런스콜</a></li>
+    <li><a href="https://www.fool.com/earnings/call-transcripts/2026/08/14/10x-genomics-txg-q2-2026-earnings-call-transcript/">10x Genomics 콘퍼런스콜</a></li>
+    <li><a href="https://www.nasdaq.com/press-release/illumina-expands-billion-cell-atlas-program-new-ai-drug-developers-2026-07-16">Illumina Billion Cell Atlas 확대 (2026-07-16)</a></li>
+    <li><a href="https://www.roche.com/media/releases/med-cor-2026-06-29">Roche Axelios 1 출시</a> · <a href="https://finance.yahoo.com/news/ultima-genomics-introduces-next-generation-130000528.html">Ultima UG200</a></li>
+    <li><a href="https://www.insideprecisionmedicine.com/topics/informatics/arc-institute-teams-with-10x-and-ultima-genomics-to-evolve-virtual-cell-atlas/">Arc Virtual Cell Atlas</a> · <a href="https://biohub.org/news/billion-cells-project-launches-advance-ai-biology/">CZI Billion Cells Project</a></li>
+    <li><a href="https://www.nasdaq.com/press-release/quantum-si-reports-second-quarter-2026-financial-results-and-provides-proteustm">Quantum-Si 2분기 실적</a> · <a href="https://www.sec.gov/Archives/edgar/data/0001726445/000119312526344748/ck0001726445-ex99_1.htm">Seer 8-K</a></li>
+    <li><a href="https://www.genscript.com/genscript-biotech-announces-2026-interim-results.html">GenScript 2026년 상반기</a> · <a href="https://www.sec.gov/Archives/edgar/data/0001830214/000162828026053319/ex991earningspr.htm">Ginkgo 8-K</a></li>
+    <li><a href="https://casrai.org/news/nih-fy2026-appropriations-enacted-what-it-means-for-grantees">NIH 2026 회계연도 예산</a> · <a href="https://www.axios.com/2026/04/03/trump-budget-medical-research-cut">2027 예산안(Axios)</a></li>
+  </ul>
+  <h4>데이터 소유·인프라</h4>
+  <ul class="src">
+    <li><a href="https://www.sec.gov/Archives/edgar/data/0001717115/000119312526326083/tem-ex99_1.htm">Tempus 2분기 8-K</a> · <a href="https://www.sec.gov/Archives/edgar/data/1717115/000119312526066961/tem-20251231.htm">10-K</a> · <a href="https://www.sec.gov/Archives/edgar/data/1717115/000119312525090062/d944168d8k.htm">Pathos·AstraZeneca 계약 8-K</a></li>
+    <li><a href="https://www.sec.gov/Archives/edgar/data/1601830/000160183026000112/rxrx-20260915.htm">Recursion–Tempus 계약 개정 8-K (2026-09-15)</a></li>
+    <li><a href="https://www.sec.gov/Archives/edgar/data/0001576280/000157628026000036/gh-06302026xexhibit991.htm">Guardant 8-K</a> · <a href="https://www.sec.gov/Archives/edgar/data/0002019410/000201941026000053/cai_ex99-1.htm">Caris 8-K</a></li>
+    <li><a href="https://www.fiercebiotech.com/biotech/deal-making-flurry-continues-genentech-offers-caris-11b-biobucks-cancer-collab">Genentech–Caris</a> · <a href="https://www.fiercebiotech.com/biotech/gsk-inks-model-deal-50m-bet-noetiks-cancer-ai-platform">GSK–Noetik</a></li>
+    <li><a href="https://www.tahoebio.ai/news/tahoe-therapeutics-raises-30m">Tahoe Therapeutics</a> · <a href="https://arcinstitute.org/news/tahoe-arc-biohub">Tahoe·Arc·Biohub</a></li>
+    <li><a href="https://www.biorxiv.org/content/10.64898/2026.02.04.703804v1.full">Biohub·시카고대 교란 예측 프리프린트</a> · <a href="https://arxiv.org/abs/2604.27646">벤치마크(arXiv)</a></li>
+    <li><a href="https://www.drugdiscoverytrends.com/lilly-launches-tunelab-sharing-ai-drug-discovery-models-with-biotechs/">Lilly TuneLab</a> · <a href="https://nvidianews.nvidia.com/news/nvidia-and-lilly-announce-co-innovation-lab-to-reinvent-drug-discovery-in-the-age-of-ai">NVIDIA–Lilly 공동 연구소</a></li>
+    <li><a href="http://www.prnewswire.com/news-releases/veeva-announces-fiscal-2027-second-quarter-results-302860933.html">Veeva 실적</a> · <a href="https://news.siemens.com/en-us/dotmatics-closing/">Siemens–Dotmatics</a> · <a href="https://www.sec.gov/Archives/edgar/data/0001490978/000149097826000067/sdgr-20260630x8kxexx991.htm">Schrödinger 8-K</a></li>
+    <li><a href="https://www.bio-itworld.com/news/2026/09/22/apheris-announced-the-results-of-their-federated-learning-co-folding-initiative-now-four-big-pharma-are-betting-bigger">Apheris 연합학습 결과</a> · <a href="https://www.hipaajournal.com/genetic-testing-company-23andme-files-for-bankruptcy/">23andMe</a></li>
+  </ul>
+  <h4>AI 타깃 발굴·설계</h4>
+  <ul class="src">
+    <li><a href="https://www.sciencedirect.com/science/article/pii/S135964462400134X">Jayatunga 외 (Drug Discovery Today 2024)</a> · <a href="https://www.iqvia.com/blogs/2026/05/iqvia-institutes-global-r-and-d-trends-2026-report-finds-credible-signal-on-ai-enabled-programs">IQVIA 연구소 2026</a></li>
+    <li><a href="https://dealforma.com/ai-machine-learning-rd-ma-ventures-ipos-h1-2026-review/">DealForma 2026년 상반기</a> · <a href="https://dealforma.com/ai-ml-drug-discovery-and-licensing-rd-ma-ventures-and-ipos-2025-review/">2025년</a></li>
+    <li><a href="https://www.prnewswire.com/news-releases/insilico-medicine-doses-first-patient-in-genesis-ipf-3-the-worlds-first-phase-iii-trial-of-a-generative-ai-driven-innovative-drug-302873749.html">Insilico rentosertib 3상</a> · <a href="https://www.pharmavoice.com/news/nimbus-takeda-zasocitinib-ai-drug-discovery/831289/">zasocitinib(PharmaVoice)</a></li>
+    <li><a href="https://www.sec.gov/Archives/edgar/data/0001601830/000160183026000097/exhibit991-q0226.htm">Recursion 2분기 8-K</a> · <a href="https://www.sec.gov/Archives/edgar/data/0001812364/000119312526338013/rlay-ex99_2.htm">Relay</a> · <a href="https://www.sec.gov/Archives/edgar/data/1672688/000167268826000134/exhibit991-2026q210xqpr.htm">Absci</a></li>
+    <li><a href="https://www.clinicaltrialsarena.com/news/abcellera-abcl635-favourable-phase-ii-data/">AbCellera 2상</a> · <a href="https://www.biopharmadive.com/news/generate-biomedicines-ipo-price-biotech-ai-flagship-startup/813130/">Generate 상장</a> · <a href="https://www.sec.gov/Archives/edgar/data/1997038/000119312526396704/iam-20260921.htm">Iambic S-1</a></li>
+    <li><a href="https://medcitynews.com/2026/05/isomorphic-labs-techbio-startup-ai-drug-discovery-alphabet-google-deepmind/">Isomorphic 조달</a> · <a href="https://hitconsultant.net/2026/07/14/chai-discovery-raises-400-million-series-c/">Chai 조달</a> · <a href="https://www.biorxiv.org/content/10.1101/2025.07.05.663018v1">Chai-2 프리프린트</a></li>
+    <li><a href="https://www.rdworldonline.com/eli-lillys-lillypod-supercomputer-goes-live-with-1016-nvidia-blackwell-gpus/">Lilly 슈퍼컴퓨터</a> · <a href="https://pharmaphorum.com/news/openai-introduces-gpt-rosalind-its-drug-discovery-ai">GPT-Rosalind</a> · <a href="https://www.statnews.com/2026/06/30/anthropic-release-claude-science-ceo-dario-amodei/">Claude Science(STAT)</a></li>
+  </ul>
+  <h4>검증·임상·진단, 정책</h4>
+  <ul class="src">
+    <li><a href="https://www.prnewswire.com/news-releases/weight-loss-drugs-gains-lift-pharma-rd-returns-but-bubble-risk-grows-302760859.html">Deloitte 제약 R&amp;D 수익률 (2026-05)</a> · <a href="https://www.knowledgeportalia.org/costs-r-d">단계별 비용</a></li>
+    <li><a href="https://www.fda.gov/news-events/press-announcements/fda-achieves-year-1-goals-reducing-animal-testing-drug-development">FDA 동물실험 축소 1년 차</a> · <a href="https://www.pharmtech.com/view/the-fda-finalizes-rule-recognizing-non-animal-testing-methods-building-on-year-long-reduction-push">최종 규칙</a></li>
+    <li><a href="https://www.sec.gov/Archives/edgar/data/0001100682/000110068226000115/crl2q26earningsrelease.htm">Charles River 8-K</a> · <a href="https://www.sec.gov/Archives/edgar/data/0000720154/000110465926069950/tm2616729d1_8k.htm">Inotiv 8-K</a></li>
+    <li><a href="https://www.sec.gov/Archives/edgar/data/0001478242/000162828026049923/iqv-q2x2026earningspressre.htm">IQVIA 8-K</a> · <a href="https://www.biospace.com/press-releases/medpace-holdings-inc-reports-second-quarter-2026-results">Medpace</a> · <a href="https://www.sec.gov/Archives/edgar/data/0001965040/000162828026050368/exhibit991-pressreleasedat.htm">Fortrea</a></li>
+    <li><a href="https://www.bakermckenzie.com/en/insight/publications/2026/01/united-states-the-biosecure-act-becomes-law">BIOSECURE 법(Baker McKenzie)</a> · <a href="https://www.thefdalawblog.com/2026/06/wuxi-apptecs-1260h-listing-brings-the-biosecure-act-back-to-center-stage/">WuXi 명단 등재</a></li>
+    <li><a href="https://foleyhoag.com/news-and-insights/publications/alerts-and-updates/2026/april/executive-order-imposing-section-232-tariffs-on-pharmaceuticals-and-pharmaceutical-ingredients/">의약품 관세</a> · <a href="https://www.duanemorris.com/alerts/most_favored_nation_drug_pricing_agreements_expanded_nine_additional_pharmaceutical_0926.html">최혜국 약가 협약</a></li>
+    <li><a href="https://www.biopharmadive.com/news/biotech-venture-capital-funding-2026-first-half/824881/">바이오텍 벤처 투자 2026년 상반기</a> · <a href="https://www.jpmorgan.com/insights/markets-and-economy/outlook/biopharma-medtech-deal-reports">JPMorgan</a></li>
+    <li><a href="https://www.federalreserve.gov/newsevents/pressreleases/monetary20260916a1.htm">연준 2026-09-16</a> · <a href="https://www.whitehouse.gov/releases/2026/07/45502/">Genesis Mission</a> · <a href="https://www.biopharmadive.com/news/massbio-industry-biotech-vc-ipo-funding-licensing/828621/">MassBio</a></li>
+    <li><a href="https://grail.com/press-releases/fda-advisory-committee-votes-in-favor-of-approval-of-grails-galleri-multi-cancer-early-detection-test/">GRAIL 자문위</a> · 시가총액: stockanalysis.com 각 종목 market-cap 페이지(2026-09-30)</li>
+  </ul>
+</section>
+
+<div class="foot">
+  이 문서는 공개 자료를 정리한 산업 학습 자료이며 투자 권유가 아니다. 수치는 2026-10-01 기준으로 확인했고, 계산값은 표 아래에 근거를 적었다. 2026년 3분기 실적(11월 초)이 나오면 4장과 9장의 판단을 다시 확인해야 한다.
+</div>
+</main>
+<script type="application/json" id="cd">{"growth": [{"n": "Thermo Fisher", "s": "Thermo", "seg": 0, "v": 10.0, "t": "유기적 +5%"}, {"n": "Danaher", "s": "Danaher", "seg": 0, "v": 5.5, "t": "코어 +3.0%"}, {"n": "Agilent", "s": "Agilent", "seg": 0, "v": 8.1, "t": "코어 +7.3%, 7월 분기"}, {"n": "Illumina", "s": "Illumina", "seg": 0, "v": 9.5, "t": "임상 소모품 +15%, 연구용 -7%"}, {"n": "10x Genomics", "s": "10x", "seg": 0, "v": 3.0, "t": "일회성 합의금 제외"}, {"n": "PacBio", "s": "PacBio", "seg": 0, "v": -2.0, "t": "$39.0M, 전년 $39.8M"}, {"n": "Twist Bioscience", "s": "Twist", "seg": 0, "v": 23.0, "t": "6월 분기"}, {"n": "Bruker", "s": "Bruker", "seg": 0, "v": 5.2, "t": "유기적 +2.8%"}, {"n": "Azenta", "s": "Azenta", "seg": 0, "v": 12.0, "t": "유기적 +9%, 6월 분기"}, {"n": "Veeva", "s": "Veeva", "seg": 1, "v": 18.0, "t": "7월 분기"}, {"n": "Schrödinger", "s": "Schrödinger", "seg": 1, "v": 8.0, "t": "소프트웨어는 -10%"}, {"n": "Certara", "s": "Certara", "seg": 1, "v": 1.0, "t": "소프트웨어 +4%"}, {"n": "IQVIA", "s": "IQVIA", "seg": 3, "v": 8.7, "t": "수주 배율 1.22"}, {"n": "ICON", "s": "ICON", "seg": 3, "v": 1.2, "t": ""}, {"n": "Medpace", "s": "Medpace", "seg": 3, "v": 17.2, "t": "신규 수주 +28.2%"}, {"n": "Fortrea", "s": "Fortrea", "seg": 3, "v": -4.5, "t": ""}, {"n": "Charles River", "s": "Charles River", "seg": 3, "v": -2.7, "t": "유기적 +0.1%"}, {"n": "Labcorp 바이오제약", "s": "Labcorp", "seg": 3, "v": 6.5, "t": "바이오제약 실험실 서비스 부문"}, {"n": "Tempus", "s": "Tempus", "seg": 4, "v": 22.0, "t": "데이터 부문 +28%"}, {"n": "Natera", "s": "Natera", "seg": 4, "v": 38.0, "t": ""}, {"n": "Guardant", "s": "Guardant", "seg": 4, "v": 44.0, "t": ""}, {"n": "Caris", "s": "Caris", "seg": 4, "v": 45.0, "t": ""}], "phase": [{"n": "1상, AI 발굴", "ai": 1, "lo": 80, "hi": 90, "lab": "80~90%", "t": "Jayatunga 외(2024)"}, {"n": "1상, 업계 평균", "ai": 0, "lo": 40, "hi": 65, "lab": "40~65%", "t": "과거 업계 평균"}, {"n": "2상, AI 발굴", "ai": 1, "lo": 40, "hi": 40, "lab": "약 40%", "t": "표본이 작다"}, {"n": "2상, 업계 평균", "ai": 0, "lo": 40, "hi": 40, "lab": "약 40%", "t": "과거 업계 평균"}, {"n": "3상, AI 발굴", "ai": 1, "lo": null, "hi": null, "lab": "결과가 나온 사례 없음", "t": "2026년 9월 기준 진행 중인 3상만 있다"}], "deal": [{"n": "2026년 상반기 전체 (70건)", "s": "상반기 전체", "up": "$1.9B", "tot": "$45.9B", "v": 4.14, "hl": 1}, {"n": "Sanofi–Earendil (2026-01)", "s": "Sanofi–Earendil", "up": "$160M", "tot": "$2.56B", "v": 6.25}, {"n": "Lilly–Insilico (2026-03)", "s": "Lilly–Insilico", "up": "$115M", "tot": "$2.75B", "v": 4.18}, {"n": "Novo–Valo (2025 확대)", "s": "Novo–Valo", "up": "$190M", "tot": "$4.60B", "v": 4.13}, {"n": "Novartis–Relation", "s": "Novartis–Relation", "up": "$55M", "tot": "$1.70B", "v": 3.24}, {"n": "Novartis–Isomorphic (2024)", "s": "Novartis–Isomorphic", "up": "$37.5M", "tot": "$1.20B", "v": 3.12}, {"n": "Lilly–Isomorphic (2024)", "s": "Lilly–Isomorphic", "up": "$45M", "tot": "$1.70B", "v": 2.65}, {"n": "Novartis–Monte Rosa (2025)", "s": "Novartis–Monte Rosa", "up": "$120M", "tot": "$5.40B", "v": 2.22}, {"n": "Genentech–Caris (2025-12)", "s": "Genentech–Caris", "up": "$25M", "tot": "$1.12B", "v": 2.22}, {"n": "AstraZeneca–CSPC (2025)", "s": "AZ–CSPC", "up": "$110M", "tot": "$5.30B", "v": 2.08}, {"n": "Lilly–Creyon (2025-04)", "s": "Lilly–Creyon", "up": "$13M", "tot": "$1.00B", "v": 1.3}, {"n": "Insilico–SK바이오팜 (2026)", "s": "Insilico–SK바이오팜", "up": "$5M", "tot": "$2.55B", "v": 0.2}], "mcap": [{"n": "Twist Bioscience", "tk": "TWST", "seg": 0, "a": 1.94, "b": 12.12, "x": 6.247}, {"n": "10x Genomics", "tk": "TXG", "seg": 0, "a": 2.06, "b": 11.77, "x": 5.714}, {"n": "AbCellera", "tk": "ABCL", "seg": 2, "a": 1.02, "b": 4.73, "x": 4.637}, {"n": "Absci", "tk": "ABSI", "seg": 2, "a": 0.52, "b": 1.85, "x": 3.525}, {"n": "Relay", "tk": "RLAY", "seg": 2, "a": 1.47, "b": 3.96, "x": 2.694}, {"n": "Illumina", "tk": "ILMN", "seg": 0, "a": 20.04, "b": 41.33, "x": 2.062}, {"n": "Natera", "tk": "NTRA", "seg": 4, "a": 31.62, "b": 59.58, "x": 1.884}, {"n": "Guardant", "tk": "GH", "seg": 4, "a": 13.16, "b": 23.94, "x": 1.819}, {"n": "Schrödinger", "tk": "SDGR", "seg": 1, "a": 1.32, "b": 2.32, "x": 1.758}, {"n": "Charles River", "tk": "CRL", "seg": 3, "a": 9.82, "b": 14.08, "x": 1.434}, {"n": "Tempus", "tk": "TEM", "seg": 4, "a": 10.51, "b": 14.78, "x": 1.406}, {"n": "PacBio", "tk": "PACB", "seg": 0, "a": 0.56, "b": 0.74, "x": 1.305}, {"n": "Veeva", "tk": "VEEV", "seg": 1, "a": 36.7, "b": 46.22, "x": 1.259}, {"n": "IQVIA", "tk": "IQV", "seg": 3, "a": 38.32, "b": 44.25, "x": 1.155}, {"n": "Thermo Fisher", "tk": "TMO", "seg": 0, "a": 217.7, "b": 249.6, "x": 1.147}, {"n": "Caris", "tk": "CAI", "seg": 4, "a": 7.61, "b": 8.66, "x": 1.138}, {"n": "Medpace", "tk": "MEDP", "seg": 3, "a": 15.82, "b": 17.42, "x": 1.101}, {"n": "Recursion", "tk": "RXRX", "seg": 2, "a": 2.13, "b": 2.21, "x": 1.038}, {"n": "Danaher", "tk": "DHR", "seg": 0, "a": 161.7, "b": 155.75, "x": 0.963}]}</script>
+<script>
+(function(){
+const CD = JSON.parse(document.getElementById('cd').textContent);
+const tip = document.getElementById('tip');
+function showTip(html, x, y){
+  tip.innerHTML = html; tip.style.display='block';
+  const r = tip.getBoundingClientRect();
+  let L = x + 14, T = y + 14;
+  if (L + r.width > window.innerWidth - 8) L = x - r.width - 14;
+  if (L < 8) L = 8;
+  if (T + r.height > window.innerHeight - 8) T = y - r.height - 14;
+  if (T < 8) T = 8;
+  tip.style.left = L + 'px'; tip.style.top = T + 'px';
+}
+function hideTip(){ tip.style.display='none'; }
+window.addEventListener('scroll', hideTip, {passive:true});
+document.addEventListener('pointerdown', e => { if (!e.target.closest('.chart svg')) hideTip(); });
+function bindHits(svg, onHit){
+  if (svg._bound) { svg._onHit = onHit; return; }
+  svg._bound = true; svg._onHit = onHit;
+  let down = false;
+  const handler = e => { const t = e.target.closest('[data-hit]'); if (!t){ hideTip(); return; } svg._onHit(t, e); };
+  svg.addEventListener('pointerdown', e => { down = true; handler(e); });
+  svg.addEventListener('pointermove', e => { if (e.pointerType === 'mouse' || down) handler(e); });
+  ['pointerup','pointercancel','pointerleave'].forEach(ev => svg.addEventListener(ev, () => { down=false; if (ev!=='pointerup') hideTip(); }));
+}
+function responsive(id, draw){
+  const box = document.getElementById(id); if (!box) return; const svg = box.querySelector('svg');
+  let t;
+  const render = () => { const W = Math.max(280, Math.floor(box.clientWidth - (parseFloat(getComputedStyle(box).paddingLeft)*2))); const H = draw(svg, W); svg.setAttribute('viewBox', `0 0 ${W} ${H}`); svg.setAttribute('height', H); };
+  render();
+  new ResizeObserver(() => { clearTimeout(t); t = setTimeout(render, 120); }).observe(box);
+}
+const SEG = ['var(--c1)','var(--c5)','var(--c4)','var(--c2)','var(--c3)'];
+const sg = (v, d) => (v > 0 ? '+' : '') + v.toFixed(d);
+
+/* ---------- revenue growth by segment, diverging bars ---------- */
+responsive('ch-growth', (svg, W) => {
+  const narrow = W < 560; const R = CD.growth;
+  const ML = narrow ? 92 : 150, MR = narrow ? 44 : 56, MT = 6, rowH = narrow ? 24 : 26;
+  const Hh = MT + R.length*rowH + 22; const pw = W - ML - MR;
+  const vMin = -10, vMax = 50; const x = v => ML + (v - vMin)/(vMax - vMin)*pw;
+  let s = '';
+  [-10,0,10,20,30,40,50].forEach(v => s += `<line class="${v===0?'axis':'grid'}" x1="${x(v)}" x2="${x(v)}" y1="${MT}" y2="${Hh-22}"/><text x="${x(v)}" y="${Hh-7}" text-anchor="middle" class="mut" style="font-size:${narrow?9:10.5}px">${v}</text>`);
+  R.forEach((r,i) => { const y0 = MT + i*rowH; const bh = narrow ? 12 : 14; const pos = r.v >= 0;
+    const bx = pos ? x(0) : x(r.v), bw = Math.max(1, Math.abs(x(r.v) - x(0)));
+    s += `<text x="${ML-6}" y="${y0+rowH/2+4}" text-anchor="end" class="lab" style="font-size:${narrow?10.5:12}px">${narrow ? r.s : r.n}</text>`;
+    s += `<rect x="${bx}" y="${y0+rowH/2-bh/2}" width="${bw}" height="${bh}" fill="${SEG[r.seg]}" rx="2"/>`;
+    s += `<text x="${pos ? x(r.v)+5 : x(r.v)-5}" y="${y0+rowH/2+4}" text-anchor="${pos?'start':'end'}" style="font-size:${narrow?10:11}px">${sg(r.v, 1)}</text>`;
+    s += `<rect data-hit="${i}" x="0" y="${y0}" width="${W}" height="${rowH}" fill="transparent"/>`; });
+  svg.innerHTML = s;
+  bindHits(svg, (t, e) => { const r = R[+t.dataset.hit]; showTip(`<b>${r.n}</b><br>매출 ${sg(r.v, 1)}%${r.t ? '<br>' + r.t : ''}`, e.clientX, e.clientY); });
+  return Hh;
+});
+
+/* ---------- clinical success by phase, range bars ---------- */
+responsive('ch-phase', (svg, W) => {
+  const narrow = W < 560; const R = CD.phase;
+  const ML = narrow ? 84 : 120, MR = narrow ? 62 : 78, MT = 6, rowH = narrow ? 30 : 34;
+  const Hh = MT + R.length*rowH + 22; const pw = W - ML - MR;
+  const x = v => ML + v/100*pw;
+  let s = '';
+  [0,20,40,60,80,100].forEach(v => s += `<line class="${v===0?'axis':'grid'}" x1="${x(v)}" x2="${x(v)}" y1="${MT}" y2="${Hh-22}"/><text x="${x(v)}" y="${Hh-7}" text-anchor="middle" class="mut" style="font-size:${narrow?9:10.5}px">${v}</text>`);
+  R.forEach((r,i) => { const y0 = MT + i*rowH; const cy = y0 + rowH/2; const col = r.ai ? 'var(--c1)' : 'var(--c4)';
+    s += `<text x="${ML-6}" y="${cy+4}" text-anchor="end" class="lab" style="font-size:${narrow?10.5:12}px">${r.n}</text>`;
+    if (r.lo == null) { s += `<text x="${x(2)}" y="${cy+4}" class="mut" style="font-size:${narrow?10:11}px">${r.lab}</text>`; }
+    else if (r.lo === r.hi) { s += `<circle cx="${x(r.lo)}" cy="${cy}" r="${narrow?6:7}" fill="${col}" stroke="var(--surface)" stroke-width="2"/><text x="${x(r.lo)+12}" y="${cy+4}" style="font-size:${narrow?10:11}px">${r.lab}</text>`; }
+    else { s += `<rect x="${x(r.lo)}" y="${cy-(narrow?6:7)}" width="${x(r.hi)-x(r.lo)}" height="${narrow?12:14}" fill="${col}" rx="3"/><text x="${x(r.hi)+6}" y="${cy+4}" style="font-size:${narrow?10:11}px">${r.lab}</text>`; }
+    s += `<rect data-hit="${i}" x="0" y="${y0}" width="${W}" height="${rowH}" fill="transparent"/>`; });
+  svg.innerHTML = s;
+  bindHits(svg, (t, e) => { const r = R[+t.dataset.hit]; showTip(`<b>${r.n}</b><br>${r.lab}<br>${r.t}`, e.clientX, e.clientY); });
+  return Hh;
+});
+
+/* ---------- upfront share of deal value ---------- */
+responsive('ch-deal', (svg, W) => {
+  const narrow = W < 560; const R = CD.deal;
+  const ML = narrow ? 112 : 190, MR = narrow ? 44 : 56, MT = 6, rowH = narrow ? 26 : 28;
+  const Hh = MT + R.length*rowH + 22; const pw = W - ML - MR;
+  const vMax = 8; const x = v => ML + v/vMax*pw;
+  let s = '';
+  [0,2,4,6,8].forEach(v => s += `<line class="${v===0?'axis':'grid'}" x1="${x(v)}" x2="${x(v)}" y1="${MT}" y2="${Hh-22}"/><text x="${x(v)}" y="${Hh-7}" text-anchor="middle" class="mut" style="font-size:${narrow?9:10.5}px">${v}%</text>`);
+  R.forEach((r,i) => { const y0 = MT + i*rowH; const bh = narrow ? 13 : 15;
+    s += `<text x="${ML-6}" y="${y0+rowH/2+4}" text-anchor="end" class="lab" style="font-size:${narrow?10.5:12}px; font-weight:${r.hl?700:400}">${narrow ? r.s : r.n}</text>`;
+    s += `<rect x="${x(0)}" y="${y0+rowH/2-bh/2}" width="${Math.max(1, x(r.v)-x(0))}" height="${bh}" fill="${r.hl?'var(--c2)':'var(--c1)'}" rx="2"/>`;
+    s += `<text x="${x(r.v)+5}" y="${y0+rowH/2+4}" style="font-size:${narrow?10:11}px; font-weight:${r.hl?700:400}">${r.v.toFixed(1)}%</text>`;
+    s += `<rect data-hit="${i}" x="0" y="${y0}" width="${W}" height="${rowH}" fill="transparent"/>`; });
+  svg.innerHTML = s;
+  bindHits(svg, (t, e) => { const r = R[+t.dataset.hit]; showTip(`<b>${r.n}</b><br>선급 ${r.up}<br>총액 ${r.tot}<br>비중 ${r.v.toFixed(1)}%`, e.clientX, e.clientY); });
+  return Hh;
+});
+
+/* ---------- market cap multiple, year to date ---------- */
+responsive('ch-mcap', (svg, W) => {
+  const narrow = W < 560; const R = CD.mcap;
+  const ML = narrow ? 88 : 150, MR = narrow ? 44 : 56, MT = 6, rowH = narrow ? 24 : 26;
+  const Hh = MT + R.length*rowH + 22; const pw = W - ML - MR;
+  const vMax = 7; const x = v => ML + v/vMax*pw;
+  let s = '';
+  [0,1,2,3,4,5,6,7].forEach(v => s += `<line class="${v===0||v===1?'axis':'grid'}" x1="${x(v)}" x2="${x(v)}" y1="${MT}" y2="${Hh-22}"/><text x="${x(v)}" y="${Hh-7}" text-anchor="middle" class="mut" style="font-size:${narrow?9:10.5}px; font-weight:${v===1?700:400}">${v}</text>`);
+  R.forEach((r,i) => { const y0 = MT + i*rowH; const bh = narrow ? 12 : 14;
+    s += `<text x="${ML-6}" y="${y0+rowH/2+4}" text-anchor="end" class="lab" style="font-size:${narrow?10.5:12}px">${narrow ? r.tk : r.n}</text>`;
+    s += `<rect x="${x(0)}" y="${y0+rowH/2-bh/2}" width="${Math.max(1, x(r.x)-x(0))}" height="${bh}" fill="${SEG[r.seg]}" rx="2"/>`;
+    s += `<text x="${x(r.x)+5}" y="${y0+rowH/2+4}" style="font-size:${narrow?10:11}px">${r.x.toFixed(1)}배</text>`;
+    s += `<rect data-hit="${i}" x="0" y="${y0}" width="${W}" height="${rowH}" fill="transparent"/>`; });
+  svg.innerHTML = s;
+  bindHits(svg, (t, e) => { const r = R[+t.dataset.hit]; showTip(`<b>${r.n} (${r.tk})</b><br>2025년 말 $${r.a}B<br>2026-09-30 $${r.b}B<br>${r.x.toFixed(2)}배`, e.clientX, e.clientY); });
+  return Hh;
+});
+})();
+
+</script>
+</body>
+</html>

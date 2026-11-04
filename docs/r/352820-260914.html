@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<title>하이브, 짝수해의 저주</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@600;700&family=Noto+Sans+KR:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+:root{
+  color-scheme:light;
+  --bg:#F3F4F7; --surface:#FFFFFF; --surface2:#F7F8FB; --surface3:#E9EBF2;
+  --ink:#15172B; --ink2:#454A61; --muted:#737A90;
+  --line:#D8DCE6; --line2:#BFC5D3;
+  --accent:#3B3A9E; --accent-soft:#E6E5F6;
+  --pos:#1B6E52; --neg:#B23A2C;
+  --odd:#2a78d6; --even:#eb6834; --s3:#1baf7a; --s4:#8B93A7;
+  --odd-soft:rgba(42,120,214,.10); --even-soft:rgba(235,104,52,.12);
+  --heat-pos:#2a78d6; --heat-neg:#e34948;
+  --shadow:0 1px 2px rgba(21,23,43,.06), 0 10px 28px rgba(21,23,43,.06);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#0F1118; --surface:#171A24; --surface2:#1D2130; --surface3:#252A3B;
+    --ink:#ECEEF5; --ink2:#B4BACB; --muted:#8D94A8;
+    --line:#2A2F40; --line2:#3B4155;
+    --accent:#A9A6F0; --accent-soft:#2A2A4D;
+    --pos:#4FB58C; --neg:#E07A5F;
+    --odd:#3987e5; --even:#d95926; --s3:#199e70; --s4:#7C8499;
+    --odd-soft:rgba(57,135,229,.16); --even-soft:rgba(217,89,38,.18);
+    --heat-pos:#3987e5; --heat-neg:#e66767;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 28px rgba(0,0,0,.3);
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#0F1118; --surface:#171A24; --surface2:#1D2130; --surface3:#252A3B;
+  --ink:#ECEEF5; --ink2:#B4BACB; --muted:#8D94A8;
+  --line:#2A2F40; --line2:#3B4155;
+  --accent:#A9A6F0; --accent-soft:#2A2A4D;
+  --pos:#4FB58C; --neg:#E07A5F;
+  --odd:#3987e5; --even:#d95926; --s3:#199e70; --s4:#7C8499;
+  --odd-soft:rgba(57,135,229,.16); --even-soft:rgba(217,89,38,.18);
+  --heat-pos:#3987e5; --heat-neg:#e66767;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 28px rgba(0,0,0,.3);
+}
+html{color-scheme:light dark}
+*{box-sizing:border-box}
+body{margin:0; background:var(--bg); color:var(--ink);
+  font-family:"Noto Sans KR","Malgun Gothic",system-ui,sans-serif; font-size:15.5px; line-height:1.75;
+  -webkit-text-size-adjust:100%}
+img{max-width:100%} [hidden]{display:none!important}
+.mono{font-family:"IBM Plex Mono","Consolas",ui-monospace,monospace; font-variant-numeric:tabular-nums}
+.serif{font-family:"Noto Serif KR","Noto Serif","Batang",serif}
+.wrap{max-width:920px; margin:0 auto; padding:0 22px 90px}
+a{color:var(--accent)}
+p{margin:0 0 14px} .lede{font-size:16.5px; color:var(--ink2)}
+ul,ol{margin:0 0 14px; padding-left:20px} li{margin-bottom:7px}
+strong,b{font-weight:700}
+.small{font-size:13px; color:var(--muted); line-height:1.6}
+.pos{color:var(--pos)} .neg{color:var(--neg)}
+
+/* masthead */
+.mast{background:var(--surface); border-bottom:1px solid var(--line)}
+.mast-in{max-width:920px; margin:0 auto; padding:34px 22px 26px}
+.eyebrow{font-family:"IBM Plex Mono",monospace; font-size:11.5px; letter-spacing:.06em; color:var(--muted)}
+h1{font-family:"Noto Serif KR",serif; font-size:clamp(30px,6.6vw,48px); line-height:1.18; margin:.3em 0 .15em; font-weight:700; letter-spacing:-.015em; text-wrap:balance}
+h1 .em{color:var(--accent)}
+.sub{color:var(--ink2); font-size:15.5px; max-width:64ch; margin:.4em 0 0}
+.tickerline{display:flex; flex-wrap:wrap; gap:6px 16px; align-items:baseline; margin-top:14px; font-family:"IBM Plex Mono",monospace; font-size:12.5px; color:var(--muted)}
+.tickerline b{color:var(--ink); font-weight:600}
+.stats{display:grid; grid-template-columns:repeat(auto-fit,minmax(138px,1fr)); gap:1px; background:var(--line); border:1px solid var(--line); margin-top:24px}
+.stat{background:var(--surface); padding:13px 14px 14px; min-width:0}
+.stat .k{font-family:"IBM Plex Mono",monospace; font-size:11px; letter-spacing:.02em; color:var(--muted)}
+.stat .v{font-family:"IBM Plex Mono",monospace; font-weight:600; font-size:clamp(19px,4.6vw,24px); line-height:1.25; margin-top:5px; overflow-wrap:anywhere}
+.stat .n{font-size:11.5px; color:var(--muted); margin-top:2px; line-height:1.4}
+
+/* toc */
+.toc{display:flex; flex-wrap:wrap; gap:8px; margin:22px 0 0}
+.toc a{font-size:12.5px; text-decoration:none; color:var(--ink2); background:var(--surface); border:1px solid var(--line); padding:5px 11px; border-radius:999px}
+.toc a:hover{border-color:var(--accent); color:var(--accent)}
+
+section{margin-top:56px; scroll-margin-top:16px}
+.sec-h{display:flex; gap:14px; align-items:baseline; border-bottom:2px solid var(--ink); padding-bottom:9px; margin-bottom:20px}
+.sec-n{font-family:"IBM Plex Mono",monospace; font-size:12px; font-weight:600; color:var(--accent); letter-spacing:.06em; padding-top:4px}
+.sec-h h2{margin:0; font-family:"Noto Serif KR",serif; font-size:clamp(20px,4.2vw,26px); font-weight:700; letter-spacing:-.01em; text-wrap:balance; flex:1; min-width:0}
+h3{font-size:17px; font-weight:700; margin:32px 0 8px; letter-spacing:-.01em}
+h4{font-size:14.5px; font-weight:700; margin:20px 0 6px; color:var(--ink2)}
+
+.take{border-left:3px solid var(--accent); background:var(--surface2); padding:14px 16px; margin:18px 0; font-size:14.5px}
+.take .lbl{font-family:"IBM Plex Mono",monospace; font-size:11px; letter-spacing:.03em; color:var(--accent); display:block; margin-bottom:5px; font-weight:600}
+.take p:last-child{margin-bottom:0}
+
+.keypoints{display:grid; gap:1px; background:var(--line); border:1px solid var(--line); margin:22px 0}
+.kp{background:var(--surface); padding:15px 17px; display:grid; grid-template-columns:30px 1fr; gap:12px}
+.kp .num{font-family:"IBM Plex Mono",monospace; font-size:12px; color:var(--accent); font-weight:600; padding-top:3px}
+.kp .txt{min-width:0}
+.kp .t{font-weight:700; margin-bottom:2px}
+.kp .d{font-size:14px; color:var(--ink2)}
+
+.grid2{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:16px 0}
+.pane{background:var(--surface); border:1px solid var(--line); padding:14px 16px; min-width:0}
+.pane h4{margin-top:0}
+.pane.yes{border-top:3px solid var(--pos)} .pane.no{border-top:3px solid var(--neg)}
+
+.tbl-scroll{overflow-x:auto; margin:16px -22px 20px; padding:0 22px; -webkit-overflow-scrolling:touch}
+table{border-collapse:collapse; width:100%; min-width:560px; font-size:13.5px}
+caption{caption-side:top; text-align:left; font-family:"IBM Plex Mono",monospace; font-size:11.5px; letter-spacing:.02em; color:var(--muted); padding-bottom:8px}
+th,td{padding:8px 10px; border-bottom:1px solid var(--line); text-align:left; vertical-align:top}
+th.num,td.num{text-align:right; white-space:nowrap; font-family:"IBM Plex Mono",monospace; font-variant-numeric:tabular-nums}
+thead th{border-bottom:1.5px solid var(--line2); font-weight:600; color:var(--ink2); font-size:12.5px}
+tbody tr:hover{background:var(--surface2)}
+tfoot td{border-top:1.5px solid var(--line2); font-weight:600}
+td.hl{background:var(--accent-soft)}
+.tnote{font-size:12.5px; color:var(--muted); margin-top:-10px; margin-bottom:16px; line-height:1.55}
+.heat td.c{text-align:center; font-family:"IBM Plex Mono",monospace; font-size:12.5px; color:var(--ink)}
+.oddc{color:var(--odd); font-weight:600} .evenc{color:var(--even); font-weight:600}
+
+.chart{background:var(--surface); border:1px solid var(--line); padding:14px 14px 10px; margin:16px 0 8px}
+.chart .ct{font-weight:700; font-size:14.5px; margin:0 0 2px}
+.chart .cs{font-size:12.5px; color:var(--muted); margin:0 0 8px}
+.chart svg{display:block; width:100%; height:auto; touch-action:pan-y}
+.chart text{font-family:"IBM Plex Mono",monospace; font-size:11px; fill:var(--ink2)}
+.chart text.lab{font-family:"Noto Sans KR",sans-serif; fill:var(--ink)}
+.chart text.mut{fill:var(--muted)}
+.chart .grid{stroke:var(--line); stroke-width:1}
+.chart .axis{stroke:var(--line2); stroke-width:1}
+.legend{display:flex; flex-wrap:wrap; gap:6px 16px; font-size:12px; color:var(--ink2); margin:6px 0 4px}
+.legend i{display:inline-block; width:12px; height:12px; border-radius:2px; vertical-align:-1px; margin-right:6px}
+.tip{position:fixed; z-index:50; pointer-events:none; background:var(--ink); color:var(--bg); font-size:12px; line-height:1.5; padding:7px 10px; border-radius:4px; max-width:min(260px,calc(100vw - 20px)); box-shadow:var(--shadow); display:none; font-family:"IBM Plex Mono",monospace}
+.tip b{font-weight:600}
+
+.risk{display:grid; gap:10px; margin:14px 0}
+.risk .r{display:grid; grid-template-columns:64px 1fr; gap:12px; background:var(--surface); border:1px solid var(--line); padding:12px 14px}
+.chip{font-family:"IBM Plex Mono",monospace; font-size:10.5px; letter-spacing:.08em; padding:3px 7px; border-radius:3px; display:inline-block; text-align:center; align-self:start; white-space:nowrap}
+.chip.h{background:var(--neg); color:#fff} .chip.m{background:var(--even); color:#fff} .chip.l{background:var(--s4); color:#fff} .chip.u{background:var(--pos); color:#fff}
+.risk .t{font-weight:700} .risk .d{font-size:14px; color:var(--ink2)}
+.check li{margin-bottom:9px}
+.src{font-size:12.5px; color:var(--muted); line-height:1.6}
+.src li{margin-bottom:4px}
+.foot{margin-top:60px; padding-top:18px; border-top:1px solid var(--line); font-size:12.5px; color:var(--muted); line-height:1.6}
+
+@media (max-width:620px){
+  body{font-size:14.5px}
+  .wrap{padding:0 14px 70px} .mast-in{padding:26px 14px 20px}
+  table{min-width:0; font-size:12.5px} th,td{padding:7px 7px}
+  .tbl-scroll{margin:14px -14px 18px; padding:0 14px}
+  .grid2{grid-template-columns:1fr}
+  .risk .r{grid-template-columns:56px 1fr}
+  .kp{grid-template-columns:24px 1fr; gap:9px}
+  .chart{padding:12px 10px 8px}
+}
+@media (max-width:400px){
+  .wrap{padding:0 11px 60px} .mast-in{padding:22px 11px 18px}
+  .tbl-scroll{margin:14px -11px 18px; padding:0 11px}
+  .stats{grid-template-columns:repeat(2,1fr)}
+}
+@media (prefers-reduced-motion:reduce){ *{transition:none!important; animation:none!important} }
+</style>
+</head>
+<body>
+<div class="tip" id="tip"></div>
+<header class="mast"><div class="mast-in">
+  <div class="eyebrow">기업리포트 · 하이브 352820 · 2026-09-14</div>
+  <h1 class="serif">하이브, <span class="em">짝수해의 저주</span>와 2027년의 파이프라인</h1>
+  <p class="sub">사상 최대 분기 실적을 낸 회사의 주가가 연초 대비 반토막 났다. 엔터주에 되풀이되는 "짝수해 약세, 홀수해 강세"가 왜 생기는지 12년치 주가로 검증하고, 그 리듬 위에서 지금 하이브를 다시 봐야 하는 이유를 아티스트 파이프라인으로 뜯어본다.</p>
+  <div class="tickerline"><span>종가 <b>173,400원</b></span><span>시가총액 <b>7조 4,747억</b></span><span>KOSPI <b>6,690</b></span><span>외국인 <b>18.75%</b></span><span>PBR <b>2.15배</b></span></div>
+  <div class="stats">
+    <div class="stat"><div class="k">연초 대비</div><div class="v neg">-47.5%</div><div class="n">같은 기간 KOSPI +58.8%</div></div>
+    <div class="stat"><div class="k">52주 고점 대비</div><div class="v neg">-57.1%</div><div class="n">404,500원 (2/19 종가)</div></div>
+    <div class="stat"><div class="k">2Q26 매출</div><div class="v">1.45조</div><div class="n">+105.5% YoY, 분기 최대</div></div>
+    <div class="stat"><div class="k">2Q26 영업이익</div><div class="v">1,709억</div><div class="n">OPM 11.8%, 분기 최대</div></div>
+    <div class="stat"><div class="k">2027E PER</div><div class="v">19~23배</div><div class="n">6개 증권사 EPS 7,522~9,036원</div></div>
+    <div class="stat"><div class="k">목표주가 범위</div><div class="v">26~35만</div><div class="n">8개사 전부 매수, 컨센 35.6만</div></div>
+  </div>
+  <nav class="toc">
+    <a href="#s1">결론</a><a href="#s2">짝수해의 저주 검증</a><a href="#s3">왜 생기나</a><a href="#s4">지금 봐야 할 이유</a><a href="#s5">비즈니스 모델</a><a href="#s6">파이프라인</a><a href="#s7">실적·추정</a><a href="#s8">경쟁사</a><a href="#s9">해자</a><a href="#s10">밸류에이션</a><a href="#s11">리스크</a><a href="#s12">체크리스트</a>
+  </nav>
+</div></header>
+
+<main class="wrap">
+
+<section id="s1">
+  <div class="sec-h"><span class="sec-n">01</span><h2>한 장 요약</h2></div>
+  <p class="lede">주가는 실적이 아니라 <b>"다음 사이클이 보이느냐"</b>를 거래한다. 엔터주가 짝수해에 무너지고 홀수해에 오르는 것은 우연이 아니라, 대형 IP의 활동 주기가 2년 단위로 굳어지면서 <b>짝수해에는 사이클의 끝이, 홀수해에는 다음 사이클의 시작이 보이기 때문</b>이다. 2026년 하이브는 이 리듬의 가장 극단적인 사례다. BTS 컴백과 월드투어로 분기 매출 1.45조원, 영업이익 1,709억원을 찍었는데 주가는 -47.5%다. 시장이 파는 것은 2026년이 아니라 "투어가 끝난 2027년 하반기"다.</p>
+  <div class="keypoints">
+    <div class="kp"><span class="num">1</span><div class="txt"><div class="t">패턴은 2019년 이후 4사 모두에서 확인된다</div><div class="d">엔터 4사 평균수익률은 홀수해 +33.3%(개별 15회 중 12회 상승), 짝수해 -13.5%(16회 중 4회 상승). KOSPI 대비 초과수익은 홀수해 +6.9%p, 짝수해 -27.2%p. 다만 2017~2018년은 두 해 연속 강세였고 2019년은 홀수해인데 급락했다. 법칙이 아니라 <b>2019년 이후의 체제</b>로 읽어야 한다.</div></div></div>
+    <div class="kp"><span class="num">2</span><div class="txt"><div class="t">원인은 시장 베타 + 2년 활동주기 + 군입대 + 컨센서스 사이클의 중첩</div><div class="d">코스피 자체의 홀짝 징크스(2000~2024년 하락한 해는 2011년을 빼면 전부 짝수해)에 더해, 투어 기간이 6개월에서 1년 이상으로 길어지며 대형 IP의 앨범→투어→휴식 주기가 2년으로 고정됐다. 발표(홀수해)에 선반영하고 실적 확인(짝수해)에 차익실현한다. 2026년은 KOSPI가 +59%인데도 -47%라, 올해만큼은 베타가 아니라 <b>순전히 섹터 자체의 사이클</b>이다.</div></div></div>
+    <div class="kp"><span class="num">3</span><div class="txt"><div class="t">진입 창은 "짝수해 하반기"였다</div><div class="d">홀수해 강세는 상반기에 집중된다. 하이브는 2021H1 +85%, 2023H1 +62%, 2025H1 +60%였고 각 해 하반기는 +19%, -17%, +7%에 그쳤다. 짝수해는 상반기에 무너지고(2022H1 -58%, 2024H1 -13%, 2026H1 -42%) 하반기에 바닥을 다졌다. 지금이 그 구간이다.</div></div></div>
+    <div class="kp"><span class="num">4</span><div class="txt"><div class="t">2027년 이익은 매출이 줄어도 늘어난다</div><div class="d">8개 증권사 2027E 영업이익은 4,070억~6,225억원(평균 4,946억, 컨센서스 4,871억)으로 2026E(2,050억~3,355억)의 약 1.7배다. 1분기 주식증여 일회성 2,550억원이 사라지고, 성과급 상단이 정해져 있으며, 원가율이 66.5%에서 62.5%로 낮아진다(유안타). 현재 주가는 2027E PER 19~23배로 역사적 하단(27.5~30배)을 30% 밑돈다.</div></div></div>
+    <div class="kp"><span class="num">5</span><div class="txt"><div class="t">"형만한 아우가 없다"는 논쟁에 파이프라인이 답하기 시작했다</div><div class="d">코르티스는 데뷔 11개월에 앨범 525만장, 두 번째 미니앨범이 11주 만에 트리플 밀리언이다. 캣츠아이는 빌보드 Hot100 Top40 5곡, 영국 앨범차트 2위, 31회 아레나 투어(37만명)로 서구권 현지화 그룹이 실제로 작동함을 보였다. 4세대(엔하이픈 100만명·르세라핌 44만명·보이넥스트도어 37만명)의 투어 규모는 직전 대비 1.1~2.6배다. 2027년에는 세븐틴 8인 복귀, 뉴진스 정상화, 튜이드·Saint Satine 첫 성과가 겹친다.</div></div></div>
+    <div class="kp"><span class="num">6</span><div class="txt"><div class="t">리스크는 실적이 아니라 지배구조와 BTS 이후 서사</div><div class="d">방시혁 의장이 9월 3일 자본시장법 위반(부당이득 2,631억원 추징보전)으로 불구속 송치됐다. 캣츠아이 멤버 소피아는 8월 활동을 중단했다. 뉴진스 손해배상 소송이 남아 있다. BTS가 2027년 하반기 이후 개인 레이블화·완전체 활동 축소로 갈 가능성은 시장이 가장 무겁게 보는 변수다.</div></div></div>
+  </div>
+  <div class="take"><span class="lbl">결론</span><p><b>사이클 관점에서는 짝수해 하반기 바닥 구간이고, 밸류에이션은 하단을 재정의할 만큼 눌렸으며, 파이프라인은 2027년 이후를 채우기 시작했다.</b> 하방은 KB증권 Bear 케이스 165,000원(EV/EBITDA 12배)과 유안타 바닥 PER 16배(약 14만원대)로 가늠되고, 상방은 2027E PER 30배 회복 시 25만원대다. 방시혁 사법 리스크와 3분기 판관비(성과급) 정상화 여부가 첫 확인 지점이다. 투자 권유가 아니며, 아래 체크리스트를 통과한 뒤 판단할 것.</p></div>
+</section>
+
+<section id="s2">
+  <div class="sec-h"><span class="sec-n">02</span><h2>짝수해 약세·홀수해 강세, 데이터로 확인하기</h2></div>
+  <p>네이버 일별 시세로 하이브·JYP·에스엠·와이지의 연말 종가 수익률을 2015년부터 계산했다(하이브는 2020년 10월 상장, 2020년은 상장일 종가 기준 부분 수익률). 막대는 4사 단순평균, 회색은 KOSPI다. 파란 배경이 홀수해, 주황 배경이 짝수해다.</p>
+  <div class="chart" id="ch-year">
+    <p class="ct">엔터 4사 평균 vs KOSPI 연간 수익률 (2015~2026, 2026년은 9/14까지)</p>
+    <p class="cs">막대 위 숫자는 엔터 4사 평균. 막대에 손을 대면 종목별 수치가 뜬다.</p>
+    <div class="legend"><span><i style="background:var(--odd)"></i>홀수해 엔터평균</span><span><i style="background:var(--even)"></i>짝수해 엔터평균</span><span><i style="background:var(--s4)"></i>KOSPI</span></div>
+    <svg></svg>
+  </div>
+  <div class="tbl-scroll"><table class="heat">
+    <caption>연간 수익률 (%, 연말 종가 기준 · 2026년은 9/14 종가)</caption>
+    <thead><tr><th>연도</th><th class="num">하이브</th><th class="num">JYP</th><th class="num">에스엠</th><th class="num">와이지</th><th class="num">엔터평균</th><th class="num">KOSPI</th><th class="num">엔터-KOSPI</th></tr></thead>
+    <tbody id="yr-body"></tbody>
+  </table></div>
+  <p class="tnote">색은 부호를 나타낸다(파랑 상승, 빨강 하락, 진할수록 큼). 엔터평균은 그해 상장돼 있던 종목의 단순평균. 2020년 하이브는 10/15 상장일 종가 대비.</p>
+
+  <h3>통계로 정리하면</h3>
+  <div class="tbl-scroll"><table>
+    <thead><tr><th>구간</th><th class="num">엔터평균 수익률</th><th class="num">상승한 해</th><th class="num">종목별 상승 횟수</th><th class="num">KOSPI 평균</th><th class="num">엔터-KOSPI</th></tr></thead>
+    <tbody>
+      <tr><td><span class="oddc">홀수해</span> 2015~2025</td><td class="num pos">+36.2%</td><td class="num">5 / 6</td><td class="num">-</td><td class="num">+21.6%</td><td class="num pos">+14.6%p</td></tr>
+      <tr><td><span class="evenc">짝수해</span> 2016~2026</td><td class="num">+0.3%</td><td class="num">2 / 6</td><td class="num">-</td><td class="num">+6.8%</td><td class="num neg">-6.6%p</td></tr>
+      <tr><td><span class="oddc">홀수해</span> 2019~2025</td><td class="num pos">+33.3%</td><td class="num">3 / 4</td><td class="num">12 / 15</td><td class="num">+26.4%</td><td class="num pos">+6.9%p</td></tr>
+      <tr><td><span class="evenc">짝수해</span> 2020~2026</td><td class="num neg">-13.5%</td><td class="num">1 / 4</td><td class="num">4 / 16</td><td class="num">+13.8%</td><td class="num neg">-27.2%p</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">2019~2025 홀수해 KOSPI 평균 = (7.7+3.6+18.7+75.6)/4, 2020~2026 짝수해 = (30.8-24.9-9.6+58.8)/4. 짝수해 4번 중 엔터가 오른 해는 2020년(코로나 유동성)뿐이다.</p>
+
+  <h3>반기로 쪼개면 리듬이 더 선명하다</h3>
+  <p>홀수해의 강세는 대부분 <b>상반기</b>에 만들어지고, 짝수해의 약세도 <b>상반기</b>에 집중된다. 즉 실제 주가 사이클은 "짝수해 하반기 바닥 → 홀수해 상반기 급등 → 홀수해 하반기 횡보 → 짝수해 상반기 급락"이다.</p>
+  <div class="tbl-scroll"><table class="heat">
+    <caption>반기 수익률 (%, 직전 반기말 대비)</caption>
+    <thead><tr><th>반기</th><th class="num">하이브</th><th class="num">JYP</th><th class="num">에스엠</th><th class="num">와이지</th><th class="num">KOSPI</th></tr></thead>
+    <tbody id="half-body"></tbody>
+  </table></div>
+  <p class="tnote">2026H2는 6/30 종가 대비 9/14 종가. 2019H1의 에스엠·JYP·와이지는 세 종목 모두 두 자릿수 하락이었다(각 -20.5%, -21.0%, -39.1%).</p>
+
+  <h3>하이브 주가 위에 짝수해를 칠해 보면</h3>
+  <div class="chart" id="ch-px">
+    <p class="ct">하이브 주간 종가와 KOSPI 대비 상대강도 (2020.10 상장 ~ 2026.9)</p>
+    <p class="cs">주황 띠가 짝수해. 아래 패널은 하이브÷KOSPI를 상장일 100으로 놓은 값이라 시장 대비 얼마나 못 갔는지를 보여준다. 손을 대면 날짜별 값이 뜬다.</p>
+    <svg></svg>
+    <ol class="small" id="px-notes" style="margin:8px 0 4px; padding-left:18px"></ol>
+  </div>
+  <p>상장 후 6년 동안 하이브가 KOSPI를 이긴 해는 2021년(+116.7%p)과 2023년(+15.9%p) 둘뿐이고 둘 다 홀수해다. 2025년은 +70.6%로 크게 올랐지만 KOSPI(+75.6%)를 이기지는 못했다. 2026년의 상대수익률 -106%p는 상장 이후 최악이며, LS증권 집계로 12개월 상대수익률은 -156%p다.</p>
+</section>
+
+<section id="s3">
+  <div class="sec-h"><span class="sec-n">03</span><h2>왜 짝수해에 무너지는가 — 다섯 겹의 원인</h2></div>
+  <p class="lede">증권사 리포트 어디에도 "짝수해·홀수해"라는 표현은 없다(아카이브 9만 3천 건 전문검색 결과, 이 키워드는 방송사 올림픽·월드컵 비용 논리에만 등장). 그러나 원인을 하나씩 뜯으면 우연이 아니라 <b>구조가 만든 리듬</b>이다. 증거가 강한 순서로 늘어놓는다.</p>
+
+  <h3>① 시장 베타 — 코스피 자체가 홀짝을 탄다</h3>
+  <p>2000년 이후 KOSPI가 하락한 해는 2011년을 제외하면 전부 짝수해다(2000·2002·2008·2014·2018·2022·2024). 엔터는 개인 비중이 높고 베타가 큰 업종이라 시장이 흔들리는 짝수해에 더 크게 흔들린다. 2022년(KOSPI -24.9%)과 2024년(-9.6%)의 엔터 약세는 상당 부분 여기서 설명된다. <b>그러나 2026년은 아니다.</b> KOSPI가 +58.8%인데 엔터 4사는 -36~-48%다. 올해의 약세는 베타로 설명되지 않는, 순수한 섹터 사이클이다.</p>
+
+  <h3>② 활동 주기의 2년화 — 발표에 사고 실적에 판다</h3>
+  <p>하나증권은 "투어 기간이 6개월에서 1년 이상으로 길어지며 컴백 연 2회 시대가 끝났다"고 진단한다. 대형 IP의 주기는 이제 <b>앨범(연초) → 스타디움 투어(1년) → 휴식·솔로(반년~1년)</b>로 2년에 수렴한다. 문제는 주가가 이 주기의 <b>발표 시점</b>에 반응한다는 것이다. BTS 투어 88회 일정이 발표된 2026년 1월 14일 전후로 주가는 40만원대까지 올랐고(하나증권 집계로 투어 발표 이후 +109%), 정작 투어가 실적으로 찍힌 7월 29일에는 컨센서스를 웃돈 실적을 발표하고도 하루 -16% 마감했다. 홀수해 말~짝수해 초에 "다음 사이클"이 발표되고, 짝수해 내내 "그 다음은 없다"는 서사가 지배한다.</p>
+  <div class="tbl-scroll"><table>
+    <caption>하이브의 연도별 서사 — 홀수해엔 시작이, 짝수해엔 끝이 보였다</caption>
+    <thead><tr><th>연도</th><th>수익률</th><th>그해를 지배한 서사</th><th>다음 해에 실제로 일어난 일</th></tr></thead>
+    <tbody>
+      <tr><td class="oddc">2021</td><td class="num pos">+120.3%</td><td>Butter 빌보드 10주 1위, 이타카 인수, LA·서울 콘서트 재개, 11월 사상 최고가 414,000원</td><td>6월 BTS 단체활동 잠정 중단 선언, 12월 진 입대</td></tr>
+      <tr><td class="evenc">2022</td><td class="num neg">-50.3%</td><td>"BTS 없는 하이브", 금리 급등, 상반기에만 -58%</td><td>솔로 활동(정국 GOLDEN)과 세븐틴·뉴진스로 실적은 오히려 성장(OP 2,956억)</td></tr>
+      <tr><td class="oddc">2023</td><td class="num pos">+34.6%</td><td>리오프닝 투어, 앨범 판매 정점, 멀티레이블 성공 서사</td><td>앨범 시장 피크아웃, 어도어 분쟁, 중국 공동구매 감소</td></tr>
+      <tr><td class="evenc">2024</td><td class="num neg">-17.2%</td><td>4월 어도어 경영권 분쟁, 앨범 역성장, 반도체(HBM) 쏠림</td><td>BTS 전역과 완전체 컴백 확정, 캣츠아이·코르티스 데뷔 성과</td></tr>
+      <tr><td class="oddc">2025</td><td class="num pos">+70.6%</td><td>6월 BTS 전역, 2026 컴백·투어 기대, 목표주가 연쇄 상향(최고 55만원)</td><td>3월 컴백·4월 투어로 분기 최대 실적, 그러나 2027 절벽 우려</td></tr>
+      <tr><td class="evenc">2026</td><td class="num neg">-47.5%</td><td>"BTS 이후가 없다", 원가율·성과급 불신, AI·반도체 쏠림, 방시혁 송치</td><td>(전망) 세븐틴 완전체 복귀, 코르티스·캣츠아이 2번째 투어, 이익 1.7배</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>③ 군입대 창 — 남자 대형그룹의 공백이 짝수해에 겹친다</h3>
+  <p>BTS의 군복무는 2022년 12월(진)에 시작해 2025년 6월에 끝났다. 세븐틴은 2024년 9월부터 순차 입대한 멤버 4명이 2027년 1분기까지 전역한다. JYP 스트레이키즈는 2027년 하반기부터 군백기가 시작된다(유안타). 한국 남자 그룹은 데뷔 후 7~9년 차에 반드시 2년의 공백을 맞는데, 하이브의 두 기둥이 그 공백에 들어간 시점(2022년 말, 2025년)과 나온 시점(2025년 중반, 2027년 초)이 각각 짝수해 약세와 홀수해 강세의 출발점과 겹친다.</p>
+
+  <h3>④ 이익의 시차 — 주가는 다음 해 성장률을 거래한다</h3>
+  <div class="tbl-scroll"><table>
+    <caption>엔터 4사 합산 영업이익 (억원, DART 연결 · 2026E·2027E는 증권사 평균)</caption>
+    <thead><tr><th>연도</th><th class="num">하이브</th><th class="num">에스엠</th><th class="num">JYP</th><th class="num">와이지</th><th class="num">4사 합산</th><th class="num">증감</th><th>그해 주가(엔터평균)</th></tr></thead>
+    <tbody>
+      <tr><td>2022</td><td class="num">2,369</td><td class="num">910</td><td class="num">966</td><td class="num">466</td><td class="num">4,711</td><td class="num">-</td><td class="neg">-8.6%</td></tr>
+      <tr><td>2023</td><td class="num">2,956</td><td class="num">1,135</td><td class="num">1,694</td><td class="num">869</td><td class="num">6,654</td><td class="num pos">+41%</td><td class="pos">+30.0%</td></tr>
+      <tr><td>2024</td><td class="num">1,840</td><td class="num">873</td><td class="num">1,283</td><td class="num neg">-206</td><td class="num">3,790</td><td class="num neg">-43%</td><td class="neg">-19.0%</td></tr>
+      <tr><td>2025</td><td class="num">493</td><td class="num">1,830</td><td class="num">1,552</td><td class="num">713</td><td class="num">4,588</td><td class="num pos">+21%</td><td class="pos">+51.2%</td></tr>
+      <tr><td>2026E</td><td class="num">2,900</td><td class="num">1,900</td><td class="num">1,550</td><td class="num">780</td><td class="num">7,130</td><td class="num pos">+55%</td><td class="neg">-41.7% (9/14)</td></tr>
+      <tr><td>2027E</td><td class="num">4,950</td><td class="num">2,200</td><td class="num">1,730</td><td class="num">780</td><td class="num">9,660</td><td class="num pos">+35%</td><td>?</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">2026E·2027E는 삼성·NH·KB·리딩·유안타·LS·신한·하나의 하이브 추정 평균(2,900/4,950)과 유안타·신한·LS의 3사 추정 평균을 반올림. 하나증권은 2027년 4사 합산 1조원 근접을 전망.</p>
+  <p>2024년은 실제 감익의 해였고 주가도 빠졌다. 2025년은 이익이 21% 늘었는데 주가는 51% 올랐다. 2026년은 이익이 55% 늘어 사상 최대인데 주가는 -42%다. 주가가 거래하는 것은 <b>"내년 매출 증가율"</b>이다. 2022년에는 2023년의 BTS 부재를, 2024년에는 2025년의 앨범 역성장을, 2026년에는 2027년의 투어 종료(매출 -1~-20%)를 팔았다. 그런데 2027년은 매출이 줄어도 <b>영업이익은 35% 늘어나는</b> 해라는 점이 과거 짝수해와 다르다.</p>
+
+  <h3>⑤ 컨센서스와 수급의 사이클</h3>
+  <p>목표주가는 홀수해 말에 정점을 찍고 짝수해 내내 내려온다. 삼성증권은 2026년 2월 13일 47만원에서 7월 29일 28만원으로, 리딩투자증권은 3월 3일 55만원에서 8월 4일 26만원으로, LS증권은 3월 27일 48만원에서 7월 30일 30만원으로 낮췄다. 하향이 멈추는 시점이 곧 홀수해 상향 사이클의 출발점이다. 수급 측면에서는 2024년 HBM, 2026년 AI·반도체 쏠림이 코스닥·엔터에서 자금을 빼갔고, 5월 이후 공매도가 늘었다(NH). 외국인 지분율은 18.75%다.</p>
+
+  <div class="take"><span class="lbl">주의</span><p>표본은 2019년 이후 4번의 사이클뿐이다. 2017~2018년은 두 해 연속 강세(JYP 2018년 +120%)였고 2019년은 홀수해인데 4사 모두 급락했다. "짝수해라서 오른다·내린다"가 아니라, <b>짝수해에 사이클의 끝이 보이고 홀수해에 다음 사이클이 발표되는 구조</b>가 지속되는지를 봐야 한다. 그 구조가 유지되는 한 2027년은 세븐틴 복귀와 신인 IP의 첫 투어가 발표되는 해다.</p></div>
+</section>
+
+<section id="s4">
+  <div class="sec-h"><span class="sec-n">04</span><h2>지금 하이브를 다시 봐야 하는 다섯 가지 이유</h2></div>
+
+  <h3>1. 밸류에이션이 바닥을 다시 그렸다</h3>
+  <p>유안타증권은 8월 19일 하이브의 PER 밴드를 21.3~32.8배로 재설정하며 과거 평균 32.6배, -1SD 27.5배, 바닥 PER 16.1배를 제시했다. 하나증권은 "지난 10년간 한한령·노재팬·버닝썬·뉴진스 사태에서도 지켜진 하단이 30배"라고 했다. 현재 주가 173,400원은 EPS를 제시한 6개 증권사의 2027E EPS(7,522~9,036원) 기준 <b>PER 19.2~23.1배</b>다. 역사적 하단을 30% 밑돈다. PBR은 2.15배, 2025년 말 순현금은 8,860억원이고 NH는 2026년 말 1.1조원을 전망한다.</p>
+
+  <h3>2. 하반기 실적은 사상 최대가 두 분기 더 이어진다</h3>
+  <p>3분기에는 BTS 유럽·북미 24회(164만명)에 엔하이픈 미주 10회, 르세라핌 19회, 보이넥스트도어 16회, 코르티스 14회, 캣츠아이 유럽 9회가 얹힌다. 4분기는 BTS 남미·아시아 29회(163만명)와 캣츠아이 북미 22회, 르세라핌 15회, 보이넥스트도어 14회다. 증권사 3Q26E 매출은 1.28~1.64조원, 영업이익 1,283억~1,896억원이다.</p>
+  <div class="chart" id="ch-q">
+    <p class="ct">분기 매출 구성과 영업이익 (십억원, 1Q24~4Q26E · 삼성증권 7/29)</p>
+    <p class="cs">위: 매출을 음반/음원·공연·MD/라이선싱·기타로 쌓음. 아래: 영업이익. 1Q26의 -1,966억에는 주식증여 일회성 2,550억이 들어 있다(제외 시 +585억).</p>
+    <div class="legend"><span><i style="background:var(--odd)"></i>음반/음원</span><span><i style="background:var(--even)"></i>공연</span><span><i style="background:var(--s3)"></i>MD/라이선싱</span><span><i style="background:var(--s4)"></i>기타(광고·콘텐츠·팬클럽)</span></div>
+    <svg></svg>
+  </div>
+  <p>2027년 이익이 늘어나는 근거는 네 가지다. 1분기의 주식증여 비용 2,550억원이 사라진다(현금 유출 없는 회계비용). 2분기 판관비 2,905억원 중 평소 대비 500억원 이상은 이익연동 성과급인데 절대금액에 상단이 있다(신한). 매출 믹스가 공연 중심에서 MD·음원으로 옮겨가며 원가율이 66.5%에서 62.5%로 낮아진다(유안타). BTS 투어가 2027년 1분기까지 이어지고 일본·중동이 추가된다.</p>
+
+  <h3>3. 파이프라인이 "BTS 이후"를 채우기 시작했다</h3>
+  <p>자세한 내용은 06장에서 다룬다. 요점만 적으면, 2분기 앨범 1,114만장 중 BTS 없이 코르티스(301만)·TXT(199만)·투어스(134만)·앤팀(128만)·보이넥스트도어(127만)가 상위 5위를 채웠다. 상위 5팀 합계 888만장으로, 1년 전 같은 분기(세븐틴·엔하이픈 포함 830만장)보다 많다. 캣츠아이의 스포티파이 월간 청취자는 3,502만명으로 BTS(3,653만)에 거의 붙었다.</p>
+
+  <h3>4. 2027년은 홀수해이면서 이벤트 밀도가 높다</h3>
+  <ul>
+    <li><b>1분기</b> BTS 오세아니아·아시아 9회 + 일본·중동 추가 발표, 엔하이픈 유럽 투어, 세븐틴 4명 전역</li>
+    <li><b>2분기</b> 세븐틴 8인 활동 재개(외국 국적 멤버 포함), 서울아레나 개장(5월, 2만석)</li>
+    <li><b>연중</b> 코르티스·캣츠아이 2번째 투어(하나증권: 캣츠아이 70~100만명), 뉴진스 4인 정상 활동, 튜이드·Saint Satine 첫 정산, 한한령 완화 옵션</li>
+    <li><b>12월</b> 엔터 4사 합작 페스티벌 '패노메논' 서울(52만명 추정, 2028년 LA 순회)</li>
+    <li><b>2028</b> BTS·세븐틴 완전체 + 5세대 80~100만명 투어 → 하나증권 영업이익 5,000억원 이상</li>
+  </ul>
+
+  <h3>5. 센티먼트와 수급이 극단에 있다</h3>
+  <p>엔터 4사 합산 시가총액은 연초 대비 36~42% 줄었고, 같은 기간 KOSPI는 59% 올랐다. 커버리지 20개사의 추천점수는 4.0(매수)이고 목표주가 컨센서스는 356,000원(7월 말)으로 현재가 대비 +105%다. KB증권의 Bear 케이스 165,000원(BTS 투어 300만명·MD 40% 가정)이 현재가와 5% 차이다. 즉 시장은 이미 투어 모객 500만명이 아닌 300만명 시나리오에 가깝게 값을 매기고 있는데, 삼성증권 집계 확정 일정만 88회 523만명이다.</p>
+</section>
+
+<section id="s5">
+  <div class="sec-h"><span class="sec-n">05</span><h2>비즈니스 모델 — 무엇을 팔아 어떻게 버나</h2></div>
+  <p>하이브는 아티스트 IP를 기획·제작하는 <b>레이블</b>(빅히트뮤직·플레디스·쏘스뮤직·KOZ·어도어·빌리프랩·ABD와 미국·일본·라틴 법인), IP를 앨범·공연·MD·콘텐츠로 확장하는 <b>솔루션</b>, 팬 커뮤니티·커머스인 <b>플랫폼</b>(위버스컴퍼니, 지분 55.24%) 세 층으로 돈을 번다. 2025년 연결 매출 2조 6,499억원의 구성은 음반·음원 29%, 공연 29%, MD·라이선싱 22%, 콘텐츠 10%, 광고·출연·팬클럽 11%다. 아티스트가 직접 뛰어야 하는 직접참여형(음반·공연·광고)이 64%, 플랫폼·MD·콘텐츠 같은 간접참여형이 36%다.</p>
+  <div class="tbl-scroll"><table>
+    <caption>레이블별 2025년 실적 (억원, 삼성증권 7/29 · DART)</caption>
+    <thead><tr><th>레이블</th><th class="num">지분</th><th class="num">매출</th><th class="num">순손익</th><th>소속</th></tr></thead>
+    <tbody>
+      <tr><td>빅히트뮤직</td><td class="num">100%</td><td class="num">4,375</td><td class="num pos">327</td><td>BTS, TXT, 코르티스</td></tr>
+      <tr><td>HYBE Japan</td><td class="num">100%</td><td class="num">7,479</td><td class="num pos">569</td><td>일본 본사(유통·공연 포함), &amp;TEAM, aoen</td></tr>
+      <tr><td>플레디스</td><td class="num">90%</td><td class="num">2,885</td><td class="num pos">548</td><td>세븐틴, 투어스, 범주, 황민현</td></tr>
+      <tr><td>빌리프랩</td><td class="num">100%</td><td class="num">1,547</td><td class="num pos">383</td><td>엔하이픈, 아일릿</td></tr>
+      <tr><td>쏘스뮤직</td><td class="num">80%</td><td class="num">779</td><td class="num pos">107</td><td>르세라핌</td></tr>
+      <tr><td>KOZ</td><td class="num">75%</td><td class="num">661</td><td class="num pos">117</td><td>지코, 보이넥스트도어</td></tr>
+      <tr><td>어도어</td><td class="num">80%</td><td class="num">296</td><td class="num pos">62</td><td>뉴진스</td></tr>
+      <tr><td>HYBE America</td><td class="num">100%</td><td class="num">3,129</td><td class="num neg">-3,231</td><td>HYBE UMG(캣츠아이·Saint Satine), Blue Highway, QC Music. 2025년 구조조정 손상차손</td></tr>
+      <tr><td>HYBE Latin America</td><td class="num">96%</td><td class="num">21</td><td class="num neg">-652</td><td>산토스 브라보스 등, 2023년 설립</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">HYBE America 손실은 2025년 북미 법인 구조조정에 따른 손상차손이 대부분이며, 2025년 연결 지배순손실 2,373억원의 주된 원인이다. ABD(튜이드)는 2026년 5월 출범이라 실적 없음.</p>
+  <p>경쟁사와 다른 점은 두 가지다. 첫째, <b>글로벌 현지 법인이 실제로 IP를 만든다.</b> 캣츠아이(미국)와 aoen(일본), 산토스 브라보스(라틴)는 한국에서 수출한 그룹이 아니라 현지에서 뽑아 현지 유통망으로 파는 그룹이다. 둘째, <b>위버스</b>다. 2분기 MAU 1,443만명, 결제금액 +12% QoQ, ARPPU +24%로 2025년 매출 2,997억원·영업이익 20억원의 흑자 전환 이후 이익 기여가 커지고 있다. 다만 판관비율이 25년 33.5%로 타사 평균 18.1%보다 높은 것도 게임·테크 확장의 고정 인건비 때문이라(신한), 플랫폼은 해자이자 비용이다.</p>
+</section>
+
+<section id="s6">
+  <div class="sec-h"><span class="sec-n">06</span><h2>아티스트 파이프라인 — 세대별 해부</h2></div>
+  <p class="lede">파이프라인을 <b>3세대(BTS·세븐틴)</b>, <b>4세대(TXT·엔하이픈·르세라핌·뉴진스·보이넥스트도어·투어스·아일릿·앤팀)</b>, <b>5세대·글로벌(코르티스·캣츠아이·튜이드·Saint Satine·산토스 브라보스·aoen)</b>으로 나눈다. 질문은 하나다. BTS 투어가 끝나는 2027년 하반기 이후, 누가 얼마를 벌어 오는가.</p>
+
+  <div class="chart" id="ch-gantt">
+    <p class="ct">2026년 하반기 ~ 2027년 1분기 활동 캘린더</p>
+    <p class="cs">막대는 투어(회차), 마름모는 앨범·싱글 발매. 파랑 BTS, 주황 3·4세대, 청록 5세대·글로벌, 회색 신인·미정. 삼성증권 7/29 표4와 LS증권 9/9 기준, 이후 확정분(튜이드 9월 데뷔, 르세라핌 9/11 싱글, 보이넥스트도어 9/28 리패키지) 반영.</p>
+    <svg></svg>
+  </div>
+
+  <h3>3세대 — 현금을 만드는 두 기둥</h3>
+  <h4>BTS · 빅히트뮤직 · 2013년 데뷔</h4>
+  <p>3월 20일 정규 5집 'ARIRANG'은 초동 417만장, 3개월 505만장(써클차트)이며 미국 상반기 바이닐·CD 판매 1위다. 월드투어 'ARIRANG'은 확정된 것만 34개 도시 88회로 K-pop 단일 투어 최다다. 삼성증권이 공연장 수용 인원으로 집계한 관객은 2분기 24회 141만명, 3분기 24회 164만명, 4분기 29회 163만명, 2027년 1분기 9회 55만명, 합계 523만명이며 일본·중동이 추가된다. 평균 티켓가는 30만원을 넘고(하나·신한), 신한증권은 티켓 1.06~1.58조원과 굿즈 0.53~0.79조원을 합쳐 투어 총매출 1.58~2.38조원을 추정한다. 스포티파이 월간 청취자 3,653만명, 팔로워 8,808만명(연초 대비 +625만)이다.</p>
+  <div class="chart" id="ch-bts">
+    <p class="ct">BTS 'ARIRANG' 투어 분기별 회차와 관객 (만명, 삼성증권 집계 · 공연장 수용인원 기준)</p>
+    <p class="cs">1Q27은 확정분만. 일본·중동·추가 도시는 미포함.</p>
+    <svg></svg>
+  </div>
+  <p><b>체크포인트.</b> 2027년 하반기 이후의 활동 형태다. 신한증권은 "개인 레이블화·완전체 활동 소멸" 우려를 디레이팅 4대 원인 중 하나로 꼽았다. 재계약 이후 높아진 정산율은 2분기 원가율 68.2%에 이미 반영돼 있고, 이는 JYP 61.3%·SM 68.9%·YG 63.9%와 비교해 과하지 않다(신한). 다음 관전 포인트는 투어 종료 후 솔로·유닛 계획의 발표 시점이다.</p>
+  <h4>세븐틴 · 플레디스 · 2015년 데뷔</h4>
+  <p>2025년 'HAPPY BURSTDAY' 297만장 이후 2026년은 유닛·솔로의 해다. 소야곡(도겸×승관) 초동 60만, V8(버논×디에잇) 62만, 호시 6월, 디노·피철인 8월, 정한×조슈아 10월. 멤버 4명이 2027년 1분기까지 전역하면 2분기부터 외국 국적 멤버를 포함한 8인 활동이 가능하고(하나), 2028년 완전체다. LS증권은 "2027년 세븐틴 컴백이 저연차 IP와 함께 BTS 공백을 상쇄"할 것으로 본다. 플레디스는 2025년 순이익 548억원으로 레이블 중 가장 많이 남겼다.</p>
+
+  <h3>4세대 — 투어 규모가 한 단계 커졌다</h3>
+  <div class="tbl-scroll"><table>
+    <caption>4세대 IP 2026년 성과 (앨범은 써클차트 누적, 투어는 LS증권 9/9·삼성증권 7/29)</caption>
+    <thead><tr><th>아티스트</th><th>레이블·데뷔</th><th>2026 주요 앨범</th><th class="num">판매량</th><th>2026~27 투어</th><th class="num">모객</th><th class="num">직전 투어</th><th>다음 이벤트</th></tr></thead>
+    <tbody>
+      <tr><td>엔하이픈</td><td>빌리프랩 · 2020</td><td>미니 7집(1/16), 미니 8집 THE SIN: BLISS(8/21)</td><td class="num">242만</td><td>BLOOD SAGA 35회 (26.5~27.3, 미주·아시아·유럽)</td><td class="num">100.5만</td><td class="num">92.4만</td><td>2027.1~3 유럽 4개 도시</td></tr>
+      <tr><td>TXT</td><td>빅히트 · 2019</td><td>미니 8집(4/13), 연준 솔로(7/10) 81만, 일본 싱글 5집(8/19)</td><td class="num">199만</td><td>아시아 15회(1Q) + 일본 팬콘 8회</td><td class="num">43만</td><td class="num">-</td><td>미니 9집 4Q(미정), 새 투어</td></tr>
+      <tr><td>르세라핌</td><td>쏘스뮤직 · 2022</td><td>정규 2집 PUREFLOW(5/22), 싱글 Made My Night(9/11)</td><td class="num">68만</td><td>PUREFLOW 34회 (26.7~12, 한·일·미·유럽·아시아)</td><td class="num">44.3만</td><td class="num">36.1만</td><td>4Q 신보(미정)</td></tr>
+      <tr><td>보이넥스트도어</td><td>KOZ · 2023</td><td>정규 1집 HOME(6/8), 리패키지(9/28)</td><td class="num">132만</td><td>KNOCK ON Vol.2 36회 (26.7~27.1)</td><td class="num">37.2만</td><td class="num">14.1만</td><td>미니 6집 4Q(미정)</td></tr>
+      <tr><td>투어스</td><td>플레디스 · 2024</td><td>미니 5집 NO TRAGEDY(4/27), 일본 싱글 2집(8/4)</td><td class="num">142만</td><td>24/7: FOR:YOU 15회 (26.6~10, 아시아)</td><td class="num">14.1만</td><td class="num">-</td><td>-</td></tr>
+      <tr><td>아일릿</td><td>빌리프랩 · 2024</td><td>미니 4집(4/30), 일본 싱글 2집(7/29)</td><td class="num">54만</td><td>PRESS START 21회 (26.6~12, 일본·홍콩·인천)</td><td class="num">12.5만</td><td class="num">-</td><td>미니 5집 3Q(미정). 스포티파이 청취자 2,170만(하이브 3위)</td></tr>
+      <tr><td>&amp;TEAM</td><td>HYBE Japan · 2022</td><td>일본 미니 3집(4/21) 128만, 한국 미니 2집(9/8)</td><td class="num">128만</td><td>Blaze The Way 18회 (26.5~8, 일본·아시아)</td><td class="num">25만</td><td class="num">-</td><td>-</td></tr>
+      <tr><td>뉴진스</td><td>어도어 · 2022</td><td>2026년 21.5만장(구보). 4인 재편(다니엘 해지)</td><td class="num">-</td><td>-</td><td class="num">-</td><td class="num">-</td><td>연내 컴백 관측(미정), 손해배상 소송 잔존</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">모객은 공연장 수용인원 기준 추정치. TXT·투어스·아일릿·앤팀의 모객은 삼성증권 표4 회차와 유안타 8/19 분기 모객을 합산. 엔하이픈 '직전 투어'는 WALK THE LINE 32회.</p>
+  <p>4세대의 의미는 "BTS급이냐"가 아니라 <b>"투어 손익분기를 넘는 팀이 몇이냐"</b>다. 하나증권 기준 100만명 투어에는 서구권 50만명이 필요하고, 엔하이픈이 그 문턱을 처음 넘었다. 보이넥스트도어는 직전 대비 2.6배, 르세라핌은 1.2배로 커졌다. 2분기 위버스DM을 연 엔하이픈까지 8팀이 DM 구독을 열어 플랫폼 매출과도 연결된다.</p>
+
+  <h3>5세대·글로벌 — "형만한 아우"의 후보</h3>
+  <div class="chart" id="ch-album">
+    <p class="ct">2분기 앨범 판매 상위 5팀 — 2025년 vs 2026년 (만장, 써클차트 TOP100 · 삼성증권)</p>
+    <p class="cs">2026년 상위 5팀은 전부 BTS·세븐틴·엔하이픈이 아닌 저연차 팀이다. 총 판매량은 937만장 → 1,114만장.</p>
+    <svg></svg>
+  </div>
+  <h4>코르티스 · 빅히트뮤직 · 2025년 8월 데뷔</h4>
+  <p>데뷔 앨범 'COLOR OUTSIDE THE LINES' 215만장, 두 번째 미니앨범 'GREENGREEN'(5/4)은 11주 만에 310만장으로 트리플 밀리언이다. 데뷔 11개월 누적 525만장은 데뷔 해에 앨범당 200만장을 넘긴 유일한 사례다(하나). 첫 투어 'PUT YOUR PHONE DOWN'은 7~9월 서울·가나가와·토론토·뉴욕·애틀랜타·어빙·LA·샌프란시스코 14회이며, 올해 롤라팔루자 시카고에 초청된 유일한 K-pop 보이그룹이다. 스포티파이 청취자 1,291만명 중 미국 비중이 하이브 아티스트 중 가장 높다. 다올투자증권은 4분기 컴백 시 2026년 650만장 이상으로 BTS 다음 2위를 예상하고, 하나증권은 2028~29년 연 500만장·80~100만명 투어를 전망한다. <b>체크포인트</b>는 4분기 미니 3집 초동이 2집(231만)을 넘는지다.</p>
+  <h4>캣츠아이(KATSEYE) · HYBE UMG · 2024년 데뷔</h4>
+  <p>빌보드 Hot100에 Gabriela(21위)·Animal(24위)·Pinky Up(28위)·Internet Girl(29위)·Iconic By Mistake(38위) 5곡이 Top40에 들었다. 8월 14일 EP 'WILD'는 영국 앨범차트 2위로 커리어 최고이고, 발매 후 6개월 미국 판매량 기준 직전작 23.6만 유닛은 트와이스(19.3만)·블랙핑크(16.1만)를 넘었다(NH). 첫 아레나 투어 'THE WILDWORLD TOUR'는 9월 1일 더블린을 시작으로 런던 O2 2회를 포함한 유럽 9회, 10~11월 북미 22회(마이애미~피닉스, 멕시코시티 2회)로 31회 37.3만명이며 직전 투어(16회 8.4만)의 4배다. 스포티파이 월간 청취자 3,502만명(피크 3,741만)은 BTS와 거의 같다. <b>리스크</b>: 멤버 소피아가 8월 활동 중단을 발표해 5인으로 투어 중이다.</p>
+  <h4>신인 — 튜이드, Saint Satine, 산토스 브라보스, aoen</h4>
+  <p>5월 출범한 신규 레이블 ABD의 7인조 걸그룹 <b>튜이드(TUIDE)</b>가 9월 데뷔했다. HYBE UMG의 두 번째 미국 걸그룹 <b>Saint Satine</b>(일본인 멤버 포함)은 하반기 데뷔 예정이며, 신한증권은 연말~내년 초 미국 걸그룹 런칭을 하반기 모멘텀으로 꼽는다. 라틴 보이그룹 <b>산토스 브라보스</b>(HYBE Latin America)는 2025년 데뷔했고, 일본 <b>aoen</b>은 싱글 3집 6.4만장·일본 24개 도시 투어를 돌았다. NH는 "두 신인 모두 데뷔 초기 비용이 높지 않을 것"이라고 본다.</p>
+
+  <h3>스포티파이로 본 팬덤의 지역 분산</h3>
+  <div class="chart" id="ch-spot">
+    <p class="ct">하이브 아티스트 스포티파이 월간 청취자 (만명, 2026-08-10 · 다올투자증권)</p>
+    <p class="cs">하이브 합산 1억 6,562만명(7월 말, +35.5% YoY)으로 4사 합산의 64%. 서구권 스트리밍은 앨범과 달리 재구매가 필요 없는 매출이다.</p>
+    <svg></svg>
+  </div>
+  <p>K-pop 음원 매출은 아직 음반의 20~30% 수준이고 미국 스트리밍 점유율은 1% 안팎이라(NH), 캣츠아이·아일릿·르세라핌처럼 스트리밍 비중이 높은 팀의 성장은 앨범 사이클과 무관한 새 매출축이다. 아일릿 팔로워는 연초 대비 +247%, 코르티스 +165%, 르세라핌 +70%다.</p>
+
+  <div class="take"><span class="lbl">파이프라인 판정</span><p>2027년 하반기 BTS 공백을 <b>완전히</b> 메울 팀은 아직 없다. 그러나 (1) 세븐틴 8인 복귀, (2) 엔하이픈 100만명·코르티스와 캣츠아이 각 70~100만명 규모의 2번째 투어, (3) 뉴진스 정상화, (4) 위버스 유료 전환이 겹치면 2027년 영업이익 4,000억~6,000억원 추정의 전제는 BTS 없이도 절반 이상이 채워진다. 시장이 요구하는 것은 "BTS급 한 팀"이지만, 회사가 만들고 있는 것은 "50~100만명급 여섯 팀"이다. 이 차이가 지금의 밸류에이션 갭이다.</p></div>
+</section>
+
+<section id="s7">
+  <div class="sec-h"><span class="sec-n">07</span><h2>실적 시계열과 증권사 추정</h2></div>
+  <div class="tbl-scroll"><table>
+    <caption>연결 실적 (억원, DART · 2018~2019는 NH 7/29 인용)</caption>
+    <thead><tr><th>연도</th><th class="num">매출</th><th class="num">증감</th><th class="num">영업이익</th><th class="num">OPM</th><th class="num">지배순이익</th><th>비고</th></tr></thead>
+    <tbody>
+      <tr><td>2018</td><td class="num">3,014</td><td class="num">-</td><td class="num">799</td><td class="num">26.5%</td><td class="num neg">-700</td><td>빅히트 단독, 전환상환우선주 평가손</td></tr>
+      <tr><td>2019</td><td class="num">5,872</td><td class="num pos">+95%</td><td class="num">987</td><td class="num">16.8%</td><td class="num pos">740</td><td>쏘스뮤직 인수</td></tr>
+      <tr><td>2020</td><td class="num">7,963</td><td class="num pos">+36%</td><td class="num">1,455</td><td class="num">18.3%</td><td class="num pos">860</td><td>10월 상장, 플레디스 인수</td></tr>
+      <tr><td>2021</td><td class="num">12,559</td><td class="num pos">+58%</td><td class="num">1,902</td><td class="num">15.1%</td><td class="num pos">1,370</td><td>이타카홀딩스 인수, 위버스·V라이브 통합</td></tr>
+      <tr><td>2022</td><td class="num">17,762</td><td class="num pos">+41%</td><td class="num">2,369</td><td class="num">13.3%</td><td class="num pos">520</td><td>BTS 단체활동 중단, 뉴진스·르세라핌 데뷔</td></tr>
+      <tr><td>2023</td><td class="num">21,781</td><td class="num pos">+23%</td><td class="num">2,956</td><td class="num">13.6%</td><td class="num pos">1,870</td><td>앨범 정점, 세븐틴·정국 솔로</td></tr>
+      <tr><td>2024</td><td class="num">22,556</td><td class="num pos">+4%</td><td class="num">1,840</td><td class="num">8.2%</td><td class="num pos">94</td><td>어도어 분쟁, 앨범 -11%</td></tr>
+      <tr><td>2025</td><td class="num">26,499</td><td class="num pos">+17%</td><td class="num">493</td><td class="num">1.9%</td><td class="num neg">-2,373</td><td>북미 법인 손상차손, 3Q 적자</td></tr>
+      <tr><td>2026 1Q</td><td class="num">6,983</td><td class="num pos">+40%</td><td class="num neg">-1,966</td><td class="num">-28.1%</td><td class="num neg">-1,585</td><td>주식증여 2,550억 제외 시 OP +585억</td></tr>
+      <tr><td>2026 2Q</td><td class="num">14,500</td><td class="num pos">+106%</td><td class="num">1,709</td><td class="num">11.8%</td><td class="num pos">1,023</td><td>BTS 컴백·투어, 분기 최대</td></tr>
+      <tr><td>2026 상반기</td><td class="num">21,483</td><td class="num pos">+78%</td><td class="num neg">-257</td><td class="num">-1.2%</td><td class="num neg">-562</td><td>일회성 제외 조정 OP 2,293억</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">2018~2019 지배순이익은 NH 7/29 표(십억원)를 억원으로 환산. 2026 상반기 지배순이익은 1Q -1,585 + 2Q 1,023. 매출총이익률은 2024년 42.5% → 2025년 35.3% → 2026 상반기 35.4%.</p>
+
+  <div class="tbl-scroll"><table>
+    <caption>증권사별 2026E·2027E 추정과 목표주가 (억원, 원)</caption>
+    <thead><tr><th>증권사 (날짜)</th><th class="num">26E 매출</th><th class="num">26E OP</th><th class="num">27E 매출</th><th class="num">27E OP</th><th class="num">27E EPS</th><th class="num">현재가 PER</th><th class="num">목표주가</th><th>방식</th></tr></thead>
+    <tbody>
+      <tr><td>삼성 (7/29)</td><td class="num">45,176</td><td class="num">2,265</td><td class="num">39,629</td><td class="num">4,280</td><td class="num">8,208</td><td class="num">21.1</td><td class="num">280,000</td><td>SOTP, 레이블 PER 30배</td></tr>
+      <tr><td>NH (7/29)</td><td class="num">49,214</td><td class="num">3,161</td><td class="num">52,409</td><td class="num">6,225</td><td class="num">9,036</td><td class="num">19.2</td><td class="num">310,000</td><td>26E 조정순익 × 30배</td></tr>
+      <tr><td>KB (7/28)</td><td class="num">53,481</td><td class="num">3,355</td><td class="num">51,110</td><td class="num">4,568</td><td class="num">7,522</td><td class="num">23.1</td><td class="num">350,000</td><td>EV/EBITDA 25배</td></tr>
+      <tr><td>리딩 (8/4)</td><td class="num">47,883</td><td class="num">2,850</td><td class="num">44,500</td><td class="num">5,150</td><td class="num">8,803</td><td class="num">19.7</td><td class="num">260,000</td><td>12MF EPS × 41배</td></tr>
+      <tr><td>유안타 (8/19)</td><td class="num">50,172</td><td class="num">2,682</td><td class="num">44,374</td><td class="num">4,838</td><td class="num">8,995</td><td class="num">19.3</td><td class="num">265,000</td><td>27E EPS × 29.5배</td></tr>
+      <tr><td>신한 (9/4)</td><td class="num">50,127</td><td class="num">3,311</td><td class="num">40,004</td><td class="num">5,185</td><td class="num">-</td><td class="num">-</td><td class="num">320,000</td><td>7/3 제시, 26F 조정순익 × 32배</td></tr>
+      <tr><td>LS (9/9)</td><td class="num">50,477</td><td class="num">3,089</td><td class="num">47,536</td><td class="num">5,253</td><td class="num">8,218</td><td class="num">21.1</td><td class="num">300,000</td><td>SOTP, 본업 PER 27배 + 위버스</td></tr>
+      <tr><td>하나 (7/2)</td><td class="num">43,550</td><td class="num">2,050</td><td class="num">36,970</td><td class="num">4,070</td><td class="num">-</td><td class="num">-</td><td class="num">350,000</td><td>27E PER 30배</td></tr>
+    </tbody>
+    <tfoot><tr><td>평균 / 컨센서스</td><td class="num">48,760</td><td class="num">2,845 / 2,860</td><td class="num">44,567</td><td class="num">4,946 / 4,871</td><td class="num">8,464</td><td class="num">20.5</td><td class="num">304,375 / 356,000</td><td>컨센서스는 9/13 언론·7/29 FnGuide</td></tr></tfoot>
+  </table></div>
+  <p class="tnote">'현재가 PER'은 173,400원 ÷ 각 사 2027E EPS. 27E 영업이익 편차(4,070~6,225억)의 핵심은 BTS 2027년 투어 회차와 매출 믹스 가정이다. 삼성·하나는 2027년 매출 역성장(-12~-15%)을 전제하고, NH·KB는 2027년에도 5조원대 매출을 본다.</p>
+</section>
+
+<section id="s8">
+  <div class="sec-h"><span class="sec-n">08</span><h2>경쟁사 비교 — 4대 기획사</h2></div>
+  <div class="tbl-scroll"><table>
+    <caption>2025년 실적과 현재 밸류에이션 (억원 · 배, DART 연결 · 네이버 9/14)</caption>
+    <thead><tr><th>회사</th><th class="num">시가총액</th><th class="num">매출</th><th class="num">영업이익</th><th class="num">OPM</th><th class="num">GPM</th><th class="num">26H1 매출</th><th class="num">26H1 OP</th><th class="num">PSR</th><th class="num">PER(후행)</th><th class="num">PER(27E)</th><th class="num">PBR</th></tr></thead>
+    <tbody>
+      <tr><td><b>하이브</b></td><td class="num">74,747</td><td class="num">26,499</td><td class="num">493</td><td class="num">1.9%</td><td class="num">35.3%</td><td class="num">21,483</td><td class="num neg">-257</td><td class="num">2.82</td><td class="num">N/A</td><td class="num">19~23</td><td class="num">2.15</td></tr>
+      <tr><td>에스엠</td><td class="num">19,758</td><td class="num">11,749</td><td class="num">1,830</td><td class="num">15.6%</td><td class="num">36.8%</td><td class="num">6,287</td><td class="num">915</td><td class="num">1.68</td><td class="num">15.0</td><td class="num">13~14</td><td class="num">1.91</td></tr>
+      <tr><td>JYP</td><td class="num">13,875</td><td class="num">8,219</td><td class="num">1,552</td><td class="num">18.9%</td><td class="num">36.9%</td><td class="num">3,691</td><td class="num">644</td><td class="num">1.69</td><td class="num">12.8</td><td class="num">10~13</td><td class="num">1.99</td></tr>
+      <tr><td>와이지</td><td class="num">8,177</td><td class="num">5,454</td><td class="num">713</td><td class="num">13.1%</td><td class="num">34.2%</td><td class="num">2,749</td><td class="num">304</td><td class="num">1.50</td><td class="num">24.1</td><td class="num">13~18</td><td class="num">1.56</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">PSR = 시가총액 ÷ 2025년 매출. GPM = 매출총이익 ÷ 매출(DART). 후행 PER·PBR은 네이버 표기. 27E PER은 유안타·LS·NH 추정 범위. 하이브 26H1 영업이익은 주식증여 일회성 2,550억 포함(제외 시 2,293억).</p>
+  <p>하이브는 매출이 3사 합산(2조 5,422억)보다 크지만 2025년 영업이익률은 1.9%로 가장 낮다. 이유는 북미 법인 손상과 판관비율(33.5%)이다. 2027E 기준으로 보면 PER 19~23배 vs 3사 10~18배로 여전히 50% 안팎의 프리미엄인데, 유안타는 "과거 하이브의 3사 대비 50% 프리미엄은 지금도 정당하다"며 밴드를 3사의 1.5배로 뒀다. 프리미엄의 근거는 글로벌 IP 개수와 위버스이고, 프리미엄이 사라지는 조건은 BTS 이후 서사의 실패다. 4사 모두 2027년 하반기에 군입대(스트레이키즈)·투어 종료(BTS·빅뱅) 이슈를 안고 있어 상대 매력은 2027년 신인 성과로 갈린다.</p>
+</section>
+
+<section id="s9">
+  <div class="sec-h"><span class="sec-n">09</span><h2>해자 검증 — 찬성과 반증을 나란히</h2></div>
+  <div class="grid2">
+    <div class="pane yes"><h4>해자가 있다는 근거</h4>
+      <ul>
+        <li><b>제작 히트율.</b> 2019년 이후 데뷔한 그룹(TXT·엔하이픈·르세라핌·뉴진스·보이넥스트도어·투어스·아일릿·코르티스) 전부가 밀리언셀러다. 데뷔~첫 투어 기간이 짧아지고 있다(LS).</li>
+        <li><b>현지화 IP의 실증.</b> 캣츠아이는 미국 판매·차트에서 트와이스·블랙핑크를 넘었다. 수출 모델이 아니라 현지 제작 모델이 작동한 첫 사례다.</li>
+        <li><b>플랫폼.</b> 위버스 MAU 1,443만, 간접매출 비중 36%. 팬 데이터가 MD·구독·광고 전환율로 되돌아오는 구조는 경쟁사에 없다(리딩).</li>
+        <li><b>규모의 경제.</b> 스타디움 360도 무대, 라이브 뷰잉·스트리밍(2분기 10회), 다이내믹 프라이싱으로 회당 매출을 키운다. 티켓플레이션을 넘어서는 유일한 그룹(신한).</li>
+        <li><b>AI 국면의 수혜 위치.</b> LS는 "AI 사업 성과보다 IP·플랫폼 보유 여부"가 갈림길이라며 하이브를 최선두로 꼽는다. Deezer 기준 AI 음악 정상 소비는 전체의 0.15~0.45%에 불과하고 오프라인 경험 가격은 5년간 +23%다.</li>
+      </ul>
+    </div>
+    <div class="pane no"><h4>해자가 약하다는 반증</h4>
+      <ul>
+        <li><b>BTS 의존.</b> 2025년 하반기~2026년 상반기 투어의 BTS 비중 31%(하나), 2분기 공연 매출 6,477억의 대부분이 BTS다. 2027년 하반기 이후 대체재는 아직 검증 전이다.</li>
+        <li><b>배분율.</b> 재계약할수록 아티스트 정산율이 오른다. 2분기 원가율 68.2%는 업계 평균 수준이지만, 하이브만의 이익 레버리지가 작다는 뜻이기도 하다.</li>
+        <li><b>멀티레이블의 한계.</b> 어도어 분쟁은 레이블 자율성과 IP 통제가 충돌하면 어떤 비용이 드는지 보여줬다. 뉴진스는 2026년 21.5만장에 그쳤다.</li>
+        <li><b>신사업 실패 이력.</b> HYBE America 2025년 순손실 3,231억, 수퍼톤 청산(2026년 7월), 게임·테크 확장에 따른 판관비율 33.5%. 플랫폼 밖 신사업은 아직 돈을 못 벌었다.</li>
+        <li><b>지배구조.</b> 방시혁 의장 송치(부당이득 2,631억 추징보전)는 상장 전 투자자 기망 혐의다. 결과와 무관하게 해외 기관의 ESG 필터에 걸린다.</li>
+      </ul>
+    </div>
+  </div>
+  <p>판정: 해자는 <b>"히트를 반복하는 제작 시스템 + 팬 플랫폼"</b>에 있고, 그 해자가 돈이 되는지는 <b>BTS 없이 2028년 영업이익 5,000억원을 만드는가</b>로 판명된다. 지금 주가는 해자가 없다는 쪽에 가깝게 매겨져 있다.</p>
+</section>
+
+<section id="s10">
+  <div class="sec-h"><span class="sec-n">10</span><h2>밸류에이션 시나리오</h2></div>
+  <div class="tbl-scroll"><table>
+    <thead><tr><th>시나리오</th><th>전제</th><th class="num">2027E EPS</th><th class="num">PER</th><th class="num">주가</th><th class="num">현재가 대비</th></tr></thead>
+    <tbody>
+      <tr><td>Bear</td><td>BTS 투어 300만명, 성과급·원가율 정상화 실패, 캣츠아이·코르티스 2번째 투어 부진. 유안타 바닥 PER 16배</td><td class="num">7,500</td><td class="num">16</td><td class="num">120,000</td><td class="num neg">-31%</td></tr>
+      <tr><td>KB Bear</td><td>Fwd EV/EBITDA 12배</td><td class="num">-</td><td class="num">-</td><td class="num">165,000</td><td class="num neg">-5%</td></tr>
+      <tr><td class="hl">현재</td><td class="hl">시장이 매긴 값 = 2027E PER 19~23배</td><td class="num hl">8,464</td><td class="num hl">20.5</td><td class="num hl">173,400</td><td class="num hl">-</td></tr>
+      <tr><td>Base</td><td>6개사 평균 EPS, PER 25배(유안타 밴드 하단 21.3배와 -1SD 27.5배 사이)까지 회복</td><td class="num">8,464</td><td class="num">25</td><td class="num">211,600</td><td class="num pos">+22%</td></tr>
+      <tr><td>Bull</td><td>역사적 하단 30배 회복(하나·NH 목표 멀티플)</td><td class="num">8,464</td><td class="num">30</td><td class="num">253,900</td><td class="num pos">+46%</td></tr>
+      <tr><td>증권사 평균 TP</td><td>8개사 평균</td><td class="num">-</td><td class="num">-</td><td class="num">304,375</td><td class="num pos">+76%</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">계산: 주가 = EPS × PER. Base 211,600 = 8,464 × 25, Bull 253,900 = 8,464 × 30, Bear 120,000 = 7,500 × 16. 배당은 2027E DPS 700~2,100원(수익률 0.4~1.2%)으로 밸류에이션 기여가 작다.</p>
+  <p>기대값 관점에서 하방 -5~-31%, 상방 +22~+76%다. 비대칭이 만들어진 이유는 2026년 EPS(3,488~4,107원)가 아니라 2027년 EPS로 넘어가는 순간 PER이 절반이 되기 때문이며, 시장은 아직 2027년 숫자를 믿지 않는다. 믿게 만드는 증거는 11월 초 3분기 실적(판관비 정상화)과 4분기 컴백 초동, 그리고 2027년 투어 발표다.</p>
+</section>
+
+<section id="s11">
+  <div class="sec-h"><span class="sec-n">11</span><h2>리스크</h2></div>
+  <div class="risk">
+    <div class="r"><span class="chip h">높음</span><div><div class="t">방시혁 의장 사법 리스크</div><div class="d">9월 3일 자본시장법상 사기적 부정거래 혐의로 불구속 송치. 2019년 상장 전 투자자에게 IPO 계획이 없다고 설명한 뒤 사모펀드에 매도하도록 유도했다는 혐의로, 부당이득 약 2,631억원 전액 추징보전. 변호인단은 혐의 부인. 기소·재판이 장기화되면 해외 기관 수급과 경영 판단 속도에 영향.</div></div></div>
+    <div class="r"><span class="chip h">높음</span><div><div class="t">BTS 2027년 하반기 이후 활동 형태</div><div class="d">투어 종료 후 개인 레이블화·완전체 활동 축소 가능성. 2027E 매출 추정 편차(3.7조~5.2조)의 핵심 변수. 발표 시점과 형태에 따라 목표주가가 다시 갈린다.</div></div></div>
+    <div class="r"><span class="chip m">중간</span><div><div class="t">판관비·성과급 구조</div><div class="d">2분기 판관비 2,905억(판관비율 20%)에 이익연동 성과급 500억+ 포함. 신한은 상단이 있다고 보지만, 3분기에도 판관비율이 20%를 넘으면 "BTS가 벌어도 하이브에 안 남는다"는 서사가 굳어진다.</div></div></div>
+    <div class="r"><span class="chip m">중간</span><div><div class="t">캣츠아이 소피아 활동 중단</div><div class="d">8월 활동 중단 발표, 5인으로 31회 투어 진행 중. 서구권 현지화 그룹의 첫 멤버 이탈 사례라 장기화 시 IP 가치 훼손.</div></div></div>
+    <div class="r"><span class="chip m">중간</span><div><div class="t">시장 로테이션 지속</div><div class="d">AI·반도체 쏠림이 이어지면 실적과 무관하게 소외가 길어진다. 2026년 KOSPI +59% 속 엔터 -42%가 그 증거. 공매도 잔고 추이 확인 필요.</div></div></div>
+    <div class="r"><span class="chip l">낮음</span><div><div class="t">뉴진스·어도어 소송</div><div class="d">전속계약 유효 판결로 3인 복귀, 다니엘 해지. 손해배상 소송이 남았지만 어도어 매출(2025년 296억)이 연결의 1%라 실적 영향은 작다. 브랜드·레이블 자율성 논쟁이 재점화될 수 있음.</div></div></div>
+    <div class="r"><span class="chip l">낮음</span><div><div class="t">신인 데뷔 비용</div><div class="d">튜이드·Saint Satine·산토스 브라보스의 초기 제작비. NH는 부담이 크지 않다고 보나, HYBE Latin America는 2025년 652억 적자.</div></div></div>
+    <div class="r"><span class="chip u">상방</span><div><div class="t">한한령 완화·중국 공연 재개</div><div class="d">6월 한중 FTA 회담에서 논의, SM 상하이 MD 매장 개점. 2025년 중국 공연시장 837억위안. 페스티벌→아레나→스타디움 순 재개 시 4사 공통 상방(NH).</div></div></div>
+  </div>
+</section>
+
+<section id="s12">
+  <div class="sec-h"><span class="sec-n">12</span><h2>투자 전 확인할 것</h2></div>
+  <ol class="check">
+    <li><b>3분기 실적(11월 초):</b> 매출 1.3조 이상, OPM 11% 이상, 판관비율 20% 미만인가. 성과급 정상화가 숫자로 보이는가.</li>
+    <li><b>4분기 컴백 초동:</b> 코르티스 미니 3집이 2집 초동 231만장을 넘는가. TXT 미니 9집·르세라핌·보이넥스트도어 미니 6집 일정 확정 여부.</li>
+    <li><b>캣츠아이 북미 22회 매진율</b>과 소피아 복귀 여부. 2027년 투어 규모 발표(70만명 이상이면 하나증권 시나리오 충족).</li>
+    <li><b>BTS 2027년 추가 일정(일본·중동)</b>의 회차와, 투어 종료 후 활동 계획 발표 시점.</li>
+    <li><b>세븐틴</b> 2027년 1분기 전역 후 컴백·투어 발표 규모. 2025년 투어 대비 회차.</li>
+    <li><b>뉴진스</b> 컴백 확정 여부와 손해배상 소송 진행.</li>
+    <li><b>방시혁 의장</b> 검찰 기소 여부. 기소 시 경영 공백 대책(이사회 의장직) 발표 여부.</li>
+    <li><b>위버스</b> 3분기 MAU·유료 전환율·ARPPU. 2025년 영업이익 20억에서 2026년 얼마로 커지는가.</li>
+    <li><b>수급:</b> 외국인 지분율 18.7% 반등, 공매도 잔고 감소, 목표주가 하향 종료(홀수해 사이클의 첫 신호).</li>
+    <li><b>2027년 회사 가이던스:</b> 매출 역성장 폭과 영업이익 가이던스가 증권사 평균(4,950억)에 부합하는가.</li>
+  </ol>
+</section>
+
+<section>
+  <div class="sec-h"><span class="sec-n">—</span><h2>자료와 계산 근거</h2></div>
+  <ul class="src">
+    <li>주가·수익률: 네이버금융 일별시세(수정주가) 2014-01-02 ~ 2026-09-14. 연간 수익률은 연말 종가 대비, 반기는 직전 반기말 대비. 엔터평균은 상장 종목 단순평균.</li>
+    <li>재무: DART 전자공시 연결재무제표(fnlttSinglAcntAll) FY2020~2025 사업보고서, 2026년 1·2분기 보고서. 2018~2019는 NH투자증권 7/29 인용.</li>
+    <li>증권사 리포트(텔레그램 리포트 아카이브 전문검색): 삼성증권 최민하 7/29, NH투자증권 이화정 7/7·7/29, KB증권 최용현 7/28, 리딩투자증권 유성만 8/4, 유안타증권 이환욱 8/19, 신한투자증권 지인해 7/3·9/4, 하나증권 이기훈 5/20·7/2, LS증권 박성호 9/9, 다올투자증권 임도영 8/11.</li>
+    <li>뉴스: 뉴스밸류 9/14(주가 17만원대 심층분석), 오피니언뉴스 9/13(목표가 유지), 일간스포츠 9/3(방시혁 송치), 헤럴드경제(코르티스 트리플 밀리언), Official Charts·Rolling Stone(캣츠아이 투어), Forbes·CelebrityAccess(2Q26 실적), 매거진한경 2025-11(코스피 홀짝 징크스).</li>
+    <li>"짝수해·홀수해" 키워드 아카이브 검색 결과 6건은 모두 방송사(SBS 등)의 올림픽·월드컵 중계권 비용 논리로, 기획사 주가 사이클을 다룬 리포트는 없었다. 03장의 원인 분석은 필자의 정리다.</li>
+    <li>수치 교차검증: 2Q26 매출 1.45조·OP 1,709억은 DART·삼성·NH·KB·LS 5개 출처 일치. 시가총액 7조 4,747억 = 43,106,836주 × 173,400원. 52주 고점은 종가 404,500원(2/19)·장중 405,500원(2/13), 네이버 표기 418,000원은 2025년 9월 이전 장중가가 섞인 값이라 쓰지 않았다.</li>
+  </ul>
+  <div class="foot">본 자료는 공개된 정보를 바탕으로 작성한 개인 참고용 분석이며 투자 권유가 아닙니다. 수치는 작성 시점 기준이고 증권사 추정치는 각 사의 의견입니다. 투자 판단과 책임은 투자자 본인에게 있습니다. 작성 2026-09-14.</div>
+</section>
+</main>
+
+<script id="cd" type="application/json">{"hybe_weekly":[["2020-10-16",198495.0],["2020-10-23",170775.0],["2020-10-30",140580.0],["2020-11-06",160380.0],["2020-11-13",158400.0],["2020-11-20",182655.0],["2020-11-27",176220.0],["2020-12-04",185625.0],["2020-12-11",178695.0],["2020-12-18",160380.0],["2020-12-25",156420.0],["2021-01-01",158400.0],["2021-01-08",158895.0],["2021-01-15",155430.0],["2021-01-22",190575.0],["2021-01-29",202455.0],["2021-02-05",240570.0],["2021-02-12",229185.0],["2021-02-19",232155.0],["2021-02-26",204435.0],["2021-03-05",205425.0],["2021-03-12",225720.0],["2021-03-19",223740.0],["2021-03-26",239580.0],["2021-04-02",240570.0],["2021-04-09",255420.0],["2021-04-16",249000.0],["2021-04-23",258500.0],["2021-04-30",243000.0],["2021-05-07",252500.0],["2021-05-14",242500.0],["2021-05-21",261500.0],["2021-05-28",261000.0],["2021-06-04",266000.0],["2021-06-11",275500.0],["2021-06-18",313000.0],["2021-06-25",314000.0],["2021-07-02",303000.0],["2021-07-09",308000.0],["2021-07-16",317500.0],["2021-07-23",303000.0],["2021-07-30",289500.0],["2021-08-06",310000.0],["2021-08-13",299000.0],["2021-08-20",274000.0],["2021-08-27",284500.0],["2021-09-03",281000.0],["2021-09-10",269500.0],["2021-09-17",276500.0],["2021-09-24",268000.0],["2021-10-01",291500.0],["2021-10-08",281000.0],["2021-10-15",306500.0],["2021-10-22",325000.0],["2021-10-29",335000.0],["2021-11-05",383500.0],["2021-11-12",396500.0],["2021-11-19",400500.0],["2021-11-26",372000.0],["2021-12-03",354500.0],["2021-12-10",352000.0],["2021-12-17",331000.0],["2021-12-24",340500.0],["2021-12-31",349000.0],["2022-01-07",302500.0],["2022-01-14",284000.0],["2022-01-21",285000.0],["2022-01-28",237000.0],["2022-02-04",260000.0],["2022-02-11",252000.0],["2022-02-18",262500.0],["2022-02-25",286500.0],["2022-03-04",278000.0],["2022-03-11",284000.0],["2022-03-18",285500.0],["2022-03-25",301000.0],["2022-04-01",323000.0],["2022-04-08",283500.0],["2022-04-15",294000.0],["2022-04-22",254500.0],["2022-04-29",251500.0],["2022-05-06",241000.0],["2022-05-13",215000.0],["2022-05-20",221000.0],["2022-05-27",218500.0],["2022-06-03",228000.0],["2022-06-10",223500.0],["2022-06-17",148500.0],["2022-06-24",148000.0],["2022-07-01",140000.0],["2022-07-08",164500.0],["2022-07-15",156500.0],["2022-07-22",167000.0],["2022-07-29",175500.0],["2022-08-05",175000.0],["2022-08-12",183000.0],["2022-08-19",186500.0],["2022-08-26",175500.0],["2022-09-02",168500.0],["2022-09-09",158000.0],["2022-09-16",154000.0],["2022-09-23",144000.0],["2022-09-30",135000.0],["2022-10-07",123000.0],["2022-10-14",118000.0],["2022-10-21",112500.0],["2022-10-28",119000.0],["2022-11-04",122500.0],["2022-11-11",141000.0],["2022-11-18",137000.0],["2022-11-25",139000.0],["2022-12-02",151000.0],["2022-12-09",156500.0],["2022-12-16",164000.0],["2022-12-23",175000.0],["2022-12-30",173500.0],["2023-01-06",168000.0],["2023-01-13",174500.0],["2023-01-20",187000.0],["2023-01-27",194000.0],["2023-02-03",195600.0],["2023-02-10",195300.0],["2023-02-17",182000.0],["2023-02-24",183200.0],["2023-03-03",187400.0],["2023-03-10",183700.0],["2023-03-17",179400.0],["2023-03-24",187500.0],["2023-03-31",188900.0],["2023-04-07",217000.0],["2023-04-14",259000.0],["2023-04-21",250000.0],["2023-04-28",270000.0],["2023-05-05",292500.0],["2023-05-12",282000.0],["2023-05-19",281000.0],["2023-05-26",270000.0],["2023-06-02",270000.0],["2023-06-09",280500.0],["2023-06-16",297500.0],["2023-06-23",301000.0],["2023-06-30",281500.0],["2023-07-07",286000.0],["2023-07-14",256500.0],["2023-07-21",256500.0],["2023-07-28",258500.0],["2023-08-04",272000.0],["2023-08-11",255000.0],["2023-08-18",236500.0],["2023-08-25",237000.0],["2023-09-01",249000.0],["2023-09-08",245500.0],["2023-09-15",244500.0],["2023-09-22",230500.0],["2023-09-29",238000.0],["2023-10-06",229000.0],["2023-10-13",244500.0],["2023-10-20",224500.0],["2023-10-27",212000.0],["2023-11-03",216000.0],["2023-11-10",212000.0],["2023-11-17",190300.0],["2023-11-24",210500.0],["2023-12-01",211500.0],["2023-12-08",237500.0],["2023-12-15",238500.0],["2023-12-22",230000.0],["2023-12-29",233500.0],["2024-01-05",252000.0],["2024-01-12",247000.0],["2024-01-19",220000.0],["2024-01-26",216500.0],["2024-02-02",205500.0],["2024-02-09",200000.0],["2024-02-16",208500.0],["2024-02-23",215500.0],["2024-03-01",199100.0],["2024-03-08",194600.0],["2024-03-15",199000.0],["2024-03-22",195800.0],["2024-03-29",230000.0],["2024-04-05",224000.0],["2024-04-12",213000.0],["2024-04-19",230500.0],["2024-04-26",201500.0],["2024-05-03",203500.0],["2024-05-10",200500.0],["2024-05-17",193900.0],["2024-05-24",200500.0],["2024-05-31",200000.0],["2024-06-07",197000.0],["2024-06-14",200500.0],["2024-06-21",200000.0],["2024-06-28",202500.0],["2024-07-05",197400.0],["2024-07-12",189700.0],["2024-07-19",182500.0],["2024-07-26",171700.0],["2024-08-02",180800.0],["2024-08-09",172200.0],["2024-08-16",166400.0],["2024-08-23",176600.0],["2024-08-30",184400.0],["2024-09-06",165600.0],["2024-09-13",164000.0],["2024-09-20",160000.0],["2024-09-27",172900.0],["2024-10-04",173500.0],["2024-10-11",176100.0],["2024-10-18",188800.0],["2024-10-25",192700.0],["2024-11-01",186700.0],["2024-11-08",198600.0],["2024-11-15",205000.0],["2024-11-22",214000.0],["2024-11-29",195200.0],["2024-12-06",189000.0],["2024-12-13",205500.0],["2024-12-20",196700.0],["2024-12-27",191700.0],["2025-01-03",201000.0],["2025-01-10",215500.0],["2025-01-17",223500.0],["2025-01-24",221500.0],["2025-01-31",225000.0],["2025-02-07",234500.0],["2025-02-14",248000.0],["2025-02-21",245500.0],["2025-02-28",257500.0],["2025-03-07",250000.0],["2025-03-14",232000.0],["2025-03-21",232000.0],["2025-03-28",240500.0],["2025-04-04",246000.0],["2025-04-11",226000.0],["2025-04-18",230500.0],["2025-04-25",232500.0],["2025-05-02",264500.0],["2025-05-09",270000.0],["2025-05-16",274500.0],["2025-05-23",285500.0],["2025-05-30",266000.0],["2025-06-06",284500.0],["2025-06-13",296000.0],["2025-06-20",307000.0],["2025-06-27",305500.0],["2025-07-04",275500.0],["2025-07-11",271000.0],["2025-07-18",268000.0],["2025-07-25",256500.0],["2025-08-01",251000.0],["2025-08-08",291000.0],["2025-08-15",283500.0],["2025-08-22",285500.0],["2025-08-29",287000.0],["2025-09-05",290500.0],["2025-09-12",292000.0],["2025-09-19",289500.0],["2025-09-26",268500.0],["2025-10-03",267500.0],["2025-10-10",272500.0],["2025-10-17",269500.0],["2025-10-24",288000.0],["2025-10-31",341000.0],["2025-11-07",305500.0],["2025-11-14",297500.0],["2025-11-21",292000.0],["2025-11-28",299500.0],["2025-12-05",290000.0],["2025-12-12",299500.0],["2025-12-19",313500.0],["2025-12-26",314500.0],["2026-01-02",346000.0],["2026-01-09",331000.0],["2026-01-16",336500.0],["2026-01-23",380000.0],["2026-01-30",374000.0],["2026-02-06",355500.0],["2026-02-13",390000.0],["2026-02-20",398500.0],["2026-02-27",387500.0],["2026-03-06",353000.0],["2026-03-13",361500.0],["2026-03-20",344000.0],["2026-03-27",307000.0],["2026-04-03",270000.0],["2026-04-10",254000.0],["2026-04-17",262500.0],["2026-04-24",252000.0],["2026-05-01",263000.0],["2026-05-08",247500.0],["2026-05-15",244000.0],["2026-05-22",235000.0],["2026-05-29",220000.0],["2026-06-05",209500.0],["2026-06-12",225000.0],["2026-06-19",223500.0],["2026-06-26",177800.0],["2026-07-03",205000.0],["2026-07-10",220500.0],["2026-07-17",208500.0],["2026-07-24",212000.0],["2026-07-31",168800.0],["2026-08-07",185000.0],["2026-08-14",179400.0],["2026-08-21",167900.0],["2026-08-28",180000.0],["2026-09-04",178500.0],["2026-09-11",173000.0],["2026-09-18",173400.0]],"kospi_weekly":[["2020-10-09",2391.96],["2020-10-16",2341.53],["2020-10-23",2360.81],["2020-10-30",2267.15],["2020-11-06",2416.5],["2020-11-13",2493.87],["2020-11-20",2553.5],["2020-11-27",2633.45],["2020-12-04",2731.45],["2020-12-11",2770.06],["2020-12-18",2772.18],["2020-12-25",2806.86],["2021-01-01",2873.47],["2021-01-08",3152.18],["2021-01-15",3085.9],["2021-01-22",3140.63],["2021-01-29",2976.21],["2021-02-05",3120.63],["2021-02-12",3100.58],["2021-02-19",3107.62],["2021-02-26",3012.95],["2021-03-05",3026.26],["2021-03-12",3054.39],["2021-03-19",3039.53],["2021-03-26",3041.01],["2021-04-02",3112.8],["2021-04-09",3131.88],["2021-04-16",3198.62],["2021-04-23",3186.1],["2021-04-30",3147.86],["2021-05-07",3197.2],["2021-05-14",3153.32],["2021-05-21",3156.42],["2021-05-28",3188.73],["2021-06-04",3240.08],["2021-06-11",3249.32],["2021-06-18",3267.93],["2021-06-25",3302.84],["2021-07-02",3281.78],["2021-07-09",3217.95],["2021-07-16",3276.91],["2021-07-23",3254.42],["2021-07-30",3202.32],["2021-08-06",3270.36],["2021-08-13",3171.29],["2021-08-20",3060.51],["2021-08-27",3133.9],["2021-09-03",3201.06],["2021-09-10",3125.76],["2021-09-17",3140.51],["2021-09-24",3125.24],["2021-10-01",3019.18],["2021-10-08",2956.3],["2021-10-15",3015.06],["2021-10-22",3006.16],["2021-10-29",2970.68],["2021-11-05",2969.27],["2021-11-12",2968.8],["2021-11-19",2971.02],["2021-11-26",2936.44],["2021-12-03",2968.33],["2021-12-10",3010.23],["2021-12-17",3017.73],["2021-12-24",3012.43],["2021-12-31",2977.65],["2022-01-07",2954.89],["2022-01-14",2921.92],["2022-01-21",2834.29],["2022-01-28",2663.34],["2022-02-04",2750.26],["2022-02-11",2747.71],["2022-02-18",2744.52],["2022-02-25",2676.76],["2022-03-04",2713.43],["2022-03-11",2661.28],["2022-03-18",2707.02],["2022-03-25",2729.98],["2022-04-01",2739.85],["2022-04-08",2700.39],["2022-04-15",2696.06],["2022-04-22",2704.71],["2022-04-29",2695.05],["2022-05-06",2644.51],["2022-05-13",2604.24],["2022-05-20",2639.29],["2022-05-27",2638.05],["2022-06-03",2670.65],["2022-06-10",2595.87],["2022-06-17",2440.93],["2022-06-24",2366.6],["2022-07-01",2305.42],["2022-07-08",2350.61],["2022-07-15",2330.98],["2022-07-22",2393.14],["2022-07-29",2451.5],["2022-08-05",2490.8],["2022-08-12",2527.94],["2022-08-19",2492.69],["2022-08-26",2481.03],["2022-09-02",2409.41],["2022-09-09",2384.28],["2022-09-16",2382.78],["2022-09-23",2290.0],["2022-09-30",2155.49],["2022-10-07",2232.84],["2022-10-14",2212.55],["2022-10-21",2213.12],["2022-10-28",2268.4],["2022-11-04",2348.43],["2022-11-11",2483.16],["2022-11-18",2444.48],["2022-11-25",2437.86],["2022-12-02",2434.33],["2022-12-09",2389.04],["2022-12-16",2360.02],["2022-12-23",2313.69],["2022-12-30",2236.4],["2023-01-06",2289.97],["2023-01-13",2386.09],["2023-01-20",2395.26],["2023-01-27",2484.02],["2023-02-03",2480.4],["2023-02-10",2469.73],["2023-02-17",2451.21],["2023-02-24",2423.61],["2023-03-03",2432.07],["2023-03-10",2394.59],["2023-03-17",2395.69],["2023-03-24",2414.96],["2023-03-31",2476.86],["2023-04-07",2490.41],["2023-04-14",2571.49],["2023-04-21",2544.4],["2023-04-28",2501.53],["2023-05-05",2500.94],["2023-05-12",2475.42],["2023-05-19",2537.79],["2023-05-26",2558.81],["2023-06-02",2601.36],["2023-06-09",2641.16],["2023-06-16",2625.79],["2023-06-23",2570.1],["2023-06-30",2564.28],["2023-07-07",2526.71],["2023-07-14",2628.3],["2023-07-21",2609.76],["2023-07-28",2608.32],["2023-08-04",2602.8],["2023-08-11",2591.26],["2023-08-18",2504.5],["2023-08-25",2519.14],["2023-09-01",2563.71],["2023-09-08",2547.68],["2023-09-15",2601.28],["2023-09-22",2508.13],["2023-09-29",2465.07],["2023-10-06",2408.73],["2023-10-13",2456.15],["2023-10-20",2375.0],["2023-10-27",2302.81],["2023-11-03",2368.34],["2023-11-10",2409.66],["2023-11-17",2469.85],["2023-11-24",2496.63],["2023-12-01",2505.01],["2023-12-08",2517.85],["2023-12-15",2563.56],["2023-12-22",2599.51],["2023-12-29",2655.28],["2024-01-05",2578.08],["2024-01-12",2525.05],["2024-01-19",2472.74],["2024-01-26",2478.56],["2024-02-02",2615.31],["2024-02-09",2620.32],["2024-02-16",2648.76],["2024-02-23",2667.7],["2024-03-01",2642.36],["2024-03-08",2680.35],["2024-03-15",2666.84],["2024-03-22",2748.56],["2024-03-29",2746.63],["2024-04-05",2714.21],["2024-04-12",2681.82],["2024-04-19",2591.86],["2024-04-26",2656.33],["2024-05-03",2676.63],["2024-05-10",2727.63],["2024-05-17",2724.62],["2024-05-24",2687.6],["2024-05-31",2636.52],["2024-06-07",2722.67],["2024-06-14",2758.42],["2024-06-21",2784.26],["2024-06-28",2797.82],["2024-07-05",2862.23],["2024-07-12",2857.0],["2024-07-19",2795.46],["2024-07-26",2731.9],["2024-08-02",2676.19],["2024-08-09",2588.43],["2024-08-16",2697.23],["2024-08-23",2701.69],["2024-08-30",2674.31],["2024-09-06",2544.28],["2024-09-13",2575.41],["2024-09-20",2593.37],["2024-09-27",2649.78],["2024-10-04",2569.71],["2024-10-11",2596.91],["2024-10-18",2593.82],["2024-10-25",2583.27],["2024-11-01",2542.36],["2024-11-08",2561.15],["2024-11-15",2416.86],["2024-11-22",2501.24],["2024-11-29",2455.91],["2024-12-06",2428.16],["2024-12-13",2494.46],["2024-12-20",2404.15],["2024-12-27",2404.77],["2025-01-03",2441.92],["2025-01-10",2515.78],["2025-01-17",2523.55],["2025-01-24",2536.8],["2025-01-31",2517.37],["2025-02-07",2521.92],["2025-02-14",2591.05],["2025-02-21",2654.58],["2025-02-28",2532.78],["2025-03-07",2563.48],["2025-03-14",2566.36],["2025-03-21",2643.13],["2025-03-28",2557.98],["2025-04-04",2465.42],["2025-04-11",2432.72],["2025-04-18",2483.42],["2025-04-25",2546.3],["2025-05-02",2559.79],["2025-05-09",2577.27],["2025-05-16",2626.87],["2025-05-23",2592.09],["2025-05-30",2697.67],["2025-06-06",2812.05],["2025-06-13",2894.62],["2025-06-20",3021.84],["2025-06-27",3055.94],["2025-07-04",3054.28],["2025-07-11",3175.77],["2025-07-18",3188.07],["2025-07-25",3196.05],["2025-08-01",3119.41],["2025-08-08",3210.01],["2025-08-15",3225.66],["2025-08-22",3168.73],["2025-08-29",3186.01],["2025-09-05",3205.12],["2025-09-12",3395.54],["2025-09-19",3445.24],["2025-09-26",3386.05],["2025-10-03",3549.21],["2025-10-10",3610.6],["2025-10-17",3748.89],["2025-10-24",3941.59],["2025-10-31",4107.5],["2025-11-07",3953.76],["2025-11-14",4011.57],["2025-11-21",3853.26],["2025-11-28",3926.59],["2025-12-05",4100.05],["2025-12-12",4167.16],["2025-12-19",4020.55],["2025-12-26",4129.68],["2026-01-02",4309.63],["2026-01-09",4586.32],["2026-01-16",4840.74],["2026-01-23",4990.07],["2026-01-30",5224.36],["2026-02-06",5089.14],["2026-02-13",5507.01],["2026-02-20",5808.53],["2026-02-27",6244.13],["2026-03-06",5584.87],["2026-03-13",5487.24],["2026-03-20",5781.2],["2026-03-27",5438.87],["2026-04-03",5377.3],["2026-04-10",5858.87],["2026-04-17",6191.92],["2026-04-24",6475.63],["2026-05-01",6598.87],["2026-05-08",7498.0],["2026-05-15",7493.18],["2026-05-22",7847.71],["2026-05-29",8476.15],["2026-06-05",8160.59],["2026-06-12",8123.62],["2026-06-19",9052.42],["2026-06-26",8411.21],["2026-07-03",8088.34],["2026-07-10",7475.94],["2026-07-17",6820.6],["2026-07-24",6690.62],["2026-07-31",6595.45],["2026-08-07",6258.77],["2026-08-14",6977.94],["2026-08-21",6912.95],["2026-08-28",6788.88],["2026-09-04",6687.21],["2026-09-11",6909.91],["2026-09-18",6690.12]],"yearly_table":{"2015":{"하이브":null,"JYP":10.0,"에스엠":26.5,"와이지":0.8,"KOSPI":2.4,"KOSDAQ":25.7,"엔터평균":12.4,"엔터-KOSPI":10.0,"하이브-KOSPI":null},"2016":{"하이브":null,"JYP":7.5,"에스엠":-39.8,"와이지":-36.4,"KOSPI":3.3,"KOSDAQ":-7.5,"엔터평균":-22.9,"엔터-KOSPI":-26.2,"하이브-KOSPI":null},"2017":{"하이브":null,"JYP":179.2,"에스엠":34.0,"와이지":1.8,"KOSPI":21.8,"KOSDAQ":26.4,"엔터평균":71.7,"엔터-KOSPI":49.9,"하이브-KOSPI":null},"2018":{"하이브":null,"JYP":120.0,"에스엠":50.7,"와이지":64.6,"KOSPI":-17.3,"KOSDAQ":-15.4,"엔터평균":78.4,"엔터-KOSPI":95.7,"하이브-KOSPI":null},"2019":{"하이브":null,"JYP":-20.2,"에스엠":-26.5,"와이지":-42.4,"KOSPI":7.7,"KOSDAQ":-0.9,"엔터평균":-29.7,"엔터-KOSPI":-37.4,"하이브-KOSPI":null},"2020":{"하이브":-38.0,"JYP":59.0,"에스엠":-22.6,"와이지":63.4,"KOSPI":30.8,"KOSDAQ":44.6,"엔터평균":15.4,"엔터-KOSPI":-15.4,"하이브-KOSPI":-68.8},"2021":{"하이브":120.3,"JYP":32.0,"에스엠":149.4,"와이지":24.6,"KOSPI":3.6,"KOSDAQ":6.8,"엔터평균":81.6,"엔터-KOSPI":78.0,"하이브-KOSPI":116.7},"2022":{"하이브":-50.3,"JYP":33.7,"에스엠":3.4,"와이지":-21.3,"KOSPI":-24.9,"KOSDAQ":-34.3,"엔터평균":-8.6,"엔터-KOSPI":16.3,"하이브-KOSPI":-25.4},"2023":{"하이브":34.6,"JYP":49.4,"에스엠":20.1,"와이지":16.1,"KOSPI":18.7,"KOSDAQ":27.6,"엔터평균":30.0,"엔터-KOSPI":11.3,"하이브-KOSPI":15.9},"2024":{"하이브":-17.2,"JYP":-31.0,"에스엠":-17.9,"와이지":-10.0,"KOSPI":-9.6,"KOSDAQ":-21.7,"엔터평균":-19.0,"엔터-KOSPI":-9.4,"하이브-KOSPI":-7.6},"2025":{"하이브":70.6,"JYP":3.9,"에스엠":78.6,"와이지":51.5,"KOSPI":75.6,"KOSDAQ":36.5,"엔터평균":51.2,"엔터-KOSPI":-24.4,"하이브-KOSPI":-5.0},"2026":{"하이브":-47.5,"JYP":-46.3,"에스엠":-35.9,"와이지":-37.1,"KOSPI":58.8,"KOSDAQ":-12.8,"엔터평균":-41.7,"엔터-KOSPI":-100.5,"하이브-KOSPI":-106.3}},"monthly_heat":{"하이브":{"2020":{"11":26.4,"12":-10.9},"2021":{"1":27.8,"2":1.0,"3":17.7,"4":1.0,"5":9.1,"6":10.4,"7":-1.0,"8":0.0,"9":3.1,"10":12.2,"11":8.8,"12":-4.3},"2022":{"1":-32.1,"2":21.7,"3":7.3,"4":-18.7,"5":-8.2,"6":-37.0,"7":20.6,"8":3.4,"9":-25.6,"10":-10.4,"11":18.2,"12":21.3},"2023":{"1":10.5,"2":-3.4,"3":2.1,"4":42.9,"5":1.5,"6":2.7,"7":-6.7,"8":-3.8,"9":-5.7,"10":-7.8,"11":-1.8,"12":8.4},"2024":{"1":-13.7,"2":-1.2,"3":15.5,"4":-12.2,"5":-1.0,"6":1.2,"7":-13.1,"8":4.8,"9":-8.5,"10":9.9,"11":5.2,"12":-0.9},"2025":{"1":16.3,"2":14.4,"3":-8.5,"4":13.4,"5":-0.4,"6":16.2,"7":-16.0,"8":10.6,"9":-7.3,"10":28.2,"11":-12.2,"12":10.2},"2026":{"1":13.3,"2":3.6,"3":-22.8,"4":-12.0,"5":-16.3,"6":-12.7,"7":-12.1,"8":6.3,"9":-3.3}},"JYP":{"2019":{"1":-5.1,"2":-0.7,"3":8.1,"4":-3.2,"5":-14.4,"6":-6.3,"7":-14.9,"8":-5.9,"9":12.5,"10":3.9,"11":-0.9,"12":8.8},"2020":{"1":2.3,"2":-14.4,"3":-15.8,"4":16.6,"5":10.1,"6":-7.2,"7":40.8,"8":16.8,"9":9.8,"10":-20.1,"11":24.2,"12":1.2},"2021":{"1":-15.4,"2":12.3,"3":-2.5,"4":-7.6,"5":20.4,"6":2.3,"7":-1.2,"8":6.6,"9":0.0,"10":22.9,"11":-13.4,"12":11.7},"2022":{"1":-19.1,"2":21.6,"3":23.2,"4":-3.3,"5":-4.2,"6":-15.2,"7":15.0,"8":10.1,"9":-3.8,"10":-5.6,"11":9.2,"12":11.9},"2023":{"1":6.9,"2":8.6,"3":-1.7,"4":16.5,"5":35.3,"6":7.2,"7":4.3,"8":-17.7,"9":0.1,"10":-8.6,"11":-6.4,"12":5.5},"2024":{"1":-25.7,"2":-2.1,"3":-2.2,"4":-7.5,"5":-12.9,"6":-1.4,"7":0.7,"8":-11.4,"9":-1.4,"10":-3.1,"11":56.4,"12":-8.5},"2025":{"1":7.3,"2":12.4,"3":-29.8,"4":16.9,"5":7.9,"6":-0.5,"7":-2.2,"8":0.0,"9":2.6,"10":8.4,"11":-15.9,"12":6.8},"2026":{"1":1.7,"2":-5.4,"3":-11.9,"4":2.3,"5":-8.3,"6":-10.9,"7":-16.0,"8":-7.8,"9":-2.1}},"에스엠":{"2019":{"1":-8.1,"2":-3.2,"3":-15.3,"4":4.9,"5":3.5,"6":-2.8,"7":-14.9,"8":-15.8,"9":11.7,"10":11.4,"11":3.5,"12":0.1},"2020":{"1":-14.6,"2":-13.4,"3":-26.0,"4":31.6,"5":-6.1,"6":-6.7,"7":28.9,"8":10.1,"9":4.1,"10":-19.6,"11":3.1,"12":0.2},"2021":{"1":2.9,"2":-1.8,"3":-1.5,"4":2.0,"5":44.7,"6":34.6,"7":0.0,"8":17.5,"9":0.1,"10":13.0,"11":-13.9,"12":10.3},"2022":{"1":-20.6,"2":26.0,"3":10.0,"4":-16.4,"5":1.9,"6":-9.2,"7":9.5,"8":0.1,"9":2.3,"10":0.4,"11":11.5,"12":-3.3},"2023":{"1":14.7,"2":45.0,"3":-27.0,"4":15.0,"5":2.3,"6":-2.6,"7":22.3,"8":5.3,"9":-6.7,"10":-21.4,"11":-14.0,"12":6.2},"2024":{"1":-17.2,"2":2.5,"3":12.3,"4":-9.7,"5":15.1,"6":-11.9,"7":-12.2,"8":-11.0,"9":6.5,"10":6.0,"11":19.6,"12":-10.8},"2025":{"1":10.4,"2":20.2,"3":6.9,"4":15.5,"5":3.6,"6":9.9,"7":-5.6,"8":4.3,"9":-6.3,"10":-8.1,"11":-9.5,"12":24.9},"2026":{"1":-14.1,"2":-0.4,"3":-23.1,"4":8.8,"5":-17.5,"6":-11.2,"7":-3.4,"8":9.4,"9":15.8}},"와이지":{"2019":{"1":-8.4,"2":-3.3,"3":-10.3,"4":-4.5,"5":-15.0,"6":-5.4,"7":-13.6,"8":-15.2,"9":8.7,"10":16.1,"11":-7.1,"12":10.1},"2020":{"1":15.5,"2":-4.1,"3":-20.6,"4":23.3,"5":-0.2,"6":25.8,"7":9.3,"8":14.6,"9":24.3,"10":-33.3,"11":13.2,"12":2.1},"2021":{"1":1.5,"2":0.8,"3":-2.6,"4":-6.6,"5":22.5,"6":0.6,"7":2.9,"8":15.0,"9":2.0,"10":13.8,"11":-20.8,"12":0.0},"2022":{"1":-12.0,"2":34.1,"3":4.1,"4":-16.7,"5":-0.7,"6":-22.0,"7":24.8,"8":10.0,"9":-20.0,"10":-11.8,"11":2.7,"12":-0.1},"2023":{"1":18.4,"2":11.8,"3":-2.2,"4":7.6,"5":53.9,"6":-18.1,"7":-1.0,"8":7.1,"9":-22.9,"10":-12.6,"11":-5.5,"12":-1.9},"2024":{"1":-12.8,"2":-7.9,"3":15.2,"4":-10.0,"5":2.9,"6":-7.7,"7":-4.6,"8":-11.2,"9":9.1,"10":2.6,"11":25.0,"12":-4.1},"2025":{"1":8.8,"2":26.4,"3":-0.2,"4":6.7,"5":20.7,"6":17.5,"7":-10.6,"8":19.4,"9":-3.8,"10":-6.3,"11":-29.1,"12":6.9},"2026":{"1":7.6,"2":-0.9,"3":-28.5,"4":2.1,"5":-17.4,"6":-6.6,"7":-8.4,"8":7.9,"9":6.1}},"KOSPI":{"2019":{"1":8.0,"2":-0.4,"3":-2.5,"4":2.9,"5":-7.3,"6":4.4,"7":-5.0,"8":-2.8,"9":4.8,"10":1.0,"11":0.2,"12":5.3},"2020":{"1":-3.6,"2":-6.2,"3":-11.7,"4":11.0,"5":4.2,"6":3.9,"7":6.7,"8":3.4,"9":0.1,"10":-2.6,"11":14.3,"12":10.9},"2021":{"1":3.6,"2":1.2,"3":1.6,"4":2.8,"5":1.8,"6":2.9,"7":-2.9,"8":-0.1,"9":-4.1,"10":-3.2,"11":-4.4,"12":4.9},"2022":{"1":-10.6,"2":1.3,"3":2.2,"4":-2.3,"5":-0.3,"6":-13.2,"7":5.1,"8":0.8,"9":-12.8,"10":6.4,"11":7.8,"12":-9.6},"2023":{"1":8.4,"2":-0.5,"3":2.7,"4":1.0,"5":3.0,"6":-0.5,"7":2.7,"8":-2.9,"9":-3.6,"10":-7.6,"11":11.3,"12":4.7},"2024":{"1":-6.0,"2":5.8,"3":3.9,"4":-2.0,"5":-2.1,"6":6.1,"7":-1.0,"8":-3.5,"9":-3.0,"10":-1.4,"11":-3.9,"12":-2.3},"2025":{"1":4.9,"2":0.6,"3":-2.0,"4":3.0,"5":5.5,"6":13.9,"7":5.7,"8":-1.8,"9":7.5,"10":19.9,"11":-4.4,"12":7.3},"2026":{"1":24.0,"2":19.5,"3":-19.1,"4":30.6,"5":28.4,"6":0.0,"7":-22.2,"8":3.4,"9":-1.9}}},"half":{"하이브":{"2021H1":84.7,"2021H2":19.3,"2022H1":-58.3,"2022H2":19.2,"2023H1":62.2,"2023H2":-17.1,"2024H1":-13.3,"2024H2":-4.5,"2025H1":59.8,"2025H2":6.8,"2026H1":-41.8,"2026H2":-9.7},"JYP":{"2019H1":-21.0,"2019H2":1.0,"2020H1":-12.2,"2020H2":81.1,"2021H1":5.5,"2021H2":25.2,"2022H1":-4.8,"2022H2":40.5,"2023H1":92.9,"2023H2":-22.6,"2024H1":-43.4,"2024H2":22.0,"2025H1":6.3,"2025H2":-2.3,"2026H1":-29.2,"2026H2":-24.1},"에스엠":{"2019H1":-20.5,"2019H2":-7.6,"2020H1":-36.9,"2020H2":22.7,"2021H1":97.6,"2021H2":26.2,"2022H1":-15.0,"2022H2":21.6,"2023H1":39.2,"2023H2":-13.8,"2024H1":-12.7,"2024H2":-6.0,"2025H1":86.5,"2025H2":-4.3,"2026H1":-47.6,"2026H2":22.3},"와이지":{"2019H1":-39.1,"2019H2":-5.5,"2020H1":36.2,"2020H2":20.0,"2021H1":14.5,"2021H2":8.8,"2022H1":-20.7,"2022H2":-0.7,"2023H1":75.4,"2023H2":-33.8,"2024H1":-20.8,"2024H2":13.6,"2025H1":107.9,"2025H2":-27.1,"2026H1":-40.0,"2026H2":4.8},"KOSPI":{"2019H1":4.4,"2019H2":3.1,"2020H1":-4.1,"2020H2":36.3,"2021H1":14.7,"2021H2":-9.7,"2022H1":-21.7,"2022H2":-4.1,"2023H1":14.7,"2023H2":3.5,"2024H1":5.4,"2024H2":-14.2,"2025H1":28.0,"2025H2":37.2,"2026H1":101.1,"2026H2":-21.1},"KOSDAQ":{"2019H1":2.2,"2019H2":-3.0,"2020H1":10.2,"2020H2":31.2,"2021H1":6.4,"2021H2":0.4,"2022H1":-27.9,"2022H2":-8.9,"2023H1":27.8,"2023H2":-0.2,"2024H1":-3.0,"2024H2":-19.3,"2025H1":15.2,"2025H2":18.4,"2026H1":-1.0,"2026H2":-11.9}},"info":{"last_date":"2026-09-14","last_close":173400.0,"w52_high_close":404500.0,"w52_high_close_date":"2026-02-19","w52_high_intraday":405500.0,"w52_high_intraday_date":"2026-02-13","w52_low_close":163000.0,"w52_low_close_date":"2026-07-30","w52_low_intraday":157900.0,"w52_low_intraday_date":"2026-07-29","ipo_close_2020_10_15":255420.0,"ath_close":414000.0,"ath_date":"2021-11-16","ytd":-47.5,"from_52w_high":-57.1,"kospi_last":6690.12,"kospi_ytd":58.8},"hybe_rel_kospi_weekly":[["2020-10-16",100.0],["2020-10-23",85.33],["2020-10-30",73.15],["2020-11-06",78.29],["2020-11-13",74.93],["2020-11-20",84.38],["2020-11-27",78.94],["2020-12-04",80.17],["2020-12-11",76.1],["2020-12-18",68.25],["2020-12-25",65.74],["2021-01-01",65.03],["2021-01-08",59.46],["2021-01-15",59.42],["2021-01-22",71.58],["2021-01-29",80.24],["2021-02-05",90.94],["2021-02-12",87.2],["2021-02-19",88.13],["2021-02-26",80.04],["2021-03-05",80.08],["2021-03-12",87.18],["2021-03-19",86.83],["2021-03-26",92.94],["2021-04-02",91.17],["2021-04-09",96.21],["2021-04-16",91.83],["2021-04-23",95.71],["2021-04-30",91.06],["2021-05-07",93.16],["2021-05-14",90.72],["2021-05-21",97.73],["2021-05-28",96.55],["2021-06-04",96.84],["2021-06-11",100.02],["2021-06-18",112.99],["2021-06-25",112.15],["2021-07-02",108.91],["2021-07-09",112.91],["2021-07-16",114.3],["2021-07-23",109.83],["2021-07-30",106.64],["2021-08-06",111.82],["2021-08-13",111.22],["2021-08-20",105.61],["2021-08-27",107.09],["2021-09-03",103.55],["2021-09-10",101.71],["2021-09-17",103.86],["2021-09-24",101.16],["2021-10-01",113.89],["2021-10-08",112.13],["2021-10-15",119.92],["2021-10-22",127.53],["2021-10-29",133.03],["2021-11-05",152.36],["2021-11-12",157.55],["2021-11-19",159.02],["2021-11-26",149.44],["2021-12-03",140.88],["2021-12-10",137.94],["2021-12-17",129.39],["2021-12-24",133.34],["2021-12-31",138.26],["2022-01-07",120.76],["2022-01-14",114.66],["2022-01-21",118.62],["2022-01-28",104.97],["2022-02-04",111.52],["2022-02-11",108.19],["2022-02-18",112.83],["2022-02-25",126.26],["2022-03-04",120.86],["2022-03-11",125.89],["2022-03-18",124.41],["2022-03-25",130.06],["2022-04-01",139.07],["2022-04-08",123.84],["2022-04-15",128.64],["2022-04-22",111.0],["2022-04-29",110.08],["2022-05-06",107.5],["2022-05-13",97.39],["2022-05-20",98.78],["2022-05-27",97.71],["2022-06-03",100.71],["2022-06-10",101.57],["2022-06-17",71.77],["2022-06-24",73.77],["2022-07-01",71.64],["2022-07-08",82.55],["2022-07-15",79.2],["2022-07-22",82.32],["2022-07-29",84.45],["2022-08-05",82.88],["2022-08-12",85.4],["2022-08-19",88.26],["2022-08-26",83.44],["2022-09-02",82.5],["2022-09-09",78.17],["2022-09-16",76.24],["2022-09-23",74.18],["2022-09-30",73.88],["2022-10-07",64.98],["2022-10-14",62.91],["2022-10-21",59.96],["2022-10-28",61.88],["2022-11-04",61.53],["2022-11-11",66.98],["2022-11-18",66.11],["2022-11-25",67.26],["2022-12-02",73.17],["2022-12-09",77.28],["2022-12-16",81.97],["2022-12-23",89.22],["2022-12-30",91.52],["2023-01-06",86.54],["2023-01-13",86.27],["2023-01-20",92.1],["2023-01-27",92.13],["2023-02-03",93.02],["2023-02-10",93.28],["2023-02-17",87.59],["2023-02-24",89.17],["2023-03-03",90.9],["2023-03-10",90.5],["2023-03-17",88.34],["2023-03-24",91.59],["2023-03-31",89.97],["2023-04-07",102.79],["2023-04-14",118.81],["2023-04-21",115.91],["2023-04-28",127.32],["2023-05-05",137.97],["2023-05-12",134.38],["2023-05-19",130.62],["2023-05-26",124.47],["2023-06-02",122.44],["2023-06-09",125.28],["2023-06-16",133.65],["2023-06-23",138.16],["2023-06-30",129.5],["2023-07-07",133.52],["2023-07-14",115.12],["2023-07-21",115.94],["2023-07-28",116.91],["2023-08-04",123.28],["2023-08-11",116.09],["2023-08-18",111.39],["2023-08-25",110.98],["2023-09-01",114.57],["2023-09-08",113.67],["2023-09-15",110.88],["2023-09-22",108.41],["2023-09-29",113.89],["2023-10-06",112.15],["2023-10-13",117.43],["2023-10-20",111.51],["2023-10-27",108.6],["2023-11-03",107.59],["2023-11-10",103.78],["2023-11-17",90.89],["2023-11-24",99.46],["2023-12-01",99.6],["2023-12-08",111.27],["2023-12-15",109.75],["2023-12-22",104.37],["2023-12-29",103.74],["2024-01-05",115.31],["2024-01-12",115.39],["2024-01-19",104.95],["2024-01-26",103.04],["2024-02-02",92.69],["2024-02-09",90.04],["2024-02-16",92.86],["2024-02-23",95.29],["2024-03-01",88.89],["2024-03-08",85.64],["2024-03-15",88.03],["2024-03-22",84.03],["2024-03-29",98.78],["2024-04-05",97.35],["2024-04-12",93.69],["2024-04-19",104.91],["2024-04-26",89.48],["2024-05-03",89.69],["2024-05-10",86.71],["2024-05-17",83.95],["2024-05-24",88.0],["2024-05-31",89.48],["2024-06-07",85.35],["2024-06-14",85.74],["2024-06-21",84.74],["2024-06-28",85.38],["2024-07-05",81.36],["2024-07-12",78.33],["2024-07-19",77.01],["2024-07-26",74.14],["2024-08-02",79.7],["2024-08-09",78.48],["2024-08-16",72.78],["2024-08-23",77.11],["2024-08-30",81.34],["2024-09-06",76.78],["2024-09-13",75.12],["2024-09-20",72.78],["2024-09-27",76.97],["2024-10-04",79.65],["2024-10-11",79.99],["2024-10-18",85.86],["2024-10-25",88.0],["2024-11-01",86.63],["2024-11-08",91.47],["2024-11-15",100.06],["2024-11-22",100.93],["2024-11-29",93.76],["2024-12-06",91.82],["2024-12-13",97.18],["2024-12-20",96.51],["2024-12-27",94.04],["2025-01-03",97.1],["2025-01-10",101.05],["2025-01-17",104.48],["2025-01-24",103.0],["2025-01-31",105.44],["2025-02-07",109.69],["2025-02-14",112.91],["2025-02-21",109.1],["2025-02-28",119.93],["2025-03-07",115.04],["2025-03-14",106.64],["2025-03-21",103.54],["2025-03-28",110.91],["2025-04-04",117.7],["2025-04-11",109.59],["2025-04-18",109.49],["2025-04-25",107.71],["2025-05-02",121.89],["2025-05-09",123.58],["2025-05-16",123.27],["2025-05-23",129.93],["2025-05-30",116.32],["2025-06-06",119.35],["2025-06-13",120.63],["2025-06-20",119.84],["2025-06-27",117.93],["2025-07-04",106.41],["2025-07-11",100.66],["2025-07-18",99.16],["2025-07-25",94.67],["2025-08-01",94.92],["2025-08-08",106.94],["2025-08-15",103.68],["2025-08-22",106.28],["2025-08-29",106.26],["2025-09-05",106.92],["2025-09-12",101.44],["2025-09-19",99.12],["2025-09-26",93.54],["2025-10-03",88.91],["2025-10-10",89.03],["2025-10-17",84.8],["2025-10-24",86.19],["2025-10-31",97.93],["2025-11-07",91.15],["2025-11-14",87.48],["2025-11-21",89.39],["2025-11-28",89.98],["2025-12-05",83.44],["2025-12-12",84.78],["2025-12-19",91.98],["2025-12-26",89.84],["2026-01-02",94.71],["2026-01-09",85.14],["2026-01-16",82.0],["2026-01-23",89.83],["2026-01-30",84.45],["2026-02-06",82.4],["2026-02-13",83.54],["2026-02-20",80.93],["2026-02-27",73.21],["2026-03-06",74.56],["2026-03-13",77.71],["2026-03-20",70.19],["2026-03-27",66.59],["2026-04-03",59.23],["2026-04-10",51.14],["2026-04-17",50.01],["2026-04-24",45.91],["2026-05-01",47.01],["2026-05-08",38.94],["2026-05-15",38.41],["2026-05-22",35.32],["2026-05-29",30.62],["2026-06-05",30.28],["2026-06-12",32.67],["2026-06-19",29.12],["2026-06-26",24.94],["2026-07-03",29.9],["2026-07-10",34.79],["2026-07-17",36.06],["2026-07-24",37.38],["2026-07-31",30.19],["2026-08-07",34.87],["2026-08-14",30.33],["2026-08-21",28.65],["2026-08-28",31.28],["2026-09-04",31.49],["2026-09-11",29.53],["2026-09-18",30.57]]}</script>
+<script>
+(function(){
+const CD = JSON.parse(document.getElementById('cd').textContent);
+const tip = document.getElementById('tip');
+let tipOn = false;
+function showTip(html, x, y){
+  tip.innerHTML = html; tip.style.display='block'; tipOn = true;
+  const r = tip.getBoundingClientRect();
+  let L = x + 14, T = y + 14;
+  if (L + r.width > window.innerWidth - 8) L = x - r.width - 14;
+  if (L < 8) L = 8;
+  if (T + r.height > window.innerHeight - 8) T = y - r.height - 14;
+  if (T < 8) T = 8;
+  tip.style.left = L + 'px'; tip.style.top = T + 'px';
+}
+function hideTip(){ tip.style.display='none'; tipOn=false; }
+window.addEventListener('scroll', hideTip, {passive:true});
+document.addEventListener('pointerdown', e => { if (!e.target.closest('.chart svg')) hideTip(); });
+const f1 = v => (v>0?'+':'') + v.toFixed(1) + '%';
+const fmtN = v => v.toLocaleString('ko-KR');
+const esc = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');
+
+/* ---------- pointer helper: attach hover/touch to hit rects ---------- */
+function bindHits(svg, onHit){
+  let down = false;
+  const handler = e => {
+    const t = e.target.closest('[data-hit]');
+    if (!t){ hideTip(); return; }
+    onHit(t, e);
+  };
+  svg.addEventListener('pointerdown', e => { down = true; handler(e); });
+  svg.addEventListener('pointermove', e => { if (e.pointerType === 'mouse' || down) handler(e); });
+  ['pointerup','pointercancel','pointerleave'].forEach(ev => svg.addEventListener(ev, () => { down=false; if (ev!=='pointerup') hideTip(); }));
+}
+
+/* ---------- responsive wrapper ---------- */
+function responsive(id, draw){
+  const box = document.getElementById(id); const svg = box.querySelector('svg');
+  let t;
+  const render = () => { const W = Math.max(280, Math.floor(box.clientWidth - (parseFloat(getComputedStyle(box).paddingLeft)*2))); const H = draw(svg, W); svg.setAttribute('viewBox', `0 0 ${W} ${H}`); svg.setAttribute('height', H); };
+  render();
+  new ResizeObserver(() => { clearTimeout(t); t = setTimeout(render, 120); }).observe(box);
+}
+
+/* ---------- yearly table + half table ---------- */
+const YT = CD.yearly_table;
+const years = Object.keys(YT).map(Number).filter(y => y >= 2015).sort();
+function heatStyle(v){
+  if (v == null || isNaN(v)) return '';
+  const a = Math.min(Math.abs(v)/80, 1) * 0.55 + 0.05;
+  const c = v >= 0 ? 'var(--heat-pos)' : 'var(--heat-neg)';
+  return `background:color-mix(in srgb, ${c} ${Math.round(a*100)}%, transparent)`;
+}
+function cell(v){ return v == null || isNaN(v) ? '<td class="c mut">-</td>' : `<td class="c" style="${heatStyle(v)}">${f1(v)}</td>`; }
+document.getElementById('yr-body').innerHTML = years.map(y => {
+  const r = YT[y]; const odd = y % 2 === 1;
+  return `<tr><td class="${odd?'oddc':'evenc'}">${y}${y===2026?' (9/14)':''}</td>${cell(r['하이브'])}${cell(r['JYP'])}${cell(r['에스엠'])}${cell(r['와이지'])}${cell(r['엔터평균'])}${cell(r['KOSPI'])}${cell(r['엔터-KOSPI'])}</tr>`;
+}).join('');
+const H = CD.half; const halfKeys = ['2021H1','2021H2','2022H1','2022H2','2023H1','2023H2','2024H1','2024H2','2025H1','2025H2','2026H1','2026H2'];
+document.getElementById('half-body').innerHTML = halfKeys.map(k => {
+  const y = +k.slice(0,4); const odd = y%2===1;
+  return `<tr><td class="${odd?'oddc':'evenc'}">${k}${k==='2026H2'?' (~9/14)':''}</td>${cell(H['하이브'][k])}${cell(H['JYP'][k])}${cell(H['에스엠'][k])}${cell(H['와이지'][k])}${cell(H['KOSPI'][k])}</tr>`;
+}).join('');
+
+/* ---------- Chart: yearly grouped bars ---------- */
+responsive('ch-year', (svg, W) => {
+  const narrow = W < 560;
+  const ML = narrow ? 34 : 44, MR = 8, MT = 18, MB = 30;
+  const Hh = narrow ? 250 : 320; const ph = Hh - MT - MB, pw = W - ML - MR;
+  const yMin = -50, yMax = 100;
+  const y = v => MT + (yMax - v) / (yMax - yMin) * ph;
+  const gw = pw / years.length; const bw = Math.min(narrow ? 10 : 16, gw*0.32);
+  let s = '';
+  years.forEach((yr, i) => { const x0 = ML + i*gw; s += `<rect x="${x0}" y="${MT}" width="${gw}" height="${ph}" fill="${yr%2? 'var(--odd-soft)':'var(--even-soft)'}"/>`; });
+  [-50,-25,0,25,50,75,100].forEach(v => { s += `<line class="${v===0?'axis':'grid'}" x1="${ML}" x2="${W-MR}" y1="${y(v)}" y2="${y(v)}"/><text x="${ML-4}" y="${y(v)+4}" text-anchor="end" class="mut">${v}</text>`; });
+  years.forEach((yr, i) => {
+    const r = YT[yr]; const xc = ML + i*gw + gw/2;
+    const e = r['엔터평균'], k = r['KOSPI'];
+    const bar = (v, x, fill) => { if (v==null||isNaN(v)) return ''; const top = Math.min(y(v), y(0)), h = Math.abs(y(v)-y(0)); return `<rect x="${x}" y="${top}" width="${bw}" height="${Math.max(h,1)}" fill="${fill}" rx="2"/>`; };
+    s += bar(e, xc - bw - 1, yr%2 ? 'var(--odd)' : 'var(--even)');
+    s += bar(k, xc + 1, 'var(--s4)');
+    if (e!=null) s += `<text x="${xc - 1 - bw/2}" y="${e>=0 ? y(e)-4 : y(e)+11}" text-anchor="middle" style="font-size:${narrow?9:10.5}px">${Math.round(e)}</text>`;
+    s += `<text x="${xc}" y="${Hh-10}" text-anchor="middle" class="${yr%2?'':'mut'}" style="font-size:${narrow?9.5:11}px">${narrow? String(yr).slice(2) : yr}</text>`;
+    s += `<rect data-hit="${yr}" x="${ML+i*gw}" y="${MT}" width="${gw}" height="${ph}" fill="transparent"/>`;
+  });
+  svg.innerHTML = s;
+  bindHits(svg, (t, e) => { const yr = t.dataset.hit; const r = YT[yr];
+    const row = (n,v)=> v==null||isNaN(v)?'':`${n} <b>${f1(v)}</b><br>`;
+    showTip(`<b>${yr}년${+yr%2?' (홀수)':' (짝수)'}</b><br>${row('하이브',r['하이브'])}${row('JYP',r['JYP'])}${row('에스엠',r['에스엠'])}${row('와이지',r['와이지'])}${row('엔터평균',r['엔터평균'])}${row('KOSPI',r['KOSPI'])}`, e.clientX, e.clientY); });
+  return Hh;
+});
+
+/* ---------- Chart: HYBE weekly price + relative ---------- */
+const NOTES = [
+  ['2021-11-19','사상 최고가 414,000원 (11/16)'],
+  ['2022-06-17','BTS 단체활동 잠정 중단 선언 (6/14)'],
+  ['2024-04-26','어도어 경영권 분쟁 표면화'],
+  ['2025-06-13','BTS 완전체 전역'],
+  ['2026-01-16','ARIRANG 투어 88회 발표'],
+  ['2026-02-20','52주 고점 404,500원 (2/19)'],
+  ['2026-07-31','2Q 최대 실적에도 -16% (7/29)'],
+];
+document.getElementById('px-notes').innerHTML = NOTES.map((n,i) => `<li>${n[1]}</li>`).join('');
+responsive('ch-px', (svg, W) => {
+  const narrow = W < 560;
+  const P = CD.hybe_weekly, R = CD.hybe_rel_kospi_weekly;
+  const ML = narrow ? 40 : 52, MR = 10, MT = 14, GAP = 26, MB = 24;
+  const h1 = narrow ? 200 : 260, h2 = narrow ? 90 : 120;
+  const Hh = MT + h1 + GAP + h2 + MB; const pw = W - ML - MR;
+  const t0 = new Date(P[0][0]).getTime(), t1 = new Date(P[P.length-1][0]).getTime();
+  const x = d => ML + (new Date(d).getTime() - t0)/(t1-t0) * pw;
+  const pMax = 450000, pMin = 100000; const y1 = v => MT + (pMax - v)/(pMax-pMin) * h1;
+  const rMax = 180, rMin = 0; const y2 = v => MT + h1 + GAP + (rMax - v)/(rMax-rMin) * h2;
+  let s = '';
+  // even-year bands
+  [2022, 2024, 2026].forEach(yr => { const a = Math.max(x(`${yr}-01-01`), ML), b = Math.min(x(`${yr}-12-31`), W-MR); if (b>a) s += `<rect x="${a}" y="${MT}" width="${b-a}" height="${h1+GAP+h2}" fill="var(--even-soft)"/>`; });
+  [100000,200000,300000,400000].forEach(v => { s += `<line class="grid" x1="${ML}" x2="${W-MR}" y1="${y1(v)}" y2="${y1(v)}"/><text x="${ML-4}" y="${y1(v)+4}" text-anchor="end" class="mut">${narrow? v/10000+'만' : v.toLocaleString()}</text>`; });
+  [0,50,100,150].forEach(v => { s += `<line class="${v===100?'axis':'grid'}" x1="${ML}" x2="${W-MR}" y1="${y2(v)}" y2="${y2(v)}"/><text x="${ML-4}" y="${y2(v)+4}" text-anchor="end" class="mut">${v}</text>`; });
+  for (let yr=2021; yr<=2026; yr++){ const xx = x(`${yr}-01-01`); s += `<line class="grid" x1="${xx}" x2="${xx}" y1="${MT}" y2="${MT+h1+GAP+h2}" stroke-dasharray="2 3"/><text x="${xx+3}" y="${Hh-8}" class="${yr%2?'':'mut'}">${yr}</text>`; }
+  const path = P.map((p,i) => (i?'L':'M') + x(p[0]).toFixed(1) + ' ' + y1(p[1]).toFixed(1)).join('');
+  s += `<path d="${path}L${x(P[P.length-1][0]).toFixed(1)} ${y1(pMin)}L${x(P[0][0]).toFixed(1)} ${y1(pMin)}Z" fill="var(--odd)" opacity=".08"/>`;
+  s += `<path d="${path}" fill="none" stroke="var(--odd)" stroke-width="2" stroke-linejoin="round"/>`;
+  const rp = R.map((p,i) => (i?'L':'M') + x(p[0]).toFixed(1) + ' ' + y2(Math.min(p[1], rMax)).toFixed(1)).join('');
+  s += `<path d="${rp}" fill="none" stroke="var(--accent)" stroke-width="1.8"/>`;
+  s += `<text x="${ML+4}" y="${MT+12}" class="lab" style="font-size:11.5px;font-weight:700">주간 종가 (원)</text>`;
+  s += `<text x="${ML+4}" y="${MT+h1+GAP-8}" class="lab" style="font-size:11.5px;font-weight:700">하이브 ÷ KOSPI (상장일=100)</text>`;
+  // last point
+  const lp = P[P.length-1]; s += `<circle cx="${x(lp[0])}" cy="${y1(lp[1])}" r="4" fill="var(--odd)" stroke="var(--surface)" stroke-width="2"/>`;
+  s += `<text x="${x(lp[0])+2}" y="${y1(lp[1])+18}" text-anchor="end" class="lab" style="font-size:11px;font-weight:700">${lp[1].toLocaleString()}</text>`;
+  const lr = R[R.length-1]; s += `<circle cx="${x(lr[0])}" cy="${y2(Math.min(lr[1],rMax))}" r="3.5" fill="var(--accent)" stroke="var(--surface)" stroke-width="2"/><text x="${x(lr[0])-6}" y="${y2(Math.min(lr[1],rMax))-6}" text-anchor="end" class="lab" style="font-size:11px">${lr[1].toFixed(0)}</text>`;
+  // annotations
+  NOTES.forEach((n, i) => { const xx = x(n[0]); const pt = P.reduce((a,p)=> Math.abs(new Date(p[0])-new Date(n[0])) < Math.abs(new Date(a[0])-new Date(n[0])) ? p : a, P[0]);
+    const yy = y1(pt[1]); s += `<circle cx="${xx}" cy="${yy}" r="${narrow?8:9}" fill="var(--surface)" stroke="var(--ink)" stroke-width="1.2"/><text x="${xx}" y="${yy+3.5}" text-anchor="middle" class="lab" style="font-size:${narrow?9.5:10.5}px;font-weight:700">${i+1}</text>`; });
+  // hit overlay + crosshair
+  s += `<g id="px-cross"></g><rect data-hit="px" x="${ML}" y="${MT}" width="${pw}" height="${h1+GAP+h2}" fill="transparent"/>`;
+  svg.innerHTML = s;
+  const cross = svg.querySelector('#px-cross');
+  bindHits(svg, (t, e) => {
+    const rect = svg.getBoundingClientRect(); const px = (e.clientX - rect.left) * (W / rect.width);
+    const tt = t0 + (px - ML)/pw * (t1 - t0); if (tt < t0 || tt > t1){ hideTip(); cross.innerHTML=''; return; }
+    let bi = 0; for (let i=0;i<P.length;i++){ if (new Date(P[i][0]).getTime() <= tt) bi = i; }
+    const p = P[bi], r = R[bi] || R[R.length-1]; const xx = x(p[0]);
+    cross.innerHTML = `<line x1="${xx}" x2="${xx}" y1="${MT}" y2="${MT+h1+GAP+h2}" stroke="var(--ink)" stroke-width="1" stroke-dasharray="3 3"/><circle cx="${xx}" cy="${y1(p[1])}" r="4" fill="var(--odd)" stroke="var(--surface)" stroke-width="2"/>`;
+    showTip(`<b>${p[0]}</b><br>종가 ${p[1].toLocaleString()}원<br>대KOSPI 상대 ${r[1].toFixed(0)}`, e.clientX, e.clientY);
+  });
+  ['pointerleave','pointerup','pointercancel'].forEach(ev => svg.addEventListener(ev, () => { cross.innerHTML=''; }));
+  return Hh;
+});
+
+/* ---------- Chart: quarterly stacked revenue + OP ---------- */
+const Q = ['1Q24','2Q24','3Q24','4Q24','1Q25','2Q25','3Q25','4Q25','1Q26','2Q26','3Q26E','4Q26E'];
+const REV = [360.9,640.5,527.8,726.4,500.6,705.6,727.2,716.4,698.3,1450.0,1279.2,1090.1];
+const ALB = [145.1,249.6,214.5,251.8,136.5,228.6,189.8,218.0,271.5,326.8,186.6,264.0];
+const CON = [44.0,144.0,74.0,188.9,155.2,188.7,245.0,175.1,88.7,647.7,645.6,398.3];
+const MD  = [60.7,109.1,99.1,151.2,106.4,152.9,168.3,142.9,137.4,310.6,288.2,223.4];
+const OP  = [14.4,50.9,54.2,64.6,21.6,65.9,-42.2,4.6,-196.6,170.9,128.3,123.8];
+responsive('ch-q', (svg, W) => {
+  const narrow = W < 560;
+  const ML = narrow ? 36 : 46, MR = 8, MT = 14, GAP = 28, MB = 26;
+  const h1 = narrow ? 190 : 240, h2 = narrow ? 90 : 120;
+  const Hh = MT + h1 + GAP + h2 + MB; const pw = W - ML - MR;
+  const gw = pw / Q.length; const bw = Math.min(gw*0.62, 40);
+  const rMax = 1500; const y1 = v => MT + (rMax - v)/rMax * h1;
+  const oMax = 200, oMin = -260; const y2 = v => MT + h1 + GAP + (oMax - v)/(oMax-oMin) * h2;
+  let s = '';
+  [0,500,1000,1500].forEach(v => { s += `<line class="${v?'grid':'axis'}" x1="${ML}" x2="${W-MR}" y1="${y1(v)}" y2="${y1(v)}"/><text x="${ML-4}" y="${y1(v)+4}" text-anchor="end" class="mut">${v?v.toLocaleString():0}</text>`; });
+  [-200,-100,0,100,200].forEach(v => { s += `<line class="${v===0?'axis':'grid'}" x1="${ML}" x2="${W-MR}" y1="${y2(v)}" y2="${y2(v)}"/><text x="${ML-4}" y="${y2(v)+4}" text-anchor="end" class="mut">${v}</text>`; });
+  Q.forEach((q, i) => {
+    const x0 = ML + i*gw + (gw-bw)/2; const oth = REV[i] - ALB[i] - CON[i] - MD[i];
+    const segs = [[ALB[i],'var(--odd)'],[CON[i],'var(--even)'],[MD[i],'var(--s3)'],[oth,'var(--s4)']];
+    let acc = 0;
+    segs.forEach(([v,c]) => { const top = y1(acc+v), h = y1(acc) - y1(acc+v); s += `<rect x="${x0}" y="${top+1}" width="${bw}" height="${Math.max(h-2,0)}" fill="${c}" opacity="${q.endsWith('E')?.55:1}"/>`; acc += v; });
+    s += `<text x="${x0+bw/2}" y="${y1(REV[i])-4}" text-anchor="middle" style="font-size:${narrow?8.5:10}px">${narrow? Math.round(REV[i]) : REV[i].toLocaleString(undefined,{maximumFractionDigits:0})}</text>`;
+    const o = OP[i]; const top = Math.min(y2(o), y2(0)), h = Math.abs(y2(o)-y2(0));
+    s += `<rect x="${x0}" y="${top}" width="${bw}" height="${Math.max(h,1)}" fill="${o>=0?'var(--odd)':'var(--neg)'}" opacity="${q.endsWith('E')?.55:1}" rx="2"/>`;
+    s += `<text x="${x0+bw/2}" y="${o>=0? y2(o)-3 : y2(o)+10}" text-anchor="middle" style="font-size:${narrow?8.5:10}px">${o.toFixed(0)}</text>`;
+    s += `<text x="${x0+bw/2}" y="${Hh-8}" text-anchor="middle" class="mut" style="font-size:${narrow?8.5:10.5}px">${narrow? q.replace('Q','Q').replace('E','') : q}</text>`;
+    s += `<rect data-hit="${i}" x="${ML+i*gw}" y="${MT}" width="${gw}" height="${h1+GAP+h2}" fill="transparent"/>`;
+  });
+  s += `<text x="${ML+4}" y="${MT+11}" class="lab" style="font-size:11.5px;font-weight:700">매출 (십억원)</text>`;
+  s += `<text x="${ML+4}" y="${MT+h1+GAP-9}" class="lab" style="font-size:11.5px;font-weight:700">영업이익 (십억원)</text>`;
+  svg.innerHTML = s;
+  bindHits(svg, (t, e) => { const i = +t.dataset.hit; const oth = REV[i]-ALB[i]-CON[i]-MD[i];
+    showTip(`<b>${Q[i]}</b><br>매출 ${REV[i].toLocaleString()}<br>음반/음원 ${ALB[i]} · 공연 ${CON[i]}<br>MD ${MD[i]} · 기타 ${oth.toFixed(1)}<br>영업이익 <b>${OP[i]}</b> (OPM ${(OP[i]/REV[i]*100).toFixed(1)}%)`, e.clientX, e.clientY); });
+  return Hh;
+});
+
+/* ---------- Chart: BTS tour by quarter ---------- */
+const BTS = [['2Q26',24,141.2,'아시아 3·북미 5·마드리드'],['3Q26',24,164.0,'유럽 4·북미 7'],['4Q26',29,163.2,'남미 5·아시아 5'],['1Q27',9,55.2,'멜버른·시드니·홍콩·불라칸 (+일본·중동)']];
+responsive('ch-bts', (svg, W) => {
+  const narrow = W < 560; const ML = narrow ? 36 : 44, MR = 8, MT = 12, MB = 40; const Hh = narrow?200:230; const ph = Hh-MT-MB, pw = W-ML-MR;
+  const gw = pw/4, bw = Math.min(gw*0.5, 70); const mx = 200; const y = v => MT + (mx-v)/mx*ph;
+  let s='';
+  [0,50,100,150,200].forEach(v => { s += `<line class="${v?'grid':'axis'}" x1="${ML}" x2="${W-MR}" y1="${y(v)}" y2="${y(v)}"/><text x="${ML-4}" y="${y(v)+4}" text-anchor="end" class="mut">${v}</text>`; });
+  BTS.forEach((b,i) => { const x0 = ML + i*gw + (gw-bw)/2;
+    s += `<rect x="${x0}" y="${y(b[2])}" width="${bw}" height="${y(0)-y(b[2])}" fill="var(--odd)" rx="3" opacity="${i===3?.55:1}"/>`;
+    s += `<text x="${x0+bw/2}" y="${y(b[2])-5}" text-anchor="middle" class="lab" style="font-size:11.5px;font-weight:700">${b[2].toFixed(0)}만</text>`;
+    s += `<text x="${x0+bw/2}" y="${Hh-22}" text-anchor="middle" class="lab" style="font-size:11.5px">${b[0]} · ${b[1]}회</text>`;
+    s += `<text x="${x0+bw/2}" y="${Hh-8}" text-anchor="middle" class="mut" style="font-size:${narrow?8.5:10}px">${narrow? b[3].split(' (')[0] : b[3]}</text>`;
+    s += `<rect data-hit="${i}" x="${ML+i*gw}" y="${MT}" width="${gw}" height="${ph}" fill="transparent"/>`; });
+  svg.innerHTML = s;
+  bindHits(svg, (t,e)=>{ const b = BTS[+t.dataset.hit]; showTip(`<b>${b[0]}</b> ${b[1]}회 · 약 ${b[2]}만명<br>${b[3]}<br>회당 ${(b[2]*10000/b[1]).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g,',')}명`, e.clientX, e.clientY); });
+  return Hh;
+});
+
+/* ---------- Chart: Gantt pipeline ---------- */
+const G0 = new Date('2026-07-01').getTime(), G1 = new Date('2027-03-31').getTime();
+const GROWS = [
+  {n:'BTS', c:'var(--odd)', bars:[['2026-07-01','2026-09-06','유럽·북미 24회'],['2026-10-02','2026-12-29','남미·아시아 29회'],['2027-02-10','2027-03-16','9회+']], al:[]},
+  {n:'세븐틴', c:'var(--even)', bars:[['2027-01-01','2027-03-31','4명 전역 → 2Q 8인 활동']], al:[['2026-08-03','디노·피철인'],['2026-10-15','정한×조슈아 (10월)']]},
+  {n:'엔하이픈', c:'var(--even)', bars:[['2026-07-04','2026-08-01','미주 10회'],['2026-10-16','2026-12-27','아시아 7회'],['2027-01-02','2027-03-14','아시아·유럽 11회']], al:[['2026-08-21','미니 8집']]},
+  {n:'르세라핌', c:'var(--even)', bars:[['2026-07-11','2026-09-30','한·일·미 19회'],['2026-10-02','2026-12-06','미·유럽·아시아 15회']], al:[['2026-09-11','싱글'],['2026-11-15','신보 4Q(미정)']]},
+  {n:'보이넥스트도어', c:'var(--even)', bars:[['2026-07-12','2026-09-26','한·일 16회'],['2026-10-10','2026-12-26','일·미·멕시코·자카르타 14회'],['2027-01-09','2027-01-30','아시아 4회']], al:[['2026-09-28','리패키지'],['2026-11-20','미니 6집 4Q(미정)']]},
+  {n:'TXT', c:'var(--even)', bars:[], al:[['2026-08-19','일본 싱글 5집'],['2026-11-10','미니 9집 4Q(미정)']]},
+  {n:'투어스', c:'var(--even)', bars:[['2026-08-28','2026-10-24','아시아 13회']], al:[['2026-08-04','일본 싱글 2집']]},
+  {n:'아일릿', c:'var(--even)', bars:[['2026-07-18','2026-08-22','고베·도쿄·홍콩 6회'],['2026-10-17','2026-12-27','앙코르 6회']], al:[['2026-07-29','일본 싱글 2집'],['2026-09-20','미니 5집 3Q(미정)']]},
+  {n:'&TEAM', c:'var(--even)', bars:[['2026-07-04','2026-08-22','아시아 7회']], al:[['2026-09-08','한국 미니 2집']]},
+  {n:'코르티스', c:'var(--s3)', bars:[['2026-07-18','2026-09-06','한·일·북미 14회']], al:[['2026-07-31','MOTION'],['2026-11-25','미니 3집 4Q(미정)']]},
+  {n:'캣츠아이', c:'var(--s3)', bars:[['2026-09-01','2026-09-17','유럽 9회'],['2026-10-13','2026-11-28','북미 22회']], al:[['2026-08-14','WILD']]},
+  {n:'튜이드', c:'var(--s4)', bars:[], al:[['2026-09-10','데뷔 (ABD)']]},
+  {n:'Saint Satine', c:'var(--s4)', bars:[], al:[['2026-12-01','데뷔 예정 (2H26)']]},
+  {n:'뉴진스', c:'var(--s4)', bars:[], al:[['2026-12-15','컴백 관측 (미정)']]},
+];
+responsive('ch-gantt', (svg, W) => {
+  const narrow = W < 560; const ML = narrow ? 74 : 104, MR = 8, MT = 26, RH = narrow ? 26 : 30;
+  const Hh = MT + GROWS.length*RH + 10; const pw = W - ML - MR;
+  const x = d => ML + (new Date(d).getTime() - G0)/(G1-G0) * pw;
+  let s = '';
+  const months = []; for (let m=0;m<9;m++){ const d = new Date(2026,6+m,1); months.push(d); }
+  months.forEach((d,i) => { const xx = x(d); const nx = i<8 ? x(months[i+1]) : W-MR;
+    if (d.getFullYear()===2027) s += `<rect x="${xx}" y="${MT-4}" width="${nx-xx}" height="${Hh-MT}" fill="var(--odd-soft)"/>`;
+    s += `<line class="grid" x1="${xx}" x2="${xx}" y1="${MT-4}" y2="${Hh-6}"/><text x="${xx+3}" y="${MT-10}" class="mut" style="font-size:${narrow?9.5:10.5}px">${d.getFullYear()===2027&&d.getMonth()===0?"'27.":''}${d.getMonth()+1}월</text>`; });
+  GROWS.forEach((r,i) => { const yc = MT + i*RH + RH/2;
+    s += `<line class="grid" x1="${ML}" x2="${W-MR}" y1="${MT+i*RH+RH}" y2="${MT+i*RH+RH}"/>`;
+    s += `<text x="${ML-6}" y="${yc+4}" text-anchor="end" class="lab" style="font-size:${narrow?10.5:12}px;font-weight:600">${esc(r.n)}</text>`;
+    const hasBar = r.bars.length > 0;
+    r.bars.forEach(b => { const a = x(b[0]), e = Math.min(x(b[1]), W-MR); const bwid = Math.max(e-a,4);
+      s += `<rect data-hit="${r.n}|${b[2]}|${b[0]}~${b[1]}" x="${a}" y="${yc-7}" width="${bwid}" height="14" fill="${r.c}" rx="3"/>`;
+      const need = b[2].length * 6.6 + 10;
+      if (!narrow && bwid > need) s += `<text x="${a+5}" y="${yc+4}" style="font-size:10px;fill:#fff;pointer-events:none">${esc(b[2])}</text>`; });
+    r.al.forEach(a => { const xx = x(a[0]); const yd = hasBar ? yc - 10 : yc; const rr = hasBar ? 5 : 7;
+      s += `<polygon data-hit="${r.n}|${a[1]}|${a[0]}" points="${xx},${yd-rr} ${xx+rr},${yd} ${xx},${yd+rr} ${xx-rr},${yd}" fill="${r.c}" stroke="var(--surface)" stroke-width="1.5"/>`;
+      if (!narrow && !hasBar) s += `<text x="${xx+10}" y="${yc+4}" style="font-size:10px">${esc(a[1])}</text>`; });
+  });
+  svg.innerHTML = s;
+  bindHits(svg, (t,e) => { const [n,l,d] = t.dataset.hit.split('|'); showTip(`<b>${esc(n)}</b><br>${esc(l)}<br>${d}`, e.clientX, e.clientY); });
+  return Hh;
+});
+
+/* ---------- Chart: album sales small multiples ---------- */
+const A25 = [['세븐틴',296.7],['엔하이픈',244.4],['보이넥스트도어',141.3],['진 (BTS)',83.8],['투어스',63.4]];
+const A26 = [['코르티스',300.9],['TXT',198.9],['투어스',133.7],['&TEAM',127.8],['보이넥스트도어',126.6]];
+responsive('ch-album', (svg, W) => {
+  const narrow = W < 560; const cols = narrow ? 1 : 2; const cw = (W - (cols-1)*20)/cols; const LW = narrow ? 92 : 104; const RH = 24; const mx = 320;
+  const panel = (data, title, ox, oy) => { let s = `<text x="${ox}" y="${oy+12}" class="lab" style="font-size:12.5px;font-weight:700">${title}</text>`;
+    data.forEach((d,i) => { const yy = oy + 24 + i*RH; const bw = (cw - LW - 46) * d[1]/mx;
+      s += `<text x="${ox+LW-8}" y="${yy+15}" text-anchor="end" class="lab" style="font-size:11px">${esc(d[0])}</text><rect data-hit="${d[0]}|${d[1]}" x="${ox+LW}" y="${yy+3}" width="${bw}" height="16" fill="${title.includes('2026')?'var(--s3)':'var(--s4)'}" rx="3"/><text x="${ox+LW+bw+5}" y="${yy+15}" style="font-size:11px">${d[1]}</text>`; });
+    return s; };
+  let s = panel(A25, '2Q25 · 총 937만장', 0, 0);
+  s += panel(A26, '2Q26 · 총 1,114만장', cols===2 ? cw+20 : 0, cols===2 ? 0 : 24+5*RH+16);
+  svg.innerHTML = s;
+  bindHits(svg, (t,e)=>{ const [n,v] = t.dataset.hit.split('|'); showTip(`<b>${esc(n)}</b> ${v}만장`, e.clientX, e.clientY); });
+  return cols===2 ? 24+5*RH+8 : 2*(24+5*RH)+24;
+});
+
+/* ---------- Chart: Spotify listeners ---------- */
+const SP = [['BTS',3653],['캣츠아이',3502],['아일릿',2170],['르세라핌',2110],['뉴진스',1410],['코르티스',1290],['엔하이픈',870],['TXT',590],['세븐틴',470]];
+responsive('ch-spot', (svg, W) => {
+  const narrow = W < 560; const LW = narrow ? 70 : 90; const RH = 22; const mx = 4000; const pw = W - LW - 52;
+  let s = ''; SP.forEach((d,i) => { const yy = i*RH; const bw = pw * d[1]/mx; const c = ['BTS','세븐틴','엔하이픈','TXT','르세라핌','뉴진스','아일릿'].includes(d[0]) ? (d[0]==='BTS' ? 'var(--odd)' : 'var(--even)') : 'var(--s3)';
+    s += `<text x="${LW-8}" y="${yy+15}" text-anchor="end" class="lab" style="font-size:11px">${esc(d[0])}</text><rect data-hit="${d[0]}|${d[1]}" x="${LW}" y="${yy+3}" width="${bw}" height="15" fill="${c}" rx="3"/><text x="${LW+bw+5}" y="${yy+15}" style="font-size:11px">${d[1].toLocaleString()}</text>`; });
+  svg.innerHTML = s;
+  bindHits(svg, (t,e)=>{ const [n,v] = t.dataset.hit.split('|'); showTip(`<b>${esc(n)}</b> 월간 청취자 ${(+v).toLocaleString()}만명`, e.clientX, e.clientY); });
+  return SP.length*RH + 4;
+});
+})();
+</script>
+</body>
+</html>

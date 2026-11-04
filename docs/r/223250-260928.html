@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<title>드림씨아이에스 기업리포트</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@600;700&family=Noto+Sans+KR:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+:root{
+  color-scheme:light;
+  --bg:#F3F4F7; --surface:#FFFFFF; --surface2:#F7F8FB; --surface3:#E9EBF2;
+  --ink:#15172B; --ink2:#454A61; --muted:#737A90;
+  --line:#D8DCE6; --line2:#BFC5D3;
+  --accent:#1F5F8B; --accent-soft:#E3EEF7;
+  --pos:#1B6E52; --neg:#B23A2C;
+  --c1:#1F5F8B; --c2:#E8792B; --c3:#1baf7a; --c4:#8B93A7; --c5:#7B4FB3;
+  --c1-soft:rgba(31,95,139,.12); --c2-soft:rgba(232,121,43,.14);
+  --shadow:0 1px 2px rgba(21,23,43,.06), 0 10px 28px rgba(21,23,43,.06);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#0F1118; --surface:#171A24; --surface2:#1D2130; --surface3:#252A3B;
+    --ink:#ECEEF5; --ink2:#B4BACB; --muted:#8D94A8;
+    --line:#2A2F40; --line2:#3B4155;
+    --accent:#7FB5E0; --accent-soft:#1E2E3E;
+    --pos:#4FB58C; --neg:#E07A5F;
+    --c1:#5B9BD5; --c2:#F08A3E; --c3:#2BC48E; --c4:#7C8499; --c5:#A283D6;
+    --c1-soft:rgba(91,155,213,.16); --c2-soft:rgba(240,138,62,.18);
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 28px rgba(0,0,0,.3);
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#0F1118; --surface:#171A24; --surface2:#1D2130; --surface3:#252A3B;
+  --ink:#ECEEF5; --ink2:#B4BACB; --muted:#8D94A8;
+  --line:#2A2F40; --line2:#3B4155;
+  --accent:#7FB5E0; --accent-soft:#1E2E3E;
+  --pos:#4FB58C; --neg:#E07A5F;
+  --c1:#5B9BD5; --c2:#F08A3E; --c3:#2BC48E; --c4:#7C8499; --c5:#A283D6;
+  --c1-soft:rgba(91,155,213,.16); --c2-soft:rgba(240,138,62,.18);
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 28px rgba(0,0,0,.3);
+}
+html{color-scheme:light dark}
+*{box-sizing:border-box}
+body{margin:0; background:var(--bg); color:var(--ink);
+  font-family:"Noto Sans KR","Malgun Gothic",system-ui,sans-serif; font-size:15.5px; line-height:1.75;
+  -webkit-text-size-adjust:100%}
+img{max-width:100%} [hidden]{display:none!important}
+.mono{font-family:"IBM Plex Mono","Consolas",ui-monospace,monospace; font-variant-numeric:tabular-nums}
+.serif{font-family:"Noto Serif KR","Noto Serif","Batang",serif}
+.wrap{max-width:920px; margin:0 auto; padding:0 22px 90px}
+a{color:var(--accent)}
+p{margin:0 0 14px} .lede{font-size:16.5px; color:var(--ink2)}
+ul,ol{margin:0 0 14px; padding-left:20px} li{margin-bottom:7px}
+strong,b{font-weight:700}
+.small{font-size:13px; color:var(--muted); line-height:1.6}
+.pos{color:var(--pos)} .neg{color:var(--neg)}
+
+.mast{background:var(--surface); border-bottom:1px solid var(--line)}
+.mast-in{max-width:920px; margin:0 auto; padding:34px 22px 26px}
+.eyebrow{font-family:"IBM Plex Mono",monospace; font-size:11.5px; letter-spacing:.06em; color:var(--muted)}
+h1{font-family:"Noto Serif KR",serif; font-size:clamp(30px,6.6vw,48px); line-height:1.18; margin:.3em 0 .15em; font-weight:700; letter-spacing:-.015em; text-wrap:balance}
+h1 .em{color:var(--accent)}
+.sub{color:var(--ink2); font-size:15.5px; max-width:64ch; margin:.4em 0 0}
+.tickerline{display:flex; flex-wrap:wrap; gap:6px 16px; align-items:baseline; margin-top:14px; font-family:"IBM Plex Mono",monospace; font-size:12.5px; color:var(--muted)}
+.tickerline b{color:var(--ink); font-weight:600}
+.stats{display:grid; grid-template-columns:repeat(auto-fit,minmax(138px,1fr)); gap:1px; background:var(--line); border:1px solid var(--line); margin-top:24px}
+.stat{background:var(--surface); padding:13px 14px 14px; min-width:0}
+.stat .k{font-family:"IBM Plex Mono",monospace; font-size:11px; letter-spacing:.02em; color:var(--muted)}
+.stat .v{font-family:"IBM Plex Mono",monospace; font-weight:600; font-size:clamp(19px,4.6vw,24px); line-height:1.25; margin-top:5px; overflow-wrap:anywhere}
+.stat .n{font-size:11.5px; color:var(--muted); margin-top:2px; line-height:1.4}
+.toc{display:flex; flex-wrap:wrap; gap:8px; margin:22px 0 0}
+.toc a{font-size:12.5px; text-decoration:none; color:var(--ink2); background:var(--surface); border:1px solid var(--line); padding:5px 11px; border-radius:999px}
+.toc a:hover{border-color:var(--accent); color:var(--accent)}
+
+section{margin-top:56px; scroll-margin-top:16px}
+.sec-h{display:flex; gap:14px; align-items:baseline; border-bottom:2px solid var(--ink); padding-bottom:9px; margin-bottom:20px}
+.sec-n{font-family:"IBM Plex Mono",monospace; font-size:12px; font-weight:600; color:var(--accent); letter-spacing:.06em; padding-top:4px}
+.sec-h h2{margin:0; font-family:"Noto Serif KR",serif; font-size:clamp(20px,4.2vw,26px); font-weight:700; letter-spacing:-.01em; text-wrap:balance; flex:1; min-width:0}
+h3{font-size:17px; font-weight:700; margin:32px 0 8px; letter-spacing:-.01em}
+h4{font-size:14.5px; font-weight:700; margin:20px 0 6px; color:var(--ink2)}
+
+.take{border-left:3px solid var(--accent); background:var(--surface2); padding:14px 16px; margin:18px 0; font-size:14.5px}
+.take .lbl{font-family:"IBM Plex Mono",monospace; font-size:11px; letter-spacing:.03em; color:var(--accent); display:block; margin-bottom:5px; font-weight:600}
+.take p:last-child{margin-bottom:0}
+.keypoints{display:grid; gap:1px; background:var(--line); border:1px solid var(--line); margin:22px 0}
+.kp{background:var(--surface); padding:15px 17px; display:grid; grid-template-columns:30px 1fr; gap:12px}
+.kp .num{font-family:"IBM Plex Mono",monospace; font-size:12px; color:var(--accent); font-weight:600; padding-top:3px}
+.kp .txt{min-width:0} .kp .t{font-weight:700; margin-bottom:2px} .kp .d{font-size:14px; color:var(--ink2)}
+.grid2{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:16px 0}
+.pane{background:var(--surface); border:1px solid var(--line); padding:14px 16px; min-width:0}
+.pane h4{margin-top:0}
+.pane.yes{border-top:3px solid var(--pos)} .pane.no{border-top:3px solid var(--neg)}
+.pane ul{margin-bottom:0; padding-left:18px} .pane li{font-size:14px; margin-bottom:6px}
+
+.vc{display:grid; grid-template-columns:repeat(6,1fr); gap:6px; margin:16px 0}
+.vc .c{background:var(--surface); border:1px solid var(--line); padding:10px 9px; font-size:12.5px; line-height:1.45; min-width:0}
+.vc .c b{display:block; font-size:13px; margin-bottom:3px}
+.vc .c.me{border:2px solid var(--accent); background:var(--accent-soft)}
+.vc .c .who{color:var(--muted); font-size:11.5px; margin-top:4px}
+
+.tbl-scroll{overflow-x:auto; margin:16px -22px 20px; padding:0 22px; -webkit-overflow-scrolling:touch}
+table{border-collapse:collapse; width:100%; min-width:560px; font-size:13.5px}
+caption{caption-side:top; text-align:left; font-family:"IBM Plex Mono",monospace; font-size:11.5px; letter-spacing:.02em; color:var(--muted); padding-bottom:8px}
+th,td{padding:8px 10px; border-bottom:1px solid var(--line); text-align:left; vertical-align:top}
+th.num,td.num{text-align:right; white-space:nowrap; font-family:"IBM Plex Mono",monospace; font-variant-numeric:tabular-nums}
+thead th{border-bottom:1.5px solid var(--line2); font-weight:600; color:var(--ink2); font-size:12.5px}
+tbody tr:hover{background:var(--surface2)}
+tfoot td{border-top:1.5px solid var(--line2); font-weight:600}
+td.hl{background:var(--accent-soft)}
+tr.sum td{font-weight:700; background:var(--surface2)}
+.tnote{font-size:12.5px; color:var(--muted); margin-top:-10px; margin-bottom:16px; line-height:1.55}
+.bar{display:inline-block; height:9px; background:var(--c1); vertical-align:middle; border-radius:2px; margin-right:6px}
+.bar.o{background:var(--c2)}
+
+.chart{background:var(--surface); border:1px solid var(--line); padding:14px 14px 10px; margin:16px 0 8px}
+.chart .ct{font-weight:700; font-size:14.5px; margin:0 0 2px}
+.chart .cs{font-size:12.5px; color:var(--muted); margin:0 0 8px}
+.chart svg{display:block; width:100%; height:auto; touch-action:pan-y}
+.chart text{font-family:"IBM Plex Mono",monospace; font-size:11px; fill:var(--ink2)}
+.chart text.lab{font-family:"Noto Sans KR",sans-serif; fill:var(--ink)}
+.chart text.mut{fill:var(--muted)}
+.chart .grid{stroke:var(--line); stroke-width:1}
+.chart .axis{stroke:var(--line2); stroke-width:1}
+.legend{display:flex; flex-wrap:wrap; gap:6px 16px; font-size:12px; color:var(--ink2); margin:6px 0 4px}
+.legend i{display:inline-block; width:12px; height:12px; border-radius:2px; vertical-align:-1px; margin-right:6px}
+.tip{position:fixed; z-index:50; pointer-events:none; background:var(--ink); color:var(--bg); font-size:12px; line-height:1.5; padding:7px 10px; border-radius:4px; max-width:min(260px,calc(100vw - 20px)); box-shadow:var(--shadow); display:none; font-family:"IBM Plex Mono",monospace}
+.tip b{font-weight:600}
+
+.risk{display:grid; gap:10px; margin:14px 0}
+.risk .r{display:grid; grid-template-columns:64px 1fr; gap:12px; background:var(--surface); border:1px solid var(--line); padding:12px 14px}
+.chip{font-family:"IBM Plex Mono",monospace; font-size:10.5px; letter-spacing:.08em; padding:3px 7px; border-radius:3px; display:inline-block; text-align:center; align-self:start; white-space:nowrap}
+.chip.h{background:var(--neg); color:#fff} .chip.m{background:var(--c2); color:#fff} .chip.l{background:var(--c4); color:#fff} .chip.u{background:var(--pos); color:#fff}
+.risk .t{font-weight:700} .risk .d{font-size:14px; color:var(--ink2)}
+
+.qs{display:grid; gap:12px; margin:16px 0}
+.q{background:var(--surface); border:1px solid var(--line); border-left:4px solid var(--accent); padding:13px 16px}
+.q .qh{display:flex; gap:10px; align-items:baseline}
+.q .qn{font-family:"IBM Plex Mono",monospace; font-size:12px; color:var(--accent); font-weight:600}
+.q .qt{font-weight:700; font-size:15px}
+.q .why{font-size:13.5px; color:var(--ink2); margin:6px 0 0}
+.q .why b{color:var(--ink)}
+.tl{list-style:none; padding:0; margin:14px 0}
+.tl li{display:grid; grid-template-columns:96px 1fr; gap:12px; padding:8px 0; border-bottom:1px solid var(--line); font-size:14px}
+.tl .d{font-family:"IBM Plex Mono",monospace; font-size:12px; color:var(--muted); padding-top:3px}
+.check li{margin-bottom:9px}
+.src{font-size:12.5px; color:var(--muted); line-height:1.6} .src li{margin-bottom:4px}
+.foot{margin-top:60px; padding-top:18px; border-top:1px solid var(--line); font-size:12.5px; color:var(--muted); line-height:1.6}
+
+@media (max-width:620px){
+  body{font-size:14.5px}
+  .wrap{padding:0 14px 70px} .mast-in{padding:26px 14px 20px}
+  table{min-width:0; font-size:12.5px} th,td{padding:7px 7px}
+  .tbl-scroll{margin:14px -14px 18px; padding:0 14px}
+  .grid2{grid-template-columns:1fr}
+  .vc{grid-template-columns:repeat(2,1fr)}
+  .risk .r{grid-template-columns:56px 1fr}
+  .kp{grid-template-columns:24px 1fr; gap:9px}
+  .chart{padding:12px 10px 8px}
+  .tl li{grid-template-columns:78px 1fr}
+  .bar{display:none}
+}
+@media (max-width:400px){
+  .wrap{padding:0 11px 60px} .mast-in{padding:22px 11px 18px}
+  .tbl-scroll{margin:14px -11px 18px; padding:0 11px}
+  .stats{grid-template-columns:repeat(2,1fr)}
+}
+@media (prefers-reduced-motion:reduce){ *{transition:none!important; animation:none!important} }
+</style>
+</head>
+<body>
+<div class="tip" id="tip"></div>
+<header class="mast"><div class="mast-in">
+  <div class="eyebrow">기업리포트 · 드림씨아이에스 223250 · 2026-09-28 · 기준가 9/23 KRX 종가</div>
+  <h1 class="serif">드림씨아이에스, <span class="em">본업은 나아졌고 순이익은 남의 주가가 정한다</span></h1>
+  <p class="sub">국내 임상시험수탁(CRO) 매출 1위, 중국 타이거메드의 한국 자회사다. 상반기 본사 영업이익은 44.5억으로 74% 늘었는데 연결 순이익은 47억 적자다. 차이는 세 군데서 나온다. 적자로 돌아선 자회사, 보유한 지투지바이오 주식의 평가손실, 작년 9월에 찍은 전환사채다. DART 정기보고서 6개년과 상장 당시 투자설명서, 수시공시, 전용 증권사 리포트와 회사 IR 자료 16건, 다른 회사·산업 리포트 113건의 본문 언급, 웹 자료를 대조해 확인된 것과 확인되지 않은 것을 나눴다.</p>
+  <div class="tickerline"><span>종가 <b>3,290원</b> (9/23)</span><span>시가총액 <b>809억</b></span><span>발행주식 <b>2,460만주</b></span><span>순현금 <b>약 199억</b></span><span>PBR <b>1.08배</b></span><span>외국인 <b>49.7%</b></span></div>
+  <div class="stats">
+    <div class="stat"><div class="k">52주 고점 대비</div><div class="v neg">-61.9%</div><div class="n">8,640원 (5/11 장중)</div></div>
+    <div class="stat"><div class="k">1H26 연결 매출</div><div class="v">374억</div><div class="n">+21.6% YoY. 2Q 200억</div></div>
+    <div class="stat"><div class="k">1H26 영업이익</div><div class="v">28.1억</div><div class="n">연결 -1.2%. 별도는 44.5억(+73.6%)</div></div>
+    <div class="stat"><div class="k">1H26 순이익</div><div class="v neg">-47.1억</div><div class="n">주식 평가손실 58.5억 포함</div></div>
+    <div class="stat"><div class="k">수주잔고</div><div class="v">2,515억</div><div class="n">6월 말. 2025년 매출의 3.8배</div></div>
+    <div class="stat"><div class="k">잠재 주식</div><div class="v">22.1%</div><div class="n">전환사채 390만주 + 스톡옵션 153만주</div></div>
+  </div>
+  <nav class="toc">
+    <a href="#s1">한 장 요약</a><a href="#s2">바로잡을 숫자</a><a href="#s3">주가</a><a href="#s4">비즈니스 모델</a><a href="#s5">실적 추이</a><a href="#s6">상반기 해부</a><a href="#s7">수주잔고</a><a href="#s8">자회사·투자자산</a><a href="#s9">산업</a><a href="#s10">경쟁사</a><a href="#s11">증권사 시각</a><a href="#s12">해자 검증</a><a href="#s13">지배구조·자본</a><a href="#s14">밸류에이션</a><a href="#s15">리스크</a><a href="#s16">확인할 것</a><a href="#s17">출처</a>
+  </nav>
+</div></header>
+
+<main class="wrap">
+
+<section id="s1">
+  <div class="sec-h"><span class="sec-n">01</span><h2>한 장 요약</h2></div>
+  <p class="lede">드림씨아이에스는 2000년에 설립된 임상시험수탁기관이다. 제약사가 맡긴 임상시험과 시판 후 조사를 대신 설계하고 관리해 주고 수수료를 받는다. 2015년 중국 최대 임상 CRO인 타이거메드가 인수했고 2020년 5월 코스닥에 상장했다. 2022년 의료기기·의약품 인허가 컨설팅 회사 메디팁을 인수하면서 메디팁 창업자 유정희 대표가 경영을 맡았다. 2025년에는 전환사채 150억을 발행해 미국의 인체 조직 모델 회사 큐리바이오의 최대주주가 됐다.</p>
+  <div class="keypoints">
+    <div class="kp"><span class="num">1</span><div class="txt"><div class="t">본사 영업이익률이 10.9%에서 15.7%로 올랐다</div><div class="d">1H26 별도 매출 284억(+20.4%), 영업이익 44.5억(+73.6%)이다. 2분기만 보면 별도 매출 156억에 영업이익 31.7억, 이익률 20.3%로 상장 첫해(2020년 20.5%) 수준까지 돌아왔다. 2023년에 직원을 83명 늘리며 7.9억까지 내려갔던 본사 이익이 회복된 것이다.</div></div></div>
+    <div class="kp"><span class="num">2</span><div class="txt"><div class="t">연결 영업이익은 제자리다. 자회사가 적자로 돌아섰다</div><div class="d">1H26 연결 영업이익은 28.1억으로 전년 28.4억과 같다. 본사가 19억을 더 벌었는데 메디팁(의료컨설팅)이 -4.2억, 메디팁에스엠오(임상 인력 지원)가 -2.1억을 냈고 부문 간 조정이 -10.1억이다. 메디팁에는 영업권 212억이 걸려 있고, 손상 검사에 쓴 영업이익률 가정은 15.8~18.8%다.</div></div></div>
+    <div class="kp"><span class="num">3</span><div class="txt"><div class="t">순이익은 지투지바이오 주가를 따라 움직인다</div><div class="d">15억에 산 지투지바이오 지분이 2025년 8월 상장으로 3분기에 평가이익 138억을 만들었고, 올해 상반기에는 주가 하락으로 평가손실 57.3억이 됐다. 6월 말 장부가 92.9억(주당 41,450원)인데 9/23 종가는 32,050원이다. 이 가격이 9월 말까지 가면 3분기에 21억이 더 깎인다. 주식은 2027년 8월까지 팔 수 없다.</div></div></div>
+    <div class="kp"><span class="num">4</span><div class="txt"><div class="t">전환사채 150억은 모레(9/30)부터 주식으로 바꿀 수 있다</div><div class="d">전환가 3,847원, 전환 가능 주식 390만주(발행주식의 15.9%)다. 현재가 3,290원은 전환가 아래라 당장 전환될 유인은 작다. 대신 7개월마다 전환가를 낮추는 조항이 있고 다음 조정일은 11월 30일, 하한은 2,693원이다. 하한까지 가면 557만주(22.6%)가 된다. 2025년 4분기에 이 사채의 파생상품 평가손실 81.5억을 순이익에서 뺐는데, 주가가 절반이 된 올해 상반기에는 재평가를 하지 않았다.</div></div></div>
+    <div class="kp"><span class="num">5</span><div class="txt"><div class="t">수주잔고 2,515억은 크지만 그대로 매출이 되지는 않는다</div><div class="d">잔고는 2019년 689억에서 3.7배가 됐다. 상장 전 3년은 '전년 잔고 + 신규 수주 − 당년 잔고'가 매출과 원 단위까지 맞았는데, 상장 후에는 매년 수십억씩 어긋난다(2024년 +73억). 계약 취소와 감액이 섞여 있다는 뜻으로 읽히지만 회사 설명은 없다. 올해 1분기 신규 수주는 81억으로 전년 4분기 395억의 5분의 1이었고 2분기에 279억으로 돌아왔다.</div></div></div>
+    <div class="kp"><span class="num">6</span><div class="txt"><div class="t">업계에서 거의 유일하게 돈을 버는 회사다</div><div class="d">최근 4분기 기준으로 국내 상장 임상·비임상 CRO 10곳 중 영업흑자는 3곳뿐이고 임상 CRO 중에는 이 회사 하나다. 매출 2위 씨엔알리서치는 영업이익이 62억(2023) → 14억(2025) → 상반기 -8억으로 내려갔다. 업계 20곳 합산 영업손익은 2023년부터 3년 연속 적자다.</div></div></div>
+    <div class="kp"><span class="num">7</span><div class="txt"><div class="t">증권사 추정은 매출은 맞고 이익은 매번 틀렸다</div><div class="d">상장 이후 영업이익 실제치는 추정의 77%(2020), 57%(2021), 20%(2023), 71%(2025)였다. 올해 추정은 영업이익 100~108억인데 상반기 실적은 28.1억이다. 리포트 12건은 모두 투자의견과 목표주가가 없다.</div></div></div>
+  </div>
+  <div class="take"><span class="lbl">결론</span><p><b>CRO 본업만 떼어 보면 싸고, 회사 전체로 보면 싸다고 말하기 어렵다.</b> 시가총액 809억에서 순현금 199억과 상장주식·큐리바이오 지분을 빼면 본업에 매겨진 값은 약 380억으로, 최근 4분기 본사 영업이익 58억의 6.6배다. 반면 회사는 본업에서 번 돈과 빌린 돈을 바이오벤처 21곳과 미국 큐리바이오에 넣고 있고, 그 결과가 순이익을 분기마다 100억 단위로 흔든다. 네이버가 보여 주는 PER 248배와 와이즈리포트의 11배는 둘 다 이 회사의 이익 체력을 말해 주지 않는다. 볼 숫자는 네 가지다. (1) 11월 중순 3분기 보고서의 별도 영업이익률이 2분기의 20%를 유지하는지, (2) 의료컨설팅 부문이 흑자로 돌아오는지, (3) 11월 30일 전환가 조정, (4) 연말 결산의 파생상품 재평가와 메디팁 영업권 손상 검사. 본 리포트는 투자 권유가 아니다.</p></div>
+</section>
+
+<section id="s2">
+  <div class="sec-h"><span class="sec-n">02</span><h2>분석에 앞서 바로잡을 숫자 열 개</h2></div>
+  <p>원자료끼리 대조하다 나온 불일치다. 시세 사이트, 회사 IR 자료, 증권사 리포트를 그대로 옮기면 틀리는 항목이므로 먼저 정리한다.</p>
+  <div class="tbl-scroll"><table>
+    <caption>자료 간 불일치와 본 리포트가 쓴 값</caption>
+    <thead><tr><th>어디에</th><th>적힌 값</th><th>본 리포트 값</th><th>근거</th></tr></thead>
+    <tbody>
+      <tr><td>네이버 PER<br>와이즈리포트 PER</td><td class="num">248.2배<br>11.0배</td><td class="num hl">둘 다 쓰지 않음</td><td>네이버는 최근 4분기 주당순이익 14원, 와이즈리포트는 2025년 주당순이익 기준이다. 최근 4분기 순이익 6.3억에는 평가이익 138억, 파생상품 손실 81.5억, 평가손실 58.5억이 섞여 있다. 본업 이익으로 다시 계산한다(14장)</td></tr>
+      <tr><td>네이버 일별 종가 9/23</td><td class="num">3,345원</td><td class="num hl">3,290원</td><td>네이버 일별 시세에는 넥스트레이드(NXT) 시간외 체결가가 섞인다. 와이즈리포트 전일종가 3,290원이 KRX 정규장 종가다. 시총 809억 = 24,600,444주 × 3,290원</td></tr>
+      <tr><td>2025년 실적<br>(2/11 공시, IR 3월판)</td><td class="num">매출 680.7억<br>영업이익 63.4억<br>순이익 84.8억</td><td class="num hl">666.3억<br>52.4억<br>75.1억</td><td>2월 공시는 감사 전 내부 결산이다. 감사 후 매출 14억, 영업이익 11억이 줄었다. 영업이익 증가율은 +25.2%에서 +3.6%로 바뀐다. 다수 기사와 일부 리포트가 잠정치를 인용한다</td></tr>
+      <tr><td>IR 3월판 PER</td><td class="num">4.94배<br>(시총 1,570억)</td><td class="num hl">약 11배</td><td>같은 슬라이드의 시총 1,570억을 주식수로 나누면 주가 약 6,390원, 주당순이익 563원으로 11.3배다. 4.94배는 주가 2,780원일 때 값이다. 563원은 지투지바이오 평가이익이 들어간 3분기 누적치다</td></tr>
+      <tr><td>IR 자료 글로벌 CRO<br>평균 PER</td><td class="num">47.6배(3월)<br>25.9배(6월)</td><td class="num hl">비교군 교체</td><td>3월판은 IQVIA·Medpace·타이거메드(80.8배), 6월판은 타이거메드를 빼고 ICON을 넣었다. 저평가 폭이 비교군 선택에 따라 달라진다</td></tr>
+      <tr><td>큐리바이오 실적<br>(IR 3월판, 일부 기사)</td><td class="num">2024년 순이익 15억</td><td class="num hl">2025년 순손실 26.0억<br>1H26 순손실 54.1억</td><td>반기보고서 관계기업 요약재무. IR 6월판은 순이익 항목을 삭제했고 2024년 매출도 900만 달러에서 840만 달러로 낮췄다</td></tr>
+      <tr><td>큐리바이오 투자액</td><td class="num">약 80억(기사)<br>148.8억(IR)</td><td class="num hl">누적 약 169억</td><td>80억은 2025-11-11 공시 한 건의 금액이다. 재무제표상 2025년 관계기업 대체 82.1억 + 추가 취득 48.7억, 2026년 상반기 38.5억을 더하면 169.3억이다. 6월 말 장부가는 158.4억</td></tr>
+      <tr><td>큐리바이오 지분율</td><td class="num">23.74% / 24.85%<br>26.14% / 30.83%</td><td class="num hl">26.14%(연결)</td><td>23.74%는 2025-11 공시 시점, 24.85%는 본사 직접 보유, 26.14%는 자회사 보유분을 합친 연결 기준(6월 말)이다. NH 리포트의 30.83%는 기준이 확인되지 않는다</td></tr>
+      <tr><td>2022 사업보고서<br>수출·내수</td><td class="num">수출 301억<br>내수 87억</td><td class="num hl">수출 47억<br>내수 341억</td><td>두 칸이 뒤바뀌어 있다. 다음 해 보고서에서 조용히 고쳐졌고 정정공시는 없다</td></tr>
+      <tr><td>신한 1/16 리포트<br>분기 매출 증가율</td><td class="num">1Q25 -75.8%</td><td class="num hl">+18.8%</td><td>'YoY' 행의 2~4분기 값은 전 분기 대비 증감률이고 1분기 값은 어느 기준으로도 맞지 않는다. 1Q25 141.7억 ÷ 1Q24 119.3억</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">그 밖에 반기보고서 '사업의 내용'은 점유율 문단이 "2020년 235억 → 2024년 587억"에서 멈춰 있고, 자사 전자 자료수집 시스템의 실적은 "2019년 현재 약 140개 프로젝트"로 7년째 같은 문장이다. 사모 자금 사용 내역 표에는 131.9억을 썼다고 적고 사유 칸에는 "취득 대상은 미정"이라는 발행 당시 문구가 남아 있다. 임원 보수 표의 상반기 영업이익 27.4억은 연결(28.1억)과 별도(44.5억) 어느 쪽과도 맞지 않는다.</p>
+</section>
+
+<section id="s3">
+  <div class="sec-h"><span class="sec-n">03</span><h2>주가: 공모가 아래에서 6년, 두 번의 급등은 본업 밖에서 왔다</h2></div>
+  <div class="chart" id="ch-px"><p class="ct">일별 종가와 사건</p><p class="cs">2023-01-02 ~ 2026-09-23. 회색 선은 코스닥 지수를 2023년 첫 거래일의 드림씨아이에스 종가(2,540원)에 맞춰 환산한 것. 번호는 아래 표. 네이버 일별 시세(수정주가, NXT 체결 포함) 기준</p><div class="legend"><span><i style="background:var(--c1)"></i>드림씨아이에스</span><span><i style="background:var(--c4)"></i>코스닥 (환산)</span></div><svg></svg></div>
+  <ul class="tl">
+    <li><span class="d">① 23-10-11</span><span>1주당 3주 무상증자 권리락. 9/25 결정 공시 뒤 급등해 10/11 장중 9,750원. 연말에는 3,255원으로 돌아왔다</span></li>
+    <li><span class="d">② 25-04-09</span><span>종가 2,630원. 2025년 저점</span></li>
+    <li><span class="d">③ 25-09-30</span><span>전환사채 150억 납입. 전환가 3,847원. 종가 3,855원</span></li>
+    <li><span class="d">④ 25-11-11</span><span>큐리바이오 지분 23.74% 취득 공시. 이틀 뒤 3분기 보고서에서 누적 순이익 159억(지투지바이오 평가이익)</span></li>
+    <li><span class="d">⑤ 25-12-22</span><span>종가 기준 최고 7,690원. 12/18 "오가노이드 대장주" 리포트가 나온 날 +29.9%, 이틀간 거래량 2,959만주(발행주식의 1.2배)</span></li>
+    <li><span class="d">⑥ 26-03-23</span><span>감사보고서 제출. 2025년 확정 실적이 잠정치보다 낮게 나왔고 파생상품 평가손실 81.5억 공시. 3월 말 4,675원</span></li>
+    <li><span class="d">⑦ 26-05-11</span><span>장중 8,640원(52주 최고). 5/7 +29.8%, 5/8 거래량 2,044만주. 종가로는 5/13의 7,420원이 고점. 비만치료제 국내 3상 관련 보도가 나온 시기와 겹치나 인과는 확인하지 못했다</span></li>
+    <li><span class="d">⑧ 26-07-30</span><span>종가 2,450원. 5/13 대비 -67.0%. 같은 기간 코스닥은 1,177 → 645로 -45.2%</span></li>
+    <li><span class="d">⑨ 26-09-21</span><span>+16.5%, 거래량 657만주. 큐리바이오의 시험법이 미국 FDA의 신규 평가도구 심사 절차에 의향서 단계로 접수됐다는 보도가 나온 날. 9/23 종가 3,290원</span></li>
+  </ul>
+  <div class="tbl-scroll"><table>
+    <caption>구간별 수익률 (네이버 일별 종가 기준)</caption>
+    <thead><tr><th>구간</th><th class="num">드림씨아이에스</th><th class="num">코스닥</th><th class="num">차이</th><th>비고</th></tr></thead>
+    <tbody>
+      <tr><td>2024년 말 → 25-12-22</td><td class="num pos">+160.7%</td><td class="num pos">+37.0%</td><td class="num">+123.7%p</td><td>지투지바이오 상장, 큐리바이오 인수</td></tr>
+      <tr><td>25-12-22 → 26-03-04</td><td class="num neg">-37.6%</td><td class="num pos">+5.3%</td><td class="num">-42.9%p</td><td>시장이 오르는 동안 하락</td></tr>
+      <tr><td>26-03-04 → 05-13</td><td class="num pos">+54.7%</td><td class="num pos">+20.3%</td><td class="num">+34.4%p</td><td>5/7~5/13 닷새에 집중</td></tr>
+      <tr><td>05-13 → 07-30</td><td class="num neg">-67.0%</td><td class="num neg">-45.2%</td><td class="num">-21.8%p</td><td>코스닥 4/27 고점 1,226 → 7/30 645</td></tr>
+      <tr><td>07-30 → 09-23</td><td class="num pos">+36.5%</td><td class="num pos">+31.0%</td><td class="num">+5.5%p</td><td>8/13 반기보고서</td></tr>
+      <tr class="sum"><td>2025년 말 → 9/23</td><td class="num neg">-47.6%</td><td class="num neg">-8.8%</td><td class="num">-38.8%p</td><td></td></tr>
+    </tbody>
+  </table></div>
+  <div class="take"><span class="lbl">읽는 법</span><p>2020년 5월 공모가 14,900원은 무상증자를 반영하면 3,725원이다. 현재가 3,290원은 <b>공모가보다 11.7% 낮다.</b> 그 사이 매출은 221억(2019)에서 666억(2025)으로 3배가 됐다. 주가가 크게 오른 두 번(2025년 12월, 2026년 5월)은 모두 실적 발표가 아니라 오가노이드와 비만치료제 같은 본업 밖 재료가 나온 때였고, 두 번 모두 석 달 안에 상승분을 되돌렸다. 평소 거래대금은 하루 2억 안팎(8/20~9/18 평균 2.3억)이다. 유통 가능 주식이 30%뿐이라 재료가 붙으면 하루에 발행주식의 80%가 거래되기도 한다.</p></div>
+</section>
+
+<section id="s4">
+  <div class="sec-h"><span class="sec-n">04</span><h2>비즈니스 모델: 허가 뒤 단계에 강한 임상 대행사</h2></div>
+  <p>신약 개발을 여섯 칸으로 나누면 드림씨아이에스 본사의 일은 네 번째와 다섯 번째 칸에 몰려 있다. 사람을 대상으로 한 임상시험, 그리고 <b>허가를 받은 약이 실제 환자에게 쓰일 때의 안전성을 조사하는 시판 후 조사</b>다. 앞뒤 칸은 인수와 지분 투자로 채웠다. 동물실험 단계는 엘씨에스(중개)와 큐리바이오(인체 조직 모델), 인허가는 메디팁, 병원 현장 인력은 메디팁에스엠오가 맡는다.</p>
+  <div class="vc">
+    <div class="c"><b>① 후보물질 발굴</b>표적 탐색, 물질 합성<div class="who">제약·바이오텍 자체, 발굴 전문 CRO</div></div>
+    <div class="c"><b>② 비임상</b>독성·효능 시험(동물, 세포)<div class="who">엘씨에스(중개) · 큐리바이오(지분 26%) · 바이오톡스텍, 코아스템켐온</div></div>
+    <div class="c me"><b>③ 인허가 컨설팅</b>임상 계획 승인, 품목허가 서류, 의료기기 인증<div class="who">메디팁(지분 66.7%)</div></div>
+    <div class="c me"><b>④ 임상시험 1~3상</b>계획서, 병원 관리, 모니터링, 자료 관리, 통계<div class="who">드림씨아이에스 본사 · 씨엔알리서치, LSK글로벌PS, IQVIA, ICON</div></div>
+    <div class="c me"><b>⑤ 시판 후 조사·관찰연구</b>사용성적조사, 비중재 연구, 실사용 자료 분석<div class="who">드림씨아이에스 본사(매출 1위 품목)</div></div>
+    <div class="c me"><b>⑥ 병원 현장 지원</b>연구간호사 파견(SMO)<div class="who">메디팁에스엠오(메디팁의 100% 자회사)</div></div>
+  </div>
+  <h3>무엇을 팔아 얼마를 버는가</h3>
+  <div class="tbl-scroll"><table>
+    <caption>서비스별 연결 매출 (억원, 사업보고서·반기보고서)</caption>
+    <thead><tr><th>구분</th><th>하는 일</th><th class="num">2023</th><th class="num">2024</th><th class="num">2025</th><th class="num">1H26</th><th class="num">1H26 비중</th></tr></thead>
+    <tbody>
+      <tr><td><b>시판 후 조사(rPMS)</b></td><td>허가 후 4~6년간 실제 처방 환자의 부작용·효과 자료 수집. 계약 기간 평균 44개월</td><td class="num">145.2</td><td class="num">176.3</td><td class="num">188.2</td><td class="num">118.6</td><td class="num">31.7%</td></tr>
+      <tr><td><b>임상시험</b></td><td>1~3상과 허가 후 임상(4상)의 설계·관리. 평균 36개월</td><td class="num">98.0</td><td class="num">126.6</td><td class="num">121.6</td><td class="num">67.0</td><td class="num">17.9%</td></tr>
+      <tr><td><b>비중재 연구(NIS)</b></td><td>약을 배정하지 않고 진료 기록을 관찰하는 연구</td><td class="num">45.6</td><td class="num">58.7</td><td class="num">58.8</td><td class="num">44.4</td><td class="num">11.9%</td></tr>
+      <tr><td>연구대행 기타</td><td>번역, 허가 대행, 시스템 제공</td><td class="num">14.5</td><td class="num">36.2</td><td class="num">66.7</td><td class="num">24.2</td><td class="num">6.5%</td></tr>
+      <tr><td><b>인허가 컨설팅</b></td><td>메디팁. 의료기기·의약품 인허가와 임상 설계</td><td class="num">118.9</td><td class="num">122.9</td><td class="num">131.2</td><td class="num">54.3</td><td class="num">14.5%</td></tr>
+      <tr><td><b>임상시험 지원(SMO)</b></td><td>병원에 연구간호사를 보내 임상 실무 지원. 2024-08 영업 양수로 시작</td><td class="num">-</td><td class="num">10.6</td><td class="num">50.2</td><td class="num">38.7</td><td class="num">10.4%</td></tr>
+      <tr><td>실비 청구(PTF) 등</td><td>병원 연구비·검사비를 대신 내고 그대로 청구. 마진 없음</td><td class="num">56.2</td><td class="num">55.2</td><td class="num">49.7</td><td class="num">27.0</td><td class="num">7.2%</td></tr>
+      <tr class="sum"><td>합계</td><td></td><td class="num">478.4</td><td class="num">586.5</td><td class="num">666.3</td><td class="num">374.2</td><td class="num">100%</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">시판 후 조사 비중은 2018년 55.9%에서 2025년 28.2%로 내려왔다. 금액은 107억에서 188억으로 늘었으므로 사업이 줄어든 것이 아니라 메디팁 연결 편입(2022년)으로 분모가 커진 결과다. 본사 매출만 놓고 보면 2025년에도 38%가 시판 후 조사다(전액 본사 매출이라는 가정의 계산값). 회사는 상장 당시 투자설명서에서 이 의존도를 위험 요소로 직접 적었다.</p>
+  <h3>주문에서 현금까지</h3>
+  <div class="grid2">
+    <div class="pane"><h4>공시로 확인되는 것</h4><ul>
+      <li>계약은 3~6년짜리다. 매출은 진행률에 따라 나눠 잡는다(1H26 매출의 92.6%가 기간 인식)</li>
+      <li>돈을 먼저 받는다. 계약부채(선수금 성격)가 311억으로 미청구 공사에 해당하는 계약자산 202억보다 크다</li>
+      <li>원가의 대부분이 인건비다. 2023년 인건비 3개 항목이 88억 늘어 매출 증가분 90억을 거의 다 가져갔다</li>
+      <li>설비가 필요 없다. 유형·무형자산 취득은 2025년 6.7억</li>
+      <li>매출 10% 이상 고객이 없다. 국내 매출 93.4%, 해외 6.6%</li>
+      <li>타이거메드 계열에서 나오는 직접 매출은 1H26 6.2억(1.66%)뿐이다</li>
+    </ul></div>
+    <div class="pane"><h4>공시에 없는 것</h4><ul>
+      <li>고객 이름과 고객별 매출(비밀유지계약을 이유로 전 기간 비공개)</li>
+      <li>수주잔고의 서비스별 구성, 계약 취소·감액 금액</li>
+      <li>임상 단계별(1상·2상·3상) 매출</li>
+      <li>연결 기준 직원 수. 공시 직원 수 425명은 본사 기준으로 보이고, 회사 보도자료는 자회사 포함 624명</li>
+      <li>타이거메드와 함께 딴 계약의 규모. 2021년 기사에는 "매출의 10~15%"라는 회사 발언이 있으나 현재 수치는 없다</li>
+      <li>비만치료제(BGM0504) 국내 3상의 비용 부담 구조와 판권 조건</li>
+    </ul></div>
+  </div>
+  <div class="take"><span class="lbl">1인당 매출로 본 구조</span><p>본사 매출을 직원 수로 나누면 2019년 1.18억, 2022년 1.15억, 2023년 0.95억, 2024년 1.27억, 2025년 1.25억이다. 7년 동안 1인당 매출이 거의 늘지 않았다. <b>사람을 늘린 만큼만 매출이 느는 사업</b>이고, 이익률은 새로 뽑은 사람이 프로젝트에 투입되기까지의 공백이 얼마나 짧은지에 달려 있다. 2023년 이익 급감(본사 영업이익 45.5억 → 7.9억)은 직원을 29.5% 늘린 해에 매출이 6.9%만 는 결과였고, 회사도 "신규 인원의 교육 등 프로젝트 투입 전 기간"을 사유로 공시했다. 올해 상반기 본사 직원은 395명에서 425명으로 다시 30명 늘었다.</p></div>
+</section>
+
+<section id="s5">
+  <div class="sec-h"><span class="sec-n">05</span><h2>실적 추이: 매출은 8년 연속 늘었고 이익률은 상장 첫해가 고점이었다</h2></div>
+  <div class="chart" id="ch-ann"><p class="ct">연간 매출과 영업이익</p><p class="cs">억원. 2017~2019년은 별도(종속회사 없음), 2020년부터 연결. 막대는 매출, 선은 영업이익. 2026E·2027E는 NH투자증권 4/1 추정</p><div class="legend"><span><i style="background:var(--c1)"></i>매출</span><span><i style="background:var(--c2)"></i>영업이익</span></div><svg></svg></div>
+  <div class="tbl-scroll"><table>
+    <caption>연간 실적 (억원, DART)</caption>
+    <thead><tr><th>연도</th><th class="num">연결 매출</th><th class="num">영업이익</th><th class="num">이익률</th><th class="num">순이익</th><th class="num">별도 매출</th><th class="num">별도 영업이익</th><th class="num">본사 직원</th><th>그해의 일</th></tr></thead>
+    <tbody>
+      <tr><td>2017</td><td class="num">159.6</td><td class="num neg">-10.5</td><td class="num neg">-6.6%</td><td class="num neg">-11.2</td><td class="num">159.6</td><td class="num neg">-10.5</td><td class="num">-</td><td>타이거메드 인수 2년 차. 업무 시스템 교체</td></tr>
+      <tr><td>2018</td><td class="num">192.0</td><td class="num">35.7</td><td class="num">18.6%</td><td class="num">34.2</td><td class="num">192.0</td><td class="num">35.7</td><td class="num">-</td><td>흑자 전환</td></tr>
+      <tr><td>2019</td><td class="num">221.1</td><td class="num">43.4</td><td class="num">19.6%</td><td class="num">41.5</td><td class="num">221.1</td><td class="num">43.4</td><td class="num">188</td><td>상장 예비심사 청구</td></tr>
+      <tr><td>2020</td><td class="num">234.9</td><td class="num">47.9</td><td class="num">20.4%</td><td class="num">48.5</td><td class="num">234.9</td><td class="num">48.2</td><td class="num">206</td><td>5월 코스닥 상장. 공모 202억</td></tr>
+      <tr><td>2021</td><td class="num">261.5</td><td class="num">36.2</td><td class="num">13.8%</td><td class="num">32.3</td><td class="num">261.5</td><td class="num">38.7</td><td class="num">246</td><td>직원 +40명</td></tr>
+      <tr><td>2022</td><td class="num">388.7</td><td class="num">58.2</td><td class="num">15.0%</td><td class="num">45.2</td><td class="num">322.0</td><td class="num">45.5</td><td class="num">281</td><td>메디팁 인수(201억), 대표이사 교체</td></tr>
+      <tr><td>2023</td><td class="num">478.4</td><td class="num">15.9</td><td class="num">3.3%</td><td class="num">38.6</td><td class="num">344.2</td><td class="num">7.9</td><td class="num">364</td><td>직원 +83명. 무상증자 1:3</td></tr>
+      <tr><td>2024</td><td class="num">586.5</td><td class="num">50.6</td><td class="num">8.6%</td><td class="num">54.1</td><td class="num">452.8</td><td class="num">40.7</td><td class="num">358</td><td>메디팁 외부 투자 유치 140억, SMO 영업 양수</td></tr>
+      <tr><td>2025</td><td class="num">666.3</td><td class="num">52.4</td><td class="num">7.9%</td><td class="num">75.1</td><td class="num">493.5</td><td class="num">39.2</td><td class="num">395</td><td>전환사채 150억, 큐리바이오 최대주주</td></tr>
+      <tr class="sum"><td>1H26</td><td class="num">374.2</td><td class="num">28.1</td><td class="num">7.5%</td><td class="num neg">-47.1</td><td class="num">284.1</td><td class="num">44.5</td><td class="num">425</td><td>전년 동기 매출 307.7억, 영업이익 28.4억</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">2019년 221억에서 2025년 666억까지 매출 증가분 445억 가운데 본사가 272억, 인수한 회사들이 173억이다. 본사 매출만 보면 연평균 14.3% 성장이다. 영업이익은 2020년 47.9억에서 2025년 52.4억으로 5년 동안 9% 늘었다.</p>
+  <div class="chart" id="ch-q"><p class="ct">분기 매출과 본사 영업이익률</p><p class="cs">억원, %. 막대는 연결 매출(왼쪽 축), 선은 별도 영업이익률(오른쪽 축). 4분기는 연간에서 3분기 누적을 뺀 값</p><div class="legend"><span><i style="background:var(--c1)"></i>연결 매출</span><span><i style="background:var(--c2)"></i>별도 영업이익률</span></div><svg></svg></div>
+  <div class="take"><span class="lbl">분기 흐름에서 볼 것</span><p>본사 영업이익률은 2023년 2분기 -12.7%까지 내려갔다가 2024년부터 8~13%대로 올라왔고 올해 2분기에 20.3%를 찍었다. 다만 <b>작년 4분기에는 결산 조정이 몰렸다.</b> 2025년 4분기는 본사 영업이익 1.4억(이익률 1.0%), 연결은 -3.9억 적자였다. 2월에 공시한 내부 결산보다 감사 후 영업이익이 11억 줄었는데 그 조정이 전부 4분기에 들어갔다. 2분기 이익률이 하반기에도 유지된다고 가정하기 전에 3분기 숫자를 확인해야 한다.</p></div>
+</section>
+
+<section id="s6">
+  <div class="sec-h"><span class="sec-n">06</span><h2>상반기 해부: 영업이익 28억이 세전손실 45억이 되는 과정</h2></div>
+  <div class="chart" id="ch-bridge"><p class="ct">1H26 영업이익에서 세전이익까지</p><p class="cs">억원. 반기보고서 손익계산서와 현금흐름표 주석으로 재구성. 회색은 시작과 끝, 붉은색은 차감 항목</p><svg></svg></div>
+  <div class="tbl-scroll"><table>
+    <caption>분기별 영업이익과 순이익이 어긋난 이유 (억원)</caption>
+    <thead><tr><th>분기</th><th class="num">영업이익</th><th class="num">세전이익</th><th class="num">순이익</th><th>가장 큰 요인</th></tr></thead>
+    <tbody>
+      <tr><td>3Q25</td><td class="num">27.9</td><td class="num">169.8</td><td class="num pos">137.2</td><td>지투지바이오 코스닥 상장(8/14). 평가이익 약 138억</td></tr>
+      <tr><td>4Q25</td><td class="num neg">-3.9</td><td class="num neg">-88.3</td><td class="num neg">-83.8</td><td>전환사채 파생상품 평가손실 81.5억(연말 주가 6,380원, 전환가의 1.66배)</td></tr>
+      <tr><td>1Q26</td><td class="num">5.4</td><td class="num neg">-2.4</td><td class="num neg">-2.6</td><td>큐리바이오 지분법손실 5.8억, 전환사채 회계상 상각 5.0억, 주식 평가손실 3.1억</td></tr>
+      <tr><td>2Q26</td><td class="num">22.7</td><td class="num neg">-42.9</td><td class="num neg">-44.5</td><td>지투지바이오 평가손실 54.6억(65,800원 → 41,450원), 지분법손실 7.9억</td></tr>
+    </tbody>
+  </table></div>
+  <h3>세 가지 항목의 성격</h3>
+  <div class="tbl-scroll"><table>
+    <thead><tr><th>항목</th><th class="num">1H26 금액</th><th>현금이 나가는가</th><th>앞으로</th></tr></thead>
+    <tbody>
+      <tr><td><b>지투지바이오 평가손익</b></td><td class="num neg">-57.3억</td><td>아니다. 다만 실제 자산 가치의 변동이다</td><td>224,238주 보유. 주가 1,000원 움직이면 세전이익 2.2억이 움직인다. 9/23 종가 32,050원이면 3분기 -21.1억. 보호예수는 상장 후 2년</td></tr>
+      <tr><td><b>큐리바이오 지분법손실</b></td><td class="num neg">-13.7억</td><td>아니다. 다만 추가 출자가 이어지고 있다(1H26 38.5억)</td><td>큐리바이오 1H26 순손실 54.1억의 약 25%를 가져온다. 큐리바이오가 흑자로 돌지 않는 한 분기마다 6~8억</td></tr>
+      <tr><td><b>전환사채 회계 비용</b></td><td class="num neg">-12.7억</td><td>아니다. 표면이자 0%</td><td>발행 시점 평가차액 상각 분기 5억 + 유효이자 분기 1.3억. 만기 또는 전환 때까지 계속</td></tr>
+    </tbody>
+  </table></div>
+  <div class="take"><span class="lbl">파생상품 재평가가 빠져 있다</span><p>전환사채에 붙은 전환권과 조기상환권은 주가가 오르면 부채가 커져 손실, 내리면 이익으로 잡힌다. 회사는 2025년 말 이 파생상품의 공정가치를 154.1억으로 평가해 손실 81.5억을 냈다. 그런데 <b>2026년 3월 말과 6월 말 장부에도 공정가치는 154.1억 그대로다.</b> 그사이 주가는 6,380원에서 3,320원(6월 말)으로 내렸다. 분기·반기에는 재평가를 하지 않은 것으로 보이며 보고서에 설명은 없다. 주가가 지금 수준이면 연말 결산에서 평가이익이 한 번에 잡혀 4분기 순이익이 크게 늘 수 있다. 작년 3분기의 138억과 마찬가지로 이익 체력과 무관한 숫자이므로, 그때 나올 "순이익 급증" 기사는 걸러 읽어야 한다. 이 단락은 공시 수치에 근거한 필자의 해석이다.</p></div>
+  <h3>현금흐름과 채권</h3>
+  <div class="tbl-scroll"><table>
+    <caption>연결 현금흐름과 운전자본 (억원)</caption>
+    <thead><tr><th>항목</th><th class="num">2024</th><th class="num">2025</th><th class="num">1H26</th><th>메모</th></tr></thead>
+    <tbody>
+      <tr><td>영업활동 현금흐름</td><td class="num neg">-0.9</td><td class="num">140.7</td><td class="num">76.2</td><td>단기 채권형 상품 회수분(2025년 40.3억, 1H26 10.0억)이 들어 있다. 빼면 100.4억, 66.2억</td></tr>
+      <tr><td>주식·관계기업 취득</td><td class="num neg">-38.0</td><td class="num neg">-136.6</td><td class="num neg">-85.5</td><td>바이오벤처 지분과 큐리바이오</td></tr>
+      <tr><td>유형·무형자산 취득</td><td class="num neg">-14.9</td><td class="num neg">-6.7</td><td class="num neg">-10.7</td><td>2025년 사옥 같은 건물 2개 호실 매입 31.8억은 별도</td></tr>
+      <tr><td>계약부채(먼저 받은 돈)</td><td class="num">262.0</td><td class="num">337.5</td><td class="num">311.3</td><td>상반기에 26억 감소</td></tr>
+      <tr><td>계약자산(일하고 아직 청구 못 한 돈)</td><td class="num">132.8</td><td class="num">156.9</td><td class="num">201.7</td><td>상반기에 45억 증가</td></tr>
+      <tr><td>6개월 넘게 밀린 매출채권</td><td class="num">9.3</td><td class="num">19.4</td><td class="num">45.7</td><td>전체 매출채권의 5.9% → 9.1% → 32.1%</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">영업에서는 연 100억 안팎의 현금이 들어온다. 그 돈과 전환사채 150억이 2025년부터 1년 반 동안 주식·관계기업 취득 222억으로 나갔다. 6개월 넘게 밀린 채권이 반년 새 26억 늘어난 것은 고객인 바이오벤처의 자금 사정과 관련됐을 가능성이 있다. 대손충당금 설정률은 4.3%(2024) → 6.1%(2025) → 10.6%(1H26)로 올라가고 있다.</p>
+</section>
+
+<section id="s7">
+  <div class="sec-h"><span class="sec-n">07</span><h2>수주잔고: 3.8년치 일감, 그러나 계약서 금액은 줄어든다</h2></div>
+  <div class="chart" id="ch-bl"><p class="ct">연말 수주잔고</p><p class="cs">억원. 2022년부터 메디팁 등 연결 실체 기준. 마지막 막대는 2026년 6월 말</p><svg></svg></div>
+  <div class="tbl-scroll"><table>
+    <caption>신규 수주, 잔고, 그리고 맞지 않는 항등식 (억원)</caption>
+    <thead><tr><th>연도</th><th class="num">신규 수주</th><th class="num">연말 잔고</th><th class="num">잔고에서 빠진 금액<br>(전년 잔고 + 신규 − 당년 잔고)</th><th class="num">용역 매출</th><th class="num">차이</th></tr></thead>
+    <tbody>
+      <tr><td>2017</td><td class="num">290.7</td><td class="num">522.9</td><td class="num">149.3</td><td class="num">149.3</td><td class="num">0</td></tr>
+      <tr><td>2018</td><td class="num">294.2</td><td class="num">634.4</td><td class="num">182.6</td><td class="num">182.6</td><td class="num">0</td></tr>
+      <tr><td>2019</td><td class="num">258.8</td><td class="num">689.1</td><td class="num">204.2</td><td class="num">204.2</td><td class="num">0</td></tr>
+      <tr><td>2020</td><td class="num">271.9</td><td class="num">671.2</td><td class="num">289.8</td><td class="num">217.8</td><td class="num neg">+72.0</td></tr>
+      <tr><td>2021</td><td class="num">388.5</td><td class="num">806.5</td><td class="num">253.3</td><td class="num">235.7</td><td class="num neg">+17.6</td></tr>
+      <tr><td>2022</td><td class="num">558.0</td><td class="num">1,141.2</td><td class="num">223.3</td><td class="num">347.3</td><td class="num">-124.0</td></tr>
+      <tr><td>2023</td><td class="num">908.6</td><td class="num">1,600.4</td><td class="num">449.4</td><td class="num">422.2</td><td class="num neg">+27.1</td></tr>
+      <tr><td>2024</td><td class="num">1,079.7</td><td class="num">2,075.5</td><td class="num">604.6</td><td class="num">531.4</td><td class="num neg">+73.2</td></tr>
+      <tr><td>2025</td><td class="num">976.9</td><td class="num">2,471.1</td><td class="num">581.3</td><td class="num">616.6</td><td class="num">-35.4</td></tr>
+      <tr class="sum"><td>1H26</td><td class="num">360.9</td><td class="num">2,514.9</td><td class="num">317.1</td><td class="num">347.2</td><td class="num">-30.1</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">용역 매출은 연구대행 + 인허가 컨설팅 + 임상시험 지원(실비 청구와 기타 제외). 2022년의 -124억은 메디팁과 엘씨에스가 들고 온 잔고가 편입된 영향으로 보인다(편입 잔고 금액은 공시에 없음). 양(+)의 차이는 매출로 인식되지 않고 잔고에서 사라진 금액, 곧 계약 취소나 감액에 해당한다. 2020년부터 2024년까지 편입 연도를 빼고 더하면 190억이다.</p>
+  <h3>계약이 줄어드는 실제 사례</h3>
+  <div class="tbl-scroll"><table>
+    <caption>2022-07 미국 제약사 임상시험 위수탁 계약의 정정 이력 (공시)</caption>
+    <thead><tr><th>공시일</th><th class="num">계약금액</th><th class="num">병원 수</th><th>회사가 밝힌 사유</th></tr></thead>
+    <tbody>
+      <tr><td>2022-07-15</td><td class="num">116.1억</td><td class="num">120</td><td>최초 계약. 기간 2022-07 ~ 2029-09</td></tr>
+      <tr><td>2024-05-24</td><td class="num">88.0억</td><td class="num">70</td><td>임상 실시 병원 축소</td></tr>
+      <tr><td>2025-05-09</td><td class="num">72.3억</td><td class="num">60</td><td>임상 실시 병원 축소</td></tr>
+      <tr><td>2026-08-11</td><td class="num">69.4억</td><td class="num">60</td><td>위수탁 업무 범위 조정</td></tr>
+    </tbody>
+  </table></div>
+  <div class="take"><span class="lbl">읽는 법</span><p>이 회사가 상장 후 공시한 대형 계약은 두 건뿐이고, 그중 하나가 <b>4년 동안 세 번 줄어 40.2% 감액</b>됐다. 임상시험은 의뢰자가 환자 모집 상황에 따라 병원 수를 바꾸므로 CRO 계약금액은 처음부터 확정치가 아니다. 잔고 2,515억을 연 매출로 나눈 3.8년이라는 숫자는 일감이 충분하다는 뜻으로 읽되, 잔고 증가율을 매출 증가율로 바로 옮기면 안 된다. 실제로 2021~2025년 잔고는 연평균 32% 늘었고 용역 매출은 27% 늘었다. 올해 1분기 신규 수주 81억은 2024년 1분기의 112억보다도 적었다. 회사는 설명하지 않았고, NH투자증권은 4월 리포트에서 2025년에 "고객사 자금 조달 난항으로 임상이 지연"됐다고 썼다.</p></div>
+</section>
+
+<section id="s8">
+  <div class="sec-h"><span class="sec-n">08</span><h2>자회사와 투자자산: 자산의 3분의 1이 본업 밖에 있다</h2></div>
+  <p>6월 말 연결 자산 1,595억 가운데 영업권 284억, 큐리바이오 158억, 바이오벤처 지분과 펀드 284억을 더하면 727억(45.6%)이다. 현금성 자산 362억을 합치면 자산의 68%가 임상 대행이라는 본업의 운전자본이 아닌 곳에 있다.</p>
+  <h3>메디팁: 201억을 주고 산 회사의 지금</h3>
+  <div class="tbl-scroll"><table>
+    <caption>메디팁 실적과 거래 이력 (억원)</caption>
+    <thead><tr><th>시점</th><th>내용</th><th class="num">매출</th><th class="num">순이익</th><th class="num">100% 환산 가치</th></tr></thead>
+    <tbody>
+      <tr><td>2020-08</td><td>18.75% 취득(24.4억). 매도인 유정희 메디팁 대표</td><td class="num">45.2 (2019)</td><td class="num">1.9</td><td class="num">130억</td></tr>
+      <tr><td>2022-03</td><td>70.25% 추가 취득(200.9억). 매도인 유정희 외 3인. 외부평가 172~212억</td><td class="num">57.4 (2020)</td><td class="num">8.6</td><td class="num">286억</td></tr>
+      <tr><td>2023</td><td>연결 편입 2년 차</td><td class="num">145.7</td><td class="num">18.3</td><td class="num">-</td></tr>
+      <tr><td>2024-09</td><td>제3자 배정 증자 100억. 주당 175,000원. 10월에 40.5억 추가</td><td class="num">141.5</td><td class="num">10.6</td><td class="num">420억(증자 전)</td></tr>
+      <tr><td>2025</td><td>프로메디스(의료기기 임상) 30억에 인수 후 합병</td><td class="num">199.5</td><td class="num">16.9</td><td class="num">-</td></tr>
+      <tr class="sum"><td>1H26</td><td>상반기</td><td class="num">89.8</td><td class="num neg">-1.7</td><td class="num">-</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">2024년 9월 증자에는 타이거메드 계열이 출자한 펀드(TG Sino-Dragon Fund II)가 52.3억, Sprouts가 27.7억을 넣었다. 드림씨아이에스는 증자에 참여하지 않아 지분이 89%에서 66.69%로 내려갔다. 메디팁은 2023년 11월 상장 주관사를 정했다고 알려졌으나 반기보고서는 감사인 변경 사유로 "상장 추진 계획 변경"을 적었다. 7월 31일 이사회에서 자기주식 취득 안건을 결의했고 8월 18일 임시주총이 예정돼 있었다. 외부 투자자의 회수와 관련된 것인지는 공시에 없다.</p>
+  <div class="grid2">
+    <div class="pane yes"><h4>인수가 남긴 것</h4><ul>
+      <li>인허가 컨설팅 매출 131억(2025). 의료기기 고객 기반</li>
+      <li>외부 투자자가 2년 뒤 1.5배 가격(286억 → 420억)에 들어왔다</li>
+      <li>임상 인력 지원(SMO) 매출이 1년 반 만에 반기 39억으로 성장</li>
+      <li>현 대표이사와 경영진</li>
+    </ul></div>
+    <div class="pane no"><h4>따져 볼 것</h4><ul>
+      <li>의료컨설팅 부문 영업이익: 19.4억(2022) → 22.2억(2023) → 10.4억(2025) → -4.2억(1H26)</li>
+      <li>영업권 212억의 손상 검사 가정은 매출 증가율 9.2~20%, 영업이익률 15.8~18.8%. 2025년 실제 이익률 6.7%</li>
+      <li>메디팁에스엠오는 6월 말 자본잠식(-0.7억), 상반기 순손실 2.5억</li>
+      <li>1H26 인허가 컨설팅 매출 54.3억은 전년 동기 대비 13.9% 감소</li>
+    </ul></div>
+  </div>
+  <h3>큐리바이오: 빌린 150억이 간 곳</h3>
+  <div class="tbl-scroll"><table>
+    <caption>큐리바이오(Curi Bio, 미국 시애틀) 요약 (억원, 반기보고서·공시)</caption>
+    <thead><tr><th>항목</th><th class="num">2023</th><th class="num">2024</th><th class="num">2025</th><th class="num">1H26</th></tr></thead>
+    <tbody>
+      <tr><td>매출</td><td class="num">92.4</td><td class="num">131.0</td><td class="num">118.8</td><td class="num">75.1</td></tr>
+      <tr><td>순이익</td><td class="num neg">-11.2</td><td class="num">15.6</td><td class="num neg">-26.0</td><td class="num neg">-54.1</td></tr>
+      <tr><td>자산 / 부채</td><td class="num">-</td><td class="num">170.5 / 100.6</td><td class="num">354.4 / 130.2</td><td class="num">284.1 / 148.2</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">줄기세포로 만든 심장·근육 조직과 측정 장비를 제약사에 파는 회사다. 매출의 70%가 장비, 30%가 시험 대행이라고 회사가 밝혔다. 드림씨아이에스는 2025년 7월부터 네 차례에 걸쳐 신주·전환사채·구주를 사서 연결 기준 26.14%를 갖고 있고 장부가는 158.4억이다. 2025-11 공시의 구주 매입 단가는 주당 0.437달러, 신주는 0.583달러였다. 인수 결정 공시에 실린 2024년 순이익 15.6억은 이듬해 순손실 26.0억으로 바뀌었고 매출도 9% 줄었다. 회사는 반기보고서에 비임상 평가 플랫폼 사업의 직접 매출을 "현재 없음"으로 적었다.</p>
+  <h3>바이오벤처 지분 21곳</h3>
+  <div class="tbl-scroll"><table>
+    <caption>주요 보유 지분 (억원, 6월 말 장부가)</caption>
+    <thead><tr><th>종목</th><th class="num">최초 투자</th><th class="num">2025말</th><th class="num">2026-06</th><th>메모</th></tr></thead>
+    <tbody>
+      <tr><td>지투지바이오(상장)</td><td class="num">15.0</td><td class="num">150.2</td><td class="num">92.9</td><td>224,238주. 9/23 종가 32,050원 기준 71.9억. 2027-08까지 보호예수</td></tr>
+      <tr><td>제네톡스</td><td class="num">12.0</td><td class="num">16.5</td><td class="num">16.5</td><td>비상장</td></tr>
+      <tr><td>유바이오시스</td><td class="num">10.2</td><td class="num">23.6</td><td class="num">23.6</td><td>2023-06 자기주식 10억과 맞바꾼 상호 출자</td></tr>
+      <tr><td>큐제네틱스</td><td class="num">2.0</td><td class="num">11.8</td><td class="num">16.8</td><td>세 차례 투자. 기타포괄 분류분 2.0억 포함</td></tr>
+      <tr><td>오토텔릭바이오</td><td class="num">10.0</td><td class="num">12.0</td><td class="num">12.0</td><td>비상장</td></tr>
+      <tr><td>2026년 신규 3곳</td><td class="num">30.0</td><td class="num">-</td><td class="num">30.0</td><td>핀테라퓨틱스, 디시젠, 엘피스셀테라퓨틱스 각 10억</td></tr>
+      <tr><td>티앤알바이오팹(상장)</td><td class="num">10.0</td><td class="num">9.0</td><td class="num">4.7</td><td>225,424주. 평가손익은 자본에 직접 반영</td></tr>
+      <tr><td>전액 손실 처리 3곳</td><td class="num">10.0 이상</td><td class="num">0</td><td class="num">0</td><td>셀라토즈테라퓨틱스(10억), 다원메닥스, 에스엔바이오사이언스</td></tr>
+      <tr class="sum"><td>당기손익 분류 합계</td><td class="num"></td><td class="num">292.4</td><td class="num">270.9</td><td>펀드 12억, 변액보험 4억 포함</td></tr>
+    </tbody>
+  </table></div>
+  <div class="take"><span class="lbl">이 투자들이 본업과 어떻게 이어지는가</span><p>회사는 이 투자를 '상생 투자'라고 부르며, 투자한 회사의 임상과 인허가 일감을 받는 구조라고 설명한다. 실제로 지투지바이오는 2024년에 4.5억의 매출을 준 고객이었다. 다만 투자액 대비 받은 일감의 규모는 공시되지 않는다. 확인되는 것은 성과의 분포다. <b>21곳 가운데 한 곳(지투지바이오)이 평가이익의 거의 전부를 만들었고 세 곳은 0원이 됐으며 나머지는 대부분 취득가 근처에 있다.</b> 비상장 지분 상당수는 취득가 그대로 평가돼 있어(54.2억) 장부가가 실제 가치를 반영한다고 보기 어렵다.</p></div>
+</section>
+
+<section id="s9">
+  <div class="sec-h"><span class="sec-n">09</span><h2>산업: 시장은 3년째 제자리이고 제도는 바뀌었다</h2></div>
+  <div class="tbl-scroll"><table>
+    <caption>국내 임상시험 시장의 기초 숫자</caption>
+    <thead><tr><th>지표</th><th class="num">2021</th><th class="num">2022</th><th class="num">2023</th><th class="num">2024</th><th class="num">2025</th><th>출처</th></tr></thead>
+    <tbody>
+      <tr><td>의약품 임상시험 승인(건)</td><td class="num">842</td><td class="num">711</td><td class="num">783</td><td class="num">747</td><td class="num">783</td><td>식약처</td></tr>
+      <tr><td>그중 다국가 임상</td><td class="num">-</td><td class="num">-</td><td class="num">-</td><td class="num">372</td><td class="num">425</td><td>식약처</td></tr>
+      <tr><td>국내 제약사 의뢰</td><td class="num">-</td><td class="num">-</td><td class="num">-</td><td class="num">305</td><td class="num">259</td><td>식약처</td></tr>
+      <tr><td>국내 CRO 시장(억원)</td><td class="num">-</td><td class="num">9,885</td><td class="num">9,801</td><td class="num">9,835</td><td class="num">-</td><td>국가임상시험지원재단</td></tr>
+      <tr><td>CRO 20곳 합산 영업손익(억원)</td><td class="num">-</td><td class="num">400대 흑자</td><td class="num neg">-387</td><td class="num neg">-602</td><td class="num neg">-295</td><td>데일리팜(단일 출처)</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">2023년 시장 9,801억 중 국내 회사 5,463억, 외국계 4,338억, 업체 수 78곳. 드림씨아이에스는 타이거메드 자회사라 통계에서 외국계로 분류된다. 2024년 수치를 두고 기사들이 "20% 이상 성장"이라고 쓴 것은 전년 수치와 맞지 않는다.</p>
+  <h3>네 가지 흐름</h3>
+  <div class="risk">
+    <div class="r"><span class="chip m">제도</span><div><div class="t">재심사 제도 폐지 (2025-02-21 시행)</div><div class="d">신약 허가 후 4~6년간 600~3,000명을 의무 조사하던 재심사가 없어지고 위해성 관리 계획으로 통합됐다. 사용성적조사는 허용되는 방법 가운데 하나로 남았지만 조사 인원은 품목마다 따로 정하고, 비교 관찰 연구나 데이터베이스 연구로 대신할 수 있다. 2026년 9월 4일부터는 용어도 '추가적인 의약품 감시 활동'으로 바뀌었다. 이 회사 본사 매출의 38%가 이 영역이다. 시행 후에도 시판 후 조사 매출은 2025년 +6.7%, 1H26 +24.5%로 늘었다. 기존에 받아 둔 계약이 4~6년에 걸쳐 매출로 잡히기 때문이며, 제도 변화의 영향은 신규 계약의 건당 금액에서 먼저 나타날 것이다. 개편 후 시장 통계는 찾지 못했다.</div></div></div>
+    <div class="r"><span class="chip h">수요</span><div><div class="t">회복은 해외 제약사의 다국가 임상에 쏠렸다</div><div class="d">2025년 승인 건수는 +4.8%로 2023년 수준을 되찾았지만 해외 제약사가 +14%, 국내 제약사는 -15%였다. 해외 제약사 임상의 99%는 다국가 임상이고 본사가 글로벌 CRO와 계약한다. 국내 CRO 고객의 92.8%가 국내 기업이다. 국내 바이오 벤처 투자는 2021년 약 3.7조에서 2024년 약 1.3조로 줄었다.</div></div></div>
+    <div class="r"><span class="chip u">해외</span><div><div class="t">글로벌 CRO는 수주가 돌아섰다</div><div class="d">2026년 2분기 신규 수주 ÷ 매출 비율이 IQVIA 1.22배, ICON 1.51배, Medpace 1.13배, Fortrea 1.06배로 모두 1배를 넘었다. 미국 바이오 벤처 투자는 상반기 91억 달러로 2022년 이후 최대다. 모회사 타이거메드는 2025년 신규 수주 +20.6%, 2026년 상반기 매출 +14.1%(중국 +24.0%)였다.</div></div></div>
+    <div class="r"><span class="chip l">신기술</span><div><div class="t">동물실험 대체는 제도가 앞서고 매출은 뒤따르지 않았다</div><div class="d">미국 FDA는 2025년 4월 동물실험 축소 계획을 냈고 2026년 9월 21일 규정 문구를 '동물시험'에서 '비임상시험'으로 바꾸는 절차를 밟았다. 한국 법안은 2025년 12월 발의 후 처리 여부를 확인하지 못했다. 국내 대표 상장사 오가노이드사이언스는 2025년 매출 24억(회사 목표 62억), 영업손실 162억이고 주가는 52주 고점 48,500원에서 6,770원이 됐다.</div></div></div>
+  </div>
+  <p class="tnote">2024년 2월 시작된 전공의 집단 사직이 임상시험에 준 영향은 업계 기사에서 환자 모집 차질로 언급되지만, 임상 현장 가동률을 직접 보여 주는 통계는 찾지 못했다. 증권사 리포트 아카이브에는 CRO와 의정 갈등을 함께 다룬 자료가 없었다. 미국 생물보안법은 2025년 12월 18일 국방수권법에 포함돼 제정됐고 최종 법에는 기업 이름이 없다. 열람한 법률 자료에 타이거메드는 나오지 않으며, 미국 정부의 첫 지정 명단은 2026년 12월 18일이 기한이다.</p>
+</section>
+
+<section id="s10">
+  <div class="sec-h"><span class="sec-n">10</span><h2>경쟁사: 흑자를 내는 임상 CRO는 하나 남았다</h2></div>
+  <div class="tbl-scroll"><table>
+    <caption>국내 상장 CRO 비교. 시총은 9/23 KRX 종가, 실적은 최근 4분기(3Q25~2Q26) 합계, 억원</caption>
+    <thead><tr><th>회사</th><th>주력</th><th class="num">시총</th><th class="num">매출</th><th class="num">영업이익</th><th class="num">1H26 매출 증가율</th><th class="num">1H26 이익률</th><th class="num">PSR</th><th class="num">PBR</th></tr></thead>
+    <tbody>
+      <tr class="sum"><td><b>드림씨아이에스</b></td><td>임상·시판 후 조사</td><td class="num">809</td><td class="num">732.8</td><td class="num">52.1</td><td class="num">+21.6%</td><td class="num">7.5%</td><td class="num">1.10</td><td class="num">1.08</td></tr>
+      <tr><td>씨엔알리서치</td><td>임상</td><td class="num">269</td><td class="num">635.5</td><td class="num neg">-4.6</td><td class="num neg">-4.2%</td><td class="num neg">-2.5%</td><td class="num">0.42</td><td class="num">0.54</td></tr>
+      <tr><td>페니트리움바이오(옛 에이디엠코리아)</td><td>임상 → 신약 개발 전환</td><td class="num">4,241</td><td class="num">83.4</td><td class="num neg">-67.0</td><td class="num neg">-19.6%</td><td class="num neg">-97.0%</td><td class="num">50.83</td><td class="num">18.49</td></tr>
+      <tr><td>디티앤씨알오</td><td>비임상·분석·임상</td><td class="num">207</td><td class="num">490.0</td><td class="num neg">-104.3</td><td class="num">+6.2%</td><td class="num neg">-47.4%</td><td class="num">0.42</td><td class="num">2.87</td></tr>
+      <tr><td>에이치엘비바이오스텝</td><td>비임상</td><td class="num">436</td><td class="num">721.5</td><td class="num neg">-62.7</td><td class="num neg">-6.1%</td><td class="num neg">-15.3%</td><td class="num">0.60</td><td class="num">0.47</td></tr>
+      <tr><td>바이오톡스텍</td><td>비임상</td><td class="num">358</td><td class="num">524.8</td><td class="num neg">-34.7</td><td class="num">+26.2%</td><td class="num neg">-7.6%</td><td class="num">0.68</td><td class="num">1.10</td></tr>
+      <tr><td>코아스템켐온</td><td>비임상·세포치료제</td><td class="num">1,123</td><td class="num">182.9</td><td class="num neg">-208.4</td><td class="num neg">-16.1%</td><td class="num neg">-105.4%</td><td class="num">6.14</td><td class="num">2.53</td></tr>
+      <tr><td>우정바이오</td><td>비임상·감염관리</td><td class="num">384</td><td class="num">442.0</td><td class="num neg">-4.8</td><td class="num">+43.0%</td><td class="num">1.9%</td><td class="num">0.87</td><td class="num">1.44</td></tr>
+      <tr><td>피엔케이피부임상연구센타</td><td>화장품 인체적용시험</td><td class="num">512</td><td class="num">236.7</td><td class="num">36.7</td><td class="num">+7.4%</td><td class="num">19.2%</td><td class="num">2.16</td><td class="num">0.62</td></tr>
+      <tr><td>에이치시티</td><td>시험인증·비임상</td><td class="num">448</td><td class="num">1,030.0</td><td class="num">18.7</td><td class="num neg">-8.2%</td><td class="num">0.0%</td><td class="num">0.43</td><td class="num">0.47</td></tr>
+      <tr><td>오가노이드사이언스</td><td>오가노이드</td><td class="num">446</td><td class="num">22.9</td><td class="num neg">-163.5</td><td class="num neg">-13.7%</td><td class="num neg">-1,159.4%</td><td class="num">19.48</td><td class="num">1.58</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">DART 재무제표와 네이버·와이즈리포트 시세로 직접 계산. 연결 재무제표가 없는 회사는 별도 기준. PSR = 시총 ÷ 최근 4분기 매출, PBR = 시총 ÷ 6월 말 지배주주 자본(구분 표시가 없는 회사는 자본총계). 임상 CRO와 직접 겨루는 곳은 씨엔알리서치와 비상장 LSK글로벌PS이고, 나머지는 비임상(동물실험)·분석·인체적용시험으로 밸류체인 인접군이다. 옛 에이디엠코리아는 2024년 최대주주가 바뀐 뒤 2026년 3월 페니트리움바이오사이언스로 이름을 바꾸고 신약 개발사로 전환 중이어서 시총을 CRO와 비교할 수 없다. 바이오인프라는 재무 자료가 온전히 수집되지 않아 뺐다.</p>
+  <div class="chart" id="ch-opm"><p class="ct">1H26 영업이익률</p><p class="cs">%. 영업이익 ÷ 매출. -60% 아래는 잘라서 표시</p><svg></svg></div>
+  <h3>씨엔알리서치와 나란히 놓으면</h3>
+  <div class="tbl-scroll"><table>
+    <thead><tr><th>항목</th><th class="num">드림씨아이에스</th><th class="num">씨엔알리서치</th><th>출처</th></tr></thead>
+    <tbody>
+      <tr><td>2025년 연결 매출</td><td class="num">666.3억</td><td class="num">649.8억</td><td>DART</td></tr>
+      <tr><td>2023 → 2025 영업이익</td><td class="num">15.9 → 52.4억</td><td class="num">62.3 → 13.8억</td><td>DART, 증권사 리포트</td></tr>
+      <tr><td>1H26 매출 / 영업이익</td><td class="num">374.2 / 28.1억</td><td class="num">325.4 / -8.0억</td><td>DART</td></tr>
+      <tr><td>수주잔고</td><td class="num">2,515억 (2026-06)</td><td class="num">1,510억 (2025말)</td><td>반기보고서, 드림씨아이에스 IR 6월판</td></tr>
+      <tr><td>주력</td><td class="num">시판 후 조사, 허가 후 임상</td><td class="num">허가용 임상(매출의 54~73%)</td><td>각 사 자료</td></tr>
+      <tr><td>해외</td><td class="num">자체 법인 없음. 타이거메드 망 이용</td><td class="num">미국·태국 법인, 다국가 매출 95억</td><td>각 사 자료</td></tr>
+      <tr><td>시총 ÷ 매출</td><td class="num">1.10배</td><td class="num">0.42배</td><td>계산</td></tr>
+    </tbody>
+  </table></div>
+  <div class="take"><span class="lbl">읽는 법</span><p>두 회사의 이익이 2023년 이후 반대로 움직인 이유는 주력 상품에 있다. 씨엔알리서치는 바이오벤처가 의뢰하는 허가용 임상 비중이 높아 벤처 투자가 마르면 계약이 멈추고 대손이 생긴다. 드림씨아이에스의 시판 후 조사는 <b>이미 허가받아 팔리는 약을 가진 제약사가 법적 의무로 맡기는 일</b>이라 경기를 덜 탄다. 같은 이유로 제도가 바뀌면 영향을 직접 받는다. 업계에서는 국내 CRO 가격이 외국계의 40~50% 수준이라는 서술이 반복되고, 씨엔알리서치가 올해 드림씨아이에스와 LSK글로벌PS 출신 통계·전산 인력을 영입했다는 리포트도 있다. 사람이 곧 생산 설비인 업종에서 인력 이동은 경쟁의 주된 수단이다.</p></div>
+</section>
+
+<section id="s11">
+  <div class="sec-h"><span class="sec-n">11</span><h2>증권사 시각: 열두 건 모두 의견이 없고, 이익 추정은 매번 높았다</h2></div>
+  <p>2020년 상장 이후 이 회사만 다룬 리포트는 12건이다. 전부 투자의견과 목표주가가 없다. 3건은 상장 주관사였던 NH투자증권이 썼고, 2023년 하나증권 리포트와 2025년 12월 "오가노이드 대장주" 리포트는 같은 사람이 썼다.</p>
+  <div class="tbl-scroll"><table>
+    <caption>추정과 실제 (억원)</caption>
+    <thead><tr><th>대상 연도</th><th>추정한 곳 (시점)</th><th class="num">매출 추정</th><th class="num">실제</th><th class="num">영업이익 추정</th><th class="num">실제</th><th class="num">실제 ÷ 추정</th></tr></thead>
+    <tbody>
+      <tr><td>2020</td><td>흥국 (2020-05)</td><td class="num">267</td><td class="num">235</td><td class="num">62</td><td class="num">48</td><td class="num">77%</td></tr>
+      <tr><td>2021</td><td>NH (2021-03)</td><td class="num">271</td><td class="num">262</td><td class="num">64</td><td class="num">36</td><td class="num">57%</td></tr>
+      <tr><td>2022</td><td>NH (2021-03)</td><td class="num">315</td><td class="num">389</td><td class="num">85</td><td class="num">58</td><td class="num">68%</td></tr>
+      <tr><td>2023</td><td>한국IR협의회 (2023-08)</td><td class="num">491</td><td class="num">478</td><td class="num">81</td><td class="num">16</td><td class="num">20%</td></tr>
+      <tr><td>2025</td><td>신한 (2026-01)</td><td class="num">651</td><td class="num">666</td><td class="num">74</td><td class="num">52</td><td class="num">71%</td></tr>
+      <tr class="sum"><td>2026</td><td>신한 (1월) / NH (4월)</td><td class="num">890 / 900</td><td class="num">1H 374</td><td class="num">108 / 100</td><td class="num">1H 28</td><td class="num">진행률 26~28%</td></tr>
+      <tr><td>2027</td><td>신한 / NH</td><td class="num">1,137 / 1,200</td><td class="num">-</td><td class="num">145 / 150</td><td class="num">-</td><td class="num">-</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">2025년 추정은 회계연도가 끝난 뒤인 2026년 1월 16일에 나온 것인데도 영업이익이 22억 빗나갔다. 2026년 매출 추정 890~900억은 전년 대비 +34~35%다. 상반기 증가율은 +21.6%였고, 추정을 맞추려면 하반기 매출이 516~526억(상반기의 1.4배), 영업이익이 72~80억(상반기의 2.6~2.8배) 나와야 한다.</p>
+  <div class="grid2">
+    <div class="pane yes"><h4>증권사가 든 투자 이유</h4><ul>
+      <li>2025년 연결 매출로 국내 CRO 1위(NH, 2026-04)</li>
+      <li>큐리바이오를 통한 동물실험 대체 시장 진입. 고객에 노보노디스크, 일라이릴리, 로슈(신한, NH)</li>
+      <li>중국 바이오텍이 한국에서 하는 임상을 타이거메드와 함께 수주. 1상 예상 20건 이상(회사 IR)</li>
+      <li>투자한 벤처의 상장에 따른 지분 가치(지투지바이오)</li>
+      <li>글로벌 CRO PER 25~35배 대비 12개월 선행 14배(신한, 1월)</li>
+    </ul></div>
+    <div class="pane no"><h4>리포트에 없는 것</h4><ul>
+      <li>전환사채 조건과 희석. 12건 어디에도 없다</li>
+      <li>메디팁 영업권 212억과 의료컨설팅 부문의 이익 감소</li>
+      <li>재심사 제도 폐지가 시판 후 조사 매출에 주는 영향</li>
+      <li>수주잔고가 매출로 전환되지 않고 줄어드는 금액</li>
+      <li>큐리바이오의 순손실. IR 자료의 "순이익 15억"을 그대로 인용</li>
+    </ul></div>
+  </div>
+  <div class="take"><span class="lbl">읽는 법</span><p>틀린 방향이 일정하다. <b>매출 추정은 5번 중 3번이 실제와 4% 안쪽으로 맞았고, 영업이익 추정은 5번 모두 높았다.</b> 회사는 일감을 따는 데는 기대만큼이었고 그 일감에서 이익을 남기는 데는 기대 이하였다. 인건비가 먼저 나가고 매출이 뒤따르는 구조에서 회사가 성장을 택할 때마다 이익률이 내려간 것이다. 2026~2027년 추정은 매출이 2년에 80% 늘면서 영업이익률도 7.9%에서 12.5%로 오른다는 가정인데, 상장 후 6년 동안 매출 증가율이 20%를 넘으면서 이익률이 함께 오른 해는 2022년과 2024년 두 번이었다.</p></div>
+</section>
+
+<section id="s12">
+  <div class="sec-h"><span class="sec-n">12</span><h2>해자 검증: 찬성 근거와 반증</h2></div>
+  <div class="grid2">
+    <div class="pane yes"><h4>해자가 있다는 근거</h4><ul>
+      <li><b>업계가 적자인 동안 흑자를 지켰다.</b> 2023~2025년 CRO 20곳 합산이 3년 연속 영업적자였고 이 회사는 매년 흑자였다</li>
+      <li><b>시판 후 조사의 누적 실적.</b> 홈페이지 기준 391건, 증권사 자료 기준 787건. 화이자 우선 협력사 지정(2019), 바이엘 기본 계약(2019). 제약사는 허가 당국에 낼 자료를 맡기는 일이라 실적 없는 업체로 잘 바꾸지 않는다</li>
+      <li><b>선수금 구조.</b> 계약부채 311억이 고객 돈으로 운전자본을 대 준다. 영업 현금흐름이 2025년 141억, 1H26 76억으로 회계 이익보다 크다</li>
+      <li><b>타이거메드 망.</b> 43개국, 직원 약 1.2만 명. 자체 해외 법인 없이 다국가 임상에 참여할 수 있다. 1H26에 계열사에 지급한 외주 수수료가 9.3억으로 계열에서 받은 매출 6.2억보다 많다. 해외 업무를 계열사에 맡기고 있다는 뜻이다</li>
+      <li><b>인허가부터 현장 인력까지 한 그룹에 있다.</b> 메디팁, 메디팁에스엠오, 엘씨에스</li>
+    </ul></div>
+    <div class="pane no"><h4>반증</h4><ul>
+      <li><b>이익률이 구조적으로 낮아졌다.</b> 연결 영업이익률 20.4%(2020) → 7.9%(2025). 가격 결정력이 있다면 나오기 어려운 추세다</li>
+      <li><b>회사 스스로 점유율을 말하지 않는다.</b> 2020년 사업보고서의 점유율 표(2018년 4.22%)와 "상위권" 문구는 2021년부터 삭제됐다. "독보적인 포지션"이라는 문구만 근거 수치 없이 남아 있다</li>
+      <li><b>사람이 떠나면 끝나는 사업이다.</b> 평균 근속 3.8년. 경쟁사가 이 회사 출신을 영입했다는 리포트가 있다. 특허나 설비 같은 장벽이 없다</li>
+      <li><b>가장 강한 상품이 제도 위에 서 있다.</b> 재심사 제도는 2025년 2월 폐지됐다. 조사 인원을 줄이거나 데이터베이스 연구로 바꿀 수 있게 됐다</li>
+      <li><b>타이거메드 효과가 숫자로 작다.</b> 직접 매출 비중 1.66%. 상장 때 투자설명서의 9.8%에서 내려왔다. 국외 매출 비중도 10.5%(2024) → 6.6%(1H26)</li>
+      <li><b>대형 계약이 40% 감액됐다.</b> 고객이 범위를 줄일 때 CRO가 막을 수단이 없다</li>
+    </ul></div>
+  </div>
+  <div class="take"><span class="lbl">판단</span><p><b>해자라기보다 버티는 힘이다.</b> 허가받은 약을 가진 제약사의 의무 조사라는 안정적인 일감, 고객이 먼저 주는 돈, 모회사의 해외 조직이 업황이 나쁠 때 적자를 막아 줬다. 하지만 이것들이 가격을 올리거나 이익률을 지키게 해 주지는 못했다. 본사 영업이익률이 2분기에 20%로 돌아온 것이 인력 투입이 끝난 데 따른 일시적 결과인지, 단가가 오른 결과인지는 공시만으로 가릴 수 없다. 상반기에 직원이 다시 30명 늘었다는 점은 전자 쪽 해석에 부담이다.</p></div>
+</section>
+
+<section id="s13">
+  <div class="sec-h"><span class="sec-n">13</span><h2>지배구조와 자본: 누가 가지고 있고 누가 늘어나는가</h2></div>
+  <div class="tbl-scroll"><table>
+    <caption>주주 구성 (2026-06-30, 반기보고서)</caption>
+    <thead><tr><th>주주</th><th class="num">주식 수</th><th class="num">지분율</th><th>메모</th></tr></thead>
+    <tbody>
+      <tr><td>Hongkong Tigermed</td><td class="num">14,123,680</td><td class="num">57.41%</td><td>항저우 타이거메드의 100% 자회사. 상장 후 매매 0건. 전환사채 30억 인수(전환 시 779,828주)</td></tr>
+      <tr><td>Master Union Holdings</td><td class="num">1,704,960</td><td class="num">6.93%</td><td>상장 때는 별개 주주. 2023-06-28 타이거메드가 인수해 계열 편입</td></tr>
+      <tr><td>유정희 대표이사</td><td class="num">1,287,472</td><td class="num">5.23%</td><td>2022-03 제3자 배정 30억으로 취득. 이후 장내 매수 99,400주. 매도 없음</td></tr>
+      <tr><td>그 밖의 임원</td><td class="num">50,575</td><td class="num">0.21%</td><td></td></tr>
+      <tr class="sum"><td>최대주주와 특수관계인</td><td class="num">17,166,687</td><td class="num">69.78%</td><td></td></tr>
+      <tr><td>소액주주 7,064명</td><td class="num">6,536,042</td><td class="num">26.57%</td><td>자기주식 없음. 배당은 상장 후 한 번도 없음</td></tr>
+    </tbody>
+  </table></div>
+  <h3>2022년 3월의 보름</h3>
+  <ul class="tl">
+    <li><span class="d">03-15</span><span>메디팁 지분 70.25%를 200.9억에 사기로 결의. 파는 사람은 유정희 메디팁 대표 외 3인. 1년 7개월 전 같은 사람에게서 18.75%를 살 때보다 주당 가격이 2.2배(54,167원 → 119,167원)</span></li>
+    <li><span class="d">03-17</span><span>유정희 한 사람을 대상으로 제3자 배정 유상증자 30억 결의. 주당 11,250원, 할인 없음</span></li>
+    <li><span class="d">03-28</span><span>증자 대금 납입</span></li>
+    <li><span class="d">03-30</span><span>정기주총에서 유정희 대표이사 선임, 공경선 대표 사임. 타이거메드 측 이사 2명 신규 선임</span></li>
+    <li><span class="d">04-22</span><span>유정희 신주의 보호예수를 2년에서 1년으로 정정. 사유는 "유관기관과의 협의"</span></li>
+  </ul>
+  <p class="tnote">상장 공모 자금 197억 가운데 신규 사업용 135억이 이 인수에 쓰였다. 투자설명서에는 의료기기 임상과 의약품 등록 조직을 만드는 인건비로 111억을 쓴다고 적혀 있었고, 인수 방식으로 진출할 수 있다는 문구도 함께 있었다. 운영자금 62억은 상장 후 6년째 쓰지 않고 예치돼 있다.</p>
+  <h3>늘어날 수 있는 주식</h3>
+  <div class="tbl-scroll"><table>
+    <caption>잠재 주식 (2026-06-30 기준, 발행주식 24,600,444주)</caption>
+    <thead><tr><th>종류</th><th class="num">주식 수</th><th class="num">발행주식 대비</th><th class="num">가격</th><th>시점</th></tr></thead>
+    <tbody>
+      <tr><td>전환사채 150억</td><td class="num">3,899,142</td><td class="num">15.85%</td><td class="num">전환가 3,847원</td><td>전환 청구 2026-09-30 ~ 2028-08-30. 조기상환 청구는 2027-09-30부터</td></tr>
+      <tr><td>&nbsp;&nbsp;전환가가 하한까지 내려가면</td><td class="num">5,569,996</td><td class="num">22.64%</td><td class="num">2,693원</td><td>7개월마다 조정. 다음 조정일 2026-11-30(계산)</td></tr>
+      <tr><td>스톡옵션 4회차</td><td class="num">385,000</td><td class="num">1.57%</td><td class="num">행사가 3,520원</td><td>2028-08-30까지</td></tr>
+      <tr><td>스톡옵션 5회차</td><td class="num">1,144,600</td><td class="num">4.65%</td><td class="num">행사가 3,900원</td><td>2027-09-29 ~ 2030-09-28</td></tr>
+      <tr class="sum"><td>합계(현 전환가 기준)</td><td class="num">5,428,742</td><td class="num">22.07%</td><td class="num"></td><td></td></tr>
+    </tbody>
+  </table></div>
+  <div class="grid2">
+    <div class="pane yes"><h4>주주에게 유리한 사실</h4><ul>
+      <li>최대주주가 상장 후 6년간 한 주도 팔지 않았고 전환사채도 30억 인수했다</li>
+      <li>2021년 4월 이후 임원 매도 보고가 없다. 2023년 11월 이후 임원 6명이 장내에서 샀다</li>
+      <li>대표이사는 2023년 12월부터 네 시기에 걸쳐 2,690~5,687원에 매수</li>
+      <li>이사 7명 중 독립이사 3명, 감사위원 분리 선임(2026-03)</li>
+      <li>회계 제재, 불성실공시 지정 이력이 검색되지 않는다</li>
+    </ul></div>
+    <div class="pane no"><h4>따져 볼 사실</h4><ul>
+      <li>2025-09-22 전환사채 결의, 09-29 스톡옵션 116만주 부여, 09-30 납입이 9일 사이에 있었다. 5회차 스톡옵션의 60.2%가 대표이사(50만주)와 부사장(20만주)에게 갔다. 4회차는 199명에게 나눴고 대표 몫은 5.6%였다</li>
+      <li>2021년 "주주가치 제고" 목적으로 산 자기주식 20만주(25.4억)는 소각 없이 인수 대가, 상여, 제휴사 처분으로 전부 시장에 돌아갔다</li>
+      <li>이사 보수 한도가 2026년 10억에서 30억으로 올랐다. 2025년 실제 지급은 7.8억</li>
+      <li>2025-03 정관 변경으로 제3자 배정 대상에 '개인, 법인'이 추가됐다</li>
+      <li>감사인이 삼일에서 대성(금융감독원 지정)으로 바뀌었다. 6년 계약 만료에 따른 주기적 지정이다. 새 감사인의 첫 연말 결산에 영업권 손상 검사와 파생상품 평가가 걸려 있다</li>
+      <li>메디팁 증자에 최대주주 계열 펀드가 52.3억으로 참여했다. 상장사 주주와 자회사 주주의 이해가 갈릴 수 있는 구조다</li>
+    </ul></div>
+  </div>
+</section>
+
+<section id="s14">
+  <div class="sec-h"><span class="sec-n">14</span><h2>밸류에이션: 순이익으로는 잴 수 없다</h2></div>
+  <h3>영업이익으로 다시 계산한 배수</h3>
+  <div class="tbl-scroll"><table>
+    <caption>시가총액 809.4억 기준. 세후 이익 = 영업이익 × (1 − 22%)로 단순 계산. 영업외 손익과 비지배 지분은 넣지 않았다</caption>
+    <thead><tr><th>어떤 이익을 쓰는가</th><th class="num">영업이익</th><th class="num">세후</th><th class="num">배수</th><th>전제</th></tr></thead>
+    <tbody>
+      <tr><td>최근 4분기 연결</td><td class="num">52.1억</td><td class="num">40.6억</td><td class="num hl">19.9배</td><td>3Q25 ~ 2Q26. 4Q25 적자 포함</td></tr>
+      <tr><td>1H26 연결 × 2</td><td class="num">56.1억</td><td class="num">43.8억</td><td class="num">18.5배</td><td>하반기가 상반기와 같다</td></tr>
+      <tr><td>최근 4분기 별도(본사)</td><td class="num">58.0억</td><td class="num">45.2억</td><td class="num">17.9배</td><td>자회사 손익을 0으로 본다</td></tr>
+      <tr><td>증권사 2026년 추정(NH)</td><td class="num">100억</td><td class="num">78.0억</td><td class="num">10.4배</td><td>하반기 영업이익 72억</td></tr>
+      <tr><td>2Q26 별도 × 4</td><td class="num">126.9억</td><td class="num">99.0억</td><td class="num">8.2배</td><td>본사 이익률 20%가 1년 내내 유지</td></tr>
+    </tbody>
+  </table></div>
+  <h3>가진 것을 빼고 본업에 매겨진 값</h3>
+  <div class="tbl-scroll"><table>
+    <caption>억원. 재무 수치는 6월 말 연결, 상장주식은 9/23 종가</caption>
+    <thead><tr><th>항목</th><th class="num">금액</th><th>계산 근거</th></tr></thead>
+    <tbody>
+      <tr><td>시가총액</td><td class="num">809.4</td><td>24,600,444주 × 3,290원</td></tr>
+      <tr><td>(−) 순현금</td><td class="num">198.7</td><td>현금·예적금·단기금융상품 361.9 − 차입금 8.0 − 리스 13.4 − 전환사채 장부가 141.8</td></tr>
+      <tr><td>(−) 지투지바이오</td><td class="num">71.9</td><td>224,238주 × 32,050원. 2027-08까지 매도 불가</td></tr>
+      <tr><td>(−) 큐리바이오</td><td class="num">158.4</td><td>장부가. 시장 가격 없음</td></tr>
+      <tr class="sum"><td>본업에 매겨진 값 ①</td><td class="num">380.4</td><td>최근 4분기 본사 영업이익 58.0억의 6.6배</td></tr>
+      <tr><td>(−) 비상장 지분·펀드</td><td class="num">191.7</td><td>당기손익 분류 178.0 + 기타포괄 분류 13.7(티앤알바이오팹 5.2 포함)</td></tr>
+      <tr class="sum"><td>본업에 매겨진 값 ②</td><td class="num">188.7</td><td>같은 영업이익의 3.3배</td></tr>
+    </tbody>
+  </table></div>
+  <div class="take"><span class="lbl">이 계산의 약점 네 가지</span><p><b>첫째, 순현금 199억은 자유롭게 쓸 수 있는 돈이 아니다.</b> 고객에게 먼저 받은 계약부채가 311억으로 순현금보다 크다. 일을 해 주고 갚아야 할 돈이다. 둘째, 현금과 투자자산의 일부는 메디팁에 있고 메디팁의 33.31%는 외부 주주 몫이다. 셋째, 큐리바이오와 비상장 지분의 장부가는 시장에서 확인된 값이 아니다. 큐리바이오는 반년에 54억 손실을 냈고, 비상장 지분 54억어치는 취득가 그대로다. 넷째, 전환사채를 부채로 빼면서 희석도 따로 걱정하면 이중 계산이 된다. 전환되면 부채 142억이 없어지는 대신 주식이 390만주 늘어 시가총액이 938억(같은 주가 기준)이 된다. 어느 쪽으로 계산해도 본업 값 ①은 370~380억 근처다.</p></div>
+  <h3>다른 잣대</h3>
+  <div class="tbl-scroll"><table>
+    <thead><tr><th>지표</th><th class="num">드림씨아이에스</th><th>비교</th></tr></thead>
+    <tbody>
+      <tr><td>시총 ÷ 매출</td><td class="num">1.10배</td><td>씨엔알리서치 0.42배. 국내 비임상 CRO 0.4~0.9배. IQVIA 기업가치 ÷ 매출 3.5배, ICON 1.9배(단일 출처)</td></tr>
+      <tr><td>시총 ÷ 지배주주 자본</td><td class="num">1.08배</td><td>자본 749.0억. 영업권 284.4억을 빼면 1.74배</td></tr>
+      <tr><td>시총 ÷ 영업 현금흐름</td><td class="num">7.0배</td><td>최근 4분기 영업 현금흐름 115.5억(아래 주석)</td></tr>
+      <tr><td>상장 당시 공모가 배수</td><td class="num">PER 19.4배</td><td>공모가 기준 시총 807억 ÷ 2019년 순이익 41.5억. 비교기업 평균 23.66배에 13.2% 할인</td></tr>
+      <tr><td>글로벌 CRO 선행 PER</td><td class="num">-</td><td>IQVIA 19.8배, ICON 15.6배, Medpace 33.8배(9월 말, 단일 출처). 2022년 실적 기준 3사 평균 28.1배에서 2024년 실적 기준 18.4배로 내려왔다</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">영업 현금흐름 최근 4분기 = 2025년 140.7억 − 1H25 101.4억 + 1H26 76.2억 = 115.5억. 단기 채권형 상품을 회수한 돈이 영업 현금흐름에 섞여 있고(2025년 40.3억, 1H26 10.0억) 고객 선수금의 증감에 따라 분기마다 크게 달라지므로 참고 지표로만 본다.</p>
+  <div class="take"><span class="lbl">정리</span><p>상장 때 시장은 이 회사를 순이익의 19배에 샀다. 지금 본업 영업이익으로 계산한 배수는 18~20배로 그때와 비슷하다. 시가총액도 807억에서 809억으로 같다. <b>6년 동안 매출이 3배가 됐지만 영업이익은 43억에서 52억으로 늘었을 뿐이고, 시장은 매출이 아니라 이익에 값을 매겼다.</b> 주가가 다시 평가받으려면 본사 이익률 회복이 연결 영업이익 증가로 이어져야 한다. 증권사 추정(100억)이 맞으면 10배, 2분기 본사 이익률이 유지되면 8배까지 내려간다. 거꾸로 하반기가 상반기 수준이면 지금 배수는 글로벌 CRO 선행 배수와 같은 수준이고 싸다고 할 이유가 없다.</p></div>
+</section>
+
+<section id="s15">
+  <div class="sec-h"><span class="sec-n">15</span><h2>리스크</h2></div>
+  <div class="risk">
+    <div class="r"><span class="chip h">HIGH</span><div><div class="t">메디팁 영업권 212억의 손상 가능성</div><div class="d">손상 검사의 영업이익률 가정은 15.8~18.8%, 2025년 의료컨설팅 부문 실제 이익률은 6.7%, 1H26은 적자다. 영업권은 연결 자본의 33.8%다. 손상을 인식하면 그만큼 영업외 손실과 자본 감소로 이어진다. 감사인이 올해 바뀌었고 핵심감사사항이 바로 이 항목이다.</div></div></div>
+    <div class="r"><span class="chip h">HIGH</span><div><div class="t">전환사채 희석과 전환가 조정</div><div class="d">현 전환가 기준 15.9%, 하한 기준 22.6%. 주가가 전환가 3,847원 아래에 머물면 11월 30일 조정에서 전환가가 내려가고 전환 가능 주식이 늘어난다. 주가가 회복되면 다시 올리는 조항이 있으나 상한은 3,847원이다. 주가가 전환가 위로 오르는 구간에서는 전환 물량이 나올 수 있다.</div></div></div>
+    <div class="r"><span class="chip h">HIGH</span><div><div class="t">본업 밖 투자가 계속 커지고 있다</div><div class="d">1년 반 동안 주식과 관계기업 취득에 222억을 썼다. 큐리바이오는 반기 순손실 54억으로 추가 자금이 필요할 수 있고 드림씨아이에스는 상반기에도 38.5억을 더 넣었다. 비만치료제 국내 3상을 회사가 의뢰자로 직접 진행하는데 비용 부담 구조가 공시되지 않았다. 전환사채 발행 결정 공시에 적힌 정관상 잔여 발행 한도는 500억이다.</div></div></div>
+    <div class="r"><span class="chip m">MID</span><div><div class="t">시판 후 조사 제도 변경</div><div class="d">본사 매출의 38%. 기존 계약이 끝나는 2028~2030년 이후의 일감이 같은 규모로 채워질지 알 수 없다. 회사는 실사용 자료 연구 역량을 키우고 있다고 밝히지만 관련 매출은 공시되지 않는다.</div></div></div>
+    <div class="r"><span class="chip m">MID</span><div><div class="t">고객의 지급 능력</div><div class="d">6개월 넘게 밀린 매출채권이 19억에서 46억으로 늘었다. 대손상각비는 2024년 2.9억, 2025년 7.8억이다. 감사 과정에서 손상차손이 2.2억에서 7.8억으로 늘어난 것이 2025년 영업이익 하향의 한 원인이었다.</div></div></div>
+    <div class="r"><span class="chip m">MID</span><div><div class="t">인력 증가와 이익률</div><div class="d">본사 직원이 반년에 30명 늘었다. 2023년에는 83명을 늘린 뒤 영업이익이 83% 줄었다. 이번 증가 폭은 그때의 3분의 1이다.</div></div></div>
+    <div class="r"><span class="chip m">MID</span><div><div class="t">순이익 변동에 따른 시세 왜곡</div><div class="d">지투지바이오 주가, 파생상품 재평가, 큐리바이오 손실이 분기 순이익을 수십억씩 움직인다. 시세 사이트의 PER과 "흑자 전환", "순이익 급증" 같은 기사 제목이 본업과 무관하게 만들어진다.</div></div></div>
+    <div class="r"><span class="chip l">LOW</span><div><div class="t">중국계 최대주주와 미국 규제</div><div class="d">미국 생물보안법은 미국 연방 정부 조달에 적용되고 민간 거래를 직접 막지 않는다. 열람한 자료에 타이거메드는 없다. 다만 첫 지정 명단이 12월 18일에 나온다. 큐리바이오는 미국 국립보건원 지원금을 받는 회사여서 최대주주가 중국계 기업의 자회사라는 점이 쟁점이 될 여지가 있다. 이 부분은 확인된 사실이 아니라 점검할 항목이다.</div></div></div>
+    <div class="r"><span class="chip l">LOW</span><div><div class="t">유동성</div><div class="d">평소 거래대금 하루 2억 안팎. 유통 주식 30%. 소송은 피고 3건이 있으나 회사는 중요하지 않다고 판단했다.</div></div></div>
+  </div>
+</section>
+
+<section id="s16">
+  <div class="sec-h"><span class="sec-n">16</span><h2>투자 전 확인할 것</h2></div>
+  <h3>날짜가 정해진 것</h3>
+  <ul class="tl">
+    <li><span class="d">09-30</span><span>전환사채 전환 청구 시작. 전환 청구가 들어오면 '전환청구권 행사' 공시가 나온다</span></li>
+    <li><span class="d">11월 중순</span><span>3분기 보고서. 별도 영업이익률(2분기 20.3%), 의료컨설팅 부문 손익, 신규 수주, 6개월 초과 채권, 큐리바이오 추가 출자 여부</span></li>
+    <li><span class="d">11-30</span><span>전환가 조정일(계산). 조정되면 '전환가액의 조정' 공시</span></li>
+    <li><span class="d">12-18</span><span>미국 정부의 우려 바이오기업 첫 명단 기한</span></li>
+    <li><span class="d">2027년 2월</span><span>2026년 잠정 실적. 작년에는 감사 후 영업이익이 17% 낮아졌다. 3월 감사보고서까지 확정치로 보지 말 것</span></li>
+    <li><span class="d">2027-08</span><span>지투지바이오 보호예수 종료</span></li>
+  </ul>
+  <h3>체크리스트</h3>
+  <ul class="check">
+    <li><b>3분기 별도 영업이익이 25억을 넘는가.</b> 넘으면 2분기 이익률이 일시적이지 않았다는 첫 증거다. 15억 아래면 상반기 평균으로 되돌아간 것이다</li>
+    <li><b>연결 영업이익과 별도 영업이익의 차이가 줄어드는가.</b> 상반기에 -16.4억이었다. 자회사가 본사 이익을 깎는 구조가 이어지는지</li>
+    <li><b>신규 수주가 분기 250억을 넘는가.</b> 2025년 분기 평균이 244억이었다</li>
+    <li><b>지투지바이오 9월 말 종가.</b> 41,450원보다 낮으면 그 차이 × 224,238주가 3분기 평가손실이다</li>
+    <li><b>파생상품부채 154.1억이 3분기 보고서에서 바뀌는가.</b> 그대로면 연말에 한 번에 반영된다</li>
+    <li><b>메디팁 자기주식 취득의 상대방과 금액.</b> 외부 투자자 지분을 되사는 것이라면 메디팁 상장 계획이 접힌 것이고 자금이 밖으로 나간다</li>
+    <li><b>바이오벤처 추가 투자와 새 차입.</b> 이사회 의안과 타법인 출자 현황</li>
+  </ul>
+  <h3>회사에 물을 질문</h3>
+  <div class="qs">
+    <div class="q"><div class="qh"><span class="qn">★ Q1</span><span class="qt">2분기 본사 영업이익률 20.3%는 무엇이 달라진 결과인가</span></div><p class="why"><b>왜 묻는가</b> 1분기 10.0%에서 한 분기에 두 배가 됐다. 인력 가동률, 단가, 특정 프로젝트 종료 정산 중 무엇인지에 따라 지속 여부가 갈린다.</p></div>
+    <div class="q"><div class="qh"><span class="qn">★ Q2</span><span class="qt">수주잔고에서 매출로 인식되지 않고 빠진 금액은 연간 얼마인가</span></div><p class="why"><b>왜 묻는가</b> 공시 수치로 역산하면 2024년 73억이다. 취소, 감액, 환율 가운데 무엇인지 회사만 안다.</p></div>
+    <div class="q"><div class="qh"><span class="qn">★ Q3</span><span class="qt">의료컨설팅 부문이 적자로 돌아선 이유와 회복 시점</span></div><p class="why"><b>왜 묻는가</b> IR 자료는 "자회사 사업 확장을 위한 선제 투자"라고만 했다. 영업권 212억의 근거가 되는 사업이다.</p></div>
+    <div class="q"><div class="qh"><span class="qn">★ Q4</span><span class="qt">재심사 폐지 이후 새로 받은 시판 후 조사 계약의 건당 금액과 조사 인원은 이전과 어떻게 다른가</span></div><p class="why"><b>왜 묻는가</b> 제도 변화의 영향은 기존 계약이 아니라 신규 계약에서 나타난다.</p></div>
+    <div class="q"><div class="qh"><span class="qn">★ Q5</span><span class="qt">큐리바이오에 앞으로 더 넣을 계획이 있는가. 연결 편입 조건은</span></div><p class="why"><b>왜 묻는가</b> 지분 26%, 반기 손실 54억. 지분이 더 늘어 연결되면 손실 전액이 영업이익에 들어온다.</p></div>
+    <div class="q"><div class="qh"><span class="qn">Q6</span><span class="qt">파생상품부채를 분기마다 재평가하지 않는 이유</span></div><p class="why"><b>왜 묻는가</b> 세 시점의 공정가치가 원 단위까지 같다.</p></div>
+    <div class="q"><div class="qh"><span class="qn">Q7</span><span class="qt">비만치료제 국내 3상 비용은 누가 내고, 회사가 얻는 권리는 무엇인가</span></div><p class="why"><b>왜 묻는가</b> 의뢰를 받는 회사가 의뢰자가 되면 수익 구조와 위험이 달라진다.</p></div>
+    <div class="q"><div class="qh"><span class="qn">Q8</span><span class="qt">타이거메드와 함께 수주한 계약이 잔고에서 차지하는 비중</span></div><p class="why"><b>왜 묻는가</b> 직접 거래는 매출의 1.66%다. 공동 수주의 규모는 공시되지 않는다.</p></div>
+    <div class="q"><div class="qh"><span class="qn">Q9</span><span class="qt">6개월 넘게 밀린 채권 46억의 고객 유형과 회수 계획</span></div><p class="why"><b>왜 묻는가</b> 반년 새 26억 늘었다.</p></div>
+    <div class="q"><div class="qh"><span class="qn">Q10</span><span class="qt">배당이나 자기주식 소각 계획. 쓰지 않은 공모 자금 62억의 용도</span></div><p class="why"><b>왜 묻는가</b> 상장 후 주주에게 돌아간 현금이 없다. 2025년 11월 회사는 주주환원을 "종합 검토"한다고 했다.</p></div>
+  </div>
+</section>
+
+<section id="s17">
+  <div class="sec-h"><span class="sec-n">17</span><h2>출처와 한계</h2></div>
+  <ul class="src">
+    <li><b>DART</b>: 사업보고서 2020~2025 회계연도, 분기·반기보고서 2024~2026, 투자설명서(2020-05-11), 연결·별도 감사보고서, 수시공시와 지분공시 원문 약 150건. 재무 수치는 단일회사 전체 재무제표 API로 받아 분기별로 재계산</li>
+    <li><b>증권사 리포트와 회사 자료</b>: 전용 리포트 12건(SK, IBK, KTB, 흥국, NH 3건, 한국IR협의회, 하나, KB, 브라이어스인사이트, 신한), 회사 IR 자료 2026년 3월판과 6월판. 다른 회사·산업 리포트 중 본문에 이 회사가 나오는 62건, CRO 업계 리포트 51건</li>
+    <li><b>시세</b>: KRX 종가와 발행주식 수는 와이즈리포트, 일별 시세와 코스닥 지수는 네이버(시간외 체결 포함). 비교 회사 시총은 9/23 종가로 환산</li>
+    <li><b>산업</b>: 식약처 임상시험 승인 현황 보도자료, 국가임상시험지원재단 실태조사 인용 기사, 약사공론·데일리팜·히트뉴스·메디파나, 각 글로벌 CRO 2분기 실적 발표, 미국 FDA 보도자료, 법무법인 자료(Arnold &amp; Porter, Sidley, Holland &amp; Knight)</li>
+    <li><b>타이거메드</b>: 회사 보도자료(2025년 연간, 2026년 상반기)</li>
+  </ul>
+  <h3>확인하지 못한 것</h3>
+  <ul class="src">
+    <li>고객 이름, 고객별 매출, 수주잔고의 서비스별 구성</li>
+    <li>재심사 폐지 이후 시판 후 조사 시장 규모와 경과 조치 원문</li>
+    <li>2026년 5월 주가 급등의 직접 원인</li>
+    <li>큐리바이오 1·2차 취득 금액의 건별 내역, 프로메디스 외 소규모 출자 20여 건의 금액</li>
+    <li>타이거메드가 미국 국방부 명단에 있는지 여부(명단 원문 미대조)</li>
+    <li>글로벌 CRO 배수는 시세 사이트 한 곳의 값이며 사이트마다 크게 다르다</li>
+    <li>연결 기준 직원 수. 본문의 1인당 매출은 본사 직원과 별도 매출로 계산했다</li>
+    <li>회사 홈페이지의 IR 자료 게시판과 연혁 페이지는 열리지 않았다</li>
+  </ul>
+  <div class="foot">본 리포트는 공개 자료를 정리한 것으로 특정 종목의 매수·매도를 권유하지 않는다. 수치는 2026-09-28 기준으로 수집했고 기준 주가는 9월 23일 KRX 종가 3,290원이다. '계산'이라고 적은 값은 공시 수치로 필자가 산출한 것이며 회사가 확인한 값이 아니다. 투자 판단과 그 결과는 투자자 본인에게 있다.</div>
+</section>
+
+</main>
+<script type="application/json" id="cd">{"px":3290,"daily":[["20230102",2540],["20230103",2916],["20230104",2916],["20230105",2891],["20230106",2928],["20230109",3066],["20230110",2978],["20230111",2928],["20230112",3041],["20230113",2978],["20230116",2991],["20230117",2978],["20230118",2978],["20230119",2966],["20230120",2966],["20230125",2986],["20230126",2953],["20230127",2953],["20230130",2958],["20230131",2998],["20230201",3003],["20230202",3053],["20230203",3036],["20230206",3033],["20230207",3028],["20230208",3036],["20230209",2976],["20230210",2903],["20230213",2903],["20230214",2873],["20230215",2961],["20230216",2948],["20230217",2918],["20230220",2978],["20230221",3181],["20230222",3216],["20230223",3129],["20230224",3079],["20230227",2993],["20230228",2986],["20230302",2778],["20230303",2843],["20230306",2868],["20230307",2876],["20230308",2866],["20230309",2853],["20230310",2788],["20230313",2801],["20230314",2628],["20230315",2680],["20230316",2708],["20230317",2856],["20230320",2863],["20230321",2866],["20230322",2808],["20230323",2808],["20230324",2816],["20230327",2758],["20230328",2736],["20230329",2841],["20230330",2788],["20230331",2680],["20230403",2625],["20230404",2798],["20230405",2828],["20230406",2823],["20230407",2816],["20230410",2756],["20230411",2758],["20230412",2741],["20230413",2791],["20230414",2846],["20230417",2843],["20230418",2816],["20230419",2888],["20230420",2811],["20230421",2811],["20230424",2813],["20230425",2793],["20230426",2798],["20230427",2791],["20230428",2808],["20230502",2816],["20230503",2798],["20230504",2793],["20230508",3194],["20230509",3111],["20230510",3211],["20230511",3176],["20230512",3311],["20230515",3441],["20230516",3404],["20230517",3324],["20230518",3261],["20230519",3299],["20230522",3254],["20230523",3154],["20230524",3141],["20230525",3249],["20230526",3256],["20230530",3179],["20230531",3121],["20230601",3028],["20230602",3071],["20230605",3216],["20230607",3239],["20230608",3176],["20230609",3154],["20230612",3219],["20230613",3104],["20230614",3106],["20230615",3106],["20230616",3316],["20230619",3391],["20230620",3411],["20230621",3254],["20230622",3241],["20230623",3241],["20230626",3201],["20230627",3159],["20230628",3194],["20230629",3304],["20230630",3371],["20230703",3364],["20230704",3394],["20230705",3316],["20230706",3249],["20230707",3126],["20230710",3066],["20230711",3109],["20230712",3003],["20230713",3028],["20230714",3053],["20230717",3063],["20230718",3016],["20230719",3016],["20230720",3066],["20230721",3041],["20230724",2978],["20230725",2903],["20230726",2853],["20230727",2908],["20230728",2958],["20230731",2983],["20230801",3216],["20230802",3479],["20230803",3361],["20230804",3467],["20230807",3429],["20230808",3479],["20230809",3539],["20230810",3577],["20230811",3577],["20230814",3479],["20230816",3479],["20230817",3482],["20230818",3504],["20230821",3386],["20230822",3529],["20230823",3499],["20230824",3489],["20230825",3451],["20230828",3434],["20230829",3497],["20230830",3779],["20230831",3754],["20230901",3579],["20230904",3774],["20230905",3855],["20230906",4235],["20230907",4233],["20230908",4330],["20230911",5619],["20230912",5194],["20230913",5419],["20230914",5231],["20230915",5469],["20230918",5619],["20230919",5982],["20230920",5795],["20230921",6020],["20230922",7296],["20230925",7196],["20230926",5194],["20230927",5970],["20231004",5069],["20231005",5356],["20231006",5770],["20231010",7500],["20231011",7840],["20231012",7470],["20231013",6680],["20231016",6390],["20231017",6200],["20231018",5910],["20231019",5470],["20231020",5410],["20231023",5220],["20231024",5030],["20231025",4770],["20231026",3505],["20231027",3450],["20231030",3565],["20231031",3495],["20231101",3770],["20231102",3950],["20231103",3890],["20231106",3765],["20231107",3550],["20231108",3605],["20231109",3355],["20231110",3350],["20231113",3320],["20231114",3585],["20231115",3565],["20231116",3700],["20231117",3580],["20231120",3560],["20231121",3575],["20231122",3470],["20231123",3410],["20231124",3260],["20231127",3240],["20231128",3215],["20231129",3185],["20231130",3270],["20231201",3165],["20231204",3080],["20231205",3035],["20231206",3100],["20231207",3140],["20231208",3195],["20231211",3155],["20231212",3065],["20231213",3025],["20231214",3030],["20231215",2965],["20231218",3010],["20231219",2950],["20231220",3090],["20231221",3030],["20231222",2985],["20231226",3310],["20231227",3270],["20231228",3255],["20240102",3365],["20240103",3270],["20240104",3210],["20240105",3185],["20240108",3220],["20240109",3230],["20240110",3135],["20240111",3360],["20240112",3180],["20240115",3160],["20240116",3115],["20240117",3115],["20240118",3070],["20240119",3095],["20240122",3080],["20240123",3100],["20240124",3135],["20240125",3045],["20240126",3120],["20240129",3030],["20240130",3030],["20240131",2980],["20240201",2955],["20240202",2975],["20240205",2950],["20240206",2900],["20240207",2905],["20240208",2915],["20240213",3000],["20240214",3010],["20240215",3015],["20240216",3035],["20240219",3040],["20240220",3015],["20240221",2990],["20240222",2970],["20240223",2930],["20240226",2930],["20240227",2900],["20240228",2865],["20240229",2850],["20240304",2905],["20240305",2955],["20240306",2990],["20240307",2950],["20240308",3050],["20240311",3015],["20240312",2945],["20240313",2930],["20240314",2895],["20240315",2865],["20240318",2965],["20240319",2865],["20240320",2885],["20240321",2940],["20240322",3000],["20240325",3075],["20240326",3090],["20240327",3020],["20240328",3060],["20240329",2985],["20240401",3080],["20240402",2980],["20240403",2910],["20240404",2910],["20240405",2890],["20240408",2845],["20240409",2875],["20240411",2875],["20240412",2890],["20240415",2820],["20240416",2660],["20240417",2670],["20240418",2725],["20240419",2670],["20240422",2730],["20240423",2710],["20240424",2775],["20240425",2945],["20240426",2965],["20240429",2965],["20240430",3010],["20240502",3000],["20240503",3860],["20240507",4010],["20240508",3850],["20240509",4205],["20240510",4220],["20240513",4220],["20240514",4250],["20240516",3930],["20240517",3680],["20240520",3685],["20240521",3605],["20240522",3535],["20240523",3440],["20240524",3350],["20240527",3345],["20240528",3325],["20240529",3375],["20240530",3265],["20240531",3260],["20240603",3325],["20240604",3275],["20240605",3270],["20240607",3270],["20240610",3310],["20240611",3295],["20240612",3525],["20240613",3390],["20240614",3280],["20240617",3300],["20240618",3225],["20240619",3260],["20240620",3335],["20240621",3350],["20240624",3535],["20240625",3500],["20240626",3395],["20240627",3510],["20240628",3515],["20240701",3780],["20240702",3590],["20240703",3445],["20240704",3590],["20240705",3940],["20240708",4205],["20240709",4085],["20240710",4330],["20240711",4260],["20240712",4130],["20240715",3970],["20240716",4010],["20240717",3800],["20240718",3655],["20240719",3730],["20240722",3845],["20240723",4145],["20240724",4180],["20240725",4230],["20240726",4015],["20240729",4120],["20240730",4250],["20240731",4100],["20240801",4165],["20240802",4065],["20240805",3375],["20240806",3395],["20240807",3750],["20240808",4445],["20240809",4105],["20240812",3920],["20240813",3920],["20240814",3990],["20240816",3970],["20240819",3855],["20240820",3830],["20240821",3720],["20240822",3600],["20240823",3560],["20240826",3690],["20240827",3705],["20240828",3700],["20240829",3660],["20240830",3835],["20240902",3735],["20240903",3910],["20240904",3550],["20240905",3605],["20240906",3440],["20240909",3595],["20240910",3545],["20240911",3645],["20240912",3680],["20240913",3665],["20240919",3640],["20240920",3810],["20240923",3800],["20240924",3710],["20240925",3735],["20240926",3720],["20240927",3605],["20240930",3630],["20241002",3425],["20241004",3510],["20241007",3500],["20241008",3460],["20241010",3635],["20241011",3600],["20241014",3625],["20241015",3630],["20241016",3740],["20241017",3785],["20241018",3785],["20241021",4920],["20241022",4555],["20241023",4605],["20241024",4395],["20241025",4445],["20241028",4380],["20241029",4175],["20241030",4030],["20241031",3970],["20241101",3890],["20241104",3880],["20241105",3680],["20241106",3435],["20241107",3305],["20241108",3300],["20241111",3375],["20241112",3225],["20241113",3275],["20241114",3365],["20241115",3235],["20241118",3250],["20241119",3360],["20241120",3255],["20241121",3050],["20241122",3170],["20241125",3185],["20241126",3095],["20241127",3140],["20241128",3140],["20241129",3050],["20241202",2960],["20241203",3055],["20241204",2950],["20241205",2870],["20241206",2835],["20241209",2665],["20241210",2830],["20241211",2955],["20241212",2965],["20241213",3025],["20241216",3045],["20241217",3045],["20241218",3040],["20241219",2960],["20241220",2870],["20241223",2980],["20241224",2940],["20241226",2915],["20241227",2860],["20241230",2950],["20250102",2985],["20250103",3010],["20250106",3060],["20250107",3005],["20250108",3025],["20250109",3040],["20250110",3020],["20250113",2955],["20250114",3045],["20250115",2940],["20250116",3010],["20250117",2990],["20250120",2975],["20250121",2980],["20250122",2945],["20250123",2925],["20250124",2965],["20250131",2895],["20250203",2810],["20250204",2940],["20250205",2940],["20250206",2975],["20250207",2905],["20250210",3035],["20250211",3035],["20250212",3050],["20250213",3170],["20250214",3145],["20250217",3170],["20250218",3170],["20250219",3135],["20250220",3150],["20250221",3140],["20250224",3110],["20250225",3110],["20250226",3105],["20250227",3110],["20250228",3015],["20250304",2985],["20250305",3000],["20250306",2870],["20250307",2890],["20250310",2895],["20250311",2870],["20250312",2925],["20250313",2870],["20250314",2910],["20250317",2860],["20250318",2810],["20250319",2880],["20250320",2815],["20250321",2835],["20250324",2850],["20250325",2805],["20250326",2805],["20250327",2800],["20250328",2750],["20250331",2730],["20250401",2810],["20250402",2760],["20250403",2790],["20250404",2825],["20250407",2665],["20250408",2705],["20250409",2630],["20250410",2755],["20250411",2835],["20250414",2895],["20250415",2870],["20250416",2890],["20250417",2910],["20250418",2900],["20250421",2880],["20250422",2900],["20250423",2915],["20250424",2930],["20250425",2905],["20250428",3000],["20250429",2985],["20250430",2950],["20250502",2935],["20250507",2920],["20250508",2950],["20250509",2980],["20250512",2990],["20250513",3010],["20250514",3050],["20250515",3055],["20250516",2955],["20250519",2920],["20250520",3000],["20250521",3045],["20250522",3095],["20250523",3125],["20250526",3120],["20250527",3020],["20250528",3090],["20250529",3085],["20250530",3085],["20250602",3020],["20250604",3200],["20250605",3510],["20250609",3295],["20250610",3230],["20250611",3350],["20250612",3415],["20250613",3335],["20250616",3315],["20250617",3260],["20250618",3450],["20250619",4020],["20250620",3870],["20250623",3695],["20250624",3655],["20250625",3600],["20250626",3505],["20250627",3390],["20250630",3355],["20250701",3470],["20250702",3420],["20250703",3470],["20250704",3365],["20250707",3345],["20250708",3510],["20250709",3560],["20250710",3510],["20250711",3530],["20250714",3620],["20250715",3610],["20250716",3655],["20250717",3625],["20250718",3610],["20250721",3615],["20250722",3565],["20250723",3515],["20250724",3520],["20250725",3450],["20250728",3260],["20250729",3285],["20250730",3300],["20250731",3290],["20250801",3120],["20250804",3205],["20250805",3250],["20250806",3260],["20250807",3475],["20250808",3485],["20250811",3555],["20250812",3525],["20250813",3575],["20250814",3390],["20250818",3505],["20250819",3440],["20250820",3385],["20250821",3335],["20250822",3320],["20250825",3500],["20250826",3445],["20250827",3990],["20250828",3640],["20250829",3535],["20250901",3425],["20250902",3470],["20250903",3500],["20250904",3655],["20250905",3665],["20250908",3660],["20250909",3650],["20250910",3675],["20250911",3640],["20250912",3695],["20250915",3690],["20250916",3615],["20250917",3810],["20250918",3790],["20250919",3910],["20250922",3900],["20250923",4200],["20250924",4050],["20250925",4060],["20250926",3840],["20250929",3915],["20250930",3855],["20251001",3900],["20251002",3860],["20251010",4105],["20251013",4230],["20251014",4465],["20251015",5050],["20251016",4920],["20251017",4850],["20251020",4830],["20251021",4980],["20251022",4865],["20251023",4935],["20251024",4945],["20251027",5100],["20251028",4840],["20251029",4700],["20251030",4450],["20251031",4280],["20251103",4350],["20251104",4425],["20251105",4440],["20251106",4360],["20251107",4350],["20251110",4480],["20251111",4275],["20251112",4315],["20251113",4300],["20251114",4650],["20251117",4400],["20251118",4495],["20251119",4480],["20251120",4675],["20251121",4400],["20251124",4295],["20251125",4320],["20251126",4300],["20251127",4190],["20251128",4710],["20251201",4580],["20251202",4695],["20251203",4930],["20251204",4895],["20251205",4930],["20251208",4895],["20251209",4900],["20251210",5070],["20251211",5680],["20251212",5950],["20251215",5900],["20251216",5820],["20251217",5410],["20251218",7030],["20251219",7590],["20251222",7690],["20251223",7410],["20251224",6990],["20251226",6790],["20251229",6650],["20251230",6380],["20260102",6330],["20260105",6540],["20260106",6000],["20260107",6120],["20260108",6400],["20260109",5770],["20260112",6310],["20260113",6110],["20260114",5900],["20260115",6080],["20260116",6250],["20260119",6270],["20260120",6220],["20260121",5950],["20260122",5980],["20260123",6250],["20260126",6300],["20260127",6260],["20260128",6400],["20260129",6310],["20260130",5990],["20260202",5750],["20260203",6220],["20260204",6330],["20260205",6050],["20260206",6040],["20260209",6160],["20260210",6300],["20260211",6110],["20260212",6000],["20260213",5770],["20260219",5900],["20260220",6000],["20260223",6480],["20260224",6390],["20260225",6620],["20260226",6290],["20260227",5910],["20260303",5720],["20260304",4795],["20260305",5470],["20260306",5400],["20260309",5040],["20260310",5200],["20260311",5330],["20260312",5150],["20260313",5150],["20260316",5110],["20260317",5150],["20260318",5190],["20260319",4980],["20260320",5160],["20260323",4840],["20260324",4975],["20260325",4950],["20260326",4895],["20260327",4970],["20260330",4735],["20260331",4675],["20260401",5000],["20260402",4645],["20260403",4735],["20260406",4580],["20260407",4570],["20260408",4770],["20260409",4705],["20260410",4715],["20260413",4710],["20260414",4765],["20260415",4895],["20260416",4995],["20260417",5040],["20260420",5190],["20260421",4990],["20260422",5020],["20260423",5020],["20260424",5010],["20260427",5040],["20260428",5100],["20260429",5120],["20260430",4950],["20260504",4885],["20260506",4815],["20260507",6250],["20260508",7120],["20260511",7130],["20260512",6740],["20260513",7420],["20260514",6930],["20260515",6570],["20260518",6450],["20260519",5820],["20260520",5480],["20260521",5590],["20260522",5750],["20260526",6160],["20260527",5730],["20260528",5300],["20260529",4950],["20260601",4620],["20260602",4505],["20260604",4330],["20260605",4165],["20260608",3715],["20260609",3955],["20260610",3895],["20260611",3930],["20260612",3925],["20260615",3810],["20260616",3930],["20260617",3945],["20260618",3730],["20260619",3560],["20260622",3540],["20260623",3355],["20260624",3375],["20260625",3250],["20260626",3100],["20260629",3455],["20260630",3320],["20260701",3415],["20260702",3330],["20260703",3375],["20260706",3355],["20260707",3280],["20260708",3060],["20260709",3070],["20260710",3235],["20260713",3005],["20260714",2990],["20260715",3130],["20260716",3030],["20260720",2875],["20260721",2830],["20260722",2780],["20260723",3015],["20260724",2870],["20260727",2945],["20260728",2760],["20260729",2565],["20260730",2450],["20260731",2830],["20260803",2880],["20260804",3260],["20260805",3260],["20260806",3265],["20260807",3390],["20260810",3475],["20260811",3575],["20260812",3500],["20260813",3445],["20260814",3580],["20260818",3390],["20260819",3305],["20260820",3340],["20260821",3265],["20260824",3360],["20260825",3485],["20260826",3480],["20260827",3365],["20260828",3480],["20260831",3410],["20260901",3410],["20260902",3335],["20260903",3300],["20260904",3395],["20260907",3380],["20260908",3450],["20260909",3440],["20260910",3440],["20260911",3300],["20260914",3330],["20260915",3200],["20260916",3115],["20260917",3150],["20260918",3130],["20260921",3645],["20260922",3480],["20260923",3345]],"kq":[2540,2553,2586,2572,2606,2652,2633,2685,2689,2692,2712,2684,2692,2697,2716,2770,2795,2804,2794,2801,2841,2892,2900,2880,2923,2950,2968,2922,2922,2949,2895,2968,2934,2984,3001,2945,2963,2946,2952,2994,2978,3035,3088,3086,3079,3061,2983,2984,2867,2955,2958,3016,3034,3036,3077,3072,3117,3131,3153,3192,3217,3206,3234,3242,3300,3274,3329,3358,3400,3369,3383,3419,3440,3438,3439,3350,3286,3235,3172,3141,3216,3188,3236,3189,3196,3186,3162,3139,3119,3111,3081,3089,3155,3162,3184,3223,3250,3236,3207,3190,3221,3241,3267,3283,3292,3331,3314,3343,3350,3392,3298,3321,3359,3361,3353,3312,3315,3309,3327,3306,3279,3260,3284,3364,3366,3371,3293,3280,3254,3324,3328,3378,3390,3398,3458,3494,3524,3535,3517,3555,3407,3343,3456,3540,3554,3441,3481,3474,3398,3375,3438,3447,3450,3411,3322,3351,3318,3362,3379,3339,3411,3402,3440,3466,3494,3512,3479,3477,3486,3472,3428,3458,3452,3397,3339,3402,3401,3371,3343,3339,3256,3243,3174,3131,3181,3054,3030,3088,3007,3091,3160,3112,3066,3103,3060,2966,2910,2889,2969,2916,2814,2831,2864,2784,2796,2923,2958,3175,3118,3068,3037,2986,2929,3004,3061,3068,3022,3075,3090,3081,3086,3083,3065,3088,3111,3146,3129,3134,3077,3100,3076,3141,3159,3176,3137,3180,3171,3219,3247,3264,3251,3233,3209,3252,3278,3325,3297,3277,3322,3326,3346,3311,3338,3284,3252,3233,3151,3179,3187,3176,3178,3163,3116,3167,3098,3097,3023,3021,3082,3056,3053,3071,3127,3197,3228,3250,3244,3247,3276,3268,3291,3285,3281,3229,3266,3264,3302,3277,3293,3266,3303,3313,3365,3366,3357,3330,3383,3374,3372,3420,3419,3456,3465,3447,3442,3425,3451,3372,3328,3340,3299,3255,3250,3246,3255,3224,3150,3151,3237,3185,3199,3198,3261,3227,3241,3290,3287,3281,3274,3296,3300,3291,3269,3232,3261,3292,3234,3204,3202,3199,3202,3175,3208,3219,3171,3147,3177,3195,3199,3218,3276,3271,3285,3293,3296,3261,3249,3249,3257,3244,3225,3183,3185,3185,3172,3179,3204,3139,3163,3180,3206,3250,3255,3247,3224,3217,3226,3176,3137,3111,3135,3064,3072,3080,3016,3017,3056,3040,3038,3077,2948,2615,2772,2831,2819,2891,2923,2893,2938,2974,2941,2979,2950,2926,2925,2900,2893,2884,2860,2904,2910,2876,2768,2743,2673,2702,2671,2683,2765,2773,2797,2831,2856,2903,2872,2947,2930,2889,2883,2909,2954,2944,2933,2916,2914,2927,2897,2894,2849,2875,2793,2819,2779,2751,2801,2815,2792,2811,2758,2852,2844,2812,2775,2812,2757,2688,2609,2578,2593,2608,2595,2583,2575,2561,2636,2622,2618,2627,2565,2556,2613,2561,2538,2501,2372,2502,2557,2585,2624,2642,2627,2639,2589,2528,2569,2573,2556,2519,2565,2597,2670,2716,2717,2722,2737,2715,2679,2716,2692,2739,2741,2752,2746,2770,2739,2756,2755,2662,2723,2765,2800,2810,2836,2835,2819,2834,2861,2907,2926,2944,2906,2930,2925,2910,2918,2916,2814,2791,2825,2780,2753,2745,2729,2759,2734,2777,2812,2820,2793,2743,2721,2724,2690,2710,2676,2624,2545,2615,2590,2585,2600,2464,2491,2434,2579,2631,2682,2693,2644,2692,2715,2706,2709,2746,2746,2760,2721,2748,2713,2730,2734,2760,2733,2744,2768,2795,2773,2743,2700,2707,2737,2715,2708,2743,2750,2757,2785,2778,2800,2838,2860,2891,2917,2974,2986,2908,2940,2934,2949,2960,2994,2968,3030,3019,2980,2956,2956,2964,2959,3001,2934,2945,2966,2990,3017,3028,3024,3075,3072,3095,3104,3108,3075,3077,3063,3052,3043,3043,3040,3046,2923,2966,3021,3039,3048,3061,3071,3053,3079,3084,3019,2980,2941,2940,2960,3019,3032,3033,3020,3014,2969,3003,3014,3047,3069,3096,3120,3151,3157,3204,3225,3222,3198,3242,3265,3307,3299,3257,3225,3159,3203,3185,3198,3231,3251,3255,3207,3271,3273,3251,3313,3300,3325,3298,3340,3414,3417,3410,3370,3406,3459,3505,3411,3397,3317,3360,3345,3429,3474,3396,3414,3324,3296,3374,3268,3240,3238,3318,3329,3452,3489,3512,3525,3517,3498,3509,3523,3537,3535,3546,3551,3465,3446,3409,3462,3514,3478,3462,3479,3528,3501,3577,3622,3616,3584,3571,3586,3593,3590,3564,3598,3611,3663,3693,3598,3670,3760,4026,4095,4288,4404,4348,4155,4328,4348,4193,4088,4265,4218,4217,4259,4184,4390,4365,4357,4407,4408,4494,4512,4303,3701,4223,4368,4169,4303,4300,4344,4361,4306,4300,4404,4325,4393,4149,4242,4386,4299,4318,4187,3981,4222,3996,4024,3962,3921,4122,4070,4137,4160,4244,4359,4399,4426,4444,4460,4468,4442,4554,4638,4598,4616,4510,4591,4577,4536,4568,4567,4461,4452,4505,4274,4203,4102,3995,4183,4392,4435,4286,4177,4065,3972,3881,3971,3792,3447,3661,3600,3771,3892,3911,3853,3903,3786,3656,3663,3372,3439,3358,3220,3482,3465,3515,3278,3285,3204,3144,2969,3003,3168,3024,2965,3137,2995,2836,2850,2841,2989,2830,2893,2670,2507,2439,2723,2789,2953,3024,3032,3022,3232,3245,3249,3258,3271,3155,3119,3181,3033,3076,3129,3128,3168,3171,3156,3106,3041,2989,3077,3110,3071,3141,3166,3104,3052,3073,3086,3110,3129,3163,3156,3194],"kqraw":[671.5,675.0,683.7,679.9,688.9,701.2,696.0,709.8,710.8,711.8,716.9,709.7,711.8,712.9,718.0,732.4,738.9,741.2,738.6,740.5,751.0,764.6,766.8,761.3,772.8,780.0,784.6,772.4,772.5,779.6,765.5,784.7,775.6,788.9,793.4,778.5,783.3,778.9,780.3,791.6,787.2,802.4,816.5,815.8,814.0,809.2,788.6,788.9,758.0,781.2,782.0,797.4,802.2,802.5,813.4,812.2,824.1,827.7,833.5,843.9,850.5,847.5,855.0,857.2,872.4,865.6,880.1,887.8,898.9,890.6,894.2,903.8,909.5,909.0,909.2,885.7,868.8,855.2,838.7,830.4,850.2,842.8,855.6,843.2,845.1,842.3,835.9,829.7,824.5,822.4,814.5,816.8,834.2,835.9,841.7,852.0,859.2,855.5,847.7,843.2,851.5,856.9,863.8,868.1,870.3,880.7,876.1,883.7,885.8,896.8,871.8,878.0,888.0,888.6,886.4,875.7,876.4,874.8,879.5,874.1,867.0,861.8,868.2,889.3,890.0,891.2,870.5,867.3,860.4,878.7,879.9,893.1,896.3,898.3,914.1,923.7,931.6,934.6,929.9,940.0,900.6,883.8,913.7,936.0,939.7,909.8,920.3,918.4,898.2,892.3,909.0,911.3,912.2,901.7,878.3,886.0,877.3,888.7,893.3,882.9,901.7,899.4,909.4,916.2,923.8,928.4,919.7,919.2,921.5,918.0,906.4,914.2,912.5,898.0,882.7,899.5,899.0,891.3,883.9,882.7,860.7,857.4,839.2,827.8,841.0,807.4,801.0,816.4,795.0,817.1,835.5,822.8,810.5,820.4,808.9,784.0,769.2,763.7,784.9,770.8,743.9,748.5,757.1,736.1,739.2,772.8,782.0,839.5,824.4,811.0,802.9,789.3,774.4,794.2,809.4,811.1,799.1,813.1,817.0,814.6,816.0,815.0,810.2,816.4,822.4,831.7,827.2,828.5,813.4,819.5,813.2,830.4,835.2,839.5,829.3,840.6,838.3,851.0,858.3,863.0,859.4,854.6,848.3,859.8,866.6,878.9,871.6,866.2,878.3,879.3,884.6,875.5,882.5,868.1,859.7,854.8,833.0,840.3,842.7,839.7,840.1,836.2,823.7,837.2,819.1,818.9,799.2,798.7,814.8,808.0,807.0,811.9,826.6,845.1,853.3,859.2,857.6,858.5,866.2,864.1,870.1,868.6,867.4,853.8,863.4,863.0,873.0,866.4,870.7,863.4,873.2,875.9,889.7,889.9,887.5,880.5,894.5,891.9,891.5,904.3,904.0,913.7,916.1,911.2,910.0,905.5,912.5,891.6,880.0,882.9,872.3,860.6,859.3,858.1,860.5,852.4,832.8,833.0,855.6,841.9,845.8,845.4,862.2,853.3,856.8,869.7,868.9,867.5,865.6,871.3,872.4,870.1,864.2,854.4,862.1,870.4,855.1,847.1,846.5,845.7,846.6,839.4,848.0,851.0,838.5,832.0,840.0,844.7,845.8,850.8,866.2,864.7,868.4,870.7,871.3,862.2,859.0,859.0,861.2,857.5,852.7,841.5,842.0,842.1,838.6,840.4,847.1,829.9,836.1,840.8,847.5,859.3,860.4,858.5,852.4,850.4,852.9,839.6,829.4,822.5,828.7,810.0,812.1,814.2,797.3,797.6,808.0,803.8,803.1,813.5,779.3,691.3,732.9,748.5,745.3,764.4,772.7,764.9,776.8,786.3,777.5,787.4,779.9,773.5,773.3,766.8,765.0,762.5,756.0,767.7,769.2,760.4,731.8,725.3,706.6,714.5,706.2,709.4,731.0,733.2,739.5,748.3,755.1,767.4,759.3,779.2,774.5,763.9,762.1,769.0,781.0,778.2,775.5,771.0,770.3,773.8,765.8,765.1,753.2,760.0,738.3,745.2,734.6,727.4,740.5,744.2,738.2,743.1,729.0,754.1,751.8,743.3,733.5,743.4,728.8,710.5,689.6,681.6,685.4,689.5,686.1,682.9,680.7,677.0,696.8,693.1,692.0,694.4,678.2,675.8,690.8,677.1,670.9,661.3,627.0,661.6,675.9,683.4,693.7,698.5,694.5,697.6,684.4,668.3,679.2,680.1,675.6,666.0,678.2,686.6,705.8,718.0,718.3,719.6,723.5,717.9,708.2,718.0,711.6,724.2,724.7,727.7,726.1,732.3,724.0,728.7,728.3,703.8,719.9,731.0,740.3,742.9,749.7,749.6,745.2,749.3,756.3,768.5,773.6,778.3,768.3,774.6,773.3,769.4,771.4,770.9,744.0,737.9,747.0,734.9,727.7,725.8,721.5,729.5,722.8,734.3,743.5,745.5,738.4,725.1,719.4,720.2,711.3,716.5,707.5,693.8,672.9,691.5,684.9,683.5,687.4,651.3,658.5,643.4,681.8,695.6,709.0,711.9,699.1,711.8,717.8,715.5,716.1,726.1,726.1,729.7,719.4,726.5,717.2,721.9,722.8,729.6,722.5,725.4,731.9,739.0,733.2,725.1,713.8,715.5,723.6,717.7,716.0,725.3,727.1,728.8,736.3,734.4,740.3,750.2,756.2,764.2,771.2,786.3,789.5,768.9,777.3,775.6,779.7,782.5,791.5,784.8,800.9,798.2,788.0,781.6,781.5,783.7,782.2,793.3,775.8,778.5,784.2,790.4,797.7,800.5,799.4,812.9,812.2,818.3,820.7,821.7,813.0,813.6,809.9,807.0,804.4,804.5,803.7,805.2,772.8,784.1,798.6,803.5,805.8,809.3,811.9,807.2,814.1,815.3,798.0,788.0,777.6,777.2,782.5,798.0,801.7,801.7,798.4,796.9,785.0,794.0,796.8,805.4,811.4,818.6,824.8,833.0,834.8,847.1,852.7,851.8,845.5,857.1,863.1,874.4,872.2,860.9,852.5,835.2,846.7,842.0,845.3,854.2,859.5,860.5,848.0,864.7,865.4,859.5,875.8,872.5,879.1,872.0,883.1,902.7,903.3,901.6,890.9,900.4,914.5,926.6,901.9,898.2,876.8,888.4,884.3,906.5,918.4,897.9,902.7,878.7,871.3,891.9,864.0,856.4,856.0,877.3,880.1,912.7,922.4,928.4,932.0,929.8,924.7,927.8,931.4,935.0,934.6,937.3,938.8,916.1,911.1,901.3,915.3,929.1,919.6,915.2,919.7,932.6,925.5,945.6,957.5,956.0,947.4,944.1,947.9,949.8,949.0,942.2,951.2,954.6,968.4,976.4,951.3,970.4,993.9,1064.4,1082.6,1133.5,1164.4,1149.4,1098.4,1144.3,1149.4,1108.4,1080.8,1127.5,1115.2,1114.9,1126.0,1106.1,1160.7,1154.0,1152.0,1165.0,1165.2,1188.2,1192.8,1137.7,978.4,1116.4,1154.7,1102.3,1137.7,1136.8,1148.4,1153.0,1138.3,1136.9,1164.4,1143.5,1161.5,1096.9,1121.4,1159.5,1136.6,1141.5,1107.0,1052.4,1116.2,1056.3,1063.8,1047.4,1036.7,1089.8,1076.0,1093.6,1099.8,1121.9,1152.4,1163.0,1170.0,1174.8,1179.0,1181.1,1174.3,1203.8,1226.2,1215.6,1220.3,1192.3,1213.7,1210.2,1199.2,1207.7,1207.3,1179.3,1176.9,1191.1,1129.8,1111.1,1084.4,1056.1,1106.0,1161.1,1172.5,1133.1,1104.4,1074.8,1050.0,1026.0,1049.7,1002.4,911.4,967.8,951.6,996.9,1029.0,1034.0,1018.7,1032.0,1000.9,966.6,968.4,891.5,909.3,887.8,851.4,920.6,916.2,929.4,866.7,868.4,847.1,831.2,785.0,794.0,837.4,799.4,784.0,829.4,791.8,749.6,753.3,751.1,790.3,748.2,764.9,705.9,662.7,644.8,719.8,737.4,780.7,799.6,801.7,798.8,854.5,857.8,858.9,861.4,864.6,834.2,824.5,840.9,801.9,813.3,827.1,826.9,837.6,838.4,834.3,821.2,804.0,790.2,813.5,822.2,811.9,830.4,836.9,820.6,806.8,812.4,816.0,822.2,827.1,836.3,834.4,844.5],"events":[["20231011",1,-20],["20250409",2,22],["20250930",3,24],["20251111",4,-24],["20251222",5,-20],["20260323",6,26],["20260513",7,-20],["20260730",8,22],["20260921",9,-26]],"annual":[{"y":2017,"rev":159.6,"op":-10.5,"ni":-11.2},{"y":2018,"rev":192.0,"op":35.7,"ni":34.2},{"y":2019,"rev":221.1,"op":43.4,"ni":41.5},{"y":2020,"rev":234.9,"op":47.9,"ni":48.5,"srev":234.9,"sop":48.2},{"y":2021,"rev":261.5,"op":36.2,"ni":32.3,"srev":261.5,"sop":38.7},{"y":2022,"rev":388.7,"op":58.2,"ni":45.2,"srev":322.0,"sop":45.5},{"y":2023,"rev":478.4,"op":15.9,"ni":38.6,"srev":344.2,"sop":7.9},{"y":2024,"rev":586.5,"op":50.6,"ni":54.1,"srev":452.8,"sop":40.7},{"y":2025,"rev":666.3,"op":52.4,"ni":75.1,"srev":493.5,"sop":39.2},{"y":2026,"rev":900,"op":100,"e":1},{"y":2027,"rev":1200,"op":150,"e":1}],"quarterly":[{"q":"2021Q1","rev":52.4,"op":6.0,"opm":11.5,"ni":5.5,"srev":52.4,"sop":6.4,"sopm":12.2},{"q":"2021Q2","rev":57.6,"op":-2.1,"opm":-3.6,"ni":-1.3,"srev":57.6,"sop":-1.4,"sopm":-2.4},{"q":"2021Q3","rev":66.0,"op":9.9,"opm":15.0,"ni":9.0,"srev":66.0,"sop":10.4,"sopm":15.8},{"q":"2021Q4","rev":85.6,"op":22.3,"opm":26.1,"ni":19.1,"srev":85.6,"sop":23.3,"sopm":27.2},{"q":"2022Q1","rev":62.2,"op":1.7,"opm":2.7,"ni":2.1,"srev":62.2,"sop":1.7,"sopm":2.7},{"q":"2022Q2","rev":101.0,"op":15.3,"opm":15.1,"ni":12.5,"srev":77.1,"sop":11.1,"sopm":14.4},{"q":"2022Q3","rev":109.0,"op":23.2,"opm":21.3,"ni":22.2,"srev":95.0,"sop":23.9,"sopm":25.2},{"q":"2022Q4","rev":116.5,"op":18.0,"opm":15.5,"ni":8.4,"srev":87.7,"sop":8.9,"sopm":10.1},{"q":"2023Q1","rev":100.0,"op":5.1,"opm":5.1,"ni":4.8,"srev":74.1,"sop":1.2,"sopm":1.6},{"q":"2023Q2","rev":104.0,"op":-4.5,"opm":-4.3,"ni":6.9,"srev":76.3,"sop":-9.7,"sopm":-12.7},{"q":"2023Q3","rev":144.3,"op":0.4,"opm":0.3,"ni":3.7,"srev":93.3,"sop":4.4,"sopm":4.7},{"q":"2023Q4","rev":130.1,"op":14.9,"opm":11.5,"ni":23.1,"srev":100.6,"sop":12.1,"sopm":12.0},{"q":"2024Q1","rev":119.3,"op":3.2,"opm":2.7,"ni":4.7,"srev":95.3,"sop":3.8,"sopm":4.0},{"q":"2024Q2","rev":137.5,"op":5.7,"opm":4.1,"ni":7.5,"srev":114.7,"sop":9.9,"sopm":8.6},{"q":"2024Q3","rev":181.9,"op":14.6,"opm":8.0,"ni":12.1,"srev":114.2,"sop":13.1,"sopm":11.5},{"q":"2024Q4","rev":147.8,"op":27.1,"opm":18.3,"ni":29.8,"srev":128.7,"sop":14.0,"sopm":10.9},{"q":"2025Q1","rev":141.7,"op":13.3,"opm":9.4,"ni":9.7,"srev":103.6,"sop":8.8,"sopm":8.5},{"q":"2025Q2","rev":166.0,"op":15.1,"opm":9.1,"ni":12.0,"srev":132.3,"sop":16.8,"sopm":12.7},{"q":"2025Q3","rev":165.2,"op":27.9,"opm":16.9,"ni":137.2,"srev":116.0,"sop":12.1,"sopm":10.4},{"q":"2025Q4","rev":193.4,"op":-3.9,"opm":-2.0,"ni":-83.8,"srev":141.5,"sop":1.4,"sopm":1.0},{"q":"2026Q1","rev":174.1,"op":5.4,"opm":3.1,"ni":-2.6,"srev":127.7,"sop":12.8,"sopm":10.0},{"q":"2026Q2","rev":200.1,"op":22.7,"opm":11.3,"ni":-44.5,"srev":156.4,"sop":31.7,"sopm":20.3}],"bridge":[["영업이익",28.1,"연결 반기 영업이익. 본사 44.5억, 의료컨설팅 -4.2억, 인력지원 -2.1억, 부문 간 조정 -10.1억","영업이익",1],["이자수익",5.1,"예적금과 환매조건부채권 이자","이자수익",0],["이자비용",-3.4,"전환사채 유효이자 2.7억 포함. 현금으로 나간 이자는 0.6억","이자비용",0],["전환사채 평가차액 상각",-10.0,"발행 시점 파생상품 평가차액(60.4억)을 만기까지 나눠 비용 처리. 현금 유출 없음","사채 상각",0],["주식 평가손실",-58.5,"지투지바이오 -57.3억(주당 67,000원 → 41,450원), 그 밖의 비상장 지분 -1.2억","주식 평가",0],["큐리바이오 지분법손실",-13.7,"큐리바이오 반기 순손실 54.1억 가운데 지분 몫","지분법",0],["외환·기타",7.2,"외환차익과 환산이익, 임대료 등에서 외환차손과 기타 비용을 뺀 순액","외환·기타",0],["세전이익",-45.3,"법인세 1.8억을 더 빼면 순손실 47.1억","세전이익",1]],"backlog":[["2017",523,"신규 수주 291억",0],["2018",634,"신규 수주 294억",0],["2019",689,"신규 수주 259억",0],["2020",671,"신규 수주 272억",0],["2021",807,"신규 수주 389억",0],["2022",1141,"신규 수주 558억. 메디팁·엘씨에스 편입",0],["2023",1600,"신규 수주 909억",0],["2024",2076,"신규 수주 1,080억",0],["2025",2471,"신규 수주 977억",0],["26.06",2515,"상반기 신규 수주 361억(1분기 81억, 2분기 279억)",1]],"opm":[["피엔케이피부임상연구센타",19.2,"1H26 매출 128.3억 · 영업이익 24.7억","피엔케이"],["드림씨아이에스",7.5,"1H26 매출 374.2억 · 영업이익 28.1억","드림씨아이에스"],["우정바이오",1.9,"1H26 매출 220.1억 · 영업이익 4.1억","우정바이오"],["에이치시티",0.0,"1H26 매출 503.3억 · 영업이익 0.0억","에이치시티"],["씨엔알리서치",-2.5,"1H26 매출 325.4억 · 영업이익 -8.0억","씨엔알리서치"],["바이오톡스텍",-7.6,"1H26 매출 263.3억 · 영업이익 -20.0억","바이오톡스텍"],["에이치엘비바이오스텝",-15.3,"1H26 매출 294.5억 · 영업이익 -45.0억","HLB바이오스텝"],["디티앤씨알오",-47.4,"1H26 매출 214.2억 · 영업이익 -101.5억","디티앤씨알오"],["페니트리움바이오(옛 에이디엠코리아)",-97.0,"1H26 매출 38.1억 · 영업이익 -36.9억","페니트리움"],["코아스템켐온",-105.4,"1H26 매출 97.4억 · 영업이익 -102.7억","코아스템켐온"]]}</script>
+<script>
+(function(){
+const CD = JSON.parse(document.getElementById('cd').textContent);
+const tip = document.getElementById('tip');
+function showTip(html, x, y){
+  tip.innerHTML = html; tip.style.display='block';
+  const r = tip.getBoundingClientRect();
+  let L = x + 14, T = y + 14;
+  if (L + r.width > window.innerWidth - 8) L = x - r.width - 14;
+  if (L < 8) L = 8;
+  if (T + r.height > window.innerHeight - 8) T = y - r.height - 14;
+  if (T < 8) T = 8;
+  tip.style.left = L + 'px'; tip.style.top = T + 'px';
+}
+function hideTip(){ tip.style.display='none'; }
+window.addEventListener('scroll', hideTip, {passive:true});
+document.addEventListener('pointerdown', e => { if (!e.target.closest('.chart svg')) hideTip(); });
+const fmtN = v => v == null ? '-' : v.toLocaleString('ko-KR');
+const d1 = v => v == null ? '-' : v.toFixed(1);
+const sg = v => (v > 0 ? '+' : '') + v.toFixed(1);
+function bindHits(svg, onHit){
+  if (svg._bound) { svg._onHit = onHit; return; }
+  svg._bound = true; svg._onHit = onHit;
+  let down = false;
+  const handler = e => { const t = e.target.closest('[data-hit]'); if (!t){ hideTip(); return; } svg._onHit(t, e); };
+  svg.addEventListener('pointerdown', e => { down = true; handler(e); });
+  svg.addEventListener('pointermove', e => { if (e.pointerType === 'mouse' || down) handler(e); });
+  ['pointerup','pointercancel','pointerleave'].forEach(ev => svg.addEventListener(ev, () => { down=false; if (ev!=='pointerup') hideTip(); }));
+}
+function responsive(id, draw){
+  const box = document.getElementById(id); if (!box) return; const svg = box.querySelector('svg');
+  let t;
+  const render = () => { const W = Math.max(280, Math.floor(box.clientWidth - (parseFloat(getComputedStyle(box).paddingLeft)*2))); const H = draw(svg, W); svg.setAttribute('viewBox', `0 0 ${W} ${H}`); svg.setAttribute('height', H); };
+  render();
+  new ResizeObserver(() => { clearTimeout(t); t = setTimeout(render, 120); }).observe(box);
+}
+
+/* ---------- price ---------- */
+responsive('ch-px', (svg, W) => {
+  const narrow = W < 560;
+  const ML = narrow ? 34 : 46, MR = 10, MT = 24, MB = 26;
+  const Hh = narrow ? 270 : 350; const ph = Hh - MT - MB, pw = W - ML - MR;
+  const D = CD.daily; const n = D.length; const yMax = 8000;
+  const x = i => ML + i/(n-1)*pw; const y = v => MT + (yMax - Math.min(v, yMax))/yMax*ph;
+  let s = '';
+  [0,2000,4000,6000,8000].forEach(v => { s += `<line class="${v===0?'axis':'grid'}" x1="${ML}" x2="${W-MR}" y1="${y(v)}" y2="${y(v)}"/><text x="${ML-4}" y="${y(v)+4}" text-anchor="end" class="mut" style="font-size:${narrow?9.5:11}px">${v ? fmtN(v) : '0'}</text>`; });
+  let lastY = '';
+  D.forEach((d,i) => { const yy = d[0].slice(0,4); if (yy !== lastY){ lastY = yy; s += `<line class="grid" x1="${x(i)}" x2="${x(i)}" y1="${MT}" y2="${MT+ph}"/><text x="${x(i)+3}" y="${Hh-8}" class="mut" style="font-size:${narrow?9:11}px">${yy}</text>`; } });
+  s += `<line x1="${ML}" x2="${W-MR}" y1="${y(3847)}" y2="${y(3847)}" stroke="var(--c2)" stroke-width="1" stroke-dasharray="4 3" opacity=".8"/><text x="${W-MR-2}" y="${y(3847)-4}" text-anchor="end" style="font-size:${narrow?9:10.5}px; fill:var(--c2)">전환가 3,847</text>`;
+  if (CD.kq) s += `<path d="${CD.kq.map((v,i) => (i?'L':'M') + x(i).toFixed(1) + ' ' + y(v).toFixed(1)).join(' ')}" fill="none" stroke="var(--c4)" stroke-width="1.2"/>`;
+  const path = D.map((d,i) => (i?'L':'M') + x(i).toFixed(1) + ' ' + y(d[1]).toFixed(1)).join(' ');
+  s += `<path d="${path} L${x(n-1).toFixed(1)} ${y(0)} L${x(0)} ${y(0)} Z" fill="var(--c1-soft)"/><path d="${path}" fill="none" stroke="var(--c1)" stroke-width="1.5"/>`;
+  CD.events.forEach(([dt, num, off]) => { let idx = D.findIndex(d => d[0] >= dt); if (idx < 0) idx = n-1; const px = Math.min(Math.max(x(idx), ML+8), W-MR-8), py = y(D[idx][1]); const cy = Math.min(Math.max(MT+8, py+off), MT+ph-8);
+    s += `<line x1="${px}" x2="${px}" y1="${py}" y2="${cy}" stroke="var(--c2)" stroke-width="1"/><circle cx="${px}" cy="${cy}" r="${narrow?7:8}" fill="var(--c2)"/><text x="${px}" y="${cy+3.5}" text-anchor="middle" style="font-size:${narrow?8.5:10}px; fill:#fff; font-weight:600">${num}</text>`; });
+  const step = Math.max(1, Math.floor(n / Math.max(60, Math.floor(pw/3))));
+  for (let i = 0; i < n; i += step) s += `<rect data-hit="${i}" x="${x(i) - pw/(n-1)*step/2}" y="${MT}" width="${pw/(n-1)*step}" height="${ph}" fill="transparent"/>`;
+  svg.innerHTML = s;
+  bindHits(svg, (t, e) => { const i = +t.dataset.hit; const d = D[i]; const last = CD.px;
+    const sh = d[0] >= '20260325' ? 24600444 : (d[0] >= '20260114' ? 24577490 : (d[0] >= '20240516' ? 23799324 : 23709280));
+    showTip(`<b>${d[0].slice(0,4)}-${d[0].slice(4,6)}-${d[0].slice(6)}</b><br>종가 ${fmtN(d[1])}원 (수정주가)<br>시총 약 ${fmtN(Math.round(d[1]*sh/1e8))}억<br>9/23 종가 3,290원 대비 ${sg((last/d[1]-1)*100)}%${CD.kqraw ? '<br>코스닥 ' + CD.kqraw[i].toFixed(1) : ''}`, e.clientX, e.clientY); });
+  return Hh;
+});
+
+/* ---------- annual ---------- */
+responsive('ch-ann', (svg, W) => {
+  const narrow = W < 560; const A = CD.annual;
+  const ML = narrow ? 38 : 48, MR = narrow ? 30 : 40, MT = 18, MB = 28;
+  const Hh = narrow ? 270 : 340; const ph = Hh - MT - MB, pw = W - ML - MR;
+  const yMax = 1200; const y = v => MT + (yMax - v)/yMax*ph;
+  const oMax = 160, oMin = -40; const yo = v => MT + (oMax - v)/(oMax - oMin)*ph;
+  const gw = pw/A.length; const bw = Math.min(narrow ? 16 : 30, gw*0.62);
+  let s = '';
+  [0,300,600,900,1200].forEach(v => s += `<line class="${v===0?'axis':'grid'}" x1="${ML}" x2="${W-MR}" y1="${y(v)}" y2="${y(v)}"/><text x="${ML-4}" y="${y(v)+4}" text-anchor="end" class="mut" style="font-size:${narrow?9:11}px">${fmtN(v)}</text>`);
+  [0,50,100,150].forEach(v => s += `<text x="${W-MR+4}" y="${yo(v)+4}" style="font-size:${narrow?9:10.5}px; fill:var(--c2)">${v}</text>`);
+  s += `<line x1="${ML}" x2="${W-MR}" y1="${yo(0)}" y2="${yo(0)}" stroke="var(--c2)" stroke-width="1" stroke-dasharray="2 3" opacity=".6"/>`;
+  A.forEach((a,i) => { const xc = ML + i*gw + gw/2;
+    s += `<rect x="${xc-bw/2}" y="${y(a.rev)}" width="${bw}" height="${y(0)-y(a.rev)}" fill="var(--c1)" opacity="${a.e?0.35:1}" rx="1"/>`;
+    if (!narrow || i%2===0 || i===A.length-1) s += `<text x="${xc}" y="${y(a.rev)-5}" text-anchor="middle" style="font-size:${narrow?8.5:10.5}px">${fmtN(Math.round(a.rev))}</text>`;
+    s += `<text x="${xc}" y="${Hh-10}" text-anchor="middle" class="mut" style="font-size:${narrow?8.5:11}px">${"'"+String(a.y).slice(2)}${a.e?'E':''}</text>`;
+    s += `<rect data-hit="${i}" x="${ML+i*gw}" y="${MT}" width="${gw}" height="${ph}" fill="transparent"/>`; });
+  const pts = A.map((a,i) => [ML + i*gw + gw/2, yo(a.op)]);
+  const k = A.findIndex(a => a.e);
+  s += `<path d="${pts.slice(0,k).map((p,i)=>(i?'L':'M')+p[0]+' '+p[1]).join(' ')}" fill="none" stroke="var(--c2)" stroke-width="2"/>`;
+  s += `<path d="${pts.slice(k-1).map((p,i)=>(i?'L':'M')+p[0]+' '+p[1]).join(' ')}" fill="none" stroke="var(--c2)" stroke-width="2" stroke-dasharray="5 3"/>`;
+  pts.forEach(p => s += `<circle cx="${p[0]}" cy="${p[1]}" r="3.2" fill="var(--c2)"/>`);
+  svg.innerHTML = s;
+  bindHits(svg, (t, e) => { const a = A[+t.dataset.hit]; showTip(`<b>${a.y}${a.e?' (NH투자증권 4/1 추정)':''}</b><br>매출 ${d1(a.rev)}억<br>영업이익 ${d1(a.op)}억 (이익률 ${(a.op/a.rev*100).toFixed(1)}%)` + (a.ni!=null?`<br>순이익 ${d1(a.ni)}억`:'') + (a.srev!=null?`<br>별도 매출 ${d1(a.srev)}억 · 영업이익 ${d1(a.sop)}억`:''), e.clientX, e.clientY); });
+  return Hh;
+});
+
+/* ---------- quarterly ---------- */
+responsive('ch-q', (svg, W) => {
+  const narrow = W < 560; const Q = CD.quarterly;
+  const ML = narrow ? 30 : 40, MR = narrow ? 28 : 36, MT = 18, MB = 30;
+  const Hh = narrow ? 250 : 320; const ph = Hh - MT - MB, pw = W - ML - MR;
+  const yMax = 250; const y = v => MT + (yMax - v)/yMax*ph;
+  const oMax = 30, oMin = -15; const yo = v => MT + (oMax - v)/(oMax - oMin)*ph;
+  const gw = pw/Q.length; const bw = Math.min(narrow ? 8 : 16, gw*0.7);
+  let s = '';
+  [0,50,100,150,200,250].forEach(v => s += `<line class="${v===0?'axis':'grid'}" x1="${ML}" x2="${W-MR}" y1="${y(v)}" y2="${y(v)}"/><text x="${ML-4}" y="${y(v)+4}" text-anchor="end" class="mut" style="font-size:${narrow?9:11}px">${v}</text>`);
+  [-15,0,15,30].forEach(v => s += `<text x="${W-MR+4}" y="${yo(v)+4}" style="font-size:${narrow?9:10.5}px; fill:var(--c2)">${v}%</text>`);
+  s += `<line x1="${ML}" x2="${W-MR}" y1="${yo(0)}" y2="${yo(0)}" stroke="var(--c2)" stroke-width="1" stroke-dasharray="2 3" opacity=".6"/>`;
+  Q.forEach((q,i) => { const xc = ML + i*gw + gw/2;
+    s += `<rect x="${xc-bw/2}" y="${y(q.rev)}" width="${bw}" height="${y(0)-y(q.rev)}" fill="var(--c1)" rx="1"/>`;
+    if (q.q.endsWith('Q1')) s += `<text x="${xc}" y="${Hh-10}" text-anchor="middle" class="mut" style="font-size:${narrow?9:11}px">${narrow ? "'"+q.q.slice(2,4) : q.q.slice(0,4)}</text>`;
+    s += `<rect data-hit="${i}" x="${ML+i*gw}" y="${MT}" width="${gw}" height="${ph}" fill="transparent"/>`; });
+  s += `<path d="${Q.map((q,i)=>(i?'L':'M')+(ML+i*gw+gw/2).toFixed(1)+' '+yo(q.sopm).toFixed(1)).join(' ')}" fill="none" stroke="var(--c2)" stroke-width="1.8"/>`;
+  Q.forEach((q,i) => s += `<circle cx="${ML+i*gw+gw/2}" cy="${yo(q.sopm)}" r="${narrow?1.8:2.4}" fill="var(--c2)"/>`);
+  svg.innerHTML = s;
+  bindHits(svg, (t, e) => { const i = +t.dataset.hit; const q = Q[i]; const py = Q[i-4]; showTip(`<b>${q.q.replace('Q',' Q')}</b><br>연결 매출 ${d1(q.rev)}억${py?` (YoY ${sg((q.rev/py.rev-1)*100)}%)`:''}<br>연결 영업이익 ${d1(q.op)}억 (${d1(q.opm)}%)<br>연결 순이익 ${d1(q.ni)}억<br>별도 매출 ${d1(q.srev)}억 · 영업이익 ${d1(q.sop)}억<br>별도 영업이익률 ${d1(q.sopm)}%<br>연결 − 별도 영업이익 ${sg(q.op-q.sop)}억`, e.clientX, e.clientY); });
+  return Hh;
+});
+
+/* ---------- generic horizontal bars ---------- */
+function hbars(id, rows, opt){
+  responsive(id, (svg, W) => {
+    const narrow = W < 560;
+    const ML = narrow ? opt.mlN : opt.ml, MR = narrow ? 50 : 64, MT = 6, rowH = narrow ? opt.rowN||30 : opt.row||34;
+    const Hh = MT + rows.length*rowH + 18; const pw = W - ML - MR; const min = opt.min||0; const x = v => ML + (v-min)/(opt.max-min)*pw;
+    let s = '';
+    opt.ticks.forEach(v => s += `<line class="${v===0?'axis':'grid'}" x1="${x(v)}" x2="${x(v)}" y1="${MT}" y2="${Hh-18}"/><text x="${x(v)}" y="${Hh-5}" text-anchor="middle" class="mut" style="font-size:${narrow?9:10.5}px">${fmtN(v)}${opt.unit||''}</text>`);
+    rows.forEach((r,i) => { const y0 = MT + i*rowH; const bh = narrow ? 13 : 15; const v = Math.max(Math.min(r.val, opt.max), min);
+      s += `<text x="${ML-6}" y="${y0+rowH/2+4}" text-anchor="end" class="lab" style="font-size:${narrow?10.5:12}px; font-weight:${r.me?700:400}">${narrow && r.short ? r.short : r.label}</text>`;
+      const x0 = Math.min(x(0), x(v)), w = Math.abs(x(v) - x(0));
+      s += `<rect x="${x0}" y="${y0+rowH/2-bh/2}" width="${w}" height="${bh}" fill="${r.fill||'var(--c1)'}" rx="2"/>`;
+      s += r.val < 0 && opt.negLeft ? `<text x="${x(0)+5}" y="${y0+rowH/2+4}" style="font-size:${narrow?10:11}px">${r.txt}</text>` : `<text x="${(v<0 ? x(0) : x(v))+5}" y="${y0+rowH/2+4}" style="font-size:${narrow?10:11}px">${r.txt}</text>`;
+      s += `<rect data-hit="${i}" x="0" y="${y0}" width="${W}" height="${rowH}" fill="transparent"/>`; });
+    svg.innerHTML = s;
+    bindHits(svg, (t, e) => showTip(rows[+t.dataset.hit].tip, e.clientX, e.clientY));
+    return Hh;
+  });
+}
+hbars('ch-bridge', CD.bridge.map(b => ({label:b[0], short:b[3], val:b[1], fill:b[4]?'var(--c4)':(b[1]<0?'var(--neg)':'var(--c1)'), me:!!b[4], txt:sg(b[1])+'억', tip:`<b>${b[0]}</b><br>${sg(b[1])}억<br>${b[2]}`})), {ml:170, mlN:108, min:-65, max:35, ticks:[-60,-40,-20,0,20], row:32, rowN:30});
+hbars('ch-bl', CD.backlog.map(m => ({label:m[0], val:m[1], fill:m[3]?'var(--c2)':'var(--c1)', txt:fmtN(m[1])+'억', tip:`<b>${m[0]}</b><br>수주잔고 ${fmtN(m[1])}억<br>${m[2]}`})), {ml:70, mlN:56, max:2800, ticks:[0,500,1000,1500,2000,2500], row:26, rowN:24});
+hbars('ch-opm', CD.opm.map(p => ({label:p[0], short:p[3], val:p[1], me:p[0]==='드림씨아이에스', fill:p[0]==='드림씨아이에스'?'var(--accent)':(p[1]<0?'var(--neg)':'var(--c4)'), txt:sg(p[1])+'%', tip:`<b>${p[0]}</b><br>1H26 영업이익률 ${sg(p[1])}%<br>${p[2]}`})), {ml:170, mlN:104, min:-60, max:25, ticks:[-60,-40,-20,0,20], row:28, rowN:26, unit:'%'});
+})();
+
+</script>
+</body>
+</html>

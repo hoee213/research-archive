@@ -1,0 +1,1073 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<title>ESS 밸류체인 지도</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@400;600;800;900&family=IBM+Plex+Sans+KR:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+:root{
+  --paper:#edf0ee; --card:#f9fbf9; --sunk:#e4e9e6;
+  --ink:#101613; --ink-2:#37423d; --grey:#69746e;
+  --line:#d5dbd7; --line-2:#bdc5c0;
+  --grid:#12695a; --grid-soft:#dcece7;
+  --load:#9c5a12; --load-soft:#f4e9da;
+  --risk:#96393c; --risk-soft:#f6e2e2;
+  --cn:#96393c; --kr:#12695a; --us:#2f5d86;
+  --shadow:0 1px 2px rgba(16,22,19,.05), 0 10px 26px -16px rgba(16,22,19,.3);
+  --measure:min(100%, 68ch);
+  --f-disp:"Gothic A1","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  --f-body:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+  --f-mono:"IBM Plex Mono","SFMono-Regular",Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#0b100e; --card:#131917; --sunk:#0f1513;
+    --ink:#e4e9e6; --ink-2:#b2bcb7; --grey:#87918b;
+    --line:#232b28; --line-2:#37423d;
+    --grid:#57bda6; --grid-soft:#0e2b26;
+    --load:#d99a4e; --load-soft:#2e2114;
+    --risk:#dd8b8b; --risk-soft:#331e1f;
+    --cn:#dd8b8b; --kr:#57bda6; --us:#79a8d0;
+    --shadow:0 1px 2px rgba(0,0,0,.45), 0 12px 30px -18px rgba(0,0,0,.9);
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0b100e; --card:#131917; --sunk:#0f1513;
+  --ink:#e4e9e6; --ink-2:#b2bcb7; --grey:#87918b;
+  --line:#232b28; --line-2:#37423d;
+  --grid:#57bda6; --grid-soft:#0e2b26;
+  --load:#d99a4e; --load-soft:#2e2114;
+  --risk:#dd8b8b; --risk-soft:#331e1f;
+  --cn:#dd8b8b; --kr:#57bda6; --us:#79a8d0;
+  --shadow:0 1px 2px rgba(0,0,0,.45), 0 12px 30px -18px rgba(0,0,0,.9);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%; scroll-behavior:smooth}
+body{margin:0; background:var(--paper); color:var(--ink);
+  font-family:var(--f-body); font-size:16px; line-height:1.72;
+  letter-spacing:-.005em; overflow-x:hidden}
+.wrap{max-width:1000px; margin:0 auto; padding:0 26px 96px}
+p,ul,ol{max-width:var(--measure)}
+h1,h2,h3{text-wrap:balance; margin:0}
+a{color:var(--grid)}
+:focus-visible{outline:2px solid var(--grid); outline-offset:2px; border-radius:3px}
+
+.mast{padding:44px 0 24px; border-bottom:2px solid var(--ink); margin-bottom:30px}
+.kicker{font-family:var(--f-mono); font-size:11.5px; letter-spacing:.2em;
+  text-transform:uppercase; color:var(--grid); font-weight:600}
+.mast h1{font-family:var(--f-disp); font-weight:900;
+  font-size:clamp(34px,7.6vw,60px); line-height:1.08; letter-spacing:-.035em;
+  margin:12px 0 10px}
+.mast .sub{font-size:clamp(15.5px,3.1vw,19px); color:var(--ink-2);
+  line-height:1.56; max-width:46ch; margin:0}
+.meta{display:flex; flex-wrap:wrap; gap:6px 20px; margin-top:20px;
+  font-family:var(--f-mono); font-size:12px; color:var(--grey)}
+.meta b{color:var(--ink-2); font-weight:500}
+
+.toc{background:var(--sunk); border-radius:4px; padding:16px 20px; margin-bottom:34px}
+.toc ol{margin:0; padding-left:20px; columns:2; column-gap:28px;
+  font-size:13.8px; line-height:1.9; max-width:none}
+.toc a{text-decoration:none; color:var(--ink-2)}
+.toc a:hover{color:var(--grid); text-decoration:underline}
+
+.stats{display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+  gap:1px; background:var(--line); border:1px solid var(--line);
+  margin:0 0 38px; border-radius:3px; overflow:hidden}
+.stat{background:var(--card); padding:15px 16px 16px}
+.stat .l{font-size:11.5px; color:var(--grey); display:block; line-height:1.4}
+.stat .v{font-family:var(--f-mono); font-weight:600; font-variant-numeric:tabular-nums;
+  font-size:clamp(19px,4.8vw,25px); line-height:1.24; margin-top:6px;
+  overflow-wrap:anywhere; display:block}
+.stat .d{font-size:11.5px; color:var(--grey); margin-top:3px; font-family:var(--f-mono)}
+.g{color:var(--grid)} .o{color:var(--load)} .r{color:var(--risk)}
+
+.thesis{background:var(--sunk); border-radius:4px; padding:22px 24px; margin-bottom:48px}
+.thesis p{font-size:clamp(16px,3.2vw,19px); line-height:1.66; margin:0;
+  font-weight:500; max-width:60ch}
+.thesis p+p{margin-top:13px}
+
+section{margin:0 0 58px; scroll-margin-top:20px}
+.snum{font-family:var(--f-mono); font-size:11.5px; letter-spacing:.16em;
+  color:var(--load); font-weight:600; display:block; margin-bottom:8px}
+h2{font-family:var(--f-disp); font-weight:800; font-size:clamp(23px,4.8vw,34px);
+  line-height:1.22; letter-spacing:-.03em; margin-bottom:18px}
+h3{font-family:var(--f-disp); font-weight:700; font-size:17.5px; margin:34px 0 10px;
+  letter-spacing:-.02em}
+h4{font-family:var(--f-disp); font-weight:700; font-size:15px; margin:24px 0 8px}
+p{margin:0 0 15px}
+.lede{font-size:17px; color:var(--ink-2)}
+strong{font-weight:600}
+mark{background:var(--load-soft); color:inherit; padding:.06em .3em; border-radius:2px}
+.num{font-family:var(--f-mono); font-variant-numeric:tabular-nums; font-weight:500}
+
+.slab{margin:26px 0 30px}
+.slab-h{display:flex; align-items:baseline; justify-content:space-between;
+  gap:14px; flex-wrap:wrap; margin-bottom:11px}
+.slab-t{font-size:13.5px; font-weight:600}
+.slab-s{font-family:var(--f-mono); font-size:11.5px; color:var(--grey)}
+.panel{background:var(--card); border:1px solid var(--line); border-radius:4px;
+  padding:16px 14px 12px}
+.chart{width:100%; display:block; touch-action:pan-y}
+.legend{display:flex; flex-wrap:wrap; gap:6px 16px; margin-top:12px;
+  font-size:11.5px; color:var(--ink-2); font-family:var(--f-mono)}
+.legend i{width:11px; height:11px; border-radius:2px; display:inline-block;
+  margin-right:6px; vertical-align:-1px}
+.tip{position:fixed; z-index:60; pointer-events:none; opacity:0;
+  transition:opacity .12s; background:var(--card); color:var(--ink);
+  border:1px solid var(--line-2); border-radius:5px; padding:8px 11px;
+  font-family:var(--f-mono); font-size:11.5px; line-height:1.6;
+  box-shadow:var(--shadow); max-width:min(290px, calc(100vw - 20px))}
+.tip b{font-weight:600} .tip .k{color:var(--grey)}
+
+.tbl-scroll{overflow-x:auto; -webkit-overflow-scrolling:touch;
+  border:1px solid var(--line); border-radius:4px; background:var(--card)}
+table{border-collapse:collapse; width:100%; min-width:580px;
+  font-size:13.5px; font-variant-numeric:tabular-nums}
+th,td{padding:9px 12px; text-align:right; border-bottom:1px solid var(--line);
+  white-space:nowrap; vertical-align:top}
+th{font-size:11.5px; font-weight:600; color:var(--grey); letter-spacing:.03em;
+  background:var(--paper); position:sticky; top:0; z-index:1}
+th:first-child,td:first-child{text-align:left; white-space:normal; min-width:106px}
+td.w{white-space:normal; min-width:190px; text-align:left; line-height:1.55}
+td.w2{white-space:normal; min-width:250px; text-align:left; line-height:1.55}
+td.n{font-family:var(--f-mono)}
+tbody tr:last-child td{border-bottom:none}
+tr.hl td{background:var(--grid-soft)}
+tr.dim td{color:var(--grey)}
+.d-neg{color:var(--risk)} .d-pos{color:var(--grid)}
+
+.steps{display:grid; gap:11px; margin:22px 0 8px}
+.step{display:grid; grid-template-columns:auto 1fr; gap:3px 15px;
+  border-left:2px solid var(--line-2); padding:3px 0 3px 16px}
+.step.on{border-left-color:var(--grid)}
+.step .sn{font-family:var(--f-mono); font-size:11px; color:var(--grey);
+  letter-spacing:.1em; grid-column:1; grid-row:1 / span 2; padding-top:3px}
+.step .st{font-weight:600; font-size:15px}
+.step.on .st{color:var(--grid)}
+.step .sd{font-size:14px; color:var(--ink-2); line-height:1.62; max-width:64ch}
+
+.cards{display:grid; grid-template-columns:repeat(auto-fit,minmax(232px,1fr));
+  gap:12px; margin:20px 0 8px}
+.card{background:var(--card); border:1px solid var(--line); border-radius:4px;
+  padding:16px 17px}
+.card h4{margin:0 0 8px; font-size:14.5px; font-weight:700; font-family:var(--f-disp)}
+.card p{font-size:13.8px; color:var(--ink-2); margin:0; line-height:1.62; max-width:none}
+.card .t{font-family:var(--f-mono); font-size:10.5px; font-weight:600;
+  letter-spacing:.08em; padding:2px 7px; border-radius:3px; display:inline-block;
+  margin-bottom:9px}
+.t-up{background:var(--grid-soft); color:var(--grid)}
+.t-dn{background:var(--risk-soft); color:var(--risk)}
+.t-wa{background:var(--load-soft); color:var(--load)}
+
+.duo{display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:20px 0 8px}
+.duo>div{border:1px solid var(--line); border-radius:4px; padding:15px 16px;
+  background:var(--card)}
+.duo h4{margin:0 0 10px; font-size:12px; letter-spacing:.09em; text-transform:uppercase;
+  font-family:var(--f-mono); font-weight:600}
+.bull h4{color:var(--grid)} .bear h4{color:var(--risk)}
+.duo ul{margin:0; padding-left:17px; font-size:14.5px; line-height:1.66; max-width:none}
+.duo li{margin-bottom:9px} .duo li:last-child{margin-bottom:0}
+
+.flag{border-left:3px solid var(--load); background:var(--load-soft);
+  padding:13px 16px; border-radius:0 4px 4px 0; margin:20px 0;
+  font-size:14px; line-height:1.66; max-width:var(--measure)}
+.flag b{font-family:var(--f-disp)}
+
+.check{list-style:none; padding:0; margin:16px 0 0; max-width:var(--measure)}
+.check li{position:relative; padding:12px 0 12px 34px; border-bottom:1px solid var(--line);
+  font-size:14.8px; line-height:1.6}
+.check li:last-child{border-bottom:none}
+.check li::before{content:""; position:absolute; left:2px; top:17px; width:13px; height:13px;
+  border:1.5px solid var(--line-2); border-radius:3px}
+
+.note{font-size:13px; color:var(--grey); line-height:1.66; max-width:var(--measure)}
+.srcs{border-top:2px solid var(--ink); padding-top:22px; margin-top:62px}
+.srcs h2{font-size:20px; margin-bottom:14px}
+.srcs dl{display:grid; grid-template-columns:auto 1fr; gap:7px 16px;
+  font-size:13px; margin:0; color:var(--ink-2)}
+.srcs dt{font-family:var(--f-mono); color:var(--grey); white-space:nowrap; font-size:12px}
+.srcs dd{margin:0}
+.disc{margin-top:26px; padding:14px 16px; border:1px dashed var(--line-2);
+  border-radius:4px; font-size:12.5px; color:var(--grey); line-height:1.66}
+
+@media (max-width:620px){
+  body{font-size:15.5px}
+  .wrap{padding:0 14px 72px}
+  table{min-width:520px; font-size:12.5px}
+  th,td{padding:7px 9px}
+  .tbl-scroll{margin:0 -14px; border-radius:0; border-left:none; border-right:none}
+  .duo{grid-template-columns:1fr}
+  .toc ol{columns:1}
+  .toc,.thesis{margin-left:-14px; margin-right:-14px; border-radius:0; padding:16px 16px}
+  .stat{padding:12px 13px 13px}
+  .srcs dl{grid-template-columns:1fr; gap:2px}
+  .srcs dd{margin-bottom:9px}
+}
+@media (max-width:400px){
+  .wrap{padding:0 11px 64px}
+  .tbl-scroll{margin:0 -11px}
+  .toc,.thesis{margin-left:-11px; margin-right:-11px}
+  .meta{gap:4px 13px; font-size:11.5px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important; animation:none!important}
+  html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="mast">
+  <span class="kicker">섹터 심층 분석 · 에너지저장장치</span>
+  <h1>ESS 밸류체인 지도</h1>
+  <p class="sub">북미 수요는 어디서 나오고, 누가 얼마를 만들 수 있으며, 그 돈은 밸류체인의 어느 칸에 남는가.</p>
+  <div class="meta">
+    <span>작성 <b>2026-09-04</b></span>
+    <span>근거 <b>증권사 리포트 93,588건 + 공시 + 해외 1차자료</b></span>
+    <span>교차검증 <b>29항목 불일치 0</b></span>
+  </div>
+</header>
+
+<nav class="toc">
+  <ol>
+    <li><a href="#demand">수요 — 북미 근거를 숫자로</a></li>
+    <li><a href="#supply">공급 — 업체별 캐파 실측</a></li>
+    <li><a href="#compete">경쟁 — 점유율의 불편한 진실</a></li>
+    <li><a href="#rule">규제 — EO 14420 해부</a></li>
+    <li><a href="#bm">BM — 레이어별로 무엇을 파나</a></li>
+    <li><a href="#gp">돈은 어느 칸에 남는가</a></li>
+    <li><a href="#peer">해외 peer 비교</a></li>
+    <li><a href="#korea">한국 5개사</a></li>
+    <li><a href="#watch">지켜볼 것</a></li>
+  </ol>
+</nav>
+
+<div class="stats">
+  <div class="stat"><span class="l">글로벌 ESS 배터리 출하 (1H26)</span><span class="v g">461GWh</span><span class="d">전년 270GWh → +71%</span></div>
+  <div class="stat"><span class="l">상위 6개사 점유율</span><span class="v r">68.9%</span><span class="d">여섯 곳 전부 중국</span></div>
+  <div class="stat"><span class="l">미국 DC 전력수요 (2035E)</span><span class="v o">106GW</span><span class="d">2025년 41GW</span></div>
+  <div class="stat"><span class="l">2028 미국 캐파 vs 수요</span><span class="v">141 / 153</span><span class="d">12GWh 부족</span></div>
+  <div class="stat"><span class="l">부품 벤더 GP 단가</span><span class="v">1~3$</span><span class="d">셀 OEM은 15~25$/kWh</span></div>
+</div>
+
+<div class="thesis">
+  <p>ESS 수요 논리는 단순하다. <strong>AI 데이터센터가 전력망보다 빠르게 늘고 있다.</strong> 미국 데이터센터 전력수요는 2025년 41GW에서 2035년 106GW로 간다는 것이 BNEF 추정이고, 2026년 1분기 미국 설치량은 <span class="num">3.3GW / 8.4GWh</span>로 역대 1분기 최고를 <span class="num">54%</span> 경신했다.</p>
+  <p>그런데 이 시장을 실제로 지배하는 건 중국이다. 2026년 상반기 글로벌 ESS 배터리 출하 상위 6개사가 <mark>CATL·EVE·Hithium·BYD·CALB·REPT — 전부 중국이고 합쳐서 68.9%</mark>다. 한국 업체는 이 순위에 없다.</p>
+  <p>그래서 한국 기업의 기회는 기술 우위가 아니라 <strong>미국이 중국을 밀어낸 구역 안에서만</strong> 존재한다. 북미로 좁히면 LG에너지솔루션 점유율이 4.2%에서 <span class="num">13.6%</span>로 뛰어 3위다. 이 리포트는 그 구역의 크기와, 그 안에서 돈이 어느 칸에 남는지를 따진다.</p>
+</div>
+
+<section id="demand">
+  <span class="snum">Ⅰ</span>
+  <h2>수요 — 북미 근거를 숫자로</h2>
+  <p class="lede">“AI 때문에 ESS가 큰다”는 말은 근거가 네 겹으로 쌓여 있다. 전력수요 전망, 계통 사고, 실제 설치 실적, 그리고 수요처별 단가 구조다.</p>
+
+  <h3>1. 전력수요 — 발전을 늘려도 모자란다</h3>
+  <p>BNEF는 미국 데이터센터 전력 부하가 <span class="num">2025년 41GW → 2030년 77GW → 2035년 106GW</span>로 간다고 본다. 10년에 2.6배다. 같은 기간 글로벌 데이터센터 설비는 2022년 말 35.9GW에서 2025년 말 62.0GW로 이미 <span class="num">72.7%</span> 커졌고, 그중 미국이 17.5 → 34.3GW로 <mark>96% 늘며 증가분의 대부분을 가져갔다</mark>(아시아 +56%, 유럽·중동 +43%).</p>
+  <p>미국의 신규 발전용량 추가도 늘고 있다 — 2022년 13.5GW, 2023년 27.0GW, 2024년 40.5GW, 2025년(1~3분기) 30.3GW. 그런데 <strong>발전을 늘려도 순간 부하 변동과 주파수 안정은 별개 문제</strong>다. 그것이 ESS의 자리다.</p>
+
+  <h3>2. 계통 사고 — 이론이 아니라는 증거</h3>
+  <div class="flag"><b>2026년 7월 22일, PJM에서 3GW가 넘는 데이터센터 전력수요가 순간적으로 이탈했다.</b> 미국 최대 전력계통에서 벌어진 일이다. 데이터센터는 부하 변동이 크고 빠르며, 그 규모가 이미 계통 안정성을 위협하는 수준에 도달했다는 실증이다. ESS 수요가 “재생에너지 간헐성 대응”에서 <strong>“데이터센터 부하 안정화”</strong>로 옮겨간 전환점으로 읽힌다.</div>
+
+  <h3>3. 실제 설치 — 전망이 아니라 실적</h3>
+  <p>Wood Mackenzie와 ACP 집계로 <strong>2026년 1분기 미국은 3.3GW / 8.4GWh를 설치</strong>했다. 종전 1분기 최고 기록을 54% 넘겼고, 유틸리티·주택·상업 세 부문이 모두 1분기 기록을 세웠다. 유틸리티 규모가 2.3GW / 6.8GWh, 주택용은 1.3GWh로 전년 대비 86% 늘었다. Wood Mackenzie는 2031년까지 미국 누적 설치가 <span class="num">200GW / 655GWh</span>에 이르고, 2026~2031년 설치의 85%가 유틸리티 부문일 것으로 본다.</p>
+
+  <div class="flag"><b>다만 상충하는 데이터도 있다.</b> 하나증권 집계 기준 2026년 5월 <strong>북미 신규 설치는 2.1GWh로 전년 대비 -74%</strong>였다(그리드 1.3GWh -82%, BTM 0.8GWh 보합). 같은 시장을 두고 분기 기록 경신과 월간 급감이 동시에 나온다. 프로젝트 준공이 분기말·연말에 몰리는 <strong>인식 시점의 문제</strong>로 보이며, 월별 수치로 추세를 판단하면 안 된다는 뜻이다. 이 리포트는 두 수치를 모두 남겨둔다.</div>
+
+  <h3>4. 수요 4대 축 — 단가가 다르다</h3>
+  <div class="tbl-scroll">
+    <table>
+      <thead><tr><th>수요처</th><th>비중·특성</th><th>단가</th><th>기술 요구</th></tr></thead>
+      <tbody>
+        <tr><td>유틸리티</td><td class="w">전체의 60~70%. 대형 프로젝트 중심, LFP가 90% 이상</td><td class="n">기준</td><td class="w">가격 민감도 최고</td></tr>
+        <tr class="hl"><td>데이터센터</td><td class="w">가장 큰 외형 성장. AI 부하 대응</td><td class="n d-pos">유틸리티의<br>1.5~2배</td><td class="w">μs 단위 정밀 냉각 요구</td></tr>
+        <tr class="hl"><td>BBU / UPS</td><td class="w">데이터센터 백업 전원. 삼성SDI 점유율 50% 수준</td><td class="n d-pos">가장 높은<br>ASP</td><td class="w">18650·21700 원통형, 신뢰성</td></tr>
+        <tr><td>산업용</td><td class="w">마이크로그리드, 피크 절감</td><td class="n">다양</td><td class="w">용도별 다변화</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p style="margin-top:15px">여기서 중요한 건 <mark>데이터센터향 단가가 유틸리티의 1.5~2배</mark>라는 점이다. 같은 GWh를 팔아도 어디에 파느냐로 매출이 두 배 차이난다. 부품사의 실적을 볼 때 물량(GWh)만이 아니라 믹스를 봐야 하는 이유다.</p>
+
+  <h3>5. 전망은 기관마다 다르다</h3>
+  <div class="slab">
+    <div class="slab-h">
+      <span class="slab-t">북미 ESS 수요 전망, 기관별 비교</span>
+      <span class="slab-s">GWh · 설치 기준</span>
+    </div>
+    <div class="panel"><svg id="c-demand" class="chart" role="img" aria-label="북미 ESS 수요 전망 기관별 비교"></svg></div>
+    <div class="legend" id="l-demand"></div>
+  </div>
+  <div class="tbl-scroll">
+    <table>
+      <thead><tr><th>기관</th><th>구분</th><th>2025</th><th>~2028</th><th>~2030</th><th>CAGR (25~30)</th></tr></thead>
+      <tbody>
+        <tr><td>BNEF</td><td>시장조사</td><td class="n">62</td><td class="n">110</td><td class="n">119</td><td class="n">14%</td></tr>
+        <tr><td>SNE리서치</td><td>시장조사</td><td class="n">88</td><td class="n">126</td><td class="n">214</td><td class="n">19%</td></tr>
+        <tr><td>삼성SDI</td><td>셀 업체</td><td class="n">90</td><td class="n">—</td><td class="n">160</td><td class="n">12%</td></tr>
+        <tr><td>LG에너지솔루션</td><td>셀 업체</td><td class="n">88</td><td class="n">—</td><td class="n">219</td><td class="n">20%</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p style="margin-top:15px"><strong>2030년 전망이 119GWh와 219GWh로 두 배 가까이 벌어진다.</strong> 셀 업체 전망(160·219)이 시장조사기관(119·214)보다 대체로 높다는 점, 그리고 증설을 결정하는 주체가 셀 업체라는 점을 함께 봐야 한다. 유안타증권은 아예 시나리오를 나눠, 2028년 미국 수요를 Low <span class="num">64.6</span> / Base <span class="num">80.8</span> / High <span class="num">109.4</span>GWh로 제시한다.</p>
+</section>
+
+<section id="supply">
+  <span class="snum">Ⅱ</span>
+  <h2>공급 — 업체별 캐파 실측</h2>
+  <p class="lede">수요 전망은 갈리지만 캐파는 숫자가 명확하다. 공장은 이미 짓고 있거나 아니거나 둘 중 하나이기 때문이다.</p>
+
+  <div class="slab">
+    <div class="slab-h">
+      <span class="slab-t">미국 ESS 셀 생산능력과 수요</span>
+      <span class="slab-s">GWh · 막대=캐파, 선=수요</span>
+    </div>
+    <div class="panel"><svg id="c-capa" class="chart" role="img" aria-label="미국 ESS 캐파와 수요"></svg></div>
+    <div class="legend" id="l-capa"></div>
+  </div>
+
+  <div class="tbl-scroll">
+    <table>
+      <thead><tr><th>업체</th><th>미국 ESS 캐파</th><th>계획</th><th>비고</th></tr></thead>
+      <tbody>
+        <tr class="hl"><td>LG에너지솔루션</td><td class="n">30 → 50GWh+</td><td class="w">2026년 말까지 50GWh 이상 확보</td><td class="w2">각형 폼팩터 ESS는 2027년 말 현지 양산 목표. 애리조나 초기 10GWh → 44GWh 순차 확대</td></tr>
+        <tr class="hl"><td>삼성SDI</td><td class="n">30GWh</td><td class="w d-neg">추가 증설 계획 없음</td><td class="w2">회사 설명 기준 미국 ESS 캐파의 2~3년치 물량 상당 부분을 이미 확보</td></tr>
+        <tr><td>SK온</td><td class="n">15GWh</td><td class="w">2027년 추정</td><td class="w2">EV 라인 재목적화 경로</td></tr>
+        <tr><td>Tesla</td><td class="n">7GWh</td><td class="w">2026년 1분기 초기 생산</td><td class="w2">ESS용 LFP 자체 캐파</td></tr>
+        <tr><td>Envision AESC</td><td class="n">7GWh</td><td class="w">2025년 4월 생산 시작</td><td class="w2">텍사스 라인 활용</td></tr>
+        <tr class="dim"><td>합계(2027E)</td><td class="n">100~120GWh</td><td class="w">가동률 70~80% 적용 시 실효 약 80GWh</td><td class="w2">유안타 추정 근거</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p style="margin-top:16px">삼성증권 추정으로 <strong>2028년 초 미국 ESS 배터리 생산능력은 141GWh, 같은 해 예상 수요는 153GWh</strong> — <mark>12GWh가 모자란다</mark>. 유안타는 미국 ESS 셀 캐파를 2025년 22GWh에서 2026년 77GWh, 2027년 120GWh, 2028년 145GWh로 본다. 두 기관 모두 <strong>수요를 충족할 현지 공급은 2028년 이후에나 확보된다</strong>는 결론에서 일치한다.</p>
+  <p>2027년으로 좁히면 미국 ESS 수요 128GWh 중 한국 업체가 현지 캐파로 커버 가능한 몫은 <span class="num">72%</span> 수준으로 추정된다. 이 숫자가 “한국 ESS 밸류체인”이라는 테마의 실질적 크기다.</p>
+
+  <div class="flag"><b>주목할 비대칭 하나.</b> LG에너지솔루션은 30 → 50GWh로 늘리는데 <strong>삼성SDI는 30GWh에서 추가 증설 계획이 없다</strong>. 대신 “2~3년치 물량을 이미 확보했다”고 말한다. 증설로 점유율을 사겠다는 쪽과 확보된 계약 안에서 마진을 지키겠다는 쪽으로 전략이 갈렸다는 뜻이고, <mark>각 사 협력업체의 실적 경로도 여기서 갈린다</mark>. 삼성SDI 벤더(한중엔시에스·상신이디피)는 가동률 안정, LG 벤더는 물량 성장에 노출된다.</div>
+</section>
+
+<section id="compete">
+  <span class="snum">Ⅲ</span>
+  <h2>경쟁 — 점유율의 불편한 진실</h2>
+  <p class="lede">한국 ESS 테마를 보는 가장 빠른 방법은 글로벌 출하 순위를 보는 것이다. 결과는 국내 서사와 상당히 다르다.</p>
+
+  <div class="slab">
+    <div class="slab-h">
+      <span class="slab-t">글로벌 ESS 배터리 출하 점유율 (2026년 상반기)</span>
+      <span class="slab-s">SNE리서치 · 총 461.3GWh</span>
+    </div>
+    <div class="panel"><svg id="c-share" class="chart" role="img" aria-label="글로벌 ESS 배터리 점유율"></svg></div>
+    <div class="legend" id="l-share"></div>
+  </div>
+
+  <div class="tbl-scroll">
+    <table>
+      <thead><tr><th>순위</th><th>업체</th><th>국적</th><th>출하량</th><th>점유율</th><th>전년비</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>CATL</td><td>중국</td><td class="n">125.0GWh</td><td class="n">27.1%</td><td class="n d-pos">+81%</td></tr>
+        <tr><td>2</td><td>EVE Energy</td><td>중국</td><td class="n">48.0GWh</td><td class="n">10.4%</td><td class="n d-pos">+69%</td></tr>
+        <tr><td>3</td><td>Hithium</td><td>중국</td><td class="n">46.2GWh</td><td class="n">10.0%</td><td class="n">—</td></tr>
+        <tr><td>4</td><td>BYD</td><td>중국</td><td class="n">35.7GWh</td><td class="n">7.7%</td><td class="n">—</td></tr>
+        <tr><td>5</td><td>CALB</td><td>중국</td><td class="n">31.5GWh</td><td class="n">6.8%</td><td class="n">—</td></tr>
+        <tr><td>6</td><td>REPT Battero</td><td>중국</td><td class="n">31.4GWh</td><td class="n">6.8%</td><td class="n">—</td></tr>
+        <tr class="dim"><td colspan="3">상위 6개사 합계</td><td class="n">317.8GWh</td><td class="n">68.9%</td><td class="n">전부 중국</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p style="margin-top:16px"><strong>한국 셀 업체는 글로벌 상위 6위 안에 없다.</strong> 그런데 시장을 북미로 좁히면 그림이 완전히 달라진다 — <mark>LG에너지솔루션이 10.3GWh를 출하해 점유율 4.2% → 13.6%로 뛰며 3위</mark>다. 1년 만에 9.4%p 상승이다.</p>
+  <p>이 두 숫자의 간격이 이 섹터의 전부다. 한국 기업은 <strong>기술이나 원가로 이긴 것이 아니라, 중국이 못 들어가는 구역에서 자리를 얻었다.</strong> 따라서 투자 판단의 1순위 변수는 셀 성능도 증설 속도도 아니고 <strong>그 구역이 얼마나 넓어지고 얼마나 오래 유지되는가</strong>다.</p>
+
+  <h4>시스템 통합(SI) 단은 또 다르다</h4>
+  <p>배터리가 아니라 완성 시스템 기준으로 보면 2026년 Wood Mackenzie 집계에서 <strong>중국 Sungrow가 글로벌 BESS 시스템통합 1위</strong>로, Tesla와 CATL을 앞선다. Sungrow는 2026년 상반기에만 25GWh를 출하했다(+28% YoY). 다만 이 회사는 <mark>미국에서 발을 빼는 중</mark>이다 — 뒤의 규제 장에서 다룬다.</p>
+</section>
+
+<section id="rule">
+  <span class="snum">Ⅳ</span>
+  <h2>규제 — EO 14420 해부</h2>
+  <p class="lede">국내 리포트들이 “미국 전력설비 행정명령”이라 부르는 것의 정식 명칭과 범위를 확인하면, 수혜 강도를 훨씬 정확하게 가늠할 수 있다.</p>
+
+  <div class="tbl-scroll">
+    <table>
+      <thead><tr><th>항목</th><th>내용</th></tr></thead>
+      <tbody>
+        <tr><td>명칭</td><td class="w2">Executive Order 14420 — “Declaring a National Emergency to Secure the United States Bulk-Power System”</td></tr>
+        <tr><td>서명일</td><td class="w2">2026년 8월 26일</td></tr>
+        <tr class="hl"><td>적용 범위</td><td class="w2"><strong>송전 전압 69kV 이상</strong>의 전력계통 설비. 지역 배전설비는 명시적으로 제외</td></tr>
+        <tr class="hl"><td>대상 장비</td><td class="w2">대형 발전기, 변압기, 산업용 제어시스템에 더해 <strong>배터리 저장장치(battery storage)와 계통연계 인버터(grid-connected inverter)를 명시적으로 포함</strong></td></tr>
+        <tr><td>대상 주체</td><td class="w2">미국의 무기 금수 또는 제재 대상국 정부의 소유·지배·관할하에 있는 자 — 중국, 러시아, 이란, 북한 등</td></tr>
+        <tr><td>발효</td><td class="w2">2026년 8월 26일 이후 개시되는 거래에 적용. <strong>이미 취득·설치된 설비에도 조건을 부과할 수 있음</strong></td></tr>
+        <tr class="hl"><td>세부 규칙 기한</td><td class="w2"><strong>미국 에너지부(DOE)가 2026년 12월 24일까지</strong> 시행규칙을 공표해 대상 국가·기업·장비를 확정</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="flag"><b>69kV 기준선이 핵심이자 한계다.</b> 미국의 분산형 태양광은 대개 13.8kV, 유틸리티 규모도 34.5kV에서 계통 연계되는 경우가 많아 <strong>상당수 프로젝트가 69kV 기준 아래에 있다</strong>. 국내 리포트 일부가 “중국산 전면 배제”로 읽은 것과 달리, 실제 적용 범위는 그보다 좁을 수 있다. 이 모호성이 12월 24일 DOE 규칙으로 해소된다. <strong>수혜 강도를 결정하는 단 하나의 이벤트</strong>다.</div>
+
+  <h3>그럼에도 중국 업체는 이미 움직였다</h3>
+  <p>규칙이 나오기 전인데 <strong>Sungrow는 이미 미국에서 후퇴 중</strong>이다. 미국 FCC 규제와 EO 14420을 이유로 R&D를 늘리고 자원을 다른 지역으로 돌리며 채널 중심 운영으로 전환한다고 밝혔다. 글로벌 SI 1위 기업이 최대 성장 시장에서 스스로 물러서는 것은 <mark>규제의 실효가 문서보다 앞서 작동하고 있다는 증거</mark>다.</p>
+
+  <h3>세제 — 언제까지, 얼마나</h3>
+  <div class="cards">
+    <div class="card"><span class="t t-up">지속</span>
+      <h4>AMPC (IRC §45X)</h4>
+      <p><strong>2029년까지 full rate</strong> — 셀 35$/kWh + 모듈 10$/kWh. 이후 2030년 75%, 2031년 50%, 2032년 25%, <strong>2033년 0%</strong>로 단계 축소. 미국 현지 생산의 원가 우위가 2030년부터 매년 얇아진다는 뜻이다.</p></div>
+    <div class="card"><span class="t t-wa">강화</span>
+      <h4>OBBBA + PFE (2025.7.4 시행)</h4>
+      <p>45X에 금지 외국 주체(PFE) 조항이 추가됐고, battery components의 <strong>material assistance ratio가 2026년 60% → 2030년 85%</strong>로 높아진다. 비중국 소재 조달 비중을 매년 더 요구한다.</p></div>
+    <div class="card"><span class="t t-wa">축소</span>
+      <h4>ITC 30% + FEOC 제한</h4>
+      <p>ITC 30% 혜택 대상에서 FEOC 기여 비중을 <strong>2026년 제조원가 45% 이하 → 2030년 25% 이하</strong>로 단계 축소. 비중국 부품 벤더에게 <strong>매년 5%p씩 강화되는 구조적 우위</strong>다.</p></div>
+    <div class="card"><span class="t t-up">기술장벽</span>
+      <h4>UL 9540A 6판 · NFPA 855 2026</h4>
+      <p>2026년 3월 13일 발효. NFPA 855 2026년판은 <strong>HMA(위험저감분석)를 사실상 모든 설치에 요구</strong>하고 TRPP(열폭주 전파방지) 시스템을 명시한다. 냉각·인클로저·화재진압 부품의 <strong>단가 인상 여지</strong>가 여기서 생긴다.</p></div>
+  </div>
+  <p style="margin-top:16px">규제를 종합하면 방향은 하나다 — <strong>비중국 공급망의 우위는 2030년까지 강해지고, 그 뒤에는 세제 혜택이 사라지며 다시 원가 경쟁으로 돌아간다.</strong> 지금의 기회 창은 대략 <mark>2026~2030년의 5년</mark>이다.</p>
+</section>
+
+<section id="bm">
+  <span class="snum">Ⅴ</span>
+  <h2>BM — 레이어별로 무엇을 파나</h2>
+  <p class="lede">1MWh ESS 컨테이너 한 대를 뜯어 kWh당 얼마씩 누가 가져가는지 보면, 각 회사의 사업 모델이 그대로 드러난다.</p>
+
+  <h3>먼저 원가 구조</h3>
+  <p>2026년 1분기 기준 미국 유틸리티 ESS 시스템(20피트 컨테이너, 약 5MWh급 LFP)의 설치 기준 가격은 <span class="num">180~250$/kWh</span>다. 이 중 EPC 수수료·운송·통관·시운전 등 비제조 비용이 <span class="num">25~35$/kWh</span>, 순제조 비용이 <span class="num">145~215$/kWh</span>다. <strong>셀이 BOM의 45~50%를 가져가고, 나머지 셀 외 시스템 부품 시장이 50~95$/kWh</strong>다.</p>
+
+  <div class="slab">
+    <div class="slab-h">
+      <span class="slab-t">1MWh 시스템 BOM 분해</span>
+      <span class="slab-s">$/kWh · NREL·Bloomberg·유안타</span>
+    </div>
+    <div class="panel"><svg id="c-bom" class="chart" role="img" aria-label="ESS BOM 부품별 단가"></svg></div>
+  </div>
+  <p class="note">부품 비중: LFP셀 47% / PCS·인버터 13% / 인클로저 9% / 냉각 6% / 랙·모듈 6% / BMS·EMS 4% / 화재진압 3% / 기타 12%.</p>
+  <p style="margin-top:15px">여기서 <strong>단가가 오를 부품과 내릴 부품이 갈린다.</strong> 오를 쪽은 냉각(LSFT 의무화), 인클로저(LSFT 통합), 화재진압(NFPA 855) — 전부 규제가 요구를 높인 항목이다. 내릴 쪽은 케이블·커넥터(표준품), 셀 캔(CTP 위협), PCS(셀 OEM의 자체 개발)다.</p>
+
+  <h3>레이어별 사업 모델</h3>
+  <div class="tbl-scroll">
+    <table>
+      <thead><tr><th>레이어</th><th>무엇을 파나</th><th>단가</th><th>GPM</th><th>수익의 원천</th><th>대표 기업</th></tr></thead>
+      <tbody>
+        <tr><td><strong>① 셀 OEM</strong></td><td class="w">LFP 셀. ESS의 원가 절반</td><td class="n">~100$/kWh</td><td class="n">17~23%</td><td class="w2">캐파 선점 + 장기계약. AMPC 세액공제(셀 35$/kWh)가 마진의 큰 부분</td><td class="w">CATL, LGES, 삼성SDI</td></tr>
+        <tr class="hl"><td><strong>② 통합 EMS</strong></td><td class="w">셀을 제외한 전 구성품을 패키지화해 인도</td><td class="n">~70$/kWh</td><td class="n">13~17%</td><td class="w2">스코프 확대. 부품 하나가 아니라 시스템을 넘겨 매출 규모 자체를 키운다</td><td class="w">서진시스템, 신성에스티(위탁), Fluence</td></tr>
+        <tr class="hl"><td><strong>③ 부품 벤더</strong></td><td class="w">냉각·케이스·버스바·캔 등 개별 부품</td><td class="n">5~25$/kWh</td><td class="n">10~15%</td><td class="w2">고객사 시스템 내 attach율. 신모델마다 단가 회복 기회</td><td class="w">한중엔시에스, 상신이디피</td></tr>
+        <tr><td><strong>④ PCS·전력기기</strong></td><td class="w">전력 변환, 계통 연계</td><td class="n">~22$/kWh</td><td class="n d-pos">34%+</td><td class="w2">전력기기 고유의 진입장벽. 밸류체인에서 마진이 가장 두껍다</td><td class="w">LS ELECTRIC, HD현대일렉트릭</td></tr>
+        <tr><td><strong>⑤ SI</strong></td><td class="w">컨테이너·PCS·EMS·스위치기어 통합, 계통 연계·운영</td><td class="n">시스템 전체</td><td class="n">11~35%</td><td class="w2">프로젝트 수주·운영. 규제 리스크가 집중되는 칸</td><td class="w">Tesla, Sungrow, Fluence</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="flag"><b>2025년 하반기에 구조가 바뀌었다.</b> 그전까지 ESS 밸류체인은 <strong>‘셀 OEM → 부품 벤더’ 2단</strong>이었는데, <strong>‘셀 OEM → 통합 EMS → 부품 벤더’ 3단</strong>으로 재편됐다. 통합 EMS는 셀을 제외한 모든 구성품을 패키지로 묶어 공급하는 역할이다. 부품 하나만 팔던 회사가 시스템을 통째로 넘기면 <mark>시스템당 매출이 한 자릿수 배로 뛴다</mark> — 서진시스템과 신성에스티의 위탁제작 진입이 그것이다.</div>
+
+  <h3>계약 형태가 마진과 운전자본을 결정한다</h3>
+  <div class="tbl-scroll">
+    <table>
+      <thead><tr><th>계약 유형</th><th>구조</th><th>GPM</th><th>운전자본 부담</th></tr></thead>
+      <tbody>
+        <tr><td>단가형</td><td class="w2">품목별 단가 계약. 물량은 고객 발주에 따름</td><td class="n">낮음</td><td class="w">낮음</td></tr>
+        <tr><td>위탁제작형</td><td class="w2">셀 외 전 부품을 패키징해 인도(통합 EMS)</td><td class="n">중간</td><td class="w d-neg">높음 — 부품 선구매</td></tr>
+        <tr class="hl"><td>우선공급자형</td><td class="w2">preferred supplier 지위, 개별 PO 발생 시 공급</td><td class="n">9~13%</td><td class="w">중간</td></tr>
+        <tr><td>플랫폼형</td><td class="w2">고객 표준 플랫폼(SBB 등)에 설계 단계부터 편입</td><td class="n d-pos">높음</td><td class="w">중간</td></tr>
+        <tr><td>EMS형</td><td class="w2">냉각·소화 등 서브시스템 통합 스코프</td><td class="n d-pos">높음</td><td class="w">중간</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p style="margin-top:15px">주의할 함정이 하나 있다. <strong>OPM이 높아질수록 운전자본 부담이 비대칭적으로 커진다.</strong> 고객 맞춤형 고부가 제품일수록 생산·검수·회수 기간이 길어지기 때문이다. 마진율만 보고 우량하다고 판단하면 현금흐름에서 뒤통수를 맞는다.</p>
+
+  <h4>같은 ‘고객사’여도 조건이 다르다 — 삼성SDI vs LG에너지솔루션</h4>
+  <div class="tbl-scroll">
+    <table>
+      <thead><tr><th>항목</th><th>삼성SDI</th><th>LG에너지솔루션</th></tr></thead>
+      <tbody>
+        <tr><td>지급 주기</td><td class="w">매월 9·19·29일 정기지급, 60일 이내 원칙</td><td class="w">60일 명시 — supplier financing 적용 시 실질 90일</td></tr>
+        <tr><td>선·기성·준공금</td><td class="w">수령 시 15일 내 협력사 지급 명시</td><td class="w">별도 명시 없음</td></tr>
+        <tr><td>지연납품</td><td class="w">표준 처리, 별도 가중조항 없음</td><td class="w d-neg">지급 연기 + 상계권 + 일당 0.3% 벌칙</td></tr>
+        <tr><td>보증</td><td class="w">표준 3년</td><td class="w d-neg">3년 + Performance Bond 최대 10%</td></tr>
+        <tr><td>공급망 금융</td><td class="w">직접 지급 중심</td><td class="w d-neg">적극 활용 — 할인료·신용리스크를 공급사로 전이</td></tr>
+        <tr><td>Best-price / MFN</td><td class="w">공식 명시 없음</td><td class="w d-neg">GTC에 명시 — 타사 인하 시 단가 동반 인하</td></tr>
+        <tr><td>원산지 증빙</td><td class="w">일반 무역 표준</td><td class="w d-neg">FTA 특혜원산지 미증빙 시 추가관세를 공급사 부담</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p style="margin-top:15px">표면적으로는 둘 다 “60일 지급”이지만, <mark>LG에너지솔루션의 공급망 금융 구조에서 공급사는 60일에 현금을 받되 할인료와 신용리스크를 떠안는다.</mark> 실질적으로 구매자는 90일의 운전자본을 확보하고 그 비용은 공급사로 넘어간다. 부품사 실적을 볼 때 <strong>“어느 고객사 비중이 높은가”가 매출뿐 아니라 현금흐름의 질을 결정한다</strong>는 뜻이다.</p>
+</section>
+
+<section id="gp">
+  <span class="snum">Ⅵ</span>
+  <h2>돈은 어느 칸에 남는가</h2>
+  <p class="lede">레이어별 단가에 각 레이어의 매출총이익률을 곱하면, 같은 시장에서 각 칸이 실제로 가져가는 이익 규모가 나온다.</p>
+
+  <div class="slab">
+    <div class="slab-h">
+      <span class="slab-t">미국 ESS 80GWh 기준, 레이어별 연간 매출총이익 풀</span>
+      <span class="slab-s">조원 · 환율 1,420원</span>
+    </div>
+    <div class="panel"><svg id="c-gp" class="chart" role="img" aria-label="레이어별 매출총이익 규모"></svg></div>
+  </div>
+
+  <div class="tbl-scroll">
+    <table>
+      <thead><tr><th>레이어</th><th>단가 × GPM</th><th>GP 단가</th><th>점유 가정</th><th>연간 GP 풀</th><th>부품벤더 대비</th></tr></thead>
+      <tbody>
+        <tr><td>셀 OEM</td><td class="n">100$ × 20%</td><td class="n">15~25$/kWh</td><td class="n">80%</td><td class="n">1.36~2.27조원</td><td class="n d-pos">20배</td></tr>
+        <tr><td>통합 EMS</td><td class="n">70$ × 15%</td><td class="n">8~15$/kWh</td><td class="n">30%</td><td class="n">0.27~0.51조원</td><td class="n">4.3배</td></tr>
+        <tr class="hl"><td>부품 벤더</td><td class="n">5~25$ × 12%</td><td class="n">1~3$/kWh</td><td class="n">40%</td><td class="n">0.05~0.14조원</td><td class="n">1배</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="note" style="margin-top:9px">계산식 = 시장규모(80GWh) × GP 단가($/kWh) × 점유율 × 환율(1,420원). 80GWh는 삼성SDI 30 + LG엔솔 60~75 + SK온 15GWh의 2027년 추정 캐파 합계 100~120GWh에 가동률 70~80%를 적용한 값이다.</p>
+
+  <div class="flag"><b>원자료의 단위 오류를 바로잡았다.</b> 유안타증권 원문은 이 세 값을 각각 <span class="num">9.6~16조원 / 1.9~3.6조원 / 0.32~0.96조원</span>으로 적었으나, 같은 리포트가 제시한 계산식(80GWh × $/kWh × 점유율)을 그대로 따르면 결과는 <span class="num">9.6~16억 달러 / 1.92~3.6억 달러 / 0.32~0.96억 달러</span>다. <strong>억 달러 값을 조원으로 표기한 것</strong>으로 보인다. 위 표에는 원화 환산값을 다시 계산해 넣었다. <mark>다만 레이어 간 비율(20 : 4.3 : 1)은 단위와 무관하게 유지되며, 그것이 이 분석의 핵심이다.</mark></div>
+
+  <p>결론은 명확하다. <strong>같은 시장에서 셀 OEM은 부품 벤더의 약 20배를 가져간다.</strong> 통합 EMS로 올라가도 4배 남짓이다. 한국 중소형 ESS 부품주가 “미국 ESS 시장 성장”의 수혜주로 묶이지만, 실제로 접근 가능한 이익 풀은 시장 전체 규모와 비교하면 매우 얇다는 뜻이다.</p>
+  <p>그래서 이 칸의 기업이 의미 있게 커지는 경로는 둘뿐이다 — <strong>① 스코프를 넓혀 통합 EMS로 올라가거나(서진시스템·신성에스티의 위탁제작), ② 규제가 요구를 높인 부품에서 단가를 회복하거나(한중엔시에스의 냉각·소화 통합)</strong>. 물량만 따라가는 전략으로는 이익이 남지 않는다.</p>
+</section>
+
+<section id="peer">
+  <span class="snum">Ⅶ</span>
+  <h2>해외 peer 비교</h2>
+  <p class="lede">ESS를 실제로 파는 글로벌 기업들의 최신 실적을 나란히 놓으면, 이 사업의 마진이 어디서 결정되는지가 보인다.</p>
+
+  <div class="slab">
+    <div class="slab-h">
+      <span class="slab-t">ESS 사업 매출총이익률 비교</span>
+      <span class="slab-s">최근 분기·반기 기준</span>
+    </div>
+    <div class="panel"><svg id="c-margin" class="chart" role="img" aria-label="해외 peer ESS 마진 비교"></svg></div>
+  </div>
+
+  <div class="tbl-scroll">
+    <table>
+      <thead><tr><th>기업</th><th>포지션</th><th>ESS 실적</th><th>ESS GPM</th><th>시가총액</th><th>특기사항</th></tr></thead>
+      <tbody>
+        <tr><td>CATL<br><span class="note">300750.SZ</span></td><td class="w">셀 OEM<br>글로벌 1위</td><td class="w">1H26 ESS 매출 532.6억 위안<br>(+87.5% YoY, 전체의 19.2%)<br>출하 125.0GWh (+81%)</td><td class="n">23.96%<br><span class="note">전년 25.52%</span></td><td class="n">—</td><td class="w2">해외 매출 GPM 29.97% vs 중국 21.16%. 1H26 전사 매출 2,769억 위안(+54.8%), 순익 433억 위안(+42%)</td></tr>
+        <tr class="hl"><td>Sungrow<br><span class="note">300274.SZ</span></td><td class="w">SI 1위<br>(Wood Mackenzie 2026)</td><td class="w">1H26 출하 25GWh (+28%)<br>ESS 매출 154.6억 위안<br>(전체의 50%, -13.2% YoY)</td><td class="n d-pos">32→35%<br><span class="note">1Q→2Q</span></td><td class="n">$54.6B</td><td class="w2">ESS 매출이 태양광 인버터를 추월. <strong>미국 시장에서 후퇴 중</strong>(FCC 규제 + EO 14420)</td></tr>
+        <tr><td>Tesla<br><span class="note">Energy 부문</span></td><td class="w">SI + 자체 셀</td><td class="w">2Q26 배치 13.5GWh<br>(역대 2위, 최고는 4Q25 14.2GWh)<br>부문 매출 $3.14B (+13% YoY)</td><td class="n d-neg">20.4%<br><span class="note">1Q26 39.5%</span></td><td class="n">—</td><td class="w2">$240M 워런티 정산 + 1분기 관세 환급 $200M 소멸. 회사가 <strong>산업용 ESS ASP 하락과 경쟁 심화</strong>를 명시</td></tr>
+        <tr><td>Fluence<br><span class="note">FLNC</span></td><td class="w">순수 SI<br>(비중국)</td><td class="w">TTM 매출 $2.63B (+7.5%)<br>FY26 가이던스 $3.2~3.6B<br>수주잔고 $6.4B (6/30)</td><td class="n d-neg">11~13%<br><span class="note">adj. 가이던스</span></td><td class="n">$1.88B</td><td class="w2">순손실 -$80.9M. PSR 0.71배. 주가 $10.20(9/3). 프로젝트 매출 인식 이연으로 연간 가이던스 -13% 하향한 이력</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p style="margin-top:18px"><strong>이 표에서 읽어야 할 것 세 가지.</strong></p>
+  <p><strong>첫째, 마진 순위가 직관과 반대다.</strong> 중국 Sungrow가 32~35%로 가장 높고, 비중국 순수 SI인 Fluence가 11~13%로 가장 낮다. <mark>규제로 보호받는 쪽이 마진이 낮고, 밀려나는 쪽이 마진이 높다.</mark> 규제 수혜가 곧 수익성은 아니라는 뜻이다.</p>
+  <p><strong>둘째, Tesla의 급락이 경고다.</strong> 39.5% → 20.4%는 일회성 요인(워런티 $240M, 관세 환급 소멸 $200M)이 크지만, 회사 스스로 <strong>산업용 ESS 판가 하락과 경쟁 심화</strong>를 인정했다. 셀에서 시스템까지 내재화한 Tesla조차 판가를 지키지 못한다면, 그 압력은 밸류체인 아래로 전가된다.</p>
+  <p><strong>셋째, CATL의 해외 마진이 국내보다 9%p 높다.</strong> 해외 29.97% vs 중국 21.16%. 중국 내수는 이미 출혈 경쟁이고, 그래서 중국 업체들이 해외로 나가려는 유인이 크다. <strong>규제가 없다면 가격 경쟁은 훨씬 험해진다</strong>는 반증이다.</p>
+
+  <div class="duo">
+    <div class="bull">
+      <h4>강세 근거</h4>
+      <ul>
+        <li><strong>수요 근거가 다층적이다.</strong> 전망치(BNEF 41→106GW)뿐 아니라 실적(미국 1Q26 8.4GWh, 1분기 최고 +54%)과 사고(PJM 3GW 이탈)가 모두 같은 방향을 가리킨다.</li>
+        <li><strong>공급 부족이 수치로 확인된다.</strong> 2028년 141GWh 캐파 vs 153GWh 수요. 증설은 리드타임이 있어 단기 해소가 불가능하다.</li>
+        <li><strong>규제 우위가 매년 강해진다.</strong> ITC FEOC 한도 45%(2026) → 25%(2030), material assistance 60% → 85%. 비중국 벤더의 상대 우위가 연 5%p씩 누적된다.</li>
+        <li><strong>기술 규제가 단가를 올린다.</strong> NFPA 855의 HMA·TRPP 요구는 냉각·인클로저·화재진압 부품의 스펙과 단가를 함께 끌어올린다.</li>
+        <li><strong>실제 철수가 일어나고 있다.</strong> 글로벌 SI 1위 Sungrow가 미국에서 발을 빼는 중이다.</li>
+      </ul>
+    </div>
+    <div class="bear">
+      <h4>약세 근거</h4>
+      <ul>
+        <li><strong>중국의 규모가 압도적이다.</strong> 글로벌 ESS 배터리 상위 6개사 전부 중국, 합계 68.9%. CATL 한 곳이 반년에 125GWh를 출하한다. 규모의 경제 격차는 규제로 좁혀지지 않는다.</li>
+        <li><strong>판가가 이미 빠지고 있다.</strong> Tesla 에너지 GPM 39.5% → 20.4%, 산업용 ASP 하락 명시. Fluence는 11~13%에 순손실.</li>
+        <li><strong>69kV 기준선이 좁을 수 있다.</strong> 분산형 13.8kV, 유틸리티 34.5kV 연계 프로젝트는 EO 14420 범위 밖일 가능성이 있다. 12월 24일 DOE 규칙 전까지는 수혜 강도를 확정할 수 없다.</li>
+        <li><strong>세제 혜택에 만료 시계가 있다.</strong> AMPC는 2030년부터 축소돼 2033년 0%. 그 이후엔 순수 원가 경쟁이고, 그 싸움의 승자는 이미 정해져 있다.</li>
+        <li><strong>부품 칸의 이익 풀이 얇다.</strong> 셀 OEM의 1/20 수준. 시장이 두 배 커져도 부품사 이익은 절대액으로 크지 않다.</li>
+        <li><strong>운전자본이 성장의 대가다.</strong> 미국향 매출 확대는 DSO 장기화를 동반하고, 구매자의 공급망 금융은 그 비용을 공급사에 전가한다.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="korea">
+  <span class="snum">Ⅷ</span>
+  <h2>한국 ESS 부품 5개사</h2>
+  <p class="lede">국내 ESS 밸류체인에서 반복 거론되는 기업들이다. 같은 테마로 묶이지만 <strong>시스템당 매출이 20배 이상 차이난다.</strong></p>
+
+  <div class="tbl-scroll">
+    <table>
+      <thead><tr><th>기업</th><th>무엇을 파나</th><th>시스템당 매출</th><th>BOM 비중</th><th>계약 형태</th></tr></thead>
+      <tbody>
+        <tr class="hl"><td>서진시스템</td><td class="w">인클로저 + 모듈 + 랙 + DC블록</td><td class="n">70~110$/kWh<br><span class="note">1.0~1.6억원/MWh</span></td><td class="n">25~35%</td><td class="w">위탁제작형(통합 EMS)</td></tr>
+        <tr><td>신성에스티</td><td class="w">모듈케이스·버스바·히트싱크<br>(위탁 진입 시 전 범위)</td><td class="n">10~16$<br><span class="note">위탁 시 70~110$</span></td><td class="n">2~4%<br><span class="note">위탁 시 25~35%</span></td><td class="w">단가형 → 위탁제작형 전환 중</td></tr>
+        <tr><td>한중엔시에스</td><td class="w">셀·전력기기·컨테이너 제외 전 부품<br>(수냉 냉각 중심)</td><td class="n">23~25$</td><td class="n">5~13%</td><td class="w">플랫폼형 + EMS형<br><span class="note">SBB/EDI 통합</span></td></tr>
+        <tr><td>상신이디피</td><td class="w">셀 캔</td><td class="n">3~5$</td><td class="n">1~2%</td><td class="w">단가형<br><span class="note">셀 단계 직결</span></td></tr>
+        <tr class="dim"><td>엔비쿨</td><td class="w">액냉 풀체인 (중국 본사)</td><td class="n">10~15$</td><td class="n">3~5%</td><td class="w">attach 모델</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>원가 구조와 현금흐름</h3>
+  <div class="tbl-scroll">
+    <table>
+      <thead><tr><th>기업</th><th>원자재 비중</th><th>직접 인건비</th><th>CAPEX 감가</th><th>DSO</th><th>메탈 +5% 시 OPM</th></tr></thead>
+      <tbody>
+        <tr class="hl"><td>서진시스템</td><td class="n">40~50%</td><td class="n d-pos">8~12%<br><span class="note">베트남</span></td><td class="n">9~12%</td><td class="n">60~90일</td><td class="n d-neg">-1.0%p</td></tr>
+        <tr><td>신성에스티</td><td class="n">35~45%</td><td class="n">13~16%</td><td class="n d-neg">10~13%</td><td class="n">70~90일</td><td class="n">-0.7%p</td></tr>
+        <tr><td>한중엔시에스</td><td class="n">30~40%</td><td class="n">12~15%</td><td class="n">8~10%</td><td class="n">60~80일</td><td class="n d-pos">-0.5%p</td></tr>
+        <tr><td>상신이디피</td><td class="n">35~40%</td><td class="n d-pos">10~13%</td><td class="n d-pos">6~8%</td><td class="n d-pos">55~75일</td><td class="n">-0.7%p</td></tr>
+        <tr class="dim"><td>엔비쿨</td><td class="n">30~35%</td><td class="n">9~11%</td><td class="n d-neg">11~14%</td><td class="n d-neg">110~140일</td><td class="n">-0.6%p</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="note" style="margin-top:9px">유안타증권 추정. 모든 업체가 알루미늄·구리에 30~50% 노출돼 있고, 메탈 가격 1% 변동 시 OPM이 0.1~0.2%p 움직인다.</p>
+
+  <p style="margin-top:16px"><strong>서진시스템은 시스템당 매출이 가장 크고(70~110$/kWh) 인건비 비중이 가장 낮다(베트남, 8~12%).</strong> 대신 원자재 비중이 가장 높아 메탈가에 가장 민감하다(-1.0%p). 매출 규모로는 5사 중 압도적이지만 <a href="https://claude.ai/code/artifact/8e197a93-19e1-407e-9ebe-ecc5dabafc30">FY25 매출총이익률은 10.4%로 가장 낮다</a> — 스코프를 넓혀 매출을 키웠지만 그만큼 남기지는 못하고 있다는 뜻이다.</p>
+  <p>반대로 <strong>상신이디피는 시스템당 매출이 가장 작지만(3~5$/kWh) 인건비·CAPEX가 가장 효율적이고 DSO도 가장 짧다.</strong> 셀 단계에 직결돼 가동률이 실적에 그대로 반영된다. <mark>“큰 매출”과 “좋은 사업”이 다르다는 것을 이 두 회사가 정확히 보여준다.</mark></p>
+  <p>유안타증권은 5개사 투자매력도를 <span class="num">한중엔시에스 > 상신이디피 > 서진시스템</span> 순으로 봤다. 한중엔시에스는 SBB/EDI 플랫폼 attach와 냉각+소화 통합 스코프, 2027년 이후 미국 가동 레버리지를 근거로 들었고, 리스크로는 삼성SDI 의존과 인디애나 초기 수율을 짚었다.</p>
+</section>
+
+<section id="watch">
+  <span class="snum">Ⅸ</span>
+  <h2>지켜볼 것</h2>
+  <ul class="check">
+    <li><strong>2026년 12월 24일 — DOE의 EO 14420 시행규칙.</strong> 69kV 기준이 유지되는지, 배터리·인버터가 실제로 어떤 범위까지 포함되는지가 이 섹터 전체의 수혜 강도를 결정한다. 단일 이벤트로는 가장 중요하다.</li>
+    <li><strong>기존 설치 설비 교체 명령이 실제로 나오는가.</strong> EO는 이미 설치된 장비에도 조건을 부과할 수 있게 했다. 발동되면 신규 수요보다 큰 시장이 열린다.</li>
+    <li><strong>Tesla 3Q26 에너지 부문 GPM.</strong> 20.4%가 일회성 바닥인지 판가 하락 추세의 시작인지 판가름난다. 부품사 마진은 이 뒤를 따라간다.</li>
+    <li><strong>Fluence의 FY26 착지와 수주잔고 소화 속도.</strong> $6.4B 잔고를 11~13% 마진으로 소화하면 비중국 SI의 수익성 상한이 확인된다.</li>
+    <li><strong>Sungrow의 미국 후퇴가 어디까지 가는가.</strong> 글로벌 1위의 공백을 누가 가져가는지가 곧 수혜 배분표다.</li>
+    <li><strong>삼성SDI가 30GWh 증설 동결을 유지하는가.</strong> 방침이 바뀌면 그 협력사(한중엔시에스·상신이디피)의 물량 전망이 통째로 달라진다.</li>
+    <li><strong>북미 월별 설치량이 다시 플러스로 돌아서는가.</strong> 5월 -74%가 인식 시점 문제인지 확인한다. 분기 데이터와 함께 봐야 한다.</li>
+    <li><strong>한국 부품사의 고객 다변화.</strong> 단일 고객 의존은 이 칸의 공통 약점이다. 셀 메이커 직계약 확대가 구조 개선의 신호다.</li>
+    <li><strong>중국의 원가 파괴 시도.</strong> CATL의 나트륨이온 ESS 상업화(2026년 9월, 연말 1GWh 출하 목표, 유럽 Solarpro 2GWh 계약)가 가격 경쟁을 한 단계 더 밀어붙일 수 있다.</li>
+    <li><strong>2030년 이후를 지금 계산해 두는가.</strong> AMPC는 2030년 75%, 2033년 0%다. 세제 없이도 남는 원가 구조를 가진 기업만 살아남는다.</li>
+  </ul>
+</section>
+
+<div class="srcs">
+  <h2>데이터 출처</h2>
+  <dl>
+    <dt>BOM·계약구조</dt><dd>유안타증권 <span class="num">「ESS 수냉식 냉각시스템: 수익 방정식 해체」</span>(2026-05-11, 이안나). BOM 분해, 계층별 GP, 계약 5유형, 구매자 정책 비교, 5개사 원가구조·DSO의 원자료.</dd>
+    <dt>수요·캐파</dt><dd>삼성증권 <span class="num">「AI 데이터센터가 이끌 ESS의 변화」</span>(4/10)·<span class="num">「2026 하반기 전망: 미국 ESS 수요와 탈중국망 기회」</span>(6/21)·<span class="num">「미국 NDR 후기」</span>(7/20)·<span class="num">「미국 전력설비 행정명령」</span>(8/27). 유진투자증권 <span class="num">「Next Energy: AI데이터센터, 새로운 계통 리스크」</span>(7/27). 하나증권 <span class="num">2차전지 Weekly</span> 다수. 신한투자증권 <span class="num">「중국 ESS, AI 핵심 인프라로 부상」</span>(7/3).</dd>
+    <dt>점유율</dt><dd>SNE리서치 2026년 상반기 글로벌 ESS 배터리 출하(CnEVPost·Battery-Tech Network 보도), Wood Mackenzie 2026 BESS 시스템통합 순위.</dd>
+    <dt>설치 실적</dt><dd>Wood Mackenzie·ACP <span class="num">US Energy Storage Monitor</span> 2026년 1분기.</dd>
+    <dt>해외 peer</dt><dd>각 사 IR·공시 및 Energy-Storage.News, ESS-News, EnergyTrend, stockanalysis.com (2026-09-03~04 기준).</dd>
+    <dt>규제 원문</dt><dd>Executive Order 14420(2026-08-26) 및 Foley &amp; Lardner, Crowell &amp; Moring, Baker McKenzie, Holland &amp; Knight의 법률 분석.</dd>
+    <dt>국내 재무</dt><dd>DART <span class="num">fnlttSinglAcntAll</span> FY2025 연결. 시세는 네이버 금융 2026-09-04 종가.</dd>
+    <dt>검색 방식</dt><dd>텔레그램 증권사 리포트 아카이브 93,588건(2018-12~2026-09) 전문검색으로 2026년 ESS·데이터센터 리포트를 추려 12건을 본문까지 읽었다. 이미지 전용 PDF 10건은 본문 추출이 되지 않아 제외했다.</dd>
+    <dt>교차검증</dt><dd>파생 수치 <b>29개 항목</b>을 원자료에서 재계산해 <b>불일치 0건</b>을 확인했다. 이 과정에서 원자료의 단위 오류 1건(레이어별 GP 규모)을 발견해 본문에 명시하고 바로잡았다.</dd>
+    <dt>한계</dt><dd>시장 전망치는 기관별 편차가 크다(2030년 북미 119~219GWh). 유안타의 5개사 원가구조·시스템당 매출은 추정치이며 회사 공시가 아니다. EO 14420 시행규칙은 아직 미공개이므로 규제 관련 서술은 <strong>발표된 조문과 법률 분석에 근거한 해석</strong>이다. 엔비쿨은 국내 상장사가 아니어서 공개 재무 확인이 제한적이다.</dd>
+  </dl>
+  <div class="disc">이 문서는 공개된 증권사 자료·공시·해외 1차자료를 정리한 개인 분석 기록이며 <strong>투자권유가 아니다</strong>. 특정 종목의 매수·매도를 권하지 않는다. 수치는 작성 시점(2026-09-04) 기준이며 인용된 전망치는 실현되지 않을 수 있다. 투자 판단과 그 결과는 투자자 본인에게 귀속된다.</div>
+</div>
+
+</div>
+
+<div class="tip" id="tip" role="status" aria-live="polite"></div>
+
+<script>
+(function(){
+"use strict";
+var css = getComputedStyle(document.documentElement);
+function T(n){ return css.getPropertyValue(n).trim(); }
+function tok(){ return {
+  ink:T('--ink'), ink2:T('--ink-2'), grey:T('--grey'), line:T('--line'),
+  line2:T('--line-2'), grid:T('--grid'), load:T('--load'), risk:T('--risk'),
+  cn:T('--cn'), kr:T('--kr'), us:T('--us'), card:T('--card'), paper:T('--paper')
+};}
+var C = tok();
+function el(tag, attrs, text){
+  var e = document.createElementNS('http://www.w3.org/2000/svg', tag);
+  for (var k in attrs) e.setAttribute(k, attrs[k]);
+  if (text != null) e.textContent = text;
+  return e;
+}
+function fmt(n){ return n.toLocaleString('ko-KR'); }
+var MONO = 'IBM Plex Mono, monospace';
+
+var tip = document.getElementById('tip'), tipOn = false;
+function showTip(html, x, y){
+  tip.innerHTML = html; tip.style.opacity = '1'; tipOn = true;
+  var r = tip.getBoundingClientRect();
+  var left = x + 14, top = y - r.height - 12;
+  if (left + r.width > innerWidth - 10) left = x - r.width - 14;
+  if (left < 10) left = 10;
+  if (top < 10) top = y + 18;
+  if (top + r.height > innerHeight - 10) top = innerHeight - r.height - 10;
+  tip.style.left = left + 'px'; tip.style.top = top + 'px';
+}
+function hideTip(){ if (tipOn){ tip.style.opacity = '0'; tipOn = false; } }
+addEventListener('scroll', hideTip, {passive:true});
+addEventListener('pointerdown', function(e){
+  if (!e.target.closest || !e.target.closest('.chart')) hideTip();
+}, true);
+function bindHits(svg, hits){
+  var down = false;
+  function at(e){
+    var best = null, bd = 1e9, r = svg.getBoundingClientRect();
+    var px = e.clientX - r.left, py = e.clientY - r.top;
+    for (var i=0;i<hits.length;i++){
+      var h = hits[i], dx = px - h.x, dy = py - h.y;
+      var d = h.band ? Math.abs(dx) : Math.sqrt(dx*dx + dy*dy);
+      if (d < bd){ bd = d; best = h; }
+    }
+    if (best && bd < (best.band ? best.band : 34)) showTip(best.html, e.clientX, e.clientY);
+    else hideTip();
+  }
+  svg.addEventListener('pointerdown', function(e){ down = true; at(e); });
+  svg.addEventListener('pointermove', function(e){
+    if (e.pointerType === 'mouse' || down) at(e);
+  });
+  svg.addEventListener('pointerup', function(){ down = false; });
+  svg.addEventListener('pointercancel', function(){ down = false; hideTip(); });
+  svg.addEventListener('pointerleave', function(e){
+    if (e.pointerType === 'mouse') hideTip(); down = false;
+  });
+}
+function grid(svg, padL, W, padR, Y, ticks, narrow, suffix){
+  for (var i=0;i<ticks.length;i++){
+    var t = ticks[i];
+    svg.appendChild(el('line',{x1:padL, y1:Y(t), x2:W-padR, y2:Y(t),
+      stroke:C.line, 'stroke-width':1}));
+    svg.appendChild(el('text',{x:padL-7, y:Y(t)+4, fill:C.grey,
+      'font-size':narrow?10:11, 'text-anchor':'end', 'font-family':MONO},
+      fmt(t) + (suffix || '')));
+  }
+}
+
+/* ---- 1. 북미 수요 전망 기관별 ---- */
+var DEM = [
+  {n:'BNEF',      c:'us',   v:[62, 110, 119]},
+  {n:'SNE리서치',  c:'us',   v:[88, 126, 214]},
+  {n:'삼성SDI',    c:'kr',   v:[90, null, 160]},
+  {n:'LG엔솔',     c:'kr',   v:[88, null, 219]}
+];
+function drawDemand(svg, W){
+  svg.textContent = '';
+  var narrow = W < 560;
+  var padL = narrow ? 34 : 44, padR = narrow ? 12 : 18, padT = 18, padB = 40;
+  var H = narrow ? 250 : 286;
+  var iw = W - padL - padR, ih = H - padT - padB;
+  svg.setAttribute('viewBox','0 0 ' + W + ' ' + H);
+  svg.setAttribute('height', H);
+  var top = 240;
+  var Y = function(v){ return padT + ih - v/top*ih; };
+  grid(svg, padL, W, padR, Y, [0,60,120,180,240], narrow);
+  var groups = ['2025','~2028','~2030'];
+  var gw = iw/groups.length, bar = gw/(DEM.length+1.4);
+  var hits = [], g, i;
+  for (g=0; g<groups.length; g++){
+    var gx = padL + gw*g;
+    for (i=0;i<DEM.length;i++){
+      var v = DEM[i].v[g];
+      var cx = gx + gw/2 + (i - (DEM.length-1)/2)*bar;
+      if (v == null){
+        svg.appendChild(el('text',{x:cx, y:Y(0)-6, fill:C.grey,
+          'font-size':narrow?9.5:10.5, 'text-anchor':'middle',
+          'font-family':MONO}, '–'));
+        continue;
+      }
+      svg.appendChild(el('rect',{x:cx-bar*0.42, y:Y(v), width:bar*0.84,
+        height:Math.max(Y(0)-Y(v),1), fill:C[DEM[i].c], rx:2,
+        opacity: DEM[i].c === 'kr' ? 0.92 : 0.66}));
+      if (!narrow || g === 2){
+        svg.appendChild(el('text',{x:cx, y:Y(v)-6, fill:C.ink2,
+          'font-size':narrow?9.5:10.5, 'text-anchor':'middle', 'font-weight':600,
+          'font-family':MONO}, v));
+      }
+      hits.push({x:cx, y:padT+ih/2, band:bar/2,
+        html:'<b>' + DEM[i].n + ' · ' + groups[g] + '</b><br>' +
+             '<span class="k">북미 ESS 수요</span> ' + v + 'GWh'});
+    }
+    svg.appendChild(el('text',{x:gx+gw/2, y:H-padB+18, fill:C.ink2,
+      'font-size':narrow?11:12.5, 'text-anchor':'middle', 'font-weight':600,
+      'font-family':MONO}, groups[g]));
+  }
+  svg.appendChild(el('text',{x:padL, y:12, fill:C.grey, 'font-size':10.5,
+    'font-family':MONO}, 'GWh'));
+  bindHits(svg, hits);
+  var lg = document.getElementById('l-demand');
+  lg.innerHTML = '<span><i style="background:' + C.us + ';opacity:.66"></i>시장조사기관</span>' +
+    '<span><i style="background:' + C.kr + '"></i>셀 업체 자체 전망</span>' +
+    '<span style="color:var(--grey)">2028년 전망은 시장조사기관만 제시</span>';
+  return H;
+}
+
+/* ---- 2. 미국 캐파 vs 수요 ---- */
+var CAPA = {y:['2025','2026E','2027E','2028E'], capa:[22,77,120,145]};
+function drawCapa(svg, W){
+  svg.textContent = '';
+  var narrow = W < 560;
+  var padL = narrow ? 34 : 44, padR = narrow ? 14 : 20, padT = 18, padB = 38;
+  var H = narrow ? 236 : 272;
+  var iw = W - padL - padR, ih = H - padT - padB;
+  svg.setAttribute('viewBox','0 0 ' + W + ' ' + H);
+  svg.setAttribute('height', H);
+  var top = 170;
+  var Y = function(v){ return padT + ih - v/top*ih; };
+  grid(svg, padL, W, padR, Y, [0,50,100,150], narrow);
+  var bw = iw/CAPA.y.length, bar = bw*(narrow?0.5:0.44);
+  var hits = [], i;
+  for (i=0;i<CAPA.y.length;i++){
+    var cx = padL + bw*i + bw/2, v = CAPA.capa[i];
+    svg.appendChild(el('rect',{x:cx-bar/2, y:Y(v), width:bar,
+      height:Math.max(Y(0)-Y(v),1), fill:C.grid, rx:2, opacity:0.85}));
+    svg.appendChild(el('text',{x:cx, y:Y(v)-7, fill:C.grid,
+      'font-size':narrow?11:12, 'text-anchor':'middle', 'font-weight':700,
+      'font-family':MONO}, v));
+    svg.appendChild(el('text',{x:cx, y:H-padB+17, fill:C.ink2,
+      'font-size':narrow?10.5:11.5, 'text-anchor':'middle',
+      'font-family':MONO}, CAPA.y[i]));
+    hits.push({x:cx, y:padT+ih/2, band:bw/2,
+      html:'<b>' + CAPA.y[i] + '</b><br><span class="k">미국 ESS 셀 캐파</span> ' +
+        v + 'GWh'});
+  }
+  var dx = padL + bw*3 + bw/2;
+  svg.appendChild(el('line',{x1:padL+4, y1:Y(153), x2:W-padR, y2:Y(153),
+    stroke:C.load, 'stroke-width':1.8, 'stroke-dasharray':'6 4'}));
+  svg.appendChild(el('text',{x:padL+8, y:Y(153)-7, fill:C.load,
+    'font-size':narrow?10.5:11.5, 'font-weight':700, 'font-family':MONO},
+    '2028 수요 153GWh'));
+  svg.appendChild(el('line',{x1:dx+bar/2+8, y1:Y(145), x2:dx+bar/2+8, y2:Y(153),
+    stroke:C.risk, 'stroke-width':1.6}));
+  svg.appendChild(el('text',{x:dx+bar/2+13, y:(Y(145)+Y(153))/2+4, fill:C.risk,
+    'font-size':narrow?9.5:10.5, 'font-weight':600, 'font-family':MONO},
+    narrow ? '-12' : '부족 12GWh'));
+  hits.push({x:dx, y:Y(153), band:26,
+    html:'<b>2028년</b><br><span class="k">수요</span> 153GWh<br>' +
+      '<span class="k">캐파(삼성증권)</span> 141GWh<br>' +
+      '<span class="k">캐파(유안타)</span> 145GWh'});
+  svg.appendChild(el('text',{x:padL, y:12, fill:C.grey, 'font-size':10.5,
+    'font-family':MONO}, 'GWh'));
+  bindHits(svg, hits);
+  document.getElementById('l-capa').innerHTML =
+    '<span><i style="background:' + C.grid + '"></i>미국 ESS 셀 캐파 (유안타 추정)</span>' +
+    '<span><i style="background:' + C.load + '"></i>2028년 예상 수요 (삼성증권)</span>';
+  return H;
+}
+
+/* ---- 3. BOM ---- */
+var BOM = [
+  {n:'LFP 셀',      v:75, p:47},
+  {n:'PCS·인버터',   v:22, p:13},
+  {n:'인클로저',     v:15, p:9},
+  {n:'냉각',        v:11, p:6},
+  {n:'랙·모듈',     v:10, p:6},
+  {n:'BMS·EMS',    v:5,  p:4},
+  {n:'화재진압',     v:5,  p:3},
+  {n:'기타',        v:4,  p:12}
+];
+function drawBom(svg, W){
+  svg.textContent = '';
+  var narrow = W < 560;
+  var padL = narrow ? 76 : 106, padR = narrow ? 44 : 58, padT = 8, padB = 24;
+  var rowH = narrow ? 26 : 29, gap = 7;
+  var H = padT + BOM.length*(rowH+gap) + padB;
+  var iw = W - padL - padR;
+  svg.setAttribute('viewBox','0 0 ' + W + ' ' + H);
+  svg.setAttribute('height', H);
+  var max = 80, i, t;
+  var X = function(v){ return padL + v/max*iw; };
+  for (t=0; t<=max; t+=20){
+    svg.appendChild(el('line',{x1:X(t), y1:padT, x2:X(t), y2:H-padB+2,
+      stroke:C.line, 'stroke-width':1}));
+    svg.appendChild(el('text',{x:X(t), y:H-padB+16, fill:C.grey,
+      'font-size':narrow?9.5:10.5, 'text-anchor':'middle',
+      'font-family':MONO}, '$' + t));
+  }
+  var hits = [];
+  for (i=0;i<BOM.length;i++){
+    var y = padT + i*(rowH+gap), b = BOM[i];
+    var isCell = i === 0;
+    svg.appendChild(el('rect',{x:padL, y:y, width:Math.max(X(b.v)-padL,2),
+      height:rowH, fill:isCell ? C.load : C.grid, rx:2,
+      opacity: isCell ? 0.9 : (i <= 4 ? 0.78 : 0.5)}));
+    svg.appendChild(el('text',{x:padL-9, y:y+rowH/2+4.5, fill:C.ink,
+      'font-size':narrow?10.5:11.8, 'text-anchor':'end', 'font-weight':600}, b.n));
+    svg.appendChild(el('text',{x:X(b.v)+7, y:y+rowH/2+4.5,
+      fill: isCell ? C.load : C.grid, 'font-size':narrow?10:11.5,
+      'font-weight':600, 'font-family':MONO}, '$' + b.v));
+    hits.push({x:(padL+X(b.v))/2, y:y+rowH/2, band:Math.max((X(b.v)-padL)/2, 10),
+      html:'<b>' + b.n + '</b><br><span class="k">단가</span> ' + b.v + '$/kWh<br>' +
+        '<span class="k">BOM 비중</span> ' + b.p + '%'});
+  }
+  bindHits(svg, hits);
+  return H;
+}
+
+/* ---- 4. 레이어별 GP 풀 ---- */
+var GP = [
+  {n:'셀 OEM',    lo:1.36, hi:2.27, x:20.0},
+  {n:'통합 EMS',  lo:0.27, hi:0.51, x:4.3},
+  {n:'부품 벤더',  lo:0.05, hi:0.14, x:1.0}
+];
+function drawGp(svg, W){
+  svg.textContent = '';
+  var narrow = W < 560;
+  var padL = narrow ? 74 : 100, padR = narrow ? 58 : 84, padT = 12, padB = 26;
+  var rowH = narrow ? 40 : 46, gap = 14;
+  var H = padT + GP.length*(rowH+gap) + padB;
+  var iw = W - padL - padR;
+  svg.setAttribute('viewBox','0 0 ' + W + ' ' + H);
+  svg.setAttribute('height', H);
+  var max = 2.5, i, t;
+  var X = function(v){ return padL + v/max*iw; };
+  for (t=0; t<=2.5; t+=0.5){
+    svg.appendChild(el('line',{x1:X(t), y1:padT, x2:X(t), y2:H-padB+2,
+      stroke:C.line, 'stroke-width':1}));
+    svg.appendChild(el('text',{x:X(t), y:H-padB+16, fill:C.grey,
+      'font-size':narrow?9.5:10.5, 'text-anchor':'middle',
+      'font-family':MONO}, t.toFixed(1)));
+  }
+  var hits = [];
+  for (i=0;i<GP.length;i++){
+    var y = padT + i*(rowH+gap), g = GP[i];
+    svg.appendChild(el('rect',{x:X(g.lo), y:y, width:Math.max(X(g.hi)-X(g.lo),3),
+      height:rowH, fill:C.grid, rx:2, opacity: i === 0 ? 0.9 : (i === 1 ? 0.66 : 0.42)}));
+    svg.appendChild(el('line',{x1:padL, y1:y+rowH/2, x2:X(g.lo), y2:y+rowH/2,
+      stroke:C.line2, 'stroke-width':1, 'stroke-dasharray':'2 3'}));
+    svg.appendChild(el('text',{x:padL-9, y:y+rowH/2+4.5, fill:C.ink,
+      'font-size':narrow?11:12.5, 'text-anchor':'end', 'font-weight':700}, g.n));
+    svg.appendChild(el('text',{x:X(g.hi)+8, y:y+rowH/2+1, fill:C.ink2,
+      'font-size':narrow?10:11.5, 'font-weight':600, 'font-family':MONO},
+      g.x.toFixed(1) + '배'));
+    svg.appendChild(el('text',{x:X(g.hi)+8, y:y+rowH/2+14, fill:C.grey,
+      'font-size':narrow?9:10, 'font-family':MONO},
+      g.lo.toFixed(2) + '~' + g.hi.toFixed(2)));
+    hits.push({x:(X(g.lo)+X(g.hi))/2, y:y+rowH/2, band:Math.max((X(g.hi)-X(g.lo))/2, 14),
+      html:'<b>' + g.n + '</b><br><span class="k">연간 GP 풀</span> ' +
+        g.lo.toFixed(2) + '~' + g.hi.toFixed(2) + '조원<br>' +
+        '<span class="k">부품벤더 대비</span> ' + g.x.toFixed(1) + '배'});
+  }
+  svg.appendChild(el('text',{x:padL, y:H-2, fill:C.grey, 'font-size':10,
+    'font-family':MONO}, '조원 / 년 (미국 80GWh 기준)'));
+  bindHits(svg, hits);
+  return H;
+}
+
+/* ---- 5. 글로벌 ESS 배터리 점유율 ---- */
+var SHARE = [
+  {n:'CATL',        v:27.1, g:125.0, cn:true},
+  {n:'EVE Energy',  v:10.4, g:48.0,  cn:true},
+  {n:'Hithium',     v:10.0, g:46.2,  cn:true},
+  {n:'BYD',         v:7.7,  g:35.7,  cn:true},
+  {n:'CALB',        v:6.8,  g:31.5,  cn:true},
+  {n:'REPT Battero',v:6.8,  g:31.4,  cn:true},
+  {n:'그 외 전체',   v:31.2, g:143.5, cn:false}
+];
+function drawShare(svg, W){
+  svg.textContent = '';
+  var narrow = W < 560;
+  var padL = narrow ? 8 : 12, padR = narrow ? 8 : 12, padT = 14;
+  var barH = narrow ? 52 : 60;
+  var H = padT + barH + (narrow ? 96 : 78);
+  var iw = W - padL - padR;
+  svg.setAttribute('viewBox','0 0 ' + W + ' ' + H);
+  svg.setAttribute('height', H);
+  var x = padL, hits = [], i;
+  for (i=0;i<SHARE.length;i++){
+    var s = SHARE[i], w = iw * s.v/100;
+    svg.appendChild(el('rect',{x:x, y:padT, width:Math.max(w,1), height:barH,
+      fill: s.cn ? C.cn : C.line2, rx:2,
+      opacity: s.cn ? (1 - i*0.09) : 0.5}));
+    if (w > (narrow ? 40 : 48)){
+      svg.appendChild(el('text',{x:x+w/2, y:padT+barH/2-2, fill:'#fff',
+        'font-size':narrow?10.5:12, 'text-anchor':'middle', 'font-weight':700,
+        'font-family':MONO}, s.v.toFixed(1) + '%'));
+      svg.appendChild(el('text',{x:x+w/2, y:padT+barH/2+13, fill:'#fff',
+        'font-size':narrow?9:10, 'text-anchor':'middle', 'opacity':0.9},
+        s.n.length > 8 ? s.n.slice(0,7) : s.n));
+    }
+    hits.push({x:x+w/2, y:padT+barH/2, band:Math.max(w/2, 8),
+      html:'<b>' + s.n + '</b><br><span class="k">출하</span> ' + s.g + 'GWh<br>' +
+        '<span class="k">점유율</span> ' + s.v.toFixed(1) + '%' +
+        (s.cn ? '<br><span class="k">국적</span> 중국' : '')});
+    x += w;
+  }
+  var x6 = padL + iw*68.9/100;
+  svg.appendChild(el('line',{x1:x6, y1:padT-6, x2:x6, y2:padT+barH+16,
+    stroke:C.ink, 'stroke-width':1.6}));
+  svg.appendChild(el('text',{x:Math.min(x6+8, W-padR-4), y:padT+barH+30,
+    fill:C.ink, 'font-size':narrow?10.5:11.5, 'font-weight':700,
+    'text-anchor': x6 > W*0.72 ? 'end' : 'start', 'font-family':MONO},
+    '중국 6개사 68.9%'));
+  svg.appendChild(el('text',{x:padL, y:padT+barH+(narrow?48:44), fill:C.grey,
+    'font-size':narrow?10:10.8, 'font-family':MONO},
+    '총 461.3GWh (전년 269.7GWh, +71%)'));
+  svg.appendChild(el('text',{x:padL, y:padT+barH+(narrow?64:60), fill:C.grid,
+    'font-size':narrow?10:10.8, 'font-weight':600, 'font-family':MONO},
+    '※ 북미로 좁히면 LG엔솔 13.6%로 3위 (전년 4.2%)'));
+  bindHits(svg, hits);
+  document.getElementById('l-share').innerHTML =
+    '<span><i style="background:' + C.cn + '"></i>중국 업체</span>' +
+    '<span><i style="background:' + C.line2 + ';opacity:.5"></i>그 외 전체</span>';
+  return H;
+}
+
+/* ---- 6. 해외 peer ESS 마진 ---- */
+var MARGIN = [
+  {n:'Sungrow',  s:'SI · 중국',     v:35.0, note:'2Q26'},
+  {n:'CATL',     s:'셀 · 중국',     v:24.0, note:'1H26'},
+  {n:'Tesla',    s:'SI+셀 · 미국',  v:20.4, note:'2Q26'},
+  {n:'Fluence',  s:'SI · 미국',     v:12.0, note:'FY26 가이던스'},
+  {n:'서진시스템', s:'부품 · 한국',   v:10.4, note:'FY25'}
+];
+function drawMargin(svg, W){
+  svg.textContent = '';
+  var narrow = W < 560;
+  var padL = narrow ? 86 : 122, padR = narrow ? 56 : 74, padT = 10, padB = 24;
+  var rowH = narrow ? 32 : 36, gap = 9;
+  var H = padT + MARGIN.length*(rowH+gap) + padB;
+  var iw = W - padL - padR;
+  svg.setAttribute('viewBox','0 0 ' + W + ' ' + H);
+  svg.setAttribute('height', H);
+  var max = 40, i, t;
+  var X = function(v){ return padL + v/max*iw; };
+  for (t=0; t<=max; t+=10){
+    svg.appendChild(el('line',{x1:X(t), y1:padT, x2:X(t), y2:H-padB+2,
+      stroke:C.line, 'stroke-width':1}));
+    svg.appendChild(el('text',{x:X(t), y:H-padB+16, fill:C.grey,
+      'font-size':narrow?9.5:10.5, 'text-anchor':'middle',
+      'font-family':MONO}, t + '%'));
+  }
+  var hits = [];
+  for (i=0;i<MARGIN.length;i++){
+    var y = padT + i*(rowH+gap), m = MARGIN[i];
+    var isCn = m.s.indexOf('중국') >= 0;
+    var isKr = m.s.indexOf('한국') >= 0;
+    svg.appendChild(el('rect',{x:padL, y:y, width:Math.max(X(m.v)-padL,2),
+      height:rowH, fill: isCn ? C.cn : (isKr ? C.grid : C.us), rx:2,
+      opacity: isKr ? 1 : 0.72}));
+    svg.appendChild(el('text',{x:padL-9, y:y+rowH/2+0.5, fill:C.ink,
+      'font-size':narrow?11:12, 'text-anchor':'end', 'font-weight':700}, m.n));
+    svg.appendChild(el('text',{x:padL-9, y:y+rowH/2+13, fill:C.grey,
+      'font-size':narrow?9:9.8, 'text-anchor':'end'}, m.s));
+    svg.appendChild(el('text',{x:X(m.v)+8, y:y+rowH/2+1,
+      fill: isCn ? C.cn : (isKr ? C.grid : C.us), 'font-size':narrow?11:12,
+      'font-weight':700, 'font-family':MONO}, m.v.toFixed(1) + '%'));
+    svg.appendChild(el('text',{x:X(m.v)+8, y:y+rowH/2+13, fill:C.grey,
+      'font-size':narrow?8.6:9.4, 'font-family':MONO}, m.note));
+    hits.push({x:(padL+X(m.v))/2, y:y+rowH/2, band:Math.max((X(m.v)-padL)/2, 10),
+      html:'<b>' + m.n + '</b><br><span class="k">' + m.s + '</span><br>' +
+        '<span class="k">ESS 매출총이익률</span> ' + m.v.toFixed(1) + '% (' + m.note + ')'});
+  }
+  bindHits(svg, hits);
+  return H;
+}
+
+var CHARTS = [
+  {id:'c-demand', fn:drawDemand},
+  {id:'c-capa',   fn:drawCapa},
+  {id:'c-share',  fn:drawShare},
+  {id:'c-bom',    fn:drawBom},
+  {id:'c-gp',     fn:drawGp},
+  {id:'c-margin', fn:drawMargin}
+];
+function renderAll(){
+  C = tok();
+  for (var i=0;i<CHARTS.length;i++){
+    var svg = document.getElementById(CHARTS[i].id);
+    if (!svg) continue;
+    var W = Math.max(svg.parentNode.clientWidth, 260);
+    svg.setAttribute('width', W);
+    CHARTS[i].fn(svg, W);
+  }
+}
+renderAll();
+var rt;
+addEventListener('resize', function(){
+  clearTimeout(rt); rt = setTimeout(renderAll, 140);
+});
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change', renderAll);
+})();
+</script>
+</body>
+</html>

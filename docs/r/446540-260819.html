@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<style>
+html{color-scheme:light dark}
+body{margin:0}
+img{max-width:100%}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+<title>메가터치 전환 해부</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@500;700;800;900&family=Noto+Sans+KR:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<style>
+:root{
+  --ground:#ECEEEB; --surface:#FFFFFF; --surface-2:#F4F6F3; --band:#1A211D;
+  --line:#D2D7D1; --line-soft:#E2E7E1;
+  --ink:#151A17; --ink-2:#3A443E; --muted:#66716A; --faint:#8C9690;
+  --accent:#1C7A63; --accent-soft:#DFEDE8;
+  --semi:#1C7A63; --batt:#C05A1B; --serv:#6E4A9E;
+  --neg:#B3341F; --warn:#8F6209;
+  --band-ink:#EDF2EE; --band-muted:#9AA8A0;
+  --shadow:0 1px 2px rgba(21,26,23,.05), 0 10px 26px -16px rgba(21,26,23,.28);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#101412; --surface:#191D1B; --surface-2:#1F2522; --band:#080B0A;
+    --line:#2E3833; --line-soft:#252D29;
+    --ink:#E8EEEA; --ink-2:#B6C2BB; --muted:#8A968F; --faint:#6B7671;
+    --accent:#45B396; --accent-soft:#14302A;
+    --semi:#45B396; --batt:#DE8146; --serv:#A98BE0;
+    --neg:#E87A62; --warn:#D6A03A;
+    --band-ink:#E8EEEA; --band-muted:#8A968F;
+    --shadow:0 1px 2px rgba(0,0,0,.45), 0 10px 26px -16px rgba(0,0,0,.75);
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#101412; --surface:#191D1B; --surface-2:#1F2522; --band:#080B0A;
+  --line:#2E3833; --line-soft:#252D29;
+  --ink:#E8EEEA; --ink-2:#B6C2BB; --muted:#8A968F; --faint:#6B7671;
+  --accent:#45B396; --accent-soft:#14302A;
+  --semi:#45B396; --batt:#DE8146; --serv:#A98BE0;
+  --neg:#E87A62; --warn:#D6A03A;
+  --band-ink:#E8EEEA; --band-muted:#8A968F;
+  --shadow:0 1px 2px rgba(0,0,0,.45), 0 10px 26px -16px rgba(0,0,0,.75);
+}
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--ground); color:var(--ink);
+  font-family:"Noto Sans KR","Malgun Gothic",sans-serif; font-weight:400;
+  font-size:16px; line-height:1.75; -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,.dsp{font-family:"Gothic A1","Noto Sans KR",sans-serif; letter-spacing:-.02em; text-wrap:balance}
+.num,.mono{font-family:"JetBrains Mono",monospace; font-variant-numeric:tabular-nums}
+
+.wrap{max-width:1140px; margin:0 auto; padding:0 24px}
+.col{max-width:772px}
+.pad-b{padding-bottom:100px}
+
+/* masthead */
+header.mast{padding:58px 0 0}
+.kicker{font-family:"JetBrains Mono",monospace; font-size:11px; letter-spacing:.2em;
+  text-transform:uppercase; color:var(--muted); display:flex; gap:16px; flex-wrap:wrap}
+.kicker b{color:var(--accent); font-weight:700}
+h1{font-size:clamp(37px,5.5vw,60px); font-weight:900; line-height:1.08; margin:20px 0 0; max-width:15ch}
+.dek{font-size:19px; line-height:1.66; color:var(--ink-2); margin:24px 0 0; max-width:64ch; font-weight:300}
+
+/* stat band */
+.band{background:var(--band); color:var(--band-ink); margin:38px 0 0}
+.band .inner{max-width:1140px; margin:0 auto; padding:22px 24px;
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(146px,1fr)); gap:20px 26px}
+.band .k{font-family:"JetBrains Mono",monospace; font-size:10px; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--band-muted)}
+.band .v{font-family:"JetBrains Mono",monospace; font-size:23px; font-weight:500; margin-top:4px; line-height:1.15}
+.band .s{font-size:12px; color:var(--band-muted); margin-top:4px; line-height:1.45}
+
+/* sections */
+section{margin:66px 0 0}
+.shead{display:flex; align-items:flex-start; gap:16px}
+.snum{font-family:"JetBrains Mono",monospace; font-size:11px; font-weight:700; color:var(--accent);
+  letter-spacing:.1em; flex:none; padding-top:11px; width:26px}
+.stitle{flex:1; border-top:2px solid var(--ink); padding-top:9px}
+h2{font-size:clamp(23px,3vw,31px); font-weight:800; margin:0; line-height:1.24}
+h3{font-family:"Gothic A1",sans-serif; font-weight:700; font-size:17.5px; margin:38px 0 0; letter-spacing:-.01em}
+p{margin:16px 0 0; max-width:70ch}
+strong{font-weight:700}
+em{font-style:normal; background:linear-gradient(transparent 60%, var(--accent-soft) 60%); font-weight:500}
+.lead{font-size:17.5px; color:var(--ink-2)}
+
+/* tables */
+.tw{overflow-x:auto; margin:26px 0 0; border:1px solid var(--line-soft); background:var(--surface)}
+table{border-collapse:collapse; width:100%; min-width:600px; font-size:14px}
+caption{caption-side:bottom; text-align:left; font-size:12.5px; color:var(--muted);
+  padding:11px 15px; line-height:1.6; border-top:1px solid var(--line-soft)}
+th,td{padding:9px 15px; text-align:right; border-bottom:1px solid var(--line-soft); white-space:nowrap}
+th:first-child,td:first-child{text-align:left; white-space:normal}
+thead th{font-family:"JetBrains Mono",monospace; font-size:10.5px; letter-spacing:.07em;
+  text-transform:uppercase; color:var(--muted); font-weight:500; background:var(--surface-2);
+  border-bottom:1px solid var(--line)}
+tbody td{font-family:"JetBrains Mono",monospace; font-variant-numeric:tabular-nums; color:var(--ink-2)}
+tbody td:first-child{font-family:"Noto Sans KR",sans-serif; color:var(--ink); font-weight:500}
+tbody tr:last-child td{border-bottom:none}
+tr.hi td{background:var(--accent-soft); color:var(--ink)}
+tr.tot td{border-top:1px solid var(--line); font-weight:700; color:var(--ink)}
+td.neg{color:var(--neg)} td.w{white-space:normal; min-width:170px}
+td.sem{color:var(--semi)} td.bat{color:var(--batt)}
+
+/* figures */
+figure{margin:32px 0 0; border:1px solid var(--line-soft); background:var(--surface); padding:20px 20px 16px}
+.fig-t{font-size:14.5px; font-weight:700; margin:0; font-family:"Gothic A1",sans-serif}
+.fig-s{font-size:12.5px; color:var(--muted); margin:4px 0 18px}
+figcaption{font-size:12.5px; color:var(--muted); margin-top:15px; line-height:1.62;
+  border-top:1px solid var(--line-soft); padding-top:12px}
+.legend{display:flex; gap:18px; flex-wrap:wrap; font-size:12.5px; color:var(--ink-2); margin:0 0 15px}
+.legend span{display:inline-flex; align-items:center; gap:7px}
+.sw{width:10px; height:10px; flex:none; border-radius:2px; display:inline-block}
+.svgwrap{overflow-x:auto}
+
+/* bars */
+.bars{display:flex; flex-direction:column; gap:10px}
+.bar{display:grid; grid-template-columns:minmax(104px,auto) 1fr minmax(72px,auto); gap:13px; align-items:center}
+.bar .lb{font-size:13px; color:var(--ink-2)}
+.bar .tr{background:var(--surface-2); height:20px; overflow:hidden}
+.bar .fl{height:100%; border-radius:0 4px 4px 0; background:var(--accent); display:block}
+.bar .vl{font-family:"JetBrains Mono",monospace; font-size:12.5px; text-align:right; color:var(--ink)}
+.stackrow{display:grid; grid-template-columns:minmax(64px,auto) 1fr; gap:13px; align-items:center}
+.stack{display:flex; height:24px; gap:2px}
+.stack i{display:block; height:100%}
+
+/* callout */
+.call{border-left:3px solid var(--accent); background:var(--surface); padding:19px 21px;
+  margin:30px 0 0; box-shadow:var(--shadow)}
+.call .h{font-family:"JetBrains Mono",monospace; font-size:10.5px; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--accent); font-weight:700}
+.call p{margin:9px 0 0; font-size:15px; max-width:none}
+.call.warn{border-left-color:var(--neg)} .call.warn .h{color:var(--neg)}
+
+/* duo */
+.duo{display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--line-soft);
+  border:1px solid var(--line-soft); margin:28px 0 0}
+.duo > div{background:var(--surface); padding:21px}
+.duo h4{margin:0; font-size:12px; font-family:"JetBrains Mono",monospace;
+  letter-spacing:.11em; text-transform:uppercase; font-weight:700}
+.duo .for h4{color:var(--accent)} .duo .against h4{color:var(--neg)}
+.duo ul{margin:13px 0 0; padding:0 0 0 18px}
+.duo li{margin:0 0 12px; font-size:14.5px; line-height:1.64; color:var(--ink-2)}
+.duo li:last-child{margin-bottom:0}
+.duo li b{color:var(--ink); font-weight:700}
+
+/* risks */
+.risks{display:flex; flex-direction:column; gap:1px; background:var(--line-soft);
+  border:1px solid var(--line-soft); margin:28px 0 0}
+.risk{background:var(--surface); padding:17px 19px; display:grid;
+  grid-template-columns:78px 1fr; gap:17px; align-items:start}
+.tag{font-family:"JetBrains Mono",monospace; font-size:10.5px; letter-spacing:.1em; font-weight:700;
+  padding:3px 0 3px 10px; border-left:3px solid; white-space:nowrap; display:inline-block}
+.t4{color:var(--neg); border-color:var(--neg)}
+.t3{color:var(--warn); border-color:var(--warn)}
+.t2{color:var(--muted); border-color:var(--muted)}
+.t1{color:var(--faint); border-color:var(--line)}
+.risk .rt{font-weight:700; font-size:14.5px; font-family:"Gothic A1",sans-serif}
+.risk .rd{font-size:14px; color:var(--ink-2); margin-top:5px; line-height:1.64}
+
+/* checklist */
+ol.check{counter-reset:c; list-style:none; padding:0; margin:28px 0 0;
+  border:1px solid var(--line-soft); background:var(--surface)}
+ol.check li{counter-increment:c; padding:16px 19px 16px 56px; position:relative;
+  border-bottom:1px solid var(--line-soft); font-size:14.5px; line-height:1.64; color:var(--ink-2)}
+ol.check li:last-child{border-bottom:none}
+ol.check li::before{content:counter(c,decimal-leading-zero); position:absolute; left:19px; top:16px;
+  font-family:"JetBrains Mono",monospace; font-size:11.5px; color:var(--accent); font-weight:700}
+ol.check li b{color:var(--ink); font-weight:700}
+
+footer{margin:80px 0 0; padding:26px 0 0; border-top:1px solid var(--line); font-size:13px; color:var(--muted)}
+footer p{max-width:78ch; font-size:13px; line-height:1.72}
+footer h3{font-size:11.5px; font-family:"JetBrains Mono",monospace; letter-spacing:.12em;
+  text-transform:uppercase; color:var(--faint); margin:28px 0 0; font-weight:700}
+.disc{margin-top:28px; padding:15px 17px; background:var(--surface-2); border:1px solid var(--line-soft);
+  font-size:12.5px; color:var(--muted); line-height:1.68}
+
+@media (max-width:720px){
+  .duo{grid-template-columns:1fr}
+  .risk{grid-template-columns:1fr; gap:7px}
+  .bar{grid-template-columns:minmax(84px,auto) 1fr minmax(60px,auto); gap:9px}
+  header.mast{padding-top:36px} h1{max-width:none}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none !important; transition:none !important}}
+:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
+</style>
+<header class="mast">
+<div class="wrap">
+  <div class="kicker"><b>메가터치 · 446540 · KOSDAQ</b><span>기업분석</span><span>2026-08-19</span></div>
+  <h1>배터리 회사가 반도체 회사가 되는 데 3년</h1>
+  <p class="dek">2023년 매출의 <span class="num">65.6%</span>가 2차전지 충방전 핀이었다. 2026년 상반기에는 <span class="num">62.7%</span>가 반도체 테스트 핀이다. 그 사이에 매출은 한 번 무너졌고, 2025년에는 <span class="num">49</span>억원짜리 대손이 터졌다. 그리고 2026년 2분기, 회사는 <strong>창사 이래 최대 분기 실적</strong>을 냈다.</p>
+</div>
+</header>
+
+<div class="band"><div class="inner">
+  <div><div class="k">주가 · 8/18 종가</div><div class="v">8,640원</div><div class="s">8/19 장중 8,250원</div></div>
+  <div><div class="k">시가총액</div><div class="v">2,512억</div><div class="s">29,079,111주 기준</div></div>
+  <div><div class="k">26년 2분기 매출</div><div class="v">252억</div><div class="s">사상 최대 · 전년동기 +108%</div></div>
+  <div><div class="k">26년 2분기 OPM</div><div class="v">18.9%</div><div class="s">사상 최고</div></div>
+  <div><div class="k">순현금</div><div class="v">245억</div><div class="s">시총의 9.7%</div></div>
+  <div><div class="k">PER · PBR</div><div class="v">20.7 · 2.92</div><div class="s">26H1 연환산 / 반기말 자본</div></div>
+</div></div>
+
+<div class="wrap pad-b">
+<div class="col">
+
+<section>
+  <div class="shead"><span class="snum">01</span><div class="stitle"><h2>요약</h2></div></div>
+  <p class="lead">메가터치는 충남 천안에서 <strong>정밀 테스트 핀</strong>을 만든다. 2차전지 활성화 공정의 충방전 PIN·CLIP, 그리고 반도체 웨이퍼 테스트용 프로브 핀과 패키지 테스트 소켓용 핀이다. 2023년 11월 코스닥에 상장했고, 최대주주는 반도체 검사장비 업체 <strong>(주)티에스이</strong>(지분 40.68%)다.</p>
+  <p>이 회사를 읽는 열쇠는 하나다. <em>매출의 절반 이상을 차지하던 배터리 사업이 3년 만에 5분의 1로 줄었고, 그 자리를 반도체가 메웠다.</em> 그 전환기에 배터리 고객사가 무너지면서 2025년 매출채권 49억이 통째로 대손 처리됐다. 이것이 2025년 영업적자 −41.7억의 정체다. <strong>대손을 빼면 2025년 본업은 +7.7억 흑자였다.</strong></p>
+  <div class="call">
+    <div class="h">결론 네 줄</div>
+    <p><strong>① 2025년 적자는 일회성이었다.</strong> 대손상각비 49.4억을 제거하면 FY2025 영업이익은 +7.7억. 회사가 공시에서 밝힌 사유는 “배터리 시장 악화 및 고객사 유동성 악화로 채권 48.7억 100% 대손 설정”이다.</p>
+    <p><strong>② 2026년 2분기는 진짜다.</strong> 매출 252억(직전 최대 분기의 1.49배), 영업이익 47.7억, OPM 18.9%. 물량으로 확인된다 — 상반기 핀 생산 물량이 이미 작년 <em>연간</em> 물량을 넘었다.</p>
+    <p><strong>③ 대만 자본이 2대주주로 들어왔다.</strong> 휘스턴재료과학이 두 차례 제3자배정으로 278억을 넣어 지분 28.57%를 확보하고 이사회에 들어갔다. 티에스이 지분은 56.95%에서 40.68%로 희석됐다.</p>
+    <p><strong>④ 가격은 회복을 이미 반영했다.</strong> 연초 3,620원 → 8월 18일 8,640원(+138.7%). 상반기 연환산 PER 20.7배는 동종 대비 싸지 않고, 2분기 연환산 15.4배는 그 실적이 유지된다는 가정 위에 선다.</p>
+  </div>
+  <p>가장 중요한 확인 지점은 <strong>3분기 실적 하나</strong>다. 2분기 252억이 계절적 몰림인지 새 수준인지가 이 리포트의 모든 배수를 바꾼다.</p>
+</section>
+
+<section>
+  <div class="shead"><span class="snum">02</span><div class="stitle"><h2>무엇을 만드는가 — 사다리의 어느 칸</h2></div></div>
+  <p>메가터치가 만드는 것은 <strong>핀 한 개</strong>다. 완제품이 아니라 부품이다. 이 구분이 이 회사의 마진 구조 전체를 설명한다.</p>
+
+  <div class="tw">
+  <table>
+    <caption>출처: 2026년 반기보고서 「사업의 개요」·「주요 제품 및 서비스」. 26H1 매출은 반기 누적.</caption>
+    <thead><tr><th>부문</th><th>제품</th><th>쓰이는 곳</th><th>26H1 매출</th><th>비중</th></tr></thead>
+    <tbody>
+      <tr class="hi"><td>반도체</td><td class="w">PROBE PIN, 소켓용 핀, ICT PIN</td><td class="w">웨이퍼 테스트(프로브 카드) · 패키지 테스트(소켓). GPU·NPU·HBM 등 AI 반도체 테스트</td><td>257.7억</td><td>62.7%</td></tr>
+      <tr><td>배터리</td><td class="w">충방전 테스트 PIN, CLIP</td><td class="w">2차전지 활성화 공정 — 충방전·에이징·디개싱·품질검사</td><td>89.9억</td><td>21.9%</td></tr>
+      <tr><td>기타(용역)</td><td class="w">MEMS 임가공</td><td class="w">외부 물량 수탁 가공</td><td>63.2억</td><td>15.4%</td></tr>
+      <tr class="tot"><td>합계</td><td></td><td></td><td>410.9억</td><td>100%</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <p>반도체 밸류체인에서 위치를 보면 이렇다. 프로브 카드와 테스트 소켓을 만드는 회사가 있고(리노공업·티에스이·티에프이), 그 안에 들어가는 <strong>핀을 공급하는 회사가 메가터치</strong>다. 최대주주 티에스이가 바로 그 완제품 업체이고, 실제로 <strong>26H1 매출의 22.0%가 티에스이向</strong>이다.</p>
+  <p>부품 칸에 있다는 것은 두 가지를 뜻한다. 하나는 <strong>마진이 구조적으로 낮다</strong>는 것 — FY2025 매출총이익률 15.7%로 동종 완제품 업체(25~52%)의 하단에도 못 미쳤다. 다른 하나는 <strong>고객이 곧 경쟁 밸류체인의 상단</strong>이라는 것 — 가격 협상력이 제한된다. 다만 2026년 상반기 GPM이 25.7%까지 올라오면서 이 격차는 좁혀지는 중이다.</p>
+
+  <p>직원은 312명(2026-06-30), 이 중 264명이 생산직이다. 평균 근속 3년 8개월. 대표이사는 2026년 3월 26일 윤재홍에서 <strong>박진</strong>으로 바뀌었고, 박진은 티에스이 계열사 (주)메가센 대표이사를 겸직한다.</p>
+</section>
+
+<section>
+  <div class="shead"><span class="snum">03</span><div class="stitle"><h2>전환 — 배터리에서 반도체로</h2></div></div>
+  <p>이 회사에서 지난 3년 동안 일어난 일은 사실상 한 문장이다. <strong>배터리 매출이 328.7억에서 98.8억으로 70% 사라졌고, 반도체가 132.0억에서 257.7억(반기)으로 그 자리를 넘겨받았다.</strong></p>
+
+  <figure>
+    <p class="fig-t">부문별 매출 구성</p>
+    <p class="fig-s">3년 만에 정반대가 됐다 — 배터리 65.6% → 21.9%, 반도체 26.3% → 62.7%</p>
+    <div class="legend">
+      <span><i class="sw" style="background:var(--semi)"></i>반도체</span>
+      <span><i class="sw" style="background:var(--batt)"></i>배터리</span>
+      <span><i class="sw" style="background:var(--serv)"></i>MEMS 임가공</span>
+    </div>
+    <div class="bars">
+      <div class="stackrow"><span class="num" style="font-size:12.5px;color:var(--ink-2)">FY2023</span>
+        <div class="stack">
+          <i style="width:26.31%;background:var(--semi)"></i>
+          <i style="width:65.56%;background:var(--batt)"></i>
+          <i style="width:8.13%;background:var(--serv);border-radius:0 4px 4px 0"></i>
+        </div></div>
+      <div class="stackrow"><span class="num" style="font-size:12.5px;color:var(--ink-2)">FY2024</span>
+        <div class="stack">
+          <i style="width:44.50%;background:var(--semi)"></i>
+          <i style="width:45.02%;background:var(--batt)"></i>
+          <i style="width:10.48%;background:var(--serv);border-radius:0 4px 4px 0"></i>
+        </div></div>
+      <div class="stackrow"><span class="num" style="font-size:12.5px;color:var(--ink-2)">FY2025</span>
+        <div class="stack">
+          <i style="width:55.58%;background:var(--semi)"></i>
+          <i style="width:22.84%;background:var(--batt)"></i>
+          <i style="width:21.58%;background:var(--serv);border-radius:0 4px 4px 0"></i>
+        </div></div>
+      <div class="stackrow"><span class="num" style="font-size:12.5px;color:var(--ink-2)">26H1</span>
+        <div class="stack">
+          <i style="width:62.71%;background:var(--semi)"></i>
+          <i style="width:21.89%;background:var(--batt)"></i>
+          <i style="width:15.40%;background:var(--serv);border-radius:0 4px 4px 0"></i>
+        </div></div>
+    </div>
+    <figcaption>FY2023(제14기) 501.4억 · FY2024 529.9억 · FY2025 432.4억 · 26H1 410.9억. FY2025·26H1의 임가공 막대에는 기타매출(0.06% / 0.03%)이 포함돼 있다. 출처: 2025·2026년 반기보고서 매출실적표.</figcaption>
+  </figure>
+
+  <div class="tw">
+  <table>
+    <caption>단위 억원. 25H1은 2025년 반기보고서, 26H1은 2026년 반기보고서 기준. 반기 대 반기 비교.</caption>
+    <thead><tr><th>부문</th><th>FY2023</th><th>FY2024</th><th>FY2025</th><th>25H1</th><th>26H1</th><th>반기 증감</th></tr></thead>
+    <tbody>
+      <tr class="hi"><td>반도체</td><td>132.0</td><td>235.8</td><td>240.3</td><td>115.7</td><td class="sem">257.7</td><td class="sem">+122.8%</td></tr>
+      <tr><td>배터리</td><td>328.7</td><td>238.6</td><td>98.8</td><td>56.4</td><td class="bat">89.9</td><td class="bat">+59.5%</td></tr>
+      <tr><td>MEMS 임가공</td><td>40.7</td><td>55.5</td><td>93.1</td><td>42.9</td><td>63.2</td><td>+47.4%</td></tr>
+      <tr class="tot"><td>합계</td><td>501.4</td><td>529.9</td><td>432.4</td><td>214.9</td><td>410.9</td><td>+91.2%</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <p>주목할 것은 <strong>배터리도 반기 기준으로는 +59.5% 회복했다</strong>는 점이다. 연간 98.8억까지 떨어졌던 배터리가 상반기에만 89.9억을 냈다. 다만 FY2024의 238.6억과 비교하면 연환산 180억으로 여전히 75% 수준이고, 뒤에서 보듯 회복의 성격이 물량이 아니라 <strong>단가</strong>다.</p>
+
+  <h3>물량과 판가로 쪼개 보면</h3>
+  <p>반기보고서는 부문별·내수수출별 <strong>평균 단가</strong>를 공시한다. 매출을 단가로 나누면 물량이 나온다. 여기서 두 사업의 성격이 완전히 갈린다.</p>
+
+  <div class="tw">
+  <table>
+    <caption>물량 = 매출액 ÷ 공시 평균단가로 이 리포트가 역산한 값이며, 회사가 공시한 수치가 아니다. 26H1은 6개월, FY2025는 12개월이므로 마지막 열은 “반기 물량 ÷ 작년 연간 물량”이다. 1.00을 넘으면 반기 만에 작년 한 해 물량을 넘어섰다는 뜻. 단가가 공시되지 않는 MEMS 임가공(26H1 63.2억)은 제외돼 있어 매출 합계가 총매출과 다르다. 출처: 2026년 반기보고서 「주요 제품 등의 가격변동추이」·「매출실적」.</caption>
+    <thead><tr><th>구분</th><th>26H1 매출</th><th>26H1 단가</th><th>26H1 물량</th><th>FY25 단가</th><th>FY25 물량</th><th>단가 증감</th><th>반기물량 ÷ 작년연간</th></tr></thead>
+    <tbody>
+      <tr class="hi"><td>반도체 수출</td><td>210.5억</td><td>1,681원</td><td>1,252만개</td><td>1,773원</td><td>1,112만개</td><td class="neg">-5.2%</td><td class="sem">1.13배</td></tr>
+      <tr class="hi"><td>반도체 내수</td><td>47.2억</td><td>574원</td><td>822만개</td><td>1,061원</td><td>407만개</td><td class="neg">-45.9%</td><td class="sem">2.02배</td></tr>
+      <tr><td>배터리 내수</td><td>79.8억</td><td>5,378원</td><td>148만개</td><td>3,431원</td><td>199만개</td><td>+56.7%</td><td>0.75배</td></tr>
+      <tr><td>배터리 수출</td><td>10.2억</td><td>2,111원</td><td>48만개</td><td>646원</td><td>473만개</td><td>+226.8%</td><td class="neg">0.10배</td></tr>
+      <tr class="tot"><td>합계</td><td>347.6억</td><td>—</td><td>2,271만개</td><td>—</td><td>2,191만개</td><td>—</td><td>1.04배</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="call">
+    <div class="h">이 표에서 읽어야 할 세 가지</div>
+    <p><strong>① 반도체는 물량이다.</strong> 단가는 오히려 내렸는데(수출 −5.2%, 내수 −45.9%) 매출이 늘었다. 상반기 물량이 작년 연간의 1.13~2.02배다. AI 반도체 테스트 수요가 실물로 확인되는 지점이다.</p>
+    <p><strong>② 배터리는 단가다.</strong> 물량은 여전히 줄고 있는데(내수 0.75배, 수출 0.10배) 단가가 폭등해 매출을 방어했다. 특히 배터리 수출 단가가 646원 → 2,111원으로 3.3배가 된 것은 <em>제품이 완전히 바뀌었다</em>는 뜻에 가깝다. 저가 범용 핀이 사라지고 고사양 핀만 남은 구조다.</p>
+    <p><strong>③ 전체 물량이 반기 만에 작년 연간을 넘었다.</strong> 2,271만개 대 2,191만개. 이 숫자가 2분기 실적이 회계적 착시가 아님을 뒷받침한다.</p>
+  </div>
+  <p>다만 배터리 내수 단가 3,431 → 5,378원, 수출 646 → 2,111원 같은 급등은 <strong>제품 믹스 변화이지 판가 인상이 아닐 가능성이 높다</strong>. 공시된 단가는 부문 평균이므로, 값싼 품목의 물량이 빠지면 평균은 자동으로 올라간다. 배터리 회복을 “가격 결정력 회복”으로 읽으면 곤란하다.</p>
+</section>
+<section>
+  <div class="shead"><span class="snum">04</span><div class="stitle"><h2>2025년 적자의 정체 — 대손 49억</h2></div></div>
+  <p>2025년 메가터치는 영업손실 −41.7억, 순손실 −28.6억을 냈다. 전년 영업이익 +40.0억에서 적자전환이다. 표면만 보면 무너진 해다. 그런데 비용을 성격별로 뜯으면 원인이 한 줄로 나온다.</p>
+
+  <div class="tw">
+  <table>
+    <caption>단위 억원. 출처: 2025년 사업보고서 주석 24·25, 2026년 반기보고서 주석 21. 조정 영업손익 = 보고 영업손익 − 대손상각비(환입).</caption>
+    <thead><tr><th>기간</th><th>매출</th><th>판관비(보고)</th><th>대손상각비</th><th>판관비(대손 제외)</th><th>영업손익(보고)</th><th>영업손익(대손 조정)</th></tr></thead>
+    <tbody>
+      <tr><td>FY2024</td><td>529.9</td><td>48.7</td><td class="sem">-7.4 (환입)</td><td>56.1</td><td>+40.0</td><td>+32.6</td></tr>
+      <tr class="hi"><td>FY2025</td><td>432.4</td><td>109.4</td><td class="neg">+49.4</td><td>60.0</td><td class="neg">-41.7</td><td>+7.7</td></tr>
+      <tr><td>25H1</td><td>214.9</td><td>77.6</td><td class="neg">+48.4</td><td>29.2</td><td class="neg">-48.2</td><td>+0.2</td></tr>
+      <tr><td>26H1</td><td>410.9</td><td>38.3</td><td>+1.0</td><td>37.3</td><td>+67.1</td><td>+66.1</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <blockquote style="margin:26px 0 0;padding:16px 20px;border-left:3px solid var(--neg);background:var(--surface);font-size:15px;color:var(--ink-2);max-width:70ch;line-height:1.7">
+    “2025년 배터리 시장 악화로 매출액 감소 및 <strong>고객사 유동성 악화로 채권 4,873백만원에 대한 대금 회수 가능성이 매우 낮을 것으로 판단하여 100% 대손충당금을 설정</strong>하였습니다.”
+    <cite style="display:block;margin-top:10px;font-style:normal;font-size:11.5px;color:var(--faint);font-family:'JetBrains Mono',monospace">DART 「매출액 또는 손익구조 30% 이상 변동」 공시, 2026-02-13</cite>
+  </blockquote>
+
+  <p>즉 <strong>2025년 영업적자 −41.7억은 대손 49.4억이 만든 숫자이고, 그것을 빼면 본업은 +7.7억 흑자였다.</strong> 손실 전부가 1분기에 몰려 있다는 점도 이를 뒷받침한다 — 25Q1 영업손실 −47.3억 중 대손이 48.4억이었고, 2분기 −1.0억, 3분기 −6.2억, 4분기 +12.7억으로 곧바로 정상 궤도로 돌아왔다.</p>
+
+  <p>대손의 규모 감각은 대손충당금 잔액으로 잡힌다. <strong>매출채권 대손충당금이 1.7억에서 51.0억으로 뛰었고, 이는 총 매출채권 124.7억의 40.9%다.</strong> 채권의 5분의 2를 못 받는다고 본 것이다. 2025년은 국내 2차전지 업계 전반이 캐즘을 겪은 해였고, 메가터치의 고객이었던 활성화 공정 장비사 중 하나가 그 유탄을 맞은 것으로 읽힌다(공시는 고객사명을 밝히지 않았다).</p>
+
+  <div class="call warn">
+    <div class="h">그래도 이것은 위험 신호였다</div>
+    <p>일회성이라는 것과 무해하다는 것은 다르다. 매출채권의 41%를 한 해에 날린 회사는 <strong>고객 신용 심사와 여신 관리에 구멍이 있었다</strong>는 뜻이기도 하다. 뒤에서 보듯 2026년 상반기에 매출채권이 다시 73.7억에서 231.2억으로 3.1배 늘었다. 이번에는 회전율(DSO)이 101.8일로 2024년말 수준이고 28%가 특수관계자 채권이라 성격이 다르지만, 회수 추이는 계속 봐야 한다.</p>
+  </div>
+</section>
+
+<section>
+  <div class="shead"><span class="snum">05</span><div class="stitle"><h2>2026년 — 사상 최대 분기</h2></div></div>
+  <p>2026년 2분기 매출 252.2억은 <strong>직전 최대 분기(24Q3 169.2억)의 1.49배</strong>이고, 영업이익률 18.9%도 사상 최고다. 분기 흐름을 나란히 놓으면 회복의 모양이 보인다.</p>
+
+  <figure>
+    <p class="fig-t">분기 매출과 영업이익률</p>
+    <p class="fig-s">25Q1의 구덩이는 대손, 26Q2의 봉우리는 반도체 물량</p>
+    <div class="svgwrap">
+    <svg viewBox="0 0 700 232" width="100%" height="232" role="img" aria-label="2024년 1분기부터 2026년 2분기까지 10개 분기의 매출 막대그래프와 영업이익률. 26Q2 매출 252억, OPM 18.9%로 최고치.">
+      <g font-family="JetBrains Mono, monospace" font-size="10.5">
+        <line x1="40" y1="160" x2="690" y2="160" stroke="var(--line)"/>
+        <line x1="40" y1="30" x2="690" y2="30" stroke="var(--line-soft)"/>
+        <text x="34" y="34" text-anchor="end" fill="var(--faint)" font-size="9.5">252</text>
+        <line x1="40" y1="95" x2="690" y2="95" stroke="var(--line-soft)"/>
+        <text x="34" y="99" text-anchor="end" fill="var(--faint)" font-size="9.5">126</text>
+        <text x="34" y="164" text-anchor="end" fill="var(--faint)" font-size="9.5">0</text>
+
+        <rect x="54" y="104.0" width="44" height="56.0" fill="var(--accent)" opacity="0.55" rx="3"/>
+        <text x="76" y="98" text-anchor="middle" fill="var(--ink-2)">108.6</text>
+        <text x="76" y="176" text-anchor="middle" fill="var(--muted)" font-size="10">24Q1</text>
+        <text x="76" y="192" text-anchor="middle" fill="var(--ink-2)" font-size="10">7.7%</text>
+
+        <rect x="118" y="92.4" width="44" height="67.6" fill="var(--accent)" opacity="0.55" rx="3"/>
+        <text x="140" y="86" text-anchor="middle" fill="var(--ink-2)">131.2</text>
+        <text x="140" y="176" text-anchor="middle" fill="var(--muted)" font-size="10">24Q2</text>
+        <text x="140" y="192" text-anchor="middle" fill="var(--ink-2)" font-size="10">10.9%</text>
+
+        <rect x="182" y="72.8" width="44" height="87.2" fill="var(--accent)" opacity="0.55" rx="3"/>
+        <text x="204" y="66" text-anchor="middle" fill="var(--ink-2)">169.2</text>
+        <text x="204" y="176" text-anchor="middle" fill="var(--muted)" font-size="10">24Q3</text>
+        <text x="204" y="192" text-anchor="middle" fill="var(--ink-2)" font-size="10">8.9%</text>
+
+        <rect x="246" y="97.7" width="44" height="62.3" fill="var(--accent)" opacity="0.55" rx="3"/>
+        <text x="268" y="91" text-anchor="middle" fill="var(--ink-2)">120.9</text>
+        <text x="268" y="176" text-anchor="middle" fill="var(--muted)" font-size="10">24Q4</text>
+        <text x="268" y="192" text-anchor="middle" fill="var(--ink-2)" font-size="10">1.9%</text>
+
+        <rect x="310" y="111.8" width="44" height="48.2" fill="var(--accent)" opacity="0.55" rx="3"/>
+        <text x="332" y="105" text-anchor="middle" fill="var(--ink-2)">93.5</text>
+        <text x="332" y="176" text-anchor="middle" fill="var(--muted)" font-size="10">25Q1</text>
+        <text x="332" y="192" text-anchor="middle" fill="var(--neg)" font-size="10" font-weight="700">-50.5%</text>
+
+        <rect x="374" y="97.4" width="44" height="62.6" fill="var(--accent)" opacity="0.55" rx="3"/>
+        <text x="396" y="91" text-anchor="middle" fill="var(--ink-2)">121.4</text>
+        <text x="396" y="176" text-anchor="middle" fill="var(--muted)" font-size="10">25Q2</text>
+        <text x="396" y="192" text-anchor="middle" fill="var(--neg)" font-size="10">-0.8%</text>
+
+        <rect x="438" y="108.4" width="44" height="51.6" fill="var(--accent)" opacity="0.55" rx="3"/>
+        <text x="460" y="102" text-anchor="middle" fill="var(--ink-2)">100.0</text>
+        <text x="460" y="176" text-anchor="middle" fill="var(--muted)" font-size="10">25Q3</text>
+        <text x="460" y="192" text-anchor="middle" fill="var(--neg)" font-size="10">-6.2%</text>
+
+        <rect x="502" y="99.5" width="44" height="60.5" fill="var(--accent)" opacity="0.55" rx="3"/>
+        <text x="524" y="93" text-anchor="middle" fill="var(--ink-2)">117.4</text>
+        <text x="524" y="176" text-anchor="middle" fill="var(--muted)" font-size="10">25Q4</text>
+        <text x="524" y="192" text-anchor="middle" fill="var(--ink-2)" font-size="10">10.8%</text>
+
+        <rect x="566" y="78.1" width="44" height="81.9" fill="var(--accent)" opacity="0.8" rx="3"/>
+        <text x="588" y="72" text-anchor="middle" fill="var(--ink-2)">158.8</text>
+        <text x="588" y="176" text-anchor="middle" fill="var(--muted)" font-size="10">26Q1</text>
+        <text x="588" y="192" text-anchor="middle" fill="var(--ink-2)" font-size="10">12.2%</text>
+
+        <rect x="630" y="30.0" width="44" height="130.0" fill="var(--accent)" rx="3"/>
+        <text x="652" y="24" text-anchor="middle" fill="var(--ink)" font-weight="700">252.2</text>
+        <text x="652" y="176" text-anchor="middle" fill="var(--ink)" font-size="10" font-weight="700">26Q2</text>
+        <text x="652" y="192" text-anchor="middle" fill="var(--accent)" font-size="10" font-weight="700">18.9%</text>
+
+        <text x="40" y="216" fill="var(--muted)" font-size="10">막대 = 분기 매출(억원, 3개월 기준) · 아래 숫자 = 해당 분기 영업이익률</text>
+      </g>
+    </svg>
+    </div>
+    <figcaption>분기 3개월 수치는 DART 정기보고서의 누적치를 차감해 산출했다. 25Q1 OPM −50.5%는 대손상각비 48.4억이 만든 값이다. 출처: DART <span class="num">fnlttSinglAcntAll</span>.</figcaption>
+  </figure>
+
+  <div class="tw">
+  <table>
+    <caption>단위 억원. FY2023~FY2025는 개별재무제표(연결 미작성). GPM = 매출총이익÷매출. 26H1은 반기 누적.</caption>
+    <thead><tr><th>기간</th><th>매출</th><th>매출총이익</th><th>GPM</th><th>판관비</th><th>영업손익</th><th>OPM</th><th>순손익</th><th>자본총계</th></tr></thead>
+    <tbody>
+      <tr><td>FY2023</td><td>501.4</td><td>50.6</td><td>10.1%</td><td>53.1</td><td class="neg">-2.5</td><td class="neg">-0.5%</td><td class="neg">-0.9</td><td>501.5</td></tr>
+      <tr><td>FY2024</td><td>529.9</td><td>88.6</td><td>16.7%</td><td>48.7</td><td>+40.0</td><td>7.5%</td><td>+50.4</td><td>551.9</td></tr>
+      <tr><td>FY2025</td><td>432.4</td><td>67.7</td><td>15.7%</td><td>109.4</td><td class="neg">-41.7</td><td class="neg">-9.7%</td><td class="neg">-28.6</td><td>523.3</td></tr>
+      <tr class="hi"><td>26H1</td><td>410.9</td><td>105.4</td><td>25.7%</td><td>38.3</td><td>+67.1</td><td>16.3%</td><td>+60.8</td><td>861.8</td></tr>
+      <tr><td>&nbsp;&nbsp;└ 26Q2 단독</td><td>252.2</td><td>68.2</td><td>27.1%</td><td>20.5</td><td>+47.7</td><td>18.9%</td><td>+40.8</td><td>—</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <p>가장 큰 변화는 <strong>매출총이익률</strong>이다. FY2023 10.1% → FY2025 15.7% → 26H1 <strong>25.7%</strong>. 배터리 저마진 물량이 빠지고 반도체 고마진 물량이 채워지면서 믹스가 통째로 바뀐 결과다. 판관비도 대손을 제외하면 반기 37.3억으로 안정적이어서, GPM 개선이 그대로 영업이익으로 떨어졌다.</p>
+  <p>여기에 <strong>영업 레버리지</strong>가 겹친다. 26H1 매출은 전년 동기비 +91.2%인데 대손 제외 판관비는 29.2 → 37.3억(+27.7%)에 그쳤다. 매출이 두 배 가까이 느는 동안 고정비는 3분의 1만 늘었다는 뜻이고, 이것이 OPM이 한 분기 만에 12.2% → 18.9%로 뛴 이유다.</p>
+
+  <div class="call warn">
+    <div class="h">2분기를 그대로 믿기 전에</div>
+    <p>26Q2 영업이익 47.7억 중 <strong>금융수익 19.4억(반기 누적)의 대부분은 외환차익 14.0억</strong>이다. 이는 영업이익이 아니라 영업외이므로 OPM 18.9%에는 포함되지 않지만, 순이익 60.8억에는 들어 있다. 수출 비중이 53.7%인 회사이므로 환율이 반대로 움직이면 순이익은 영업이익보다 크게 흔들린다. <strong>순이익 기준 배수는 영업이익 기준보다 신뢰도가 낮다.</strong></p>
+  </div>
+</section>
+
+<section>
+  <div class="shead"><span class="snum">06</span><div class="stitle"><h2>지배구조 — 티에스이 옆에 대만 자본</h2></div></div>
+  <p>2026년 상반기에 이 회사의 주주명부가 바뀌었다. 대만의 <strong>휘스턴재료과학(Whitston Materials Technology Co., Ltd.)</strong>이 두 차례 제3자배정 유상증자를 전량 인수해 지분 28.57%를 확보하고 이사회에 들어왔다.</p>
+
+  <div class="tw">
+  <table>
+    <caption>출처: 주요사항보고서(유상증자결정) 2025-12-19 및 2026-04-02, 증권발행결과 공시. 두 건 모두 발행 대상은 Whitston Materials Technology Co., Ltd. 단일. 신주 전량 1년간 보호예수.</caption>
+    <thead><tr><th>구분</th><th>1차</th><th>2차</th><th>합계</th></tr></thead>
+    <tbody>
+      <tr><td>이사회 결의</td><td>2025-12-19</td><td>2026-04-02</td><td>—</td></tr>
+      <tr><td>납입일</td><td>2026-01-23</td><td>2026-04-28</td><td>—</td></tr>
+      <tr><td>신주 수</td><td>5,192,749주</td><td>3,115,362주</td><td>8,308,111주</td></tr>
+      <tr><td>발행가</td><td>3,165원</td><td>3,660원</td><td>—</td></tr>
+      <tr class="hi"><td>조달금액</td><td>164.4억</td><td>114.0억</td><td>278.4억</td></tr>
+      <tr><td>&nbsp;&nbsp;└ 시설자금</td><td>100.0억</td><td>80.0억</td><td>180.0억</td></tr>
+      <tr><td>&nbsp;&nbsp;└ 운영자금</td><td>64.4억</td><td>34.0억</td><td>98.4억</td></tr>
+      <tr><td>보호예수 해제</td><td>2027-01</td><td>2027-04</td><td>—</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <figure>
+    <p class="fig-t">지분 구조의 변화</p>
+    <p class="fig-s">티에스이 56.95% → 40.68%, 휘스턴 0 → 28.57%</p>
+    <div class="legend">
+      <span><i class="sw" style="background:var(--semi)"></i>티에스이</span>
+      <span><i class="sw" style="background:var(--serv)"></i>휘스턴재료과학</span>
+      <span><i class="sw" style="background:var(--muted)"></i>기타 주주</span>
+    </div>
+    <div class="bars">
+      <div class="stackrow"><span class="num" style="font-size:12.5px;color:var(--ink-2)">증자 전</span>
+        <div class="stack">
+          <i style="width:56.95%;background:var(--semi)"></i>
+          <i style="width:43.05%;background:var(--muted);border-radius:0 4px 4px 0"></i>
+        </div></div>
+      <div class="stackrow"><span class="num" style="font-size:12.5px;color:var(--ink-2)">26.06.30</span>
+        <div class="stack">
+          <i style="width:40.68%;background:var(--semi)"></i>
+          <i style="width:28.57%;background:var(--serv)"></i>
+          <i style="width:30.75%;background:var(--muted);border-radius:0 4px 4px 0"></i>
+        </div></div>
+    </div>
+    <figcaption>발행주식 20,771,000주 → 29,079,111주(+40.0%). 티에스이 보유 주식 수는 11,828,700주로 변화 없고 지분율만 희석됐다. 출처: 2026년 반기보고서 「주식 소유현황」.</figcaption>
+  </figure>
+
+  <h3>휘스턴은 재무투자자가 아니다</h3>
+  <p>반기보고서 특수관계자 주석은 휘스턴을 <em>“회사에 유의적 영향력을 행사하는 기업”</em>으로 분류한다. 그리고 같은 표에 <strong>HSIEHCHANG TECHNOLOGY CO., LTD.</strong>가 ‘기타’ 특수관계자로 <strong>이번 반기에 새로 등재</strong>됐다. 이 회사는 전기에도 23.5억의 매출 거래가 있던 기존 거래처인데, 휘스턴이 주주로 들어오면서 특수관계자로 편입된 것이다. 즉 <strong>휘스턴은 자금만 넣은 것이 아니라 기존 거래선과 연결된 전략적 투자자</strong>로 보는 것이 타당하다.</p>
+
+  <div class="tw">
+  <table>
+    <caption>단위 억원. 출처: 2026년 반기보고서 주석 28 「특수관계자 거래」. 비중은 각 기간 총매출 대비.</caption>
+    <thead><tr><th>특수관계자</th><th>관계</th><th>25H1 매출</th><th>26H1 매출</th><th>26H1 비중</th><th>26H1말 매출채권</th></tr></thead>
+    <tbody>
+      <tr class="hi"><td>(주)티에스이</td><td class="w">지배기업(40.68%) · 프로브카드·소켓 제조</td><td>54.1</td><td>90.5</td><td>22.0%</td><td>35.3</td></tr>
+      <tr><td>HSIEHCHANG TECHNOLOGY</td><td class="w">기타 특수관계자(대만) · 26년 신규 편입</td><td>23.5</td><td>46.5</td><td>11.3%</td><td>29.9</td></tr>
+      <tr class="tot"><td>합계</td><td></td><td>77.5</td><td>137.0</td><td>33.3%</td><td>65.2</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <p>여기서 갈리는 판단이 있다. <strong>긍정적으로 읽으면</strong>, 대만 반도체 밸류체인으로 가는 채널이 지분으로 묶였고 그 채널의 매출이 이미 반기 46.5억으로 두 배가 됐다. <strong>부정적으로 읽으면</strong>, 매출의 3분의 1이 지분 관계로 얽힌 상대에게서 나온다는 뜻이고 <strong>독립적인 가격 결정력을 검증하기 어렵다</strong>. 다만 25H1의 특수관계자 비중이 36.1%였으므로 <em>비중 자체는 오히려 소폭 낮아졌다</em>는 점은 공정하게 짚어둔다.</p>
+  <p>또 하나. 최대주주 티에스이 지분이 40.68%로 내려오고 2대주주가 28.57%를 쥐면서, <strong>두 축의 지분 격차가 12.1%p로 좁혀졌다</strong>. 현재로선 경영권 분쟁 징후는 없고 두 회사 모두 반도체 테스트 밸류체인 안에 있지만, 지배구조가 단일 대주주 체제에서 이중 축으로 바뀐 것은 사실이다.</p>
+</section>
+<section>
+  <div class="shead"><span class="snum">07</span><div class="stitle"><h2>캐파 증설과 재무구조</h2></div></div>
+  <p>증자로 들어온 시설자금 180억은 이미 쓰이기 시작했다. 2026년 6월 30일, 회사는 일본 <strong>TSUGAMI Corporation</strong>으로부터 CNC 장비 100대를 <strong>84.7억원</strong>(JPY 889,500,000)에 매입하기로 이사회 결의했다. 자산총액의 13.52%에 해당해 주요사항보고 대상이었고, 삼화회계법인 외부평가에서 ‘적정’ 의견을 받았다.</p>
+
+  <div class="tw">
+  <table>
+    <caption>출처: 주요사항보고서(유형자산 양수 결정) 2026-06-30, 2026년 반기보고서 「생산 및 설비에 관한 사항」. 물량은 앞 장의 역산치. 회사는 “고객 사양이 다양해 가동률 개념을 적용하기 어렵다”고 명시했으므로 아래 가동률은 참고치다.</caption>
+    <thead><tr><th>항목</th><th>내용</th></tr></thead>
+    <tbody>
+      <tr><td>양수 자산</td><td class="w">CNC 장비 100대 (P033 50sets + P034 50sets)</td></tr>
+      <tr class="hi"><td>금액</td><td class="w">84.7억원 (JPY 889,500,000, 매매기준율 9.5198원/엔)</td></tr>
+      <tr><td>거래상대</td><td class="w">TSUGAMI Corporation (일본, CNC 장비 제조)</td></tr>
+      <tr><td>대금 조건</td><td class="w">계약 시 20% T/T 송금, 최초 공장출하 20일 전 80% L/C</td></tr>
+      <tr><td>최종 입고 예정</td><td class="w">2027-07-15 (순차 입고)</td></tr>
+      <tr><td>재원</td><td class="w">2026년 유상증자 조달금액</td></tr>
+      <tr><td>CNC 보유 대수</td><td class="w">303대 → 403대 (+33.0%)</td></tr>
+      <tr><td>공칭 생산능력</td><td class="w">303대 기준 월 650만개 = 반기 3,900만개</td></tr>
+      <tr><td>26H1 실제 물량(역산)</td><td class="w">2,271만개 → 참고 가동률 58.2%</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <p>여기에 의문이 하나 남는다. <strong>참고 가동률이 58%인데 왜 33%를 증설하는가.</strong> 세 가지 설명이 가능하다 — (a) 제품별로 라인이 갈려 특정 사양은 이미 포화, (b) CNC는 앞공정일 뿐이고 도금·조립 등 뒷공정이 실제 병목, (c) 2027년 이후 수요를 보고 선제 투자. 회사가 가동률 개념을 적용하지 않는다고 밝힌 것도 (a)·(b) 쪽을 시사한다. 어느 쪽이든 <strong>장비는 2027년 7월까지 순차 입고되므로 감가상각 부담은 2027년부터 본격화</strong>한다.</p>
+
+  <h3>재무는 튼튼하다</h3>
+  <div class="tw">
+  <table>
+    <caption>단위 억원. 출처: 2026년 반기보고서 재무상태표. DSO = 매출채권 장부금액 ÷ 해당 기간 매출 × 기간일수(반기 181일, 연간 365일).</caption>
+    <thead><tr><th>항목</th><th>26.06.30</th><th>25.12.31</th><th>24.12.31</th></tr></thead>
+    <tbody>
+      <tr><td>현금및현금성자산</td><td>274.9</td><td>125.7</td><td>183.8</td></tr>
+      <tr><td>매출채권(장부금액)</td><td>231.2</td><td>73.7</td><td>153.0</td></tr>
+      <tr><td>&nbsp;&nbsp;└ 대손충당금</td><td>52.1</td><td>51.0</td><td>1.7</td></tr>
+      <tr><td>재고자산</td><td>94.3</td><td>71.8</td><td>45.9</td></tr>
+      <tr><td>유형자산</td><td>324.1</td><td>279.3</td><td>—</td></tr>
+      <tr><td>자산총계</td><td>991.6</td><td>626.1</td><td>650.9</td></tr>
+      <tr><td>부채총계</td><td>129.8</td><td>102.8</td><td>99.0</td></tr>
+      <tr><td>&nbsp;&nbsp;└ 단기차입금</td><td>30.0</td><td>30.0</td><td>—</td></tr>
+      <tr class="hi"><td>자본총계</td><td>861.8</td><td>523.3</td><td>551.9</td></tr>
+      <tr class="tot"><td>부채비율</td><td>15.1%</td><td>19.6%</td><td>17.9%</td></tr>
+      <tr><td>순현금</td><td>244.9</td><td>95.7</td><td>183.8</td></tr>
+      <tr><td>DSO(참고)</td><td>101.8일</td><td>62.2일</td><td>105.4일</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <p>차입금은 기업은행 시설·운전자금 30억(이자율 2.11%)이 전부다. <strong>순현금 244.9억은 시총의 9.7%</strong>에 해당한다. 자본총계가 523.3억에서 861.8억으로 늘어난 것은 증자 278.4억과 반기 순이익 60.8억의 합(339.2억)으로 정확히 설명된다.</p>
+  <p>매출채권이 73.7억에서 231.2억으로 3.1배 늘어난 것은 놀라 보이지만, <strong>DSO로 환산하면 101.8일로 2024년말(105.4일)과 거의 같다.</strong> 2025년말의 62.2일이 대손 제각 직후의 일시적 저점이었을 뿐이다. 즉 채권 증가는 매출 급증에 따른 정상적 확대로 읽는 것이 맞다. 다만 그중 65.2억(28%)이 특수관계자 채권이라는 점은 별도로 감안해야 한다.</p>
+  <p>배당은 상장 이후 한 번도 없었고, 회사는 “향후 투자 재원 마련”을 이유로 들었다. 자사주 매입·소각 계획도 없다.</p>
+</section>
+
+<section>
+  <div class="shead"><span class="snum">08</span><div class="stitle"><h2>경쟁사 비교 — 사다리의 어느 칸</h2></div></div>
+  <p>비교군은 <strong>반도체 테스트 부품·소켓·프로브카드</strong> 밸류체인이다. 메가터치는 이들 중 유일하게 <strong>완제품이 아니라 핀(부품)</strong>을 만들고, 이 중 하나(티에스이)는 최대주주이자 고객이다.</p>
+
+  <div class="tw">
+  <table>
+    <caption>단위 억원. 재무는 FY2025 확정치(DART, 티에스이·마이크로컨텍솔·오킨스전자·티에프이는 연결, 리노공업·메가터치는 별도). 시총·PER·PBR은 2026-08-19 네이버 금융. 메가터치 시총은 발행주식 29,079,111주 × 8/18 종가 8,640원으로 직접 계산. 메가터치 PER은 FY2025가 적자라 산출 불가.</caption>
+    <thead><tr><th>종목</th><th>밸류체인 위치</th><th>시총</th><th>매출</th><th>GPM</th><th>영업이익</th><th>OPM</th><th>PER</th><th>PBR</th></tr></thead>
+    <tbody>
+      <tr class="hi"><td>메가터치</td><td class="w">테스트 핀(부품)</td><td>2,512</td><td>432</td><td>15.7%</td><td class="neg">-42</td><td class="neg">적자</td><td>N/A</td><td>2.92</td></tr>
+      <tr><td>&nbsp;&nbsp;└ 26H1 기준</td><td class="w">—</td><td>—</td><td>822*</td><td>25.7%</td><td>134*</td><td>16.3%</td><td>20.7*</td><td>—</td></tr>
+      <tr><td>리노공업</td><td class="w">테스트 핀 + 소켓 일관</td><td>52,510</td><td>3,725</td><td>52.2%</td><td>1,770</td><td>47.5%</td><td>32.2</td><td>7.36</td></tr>
+      <tr><td>티에스이</td><td class="w">프로브카드·소켓 완제품 · 메가터치 모회사</td><td>29,313</td><td>4,289</td><td>28.0%</td><td>492</td><td>11.5%</td><td>40.7</td><td>6.88</td></tr>
+      <tr><td>티에프이</td><td class="w">테스트 소켓·인터페이스</td><td>4,747</td><td>1,117</td><td>36.0%</td><td>191</td><td>17.1%</td><td>23.7</td><td>3.69</td></tr>
+      <tr><td>오킨스전자</td><td class="w">번인 소켓·테스트 보드</td><td>3,813</td><td>944</td><td>25.5%</td><td>111</td><td>11.7%</td><td>32.6</td><td>6.02</td></tr>
+      <tr><td>마이크로컨텍솔</td><td class="w">테스트 소켓</td><td>3,367</td><td>1,003</td><td>26.8%</td><td>177</td><td>17.7%</td><td>18.8</td><td>3.92</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p style="font-size:13px;color:var(--muted);margin-top:10px">* 26H1 실적을 단순 2배 한 연환산치이며 실적 전망이 아니다. 다른 회사는 FY2025 확정 실적이므로 직접 비교에는 주의가 필요하다.</p>
+
+  <figure>
+    <p class="fig-t">매출총이익률 사다리</p>
+    <p class="fig-s">부품 칸의 마진이 낮은 것은 구조적이다 — 다만 26H1에 격차가 크게 좁혀졌다</p>
+    <div class="bars">
+      <div class="bar"><span class="lb">리노공업</span><span class="tr"><span class="fl" style="width:100%"></span></span><span class="vl">52.2%</span></div>
+      <div class="bar"><span class="lb">티에프이</span><span class="tr"><span class="fl" style="width:69.0%"></span></span><span class="vl">36.0%</span></div>
+      <div class="bar"><span class="lb">티에스이</span><span class="tr"><span class="fl" style="width:53.6%"></span></span><span class="vl">28.0%</span></div>
+      <div class="bar"><span class="lb">마이크로컨텍솔</span><span class="tr"><span class="fl" style="width:51.3%"></span></span><span class="vl">26.8%</span></div>
+      <div class="bar"><span class="lb"><strong>메가터치 26H1</strong></span><span class="tr"><span class="fl" style="width:49.2%;background:var(--semi)"></span></span><span class="vl">25.7%</span></div>
+      <div class="bar"><span class="lb">오킨스전자</span><span class="tr"><span class="fl" style="width:48.9%"></span></span><span class="vl">25.5%</span></div>
+      <div class="bar"><span class="lb">메가터치 FY2025</span><span class="tr"><span class="fl" style="width:30.1%;background:var(--batt)"></span></span><span class="vl">15.7%</span></div>
+    </div>
+    <figcaption>메가터치를 제외한 값은 모두 FY2025 확정치. 메가터치 26H1 GPM 25.7%는 이미 오킨스전자·마이크로컨텍솔 수준이며, 26Q2 단독으로는 27.1%다.</figcaption>
+  </figure>
+
+  <p>이 표에서 두 가지가 보인다. 첫째, <strong>리노공업의 GPM 52.2%·OPM 47.5%가 이 업계의 천장</strong>이고 그것은 핀부터 소켓까지 수직 통합한 결과다. 메가터치가 그 자리로 가려면 완제품으로 올라가야 하는데, 최대주주가 바로 그 완제품 업체이므로 구조적으로 어렵다. 둘째, 그럼에도 <strong>메가터치의 26H1 OPM 16.3%는 이미 마이크로컨텍솔(17.7%)·티에프이(17.1%)와 대등</strong>하다. 부품 칸에서도 AI 반도체 사이클의 몫은 받고 있다는 뜻이다.</p>
+</section>
+
+<section>
+  <div class="shead"><span class="snum">09</span><div class="stitle"><h2>해자 검증 — 찬성과 반증</h2></div></div>
+  <div class="duo">
+    <div class="for">
+      <h4>해자가 있다는 근거</h4>
+      <ul>
+        <li><b>전환에 성공했다.</b> 배터리 캐즘으로 주력 매출이 70% 사라진 회사가 3년 만에 반도체로 갈아타 사상 최대 분기를 냈다. 대부분의 2차전지 후방 업체는 이 전환을 못 했다.</li>
+        <li><b>물량으로 검증된다.</b> 26H1 생산 물량 2,271만개가 이미 FY2025 연간(2,191만개)을 넘었다. 회계적 인식 차이가 아니라 실물이 늘었다.</li>
+        <li><b>진입장벽은 인증이다.</b> 프로브 핀은 고객사 테스트 라인에서 검증을 통과해야 들어간다. GPU·NPU·HBM처럼 테스트 난도가 높은 제품일수록 교체가 어렵다.</li>
+        <li><b>모회사 채널.</b> 티에스이는 국내 프로브카드·소켓 상위 업체이고 FY2025 매출 4,289억·영업이익 492억이다. 그 안에 부품을 공급하는 자리는 안정적이다.</li>
+        <li><b>대만 채널이 열렸다.</b> 휘스턴 투자로 HSIEHCHANG向 매출이 반기 23.5 → 46.5억으로 두 배가 됐다. 대만은 OSAT·파운드리 밀도가 가장 높은 시장이다.</li>
+        <li><b>재무 여력.</b> 순현금 244.9억, 부채비율 15.1%. 증설 84.7억을 자체 재원으로 감당한다.</li>
+      </ul>
+    </div>
+    <div class="against">
+      <h4>해자를 의심하게 하는 근거</h4>
+      <ul>
+        <li><b>밸류체인 아래 칸이다.</b> 완제품이 아니라 핀 부품이다. FY2025 GPM 15.7%는 비교군 최하위였고, 26H1의 25.7%도 여전히 리노공업(52.2%)의 절반이다.</li>
+        <li><b>매출의 33.3%가 특수관계자다.</b> 티에스이 22.0% + HSIEHCHANG 11.3%. 지분으로 얽힌 상대와의 거래이므로 독립적 가격 결정력을 외부에서 검증할 수 없다.</li>
+        <li><b>고객 신용 관리에 실패한 이력.</b> 2025년 매출채권의 40.9%를 대손 처리했다. 여신 심사 체계의 문제였는지 시장 붕괴의 불가항력이었는지는 공시만으로 판별되지 않는다.</li>
+        <li><b>단가는 내려가고 있다.</b> 반도체 수출 −5.2%, 내수 −45.9%. 물량으로 이익을 내는 구조이므로 사이클이 꺾이면 레버리지가 반대로 작동한다.</li>
+        <li><b>연구개발 규모가 작다.</b> FY2025 연구개발비 17.7억(매출의 4.1%), 26H1 9.7억. 정밀 가공 노하우는 축적형이지만 기술 격차를 벌리는 투자로 보기엔 작다.</li>
+        <li><b>배터리는 아직 바닥이 확인되지 않았다.</b> 반기 매출은 +59.5% 늘었지만 물량은 여전히 감소 중이고, 수출 물량은 작년 연간의 10분의 1이다.</li>
+      </ul>
+    </div>
+  </div>
+  <p>정리하면 <strong>메가터치의 강점은 기술적 배타성이 아니라 “전환을 해낸 실행력과 그 결과 확보한 자리”</strong>다. AI 반도체 테스트 물량이 늘어나는 국면에서 인증된 핀 공급자라는 지위는 실재한다. 그러나 그 지위가 <strong>가격 결정력</strong>으로 이어진다는 증거는 아직 없다 — 단가는 내려가고 있고, 매출의 3분의 1은 지분으로 얽힌 상대에게서 나온다.</p>
+</section>
+<section>
+  <div class="shead"><span class="snum">10</span><div class="stitle"><h2>밸류에이션 — 어느 실적으로 값을 매길 것인가</h2></div></div>
+  <p>이 종목의 밸류에이션은 <strong>어느 기간을 분모로 쓰느냐</strong>에 따라 완전히 달라진다. 확정 실적은 적자, 최근 반기는 급성장, 최근 분기는 사상 최대다. 네 가지를 모두 늘어놓는 것이 정직하다.</p>
+
+  <div class="tw">
+  <table>
+    <caption>시가총액 2,512억 = 발행주식 29,079,111주 × 2026-08-18 종가 8,640원. 순현금 244.9억(현금 274.9 − 단기차입금 30.0). EV = 2,267억. 연환산은 해당 기간 실적을 단순히 곱한 값이며 실적 전망이 아니다. TTM 순이익 = 2H2025 +14.34억(FY2025 −28.59 − 25H1 −42.93) + 26H1 +60.79억.</caption>
+    <thead><tr><th>기준 실적</th><th>매출</th><th>영업이익</th><th>순이익</th><th>PER</th><th>PSR</th><th>EV/영업이익</th></tr></thead>
+    <tbody>
+      <tr><td>FY2025 확정</td><td>432억</td><td class="neg">-42억</td><td class="neg">-29억</td><td>N/A</td><td>5.81배</td><td>N/A</td></tr>
+      <tr><td>최근 12개월(TTM)</td><td>629억</td><td>—</td><td>75억</td><td>33.4배</td><td>3.99배</td><td>—</td></tr>
+      <tr class="hi"><td>26H1 연환산</td><td>822억</td><td>134억</td><td>122억</td><td>20.7배</td><td>3.06배</td><td>16.9배</td></tr>
+      <tr><td>26Q2 연환산</td><td>1,009억</td><td>191억</td><td>163억</td><td>15.4배</td><td>2.49배</td><td>11.9배</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <p>비교군의 FY2025 확정 PER은 18.8~40.7배(중앙값 32.2배)다. 메가터치의 <strong>26H1 연환산 PER 20.7배는 그 하단</strong>이고, <strong>26Q2 연환산 15.4배는 최하단</strong>이다. 다만 이것은 확정 실적과 연환산 가정을 나란히 놓은 비교이므로 그 자체로 “싸다”는 결론이 되지 않는다.</p>
+
+  <div class="call">
+    <div class="h">전제를 뒤집어 보면</div>
+    <p>현재 시총 2,512억이 비교군 중앙값 PER 32배로 설명되려면 <strong>연간 순이익 78.5억</strong>이면 충분하다. 26H1 순이익이 이미 60.8억이므로, <strong>하반기가 상반기의 30% 수준만 나와도 지금 가격이 정당화된다.</strong> 반대로 시장이 26Q2 수준(연 163억)의 지속을 기대하고 있다면 그때의 적정 PER은 15.4배로, 비교군 대비 큰 할인 상태다. 즉 <strong>현재 가격은 “회복은 인정하되 2분기 수준의 지속에는 아직 값을 매기지 않은” 구간</strong>으로 읽힌다.</p>
+  </div>
+
+  <p>다만 순이익 기준 배수에는 주의가 필요하다. 26H1 순이익 60.8억에는 <strong>외환차익 14.0억을 포함한 금융수익 19.4억</strong>이 들어 있다. 이를 제외하면 세전이익은 58.1억 수준으로 내려가고, PER은 그만큼 올라간다. 수출 비중 53.7%인 회사이므로 환율은 매 분기 양방향으로 작동한다. <strong>영업이익 기준의 EV/영업이익 16.9배(26H1 연환산)가 더 신뢰할 만한 지표다.</strong></p>
+
+  <h3>주가는 이미 회복을 반영했다</h3>
+  <p>연초 3,620원 → 3월 4일 저점 3,245원 → 5월 26일 고점 10,990원 → 8월 18일 8,640원. <strong>저점 대비 3.39배, 연초 대비 +138.7%</strong>다. 흐름을 보면 4월(제3자배정 2차 결의, +78%)과 5월(신주 상장)에 급등했다가 6월에 5,890원까지 −46% 되밀렸고, 8월 반기 실적 발표 전후로 다시 올라왔다. <strong>변동성이 매우 크다.</strong></p>
+  <p>증권사 정식 커버리지는 확인되지 않는다. 컨센서스가 없는 구간이며, 2026년 실적 추정치는 시장에 존재하지 않는다.</p>
+</section>
+
+<section>
+  <div class="shead"><span class="snum">11</span><div class="stitle"><h2>리스크</h2></div></div>
+  <div class="risks">
+    <div class="risk"><div><span class="tag t4">치명</span></div>
+      <div><div class="rt">2분기 실적의 지속성이 검증되지 않았다</div>
+      <div class="rd">26Q2 매출 252.2억은 직전 최대 분기의 1.49배이고, 이 리포트의 모든 배수가 이 분기를 기준으로 계산된다. 반도체 테스트 핀은 고객사 신규 라인 셋업에 물량이 몰리는 성격이 있어 분기 간 편차가 크다. 24Q3 169.2억 다음 분기가 120.9억으로 −29% 빠진 전례가 있다.</div></div></div>
+
+    <div class="risk"><div><span class="tag t3">높음</span></div>
+      <div><div class="rt">매출의 33.3%가 특수관계자 거래</div>
+      <div class="rd">티에스이 90.5억(22.0%) + HSIEHCHANG 46.5억(11.3%). 최대주주이자 고객, 2대주주와 연결된 거래처다. 이전가격의 적정성을 외부에서 검증할 수 없고, 그룹 정책이 바뀌면 매출이 직접 영향을 받는다. 반기말 특수관계자 매출채권 65.2억도 함께 봐야 한다.</div></div></div>
+
+    <div class="risk"><div><span class="tag t3">높음</span></div>
+      <div><div class="rt">대손 재발 위험</div>
+      <div class="rd">2025년 매출채권의 40.9%를 100% 대손 처리했다. 2026년 상반기 매출채권은 231.2억으로 3.1배 늘었다. DSO는 101.8일로 2024년말(105.4일) 수준이라 회전 자체는 정상이지만, 배터리 고객군의 신용 상태가 회복됐다는 증거는 아직 없다.</div></div></div>
+
+    <div class="risk"><div><span class="tag t3">높음</span></div>
+      <div><div class="rt">단가 하락 — 물량에 의존하는 구조</div>
+      <div class="rd">반도체 수출 단가 −5.2%, 내수 단가 −45.9%. 이익은 물량 증가로 만들고 있다. AI 반도체 테스트 수요가 꺾이면 영업 레버리지가 반대 방향으로 작동해 이익이 매출보다 빠르게 줄어든다.</div></div></div>
+
+    <div class="risk"><div><span class="tag t2">중간</span></div>
+      <div><div class="rt">배터리 부문의 바닥이 미확인</div>
+      <div class="rd">반기 매출은 +59.5% 회복했지만 물량은 계속 감소 중이다(내수 0.75배, 수출 0.10배). 매출 방어는 단가 상승, 정확히는 저가 품목이 빠진 믹스 효과다. 배터리 매출이 다시 줄어들면 전사 성장률이 희석된다.</div></div></div>
+
+    <div class="risk"><div><span class="tag t2">중간</span></div>
+      <div><div class="rt">증설의 시점 리스크</div>
+      <div class="rd">CNC 100대·84.7억을 2027년 7월까지 순차 입고한다. 참고 가동률이 58%인 상태에서의 +33% 증설이고, 감가상각 부담은 2027년부터 본격화한다. 사이클이 그 전에 꺾이면 고정비만 남는다.</div></div></div>
+
+    <div class="risk"><div><span class="tag t2">중간</span></div>
+      <div><div class="rt">지배구조가 이중 축으로 바뀌었다</div>
+      <div class="rd">티에스이 40.68% vs 휘스턴재료과학 28.57%, 격차 12.1%p. 현재 분쟁 징후는 없고 양측 모두 반도체 테스트 밸류체인 안에 있지만, 단일 대주주 체제는 아니게 됐다. 대표이사도 2026년 3월 교체됐다.</div></div></div>
+
+    <div class="risk"><div><span class="tag t2">중간</span></div>
+      <div><div class="rt">보호예수 해제 — 유통주식 28.57% 증가</div>
+      <div class="rd">휘스턴이 인수한 8,308,111주는 각각 2027년 1월·4월에 1년 보호예수가 풀린다. 전략적 투자자이므로 즉시 매도 가능성은 낮지만, 발행주식의 28.57%가 잠재 유통물량으로 대기한다.</div></div></div>
+
+    <div class="risk"><div><span class="tag t2">중간</span></div>
+      <div><div class="rt">환율 노출과 주가 변동성</div>
+      <div class="rd">수출 비중 53.7%, 26H1 외환차익 14.0억이 순이익에 포함됐다. 주가는 52주 3,245원~10,990원(3.39배 범위)이고 5월 고점에서 6월까지 −46% 되밀린 이력이 있다.</div></div></div>
+
+    <div class="risk"><div><span class="tag t1">낮음</span></div>
+      <div><div class="rt">재무 리스크는 낮다</div>
+      <div class="rd">차입금 30억(이자율 2.11%), 부채비율 15.1%, 순현금 244.9억. 전환사채·신주인수권부사채 없음, 자기주식 없음. 증설 재원도 이미 확보된 증자 자금이다. 다만 배당은 상장 후 한 번도 없었다.</div></div></div>
+  </div>
+</section>
+
+<section>
+  <div class="shead"><span class="snum">12</span><div class="stitle"><h2>투자 전 확인할 것</h2></div></div>
+  <ol class="check">
+    <li><b>3분기 매출과 영업이익률(11월 중순 공시).</b> 이 리포트의 모든 배수가 여기서 갈린다. 매출이 250억 안팎을 유지하면 26Q2 연환산(PER 15.4배)이 현실이 되고, 170억대로 되밀리면 26H1 연환산(20.7배)이 상단이 된다.</li>
+    <li><b>부문별 매출과 단가.</b> 반도체 수출 물량이 계속 늘어나는지, 단가 하락 폭이 커지는지. 물량 × 단가 두 축을 반드시 함께 볼 것 — 단가만 오르는 회복은 믹스 효과일 수 있다.</li>
+    <li><b>매출채권과 대손충당금.</b> DSO가 101.8일에서 더 늘어나는지, 충당금이 추가 설정되는지. 2025년의 재발 여부를 보는 유일한 창이다.</li>
+    <li><b>특수관계자 매출 비중.</b> 26H1 33.3%가 낮아지는지 높아지는지. 낮아지면 독립적 영업력의 증거, 높아지면 그룹 내 캡티브 부품사로 굳어진다는 신호다.</li>
+    <li><b>HSIEHCHANG 거래의 성격.</b> 휘스턴 투자 이후 대만 채널이 실제로 확대되는지. 반기 46.5억이 다음 분기에도 늘어나면 지분 투자가 사업으로 연결된 것이다.</li>
+    <li><b>배터리 부문의 물량 바닥.</b> 매출이 아니라 물량(매출÷단가)으로 볼 것. 물량이 돌아서기 전까지 배터리 회복은 믹스 효과일 뿐이다.</li>
+    <li><b>CNC 100대 입고 진행과 감가상각.</b> 2027년 7월까지 순차 입고. 입고 속도와 그에 따른 감가상각비 증가분이 2027년 OPM에 미치는 영향을 미리 계산해 둘 것.</li>
+    <li><b>외환손익을 제외한 순이익.</b> 26H1 금융수익 19.4억 중 외환차익 14.0억. 영업이익과 세전이익의 괴리가 계속 커지는지 확인.</li>
+    <li><b>보호예수 해제 일정(2027년 1월·4월).</b> 8,308,111주(28.57%). 그전에 휘스턴의 추가 지분 취득이나 사업 협약 공시가 나오는지.</li>
+  </ol>
+</section>
+
+<footer>
+  <h3>데이터 출처</h3>
+  <p><b>DART 전자공시</b> — 2026년 반기보고서(2026-08-14 접수), 2025년 사업보고서(2026-03-18), 2024년 사업보고서(2025-03-18), 2025년 반기보고서(2025-08-14), 주요사항보고서(유상증자결정) 2025-12-19·2026-04-02, 증권발행결과 2026-01-23·2026-04-28, 주요사항보고서(유형자산 양수 결정) 2026-06-30, 대표이사 변경 2026-03-26, 매출액 또는 손익구조 30% 이상 변동 2026-02-13, 재무제표 원문 API <span class="num">fnlttSinglAcntAll</span>(2023~2026 전 분기) · 문서원문 API <span class="num">document.xml</span>.<br>
+  <b>시세</b> — 네이버 금융 및 일별시세 API(2026-08-19 조회). <b>비교군 재무</b> — DART FY2025 확정치. <b>보도</b> — 블로터, 이데일리, SBS Biz, 조세금융신문, 인베스팅닷컴.</p>
+
+  <h3>계산 근거</h3>
+  <p>시가총액 = 발행주식 29,079,111주(2026-06-30, 자기주식 0) × 2026-08-18 종가 8,640원 = 2,512억. 순현금 = 현금및현금성자산 274.9억 − 단기차입금 30.0억 = 244.9억. EV = 2,512 − 244.9 = 2,267억. BPS = 반기말 자본총계 861.8억 ÷ 29,079,111주 = 2,964원, PBR 2.92배. 분기 3개월 손익은 DART 누적치를 차감해 산출. 대손 조정 영업손익 = 보고 영업손익 − 대손상각비(환입). 물량 = 부문별 매출액 ÷ 공시 평균단가(반기보고서 「주요 제품 등의 가격변동추이」)로 역산했으며 회사 공시 수치가 아니다. 물량 합계에는 단가가 공시되지 않는 MEMS 임가공(26H1 63.2억)이 제외돼 있다. DSO = 매출채권 장부금액 ÷ 해당 기간 매출 × 기간일수. TTM 순이익 = 2H2025 14.34억 + 26H1 60.79억 = 75.13억. 연환산은 해당 기간 실적의 단순 배수이며 실적 전망이 아니다.</p>
+
+  <h3>교차검증 기록</h3>
+  <p>손익·재무상태·부문매출·물량 항목 45건을 DART 원문과 재계산값으로 대조해 불일치 0건을 확인했다. 주요 검증: ① 자본총계 증가 338.5억 = 유상증자 278.4억 + 반기순이익 60.8억(정확히 일치) ② 증자 주식수 20,771,000 + 5,192,749 + 3,115,362 = 29,079,111주(반기보고서 발행주식총수와 일치) ③ 티에스이 11,828,700주 ÷ 29,079,111주 = 40.68%, 휘스턴 8,308,111주 ÷ 29,079,111주 = 28.57%(공시 지분율과 일치) ④ 부문별 매출 합계가 각 연도 총매출과 일치(FY2023 501.4 / FY2024 529.9 / FY2025 432.4 / 26H1 410.9) ⑤ 손익구조 변동 공시의 대손 48.73억과 재무제표 대손상각비 49.43억의 차이는 기타채권 분을 포함한 것으로 판단해 재무제표 값을 사용했다. ⑥ 시가총액은 네이버 표기(8/19 장중가 8,250원 기준 2,399억)와 발행주식수로 재계산해 일치를 확인했고, 본문은 8/18 종가 기준을 쓴다.</p>
+
+  <div class="disc">이 문서는 공개된 공시·시세·언론 자료를 정리한 분석 자료이며 투자 권유가 아닙니다. 연환산 수치는 명시된 가정에 따른 단순 계산일 뿐 예측이 아니며, 회사나 증권사의 추정치가 아닙니다. 물량 역산과 대손 조정 영업손익은 이 리포트의 계산이며 회사가 공시한 값이 아닙니다. 투자 판단과 그 결과의 책임은 투자자 본인에게 있습니다. 기준일 2026년 8월 19일.</div>
+</footer>
+
+</div>
+</div>
+
+</body>
+</html>

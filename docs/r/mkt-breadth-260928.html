@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=1080">
+<title>Breadth 시그널 09-28 12:12</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=JetBrains+Mono:wght@400;500;700&family=Noto+Serif+KR:wght@500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#1B2A4A;--gold:#9A7B2F;--up:#C8392B;--dn:#1A5C9E;--line:#E4E1D8}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1080px;min-height:1920px;background:#FFFFFF}
+body{color:var(--ink);font-family:'Noto Serif KR',serif}
+.canvas{width:1080px;min-height:1920px;padding:52px 64px 44px;display:flex;flex-direction:column;justify-content:space-between;gap:22px;background:#FFFFFF}
+.mono{font-family:'JetBrains Mono',monospace}
+.up{color:var(--up)} .dn{color:var(--dn)}
+/* masthead */
+.mast{border-bottom:3px solid var(--ink);padding-bottom:26px}
+.logo{display:flex;align-items:baseline;gap:18px;flex-wrap:wrap}
+.logo .brand{font-family:'DM Serif Display',serif;font-size:64px;line-height:1;letter-spacing:.5px}
+.logo .desk{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:22px;letter-spacing:5px;color:var(--gold)}
+.mrow{display:flex;justify-content:space-between;align-items:center;margin-top:22px}
+.tag{font-weight:900;font-size:30px;padding:8px 18px;border:2px solid var(--gold);color:var(--gold);border-radius:4px}
+.stamp{font-family:'JetBrains Mono',monospace;font-size:21px;font-weight:500}
+.cov{margin-top:16px;font-family:'JetBrains Mono',monospace;font-size:17px;color:#5B6478;letter-spacing:.2px}
+/* market block */
+.mtitle{font-family:'DM Serif Display',serif;font-size:56px;line-height:1;border-left:8px solid var(--gold);padding-left:18px}
+.summary{margin:16px 0 18px;display:flex;align-items:center;flex-wrap:wrap;gap:12px 16px;font-family:'JetBrains Mono',monospace;font-weight:700;font-size:38px;line-height:1.2}
+.summary .dot{color:#B7B2A5}
+.bsum{font-family:'JetBrains Mono','Noto Serif KR',monospace}
+.t-vw{color:#123A63} .t-w{color:#1A5C9E} .t-n{color:#6B7280} .t-s{color:#C8392B} .t-vs{color:#8E2A1F}
+.summary .badge{font-size:22px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.cell{border-radius:10px;padding:18px 20px 14px;border:1px solid rgba(27,42,74,.08);display:flex;flex-direction:column;gap:8px}
+.g-vw{background:#DCE6F3} .g-vw .cgrade{color:#123A63}
+.g-w{background:#EAF1F8} .g-w .cgrade{color:#1A5C9E}
+.g-n{background:#F1F0EC} .g-n .cgrade{color:#6B7280}
+.g-s{background:#FBEAE6} .g-s .cgrade{color:#C8392B}
+.g-vs{background:#F6DEDA} .g-vs .cgrade{color:#8E2A1F}
+.cname{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:21px;letter-spacing:2px;color:var(--gold)}
+.cidx{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:22px}
+.cgrade{font-weight:900;font-size:36px;line-height:1.1}
+.cgrade .garr{font-size:28px}
+.cbadge{min-height:36px;display:flex;align-items:center}
+.badge{display:inline-block;font-family:'Noto Serif KR',serif;font-weight:700;font-size:19px;padding:5px 12px;border-radius:999px;border:1.5px solid;white-space:nowrap}
+.badge.rally{background:#FCEFD1;color:#8A6410;border-color:#D9AE4E}
+.badge.dip{background:#E4ECF3;color:#1A5C9E;border-color:#A9C4DC}
+.spark{width:100%;height:76px;display:block}
+.cap{font-family:'JetBrains Mono',monospace;font-size:15px;color:#5B6478}
+/* note */
+.note{border:1.5px solid var(--ink);border-radius:10px;padding:26px 30px}
+.note h3{font-family:'JetBrains Mono',monospace;font-size:20px;letter-spacing:4px;color:var(--gold);margin-bottom:14px}
+.note ul{list-style:none;display:flex;flex-direction:column;gap:12px}
+.note li{font-size:20px;line-height:1.48;padding-left:22px;position:relative;font-weight:500}
+.note li::before{content:'';position:absolute;left:0;top:13px;width:9px;height:9px;background:var(--gold)}
+/* legend */
+.legend{border-top:1px solid var(--line);padding-top:22px;font-family:'JetBrains Mono',monospace;font-size:15.5px;color:#4B5568;line-height:1.6}
+.sw{display:flex;gap:10px;margin-bottom:14px}
+.sw div{flex:1;padding:8px 6px;border-radius:6px;text-align:center;font-family:'Noto Serif KR',serif;font-weight:700;font-size:17px}
+.legend p{margin-top:4px}
+.legend .badge{font-size:14px;padding:2px 9px}
+.credit{display:flex;justify-content:space-between;align-items:center;border-top:3px solid var(--ink);padding-top:18px;font-family:'JetBrains Mono',monospace;font-size:17px;font-weight:700}
+.credit .b{font-family:'DM Serif Display',serif;font-size:26px;font-weight:400}
+</style></head>
+<body><div class="canvas">
+<header class="mast">
+  <div class="logo"><span class="brand">TNBfolio</span><span class="desk">BREADTH DESK</span></div>
+  <div class="mrow"><span class="tag">시장 폭 시그널</span><span class="stamp">2026-09-28 · 12:12 KST 갱신</span></div>
+  <div class="cov">COVERAGE · KOSPI 종합/대형/중형/소형 · KOSDAQ 종합/K100/MID/SMALL · 60일 신고가–신저가 기준</div>
+</header>
+<section class="mkt">
+  <div class="mtitle">KOSPI</div>
+  <div class="summary">
+    <span class="dn">지수 ▼2.38%</span><span class="dot">·</span>
+    <span class="bsum t-n">Breadth +1 중립 →</span>
+    
+  </div>
+  <div class="grid"><div class="cell g-n">
+  <div class="cname">대형</div>
+  <div class="cidx"><span class="dn">지수 ▼2.66%</span></div>
+  <div class="cgrade"><span class="gtxt">중립</span> <span class="garr">→</span></div>
+  <div class="cbadge"></div>
+  <svg class="spark" viewBox="0 0 260 84" preserveAspectRatio="none"><line x1="0" y1="42.0" x2="260" y2="42.0" stroke="#1B2A4A" stroke-opacity=".35" stroke-width="1.5"/><rect x="0.0" y="37.8" width="18" height="4.2" rx="2" fill="#C8392B"/><rect x="26.9" y="42.0" width="18" height="4.2" rx="2" fill="#1A5C9E"/><rect x="53.8" y="42.0" width="18" height="21.1" rx="2" fill="#1A5C9E"/><rect x="80.7" y="42.0" width="18" height="33.8" rx="2" fill="#1A5C9E"/><rect x="107.6" y="42.0" width="18" height="21.1" rx="2" fill="#1A5C9E"/><rect x="134.4" y="42.0" width="18" height="8.4" rx="2" fill="#1A5C9E"/><rect x="161.3" y="42.0" width="18" height="38.0" rx="2" fill="#1A5C9E"/><rect x="188.2" y="42.0" width="18" height="25.3" rx="2" fill="#1A5C9E"/><rect x="215.1" y="42.0" width="18" height="38.0" rx="2" fill="#1A5C9E"/><rect x="242.0" y="41.2" width="18" height="1.5" rx="2" fill="#9CA3AF"/></svg>
+  <div class="cap">10거래일 추이</div>
+</div><div class="cell g-s">
+  <div class="cname">중형</div>
+  <div class="cidx"><span class="up">지수 ▲1.04%</span></div>
+  <div class="cgrade"><span class="gtxt">강세</span> <span class="garr">▲</span></div>
+  <div class="cbadge"></div>
+  <svg class="spark" viewBox="0 0 260 84" preserveAspectRatio="none"><line x1="0" y1="42.0" x2="260" y2="42.0" stroke="#1B2A4A" stroke-opacity=".35" stroke-width="1.5"/><rect x="0.0" y="23.0" width="18" height="19.0" rx="2" fill="#C8392B"/><rect x="26.9" y="29.3" width="18" height="12.7" rx="2" fill="#C8392B"/><rect x="53.8" y="41.2" width="18" height="1.5" rx="2" fill="#9CA3AF"/><rect x="80.7" y="42.0" width="18" height="14.8" rx="2" fill="#1A5C9E"/><rect x="107.6" y="42.0" width="18" height="8.4" rx="2" fill="#1A5C9E"/><rect x="134.4" y="42.0" width="18" height="10.6" rx="2" fill="#1A5C9E"/><rect x="161.3" y="42.0" width="18" height="19.0" rx="2" fill="#1A5C9E"/><rect x="188.2" y="42.0" width="18" height="16.9" rx="2" fill="#1A5C9E"/><rect x="215.1" y="42.0" width="18" height="25.8" rx="2" fill="#1A5C9E"/><rect x="242.0" y="35.7" width="18" height="6.3" rx="2" fill="#C8392B"/></svg>
+  <div class="cap">10거래일 추이</div>
+</div><div class="cell g-n">
+  <div class="cname">소형</div>
+  <div class="cidx"><span class="up">지수 ▲0.76%</span></div>
+  <div class="cgrade"><span class="gtxt">중립</span> <span class="garr">→</span></div>
+  <div class="cbadge"></div>
+  <svg class="spark" viewBox="0 0 260 84" preserveAspectRatio="none"><line x1="0" y1="42.0" x2="260" y2="42.0" stroke="#1B2A4A" stroke-opacity=".35" stroke-width="1.5"/><rect x="0.0" y="24.3" width="18" height="17.7" rx="2" fill="#C8392B"/><rect x="26.9" y="16.7" width="18" height="25.3" rx="2" fill="#C8392B"/><rect x="53.8" y="36.9" width="18" height="5.1" rx="2" fill="#C8392B"/><rect x="80.7" y="35.2" width="18" height="6.8" rx="2" fill="#C8392B"/><rect x="107.6" y="36.1" width="18" height="5.9" rx="2" fill="#C8392B"/><rect x="134.4" y="31.9" width="18" height="10.1" rx="2" fill="#C8392B"/><rect x="161.3" y="42.0" width="18" height="3.4" rx="2" fill="#1A5C9E"/><rect x="188.2" y="42.0" width="18" height="11.8" rx="2" fill="#1A5C9E"/><rect x="215.1" y="42.0" width="18" height="13.5" rx="2" fill="#1A5C9E"/><rect x="242.0" y="42.0" width="18" height="2.5" rx="2" fill="#1A5C9E"/></svg>
+  <div class="cap">10거래일 추이</div>
+</div></div>
+</section>
+<section class="mkt">
+  <div class="mtitle">KOSDAQ</div>
+  <div class="summary">
+    <span class="up">지수 ▲0.54%</span><span class="dot">·</span>
+    <span class="bsum t-s">Breadth +40 강세 ▲</span>
+    
+  </div>
+  <div class="grid"><div class="cell g-vs">
+  <div class="cname">K100</div>
+  <div class="cidx"><span class="up">지수 ▲0.27%</span></div>
+  <div class="cgrade"><span class="gtxt">매우강세</span> <span class="garr">▲▲</span></div>
+  <div class="cbadge"></div>
+  <svg class="spark" viewBox="0 0 260 84" preserveAspectRatio="none"><line x1="0" y1="42.0" x2="260" y2="42.0" stroke="#1B2A4A" stroke-opacity=".35" stroke-width="1.5"/><rect x="0.0" y="37.8" width="18" height="4.2" rx="2" fill="#C8392B"/><rect x="26.9" y="42.0" width="18" height="4.2" rx="2" fill="#1A5C9E"/><rect x="53.8" y="16.7" width="18" height="25.3" rx="2" fill="#C8392B"/><rect x="80.7" y="42.0" width="18" height="12.7" rx="2" fill="#1A5C9E"/><rect x="107.6" y="41.2" width="18" height="1.5" rx="2" fill="#9CA3AF"/><rect x="134.4" y="41.2" width="18" height="1.5" rx="2" fill="#9CA3AF"/><rect x="161.3" y="29.3" width="18" height="12.7" rx="2" fill="#C8392B"/><rect x="188.2" y="42.0" width="18" height="21.1" rx="2" fill="#1A5C9E"/><rect x="215.1" y="33.6" width="18" height="8.4" rx="2" fill="#C8392B"/><rect x="242.0" y="29.3" width="18" height="12.7" rx="2" fill="#C8392B"/></svg>
+  <div class="cap">10거래일 추이</div>
+</div><div class="cell g-vs">
+  <div class="cname">MID</div>
+  <div class="cidx"><span class="up">지수 ▲0.88%</span></div>
+  <div class="cgrade"><span class="gtxt">매우강세</span> <span class="garr">▲▲</span></div>
+  <div class="cbadge"></div>
+  <svg class="spark" viewBox="0 0 260 84" preserveAspectRatio="none"><line x1="0" y1="42.0" x2="260" y2="42.0" stroke="#1B2A4A" stroke-opacity=".35" stroke-width="1.5"/><rect x="0.0" y="42.0" width="18" height="5.9" rx="2" fill="#1A5C9E"/><rect x="26.9" y="42.0" width="18" height="7.2" rx="2" fill="#1A5C9E"/><rect x="53.8" y="42.0" width="18" height="2.5" rx="2" fill="#1A5C9E"/><rect x="80.7" y="39.0" width="18" height="3.0" rx="2" fill="#C8392B"/><rect x="107.6" y="30.6" width="18" height="11.4" rx="2" fill="#C8392B"/><rect x="134.4" y="34.8" width="18" height="7.2" rx="2" fill="#C8392B"/><rect x="161.3" y="23.4" width="18" height="18.6" rx="2" fill="#C8392B"/><rect x="188.2" y="37.8" width="18" height="4.2" rx="2" fill="#C8392B"/><rect x="215.1" y="12.0" width="18" height="30.0" rx="2" fill="#C8392B"/><rect x="242.0" y="15.0" width="18" height="27.0" rx="2" fill="#C8392B"/></svg>
+  <div class="cap">10거래일 추이</div>
+</div><div class="cell g-s">
+  <div class="cname">SMALL</div>
+  <div class="cidx"><span class="up">지수 ▲0.96%</span></div>
+  <div class="cgrade"><span class="gtxt">강세</span> <span class="garr">▲</span></div>
+  <div class="cbadge"></div>
+  <svg class="spark" viewBox="0 0 260 84" preserveAspectRatio="none"><line x1="0" y1="42.0" x2="260" y2="42.0" stroke="#1B2A4A" stroke-opacity=".35" stroke-width="1.5"/><rect x="0.0" y="33.1" width="18" height="8.9" rx="2" fill="#C8392B"/><rect x="26.9" y="16.7" width="18" height="25.3" rx="2" fill="#C8392B"/><rect x="53.8" y="23.8" width="18" height="18.2" rx="2" fill="#C8392B"/><rect x="80.7" y="30.2" width="18" height="11.8" rx="2" fill="#C8392B"/><rect x="107.6" y="27.2" width="18" height="14.8" rx="2" fill="#C8392B"/><rect x="134.4" y="19.6" width="18" height="22.4" rx="2" fill="#C8392B"/><rect x="161.3" y="34.8" width="18" height="7.2" rx="2" fill="#C8392B"/><rect x="188.2" y="34.4" width="18" height="7.6" rx="2" fill="#C8392B"/><rect x="215.1" y="32.3" width="18" height="9.7" rx="2" fill="#C8392B"/><rect x="242.0" y="36.1" width="18" height="5.9" rx="2" fill="#C8392B"/></svg>
+  <div class="cap">10거래일 추이</div>
+</div></div>
+</section>
+<section class="note"><h3>DESK NOTE</h3><ul><li>코스피 지수 낙폭이 ▼2.38%로 오늘 들어 가장 커졌지만 종합 Breadth는 +1로 중립을 지켰다. 대형 지수가 ▼2.66%로 가장 크게 밀려 하락이 대형 구간에 몰린 흐름이 이어졌다.</li><li>코스피 중형은 강세를 유지했으나 10:12 고점 이후 두 시간 연속 비율이 낮아졌다. 대형·소형은 중립에 머물렀다.</li><li>코스닥 종합은 매우강세→강세로 한 단계 내려왔다. K100·MID는 매우강세, SMALL은 강세를 유지했다.</li><li>코스닥 종합과 SMALL은 10거래일 연속 플러스를 이어갔고, MID는 7거래일 연속 플러스다.</li></ul></section>
+<section class="legend">
+  <div class="sw">
+    <div style="background:#DCE6F3;color:#123A63">매우약세 ▼▼</div>
+    <div style="background:#EAF1F8;color:#1A5C9E">약세 ▼</div>
+    <div style="background:#F1F0EC;color:#6B7280">중립 →</div>
+    <div style="background:#FBEAE6;color:#C8392B">강세 ▲</div>
+    <div style="background:#F6DEDA;color:#8E2A1F">매우강세 ▲▲</div>
+  </div>
+  <p><span class="up">▲ 빨강 = 상승·강세</span> / <span class="dn">▼ 파랑 = 하락·약세</span> — 지수 등락률과 Breadth에 동일 적용. 스파크라인은 왼쪽→오른쪽 순 최근 10거래일.</p>
+  <p><span class="badge rally">⚠ 쏠림 랠리</span> 지수 ▲ + Breadth 약세 &nbsp; <span class="badge dip">저가매수 유입</span> 지수 ▼ + Breadth 강세 — 방향이 어긋날 때만 표시.</p>
+  <p>Breadth는 시장 종합 절대치만 표기하며, 구간별 원자료는 공개하지 않는다.</p>
+</section>
+<footer class="credit"><span class="b">TNBfolio Research · Breadth Desk</span><span>@TNBfolio</span></footer>
+</div></body></html>

@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KT Research Archive</title>
+<meta name="description" content="직접 작성한 기업·산업 리포트 아카이브">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+:root{
+  --bg:#F3F4F1; --panel:#FFFFFF; --panel-2:#F7F8F5; --line:#DDE1DA; --line-soft:#E9ECE6;
+  --ink:#161B18; --ink-2:#3C463F; --muted:#6B756E; --faint:#959E97;
+  --accent:#1F6F5C; --accent-soft:#E0EEE9; --hl:#FFE8A3;
+  --c-company:#1F6F5C; --c-industry:#8A5A12; --c-market:#4B57A6;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#111412; --panel:#181C19; --panel-2:#1E2320; --line:#2C332E; --line-soft:#242A26;
+    --ink:#E8ECE9; --ink-2:#C2CAC4; --muted:#8E9891; --faint:#69726B;
+    --accent:#5CC0A3; --accent-soft:#1D3530; --hl:#5A4A12;
+    --c-company:#5CC0A3; --c-industry:#E0A954; --c-market:#9BA6F0;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#111412; --panel:#181C19; --panel-2:#1E2320; --line:#2C332E; --line-soft:#242A26;
+  --ink:#E8ECE9; --ink-2:#C2CAC4; --muted:#8E9891; --faint:#69726B;
+  --accent:#5CC0A3; --accent-soft:#1D3530; --hl:#5A4A12;
+  --c-company:#5CC0A3; --c-industry:#E0A954; --c-market:#9BA6F0;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:"Pretendard Variable",Pretendard,-apple-system,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  font-size:14px;line-height:1.45;-webkit-font-smoothing:antialiased}
+button,input{font:inherit;color:inherit}
+.app{display:grid;grid-template-columns:380px 1fr;height:100vh}
+aside{background:var(--panel);border-right:1px solid var(--line);display:flex;flex-direction:column;min-height:0}
+.top{padding:20px 18px 12px;border-bottom:1px solid var(--line-soft)}
+.brand{display:flex;align-items:baseline;justify-content:space-between;gap:8px}
+h1{margin:0;font-size:19px;letter-spacing:-.02em;font-weight:750}
+.sub{color:var(--muted);font-size:12px;margin-top:2px}
+.count{font-size:12px;color:var(--muted);white-space:nowrap}
+.count b{color:var(--ink);font-size:15px}
+.search{margin-top:14px;position:relative}
+.search input{width:100%;padding:9px 12px 9px 34px;border:1px solid var(--line);border-radius:9px;background:var(--panel-2);outline:none}
+.search input:focus{border-color:var(--accent);background:var(--panel)}
+.search svg{position:absolute;left:11px;top:50%;transform:translateY(-50%);color:var(--faint)}
+.row{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap;align-items:center}
+.chip{border:1px solid var(--line);background:transparent;border-radius:999px;padding:4px 11px;font-size:12.5px;cursor:pointer;color:var(--ink-2)}
+.chip .n{color:var(--faint);margin-left:3px;font-variant-numeric:tabular-nums}
+.chip[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--panel)}
+.chip[aria-pressed="true"] .n{color:inherit;opacity:.7}
+.seg{margin-left:auto;display:flex;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.seg button{border:0;background:transparent;padding:3px 9px;font-size:12px;cursor:pointer;color:var(--muted)}
+.seg button[aria-pressed="true"]{background:var(--accent-soft);color:var(--accent);font-weight:600}
+.list{overflow:auto;flex:1;padding:6px 0 24px}
+.group{padding:14px 18px 4px;font-size:11.5px;font-weight:700;color:var(--muted);letter-spacing:.02em;display:flex;justify-content:space-between;position:sticky;top:0;background:var(--panel);z-index:1}
+.item{display:block;width:100%;text-align:left;border:0;background:transparent;padding:9px 18px 9px 15px;border-left:3px solid transparent;cursor:pointer;text-decoration:none;color:inherit}
+.item:hover{background:var(--panel-2)}
+.item[aria-current="true"]{background:var(--accent-soft);border-left-color:var(--accent)}
+.it-top{display:flex;align-items:center;gap:7px}
+.name{font-weight:650;font-size:14.5px;letter-spacing:-.01em}
+.code{color:var(--faint);font-size:12px;font-variant-numeric:tabular-nums}
+.date{margin-left:auto;color:var(--faint);font-size:12px;font-variant-numeric:tabular-nums;white-space:nowrap}
+.badge{font-size:10.5px;font-weight:700;padding:1px 6px;border-radius:4px;border:1px solid currentColor;line-height:1.4}
+.b-company{color:var(--c-company)} .b-industry{color:var(--c-industry)} .b-market{color:var(--c-market)}
+.desc{color:var(--muted);font-size:12.5px;margin-top:2px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.snip{color:var(--ink-2);font-size:12px;margin-top:4px;background:var(--panel-2);border-radius:6px;padding:4px 7px}
+mark{background:var(--hl);color:inherit;border-radius:2px;padding:0 1px}
+.empty{padding:40px 18px;text-align:center;color:var(--muted)}
+main{display:flex;flex-direction:column;min-width:0;min-height:0}
+.vbar{display:flex;align-items:center;gap:10px;padding:10px 18px;border-bottom:1px solid var(--line);background:var(--panel);min-height:52px}
+.vtitle{font-weight:650;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.vmeta{color:var(--muted);font-size:12.5px;white-space:nowrap}
+.vbar .sp{flex:1}
+.btn{border:1px solid var(--line);background:var(--panel);border-radius:8px;padding:5px 11px;font-size:12.5px;cursor:pointer;text-decoration:none;color:var(--ink-2);white-space:nowrap}
+.btn:hover{border-color:var(--accent);color:var(--accent)}
+iframe{flex:1;border:0;width:100%;background:#fff}
+.placeholder{flex:1;display:grid;place-items:center;color:var(--muted);text-align:center;padding:24px}
+.placeholder b{display:block;color:var(--ink);font-size:16px;margin-bottom:4px}
+.foot{padding:10px 18px;border-top:1px solid var(--line-soft);color:var(--faint);font-size:11.5px;display:flex;justify-content:space-between}
+.foot button{border:0;background:none;color:var(--faint);cursor:pointer;padding:0}
+@media (max-width:900px){
+  .app{grid-template-columns:1fr;height:auto}
+  aside{border-right:0;min-height:100vh}
+  main{display:none}
+  .top{padding:16px 16px 10px;position:sticky;top:0;background:var(--panel);z-index:2}
+  .group{padding:14px 16px 4px;top:var(--topH,0)}
+  .item{padding:10px 16px 10px 13px}
+  .list{overflow:visible}
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside>
+    <div class="top" id="top">
+      <div class="brand">
+        <div><h1>KT Research Archive</h1><div class="sub">기업 · 산업 · 시장 리포트</div></div>
+        <div class="count"><b id="total">0</b>건</div>
+      </div>
+      <div class="search">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <input id="q" type="search" placeholder="종목명·코드·섹터·본문 검색" autocomplete="off">
+      </div>
+      <div class="row" id="types"></div>
+      <div class="row">
+        <div class="seg" id="sort" style="margin-left:0">
+          <button data-v="sector" aria-pressed="true">섹터별</button>
+          <button data-v="date" aria-pressed="false">최신순</button>
+        </div>
+      </div>
+    </div>
+    <div class="list" id="list"></div>
+    <div class="foot"><span id="updated"></span><button id="theme" title="테마 전환">◐ 테마</button></div>
+  </aside>
+  <main>
+    <div class="vbar" id="vbar" hidden>
+      <span class="badge" id="vbadge"></span>
+      <span class="vtitle" id="vtitle"></span>
+      <span class="vmeta" id="vmeta"></span>
+      <span class="sp"></span>
+      <a class="btn" id="vopen" target="_blank" rel="noopener">새 탭에서 열기 ↗</a>
+    </div>
+    <div class="placeholder" id="ph"><div><b>왼쪽에서 리포트를 선택하세요</b>본문 검색은 두 글자 이상 입력하면 동작합니다</div></div>
+    <iframe id="frame" title="리포트 뷰어" hidden></iframe>
+  </main>
+</div>
+<script>
+const TYPES = {all:"전체", company:"기업", industry:"산업", market:"시장"};
+const ORDER = {industry:0, market:1, company:2};
+const st = {type:"all", sort:"sector", q:"", cur:null};
+let R = [], TEXT = null, textLoading = null;
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const mobile = () => matchMedia("(max-width:900px)").matches;
+
+function loadText(){
+  if (TEXT || textLoading) return textLoading;
+  textLoading = fetch("data/search.json").then(r => r.json()).then(j => { TEXT = j; render(); });
+  return textLoading;
+}
+function hl(s, q){
+  if (!q) return esc(s);
+  const i = s.toLowerCase().indexOf(q.toLowerCase());
+  if (i < 0) return esc(s);
+  return esc(s.slice(0,i)) + "<mark>" + esc(s.slice(i, i+q.length)) + "</mark>" + esc(s.slice(i+q.length));
+}
+function snippet(t, q){
+  const i = t.toLowerCase().indexOf(q.toLowerCase());
+  if (i < 0) return null;
+  const a = Math.max(0, i-40), b = Math.min(t.length, i+q.length+60);
+  return (a>0?"…":"") + t.slice(a,b) + (b<t.length?"…":"");
+}
+function matches(r){
+  if (st.type !== "all" && r.type !== st.type) return null;
+  const q = st.q.trim();
+  if (!q) return {r};
+  const meta = [r.name, r.code, r.title, r.desc, ...r.sector].join(" ").toLowerCase();
+  if (meta.includes(q.toLowerCase())) return {r};
+  if (q.length >= 2 && TEXT && TEXT[r.id]){
+    const s = snippet(TEXT[r.id], q);
+    if (s) return {r, snip:s};
+  }
+  return null;
+}
+function itemHTML(m){
+  const r = m.r, q = st.q.trim();
+  const tag = mobile() ? `a href="r/${r.id}.html"` : `button type="button"`;
+  const end = mobile() ? "a" : "button";
+  return `<${tag} class="item" data-id="${r.id}" aria-current="${st.cur===r.id}">
+    <div class="it-top"><span class="badge b-${r.type}">${TYPES[r.type]}</span>
+      <span class="name">${hl(r.name,q)}</span>${r.code?`<span class="code">${hl(r.code,q)}</span>`:""}
+      <span class="date">${r.date.slice(2).replace(/-/g,".")}</span></div>
+    ${r.desc||r.title?`<div class="desc">${hl(r.desc||r.title,q)}</div>`:""}
+    ${m.snip?`<div class="snip">${hl(m.snip,q)}</div>`:""}
+  </${end}>`;
+}
+function render(){
+  const hits = R.map(matches).filter(Boolean);
+  const cnt = {all:0, company:0, industry:0, market:0};
+  R.forEach(r => { cnt.all++; cnt[r.type]++; });
+  $("types").innerHTML = Object.keys(TYPES).filter(k => k==="all" || cnt[k]).map(k =>
+    `<button class="chip" data-t="${k}" aria-pressed="${st.type===k}">${TYPES[k]}<span class="n">${cnt[k]}</span></button>`).join("");
+  let html = "";
+  if (!hits.length){
+    html = `<div class="empty">${st.q && !TEXT && st.q.trim().length>=2 ? "본문 색인 불러오는 중…" : "검색 결과가 없습니다"}</div>`;
+  } else if (st.sort === "date"){
+    html = hits.map(itemHTML).join("");
+  } else {
+    const g = {};
+    hits.forEach(m => m.r.sector.forEach(s => (g[s] ||= []).push(m)));
+    const keys = Object.keys(g).sort((a,b) => (a==="미분류")-(b==="미분류") || g[b].length-g[a].length || a.localeCompare(b,"ko"));
+    html = keys.map(k => {
+      const arr = g[k].sort((a,b) => ORDER[a.r.type]-ORDER[b.r.type] || b.r.date.localeCompare(a.r.date));
+      return `<div class="group"><span>${esc(k)}</span><span>${arr.length}</span></div>` + arr.map(itemHTML).join("");
+    }).join("");
+  }
+  $("list").innerHTML = html;
+  $("total").textContent = R.length;
+}
+function show(id, push=true){
+  const r = R.find(x => x.id === id);
+  if (!r) return;
+  if (mobile()){ location.href = `r/${id}.html`; return; }
+  st.cur = id;
+  $("ph").hidden = true; $("frame").hidden = false; $("vbar").hidden = false;
+  $("frame").src = `r/${id}.html`;
+  $("vopen").href = `r/${id}.html`;
+  $("vbadge").className = `badge b-${r.type}`; $("vbadge").textContent = TYPES[r.type];
+  $("vtitle").textContent = r.title || r.name;
+  $("vmeta").textContent = [r.code, r.sector.join(", "), r.date].filter(Boolean).join(" · ");
+  document.title = `${r.name} — KT Research Archive`;
+  if (push) history.replaceState(null, "", "#" + id);
+  document.querySelectorAll(".item").forEach(e => e.setAttribute("aria-current", e.dataset.id === id));
+}
+$("list").addEventListener("click", e => {
+  const it = e.target.closest(".item");
+  if (!it || mobile()) return;
+  e.preventDefault(); show(it.dataset.id);
+});
+$("types").addEventListener("click", e => {
+  const b = e.target.closest(".chip"); if (!b) return;
+  st.type = b.dataset.t; render();
+});
+$("sort").addEventListener("click", e => {
+  const b = e.target.closest("button"); if (!b) return;
+  st.sort = b.dataset.v;
+  $("sort").querySelectorAll("button").forEach(x => x.setAttribute("aria-pressed", x === b));
+  try { localStorage.setItem("ra-sort", st.sort); } catch(_){}
+  render();
+});
+let t;
+$("q").addEventListener("input", e => {
+  st.q = e.target.value;
+  if (st.q.trim().length >= 2) loadText();
+  clearTimeout(t); t = setTimeout(render, 120);
+});
+$("theme").addEventListener("click", () => {
+  const dark = getComputedStyle(document.documentElement).getPropertyValue("--bg").trim() === "#111412";
+  document.documentElement.dataset.theme = dark ? "light" : "dark";
+  try { localStorage.setItem("ra-theme", document.documentElement.dataset.theme); } catch(_){}
+});
+try {
+  const th = localStorage.getItem("ra-theme"); if (th) document.documentElement.dataset.theme = th;
+  const so = localStorage.getItem("ra-sort");
+  if (so){ st.sort = so; $("sort").querySelectorAll("button").forEach(x => x.setAttribute("aria-pressed", x.dataset.v === so)); }
+} catch(_){}
+const setTopH = () => document.documentElement.style.setProperty("--topH", $("top").offsetHeight + "px");
+addEventListener("resize", () => { setTopH(); render(); });
+fetch("data/reports.json").then(r => r.json()).then(j => {
+  R = j.reports;
+  $("updated").textContent = "갱신 " + j.updated;
+  render(); setTopH();
+  const h = decodeURIComponent(location.hash.slice(1));
+  if (h && !mobile()) show(h, false);
+});
+</script>
+</body>
+</html>

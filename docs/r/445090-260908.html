@@ -1,0 +1,1241 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<title>에이직랜드 해부</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap">
+<style>
+:root{
+  --bg:#EEF1F4; --surface:#FFFFFF; --surface2:#F7F9FA; --surface3:#E7ECF1;
+  --ink:#101519; --ink2:#46525E; --muted:#6C7A87;
+  --line:#D6DEE5; --line2:#BFCBD5;
+  --accent:#8A5D12; --accent-mark:#B0761A;
+  --pos:#1B6E52; --neg:#A63A28;
+  --s1:#2E6FA3; --s2:#B0761A; --s3:#2AA694; --s4:#9A3F72;
+  --shadow:0 1px 2px rgba(16,30,45,.06), 0 8px 24px rgba(16,30,45,.05);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0D1216; --surface:#151B21; --surface2:#1B232A; --surface3:#212B33;
+    --ink:#E9EFF4; --ink2:#AAB7C2; --muted:#8797A3;
+    --line:#263039; --line2:#33404B;
+    --accent:#D8A63E; --accent-mark:#D8A63E;
+    --pos:#4FB58C; --neg:#E07A5F;
+    --s1:#4A8CC4; --s2:#BC8828; --s3:#28A892; --s4:#B14C82;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.28);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0D1216; --surface:#151B21; --surface2:#1B232A; --surface3:#212B33;
+  --ink:#E9EFF4; --ink2:#AAB7C2; --muted:#8797A3;
+  --line:#263039; --line2:#33404B;
+  --accent:#D8A63E; --accent-mark:#D8A63E;
+  --pos:#4FB58C; --neg:#E07A5F;
+  --s1:#4A8CC4; --s2:#BC8828; --s3:#28A892; --s4:#B14C82;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.28);
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family:"IBM Plex Sans KR","Malgun Gothic",system-ui,sans-serif;
+  font-size:15.5px; line-height:1.72; -webkit-text-size-adjust:100%;
+}
+.mono{font-family:"IBM Plex Mono","Consolas",ui-monospace,monospace; font-variant-numeric:tabular-nums}
+.wrap{max-width:940px; margin:0 auto; padding:0 22px 96px}
+
+.mast{border-bottom:1px solid var(--line); background:var(--surface); }
+.mast-in{max-width:940px; margin:0 auto; padding:30px 22px 24px}
+.eyebrow{font-family:"IBM Plex Mono",monospace; font-size:11.5px; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--muted)}
+h1{font-size:clamp(29px,6.4vw,44px); line-height:1.15; margin:.32em 0 .12em; font-weight:700;
+  letter-spacing:-.02em; text-wrap:balance}
+.sub{color:var(--ink2); font-size:15px; max-width:62ch; margin:.5em 0 0}
+.tickerline{display:flex; flex-wrap:wrap; gap:8px 14px; align-items:baseline; margin-top:14px;
+  font-family:"IBM Plex Mono",monospace; font-size:12.5px; color:var(--muted)}
+.tickerline b{color:var(--ink); font-weight:600}
+
+.stats{display:grid; grid-template-columns:repeat(auto-fit,minmax(126px,1fr)); gap:1px;
+  background:var(--line); border:1px solid var(--line); margin-top:26px}
+.stat{background:var(--surface); padding:13px 14px 15px}
+.stat .k{font-family:"IBM Plex Mono",monospace; font-size:10.5px; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--muted)}
+.stat .v{font-family:"IBM Plex Mono",monospace; font-weight:600;
+  font-size:clamp(19px,4.6vw,25px); line-height:1.25; margin-top:5px; overflow-wrap:anywhere}
+.stat .n{font-size:11.5px; color:var(--muted); margin-top:2px; line-height:1.4}
+.neg{color:var(--neg)} .pos{color:var(--pos)}
+
+section{margin-top:52px; scroll-margin-top:16px}
+.sec-h{display:flex; gap:14px; align-items:baseline; border-bottom:2px solid var(--ink);
+  padding-bottom:9px; margin-bottom:20px}
+.sec-n{font-family:"IBM Plex Mono",monospace; font-size:12px; font-weight:600; color:var(--accent);
+  letter-spacing:.06em; padding-top:4px}
+.sec-h h2{margin:0; font-size:clamp(19px,4vw,24px); font-weight:700; letter-spacing:-.015em;
+  text-wrap:balance; flex:1; min-width:0}
+h3{font-size:16.5px; font-weight:600; margin:32px 0 8px; letter-spacing:-.01em}
+h4{font-size:14.5px; font-weight:600; margin:20px 0 6px; color:var(--ink2)}
+p{margin:0 0 14px}
+.lede{font-size:16.5px; color:var(--ink2)}
+ul,ol{margin:0 0 14px; padding-left:20px}
+li{margin-bottom:7px}
+strong,b{font-weight:600}
+a{color:var(--accent)}
+.small{font-size:13px; color:var(--muted); line-height:1.6}
+
+.take{border-left:3px solid var(--accent-mark); background:var(--surface2);
+  padding:14px 16px; margin:18px 0; font-size:14.5px}
+.take .lbl{font-family:"IBM Plex Mono",monospace; font-size:10.5px; letter-spacing:.12em;
+  text-transform:uppercase; color:var(--accent); display:block; margin-bottom:5px}
+.take p:last-child{margin-bottom:0}
+
+.keypoints{display:grid; gap:1px; background:var(--line); border:1px solid var(--line); margin:22px 0}
+.kp{background:var(--surface); padding:15px 17px; display:grid; grid-template-columns:34px 1fr; gap:14px}
+.kp .num{font-family:"IBM Plex Mono",monospace; font-size:12px; color:var(--accent); font-weight:600;
+  padding-top:3px}
+.kp .txt{min-width:0}
+.kp .t{font-weight:600; margin-bottom:2px}
+.kp .d{font-size:14px; color:var(--ink2)}
+
+.tbl-scroll{overflow-x:auto; margin:18px -22px 20px; padding:0 22px;
+  -webkit-overflow-scrolling:touch}
+table{border-collapse:collapse; width:100%; min-width:520px; font-size:13.5px}
+caption{caption-side:top; text-align:left; font-family:"IBM Plex Mono",monospace; font-size:11px;
+  letter-spacing:.1em; text-transform:uppercase; color:var(--muted); padding-bottom:8px}
+th,td{padding:9px 11px; border-bottom:1px solid var(--line); text-align:left; vertical-align:top}
+th.num,td.num{text-align:right; white-space:nowrap}
+thead th{border-bottom:1.5px solid var(--line2); font-weight:600; color:var(--ink2); font-size:12.5px}
+tbody tr:hover{background:var(--surface2)}
+td.num,th.num{font-family:"IBM Plex Mono",monospace; font-variant-numeric:tabular-nums}
+tfoot td{border-top:1.5px solid var(--line2); border-bottom:none; font-weight:600}
+tr.hl td{background:var(--surface2); font-weight:600}
+.tbl-note{font-size:12px; color:var(--muted); margin:-8px 0 22px; line-height:1.55}
+
+figure{margin:22px 0 24px; background:var(--surface); border:1px solid var(--line); padding:16px 16px 12px}
+figure .cap{font-family:"IBM Plex Mono",monospace; font-size:11px; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--muted); margin-bottom:2px}
+figure .ttl{font-weight:600; font-size:15px; margin-bottom:12px; line-height:1.4}
+figcaption{font-size:12px; color:var(--muted); margin-top:8px; line-height:1.55}
+.chart{width:100%; position:relative; touch-action:pan-y}
+.chart svg{display:block; width:100%; height:auto}
+.legend{display:flex; flex-wrap:wrap; gap:8px 16px; margin-bottom:10px;
+  font-family:"IBM Plex Mono",monospace; font-size:11.5px; color:var(--ink2)}
+.legend span{display:inline-flex; align-items:center; gap:6px}
+.legend i{width:11px; height:11px; border-radius:2px; display:inline-block}
+.tip{position:fixed; z-index:50; pointer-events:none; background:var(--surface);
+  border:1px solid var(--line2); box-shadow:var(--shadow); padding:8px 10px; font-size:12.5px;
+  max-width:min(268px,calc(100vw - 20px)); line-height:1.5; display:none}
+.tip .th{font-family:"IBM Plex Mono",monospace; font-size:11px; color:var(--muted);
+  letter-spacing:.06em; margin-bottom:4px}
+.tip .tr{display:flex; justify-content:space-between; gap:14px}
+.tip .tr b{font-family:"IBM Plex Mono",monospace; font-weight:600}
+
+.duo{display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--line);
+  border:1px solid var(--line); margin:20px 0}
+.duo>div{background:var(--surface); padding:16px 17px}
+.duo h4{margin-top:0; font-family:"IBM Plex Mono",monospace; font-size:11px; letter-spacing:.11em;
+  text-transform:uppercase}
+.duo .for h4{color:var(--pos)} .duo .against h4{color:var(--neg)}
+.duo ul{padding-left:17px; margin-bottom:0} .duo li{font-size:13.8px; color:var(--ink2)}
+
+.risk{border:1px solid var(--line); background:var(--surface); padding:14px 16px; margin-bottom:1px}
+.risk-list{background:var(--line); border:1px solid var(--line); display:grid; gap:1px}
+.risk .rh{display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin-bottom:5px}
+.tag{font-family:"IBM Plex Mono",monospace; font-size:10px; letter-spacing:.1em; text-transform:uppercase;
+  padding:2px 7px; border:1px solid currentColor; font-weight:600}
+.tag.high{color:var(--neg)} .tag.mid{color:var(--accent)} .tag.low{color:var(--muted)}
+.risk .rt{font-weight:600; font-size:14.5px}
+.risk p{font-size:13.8px; color:var(--ink2); margin:0}
+
+.check{display:grid; gap:1px; background:var(--line); border:1px solid var(--line)}
+.check div{background:var(--surface); padding:12px 16px; display:grid; grid-template-columns:22px 1fr; gap:12px;
+  font-size:14px}
+.check .box{width:13px; height:13px; border:1.5px solid var(--line2); margin-top:5px}
+
+/* 질문 리스트 */
+.qgroup{margin:22px 0 6px}
+.qgroup h3{margin:26px 0 6px}
+.qgroup .why{font-size:13px; color:var(--muted); margin-bottom:10px}
+.qs{display:grid; gap:1px; background:var(--line); border:1px solid var(--line)}
+.q{background:var(--surface); padding:12px 15px; display:grid; grid-template-columns:38px 1fr; gap:12px}
+.q .qn{font-family:"IBM Plex Mono",monospace; font-size:11.5px; color:var(--accent); font-weight:600; padding-top:3px}
+.q .qt{font-size:14.5px; font-weight:600; line-height:1.55}
+.q .qw{font-size:13px; color:var(--ink2); margin-top:3px; line-height:1.55}
+.q .qw b{color:var(--ink)}
+
+.tl{border-left:2px solid var(--line2); margin:18px 0 22px; padding-left:0}
+.tl li{list-style:none; position:relative; padding:0 0 16px 20px; margin:0}
+.tl li::before{content:""; position:absolute; left:-5px; top:9px; width:8px; height:8px;
+  background:var(--accent-mark); border:2px solid var(--surface)}
+.tl .d{font-family:"IBM Plex Mono",monospace; font-size:11.5px; color:var(--muted); letter-spacing:.05em}
+.tl .b{font-size:14.2px}
+
+.srcgrid{display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:1px;
+  background:var(--line); border:1px solid var(--line)}
+.srcgrid div{background:var(--surface); padding:13px 15px}
+.srcgrid .n{font-family:"IBM Plex Mono",monospace; font-size:20px; font-weight:600; color:var(--accent)}
+.srcgrid .l{font-size:13px; color:var(--ink2); margin-top:2px}
+
+footer{margin-top:56px; border-top:1px solid var(--line); padding-top:18px; font-size:12.5px;
+  color:var(--muted); line-height:1.65}
+
+@media (max-width:720px){ .duo{grid-template-columns:1fr} }
+@media (max-width:620px){
+  body{font-size:15px}
+  .wrap{padding:0 14px 72px}
+  .mast-in{padding:24px 14px 20px}
+  .tbl-scroll{margin-left:-14px; margin-right:-14px; padding:0 14px}
+  table{font-size:12.5px; min-width:0}
+  th,td{padding:7px 8px}
+  figure{padding:13px 12px 10px}
+  .kp{grid-template-columns:28px 1fr; gap:10px; padding:13px 14px}
+  .q{grid-template-columns:30px 1fr; gap:9px; padding:11px 12px}
+}
+@media (max-width:400px){
+  .wrap{padding:0 11px 64px}
+  .mast-in{padding:20px 11px 18px}
+  .tbl-scroll{margin-left:-11px; margin-right:-11px; padding:0 11px}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important; transition:none!important}}
+:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
+</style>
+</head>
+<body>
+
+<div class="mast">
+  <div class="mast-in">
+    <div class="eyebrow">KOSDAQ 445090 · 시스템반도체 디자인하우스 · 2026.09.08 장중 기준</div>
+    <h1>에이직랜드 해부</h1>
+    <p class="sub">국내 유일의 TSMC VCA(Value Chain Alliance). 2년 연속 적자 끝에 2026년 상반기 매출이 작년 연간의 1.56배가 되며 흑자로 돌아섰는데,
+      주가는 그 사이 상장 후 최저가를 찍었다. 실적과 주가가 반대로 움직인 이유, 그리고 기업미팅에서 물어야 할 것들.</p>
+    <div class="tickerline">
+      <span>대표 <b>이종민</b> (23.56%)</span><span>본사 <b>수원 광교</b></span>
+      <span>설립 <b>2016.04</b></span><span>상장 <b>2023.11.13</b> 공모가 25,000원</span>
+      <span>발행주식 <b>10,925,658주</b></span><span>직원 <b>260명</b></span>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><div class="k">주가</div><div class="v">20,600</div><div class="n">원 · 09/08 09:25</div></div>
+      <div class="stat"><div class="k">시가총액</div><div class="v">2,251</div><div class="n">억원 · CB 전량전환 시 2,545억</div></div>
+      <div class="stat"><div class="k">PER (TTM)</div><div class="v neg">적자</div><div class="n">TTM 순손실 −68억 · 상반기×2 기준 17.7배</div></div>
+      <div class="stat"><div class="k">PBR</div><div class="v">2.64</div><div class="n">배 · BPS 7,807원 (26.6말)</div></div>
+      <div class="stat"><div class="k">PSR</div><div class="v">0.99</div><div class="n">배 · 상반기 매출×2 기준 (TTM 1.44)</div></div>
+      <div class="stat"><div class="k">고점 대비</div><div class="v neg">−73.0</div><div class="n">% · 24/02/26 76,200원 · 저점 26/07/30 14,720원</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+
+<!-- ===================== 01 ===================== -->
+<section id="s1">
+  <div class="sec-h"><div class="sec-n">01</div><h2>한 장 요약 — 무엇이 벌어졌나</h2></div>
+
+  <p class="lede">이 회사에 대한 판단은 세 개의 숫자 위에서 갈린다.
+    <b class="mono">상반기 매출 1,137억</b>,
+    <b class="mono">개발 프로젝트 잔액 776억</b>,
+    <b class="mono">매출총이익률 16.1%</b>.
+    첫 번째는 2025년 연간 매출(728억)을 반년 만에 넘어섰다는 뜻이고, 두 번째는 그 매출을 만든 잔액이
+    9개월 사이 절반 이하로 줄었다는 뜻이며, 세 번째는 매출이 3.7배가 돼도 남는 돈은 그 비율만큼 늘지 않는 사업 구조라는 뜻이다.</p>
+
+  <div class="keypoints">
+    <div class="kp"><div class="num">01</div><div class="txt">
+      <div class="t">2026년 상반기, 창사 이래 최대 매출과 2년 만의 흑자</div>
+      <div class="d">매출 1,137억(+273% YoY), 영업이익 50억, 순이익 63억. 2분기 단독으로는 매출 597억·영업이익 80억(OPM 13.4%)·순이익 90억으로
+        분기 기준 사상 최대. 2024년 −170억, 2025년 −276억이던 영업손실이 끝났다.
+        다만 순이익이 영업이익보다 큰 것은 <b>2분기 법인세수익 10.7억과 금융수익 14.9억</b>(외환차익 16.4억 포함) 덕이다.</div></div></div>
+    <div class="kp"><div class="num">02</div><div class="txt">
+      <div class="t">매출의 60%가 메모리 컨트롤러 — 3년 만에 세 번째 주력 교체</div>
+      <div class="d">응용시장 1위가 <b>IoT·5G(2021년 62%) → AI(2023년 48%) → 메모리(2026년 상반기 60%)</b>로 바뀌었다.
+        SK하이닉스 컨트롤러(CXL 197억 + eSSD 410억)와 파두 SSD 컨트롤러(300억)가 동인이며,
+        상반기 매출의 65%가 <b>10% 이상 고객 3곳</b>에서 나왔다. 공시된 계약 9건이 상반기 매출의 65%(743억)를 설명한다.</div></div></div>
+    <div class="kp"><div class="num">03</div><div class="txt">
+      <div class="t">진짜 경고등은 손익이 아니라 잔액이다</div>
+      <div class="d">진행 중인 개발 프로젝트 잔액은 <b class="mono">1,793억(25.9말) → 1,313억 → 1,030억 → 776억(26.6말)</b>.
+        상반기 신규 유입 555억 대비 수익인식 925억, 즉 <b>Book-to-Bill 0.60</b>이다.
+        계약부채(선수금)도 950억에서 359억으로 591억 소진됐다. 상반기 매출은 새 수주가 아니라 <b>2025년에 받아둔 선수금을 매출로 바꾼 것</b>이다.
+        여기에 <b>6월 26일 SK하이닉스 CXL 계약이 398억 → 197억으로 반토막</b>(조기 종료)난 것이 2분기 잔액 조정 −228억의 정체다.
+        다만 8월 19일에는 SK하이닉스 eSSD 계약이 319억 → 410억으로 <b>+91억 증액</b>됐다 — 3분기 잔액에 먼저 반영될 플러스다.</div></div></div>
+    <div class="kp"><div class="num">04</div><div class="txt">
+      <div class="t">그래서 흑자인데 현금은 빠져나갔다</div>
+      <div class="d">상반기 영업활동현금흐름 <b class="mono">−141억</b>. 순이익 63억에 계약부채 감소 591억이 얹혔다.
+        현금은 2025년 말 272억에서 6월 말 437억으로 늘었지만, 그 사이 들어온 돈은 <b>CB 450억과 장기차입</b>이다.
+        은행차입 465억 + CB 액면 450억 대비 현금성자산 560억 — 순차입 상태다.</div></div></div>
+    <div class="kp"><div class="num">05</div><div class="txt">
+      <div class="t">마진의 상한이 낮은 이유는 원가표에 있다</div>
+      <div class="d">상반기 비용 1,087억 중 <b>지급수수료(IP 라이선스) 378억, 외주가공비 356억, 원재료(TSMC 웨이퍼) 167억</b>이 901억.
+        인건비는 106억뿐이다. 매출의 대부분이 시놉시스·Arm·TSMC 대금의 통과(pass-through)이며,
+        이 구조에서 GPM은 GUC(대만 1위 VCA)조차 21~25%가 상한이다. 에이직랜드는 2분기 24.4%, 상반기 16.1%.</div></div></div>
+    <div class="kp"><div class="num">06</div><div class="txt">
+      <div class="t">2024~2025년 적자는 '투자'라기보다 '고정비 선행'이었다</div>
+      <div class="d">직원 125명(2023) → 264명(2025), 종업원급여 124억 → 204억(1.7배). 2024년 지급수수료 399억(전년 80억)은 선단공정 IP·EDA 선구매.
+        2025년에는 <b>공사손실충당부채 55억</b>(적자가 예상되는 계약)까지 쌓였고 6월 말에도 52억이 남아 있다.
+        매출은 2024년 941억에서 2025년 728억으로 줄었는데 비용은 그대로였다.</div></div></div>
+    <div class="kp"><div class="num">07</div><div class="txt">
+      <div class="t">내부자는 팔고, 최대주주는 담보대출 중이다</div>
+      <div class="d">개발총괄 장성식 부사장이 2025년 12월 10.7만주(29.6억) 매도 후 사임하며 특수관계에서 이탈(잔여 75.5만주·6.91%는 개인 보유),
+        CFO 이석주 부사장 2026년 1월 10.87만주(29.5억) 매도, 장창은 전무 4월 6만주 매도.
+        최대주주 이종민 대표(23.56%)는 2025년 6월부터 <b>주식담보대출을 연장 중</b>이다. 최대주주 측 합산 지분은 40.3%에서 28.0%로 줄었다.</div></div></div>
+    <div class="kp"><div class="num">08</div><div class="txt">
+      <div class="t">밸류에이션은 국내 디자인하우스 중 가장 싸다</div>
+      <div class="d">상반기 매출×2 기준 <b>PSR 0.99배</b>. 가온칩스 6.1배, 세미파이브 2.6배, 에이디테크놀로지 2.0배.
+        상반기 매출은 국내 최대이고 유일한 흑자인데 시총은 가온칩스의 44%다.
+        시장이 붙인 할인의 이름은 '잔액 절벽'과 'CB 450억 희석(최대 16.3%)'이다.</div></div></div>
+  </div>
+
+  <div class="take"><span class="lbl">한 줄 판단</span>
+    <p>"흑자 전환에 PSR 1배"라는 이유만으로 사는 종목이 아니라, <b>3분기 보고서에서 개발 프로젝트 잔액이 다시 늘어나는지</b>를
+    확인하고 사는 종목이다. 776억 잔액은 하반기 매출을 절반쯤만 채운다. 나머지는 254억 양산계약(A사, 12월까지)과
+    새 수주에서 와야 하며, 그 새 수주가 3분기에 얼마였는지는 11월 14일 공시에 적힌다.
+    기업미팅에서는 §13의 질문 24개 중 <b>Q1·Q2·Q7·Q12</b>가 먼저다.</p></div>
+</section>
+
+<!-- ===================== 02 ===================== -->
+<section id="s2">
+  <div class="sec-h"><div class="sec-n">02</div><h2>이 회사의 정체 — 국내에서 TSMC 웨이퍼를 발주할 수 있는 유일한 회사</h2></div>
+
+  <p>2016년 4월 설립. 대표 이종민은 하이닉스 ASIC 설계 출신으로 버추얼타임·휴먼칩스·다윈텍을 거쳤고,
+    다윈텍이 반도체 사업을 접을 때 인력 약 40명과 함께 창업했다. 2018년 Arm의 공식 디자인 파트너(AADP)가 됐고,
+    <b>2019년 TSMC VCA</b>에 선정됐다. 원래 국내 최초 VCA는 에이디테크놀로지였으나 2020년 삼성 DSP로 전향하면서
+    자리를 비웠고, TSMC가 새로 찾은 한국 파트너가 에이직랜드다. 회사는 반기보고서에 "DCA(하위 단계)를 거치지 않고 바로 VCA로 선정된 점이
+    설계 기술력의 증거"라고 적었다.</p>
+
+  <p>VCA는 단순한 인증이 아니다. <b>TSMC에 웨이퍼를 직접 발주할 수 있는 사업권</b>이고, 지역 기반으로 배정되기 때문에
+    한국에서 TSMC로 칩을 만들려는 팹리스는 사실상 이 회사를 거치거나 대만 GUC·Alchip으로 가야 한다.
+    TSMC 공식 페이지의 VCA는 현재 7곳(Alchip·ASICLAND·Avnet·China ICC·GUC·IMEC·Toppan)이다.</p>
+
+  <ul class="tl">
+    <li><div class="d">2016.04</div><div class="b">설립. 초기 매출은 대기업 파견 용역 위주</div></li>
+    <li><div class="d">2018 / 2019</div><div class="b">Arm AADP 선정 → <b>TSMC VCA 선정</b>. 웨이퍼 발주권 확보로 턴키(양산) 사업 개시</div></li>
+    <li><div class="d">2020~2021</div><div class="b">북미 5G 인프라 칩 양산 공급. 2021년 매출 452억 중 IoT·5G가 62%, 양산 비중 57%</div></li>
+    <li><div class="d">2022~2023</div><div class="b">SK그룹 사피온 X330(TSMC 7nm) 개발 참여. 2023년 AI 비중 48%. 2022년 영업이익률 16.4%로 정점</div></li>
+    <li><div class="d">2023.11.13</div><div class="b">코스닥 상장. 희망밴드 19,100~21,400원을 넘긴 <b>공모가 25,000원</b>, 공모 267.6만주(우리사주 4만주 포함) 669억. 첫날 종가 30,300원</div></li>
+    <li><div class="d">2024.02.26</div><div class="b">종가 <b>76,200원</b> 사상 최고(공모가 3.0배). 이후 30개월 하락</div></li>
+    <li><div class="d">2024.02~08</div><div class="b">자회사 탑에이직·위즈마인드(LG 계열 디자인하우스, 2018년 인수) 흡수합병. 8월 <b>대만 신주 법인</b> 설립(3nm·CoWoS 대응)</div></li>
+    <li><div class="d">2024.11</div><div class="b">SK하이닉스 CXL 컨트롤러 설계 311억 계약(2024.11.01). 2025.01 407억으로 증액 → 2026.06.26 <b>197억으로 반토막·조기 종료</b></div></li>
+    <li><div class="d">2024.12.27</div><div class="b">성남 금토동(판교) 사옥 부지 3,231㎡ <b>291억</b> 취득 계약(잔금 2025.12). 수원 광교 사옥(토지 172억·건물 178억)에 이은 두 번째 부동산</div></li>
+    <li><div class="d">2025</div><div class="b">매출 −22.6%, 영업손실 276억. 10월 TSMC 3nm·CoWoS PDK 확보. 12월 개발총괄 부사장 지분 매도·사임</div></li>
+    <li><div class="d">2026.01.08</div><div class="b">스토리지 컨트롤러 <b>양산 공급 254억</b>(US$17.6M, 12월까지 순차 공급) — 상장 후 최대 양산 계약</div></li>
+    <li><div class="d">2026.03.23</div><div class="b"><b>제2회차 CB 450억</b> 납입. 전환가 31,517원, 리픽싱 하한 25,214원, 운영자금 380억은 TSMC 선급·EDA/IP 선구매 용도</div></li>
+    <li><div class="d">2026.06.26~29</div><div class="b">SK하이닉스 CXL 계약 398억 → 197억 정정(6/26), 사흘 뒤 차세대 eSSD 컨트롤러 <b>319억</b> 계약 공시(6/29, 기간 2025.05~2027.12). 8/19 <b>410억으로 증액</b></div></li>
+    <li><div class="d">2026.07.30</div><div class="b">종가 14,720원, 상장 후 최저. 6월 말부터 5주간 −41%</div></li>
+    <li><div class="d">2026.08.14</div><div class="b">반기보고서: 상반기 매출 1,137억·영업이익 50억 흑자 전환</div></li>
+  </ul>
+
+  <h3>지배구조 — 창업 멤버가 빠져나간 뒤의 28%</h3>
+  <div class="tbl-scroll">
+  <table>
+    <caption>최대주주 및 특수관계인 (2026.06.30 기준, 보통주 10,925,658주)</caption>
+    <thead><tr><th>주주</th><th>관계</th><th class="num">기초(25.12)</th><th class="num">기말(26.06)</th><th>비고</th></tr></thead>
+    <tbody>
+      <tr><td>이종민</td><td>최대주주·대표이사</td><td class="num">23.67%</td><td class="num">23.56%</td><td>2025.06부터 주식담보대출 신규·연장 반복(최근 2026.08.25 연장)</td></tr>
+      <tr><td>장성식</td><td>등기이사(개발총괄 부사장)</td><td class="num">7.94%</td><td class="num">0.00%</td><td>2025.12.04 10.7만주(29.6억) 매도 후 사임 → 특수관계 이탈. 잔여 75.5만주는 2026.04 별도 5% 보고(6.91%)</td></tr>
+      <tr><td>이석주</td><td>등기이사(경영총괄 부사장)</td><td class="num">4.03%</td><td class="num">3.01%</td><td>2026.01.19 10.87만주(29.5억) 매도</td></tr>
+      <tr><td>장창은</td><td>미등기(SoC본부 전무)</td><td class="num">1.31%</td><td class="num">1.31%</td><td>2026.04.30 6만주 추가 매도(0.76%로)</td></tr>
+      <tr><td>이종권·이석용·김준호</td><td>특수관계인·미등기임원</td><td class="num">2.61%</td><td class="num">2.61%</td><td>—</td></tr>
+      <tr><td>최문영</td><td>미등기이사</td><td class="num">0.74%</td><td class="num">0.00%</td><td>직급변경으로 제외, 2025.11 8.1만주 매도</td></tr>
+    </tbody>
+    <tfoot><tr><td>합계</td><td></td><td class="num">40.32%</td><td class="num">30.49%</td><td>5% 보고 기준 이종민 외 28.02% (2026.04.09)</td></tr></tfoot>
+  </table>
+  </div>
+  <p class="tbl-note">한국투자-대신-더커런트 신기술사업투자조합 제1호가 CB 350억(전환 시 1,110,511주·9.23%)을 인수해 2026.04.03 5% 보고. 외국인 지분 0.81%.
+    이사회는 사내이사 2인(이종민·이석주) + 사외이사 1인(박권추, 전 금감원 전문심의위원)이고 감사는 상근.
+    장성식 부사장은 사임과 함께 <b>자회사 아트랩(반도체 불량분석, 완전자본잠식)을 2025.12.24 개인 명의로 양수</b>했다.</p>
+</section>
+
+<!-- ===================== 03 ===================== -->
+<section id="s3">
+  <div class="sec-h"><div class="sec-n">03</div><h2>비즈니스 모델 — 설계비를 받고, 웨이퍼를 사서 되판다</h2></div>
+
+  <p>밸류체인에서의 자리는 팹리스와 파운드리 사이다. 팹리스(고객)가 논리 설계(RTL)를 가져오면
+    에이직랜드가 TSMC 공정 규칙에 맞는 물리 설계(백엔드)·검증·테이프아웃을 수행하고, 그 대가로 <b>개발매출(NRE)</b>을 받는다.
+    칩이 완성되면 TSMC에 웨이퍼를 발주하고 OSAT에 패키징·테스트를 맡겨 완성품을 고객에게 공급하면서 <b>제품매출(양산)</b>이 생긴다.
+    Spec-in(사양 정의)부터 참여하는 종합 설계 서비스와 Arm IP 기반 플랫폼(AWorld Magic)이 회사가 내세우는 차별점이다.</p>
+
+  <h3>매출 두 갈래 — 개발이 81%, 양산이 19%</h3>
+  <div class="tbl-scroll">
+  <table>
+    <caption>매출 유형별 추이 (연결, 억원)</caption>
+    <thead><tr><th>구분</th><th class="num">2020</th><th class="num">2021</th><th class="num">2022</th><th class="num">2023</th><th class="num">2024</th><th class="num">2025</th><th class="num">1H26</th></tr></thead>
+    <tbody>
+      <tr><td>제품(양산 공급)</td><td class="num">75</td><td class="num">260</td><td class="num">307</td><td class="num">82</td><td class="num">55</td><td class="num">54</td><td class="num">212</td></tr>
+      <tr><td>개발(NRE·시제품)</td><td class="num">160</td><td class="num">194</td><td class="num">380</td><td class="num">655</td><td class="num">885</td><td class="num">671</td><td class="num">925</td></tr>
+      <tr><td>기타</td><td class="num">—</td><td class="num">—</td><td class="num">9</td><td class="num">5</td><td class="num">—</td><td class="num">4</td><td class="num">—</td></tr>
+      <tr class="hl"><td>합계</td><td class="num">236</td><td class="num">452</td><td class="num">696</td><td class="num">742</td><td class="num">941</td><td class="num">728</td><td class="num">1,137</td></tr>
+      <tr><td>양산 비중</td><td class="num">32%</td><td class="num">57%</td><td class="num">44%</td><td class="num">11%</td><td class="num">6%</td><td class="num">7%</td><td class="num">19%</td></tr>
+      <tr><td>수출 비중</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num">0%</td><td class="num">2%</td><td class="num">7%</td><td class="num">28%</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="tbl-note">2020~2021년은 감사보고서 별도 기준(제품/용역), 2022년 이후는 사업보고서 연결 기준. 상반기 수출 313억은 대만 법인 경유 가전 ASIC 101억과
+    개발 수출 203억(미국 프라임마스·BrainChip 등)이다.</p>
+
+  <p>2021년의 양산 57%는 북미 5G 칩 한 건이었고, 그 물량이 끝나자 양산 비중은 6%까지 내려갔다. 회사가 "개발 과제의 경기 민감성을
+    양산으로 상쇄한다"고 쓴 전략은 2026년에야 254억 양산계약으로 다시 작동하기 시작했다.</p>
+
+  <h3>원가표가 말해주는 것 — 이 회사는 무엇을 사서 파는가</h3>
+  <div class="tbl-scroll">
+  <table>
+    <caption>비용의 성격별 분류 (연결, 억원) — 매출원가+판관비 합계</caption>
+    <thead><tr><th>항목</th><th class="num">2022</th><th class="num">2023</th><th class="num">2024</th><th class="num">2025</th><th class="num">1H26</th><th>정체</th></tr></thead>
+    <tbody>
+      <tr><td>지급수수료</td><td class="num">18</td><td class="num">80</td><td class="num">399</td><td class="num">179</td><td class="num">378</td><td>시놉시스·Arm 등 IP 라이선스 (상반기 매입 339억)</td></tr>
+      <tr><td>외주가공비</td><td class="num">256</td><td class="num">371</td><td class="num">373</td><td class="num">390</td><td class="num">356</td><td>패키징·테스트·외부 설계인력, 개발용 웨이퍼</td></tr>
+      <tr><td>원재료 사용액</td><td class="num">149</td><td class="num">49</td><td class="num">34</td><td class="num">39</td><td class="num">167</td><td>TSMC 양산 웨이퍼 (상반기 FAB 매입 483억)</td></tr>
+      <tr><td>종업원급여+복리후생</td><td class="num">113</td><td class="num">147</td><td class="num">217</td><td class="num">237</td><td class="num">123</td><td>직원 125 → 237 → 264 → 260명</td></tr>
+      <tr><td>감가상각비</td><td class="num">14</td><td class="num">18</td><td class="num">23</td><td class="num">44</td><td class="num">25</td><td>사옥·비품·대만법인</td></tr>
+      <tr><td>기타</td><td class="num">31</td><td class="num">39</td><td class="num">48</td><td class="num">115</td><td class="num">38</td><td>2025년에 공사손실충당부채 55억 등 포함</td></tr>
+      <tr class="hl"><td>합계</td><td class="num">582</td><td class="num">703</td><td class="num">1,094</td><td class="num">1,004</td><td class="num">1,087</td><td></td></tr>
+      <tr><td>매출</td><td class="num">696</td><td class="num">742</td><td class="num">941</td><td class="num">728</td><td class="num">1,137</td><td></td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="tbl-note">2025년 기타 115억에는 유형자산폐기손실 11억, 재고평가손실 등이 섞여 있다. 2026년 상반기 매입 831억의 구성은 FAB(TSMC) 483억 58%,
+    IP 339억 41%, 패키징·테스트·외부인력 9억 1%다.</p>
+
+  <div class="take"><span class="lbl">여기서 나오는 투자 논리</span>
+    <p>상반기 비용 1,087억 중 <b>인건비는 11%</b>이고 나머지는 외부에서 사온 것이다. 즉 이 회사의 매출은 "설계 인력 × 단가"가 아니라
+    "고객 프로젝트가 소비하는 IP·웨이퍼·후공정 대금 + 마진"이다. 그래서 매출은 대형 프로젝트 하나에 3배가 되기도 하고(2026년),
+    프로젝트 일정이 밀리면 비용만 남는다(2025년). GPM의 상한은 통과 원가의 비중이 정한다 — 대만 1위 VCA인 GUC가 턴키 비중 82%에서
+    GPM 24.8%(2025)·21.5%(2Q26)에 머무는 것이 이 사업의 천장이다.</p></div>
+
+  <h3>같은 업의 마진 사다리</h3>
+  <figure>
+    <div class="cap">Gross margin ladder</div>
+    <div class="ttl">디자인서비스 회사들의 매출총이익률 — 매출에서 NRE(설계비) 비중이 높을수록 위, 턴키(웨이퍼 되팔기) 비중이 높을수록 아래</div>
+    <div class="chart" id="c6"></div>
+    <figcaption>Alchip 1Q26은 양산 공백기(NRE 위주)라 50%, 2Q26 Trainium3 양산 램프로 34.8%. GUC는 턴키 82%. 세미파이브는 삼성 DSP.
+      에이직랜드 2분기 24.4%는 양산 매출 166억(분기 매출의 28%)이 섞인 수치다. 출처: 각사 공시·실적발표(2026.07~08).</figcaption>
+  </figure>
+</section>
+
+<!-- ===================== 04 ===================== -->
+<section id="s4">
+  <div class="sec-h"><div class="sec-n">04</div><h2>실적 — 2년의 적자와 반년의 반전</h2></div>
+
+  <figure>
+    <div class="cap">Annual P&amp;L</div>
+    <div class="ttl">연간 매출(억원)과 영업이익률 — 개발/양산 구분</div>
+    <div class="legend" id="lg1"></div>
+    <div class="chart" id="c1"></div>
+    <figcaption>2020~2021년은 별도 감사보고서(제품/용역), 2022년 이후 연결. 1H26은 6개월 실적. 막대 위 숫자는 매출, 아래 %는 영업이익률.</figcaption>
+  </figure>
+
+  <div class="tbl-scroll">
+  <table>
+    <caption>연간 손익 (연결, 억원)</caption>
+    <thead><tr><th>연도</th><th class="num">매출</th><th class="num">YoY</th><th class="num">매출총이익</th><th class="num">GPM</th><th class="num">판관비</th><th class="num">영업이익</th><th class="num">OPM</th><th class="num">순이익</th><th class="num">직원</th></tr></thead>
+    <tbody>
+      <tr><td>2020</td><td class="num">236</td><td class="num">—</td><td class="num">55</td><td class="num">23.5%</td><td class="num">44</td><td class="num">11</td><td class="num">4.8%</td><td class="num">6</td><td class="num">—</td></tr>
+      <tr><td>2021</td><td class="num">452</td><td class="num">+91.6%</td><td class="num">80</td><td class="num">17.7%</td><td class="num">53</td><td class="num">28</td><td class="num">6.1%</td><td class="num">21</td><td class="num">—</td></tr>
+      <tr><td>2022</td><td class="num">696</td><td class="num">+54.1%</td><td class="num">186</td><td class="num">26.8%</td><td class="num">72</td><td class="num">115</td><td class="num">16.4%</td><td class="num">52</td><td class="num">—</td></tr>
+      <tr><td>2023</td><td class="num">742</td><td class="num">+6.5%</td><td class="num">145</td><td class="num">19.5%</td><td class="num">106</td><td class="num">39</td><td class="num">5.2%</td><td class="num">36</td><td class="num">125</td></tr>
+      <tr><td>2024</td><td class="num">941</td><td class="num">+26.8%</td><td class="num">11</td><td class="num">1.1%</td><td class="num">180</td><td class="num neg">−170</td><td class="num neg">−18.0%</td><td class="num neg">−140</td><td class="num">237</td></tr>
+      <tr><td>2025</td><td class="num">728</td><td class="num neg">−22.6%</td><td class="num neg">−4</td><td class="num neg">−0.6%</td><td class="num">272</td><td class="num neg">−276</td><td class="num neg">−37.9%</td><td class="num neg">−266</td><td class="num">264</td></tr>
+      <tr class="hl"><td>1H26</td><td class="num">1,137</td><td class="num pos">+273%</td><td class="num">183</td><td class="num">16.1%</td><td class="num">133</td><td class="num pos">50</td><td class="num pos">4.4%</td><td class="num pos">63</td><td class="num">260</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="tbl-note">2024년은 매출이 27% 늘었는데 매출총이익이 145억에서 11억으로 사라진 해다. 지급수수료 399억(IP 선구매)이 원가에 들어갔다.
+    2025년 판관비 272억 중 경상연구개발비 63억(정부보조금 54억 차감 전 117억), 급여 94억.</p>
+
+  <figure>
+    <div class="cap">Quarterly</div>
+    <div class="ttl">분기 매출(억원)과 매출총이익률·영업이익률</div>
+    <div class="legend" id="lg2"></div>
+    <div class="chart" id="c2"></div>
+    <figcaption>1Q26 GPM 6.8%는 IP 라이선스 매입 152억이 한 분기에 몰린 결과. 2Q26 GPM 24.4%는 양산 166억이 섞였다. 회사가 "고객사 개발 일정 조정으로 매출 이월"이라고 설명한 4Q25 매출 262억은 당시 컨센서스 506억의 절반이었다.</figcaption>
+  </figure>
+
+  <h3>2분기 순이익 90억의 구성</h3>
+  <p>영업이익 80억에 금융수익 14.9억(외환차익 16.4억, 외화환산손실 −4.8억), 금융원가 −14.8억(CB 이자비용 포함), 지분법이익 0.7억,
+    기타손실 −1.0억을 더한 세전이익이 79.6억이고, 여기에 <b>법인세수익 +10.7억</b>(이연법인세자산 인식)이 붙어 90.3억이 됐다.
+    영업 밖에서 더해진 10억은 반복되지 않는다. 분기 순이익을 4배 해 PER 6.2배라고 읽으면 안 되는 이유다.</p>
+</section>
+
+<!-- ===================== 05 ===================== -->
+<section id="s5">
+  <div class="sec-h"><div class="sec-n">05</div><h2>고객과 응용시장 — 3년마다 주력이 바뀌는 회사</h2></div>
+
+  <figure>
+    <div class="cap">Application mix</div>
+    <div class="ttl">응용시장별 매출(억원) — 5G에서 AI로, AI에서 메모리로</div>
+    <div class="legend" id="lg3"></div>
+    <div class="chart" id="c3"></div>
+    <figcaption>'가전·디스플레이'는 Consumer Electronics(2026년 신설, 상반기 232억)+Display. '기타'는 Automotive·Industrial·Others. 출처: 각 연도 사업보고서·2026 반기보고서 "주요 제품 등의 매출현황".</figcaption>
+  </figure>
+
+  <div class="tbl-scroll">
+  <table>
+    <caption>응용시장별 매출 (억원, 비중)</caption>
+    <thead><tr><th>응용시장</th><th class="num">2021</th><th class="num">2022</th><th class="num">2023</th><th class="num">2024</th><th class="num">2025</th><th class="num">1Q26</th><th class="num">2Q26</th><th class="num">1H26 비중</th></tr></thead>
+    <tbody>
+      <tr><td>Memory (SSD·CXL 컨트롤러)</td><td class="num">32</td><td class="num">89</td><td class="num">108</td><td class="num">129</td><td class="num">234</td><td class="num">312</td><td class="num">371</td><td class="num">60.0%</td></tr>
+      <tr><td>Consumer Electronics</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num">103</td><td class="num">129</td><td class="num">20.4%</td></tr>
+      <tr><td>AI</td><td class="num">51</td><td class="num">106</td><td class="num">353</td><td class="num">331</td><td class="num">194</td><td class="num">78</td><td class="num">52</td><td class="num">11.5%</td></tr>
+      <tr><td>Display</td><td class="num">19</td><td class="num">22</td><td class="num">27</td><td class="num">28</td><td class="num">75</td><td class="num">18</td><td class="num">6</td><td class="num">2.1%</td></tr>
+      <tr><td>IoT &amp; 5G</td><td class="num">279</td><td class="num">369</td><td class="num">124</td><td class="num">73</td><td class="num">68</td><td class="num">8</td><td class="num">8</td><td class="num">1.4%</td></tr>
+      <tr><td>Automotive</td><td class="num">2</td><td class="num">15</td><td class="num">14</td><td class="num">171</td><td class="num">82</td><td class="num">5</td><td class="num">6</td><td class="num">1.0%</td></tr>
+      <tr><td>Industrial · Others</td><td class="num">69</td><td class="num">96</td><td class="num">115</td><td class="num">209</td><td class="num">75</td><td class="num">17</td><td class="num">25</td><td class="num">3.6%</td></tr>
+      <tr class="hl"><td>합계</td><td class="num">452</td><td class="num">696</td><td class="num">742</td><td class="num">941</td><td class="num">728</td><td class="num">540</td><td class="num">597</td><td class="num">100%</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="tbl-note">2Q26 = 상반기 − 1분기. AI 매출은 2023년 353억(사피온 X330 등)에서 2026년 상반기 130억으로 줄고 있다. 회사가 IR에서 강조하는 "AI"와 실제 매출표의 무게중심이 다르다.</p>
+
+  <h3>공시된 계약 10건 — 상반기 매출의 65%를 설명한다</h3>
+  <div class="tbl-scroll">
+  <table>
+    <caption>단일판매·공급계약 공시 현황 (2026.06.30 기준, 억원)</caption>
+    <thead><tr><th>거래처</th><th>품목</th><th>계약일</th><th>종료일</th><th class="num">계약금액</th><th class="num">1H26 인식</th><th class="num">누적 인식</th><th class="num">잔여</th></tr></thead>
+    <tbody>
+      <tr><td>SK하이닉스 ①</td><td>CXL 컨트롤러 설계 (원계약 311 → 407 → 398억)</td><td>24.11.01</td><td>26.06.26</td><td class="num">197.4</td><td class="num">193.5</td><td class="num">197.4</td><td class="num">종료</td></tr>
+      <tr><td>SK하이닉스 ②</td><td>차세대 eSSD 컨트롤러 설계 (8/19 409.6억으로 증액)</td><td>25.05.27</td><td>27.12.31</td><td class="num">318.5</td><td class="num">13.8</td><td class="num">25.5</td><td class="num">293.0</td></tr>
+      <tr><td>㈜파두</td><td>SSD 컨트롤러 설계 (US$21M, 8/20 조기 종료)</td><td>24.07.30</td><td>27.07.11</td><td class="num">299.8</td><td class="num">235.7</td><td class="num">281.6</td><td class="num">23.3</td></tr>
+      <tr><td>A사 (비공개)</td><td><b>양산 공급</b> (US$17.6M)</td><td>26.01.08</td><td>26.12.31</td><td class="num">254.3</td><td class="num">63.8</td><td class="num">63.8</td><td class="num">190.5</td></tr>
+      <tr><td>대만 고객 (자회사 경유)</td><td><b>양산 공급</b> 가전·IoT</td><td>25.12.05</td><td>26.07.10</td><td class="num">101.3</td><td class="num">101.3</td><td class="num">101.3</td><td class="num">종료</td></tr>
+      <tr><td>F사 (국내 AI반도체 기업)</td><td>주문형 반도체 설계 (원계약 97 → 142억)</td><td>24.05.13</td><td>26.07.31</td><td class="num">141.7</td><td class="num">69.7</td><td class="num">141.7</td><td class="num">종료</td></tr>
+      <tr><td>모빌린트</td><td>REGULUS NPU (TSMC 12nm, 7/30 165억·2027.12로 연장)</td><td>22.10.20</td><td>26.12.31</td><td class="num">154.3</td><td class="num">4.6</td><td class="num">154.3</td><td class="num">0</td></tr>
+      <tr><td>수퍼게이트</td><td>AI VPU 턴키 (ETRI 슈퍼컴 가속기)</td><td>25.04.29</td><td>26.12.31</td><td class="num">132.4</td><td class="num">9.6</td><td class="num">30.3</td><td class="num">102.1</td></tr>
+      <tr><td>프라임마스 (미국)</td><td>CXL 컨트롤러·칩렛 SoC</td><td>25.04.15</td><td>27.06.30</td><td class="num">94.7</td><td class="num">51.0</td><td class="num">80.3</td><td class="num">14.4</td></tr>
+      <tr><td>㈜딥엑스</td><td>주문형 반도체 설계</td><td>24.11.15</td><td>25.04.30</td><td class="num">96.5</td><td class="num">—</td><td class="num">96.5</td><td class="num">종료</td></tr>
+    </tbody>
+    <tfoot><tr><td colspan="4">합계 (1H26 인식 / 잔여)</td><td class="num">1,790.8</td><td class="num">743.0</td><td class="num"></td><td class="num">623.3</td></tr></tfoot>
+  </table>
+  </div>
+  <p class="tbl-note">계약금액은 공시 기준(달러 계약은 공시 시점 환율), 인식액은 반기보고서 "판매·공급금액". 회사가 사업보고서에 적은 수주잔고(618억)는 이 표의 잔여분이며, 진행 중인 전체 개발 프로젝트 잔액(776억)보다 작다.
+    잔여 623억 중 <b>SK하이닉스 ② 293억과 A사 양산 191억이 78%</b>다.</p>
+
+  <div class="tbl-scroll">
+  <table>
+    <caption>6월 말 이후 계약 변동 — 반기보고서에 없는 것 (억원)</caption>
+    <thead><tr><th>공시일</th><th>거래처</th><th>내용</th><th class="num">변동</th><th>의미</th></tr></thead>
+    <tbody>
+      <tr><td>2026.06.26</td><td>SK하이닉스 ① CXL</td><td>계약금액 398.4 → 197.4억, 종료일 8/14 → 6/26</td><td class="num neg">−201.0</td><td>2분기 잔액 조정 −228억의 정체. 반기 매출에는 이미 반영</td></tr>
+      <tr><td>2026.07.30</td><td>모빌린트</td><td>154.3 → 165.4억, 종료 2026.12 → 2027.12</td><td class="num pos">+11.1</td><td>3분기 잔액 +</td></tr>
+      <tr><td>2026.07.31</td><td>F사</td><td>거래상대방을 "국내 AI반도체 기업"으로 공개, 7/31 종료</td><td class="num">—</td><td>퓨리오사·리벨리온·딥엑스 중 하나로 추정, 미확인</td></tr>
+      <tr><td>2026.08.18</td><td>A사 양산</td><td>254.3 → 257.1억 (환율)</td><td class="num pos">+2.8</td><td>—</td></tr>
+      <tr><td>2026.08.19</td><td>SK하이닉스 ② eSSD</td><td>318.5 → <b>409.6억</b></td><td class="num pos">+91.1</td><td>3분기 잔액 +. 잔여 384억으로 단일 최대 프로젝트</td></tr>
+      <tr><td>2026.08.20</td><td>㈜파두</td><td>종료일 2027.07.11 → 2026.08.20</td><td class="num">—</td><td>잔여 23억 조기 종료. 후속 계약 여부가 관건</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="tbl-note">SK하이닉스 CXL 계약은 2024.11 311억 → 2025.01 407억 → 2025.05 398억(기간 연장) → 2026.06 197억으로 끝났다. 회사가 2025년 IR에서 "SK하이닉스 CXL 400억"으로 알렸던 프로젝트가 절반만 인식되고 종료된 것이다. 이 정정공시가 나온 6월 26일은 주가가 5주간 −51% 하락하는 구간의 한복판이었다.</p>
+
+  <div class="take"><span class="lbl">읽는 법</span>
+    <p>상반기 1,137억 중 SK하이닉스 ①(193억)과 파두(236억)가 429억, 여기에 A사 양산·대만 양산·F사·프라임마스를 더하면 743억이 공시 계약에서 왔다.
+    10% 이상 고객 3곳의 매출이 260억·264억·215억으로 합계 740억(65.0%)인 것과 맞아떨어진다.
+    문제는 <b>이 중 4건(SK하이닉스 ①·대만·F사·파두, 합계 740억)이 6~8월에 끝났다</b>는 점이다. 하반기에 이 자리를 채우는 건 SK하이닉스 ②(8월 증액 후 잔여 384억, 2027년 말까지)와 A사 양산 193억, 수퍼게이트 102억이다.</p></div>
+</section>
+
+<!-- ===================== 06 ===================== -->
+<section id="s6">
+  <div class="sec-h"><div class="sec-n">06</div><h2>수주 — 이 회사에서 가장 먼저 봐야 할 숫자</h2></div>
+
+  <p>회사는 수주잔고를 "영업 기밀"이라며 공시 계약분만 적지만, 재무제표 주석 27에는 <b>진행 중인 개발 프로젝트의 계약 잔액</b>이
+    기초·증감·수익인식·기말로 매 분기 나온다. 이것이 사실상의 수주잔고이며, 이 숫자가 지금 이 회사의 전부다.</p>
+
+  <figure>
+    <div class="cap">Development project balance</div>
+    <div class="ttl">개발 프로젝트 잔액(억원)과 신규 프로젝트 유입 — 수익인식 속도가 유입을 앞질렀다</div>
+    <div class="legend" id="lg4"></div>
+    <div class="chart" id="c4"></div>
+    <figcaption>잔액 = 기초 + 증감(신규·변경) − 수익인식. 신규 유입은 주석에 별도 기재된 "신규 프로젝트로 인한 증가 금액"(누적 기준을 기간별로 분해). B/B = 신규 유입 ÷ 수익인식. 출처: 각 분기보고서 주석 27.</figcaption>
+  </figure>
+
+  <div class="tbl-scroll">
+  <table>
+    <caption>개발 프로젝트 잔액 변동 (연결, 억원)</caption>
+    <thead><tr><th>기간</th><th class="num">기초</th><th class="num">증감(신규+변경)</th><th class="num">그중 신규</th><th class="num">수익인식</th><th class="num">기말</th><th class="num">B/B</th><th class="num">계약부채</th></tr></thead>
+    <tbody>
+      <tr><td>2024년</td><td class="num">1,049</td><td class="num">1,247</td><td class="num">1,136</td><td class="num">879</td><td class="num">1,417</td><td class="num">1.29</td><td class="num">336</td></tr>
+      <tr><td>2025 1H</td><td class="num">1,417</td><td class="num">494</td><td class="num">382</td><td class="num">297</td><td class="num">1,614</td><td class="num">1.29</td><td class="num">491</td></tr>
+      <tr><td>2025 3Q</td><td class="num">1,614</td><td class="num">336</td><td class="num">142</td><td class="num">158</td><td class="num">1,792</td><td class="num">0.90</td><td class="num">590</td></tr>
+      <tr><td>2025 4Q</td><td class="num">1,792</td><td class="num neg">−260</td><td class="num">188</td><td class="num">220</td><td class="num">1,313</td><td class="num">0.85</td><td class="num">950</td></tr>
+      <tr><td>2026 1Q</td><td class="num">1,313</td><td class="num">211</td><td class="num">149</td><td class="num">494</td><td class="num">1,030</td><td class="num">0.30</td><td class="num">652</td></tr>
+      <tr><td>2026 2Q</td><td class="num">1,030</td><td class="num">178</td><td class="num">406</td><td class="num">432</td><td class="num">776</td><td class="num">0.94</td><td class="num">359</td></tr>
+      <tr class="hl"><td>2026 1H</td><td class="num">1,313</td><td class="num">389</td><td class="num">555</td><td class="num">925</td><td class="num">776</td><td class="num">0.60</td><td class="num">359</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="tbl-note">분기 수치는 누적 공시를 차감해 계산. 2025년 4분기 증감 −260억은 신규 188억이 들어왔는데도 잔액이 순감소했다는 뜻 — <b>약 450억 규모의 기존 계약이 축소·취소·조정된 것</b>인데, 이 기간 공시된 계약 변동은 없다(F사·수퍼게이트는 오히려 증액). 2026년 2분기의 −228억은 <b>6/26 SK하이닉스 CXL 계약 −201억 정정</b>으로 대부분 설명된다. 4분기 −450억의 정체는 공시에 없다.</p>
+
+  <div class="take"><span class="lbl">이 표가 결론을 좌우한다</span>
+    <p>2025년 하반기 잔액 1,792억은 이 회사가 "2026년 매출 2,000억"을 말할 수 있었던 근거였다. 그 잔액이 9개월 만에 776억이 됐다.
+    상반기 개발매출 925억은 <b>잔액을 태워 만든 매출</b>이고, 같은 기간 새로 들어온 프로젝트는 555억이다.
+    하반기에 상반기만큼(925억) 개발매출을 내려면 776억 잔액을 거의 다 소진해야 하고, 그러면 2027년 초에 잔액이 바닥난다.
+    반대로 2분기 신규 406억(B/B 0.94)이 3분기에도 이어지면 그림이 달라진다. <b>11월 14일 3분기 보고서의 주석 27 한 줄</b>이 이 종목의 방향을 정한다.</p></div>
+
+  <h3>계약부채 — 2025년에 받아둔 선수금이 2026년 매출이 됐다</h3>
+  <p>계약부채(선수금)는 2025년 6월 491억 → 12월 <b>950억</b>으로 급증했다가 2026년 6월 359억으로 내려왔다.
+    2025년 하반기에 고객이 낸 선금 약 460억이 2026년 상반기 매출의 절반을 채웠다는 뜻이다. 이것이 "흑자인데 영업현금흐름 −141억"의 정체다.
+    2025년 연간으로 보면 계약부채가 614억 늘었는데도 영업현금흐름은 −63억이었다. 선수금이 없었다면 −680억이다.</p>
+</section>
+
+<!-- ===================== 07 ===================== -->
+<section id="s7">
+  <div class="sec-h"><div class="sec-n">07</div><h2>비교 — 국내에서 가장 싸고, 대만보다 20배 싸다</h2></div>
+
+  <p>직접 경쟁자는 대만의 TSMC VCA인 GUC·Alchip이고, 국내에서는 삼성 파운드리 DSP(가온칩스·세미파이브·에이디테크놀로지·코아시아세미)가
+    "같은 팹리스 고객을 두고 파운드리 선택 단계에서 경쟁"하는 관계다. 회사도 반기보고서에 그렇게 썼다.</p>
+
+  <div class="tbl-scroll">
+  <table>
+    <caption>피어 비교 — 국내 디자인하우스 (억원, 시총은 2026.09.08 기준)</caption>
+    <thead><tr><th>회사</th><th>파운드리</th><th class="num">시총</th><th class="num">2025 매출</th><th class="num">2025 영업이익</th><th class="num">1H26 매출</th><th class="num">1H26 영업이익</th><th class="num">1H26 GPM</th><th class="num">PSR (1H×2)</th><th class="num">PBR</th></tr></thead>
+    <tbody>
+      <tr class="hl"><td>에이직랜드</td><td>TSMC VCA</td><td class="num">2,251</td><td class="num">728</td><td class="num neg">−276</td><td class="num">1,137</td><td class="num pos">+50</td><td class="num">16.1%</td><td class="num">0.99</td><td class="num">2.6</td></tr>
+      <tr><td>가온칩스</td><td>삼성 DSP</td><td class="num">5,105</td><td class="num">685</td><td class="num neg">−167</td><td class="num">419</td><td class="num neg">−36</td><td class="num">—</td><td class="num">6.1</td><td class="num">11.0</td></tr>
+      <tr><td>세미파이브</td><td>삼성 DSP</td><td class="num">4,950</td><td class="num">1,209</td><td class="num neg">−534</td><td class="num">947</td><td class="num neg">−109</td><td class="num">30.6%</td><td class="num">2.6</td><td class="num">4.1</td></tr>
+      <tr><td>에이디테크놀로지</td><td>삼성 DSP (구 TSMC VCA)</td><td class="num">3,298</td><td class="num">1,645</td><td class="num pos">+29</td><td class="num">820</td><td class="num neg">−15</td><td class="num">—</td><td class="num">2.0</td><td class="num">3.2</td></tr>
+      <tr><td>코아시아 (그룹)</td><td>삼성 DSP</td><td class="num">826</td><td class="num">3,751</td><td class="num neg">−22</td><td class="num">2,539</td><td class="num neg">−50</td><td class="num">—</td><td class="num">0.16</td><td class="num">1.9</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="tbl-note">코아시아는 카메라모듈 등 비반도체 매출이 섞인 그룹 연결(자회사 코아시아세미 단독 1H26 매출 902억). 국내 DSP 5사 상반기 합산 매출 3,494억 중 에이직랜드 1,137억이 단일 회사로 최대이며 유일한 영업흑자. 출처: 각사 반기보고서, ZDNet 2026.08.24.</p>
+
+  <div class="tbl-scroll">
+  <table>
+    <caption>피어 비교 — 해외 디자인서비스 (현지통화, 원화 환산은 참고치)</caption>
+    <thead><tr><th>회사</th><th>성격</th><th class="num">시총(원화)</th><th class="num">2025 매출</th><th class="num">2025 GPM</th><th class="num">2Q26 GPM</th><th class="num">2Q26 OPM</th><th class="num">PER</th><th class="num">PSR</th></tr></thead>
+    <tbody>
+      <tr><td>GUC (3443.TW)</td><td>TSMC VCA, TSMC 지분 34%</td><td class="num">≈35조</td><td class="num">NT$341억 (≈1.5조)</td><td class="num">24.8%</td><td class="num">21.5%</td><td class="num">12.1%</td><td class="num">≈149</td><td class="num">≈23</td></tr>
+      <tr><td>Alchip (3661.TW)</td><td>TSMC VCA, AWS Trainium</td><td class="num">≈15.7조</td><td class="num">US$9.9억 (≈1.4조)</td><td class="num">—</td><td class="num">34.8%</td><td class="num">—</td><td class="num">≈59</td><td class="num">≈11</td></tr>
+      <tr><td>Faraday (3035.TW)</td><td>UMC 계열 ASIC+IP</td><td class="num">≈2.1조</td><td class="num">NT$180억 (≈8,100억)</td><td class="num">27.0%</td><td class="num">45.2%</td><td class="num">8.2%</td><td class="num">≈71</td><td class="num">≈3.9</td></tr>
+      <tr><td>Socionext (6526.T)</td><td>일본 커스텀 SoC</td><td class="num">≈3.1조</td><td class="num">¥2,008억 (≈1.9조)</td><td class="num">—</td><td class="num">54.6%</td><td class="num neg">적자</td><td class="num">—</td><td class="num">≈1.6</td></tr>
+      <tr class="hl"><td>에이직랜드</td><td>TSMC VCA (한국)</td><td class="num">2,251억</td><td class="num">728억</td><td class="num neg">−0.6%</td><td class="num">24.4%</td><td class="num">13.4%</td><td class="num">적자</td><td class="num">1.44 (TTM)</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="tbl-note">환율 가정 NT$1=45원, US$1=1,390원, ¥1=9.3원. GUC 2026년 1~8월 누적 매출 NT$369억(+104%)으로 이미 2025년 연간을 넘겼고, 2027년 CoWoS 웨이퍼 6만장 선예약 보도. Alchip 2025년 매출 −40%는 AWS Trainium 세대교체 공백 — <b>단일 고객 의존이 실적을 흔든다</b>는 점에서 에이직랜드의 메모리 60%와 같은 구조다.</p>
+
+  <div class="take"><span class="lbl">밸류 갭의 이름</span>
+    <p>같은 VCA인 GUC는 PSR 23배, 에이직랜드는 1배다. 삼성 DSP인 가온칩스는 상반기 매출이 에이직랜드의 37%인데 시총은 2.3배다.
+    시장은 삼성 파운드리 턴어라운드(테슬라 AI5, 2nm) 기대를 삼성 DSP 프리미엄으로, TSMC 선단공정 슬롯 부족과 잔액 절벽을 에이직랜드 할인으로 값 매기고 있다.
+    이 할인이 풀리는 조건은 하나다 — <b>잔액이 다시 늘어나는 것</b>. 그 전까지는 싸다는 사실이 주가를 올리지 못했다는 게 지난 12개월의 기록이다.</p></div>
+</section>
+
+<!-- ===================== 08 ===================== -->
+<section id="s8">
+  <div class="sec-h"><div class="sec-n">08</div><h2>해자 검증 — 찬성과 반증을 나란히</h2></div>
+
+  <div class="duo">
+    <div class="for"><h4>해자가 있다는 근거</h4>
+      <ul>
+        <li><b>지역 독점 사업권.</b> TSMC VCA는 지역 기반으로 배정되고 TSMC가 지정한다. 한국에서 TSMC 웨이퍼를 발주할 수 있는 회사는 이곳뿐이며, 에이디테크놀로지가 2020년 자리를 비운 뒤 새 VCA가 나온 적이 없다.</li>
+        <li><b>TSMC 점유율 71~73%.</b> 선단공정(3nm·5nm)에서 삼성과의 격차가 벌어질수록 한국 팹리스의 TSMC 수요는 이 회사를 통과한다. 2025년 10월 3nm·CoWoS PDK를 확보했다.</li>
+        <li><b>SK하이닉스 레퍼런스.</b> 2024년 197억, 2025년 319억 연속 수주. 메모리 1위 IDM이 컨트롤러 설계 파트너로 선택했다는 사실은 다른 고객에게 통하는 증명서다.</li>
+        <li><b>양산이 붙기 시작했다.</b> 2026년 양산 계약 355억(A사 254 + 대만 101)은 2023~2025년 3년 합계(191억)의 1.9배. 개발→양산 전환은 고객 이탈 비용을 높인다.</li>
+        <li><b>국내 유일 흑자·최대 매출.</b> 상반기 국내 디자인하우스 5사 중 매출 1위, 유일한 영업흑자.</li>
+      </ul>
+    </div>
+    <div class="against"><h4>해자가 약하다는 반증</h4>
+      <ul>
+        <li><b>사업권은 TSMC가 준 것이고 거둘 수도 있다.</b> VCA 지위는 계약이지 자산이 아니다. LG전자가 2026년 6월 TSMC 기반 ASIC 디자인서비스 진출을 선언했고(VCA는 아님), 세미파이브 자회사 Analog Bits가 TSMC N2P IP를 공급한다.</li>
+        <li><b>마진이 해자를 부정한다.</b> 독점이 진짜라면 가격 결정력이 있어야 하는데 GPM은 2023년 19.5% → 2024년 1.1% → 2025년 −0.6%. 공사손실충당부채 55억은 <b>손해 보고 받은 계약</b>이 있다는 뜻이다.</li>
+        <li><b>고객이 3년마다 통째로 바뀐다.</b> 5G(2021) → AI(2023) → 메모리(2026). 반복 구매가 아니라 프로젝트 단위 매출이며, 끝나면 잔액이 사라진다. SK하이닉스 CXL 계약이 407억에서 197억으로 줄어 끝난 것, 2025년 4분기 잔액 −450억 조정이 그 증거다.</li>
+        <li><b>핵심 인력이 나갔다.</b> 창업 멤버인 개발총괄 부사장이 지분 일부(10.7만주)를 팔고 사임했고, CFO도 매도했다. "인력이 곧 기술력"이라고 회사 스스로 썼다.</li>
+        <li><b>한국 팹리스의 무게중심은 삼성이다.</b> 리벨리온(삼성 4nm)·딥엑스(삼성 5nm→2nm)·하이퍼엑셀(삼성 4nm)·텔레칩스(삼성 8nm). 정부 NPU 예산의 직접 수혜는 삼성 DSP로 간다. TSMC를 쓰는 국내 AI칩은 퓨리오사(5nm)·모빌린트(12nm) 정도다.</li>
+        <li><b>선단공정 슬롯은 TSMC의 대형 고객 우선.</b> 3nm는 "장기·충성 고객 우선", CoWoS 2026년 물량은 NVIDIA 60%·상위 3사 85%. 회사도 "3nm 이하는 예약이 밀린다"고 인정했다.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="take"><span class="lbl">판정</span>
+    <p>해자는 <b>'접근권'</b>이지 <b>'가격 결정력'</b>이 아니다. 한국에서 TSMC로 가는 문을 쥐고 있는 것은 사실이지만, 그 문을 지나는 고객이 지불하는 값은
+    통과 원가(IP·웨이퍼) + 얇은 마진이며 그마저 프로젝트 협상마다 다시 정해진다. 이 회사의 이익은 해자가 아니라 <b>어떤 프로젝트가 어느 분기에 인식되느냐</b>가 결정한다.
+    양산 비중이 30%를 넘고 같은 고객의 2세대 칩이 반복 수주될 때 비로소 해자라고 부를 수 있다.</p></div>
+</section>
+
+<!-- ===================== 09 ===================== -->
+<section id="s9">
+  <div class="sec-h"><div class="sec-n">09</div><h2>주가 — 공모가 3배에서 공모가 아래로, 그리고 CB 전환가</h2></div>
+
+  <figure>
+    <div class="cap">Share price</div>
+    <div class="ttl">주간 종가(원) — 상장일부터 2026.09.08</div>
+    <div class="legend" id="lg5"></div>
+    <div class="chart" id="c5"></div>
+    <figcaption>점선: 공모가 25,000원 / CB 전환가 31,517원 / CB 리픽싱 하한 25,214원(전환가의 80%). 첫 리픽싱 기준일은 발행 7개월 후인 2026.10.23. 출처: 네이버 일별시세(무상증자·분할 이력 없음, 보정 불필요).</figcaption>
+  </figure>
+
+  <div class="tbl-scroll">
+  <table>
+    <caption>주가 이정표</caption>
+    <thead><tr><th>일자</th><th class="num">종가</th><th>사건</th><th class="num">현재가 대비</th></tr></thead>
+    <tbody>
+      <tr><td>2023.11.13</td><td class="num">30,300</td><td>상장 첫날 (공모가 25,000원, +21.2%)</td><td class="num">−32.0%</td></tr>
+      <tr><td>2024.02.26</td><td class="num">76,200</td><td>사상 최고. AI 반도체·TSMC 테마</td><td class="num">−73.0%</td></tr>
+      <tr><td>2024.08.05</td><td class="num">28,450</td><td>글로벌 급락일 −22.6%(전주 대비 −31%). 8/14 2Q24 적자 공시</td><td class="num">−27.6%</td></tr>
+      <tr><td>2025.03.13</td><td class="num">29,500</td><td>FY2024 실적 공시(3/20) 직전. LS증권 TP 44,000원(3/21)</td><td class="num">−30.2%</td></tr>
+      <tr><td>2025.10.16</td><td class="num">33,800</td><td>52주 최고(장중 34,800). 10/24 3nm·CoWoS PDK 확보 보도</td><td class="num">−39.1%</td></tr>
+      <tr><td>2026.03.13</td><td class="num">28,900</td><td>CB 450억 결정 (전환가 31,517원)</td><td class="num">−28.7%</td></tr>
+      <tr><td>2026.06.25</td><td class="num">22,950</td><td>6/18 29,850에서 1주 −23%. 다음날 6/26 SK하이닉스 CXL 계약 반토막 정정, 6/29 eSSD 319억 신규 공시</td><td class="num">−10.2%</td></tr>
+      <tr><td>2026.07.30</td><td class="num">14,720</td><td><b>상장 후 최저</b>(장중 13,910). 7/2 −11.1% 등 업종 동반 하락, 6/18 대비 −51%</td><td class="num pos">+39.9%</td></tr>
+      <tr><td>2026.08.14</td><td class="num">23,550</td><td>반기 흑자 발표 당일 +12.4%, 전주 대비 +29%. 8/19 SK하이닉스 eSSD 410억 증액</td><td class="num">−12.5%</td></tr>
+      <tr class="hl"><td>2026.09.08</td><td class="num">20,600</td><td>현재. 흑자 발표 후 3주간 −12.5% 되돌림</td><td class="num">—</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3>CB 450억이 주가에 씌운 천장과 바닥</h3>
+  <p>전환가 31,517원에 1,427,800주(발행주식의 13.1%). 주가가 전환가의 80%인 25,214원 아래에 머물면 리픽싱으로 최대 1,784,600주(16.3%)까지 늘어난다.
+    현재 주가 20,600원은 리픽싱 하한보다도 18% 낮아 <b>CB 투자자 입장에서는 주가가 25,214원을 회복해야 전환 가치가 생긴다</b>.
+    풋옵션은 2029년 3월부터(3년), 콜옵션은 회사 또는 지정 3자가 30%까지 2027년 3월부터 행사 가능하다 — 최대주주 측이 지분율을 최대 4.2%p 되찾을 수 있는 장치다.
+    발행 당시 기준주가 대비 110% 할증 전환가는 시장 관행보다 회사에 유리한 조건이었고, 그만큼 그 시점 경영진의 주가 자신감을 보여준다.</p>
+
+  <h3>증권사가 본 이 회사</h3>
+  <div class="tbl-scroll">
+  <table>
+    <caption>증권사 리포트 (2025~2026)</caption>
+    <thead><tr><th>일자</th><th>증권사</th><th>제목</th><th class="num">목표주가</th><th>2026E 매출 / OP</th></tr></thead>
+    <tbody>
+      <tr><td>2025.03.21</td><td>LS증권</td><td>외형 확대, but 리레이팅 위해 신규 Core 레퍼런스 필요</td><td class="num">44,000</td><td>1,826 / 209</td></tr>
+      <tr><td>2025.08.18</td><td>LS증권</td><td>2Q25 사업현황 Update (TP 하향)</td><td class="num">35,400</td><td>1,124 / 58 (순이익 64)</td></tr>
+      <tr><td>2026.05.29</td><td>유안타증권</td><td>폭발적인 양산 매출 증가세와 Turnaround 기대</td><td class="num">—</td><td>미공개</td></tr>
+      <tr><td>2026.07.09</td><td>하나증권</td><td>하이닉스가 선택한 eSSD 파트너</td><td class="num">—</td><td>미공개</td></tr>
+      <tr><td>2026.07.20</td><td>신한투자증권</td><td>장기 양산 가시성 확보</td><td class="num">—</td><td>미공개</td></tr>
+      <tr><td>2026.08.20</td><td>하나증권</td><td>2026년 흑자, 2027년 임계점, 2028년 레버리지</td><td class="num">—</td><td>미공개</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="tbl-note">LS증권의 2026E 매출 1,124억·영업이익 58억은 상반기에 이미 매출 1,137억·영업이익 50억으로 사실상 충족됐다. 2026년 리포트 4건은 목표주가 없는 Not Rated로 보인다(웹에서 원문 미확보). 한경 컨센서스 목표가 39,700원은 애널리스트 1명 기준.
+    회사 측 가이던스: 2027년 매출 2,000억(2025.04 CEO 인터뷰), 2030년 5,000억(2024.10).</p>
+</section>
+
+<!-- ===================== 10 ===================== -->
+<section id="s10">
+  <div class="sec-h"><div class="sec-n">10</div><h2>재무 — 부동산 670억, 차입 915억, 그리고 벤처투자 100억</h2></div>
+
+  <div class="tbl-scroll">
+  <table>
+    <caption>재무상태 요약 (연결, 억원)</caption>
+    <thead><tr><th>항목</th><th class="num">2023말</th><th class="num">2024말</th><th class="num">2025말</th><th class="num">2026.6말</th><th>비고</th></tr></thead>
+    <tbody>
+      <tr><td>현금+단기금융+FVPL</td><td class="num">674</td><td class="num">524</td><td class="num">272</td><td class="num">560</td><td>IPO 659억은 2024년 말까지 소진</td></tr>
+      <tr><td>매출채권+계약자산</td><td class="num">130</td><td class="num">203</td><td class="num">297</td><td class="num">246</td><td></td></tr>
+      <tr><td>유형자산</td><td class="num">345</td><td class="num">463</td><td class="num">750</td><td class="num">768</td><td>수원 사옥 350(토지 172·건물 178) + 판교 토지 308 + 비품 88 + 건설중 16</td></tr>
+      <tr><td>관계기업·기타 투자자산</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num">103</td><td>아크칩스 지분법 31, 비유동 FVPL·FVOCI 72 (아르보·대만법인은 연결 편입)</td></tr>
+      <tr><td>자산총계</td><td class="num">1,600</td><td class="num">1,671</td><td class="num">2,210</td><td class="num">2,307</td><td></td></tr>
+      <tr><td>계약부채(선수금)</td><td class="num">280</td><td class="num">336</td><td class="num">950</td><td class="num">359</td><td>§06</td></tr>
+      <tr><td>은행차입금</td><td class="num">247</td><td class="num">71</td><td class="num">175+</td><td class="num">465</td><td>단기 55 + 유동성장기 70 + 장기 340 (산업은행 240억은 2040년 만기 시설자금)</td></tr>
+      <tr><td>전환사채(장부)</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num">266</td><td>액면 450억, 만기 2031.03 (보장수익 1%)</td></tr>
+      <tr><td>공사손실충당부채</td><td class="num">—</td><td class="num">—</td><td class="num">55</td><td class="num">52</td><td>손실이 예상되는 진행 계약</td></tr>
+      <tr><td>부채총계</td><td class="num">622</td><td class="num">828</td><td class="num">1,657</td><td class="num">1,454</td><td></td></tr>
+      <tr><td>자본총계</td><td class="num">978</td><td class="num">843</td><td class="num">553</td><td class="num">853</td><td>결손금 −298억. CB 전환권 등 기타자본 225억</td></tr>
+      <tr class="hl"><td>부채비율</td><td class="num">63.6%</td><td class="num">98.2%</td><td class="num">299.7%</td><td class="num">170.5%</td><td></td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="tbl-note">2025년 말 은행차입은 단기 55억·유동성장기 120억 외 장기차입이 별도 계정으로 잡혀 있어 "175+"로 표기. 6월 말 자본 853억 중 CB 전환권 대가가 기타자본에 반영돼 있어 CB가 상환되면 자본이 줄어든다.</p>
+
+  <h3>현금이 간 곳</h3>
+  <p>2023년 11월 IPO로 659억이 들어왔다. 2023~2025년 3년간 유형자산 취득이 <b>813억</b>(수원 사옥 331억 → 판교 토지 291억 + 비품·설비),
+    영업활동현금흐름 합계 <b>−145억</b>. 2025년 3월에는 "중소기업 및 신기술사업 투자와 경영자문"을 목적으로 100% 자회사 <b>아르보파트너스에 100억</b>을 출자했고
+    같은 해 벤처투자조합 3곳(엠지밸류업1호·엔코어 반도체 2호·3호)이 연결 대상에 들어왔다. 적자 276억을 낸 해에 벤처 투자회사를 세운 셈이다.
+    2026년 3월 CB 450억의 용도가 "TSMC 팹 선급·EDA/IP 선구매 380억"이었다는 것과 나란히 놓고 봐야 한다.</p>
+
+  <p>차입 구조는 부동산 담보다. 기업은행 차입에 수원 토지·건물이 담보로 잡혀 있고 대표이사가 54억 개인보증을 섰다.
+    산업은행 240억은 2040년 만기 시설자금(금리 2.3~2.6%)으로 판교 사옥 건설 재원으로 보인다. 6월 말 건설중자산 14억, 즉 판교 착공은 아직 초기다.</p>
+</section>
+
+<!-- ===================== 11 ===================== -->
+<section id="s11">
+  <div class="sec-h"><div class="sec-n">11</div><h2>리스크</h2></div>
+  <div class="risk-list">
+    <div class="risk"><div class="rh"><span class="tag high">High</span><span class="rt">개발 프로젝트 잔액 절벽</span></div>
+      <p>1,792억 → 776억(9개월). 상반기 B/B 0.60. 하반기에 상반기 수준의 개발매출을 내면 잔액이 바닥난다. 2025년 4분기 −450억 규모의 잔액 조정이 어떤 계약이었는지 공시되지 않았다.</p></div>
+    <div class="risk"><div class="rh"><span class="tag high">High</span><span class="rt">고객 집중 — 3곳이 65%, 메모리가 60%</span></div>
+      <p>SK하이닉스 CXL 계약이 407억에서 197억으로 줄어 종료된 것이 이미 한 번 벌어진 일이다. 파두 300억도 8/20 조기 종료. Alchip이 AWS 한 곳의 세대교체 공백으로 2025년 매출 −40%를 겪은 구조와 같다.</p></div>
+    <div class="risk"><div class="rh"><span class="tag high">High</span><span class="rt">CB 450억 희석과 리픽싱</span></div>
+      <p>전환 시 13.1%, 리픽싱 하한 적용 시 16.3% 희석. 첫 리픽싱 기준일 2026.10.23. 주가가 25,214원 아래면 하한까지 내려간다. 2029년 3월부터 풋옵션 — 그때까지 주가가 전환가를 넘지 못하면 450억×1.03을 현금으로 돌려줘야 한다.</p></div>
+    <div class="risk"><div class="rh"><span class="tag mid">Mid</span><span class="rt">흑자와 현금흐름의 괴리</span></div>
+      <p>상반기 순이익 63억, 영업현금흐름 −141억. 선수금 소진 591억이 원인. 하반기 신규 수주에 선수금이 붙지 않으면 현금은 다시 CB·차입에 의존한다. 순차입(은행 465 + CB 450 − 현금성 560) 355억.</p></div>
+    <div class="risk"><div class="rh"><span class="tag mid">Mid</span><span class="rt">내부자 매도와 최대주주 담보대출</span></div>
+      <p>개발총괄 부사장 10.7만주 매도·사임, CFO·전무 매도. 최대주주 담보대출은 2025.06부터 5회 연장. 주가가 담보 유지 기준을 밑돌면 반대매매 위험이 생긴다.</p></div>
+    <div class="risk"><div class="rh"><span class="tag mid">Mid</span><span class="rt">손실 계약과 개발매출 인식 시점 — 감사인의 핵심감사사항</span></div>
+      <p>한영회계법인은 3년 연속 "기간에 걸쳐 인식되는 개발매출의 측정과 기간귀속"을 핵심감사사항(KAM)으로 지정했다. 공사손실충당부채 52억이 남아 있다. 진행률 추정이 바뀌면 분기 손익이 흔들린다.</p></div>
+    <div class="risk"><div class="rh"><span class="tag mid">Mid</span><span class="rt">비핵심 자산 — 부동산 660억·벤처투자 100억</span></div>
+      <p>자산의 29%가 사옥·토지, 100억이 투자자문 자회사. 설계회사가 필요로 하는 자산이 아니며, 적자 국면에서 실행됐다. 판교 사옥 건설이 시작되면 추가 CAPEX가 붙는다.</p></div>
+    <div class="risk"><div class="rh"><span class="tag low">Low</span><span class="rt">TSMC 정책 변화 — 선단공정 가격 인상·슬롯</span></div>
+      <p>2026년부터 3nm 이하 3~10% 인상. 원가 전가 계약이라 마진율보다 운전자본 부담으로 온다. 회사 양산 물량은 7nm 이상이라 단기 병목은 없다. VCA 지위 자체의 변경 가능성은 낮으나 0은 아니다.</p></div>
+  </div>
+</section>
+
+<!-- ===================== 12 ===================== -->
+<section id="s12">
+  <div class="sec-h"><div class="sec-n">12</div><h2>투자 전 확인할 것</h2></div>
+  <div class="check">
+    <div><div class="box"></div><div><b>3분기 보고서(11/14) 주석 27</b> — 개발 프로젝트 기말 잔액이 776억보다 큰가, 신규 유입이 3분기 수익인식보다 큰가(B/B ≥ 1)</div></div>
+    <div><div class="box"></div><div><b>계약부채</b>가 359억에서 다시 늘었는가 — 새 프로젝트에 선수금이 붙었다는 신호</div></div>
+    <div><div class="box"></div><div><b>A사 양산 254억</b>의 3분기 인식액 — 상반기 64억 페이스면 연내 190억을 다 못 채운다</div></div>
+    <div><div class="box"></div><div><b>SK하이닉스 ② 410억(8/19 증액)</b>의 인식 속도 — 상반기 14억은 너무 느리다. 2027년 말까지 잔여 384억을 언제 인식하는지</div></div>
+    <div><div class="box"></div><div><b>3분기 GPM</b> — 2분기 24.4%가 양산 믹스 효과였는지(양산 비중과 함께 볼 것), 아니면 IP 선구매가 끝난 구조적 개선인지</div></div>
+    <div><div class="box"></div><div><b>10월 23일 CB 리픽싱</b> 공시 — 조정 전환가와 전환 가능 주식 수</div></div>
+    <div><div class="box"></div><div><b>단일판매·공급계약 신규 공시</b> — 7~9월은 기존 계약 정정 5건뿐, 신규 0건. 특히 양산 계약과 AI(5nm) 프로젝트</div></div>
+    <div><div class="box"></div><div><b>최대주주 담보대출</b> 연장 공시의 담보 주식 수 변화와 <b>임원 매도</b> 추가 여부</div></div>
+    <div><div class="box"></div><div><b>공사손실충당부채</b> 52억의 증감 — 늘면 손해 보는 계약이 추가된 것</div></div>
+  </div>
+</section>
+
+<!-- ===================== 13 ===================== -->
+<section id="s13">
+  <div class="sec-h"><div class="sec-n">13</div><h2>기업미팅 질문 리스트 — 24개, 우선순위 순</h2></div>
+
+  <p class="lede">질문마다 "왜 묻는가"에 이 리포트에서 찾은 숫자를 달았다. 회사가 숫자로 답하면 그 자리에서 대조할 수 있다.
+    ★는 이 미팅에서 반드시 답을 받아야 할 4개.</p>
+
+  <div class="qgroup">
+    <h3>A. 수주 잔액과 파이프라인</h3>
+    <div class="why">이 회사의 방향을 정하는 단 하나의 변수. 주석 27의 잔액이 다시 늘어나는지가 핵심이다.</div>
+    <div class="qs">
+      <div class="q"><div class="qn">Q1 ★</div><div><div class="qt">진행 중인 개발 프로젝트 잔액이 2025년 9월 1,792억에서 2026년 6월 776억으로 줄었습니다. 7~9월 신규 수주는 얼마이고, 9월 말 잔액은 6월 말보다 늘었습니까?</div>
+        <div class="qw">상반기 신규 555억 vs 수익인식 925억(B/B 0.60). 2분기만 보면 신규 406억으로 0.94. 3분기 숫자가 0.94 쪽인지 0.30 쪽인지가 전부다.</div></div></div>
+      <div class="q"><div class="qn">Q2 ★</div><div><div class="qt">SK하이닉스 CXL 계약이 407억에서 197억으로 줄어 6월에 조기 종료됐습니다. 범위 축소입니까, 고객의 CXL 로드맵 변경입니까? 그리고 2025년 4분기에 잔액이 신규 188억 유입에도 260억 순감소(약 450억 조정)했는데, 이건 어떤 프로젝트였습니까?</div>
+        <div class="qw">2분기 −228억은 CXL 정정으로 설명되지만 4분기 −450억은 공시된 계약 변동이 없다. 고객 사정(개발 중단)인지, 범위 축소인지에 따라 재발 가능성이 다르다.</div></div></div>
+      <div class="q"><div class="qn">Q3</div><div><div class="qt">2027년 매출 2,000억 목표는 유효합니까? 그 구성에서 양산과 개발의 비율, 그리고 현재 잔액에 없는 '신규 확보 필요액'은 얼마입니까?</div>
+        <div class="qw">2025.04 CEO 인터뷰 목표. 현재 잔액 776억 + A사 양산 잔여 191억으로는 2027년의 절반도 안 된다.</div></div></div>
+      <div class="q"><div class="qn">Q4</div><div><div class="qt">A사 양산 254억은 "연간 물량 사전 확정"이었는데 상반기 인식이 64억입니다. 연내 나머지 191억을 다 공급합니까? 2027년 물량 협의는 시작됐습니까?</div>
+        <div class="qw">상반기 페이스(64억)로는 연간 128억. 하반기 127억을 공급해야 계약이 맞는다.</div></div></div>
+      <div class="q"><div class="qn">Q5</div><div><div class="qt">SK하이닉스 eSSD 컨트롤러가 8월 19일 319억에서 410억으로 증액됐습니다. 증액 사유(범위 확대·공정 변경·2차 칩)는 무엇이고, 상반기 인식 14억이었던 이 계약의 하반기·2027년 인식 계획은 어떻게 됩니까? 양산 웨이퍼도 에이직랜드가 공급합니까?</div>
+        <div class="qw">잔여 384억으로 단일 최대 프로젝트. CXL은 407 → 197억으로 줄어 끝났는데 eSSD는 늘고 있다 — 두 프로젝트의 차이가 SK하이닉스 관계의 실체다. SK하이닉스는 TSMC 직거래가 가능한 고객이라 양산 경로가 관건.</div></div></div>
+      <div class="q"><div class="qn">Q6</div><div><div class="qt">파두 300억이 8월 20일 조기 종료 공시됐습니다(원래 2027년 7월). 개발이 앞당겨 끝난 겁니까, 남은 범위가 취소된 겁니까? 파두 차세대 컨트롤러나 양산 공급 후속 계약이 논의 중입니까?</div>
+        <div class="qw">파두는 상반기 매출의 21%(236억). 반복 수주 여부가 '고객 관계'인지 '프로젝트 관계'인지를 가른다.</div></div></div>
+    </div>
+  </div>
+
+  <div class="qgroup">
+    <h3>B. 마진 구조</h3>
+    <div class="why">상반기 GPM 16.1%가 이 사업의 정상인지, 2분기 24.4%가 지속되는지.</div>
+    <div class="qs">
+      <div class="q"><div class="qn">Q7 ★</div><div><div class="qt">1분기 GPM 6.8%와 2분기 24.4%의 차이는 무엇입니까? 2분기 양산 166억의 GPM과 개발 432억의 GPM을 나눠서 말씀해 주실 수 있습니까?</div>
+        <div class="qw">1분기는 IP 라이선스 매입 152억이 몰렸다. 개발 GPM과 양산 GPM을 알아야 하반기 믹스로 마진을 추정할 수 있다. GUC는 NRE 20~40%·턴키 한 자릿수 후반이라고 공개한다.</div></div></div>
+      <div class="q"><div class="qn">Q8</div><div><div class="qt">상반기 IP 라이선스 매입 339억(시놉시스·Arm)은 고객에게 100% 전가되는 통과 원가입니까, 아니면 회사가 보유하는 IP도 있습니까? 2024년 399억도 같은 성격이었습니까?</div>
+        <div class="qw">통과 원가면 매출 규모는 크되 이익은 없다. 회사 보유 IP면 자산화 여부와 재사용 가능성이 마진 개선 포인트가 된다.</div></div></div>
+      <div class="q"><div class="qn">Q9</div><div><div class="qt">공사손실충당부채 52억은 어떤 계약입니까? 손실 계약을 왜 받았고, 그 계약은 언제 끝납니까? 지금 협상 중인 계약에서 같은 조건은 없습니까?</div>
+        <div class="qw">2025년 말 55억 신규 설정. 독점 사업권을 가진 회사가 손실 계약을 받았다는 것은 가격 협상력이 없다는 뜻이다.</div></div></div>
+      <div class="q"><div class="qn">Q10</div><div><div class="qt">개발 프로젝트 하나에서 에이직랜드가 가져가는 순마진(IP·MPW·외주 제외)은 계약금액의 몇 %입니까? 양산으로 넘어가면 웨이퍼 매출에서 몇 %입니까?</div>
+        <div class="qw">비용 1,087억 중 인건비 123억. 인건비 대비 매출총이익 183억이 이 회사의 '진짜 부가가치'다.</div></div></div>
+    </div>
+  </div>
+
+  <div class="qgroup">
+    <h3>C. 고객 집중과 응용시장</h3>
+    <div class="why">메모리 60%·3개 고객 65%. 다음 주력이 무엇인지.</div>
+    <div class="qs">
+      <div class="q"><div class="qn">Q11</div><div><div class="qt">AI 매출이 2023년 353억에서 상반기 130억으로 줄었습니다. 현재 진행 중인 AI 프로젝트(5nm 엣지 AI, CXL/HPC, BrainChip)의 테이프아웃과 양산 시점은 언제입니까?</div>
+        <div class="qw">IR의 강조점과 매출표의 무게중심이 다르다. 2027년 5nm 엣지 AI 양산이 회사 계획.</div></div></div>
+      <div class="q"><div class="qn">Q12 ★</div><div><div class="qt">상반기 Consumer Electronics 232억은 신규 분류입니다. 어떤 고객·어떤 칩이고, 개발입니까 양산입니까? 대만 자회사 경유 양산 101억과 같은 고객입니까?</div>
+        <div class="qw">2026년에 갑자기 매출의 20%가 된 항목인데 사업보고서 설명이 없다. 일회성이면 하반기 매출에서 232억이 사라진다.</div></div></div>
+      <div class="q"><div class="qn">Q13</div><div><div class="qt">퓨리오사AI(TSMC 5nm RNGD)·모빌린트(TSMC 12nm)의 양산 웨이퍼 조달 경로에 에이직랜드가 들어가 있습니까? 국내 팹리스 중 TSMC를 쓰면서 에이직랜드를 거치지 않는 회사가 있습니까?</div>
+        <div class="qw">"국내 유일 VCA"가 실제로 독점인지 검증하는 질문. 대형 팹리스는 TSMC 직거래가 가능하다.</div></div></div>
+      <div class="q"><div class="qn">Q14</div><div><div class="qt">LG전자가 2026년 6월 TSMC 기반 ASIC 디자인서비스 진출을 발표했습니다. 경쟁입니까, LG의 웨이퍼 조달을 에이직랜드가 맡는 협력입니까?</div>
+        <div class="qw">위즈마인드(LG 계열 디자인하우스) 인수로 LG는 오래된 고객. VCA가 아닌 LG는 웨이퍼 발주권이 없다.</div></div></div>
+    </div>
+  </div>
+
+  <div class="qgroup">
+    <h3>D. TSMC 관계와 선단공정</h3>
+    <div class="qs">
+      <div class="q"><div class="qn">Q15</div><div><div class="qt">3nm·CoWoS PDK를 확보한 지 1년이 됐습니다. 3nm 또는 CoWoS 프로젝트를 실제로 수주했습니까? TSMC의 3nm 슬롯과 CoWoS 배정에서 VCA 소형사가 받는 우선순위는 어느 정도입니까?</div>
+        <div class="qw">회사도 "3nm 이하는 예약이 밀린다"고 했다. CoWoS 2026년 물량은 NVIDIA 60%·상위 3사 85%.</div></div></div>
+      <div class="q"><div class="qn">Q16</div><div><div class="qt">CB 운영자금 380억 중 TSMC 선급금으로 실제 집행된 금액은 얼마이고, 어떤 프로젝트의 웨이퍼입니까? 선급이 필요한 이유가 양산 예약입니까, 개발용 MPW입니까?</div>
+        <div class="qw">6월 말 현금 437억. 선급 380억이 나가면 현금이 다시 바닥이다. 선급이 붙은 양산 계약이 있다면 그것이 하반기 양산 매출의 근거.</div></div></div>
+      <div class="q"><div class="qn">Q17</div><div><div class="qt">TSMC와의 VCA 계약은 몇 년 단위로 갱신되며, 최근 갱신일과 다음 갱신일은 언제입니까? TSMC가 요구하는 최소 발주량이나 실적 조건이 있습니까?</div>
+        <div class="qw">해자가 '계약'이라면 계약 조건이 해자의 깊이다. 에이디테크놀로지는 2020년 이 지위를 잃었다.</div></div></div>
+      <div class="q"><div class="qn">Q18</div><div><div class="qt">대만 법인(자산 223억, 2025년 순손실 27억)의 인력은 몇 명이고 무엇을 합니까? 대만 법인이 대만·동남아 고객을 직접 수주한 실적(가전 101억 외)이 있습니까?</div>
+        <div class="qw">2025년 적자 원인으로 회사가 "해외 거점 투자"를 들었다. 그 거점의 손익분기 시점을 알아야 한다.</div></div></div>
+    </div>
+  </div>
+
+  <div class="qgroup">
+    <h3>E. 자본과 현금</h3>
+    <div class="qs">
+      <div class="q"><div class="qn">Q19</div><div><div class="qt">상반기 순이익 63억인데 영업현금흐름은 −141억입니다. 하반기 신규 계약에 선수금 조건이 붙어 있습니까? 연말 계약부채는 6월 말 359억보다 늘어날 전망입니까?</div>
+        <div class="qw">2025년 하반기 선수금 460억이 2026년 상반기를 만들었다. 같은 일이 2026년 하반기에 반복되는지가 2027년을 정한다.</div></div></div>
+      <div class="q"><div class="qn">Q20</div><div><div class="qt">CB 450억의 콜옵션 30%는 누가 행사할 예정입니까? 2029년 풋옵션 시점에 주가가 전환가 밑이면 상환 재원은 어떻게 마련합니까?</div>
+        <div class="qw">콜옵션은 최대주주 지분 회복 장치가 될 수 있다. 풋 상환액 450억×1.03 = 464억.</div></div></div>
+      <div class="q"><div class="qn">Q21</div><div><div class="qt">판교 사옥(토지 308억)의 건축 계획·총 투자액·재원은 무엇입니까? 수원 사옥이 있는데 두 번째 사옥이 필요한 이유는? 매각이나 임대 전환 가능성은?</div>
+        <div class="qw">유형자산 768억 = 자산의 33%. 산업은행 240억 시설자금(2040년 만기)이 이미 잡혀 있다.</div></div></div>
+      <div class="q"><div class="qn">Q22</div><div><div class="qt">아르보파트너스(100억, 투자자문)와 벤처투자조합 3곳에 출자한 목적이 무엇입니까? 투자 대상이 에이직랜드의 고객이 될 팹리스입니까? 지금까지 집행액과 평가액은?</div>
+        <div class="qw">적자 276억을 낸 2025년에 100억을 투자회사에 넣었다. 고객 육성(CVC)이면 논리가 있고, 아니면 자본 배분 문제다.</div></div></div>
+    </div>
+  </div>
+
+  <div class="qgroup">
+    <h3>F. 지배구조와 인력</h3>
+    <div class="qs">
+      <div class="q"><div class="qn">Q23</div><div><div class="qt">개발총괄 장성식 부사장이 10.7만주를 매도하고 사임하면서 자회사 아트랩을 개인 명의로 가져갔습니다(잔여 6.91%는 계속 보유). 사임 배경과 개발 조직의 후임 체계, 그리고 그와 함께 이동한 인력이 있습니까?</div>
+        <div class="qw">창업 멤버·개발 총괄의 이탈. 회사 스스로 "인력이 곧 기술력"이라고 썼다. CFO도 1월에 10.9만주를 팔았다.</div></div></div>
+      <div class="q"><div class="qn">Q24</div><div><div class="qt">대표이사의 주식담보대출 규모와 담보유지비율은 어느 정도이며, 주가가 어느 수준까지 내려가면 추가 담보나 반대매매 조건에 걸립니까?</div>
+        <div class="qw">2025.06부터 5회 연장. 상장 후 최저가 14,720원(7/30)을 지날 때 어떤 일이 있었는지도 물을 것.</div></div></div>
+    </div>
+  </div>
+
+  <div class="take"><span class="lbl">미팅 후 기록할 것</span>
+    <p>Q1의 답(3분기 신규 수주액·9월 말 잔액)과 Q7의 답(개발/양산 분리 GPM)만 숫자로 받아오면 11월 14일 공시 전에 3분기 실적을 ±20% 안에서 추정할 수 있다.
+    Q2와 Q9에 회사가 구체적으로 답하지 않으면, 그 자체가 답이다.</p></div>
+</section>
+
+<!-- ===================== 14 ===================== -->
+<section id="s14">
+  <div class="sec-h"><div class="sec-n">14</div><h2>이 리포트가 읽은 것</h2></div>
+  <div class="srcgrid">
+    <div><div class="n">39</div><div class="l">DART 원문 — 사업보고서 3개년(FY2023~25), 반기·분기보고서 6건, 감사보고서(FY2021~22), IPO 증권신고서, CB·합병·유형자산양수 주요사항보고서, 단일판매·공급계약 공시 25건(정정 포함, 2024.05~2026.08)</div></div>
+    <div><div class="n">22</div><div class="l">DART 재무제표 API — 연도×분기(2023~2026) 연결·별도 전 계정, 주주·임원·직원·투자·감사의견·5%·임원거래 보고</div></div>
+    <div><div class="n">687</div><div class="l">일별 시세 (2023.11.13~2026.09.08, 네이버) — 급변 왕복 패턴으로 미보정 이벤트 검사, 해당 없음</div></div>
+    <div><div class="n">7</div><div class="l">증권사 리포트 확인 (LS 2건 원문, 하나 2건·신한·유안타·한투 NDR 제목만)</div></div>
+    <div><div class="n">80+</div><div class="l">뉴스·IR·해외 피어 실적발표 (TSMC 2Q26 6-K, GUC·Alchip·Faraday·Socionext 실적 콜, TrendForce, Digitimes, thebell, 블로터, 전자신문, ZDNet 등)</div></div>
+    <div><div class="n">36</div><div class="l">교차검증 항목 — 응용시장 합계, 계약 인식액 합계 vs 10% 고객 합계, 잔액 변동표, 분기 = 누적 차감, 시총·PBR·PSR 재계산. 불일치 0건</div></div>
+  </div>
+  <p class="small" style="margin-top:14px">계산 근거: 시가총액 = 20,600원 × 10,925,658주. PSR(1H×2) = 2,251 ÷ (1,137×2). PBR = 2,251 ÷ 853(26.6말 자본). TTM = FY2025 − 1H25 + 1H26.
+    CB 희석 = 450억 ÷ 31,517원 = 1,427,800주, 하한 25,214원 적용 시 1,784,600주. 분기 수치는 반기·누적 공시에서 직전 분기를 차감. 해외 피어 원화 환산은 참고용 가정 환율.</p>
+</section>
+
+<footer>
+  본 문서는 공개 자료(DART 공시, 뉴스, 증권사 리포트, 시세)를 바탕으로 2026년 9월 8일에 작성한 개인 분석 자료이며 투자 권유가 아닙니다.
+  수치는 작성 시점 공시 기준이고 이후 정정·변경될 수 있습니다. 투자 판단과 결과의 책임은 투자자 본인에게 있습니다.
+</footer>
+
+</div>
+<div class="tip" id="tip"></div>
+
+<script>
+(function(){
+"use strict";
+const CS = getComputedStyle(document.documentElement);
+function tok(n){ return CS.getPropertyValue(n).trim(); }
+function T(){ return {
+  ink: tok('--ink'), ink2: tok('--ink2'), muted: tok('--muted'),
+  line: tok('--line'), line2: tok('--line2'), surface: tok('--surface'),
+  s:[tok('--s1'),tok('--s2'),tok('--s3'),tok('--s4')],
+  acc: tok('--accent-mark'), neg: tok('--neg'), pos: tok('--pos')
+};}
+const NS='http://www.w3.org/2000/svg';
+function el(t,a){ const e=document.createElementNS(NS,t); for(const k in a) e.setAttribute(k,a[k]); return e; }
+function txt(x,y,s,o){ o=o||{}; const t=el('text',{x:x,y:y,fill:o.fill||T().muted,
+  'font-size':o.fs||11, 'text-anchor':o.anchor||'middle',
+  'font-family':o.ff||'"IBM Plex Mono",monospace', 'font-weight':o.fw||400});
+  t.textContent=s; return t; }
+function fmt(n){ return Math.round(n).toLocaleString('ko-KR'); }
+
+const tip=document.getElementById('tip');
+function showTip(ev, html){
+  tip.innerHTML=html; tip.style.display='block';
+  const r=tip.getBoundingClientRect();
+  let x=ev.clientX+14, y=ev.clientY-r.height-12;
+  if(x+r.width>window.innerWidth-8) x=ev.clientX-r.width-14;
+  if(x<8) x=8;
+  if(y<8) y=ev.clientY+18;
+  if(y+r.height>window.innerHeight-8) y=window.innerHeight-r.height-8;
+  tip.style.left=x+'px'; tip.style.top=y+'px';
+}
+function hideTip(){ tip.style.display='none'; }
+window.addEventListener('scroll', hideTip, {passive:true});
+document.addEventListener('pointerdown', function(e){ if(!e.target.closest('.chart')) hideTip(); });
+function row(k,v){ return '<div class="tr"><span>'+k+'</span><b>'+v+'</b></div>'; }
+
+/* ---------- data ---------- */
+const ANNUAL=[
+  {y:'2020', prod:75, dev:160, rev:236, opm:4.8},
+  {y:'2021', prod:260, dev:194, rev:452, opm:6.1},
+  {y:'2022', prod:307, dev:389, rev:696, opm:16.4},
+  {y:'2023', prod:82, dev:660, rev:742, opm:5.2},
+  {y:'2024', prod:55, dev:885, rev:941, opm:-18.0},
+  {y:'2025', prod:54, dev:674, rev:728, opm:-37.9},
+  {y:'1H26', prod:212, dev:925, rev:1137, opm:4.4, half:true}
+];
+const QTR=[
+  {q:'24.1Q',rev:217,gpm:22.8,opm:8.5},{q:'2Q',rev:121,gpm:3.8,opm:-32.7},{q:'3Q',rev:142,gpm:-8.0,opm:-38.9},{q:'4Q',rev:461,gpm:-7.0,opm:-20.2},
+  {q:'25.1Q',rev:158,gpm:-10.3,opm:-50.3},{q:'2Q',rev:147,gpm:2.1,opm:-35.6},{q:'3Q',rev:162,gpm:10.4,opm:-27.7},{q:'4Q',rev:262,gpm:-3.0,opm:-37.9},
+  {q:'26.1Q',rev:540,gpm:6.8,opm:-5.5},{q:'2Q',rev:597,gpm:24.4,opm:13.4}
+];
+const SEGNAMES=['AI','메모리','IoT·5G','가전·디스플레이','기타(차량·산업 등)'];
+const SEG=[
+  {k:'2020', v:[29,58,96,10,43]},
+  {k:'2021', v:[51,32,279,19,71]},
+  {k:'2022', v:[106,89,369,22,111]},
+  {k:'2023', v:[353,108,124,27,129]},
+  {k:'2024', v:[331,129,73,28,380]},
+  {k:'2025', v:[194,234,68,75,157]},
+  {k:'1H26', v:[130,683,16,256,52]}
+];
+const BACKLOG=[
+  {k:'23말', bl:1049, nw:null, bb:null},
+  {k:'24.6', bl:1044, nw:309, bb:1.02},
+  {k:'24말', bl:1417, nw:1136, bb:1.29},
+  {k:'25.6', bl:1614, nw:382, bb:1.29},
+  {k:'25.9', bl:1792, nw:142, bb:0.90},
+  {k:'25말', bl:1313, nw:188, bb:0.85},
+  {k:'26.3', bl:1030, nw:149, bb:0.30},
+  {k:'26.6', bl:776, nw:406, bb:0.94}
+];
+const LADDER=[
+  {n:'Alchip 1Q26 (NRE 위주)', v:50.2},
+  {n:'Faraday 2Q26 (IP+양산)', v:45.2},
+  {n:'Alchip 2Q26 (양산 램프)', v:34.8},
+  {n:'세미파이브 1H26 (삼성 DSP)', v:30.6},
+  {n:'GUC 2025 (턴키 82%)', v:24.8},
+  {n:'에이직랜드 2Q26', v:24.4, me:true},
+  {n:'GUC 2Q26', v:21.5},
+  {n:'에이직랜드 1H26', v:16.1, me:true}
+];
+const PRICE=[["20231113",30300],["20231120",40550],["20231127",54400],["20231204",44750],["20231211",51600],["20231218",46800],["20231226",61100],["20240104",53000],["20240111",52800],["20240118",49150],["20240125",53400],["20240201",42400],["20240208",45900],["20240219",51500],["20240226",76200],["20240305",69000],["20240312",75300],["20240319",68300],["20240326",55700],["20240402",63300],["20240409",52300],["20240417",58300],["20240424",56700],["20240502",58200],["20240510",54800],["20240520",50400],["20240527",45850],["20240603",46800],["20240611",47100],["20240618",47450],["20240625",48250],["20240702",45500],["20240709",46000],["20240716",50200],["20240723",42600],["20240730",42300],["20240806",29200],["20240813",29500],["20240821",31450],["20240828",30500],["20240904",27850],["20240911",27750],["20240923",27100],["20240930",27750],["20241010",27400],["20241017",36850],["20241024",30850],["20241031",41450],["20241107",38750],["20241114",28150],["20241121",27150],["20241128",27800],["20241205",26700],["20241212",24200],["20241219",35600],["20241227",35450],["20250107",38700],["20250114",37900],["20250121",39000],["20250203",32550],["20250210",37550],["20250217",38650],["20250224",36050],["20250304",32800],["20250311",32000],["20250318",32950],["20250325",30650],["20250401",27900],["20250408",24850],["20250415",29250],["20250422",32850],["20250429",31200],["20250509",30950],["20250516",30100],["20250523",28350],["20250530",28500],["20250610",31000],["20250617",32050],["20250624",32150],["20250701",32550],["20250708",32200],["20250715",33300],["20250722",31400],["20250729",31050],["20250805",30250],["20250812",30700],["20250820",27900],["20250827",28600],["20250903",28050],["20250910",30900],["20250917",30750],["20250924",31400],["20251001",31100],["20251015",32400],["20251022",31700],["20251029",32650],["20251105",30450],["20251112",29400],["20251119",26800],["20251126",28400],["20251203",29600],["20251210",28450],["20251217",26750],["20251224",26300],["20260105",28750],["20260112",28450],["20260119",30000],["20260126",32100],["20260202",30350],["20260209",32300],["20260219",32800],["20260226",31650],["20260306",28750],["20260313",28900],["20260320",28000],["20260327",27200],["20260403",26900],["20260410",27300],["20260417",29350],["20260424",30750],["20260504",31700],["20260512",29250],["20260519",26600],["20260527",30550],["20260604",31050],["20260611",27050],["20260618",29850],["20260625",22950],["20260702",21200],["20260709",21400],["20260716",21850],["20260724",18780],["20260731",17520],["20260807",18260],["20260814",23550],["20260824",20500],["20260831",20750],["20260907",20350],["20260908",20600]];
+
+function legend(id, items){
+  const box=document.getElementById(id); if(!box) return;
+  box.innerHTML = items.map(function(it){ return '<span><i style="background:'+it.c+'"></i>'+it.n+'</span>'; }).join('');
+}
+
+/* ---------- C1: annual stacked ---------- */
+function drawC1(host, W){
+  const t=T(), narrow=W<560;
+  const H = narrow?260:300;
+  const ml = narrow?38:46, mr=10, mt=28, mb=44;
+  const iw = W-ml-mr, ih = H-mt-mb, max = 1250;
+  const svg = el('svg',{viewBox:'0 0 '+W+' '+H,role:'img','aria-label':'연간 매출과 개발 양산 구성'});
+  [0,250,500,750,1000,1250].forEach(function(v){
+    const y = mt+ih-(v/max)*ih;
+    svg.appendChild(el('line',{x1:ml,x2:W-mr,y1:y,y2:y,stroke:t.line,'stroke-width':1}));
+    svg.appendChild(txt(ml-7,y+4,fmt(v),{anchor:'end',fs:narrow?9.5:10.5}));
+  });
+  const bw = Math.min(narrow?30:52, iw/ANNUAL.length*0.56);
+  ANNUAL.forEach(function(d,i){
+    const cx = ml + iw*(i+0.5)/ANNUAL.length, x = cx-bw/2;
+    const hd=(d.dev/max)*ih, hp=(d.prod/max)*ih;
+    const yd = mt+ih-hd, yp = yd-hp-2;
+    const r1=el('rect',{x:x,y:yd,width:bw,height:hd,fill:t.s[0]});
+    const r2=el('rect',{x:x,y:yp,width:bw,height:Math.max(hp,1),fill:t.s[1]});
+    if(d.half){ r1.setAttribute('opacity','0.85'); r2.setAttribute('opacity','0.85'); }
+    [[r1,'개발(NRE)',d.dev],[r2,'양산(제품)',d.prod]].forEach(function(p){
+      p[0].style.cursor='pointer';
+      p[0].addEventListener('pointerdown',function(ev){
+        showTip(ev,'<div class="th">'+d.y+' · '+p[1]+'</div>'+row('매출',fmt(p[2])+'억')+row('비중',(p[2]/d.rev*100).toFixed(1)+'%')+row('영업이익률',d.opm.toFixed(1)+'%'));
+      });
+      svg.appendChild(p[0]);
+    });
+    svg.appendChild(txt(cx, yp-6, fmt(d.rev), {fs:narrow?10:12, fill:t.ink, fw:600}));
+    svg.appendChild(txt(cx, H-24, d.y, {fs:narrow?10:11, fill:t.ink2}));
+    svg.appendChild(txt(cx, H-9, (d.opm>0?'+':'')+d.opm.toFixed(1)+'%', {fs:narrow?9:10.5, fill:d.opm<0?t.neg:t.pos, fw:600}));
+  });
+  svg.appendChild(el('line',{x1:ml,x2:W-mr,y1:mt+ih,y2:mt+ih,stroke:t.line2,'stroke-width':1.5}));
+  host.innerHTML=''; host.appendChild(svg);
+}
+
+/* ---------- C2: quarterly ---------- */
+function drawC2(host, W){
+  const t=T(), narrow=W<560;
+  const H = narrow?330:380;
+  const ml = narrow?36:44, mr=8, mt=18, gap=28;
+  const h1 = (H-mt-gap-28)*0.55, h2=(H-mt-gap-28)*0.45;
+  const iw = W-ml-mr, max1=650, span=iw/QTR.length;
+  const svg = el('svg',{viewBox:'0 0 '+W+' '+H,role:'img','aria-label':'분기 매출과 이익률'});
+  [0,200,400,600].forEach(function(v){
+    const y=mt+h1-(v/max1)*h1;
+    svg.appendChild(el('line',{x1:ml,x2:W-mr,y1:y,y2:y,stroke:t.line,'stroke-width':1}));
+    svg.appendChild(txt(ml-6,y+4,fmt(v),{anchor:'end',fs:narrow?9:10}));
+  });
+  svg.appendChild(txt(ml,mt-6,'매출 (억원)',{anchor:'start',fs:10,fill:t.ink2,fw:500}));
+  const bw=Math.min(narrow?16:26, span*0.62);
+  QTR.forEach(function(d,i){
+    const cx=ml+span*(i+0.5), h=(d.rev/max1)*h1, y=mt+h1-h;
+    const r=el('rect',{x:cx-bw/2,y:y,width:bw,height:h,fill:(i>=8)?t.s[3]:t.s[0],rx:2});
+    r.style.cursor='pointer';
+    r.addEventListener('pointerdown',function(ev){
+      showTip(ev,'<div class="th">'+d.q+'</div>'+row('매출',fmt(d.rev)+'억')+row('매출총이익률',d.gpm.toFixed(1)+'%')+row('영업이익률',d.opm.toFixed(1)+'%'));
+    });
+    svg.appendChild(r);
+    svg.appendChild(txt(cx, y-5, fmt(d.rev), {fs:narrow?8.5:10, fill:t.ink, fw:500}));
+  });
+  svg.appendChild(el('line',{x1:ml,x2:W-mr,y1:mt+h1,y2:mt+h1,stroke:t.line2,'stroke-width':1.5}));
+  const y0=mt+h1+gap, lo=-60, hi=30;
+  function py(v){ return y0+h2-((v-lo)/(hi-lo))*h2; }
+  [-60,-30,0,30].forEach(function(v){
+    const y=py(v);
+    svg.appendChild(el('line',{x1:ml,x2:W-mr,y1:y,y2:y,stroke:v===0?t.line2:t.line,'stroke-width':v===0?1.5:1}));
+    svg.appendChild(txt(ml-6,y+4,v+'%',{anchor:'end',fs:narrow?9:10}));
+  });
+  svg.appendChild(txt(ml,y0-6,'이익률',{anchor:'start',fs:10,fill:t.ink2,fw:500}));
+  [['gpm',t.s[2]],['opm',t.acc]].forEach(function(s){
+    let dstr='';
+    QTR.forEach(function(d,i){ const cx=ml+span*(i+0.5); dstr += (dstr?' L ':'M ')+cx.toFixed(1)+' '+py(d[s[0]]).toFixed(1); });
+    svg.appendChild(el('path',{d:dstr,fill:'none',stroke:s[1],'stroke-width':2,'stroke-linejoin':'round','stroke-linecap':'round'}));
+    QTR.forEach(function(d,i){
+      const cx=ml+span*(i+0.5), y=py(d[s[0]]);
+      svg.appendChild(el('circle',{cx:cx,cy:y,r:3.2,fill:s[1],stroke:t.surface,'stroke-width':2}));
+      const hit=el('circle',{cx:cx,cy:y,r:14,fill:'transparent'}); hit.style.cursor='pointer';
+      hit.addEventListener('pointerdown',function(ev){
+        showTip(ev,'<div class="th">'+d.q+'</div>'+row('매출총이익률',d.gpm.toFixed(1)+'%')+row('영업이익률',d.opm.toFixed(1)+'%')+row('매출',fmt(d.rev)+'억'));
+      });
+      svg.appendChild(hit);
+    });
+  });
+  QTR.forEach(function(d,i){
+    if(narrow && d.q.indexOf('.')<0) return;
+    const cx=ml+span*(i+0.5);
+    svg.appendChild(txt(cx, H-8, narrow? d.q.split('.')[0]+'년' : d.q, {fs:narrow?9:10, fill:t.ink2}));
+  });
+  host.innerHTML=''; host.appendChild(svg);
+}
+
+/* ---------- C3: segment stacked ---------- */
+function drawC3(host, W){
+  const t=T(), narrow=W<560;
+  const H = narrow?260:300;
+  const ml=narrow?38:46, mr=10, mt=22, mb=32;
+  const iw=W-ml-mr, ih=H-mt-mb, max=1250;
+  const cols=[t.s[0],t.s[1],t.s[2],t.s[3],t.line2];
+  const svg=el('svg',{viewBox:'0 0 '+W+' '+H,role:'img','aria-label':'응용시장별 매출 구성'});
+  [0,250,500,750,1000,1250].forEach(function(v){
+    const y=mt+ih-(v/max)*ih;
+    svg.appendChild(el('line',{x1:ml,x2:W-mr,y1:y,y2:y,stroke:t.line,'stroke-width':1}));
+    svg.appendChild(txt(ml-7,y+4,fmt(v),{anchor:'end',fs:narrow?9.5:10.5}));
+  });
+  const span=iw/SEG.length, bw=Math.min(narrow?30:56, span*0.55);
+  SEG.forEach(function(d,i){
+    const cx=ml+span*(i+0.5); let acc=0;
+    const total=d.v.reduce(function(a,b){return a+b;},0);
+    d.v.forEach(function(v,j){
+      const h=(v/max)*ih, y=mt+ih-((acc+v)/max)*ih;
+      const r=el('rect',{x:cx-bw/2,y:y,width:bw,height:Math.max(h-2,0.5),fill:cols[j]});
+      r.style.cursor='pointer';
+      r.addEventListener('pointerdown',function(ev){
+        showTip(ev,'<div class="th">'+d.k+' · '+SEGNAMES[j]+'</div>'+row('매출',fmt(v)+'억')+row('비중',(v/total*100).toFixed(1)+'%')+row('합계',fmt(total)+'억'));
+      });
+      svg.appendChild(r); acc+=v;
+    });
+    svg.appendChild(txt(cx, mt+ih-(total/max)*ih-7, fmt(total), {fs:narrow?10:12, fill:t.ink, fw:600}));
+    svg.appendChild(txt(cx, H-11, d.k, {fs:narrow?10:11.5, fill:t.ink2}));
+  });
+  svg.appendChild(el('line',{x1:ml,x2:W-mr,y1:mt+ih,y2:mt+ih,stroke:t.line2,'stroke-width':1.5}));
+  host.innerHTML=''; host.appendChild(svg);
+}
+
+/* ---------- C4: backlog ---------- */
+function drawC4(host, W){
+  const t=T(), narrow=W<560;
+  const H=narrow?250:280;
+  const ml=narrow?42:52, mr=narrow?10:14, mt=30, mb=44;
+  const iw=W-ml-mr, ih=H-mt-mb, max=2000;
+  const svg=el('svg',{viewBox:'0 0 '+W+' '+H,role:'img','aria-label':'개발 프로젝트 잔액과 신규 유입'});
+  [0,500,1000,1500,2000].forEach(function(v){
+    const y=mt+ih-(v/max)*ih;
+    svg.appendChild(el('line',{x1:ml,x2:W-mr,y1:y,y2:y,stroke:t.line,'stroke-width':1}));
+    svg.appendChild(txt(ml-7,y+4,fmt(v),{anchor:'end',fs:narrow?9.5:10.5}));
+  });
+  svg.appendChild(txt(ml,mt-12,'억원',{anchor:'start',fs:10,fill:t.ink2,fw:500}));
+  const span=iw/BACKLOG.length, bw=Math.min(narrow?22:44, span*0.5);
+  BACKLOG.forEach(function(d,i){
+    const cx=ml+span*(i+0.5), h=(d.bl/max)*ih, y=mt+ih-h;
+    const r=el('rect',{x:cx-bw/2,y:y,width:bw,height:h,fill:(d.bb!==null&&d.bb<1)?t.s[3]:t.s[0],rx:2});
+    r.style.cursor='pointer';
+    r.addEventListener('pointerdown',function(ev){
+      showTip(ev,'<div class="th">'+d.k+'</div>'+row('프로젝트 잔액',fmt(d.bl)+'억')+(d.nw!==null?row('기간 내 신규',fmt(d.nw)+'억'):'')+(d.bb!==null?row('B/B',d.bb.toFixed(2)):''));
+    });
+    svg.appendChild(r);
+    svg.appendChild(txt(cx, y-7, fmt(d.bl), {fs:narrow?9.5:12, fill:t.ink, fw:600}));
+    if(d.nw!==null){
+      const ny=mt+ih-(d.nw/max)*ih;
+      svg.appendChild(el('line',{x1:cx-bw/2-4,x2:cx+bw/2+4,y1:ny,y2:ny,stroke:t.acc,'stroke-width':2.5}));
+    }
+    svg.appendChild(txt(cx, H-26, d.k, {fs:narrow?9.5:11, fill:t.ink2}));
+    if(d.bb!==null) svg.appendChild(txt(cx, H-9, (narrow?'':'B/B ')+d.bb.toFixed(2), {fs:narrow?9:10.5, fill:d.bb>=1?t.pos:t.neg, fw:600}));
+  });
+  svg.appendChild(el('line',{x1:ml,x2:W-mr,y1:mt+ih,y2:mt+ih,stroke:t.line2,'stroke-width':1.5}));
+  host.innerHTML=''; host.appendChild(svg);
+}
+
+/* ---------- C5: price ---------- */
+function drawC5(host, W){
+  const t=T(), narrow=W<560;
+  const H=narrow?280:330;
+  const ml=narrow?38:48, mr=narrow?8:12, mt=18, mb=30;
+  const iw=W-ml-mr, ih=H-mt-mb;
+  const d0=new Date(2023,10,13).getTime(), d1=new Date(2026,8,15).getTime(), max=85000;
+  function px(ds){ return ml + (new Date(+ds.slice(0,4),+ds.slice(4,6)-1,+ds.slice(6,8)).getTime()-d0)/(d1-d0)*iw; }
+  function py(v){ return mt+ih-(v/max)*ih; }
+  const svg=el('svg',{viewBox:'0 0 '+W+' '+H,role:'img','aria-label':'주가 추이와 CB 전환가'});
+  [0,20000,40000,60000,80000].forEach(function(v){
+    const y=py(v);
+    svg.appendChild(el('line',{x1:ml,x2:W-mr,y1:y,y2:y,stroke:t.line,'stroke-width':1}));
+    svg.appendChild(txt(ml-6,y+4, v===0?'0':(v/1000)+'k',{anchor:'end',fs:narrow?9.5:10.5}));
+  });
+  [['20240101','24.01'],['20240701','24.07'],['20250101','25.01'],['20250701','25.07'],['20260101','26.01'],['20260701','26.07']].forEach(function(p){
+    const x=px(p[0]);
+    svg.appendChild(el('line',{x1:x,x2:x,y1:mt+ih,y2:mt+ih+5,stroke:t.line2,'stroke-width':1}));
+    svg.appendChild(txt(x,H-10,p[1],{fs:narrow?9:10.5}));
+  });
+  // reference lines
+  [[25000,t.s[2],'공모가 25,000'],[31517,t.s[1],'CB 전환가 31,517'],[25214,t.s[3],'리픽싱 하한 25,214']].forEach(function(l,i){
+    const y=py(l[0]);
+    svg.appendChild(el('line',{x1:ml,x2:W-mr,y1:y,y2:y,stroke:l[1],'stroke-width':1.4,'stroke-dasharray':'5 4'}));
+    if(!narrow || i!==2) svg.appendChild(txt(W-mr-3, y+(i===2?12:-4), l[2], {anchor:'end',fs:9.5,fill:l[1],fw:500}));
+  });
+  let ps='';
+  PRICE.forEach(function(p,i){ ps += (i?' L ':'M ')+px(p[0]).toFixed(1)+' '+py(p[1]).toFixed(1); });
+  svg.appendChild(el('path',{d:ps,fill:'none',stroke:t.s[0],'stroke-width':2,'stroke-linejoin':'round','stroke-linecap':'round'}));
+  const pk=PRICE.reduce(function(a,b){ return b[1]>a[1]?b:a; });
+  const lw=PRICE.reduce(function(a,b){ return b[1]<a[1]?b:a; });
+  const last=PRICE[PRICE.length-1];
+  [[pk,-10,fmt(pk[1])],[lw,16,fmt(lw[1])],[last,-10,fmt(last[1])]].forEach(function(m){
+    svg.appendChild(el('circle',{cx:px(m[0][0]),cy:py(m[0][1]),r:4,fill:t.s[0],stroke:t.surface,'stroke-width':2}));
+    svg.appendChild(txt(Math.min(px(m[0][0]),W-mr-18), py(m[0][1])+m[1], m[2], {fs:narrow?10:11,fill:t.ink,fw:600}));
+  });
+  // hit layer
+  const hit=el('rect',{x:ml,y:mt,width:iw,height:ih,fill:'transparent'});
+  let down=false;
+  function near(ev){
+    const rect=svg.getBoundingClientRect(); const sx=(ev.clientX-rect.left)*(W/rect.width);
+    let best=null,bd=1e9; PRICE.forEach(function(p){ const d=Math.abs(px(p[0])-sx); if(d<bd){bd=d;best=p;} });
+    if(best) showTip(ev,'<div class="th">'+best[0].slice(0,4)+'.'+best[0].slice(4,6)+'.'+best[0].slice(6,8)+'</div>'+row('종가',fmt(best[1])+'원')+row('현재가 대비',((20600/best[1]-1)*100).toFixed(1)+'%'));
+  }
+  hit.addEventListener('pointerdown',function(ev){ down=true; near(ev); });
+  hit.addEventListener('pointermove',function(ev){ if(ev.pointerType==='mouse'||down) near(ev); });
+  ['pointerup','pointercancel','pointerleave'].forEach(function(n){ hit.addEventListener(n,function(){ down=false; if(n!=='pointerup') hideTip(); }); });
+  svg.appendChild(hit);
+  host.innerHTML=''; host.appendChild(svg);
+}
+
+/* ---------- C6: GPM ladder ---------- */
+function drawC6(host, W){
+  const t=T(), narrow=W<560;
+  const rowH=narrow?26:30, ml=narrow?150:230, mr=44, mt=8, mb=8;
+  const H=mt+mb+LADDER.length*rowH, iw=W-ml-mr, max=55;
+  const svg=el('svg',{viewBox:'0 0 '+W+' '+H,role:'img','aria-label':'매출총이익률 비교'});
+  LADDER.forEach(function(d,i){
+    const y=mt+i*rowH, bh=rowH-9, w=(d.v/max)*iw;
+    const r=el('rect',{x:ml,y:y+4,width:w,height:bh,fill:d.me?t.acc:t.s[0],rx:2});
+    if(!d.me) r.setAttribute('opacity','0.55');
+    r.style.cursor='pointer';
+    r.addEventListener('pointerdown',function(ev){ showTip(ev,'<div class="th">'+d.n+'</div>'+row('매출총이익률',d.v.toFixed(1)+'%')); });
+    svg.appendChild(r);
+    const lbl=txt(ml-8, y+4+bh/2+4, d.n, {anchor:'end',fs:narrow?9.5:11.5, fill:d.me?t.ink:t.ink2, fw:d.me?600:400, ff:'"IBM Plex Sans KR",sans-serif'});
+    svg.appendChild(lbl);
+    svg.appendChild(txt(ml+w+6, y+4+bh/2+4, d.v.toFixed(1)+'%', {anchor:'start',fs:narrow?10:11.5, fill:t.ink, fw:600}));
+  });
+  host.innerHTML=''; host.appendChild(svg);
+}
+
+/* ---------- render ---------- */
+legend('lg1',[{c:T().s[0],n:'개발(NRE·시제품)'},{c:T().s[1],n:'양산(제품 공급)'}]);
+legend('lg2',[{c:T().s[0],n:'분기 매출'},{c:T().s[3],n:'2026년'},{c:T().s[2],n:'매출총이익률'},{c:T().acc,n:'영업이익률'}]);
+legend('lg3',SEGNAMES.map(function(n,i){ return {c:[T().s[0],T().s[1],T().s[2],T().s[3],T().line2][i], n:n}; }));
+legend('lg4',[{c:T().s[0],n:'잔액 (B/B ≥ 1 구간)'},{c:T().s[3],n:'잔액 (B/B < 1 구간)'},{c:T().acc,n:'기간 내 신규 프로젝트 유입'}]);
+legend('lg5',[{c:T().s[0],n:'주간 종가'},{c:T().s[2],n:'공모가'},{c:T().s[1],n:'CB 전환가'},{c:T().s[3],n:'리픽싱 하한'}]);
+
+const charts=[['c1',drawC1],['c2',drawC2],['c3',drawC3],['c4',drawC4],['c5',drawC5],['c6',drawC6]];
+function renderAll(){
+  charts.forEach(function(c){ const h=document.getElementById(c[0]); if(!h) return; const W=Math.max(300, Math.floor(h.clientWidth||h.getBoundingClientRect().width||600)); c[1](h,W); });
+}
+let rt=null;
+window.addEventListener('resize', function(){ clearTimeout(rt); rt=setTimeout(renderAll,150); });
+if(window.matchMedia){ try{ window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', renderAll); }catch(e){} }
+if(document.fonts && document.fonts.ready){ document.fonts.ready.then(renderAll); }
+renderAll();
+})();
+</script>
+</body>
+</html>

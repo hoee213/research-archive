@@ -1,0 +1,648 @@
+<!doctype html><html><head>
+<meta name="viewport" content="width=device-width, initial-scale=1"><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1"><style>:root{color-scheme:light}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}</style></head><body>
+<title>사피엔반도체 해부</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+KR:wght@300;400;500;600;700&display=swap">
+<style>
+:root{
+  --paper:#F4F6F5; --surface:#FFFFFF; --surface-2:#EDF1EF;
+  --ink:#12181A; --ink-2:#3A4744; --muted:#6B7975;
+  --line:#DCE3E0; --line-strong:#C3CECA;
+  --accent:#0E7C66; --accent-soft:#E2F0EA; --accent-ink:#0A5A4A;
+  --neg:#B3341F; --neg-soft:#F7E5E1;
+  --caut:#9A6300; --caut-soft:#F6ECD9;
+  --pos:#0E7C66;
+  --maxw:1080px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#0E1214; --surface:#151B1D; --surface-2:#1B2325;
+    --ink:#E9EEEC; --ink-2:#BCC8C4; --muted:#8C9B96;
+    --line:#26302F; --line-strong:#374443;
+    --accent:#3FD3A8; --accent-soft:#12302A; --accent-ink:#7FE6C6;
+    --neg:#F0806F; --neg-soft:#33201D;
+    --caut:#E0A64A; --caut-soft:#2E2415;
+    --pos:#3FD3A8;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0E1214; --surface:#151B1D; --surface-2:#1B2325;
+  --ink:#E9EEEC; --ink-2:#BCC8C4; --muted:#8C9B96;
+  --line:#26302F; --line-strong:#374443;
+  --accent:#3FD3A8; --accent-soft:#12302A; --accent-ink:#7FE6C6;
+  --neg:#F0806F; --neg-soft:#33201D;
+  --caut:#E0A64A; --caut-soft:#2E2415;
+  --pos:#3FD3A8;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--paper); color:var(--ink);
+  font-family:"IBM Plex Sans KR",-apple-system,BlinkMacSystemFont,"Malgun Gothic",sans-serif;
+  font-size:16px; line-height:1.72; font-weight:400;
+  -webkit-font-smoothing:antialiased;
+}
+.mono{font-family:"IBM Plex Mono","SFMono-Regular",Consolas,monospace; font-variant-numeric:tabular-nums}
+.wrap{max-width:var(--maxw); margin:0 auto; padding:0 22px}
+
+.bar{position:sticky; top:0; z-index:50; background:var(--surface); border-bottom:1px solid var(--line)}
+.bar-in{max-width:var(--maxw); margin:0 auto; padding:9px 22px; display:flex; align-items:baseline; gap:8px 16px; flex-wrap:wrap}
+.bar .nm{font-weight:600; letter-spacing:-.01em}
+.bar .cd{font-family:"IBM Plex Mono",monospace; font-size:12px; color:var(--muted); letter-spacing:.04em}
+.bar .px{font-family:"IBM Plex Mono",monospace; font-size:14px; font-weight:500; margin-left:auto}
+.bar .dn{color:var(--neg)}
+.bar .mc{font-family:"IBM Plex Mono",monospace; font-size:13px; color:var(--muted)}
+
+.hero{position:relative; overflow:hidden; border-bottom:1px solid var(--line); background:var(--surface)}
+.hero::before{
+  content:""; position:absolute; inset:0; pointer-events:none; opacity:.55;
+  background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);
+  background-size:14px 14px;
+  -webkit-mask-image:radial-gradient(120% 90% at 88% 8%,#000 0%,transparent 62%);
+  mask-image:radial-gradient(120% 90% at 88% 8%,#000 0%,transparent 62%);
+}
+.hero-in{position:relative; max-width:var(--maxw); margin:0 auto; padding:56px 22px 44px}
+.eyebrow{font-family:"IBM Plex Mono",monospace; font-size:11.5px; letter-spacing:.16em; text-transform:uppercase; color:var(--accent); font-weight:500}
+h1{font-size:clamp(30px,4.6vw,50px); line-height:1.16; letter-spacing:-.032em; font-weight:700; margin:14px 0 0; text-wrap:balance; max-width:19ch}
+.dek{margin:20px 0 0; font-size:17.5px; line-height:1.68; color:var(--ink-2); max-width:60ch; font-weight:300}
+.dek b{font-weight:600; color:var(--ink)}
+.stamp{margin-top:26px; display:flex; gap:10px 22px; flex-wrap:wrap; font-family:"IBM Plex Mono",monospace; font-size:12px; color:var(--muted)}
+
+section{padding:52px 0 8px; border-top:1px solid var(--line)}
+section:first-of-type{border-top:none}
+.sechead{display:flex; align-items:baseline; gap:14px; margin-bottom:8px}
+.secno{font-family:"IBM Plex Mono",monospace; font-size:12px; color:var(--accent); font-weight:500; letter-spacing:.08em}
+h2{font-size:clamp(21px,2.6vw,27px); letter-spacing:-.022em; font-weight:600; margin:0; text-wrap:balance}
+.lede{color:var(--ink-2); max-width:66ch; margin:12px 0 26px; font-weight:300; font-size:16.5px}
+h3{font-size:16.5px; font-weight:600; letter-spacing:-.012em; margin:34px 0 10px}
+p{margin:0 0 15px; max-width:70ch}
+ul{margin:0 0 15px; padding-left:19px}
+li{margin-bottom:7px}
+a{color:var(--accent-ink); text-decoration:underline; text-underline-offset:2px; text-decoration-thickness:1px}
+a:focus-visible,summary:focus-visible{outline:2px solid var(--accent); outline-offset:3px; border-radius:2px}
+strong{font-weight:600}
+.hl{background:var(--accent-soft); padding:0 3px; border-radius:2px; font-weight:500}
+
+.tiles{display:grid; grid-template-columns:repeat(auto-fit,minmax(158px,1fr)); gap:1px; background:var(--line); border:1px solid var(--line); border-radius:3px; overflow:hidden; margin:0 0 30px}
+.tile{background:var(--surface); padding:14px 15px 15px}
+.tile .k{font-family:"IBM Plex Mono",monospace; font-size:10.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--muted)}
+.tile .v{font-family:"IBM Plex Mono",monospace; font-size:22px; font-weight:500; letter-spacing:-.02em; margin-top:5px; line-height:1.2}
+.tile .s{font-size:12px; color:var(--muted); margin-top:3px; line-height:1.45}
+.v.neg{color:var(--neg)} .v.pos{color:var(--pos)} .v.caut{color:var(--caut)}
+
+.tbl-wrap{overflow-x:auto; border:1px solid var(--line); border-radius:3px; background:var(--surface); margin:0 0 12px}
+table{border-collapse:collapse; width:100%; min-width:600px; font-size:13.5px}
+th,td{padding:9px 12px; text-align:right; border-bottom:1px solid var(--line); white-space:nowrap}
+th{font-family:"IBM Plex Mono",monospace; font-size:10.5px; letter-spacing:.07em; text-transform:uppercase; color:var(--muted); font-weight:500; background:var(--surface-2)}
+th:first-child,td:first-child{text-align:left; white-space:normal; min-width:118px}
+td.num{font-family:"IBM Plex Mono",monospace; font-variant-numeric:tabular-nums}
+td.neg{color:var(--neg)}
+tbody tr:last-child td{border-bottom:none}
+tbody tr.emph{background:var(--accent-soft)}
+tbody tr.emph td{font-weight:500}
+.cap{font-size:12px; color:var(--muted); margin:0 0 26px; max-width:78ch; line-height:1.6}
+.cap b{color:var(--ink-2); font-weight:500}
+
+.chart{border:1px solid var(--line); border-radius:3px; background:var(--surface); padding:20px 18px 14px; margin:0 0 12px; overflow-x:auto}
+.crow{display:grid; grid-template-columns:66px 1fr 92px; align-items:center; gap:12px; margin-bottom:7px; min-width:430px}
+.clab{font-family:"IBM Plex Mono",monospace; font-size:11.5px; color:var(--muted)}
+.ctrack{position:relative; height:20px; background:var(--surface-2); border-radius:2px}
+.cfill{position:absolute; left:0; top:0; bottom:0; background:var(--accent); border-radius:2px}
+.cfill.dim{background:var(--line-strong)}
+.cfill.warn{background:var(--caut)}
+.cval{font-family:"IBM Plex Mono",monospace; font-size:12px; text-align:right}
+.legend{display:flex; gap:18px; flex-wrap:wrap; font-family:"IBM Plex Mono",monospace; font-size:11px; color:var(--muted); margin-top:12px; padding-top:11px; border-top:1px solid var(--line)}
+.sw{display:inline-block; width:10px; height:10px; border-radius:2px; margin-right:6px; vertical-align:-1px}
+
+.chain{border:1px solid var(--line); border-radius:3px; background:var(--surface); padding:22px 18px; margin:0 0 12px; overflow-x:auto}
+.chain-row{display:flex; align-items:stretch; min-width:720px}
+.node{flex:1; padding:12px 11px; border:1px solid var(--line); border-right:none; background:var(--surface)}
+.node:last-child{border-right:1px solid var(--line)}
+.node.me{background:var(--accent-soft); border-color:var(--accent); border-right:1px solid var(--accent); position:relative; z-index:2}
+.node .stage{font-family:"IBM Plex Mono",monospace; font-size:9.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--muted)}
+.node.me .stage{color:var(--accent-ink)}
+.node .who{font-size:13px; font-weight:600; margin-top:5px; line-height:1.35}
+.node .ex{font-size:11.5px; color:var(--muted); margin-top:4px; line-height:1.45}
+
+.duo{display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--line); border:1px solid var(--line); border-radius:3px; overflow:hidden; margin:0 0 12px}
+@media(max-width:720px){.duo{grid-template-columns:1fr}}
+.duo-col{background:var(--surface); padding:18px 18px 8px}
+.duo-h{font-family:"IBM Plex Mono",monospace; font-size:11px; letter-spacing:.1em; text-transform:uppercase; font-weight:500; margin-bottom:12px; padding-bottom:9px; border-bottom:1px solid var(--line)}
+.duo-col.yes .duo-h{color:var(--accent)}
+.duo-col.no .duo-h{color:var(--neg)}
+.duo-col ul{padding-left:0; list-style:none; margin:0}
+.duo-col li{margin-bottom:14px; font-size:14px; line-height:1.62; padding-left:16px; position:relative}
+.duo-col li::before{content:""; position:absolute; left:0; top:9px; width:6px; height:6px; border-radius:1px; background:var(--accent)}
+.duo-col.no li::before{background:var(--neg)}
+.duo-col li b{display:block; font-weight:600; margin-bottom:1px}
+
+.risk{border:1px solid var(--line); border-radius:3px; overflow:hidden; background:var(--surface); margin:0 0 12px}
+.rrow{display:grid; grid-template-columns:64px 1fr; border-bottom:1px solid var(--line)}
+.rrow:last-child{border-bottom:none}
+.rsev{font-family:"IBM Plex Mono",monospace; font-size:10px; letter-spacing:.08em; padding:15px 0 0; text-align:center; font-weight:500}
+.rsev.h{color:var(--neg); background:var(--neg-soft)}
+.rsev.m{color:var(--caut); background:var(--caut-soft)}
+.rsev.l{color:var(--muted); background:var(--surface-2)}
+.rbody{padding:14px 16px}
+.rbody .rt{font-weight:600; font-size:14.5px; margin-bottom:3px}
+.rbody .rd{font-size:13.5px; color:var(--ink-2); line-height:1.6; max-width:68ch}
+
+.check{counter-reset:ck; list-style:none; padding:0; margin:0 0 12px; border:1px solid var(--line); border-radius:3px; background:var(--surface); overflow:hidden}
+.check li{counter-increment:ck; display:grid; grid-template-columns:40px 1fr; margin:0; border-bottom:1px solid var(--line); align-items:stretch}
+.check li:last-child{border-bottom:none}
+.check li::before{content:counter(ck,decimal-leading-zero); font-family:"IBM Plex Mono",monospace; font-size:11px; color:var(--accent); padding:15px 0 0; text-align:center; background:var(--surface-2)}
+.check .ci{padding:14px 16px}
+.check .ci b{display:block; font-weight:600; font-size:14.5px; margin-bottom:2px}
+.check .ci span{font-size:13.5px; color:var(--ink-2); line-height:1.6; display:block; max-width:68ch}
+
+.call{border-left:3px solid var(--accent); background:var(--surface); padding:16px 18px; margin:0 0 24px; border-radius:0 3px 3px 0; border-top:1px solid var(--line); border-right:1px solid var(--line); border-bottom:1px solid var(--line)}
+.call .ch{font-family:"IBM Plex Mono",monospace; font-size:10.5px; letter-spacing:.11em; text-transform:uppercase; color:var(--accent); font-weight:500; margin-bottom:7px}
+.call p{margin:0 0 10px; font-size:14.5px; line-height:1.68; max-width:72ch}
+.call p:last-child{margin-bottom:0}
+.call.warn{border-left-color:var(--caut)}
+.call.warn .ch{color:var(--caut)}
+
+details{border:1px solid var(--line); border-radius:3px; background:var(--surface); margin:0 0 12px}
+summary{cursor:pointer; padding:13px 16px; font-size:14px; font-weight:500; list-style:none}
+summary::-webkit-details-marker{display:none}
+summary::before{content:"+ "; font-family:"IBM Plex Mono",monospace; color:var(--accent)}
+details[open] summary::before{content:"- "}
+.dbody{padding:0 16px 16px; font-size:13.5px; color:var(--ink-2); line-height:1.65}
+.dbody p{max-width:74ch; margin-bottom:11px}
+.dbody p:last-child{margin-bottom:0}
+
+footer{border-top:1px solid var(--line); margin-top:56px; padding:30px 0 60px; font-size:12.5px; color:var(--muted); line-height:1.7}
+footer b{color:var(--ink-2); font-weight:500}
+.srcs{display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:6px 22px; margin-top:12px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important; transition:none!important}}
+</style>
+
+<div class="bar">
+  <div class="bar-in">
+    <span class="nm">사피엔반도체</span>
+    <span class="cd">452430 · KOSDAQ</span>
+    <span class="px">26,300원 <span class="dn">종가 2026-08-24</span></span>
+    <span class="mc">시총 2,171억 · 8,255,421주</span>
+  </div>
+</div>
+
+<div class="hero">
+  <div class="hero-in">
+    <div class="eyebrow">기업분석 · Micro-LED 디스플레이 구동 반도체</div>
+    <h1>칩을 파는 회사의 값이 붙었지만, 팔고 있는 건 설계 용역이다</h1>
+    <p class="dek">2026년 상반기 매출이 <b>+291%</b> 뛰고 창사 이래 첫 반기 영업흑자를 냈다. 그런데 그 매출의 <b>98.9%</b>가 제품이 아니라 개발용역(NRE)이고, 흑자의 실체는 <b>계약금액 증액에 따른 소급 인식</b>과 <b>대손충당금 환입</b>이다. 그리고 상반기에 매출을 만들어낸 계약 3건은 이미 <b>87.5~93.0% 소진</b>됐다.</p>
+    <div class="stamp">
+      <span>작성 2026-08-24</span>
+      <span>DART 정기보고서 · 공시원문 직접 파싱</span>
+      <span>증권사 커버리지 3사 (전원 Not Rated)</span>
+      <span>연결대상 종속회사 없음 — 전 수치 별도기준</span>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+
+<section>
+  <div class="sechead"><span class="secno">§01</span><h2>한눈에</h2></div>
+  <div class="tiles">
+    <div class="tile"><div class="k">26년 상반기 매출</div><div class="v">143.5억</div><div class="s">전년 반기 36.6억 → +291.5%</div></div>
+    <div class="tile"><div class="k">상반기 영업이익</div><div class="v pos">+4.1억</div><div class="s">OPM 2.9% · 첫 반기 흑자</div></div>
+    <div class="tile"><div class="k">제품매출 비중</div><div class="v neg">1.1%</div><div class="s">24년 반기 32.4% → 25년 12.1%</div></div>
+    <div class="tile"><div class="k">영업활동현금흐름</div><div class="v neg">-68.8억</div><div class="s">현금 109.9억 → 41.8억</div></div>
+    <div class="tile"><div class="k">공시계약 잔여 인식액</div><div class="v caut">약 26억</div><div class="s">NRE 3건 진행률 87.5~93.0%</div></div>
+    <div class="tile"><div class="k">PBR</div><div class="v">15.6배</div><div class="s">BPS 1,690원 · 자본 139.6억</div></div>
+  </div>
+
+  <div class="call">
+    <div class="ch">이 리포트의 한 문장</div>
+    <p>사피엔반도체는 <strong>AR 스마트글래스용 LEDoS(실리콘 위 마이크로LED) CMOS 백플레인</strong>이라는, 아직 시장이 열리지 않은 칸에 먼저 자리를 잡은 팹리스다. 자리는 진짜다 — 미주 빅테크 1곳, 북미 빅테크 1곳, 아시아 마이크로디스플레이 제조사 2곳과 총 <span class="hl">USD 24.0M(약 354억)</span> 규모의 계약을 확보했다. 문제는 그 계약이 전부 <strong>개발용역(NRE)</strong>이고, 양산 제품 수주는 2026년 4월의 <strong>USD 1.56M 웨이퍼 PO 단 1건</strong>뿐이라는 점이다. 상장 이래 3년 연속 IPO 추정치를 50~60% 하회한 이력을 감안하면, 현재 주가 2,171억은 <em>NRE 회사의 값이 아니라 아직 오지 않은 양산 회사의 값</em>이다.</p>
+  </div>
+</section>
+
+<section>
+  <div class="sechead"><span class="secno">§02</span><h2>비즈니스 모델 — 밸류체인의 어느 칸인가</h2></div>
+  <p class="lede">2017년 설립, 2024년 2월 하나머스트7호스팩 합병으로 코스닥 상장(기술성장기업 특례). 자체 생산설비가 없는 순수 팹리스이며, 파운드리·패키지·테스트를 전량 외주한다.</p>
+
+  <div class="chain">
+    <div class="chain-row">
+      <div class="node"><div class="stage">Upstream</div><div class="who">LED 에피·칩</div><div class="ex">에피스타, 三安, 서울바이오시스</div></div>
+      <div class="node me"><div class="stage">여기 · 설계</div><div class="who">CMOS 백플레인 / DDIC 설계</div><div class="ex">사피엔반도체 — 28nm FD-SOI, 픽셀피치 2.5~5μm</div></div>
+      <div class="node"><div class="stage">위탁생산</div><div class="who">파운드리 · 패키지 · 테스트</div><div class="ex">전량 외주 (업체 비공개)</div></div>
+      <div class="node"><div class="stage">패널</div><div class="who">LEDoS 마이크로디스플레이</div><div class="ex">JBD, Raysolve, Porotech, Raxium</div></div>
+      <div class="node"><div class="stage">모듈·세트</div><div class="who">광학엔진 · AR 글래스</div><div class="ex">미주/북미 빅테크, 중국 세트사</div></div>
+    </div>
+  </div>
+  <p class="cap"><b>출처</b> 2026년 반기보고서 「II. 사업의 내용」, 회사 홈페이지 제품 사양. 사피엔은 백플레인 실리콘 칩만 설계하며, 그 위에 마이크로LED 소자를 얹는 본딩·전사 공정은 고객(패널사)의 몫이다.</p>
+
+  <h3>돈을 버는 방식은 두 단계인데, 지금은 1단계만 돌고 있다</h3>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>수익모델</th><th>내용</th><th>인식방법</th><th>26년 반기 매출</th><th>비중</th></tr></thead>
+      <tbody>
+        <tr class="emph"><td>① NRE 개발용역</td><td>고객 사양에 맞춘 백플레인 맞춤설계</td><td>기간에 걸쳐 (투입법 진행기준)</td><td class="num">141.93억</td><td class="num">98.9%</td></tr>
+        <tr><td>② 제품 공급</td><td>설계된 백플레인을 웨이퍼/칩으로 납품</td><td>한 시점에 (인도 시)</td><td class="num">1.56억</td><td class="num">1.1%</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="cap"><b>출처</b> 반기보고서 주석 20 「고객과의 계약에서 생기는 수익」. ①은 고객이 개발비를 대는 구조라 마진이 구조적으로 얇고 반복성이 없다. ②가 커져야 반복매출·규모의 경제가 생긴다. <b>전년 반기 제품 비중은 12.1%, 2024년 반기는 32.4%였다 — 비중이 거꾸로 가고 있다.</b></p>
+
+  <h3>제품 라인은 둘인데, 하나는 사실상 사라졌다</h3>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>사업부문</th><th>제품</th><th>24년 반기</th><th>25년 반기</th><th>26년 반기</th></tr></thead>
+      <tbody>
+        <tr><td>대형 디스플레이 구동반도체</td><td>Chip Set (TV·사이니지·FALD-BLU)</td><td class="num">0.33억</td><td class="num">1.94억</td><td class="num neg">0억</td></tr>
+        <tr class="emph"><td>초소형 디스플레이 구동반도체</td><td>CMOS Backplane (AR/MR)</td><td class="num">2.21억</td><td class="num">34.71억</td><td class="num">143.49억</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="cap"><b>출처</b> 반기보고서 「4. 매출 및 수주상황」. IPO 증권신고서는 2025년 TV/사이니지 67.2억, FALD-BLU 75.2억을 추정했으나 <b>실적은 각각 0원과 1.94억</b>이었다. 회사가 내세운 "사업 다변화로 초기시장 위험 최소화" 전략은 작동하지 않았고, 남은 것은 AR 하나다.</p>
+</section>
+
+<section>
+  <div class="sechead"><span class="secno">§03</span><h2>실적 — 흑자전환을 해부한다</h2></div>
+  <p class="lede">숫자 자체는 극적이다. 다만 무엇이 그 숫자를 만들었는지가 이 종목의 전부다.</p>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>분기</th><th>매출</th><th>매출총이익</th><th>GPM</th><th>판관비</th><th>영업이익</th><th>OPM</th><th>순이익</th></tr></thead>
+      <tbody>
+        <tr><td>2024 1Q</td><td class="num">0.82</td><td class="num">0.42</td><td class="num">51.1%</td><td class="num">32.98</td><td class="num neg">-32.56</td><td class="num">—</td><td class="num neg">-163.71</td></tr>
+        <tr><td>2024 2Q</td><td class="num">1.72</td><td class="num">0.40</td><td class="num">23.5%</td><td class="num">15.09</td><td class="num neg">-14.69</td><td class="num">—</td><td class="num neg">-15.99</td></tr>
+        <tr><td>2024 3Q</td><td class="num">10.51</td><td class="num">2.44</td><td class="num">23.3%</td><td class="num">9.55</td><td class="num neg">-7.10</td><td class="num">—</td><td class="num neg">-8.28</td></tr>
+        <tr><td>2024 4Q</td><td class="num">66.87</td><td class="num">11.57</td><td class="num">17.3%</td><td class="num">7.75</td><td class="num">+3.82</td><td class="num">5.7%</td><td class="num">+5.89</td></tr>
+        <tr><td>2025 1Q</td><td class="num">16.48</td><td class="num">2.74</td><td class="num">16.7%</td><td class="num">18.78</td><td class="num neg">-16.03</td><td class="num">—</td><td class="num neg">-16.99</td></tr>
+        <tr><td>2025 2Q</td><td class="num">20.17</td><td class="num neg">-4.92</td><td class="num neg">-24.4%</td><td class="num">11.94</td><td class="num neg">-16.86</td><td class="num">—</td><td class="num neg">-22.50</td></tr>
+        <tr><td>2025 3Q</td><td class="num">46.39</td><td class="num">6.55</td><td class="num">14.1%</td><td class="num">19.47</td><td class="num neg">-12.92</td><td class="num">—</td><td class="num neg">-8.71</td></tr>
+        <tr><td>2025 4Q</td><td class="num">90.08</td><td class="num">22.95</td><td class="num">25.5%</td><td class="num">22.79</td><td class="num">+0.16</td><td class="num">0.2%</td><td class="num">+0.32</td></tr>
+        <tr class="emph"><td>2026 1Q</td><td class="num">71.34</td><td class="num">14.27</td><td class="num">20.0%</td><td class="num">13.26</td><td class="num">+1.02</td><td class="num">1.4%</td><td class="num">+3.64</td></tr>
+        <tr class="emph"><td>2026 2Q</td><td class="num">72.15</td><td class="num">25.07</td><td class="num">34.7%</td><td class="num">21.95</td><td class="num">+3.12</td><td class="num">4.3%</td><td class="num">+1.04</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="cap">단위 억원, 별도기준. <b>산출근거</b> DART <span class="mono">fnlttSinglAcntAll</span> 원문에서 분기별 <span class="mono">thstrm_amount</span>(3개월)와 <span class="mono">thstrm_add_amount</span>(누적)를 각각 취해 재계산. 4분기 값은 연간에서 3분기 누적을 차감했다. 2026년 2분기 매출은 반기보고서에 매출 계정이 별도 표시되지 않아 <b>매출원가 47.08억 + 매출총이익 25.07억</b>으로 역산했다(반기 누적 143.49억과 일치 확인). 2024년 1분기 순손실 -163.7억의 대부분은 영업이 아니라 <b>스팩합병 상장 과정에서 일시 인식한 합병비용 134.5억</b>(2024년 사업보고서 주석 27 기타비용, 비현금)이다.</p>
+
+  <div class="chart">
+    <div class="crow"><span class="clab">24.4Q</span><div class="ctrack"><div class="cfill dim" style="width:46.4%"></div></div><span class="cval">66.9억</span></div>
+    <div class="crow"><span class="clab">25.1Q</span><div class="ctrack"><div class="cfill dim" style="width:11.4%"></div></div><span class="cval">16.5억</span></div>
+    <div class="crow"><span class="clab">25.2Q</span><div class="ctrack"><div class="cfill dim" style="width:14.0%"></div></div><span class="cval">20.2억</span></div>
+    <div class="crow"><span class="clab">25.3Q</span><div class="ctrack"><div class="cfill dim" style="width:32.2%"></div></div><span class="cval">46.4억</span></div>
+    <div class="crow"><span class="clab">25.4Q</span><div class="ctrack"><div class="cfill dim" style="width:62.5%"></div></div><span class="cval">90.1억</span></div>
+    <div class="crow"><span class="clab">26.1Q</span><div class="ctrack"><div class="cfill" style="width:49.5%"></div></div><span class="cval">71.3억</span></div>
+    <div class="crow"><span class="clab">26.2Q</span><div class="ctrack"><div class="cfill" style="width:50.1%"></div></div><span class="cval">72.1억</span></div>
+    <div class="crow"><span class="clab">26.3Q E</span><div class="ctrack"><div class="cfill warn" style="width:47.2%"></div></div><span class="cval">68억*</span></div>
+    <div class="crow"><span class="clab">26.4Q E</span><div class="ctrack"><div class="cfill warn" style="width:82.6%"></div></div><span class="cval">119억*</span></div>
+    <div class="legend"><span><span class="sw" style="background:var(--accent)"></span>확정 실적</span><span><span class="sw" style="background:var(--caut)"></span>유진투자증권 추정(2026-08-24)</span><span>* 회사 가이던스 아님</span></div>
+  </div>
+  <p class="cap">유진투자증권은 4분기에 <b>119억(제품매출 49억 포함)</b>을 가정한다. 사상 최대 분기가 되어야 하고, 그러려면 아직 공시되지 않은 양산 물량이 필요하다. §04의 계약 원장과 대조해 보길 권한다.</p>
+
+  <h3>2분기 영업이익 3.1억은 어디서 왔나</h3>
+  <p>2분기 GPM이 20.0% → 34.7%로 뛰었다. 진행기준(투입법)에서는 원가를 투입한 만큼 매출을 인식하므로, GPM은 원래 크게 흔들리지 않는다. 흔들렸다면 이유가 있다.</p>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>계약 MA-202408-004</th><th>계약금액(USD)</th><th>진행률</th><th>누적 인식(USD)</th><th>당분기 증분(USD)</th></tr></thead>
+      <tbody>
+        <tr><td>2025년말</td><td class="num">8,617,720</td><td class="num">73.19%</td><td class="num">6,307,308</td><td class="num">—</td></tr>
+        <tr><td>2026년 1분기말</td><td class="num">8,617,720</td><td class="num">88.23%</td><td class="num">7,603,412</td><td class="num">+1,296,104</td></tr>
+        <tr class="emph"><td>2026년 2분기말</td><td class="num">9,591,720</td><td class="num">88.70%</td><td class="num">8,507,855</td><td class="num">+904,443</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="cap"><b>산출근거</b> 계약금액은 2025-08-29 및 2026-05-27 단일판매·공급계약 공시의 USD 표기, 진행률은 각 분기·반기보고서 주석 20-(3). 원화 공시금액(120.28억 → 145.15억)은 서로 다른 날짜의 환율(1,395.70 / 1,513.30)로 환산돼 있어 <b>분기 증분을 원화로 비교하면 환율효과가 섞인다</b>. 그래서 USD로 계산했다.</p>
+
+  <div class="call warn">
+    <div class="ch">역산 결과</div>
+    <p>2분기에 진행률은 <strong>0.47%p</strong>밖에 오르지 않았는데 누적 인식액은 <strong>USD 904,443</strong>이 늘었다. 이 중 <strong>USD 859,451</strong>(= 계약 증액분 974,000 × 기 진행률 88.23%)은 <em>이미 지난 분기까지 원가를 다 쓴 작업에 대해 값을 더 받게 되면서 소급 인식된 금액</em>이다. 대응 원가가 없다. 환율 1,480원 적용 시 <span class="hl">약 12.7억</span>.</p>
+    <p>여기에 판관비의 <strong>대손충당금 환입 2.67억</strong>(2025년 SA-202407-007 채권에 잡아둔 충당금 환입)을 더하면 <strong>약 15.4억</strong>. 2분기 영업이익 3.12억은 이 두 항목 없이는 성립하지 않는다.</p>
+    <p>다만 소급분은 "가짜 이익"이 아니다. 고객이 범위 확대를 인정하고 실제로 더 지불하기로 한 금액이며, 그 원가는 적자를 내던 과거 분기에 이미 비용 처리됐다. 정당한 이익이되 <strong>반복되지 않는다</strong>는 것이 핵심이다.</p>
+  </div>
+
+  <h3>상장 이후 3년, IPO 추정치와의 거리</h3>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>연도</th><th>증권신고서 추정 매출</th><th>실적</th><th>괴리율</th><th>추정 영업이익</th><th>실적</th></tr></thead>
+      <tbody>
+        <tr><td>2024년</td><td class="num">170.5억</td><td class="num">79.9억</td><td class="num neg">-53.1%</td><td class="num">-17.9억</td><td class="num neg">-34.5억</td></tr>
+        <tr><td>2025년</td><td class="num">435.2억</td><td class="num">173.1억</td><td class="num neg">-60.2%</td><td class="num">+20.5억</td><td class="num neg">-45.7억</td></tr>
+        <tr class="emph"><td>2026년</td><td class="num">1,216.5억</td><td class="num">상반기 143.5억</td><td class="num neg">-79% (추정)</td><td class="num">+173.4억</td><td class="num">상반기 +4.1억</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="cap"><b>출처</b> 반기보고서 「마. 상장기업의 재무사항 비교표」(인수인 하나금융투자). 2026년 괴리율은 §04의 바텀업 추정 249억을 대입한 필자 계산. 회사가 밝힌 미달 사유는 매년 동일하다 — <b>"스마트 글라스 시장 개화가 1년 정도 지연"</b>, <b>"고객사 설비투자 계획 변경"</b>, <b>"개발 리소스 제약으로 일정 지연"</b>. 기술의 문제가 아니라 <b>타이밍을 회사가 통제하지 못한다</b>는 뜻이다.</p>
+</section>
+
+<section>
+  <div class="sechead"><span class="secno">§04</span><h2>계약 원장 — 상반기 매출을 만든 것과 남은 것</h2></div>
+  <p class="lede">수주잔고는 "거래 상대방의 영업 기밀"을 이유로 공시가 생략돼 있다. 대신 재무제표 주석의 계약별 진행률과 단일판매·공급계약 공시를 맞물리면 잔고를 역산할 수 있다.</p>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>계약</th><th>상대방 / 지역</th><th>성격</th><th>금액(USD)</th><th>원화(공시)</th><th>기간</th><th>26.6말 진행률</th><th>잔여(USD)</th></tr></thead>
+      <tbody>
+        <tr><td>MA-202408-004</td><td>CA BigTech / 미주</td><td>NRE 공동개발·공급</td><td class="num">9,591,720</td><td class="num">145.15억</td><td class="num">24.08~26.10</td><td class="num">88.7%</td><td class="num">1,083,864</td></tr>
+        <tr><td>SA-202510-003</td><td>MicroLED 패널사 / APAC</td><td>NRE 백플레인 개발</td><td class="num">4,133,400</td><td class="num">58.70억</td><td class="num">25.10~26.11</td><td class="num">93.0%</td><td class="num">289,338</td></tr>
+        <tr><td>GA-202512-004</td><td>글로벌 마이크로디스플레이 / APAC</td><td>NRE 백플레인 개발</td><td class="num">3,688,400</td><td class="num">54.71억</td><td class="num">25.12~26.11</td><td class="num">87.5%</td><td class="num">461,050</td></tr>
+        <tr class="emph"><td>2026-04-06 PO</td><td>CA BigTech / 미주</td><td><strong>제품</strong> — LEDoS 백플레인 웨이퍼</td><td class="num">1,558,280</td><td class="num">23.49억</td><td class="num">~26.12.31</td><td class="num">미공시</td><td class="num">—</td></tr>
+        <tr><td>2026-08-04</td><td>북미 Big Tech</td><td>NRE 공동개발·공급</td><td class="num">5,046,600</td><td class="num">72.16억</td><td class="num">26.07~27.10</td><td class="num">신규</td><td class="num">5,046,600</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="cap"><b>출처</b> 진행률·계약명은 2026 반기보고서 주석 20-(3), 금액·기간은 각 단일판매·공급계약 공시 원문. <b>MA는 두 차례 증액됐다</b> — 2025-03-14 USD 6.56M → 2025-08-29 USD 8.62M → 2026-05-27 USD 9.59M, 종료일도 26.05 → 26.06 → 26.10으로 두 번 연장. 회사는 "제품 양산 준비를 위한 규모·기간 증가"라고 설명한다.</p>
+
+  <div class="chart">
+    <div class="crow"><span class="clab">MA</span><div class="ctrack"><div class="cfill" style="width:88.7%"></div></div><span class="cval">88.7%</span></div>
+    <div class="crow"><span class="clab">SA</span><div class="ctrack"><div class="cfill" style="width:93.0%"></div></div><span class="cval">93.0%</span></div>
+    <div class="crow"><span class="clab">GA</span><div class="ctrack"><div class="cfill" style="width:87.5%"></div></div><span class="cval">87.5%</span></div>
+    <div class="legend"><span>NRE 3건 진행률 (2026-06-30 기준)</span><span>잔여 합계 USD 1.83M ≈ 26억 @1,430원</span></div>
+  </div>
+
+  <h3>상반기 매출을 계약별로 되짚으면</h3>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>계약</th><th>1Q26 증분(USD)</th><th>환산(억, @1,480)</th><th>2Q26 증분(USD)</th><th>환산(억, @1,480)</th></tr></thead>
+      <tbody>
+        <tr><td>MA</td><td class="num">1,296,104</td><td class="num">19.2</td><td class="num">904,443</td><td class="num">13.4</td></tr>
+        <tr><td>SA</td><td class="num">633,650</td><td class="num">9.4</td><td class="num">2,555,712</td><td class="num">37.8</td></tr>
+        <tr><td>GA</td><td class="num">2,883,590</td><td class="num">42.7</td><td class="num">343,759</td><td class="num">5.1</td></tr>
+        <tr class="emph"><td>3건 합계</td><td class="num">4,813,344</td><td class="num">71.2</td><td class="num">3,803,914</td><td class="num">56.3</td></tr>
+        <tr><td>실제 분기 매출</td><td class="num">—</td><td class="num">71.3</td><td class="num">—</td><td class="num">72.1</td></tr>
+        <tr><td>잔차(미공시 계약 추정)</td><td class="num">—</td><td class="num">+0.1</td><td class="num">—</td><td class="num">+15.9</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="cap"><b>산출근거</b> 각 계약의 (당분기 진행률 × 계약금액) − (전분기 진행률 × 전분기 계약금액)을 USD로 계산. 1분기는 잔차가 사실상 0으로 <b>모형이 실적과 99.9% 일치</b>하며, 이는 환산환율 가정(1,480원)의 타당성을 뒷받침한다. 2분기 잔차 약 16억은 공시 의무 기준(직전 매출액의 10% = 17.3억) 미만이라 공시되지 않은 소액 계약으로 추정된다 — <b>즉 보이지 않는 매출도 존재한다.</b></p>
+
+  <h3>하반기 매출은 어디까지 보이는가</h3>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>구성</th><th>근거</th><th>금액(억)</th></tr></thead>
+      <tbody>
+        <tr><td>NRE 3건 잔여</td><td>USD 1.834M × 1,430원</td><td class="num">26.2</td></tr>
+        <tr><td>4월 제품 PO</td><td>USD 1.558M, 26.12.31까지 전액 인도 가정</td><td class="num">22.3</td></tr>
+        <tr><td>8월 신규 NRE 중 26년 귀속분</td><td>USD 5.047M × (5.4개월 / 15.2개월) 균등 가정</td><td class="num">25.6</td></tr>
+        <tr><td>미공시 소액계약</td><td>2분기 잔차 15.9억 × 2분기 지속 가정</td><td class="num">31.8</td></tr>
+        <tr class="emph"><td>하반기 합계(바텀업)</td><td>—</td><td class="num">105.9</td></tr>
+        <tr class="emph"><td>2026년 연간 추정</td><td>상반기 143.5 + 하반기 105.9</td><td class="num">249.4</td></tr>
+        <tr><td>유진투자증권 2026E</td><td>2026-08-24 리포트</td><td class="num">330</td></tr>
+        <tr><td>메리츠증권 2026E</td><td>2026-02-12 리포트</td><td class="num">355</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="cap"><b>이것이 이 종목의 핵심 간극이다.</b> 증권사 추정과 공시 기반 바텀업 사이에 <b>80~105억</b>의 공백이 있고, 이는 <b>하반기에 새로 따내거나 앞당겨 인식해야 하는 금액</b>이다. 유진투자증권이 4분기 제품매출 49억, 3분기 20억(합 69억)을 가정하는 반면 <b>현재 공시된 제품 수주는 23.5억 1건뿐</b>이라는 점도 같은 간극을 가리킨다. 다만 위 잔차 분석이 보여주듯 공시 의무 미만(17.3억 미만) 계약은 보이지 않으므로, 간극 전부가 곧 미달을 뜻하지는 않는다.</p>
+</section>
+
+<section>
+  <div class="sechead"><span class="secno">§05</span><h2>현금 — 이익과 현금이 반대로 갔다</h2></div>
+  <p class="lede">회계상 반기 순이익 +4.7억. 같은 기간 영업활동현금흐름 -68.8억. 이 괴리의 정체를 보면 NRE 모델의 실제 작동 방식이 드러난다.</p>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>항목</th><th>2025년말</th><th>2026년 반기말</th><th>증감</th></tr></thead>
+      <tbody>
+        <tr><td>현금및현금성자산</td><td class="num">109.95</td><td class="num">41.82</td><td class="num neg">-68.13</td></tr>
+        <tr><td>매입채무 및 기타유동채무</td><td class="num">47.58</td><td class="num">5.26</td><td class="num neg">-42.32</td></tr>
+        <tr><td>계약부채(선수금)</td><td class="num">25.58</td><td class="num">5.28</td><td class="num neg">-20.30</td></tr>
+        <tr><td>매출채권 및 기타유동채권</td><td class="num">19.19</td><td class="num">34.42</td><td class="num">+15.23</td></tr>
+        <tr><td>재고자산</td><td class="num">8.18</td><td class="num">15.37</td><td class="num">+7.19</td></tr>
+        <tr class="emph"><td>영업활동현금흐름(반기)</td><td class="num">—</td><td class="num neg">-68.82</td><td class="num">전년 반기 -9.93</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="cap">단위 억원. <b>메커니즘</b> — 2025년에 선수금(계약부채)으로 받아둔 돈으로 외주가공비를 발주했고, 2026년 상반기에 그 대금을 실제로 지급(매입채무 -42억)하면서 현금이 빠졌다. 동시에 매출은 진행기준으로 인식돼 이익으로 잡혔다. <b>즉 상반기 이익은 작년에 받은 현금의 회계적 지연 인식에 가깝다.</b></p>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>재무 안정성</th><th>2026년 반기말</th><th>비고</th></tr></thead>
+      <tbody>
+        <tr><td>자본총계</td><td class="num">139.55억</td><td>결손금 -466.0억, 납입자본 594.3억</td></tr>
+        <tr><td>총차입금</td><td class="num">92.25억</td><td>하나은행 70억(3.31%) + 중진공 22.2억</td></tr>
+        <tr><td>순차입금</td><td class="num">50.43억</td><td>현금 41.82억 차감</td></tr>
+        <tr><td>유동비율</td><td class="num">97.1%</td><td>유동자산 101.2억 / 유동부채 104.3억</td></tr>
+        <tr><td>부채비율</td><td class="num">93.9%</td><td>—</td></tr>
+        <tr><td>유형자산</td><td class="num">145.84억</td><td>토지 46.6 + 건물 79.3 (판교 자가사옥, 차입금 담보)</td></tr>
+        <tr><td>전환사채·신주인수권부사채</td><td class="num">0</td><td>미상환 잔액 없음</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="cap"><b>주목할 점 두 가지.</b> ① 자본 139.6억인 팹리스가 유형자산 145.8억(대부분 판교 사옥)을 들고 있다 — 자산의 절반이 사업이 아니라 부동산이며, 그것이 하나은행 차입 70억의 담보다. ② <b>2026년 4월 제품 PO에는 선급금이 없고 결제조건이 NET 30이다.</b> 기존 NRE 계약은 모두 "계약금·선급금 유"였다. 양산 단계로 갈수록 선수금이 사라지고 운전자본을 회사가 대야 한다는 뜻이고, 상반기 현금 -68억은 그 예고편일 수 있다.</p>
+
+  <h3>지배구조와 인력</h3>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>항목</th><th>내용</th><th>비고</th></tr></thead>
+      <tbody>
+        <tr><td>최대주주</td><td>이명희 대표이사 2,534,590주 (30.70%)</td><td>특수관계인 포함 32.05%</td></tr>
+        <tr><td>2대주주</td><td>SVIC 55호 신기술사업투자조합 425,894주 (5.16%)</td><td>—</td></tr>
+        <tr><td>대표이사 이력</td><td>Georgia Tech 박사 · Agilent 팀장 · 삼성전자 상무 · 현대오트론 상무 · UNIST 교수</td><td>2017년 창업, 재직 8.8년</td></tr>
+        <tr><td>임직원</td><td>77명 (평균 근속 2.7년)</td><td>상반기 급여총액 47.4억</td></tr>
+        <tr><td>연구개발 인력</td><td>부설연구소 58명 (박사 3 · 석사 25 · 학사 28 · 기타 2)</td><td>아날로그 19 · 로직 14 · 시스템 11 · 기술전략 5 · 선행개발 5 · 검증 3</td></tr>
+        <tr><td>연구개발비</td><td>상반기 29.94억 (매출 대비 20.9%)</td><td>제조원가 24.26 + 판관비 5.68</td></tr>
+        <tr><td>보호예수</td><td>해당 없음</td><td>—</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="cap"><b>출처</b> 2026년 반기보고서 「VII. 주주에 관한 사항」, 「VIII. 임원 및 직원 등에 관한 사항」, 「6. 주요계약 및 연구개발활동」. <b>인력의 75%(77명 중 58명)가 연구개발</b>이다. 상반기 1인 평균급여 6,200만원은 반기 기준으로 높아 보이는데, 근로소득지급명세서 총급여 기준이라 <b>주식매수선택권 행사이익이 포함</b>된다(상반기 중 행사 다수). 연구개발비 비율은 2024년 35.7% → 2025년 28.6% → 2026년 반기 20.9%로 낮아졌으나, 이는 절대액 감소가 아니라 매출 증가에 따른 희석이다(절대액 28.5억 → 49.5억 → 반기 29.9억).</p>
+</section>
+
+<section>
+  <div class="sechead"><span class="secno">§06</span><h2>경쟁 구도와 밸류에이션 비교</h2></div>
+  <p class="lede">국내 상장사 중 마이크로LED 백플레인을 직접 설계하는 <strong>직접 경쟁자는 없다</strong>. 따라서 아래는 경쟁사 비교가 아니라 <strong>밸류체인 인접군</strong> 비교이며, 성격이 다른 세 묶음으로 나눠야 의미가 있다.</p>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>종목</th><th>성격</th><th>시총(억)</th><th>26H1 매출(억)</th><th>GPM</th><th>26H1 영업이익(억)</th><th>OPM</th><th>PSR</th><th>PBR</th></tr></thead>
+      <tbody>
+        <tr class="emph"><td>사피엔반도체</td><td>마이크로LED 백플레인 설계</td><td class="num">2,171</td><td class="num">143.5</td><td class="num">27.4%</td><td class="num">+4.1</td><td class="num">2.9%</td><td class="num">7.6</td><td class="num">15.6</td></tr>
+        <tr><td>라온텍</td><td>마이크로디스플레이(LCoS·OLEDoS) 팹리스</td><td class="num">1,163</td><td class="num">23.8</td><td class="num">42.2%</td><td class="num neg">-62.9</td><td class="num">적자</td><td class="num">24.4</td><td class="num">8.7</td></tr>
+        <tr><td>LX세미콘</td><td>DDIC 팹리스 (국내 1위)</td><td class="num">6,026</td><td class="num">7,899</td><td class="num">29.5%</td><td class="num">+426.0</td><td class="num">5.4%</td><td class="num">0.4</td><td class="num">0.5</td></tr>
+        <tr><td>아나패스</td><td>디스플레이 인터페이스·DDIC 팹리스</td><td class="num">1,614</td><td class="num">333.5</td><td class="num">29.8%</td><td class="num neg">-37.1</td><td class="num">적자</td><td class="num">2.4</td><td class="num">2.1</td></tr>
+        <tr><td>가온칩스</td><td>디자인하우스(설계 서비스)</td><td class="num">5,307</td><td class="num">418.8</td><td class="num">5.1%</td><td class="num neg">-35.8</td><td class="num">적자</td><td class="num">6.3</td><td class="num">9.7</td></tr>
+        <tr><td>칩스앤미디어</td><td>반도체 IP 라이선스</td><td class="num">2,193</td><td class="num">128.7</td><td class="num">—</td><td class="num">+13.1</td><td class="num">10.2%</td><td class="num">8.5</td><td class="num">2.5</td></tr>
+        <tr><td>오픈엣지테크놀로지</td><td>반도체 IP 라이선스</td><td class="num">2,355</td><td class="num">56.2</td><td class="num">—</td><td class="num neg">-152.7</td><td class="num">적자</td><td class="num">21.0</td><td class="num">24.3</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="cap"><b>산출근거</b> 시총·PBR은 2026-08-24 종가 기준 네이버 금융, 재무는 DART <span class="mono">fnlttSinglAcntAll</span> 2026년 반기(사피엔·라온텍·아나패스는 별도, 나머지는 연결). <b>PSR은 26년 상반기 매출을 단순 2배 연환산한 값으로 필자가 계산</b>했다(사피엔 2,171 ÷ 287.0 = 7.6배). 칩스앤미디어·오픈엣지는 매출총이익을 별도 표시하지 않아 GPM 산출 불가. 티엘아이는 매출이 26년 상반기 13.1억으로 붕괴해 비교군에서 제외했다.</p>
+
+  <div class="call">
+    <div class="ch">비교표에서 읽히는 것</div>
+    <p><strong>사피엔의 매출 구조는 팹리스보다 디자인하우스에 가깝다.</strong> 매출의 99%가 고객 사양 맞춤 설계용역이라는 점에서 가온칩스와 같은 칸이고, GPM 27.4%는 가온칩스(5.1%)보다 높지만 IP 라이선스 사업(칩스앤미디어 OPM 10.2%)에는 못 미친다.</p>
+    <p>그런데 <strong>밸류에이션은 IP 회사 쪽에 붙어 있다</strong>. PSR 7.6배는 칩스앤미디어(8.5배)와 같은 수준이고, PBR 15.6배는 비교군 전체에서 오픈엣지(24.3배) 다음으로 높다. 시장은 사피엔을 "지금 하는 일"이 아니라 "AR 시장이 열렸을 때 하게 될 일"로 값을 매기고 있다.</p>
+  </div>
+
+  <h3>고객·시장 쪽 사실관계</h3>
+  <ul>
+    <li><strong>고객 집중도</strong> — 2026년 상반기 매출 10% 이상 고객 3곳이 128.2억, 전체의 <strong>89.3%</strong>. 지역별로는 아시아 110.6억(77.1%), 북아메리카 32.8억(22.9%), 유럽 0.06억.</li>
+    <li><strong>아시아 고객의 정체</strong> — 메리츠증권은 "중국 LEDoS 고객사가 공개한 2.5μm 픽셀피치 신제품 Roadrunner"를 지목한다. Roadrunner는 <strong>JBD(Jade Bird Display)</strong>가 2025년 발표한 10,160 PPI 플랫폼으로, 22nm 백플레인 기반이며 2026년 하반기 단계적 양산이 예정돼 있다.</li>
+    <li><strong>시장 규모의 현실</strong> — Omdia 기준 마이크로LED 디스플레이 전체 매출은 2025년 $52.4M → 2026년 $105.4M(약 1,500억원), AR 디스플레이 매출은 2026년 $156M(+152%), 출하 410만대 전망. <strong>사피엔의 2027년 컨센서스 매출 823억은 이 시장의 백플레인 계층에서 압도적 점유를 전제한다.</strong></li>
+    <li><strong>협력 구도</strong> — 2026년 1월 <strong>세미파이브</strong>와 차세대 마이크로디스플레이 CMOS 백플레인 공동개발 MOU 체결. 설계 검증·물리설계 역량을 외부에서 보강해야 하는 위치라는 방증이기도 하다.</li>
+  </ul>
+</section>
+
+<section>
+  <div class="sechead"><span class="secno">§07</span><h2>해자 검증 — 찬성과 반증을 나란히</h2></div>
+  <p class="lede">"특허 240건"만 보고 판단하지 않기 위해, 같은 사실을 양쪽에서 읽어본다.</p>
+
+  <div class="duo">
+    <div class="duo-col yes">
+      <div class="duo-h">해자가 있다는 근거</div>
+      <ul>
+        <li><b>원천 회로 특허</b>Multi-bit MIP(Memory-Inside-Pixel) 구조와 PWM 구동 MPD는 회사가 등록한 특허 구조다. 5,000~10,000 PPI, 픽셀피치 2.5μm를 28nm FD-SOI로 구현하는 설계는 아무나 못 한다.</li>
+        <li><b>재계약과 증액이 실제로 일어났다</b>미주 빅테크 계약은 2년에 걸쳐 USD 6.56M → 8.62M → 9.59M으로 두 번 증액됐다. 개발이 중단되지 않았고 범위가 커졌다는 뜻이다.</li>
+        <li><b>고객 스위칭 코스트</b>백플레인은 고객 패널 사양에 맞춘 커스텀 ASIC이다. 양산에 들어가면 교체에 재설계·재검증이 필요해 실질적 잠금 효과가 생긴다.</li>
+        <li><b>고객 명단 자체가 검증</b>미주·북미 빅테크 각 1곳, 중국 LEDoS 선두, 글로벌 마이크로디스플레이 솔루션사. 아직 소규모지만 고객이 상징하는 검증 수준은 높다.</li>
+        <li><b>재무 위생</b>감사인 삼일회계법인, 미상환 CB·BW 0, 종속회사 0, 특수관계자 거래 사실상 없음(주요 경영진 보상 반기 2.46억). 2대주주는 SVIC 55호 신기술사업투자조합 5.16%.</li>
+      </ul>
+    </div>
+    <div class="duo-col no">
+      <div class="duo-h">해자를 의심할 근거</div>
+      <ul>
+        <li><b>아직 제품 회사가 아니다</b>매출의 98.9%가 개발용역. 제품 비중은 24년 32.4% → 25년 12.1% → 26년 1.1%로 거꾸로 갔다. 용역은 고객이 R&D비를 대는 구조라 해자가 아니라 <em>수주</em>다.</li>
+        <li><b>3년 연속 자기 추정치를 크게 하회</b>-53%, -60%, 그리고 2026년도 -79%(추정). 기술이 있어도 개화 시점을 통제하지 못하며, 미달 사유는 매년 같다.</li>
+        <li><b>다변화 전략이 실패했다</b>TV/사이니지 매출 3년째 0원, FALD-BLU는 25년 1.94억 → 26년 0원. 리스크 분산 장치로 내세운 두 축이 모두 사라지고 AR 단일 의존이 됐다.</li>
+        <li><b>협상력의 방향</b>첫 제품 PO에는 선급금이 없고 NET 30이다. NRE 단계의 선수금 우위가 양산 단계에서 유지되지 않는다.</li>
+        <li><b>고객이 내재화할 수 있는 층</b>백플레인은 세트사·패널사가 디자인하우스(세미파이브 등)와 직접 만들 수도 있는 계층이다. 사피엔 자신이 세미파이브와 MOU를 맺어야 하는 위치라는 점이 이 계층의 개방성을 보여준다.</li>
+        <li><b>특허 카운트 서술의 불일치</b>2025년 사업보고서 "140여개 이상" → 2026년 반기보고서 "240여개 이상". 6개월 만에 100건 증가로, 등록·출원 기준이 명시돼 있지 않다.</li>
+      </ul>
+    </div>
+  </div>
+  <p class="cap"><b>판단</b> — 해자의 성격은 "특허 장벽"보다 <b>"먼저 들어가 고객의 개발 일정에 올라탄 선점"</b>에 가깝다. 선점은 실재하지만, 그것이 이익으로 바뀌려면 NRE가 양산 웨이퍼 공급으로 전환되고 그 물량이 반복돼야 한다. 그 전환의 첫 증거가 2026년 4월 PO 23.5억이며, <b>현재로선 증거가 그 한 건뿐이다.</b></p>
+</section>
+
+<section>
+  <div class="sechead"><span class="secno">§08</span><h2>밸류에이션</h2></div>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>지표</th><th>기준</th><th>값</th><th>계산근거</th></tr></thead>
+      <tbody>
+        <tr><td>시가총액</td><td>2026-08-24 종가</td><td class="num">2,171억</td><td>26,300원 × 8,255,421주</td></tr>
+        <tr><td>PBR</td><td>26년 반기말 자본</td><td class="num">15.6배</td><td>26,300 ÷ BPS 1,690원</td></tr>
+        <tr><td>PSR</td><td>FY2025 확정</td><td class="num">12.5배</td><td>2,171 ÷ 173.1</td></tr>
+        <tr class="emph"><td>PSR</td><td>26H1 연환산</td><td class="num">7.6배</td><td>2,171 ÷ (143.5 × 2)</td></tr>
+        <tr><td>PSR</td><td>바텀업 26E 249억</td><td class="num">8.7배</td><td>§04 계약 원장 기반</td></tr>
+        <tr><td>PSR</td><td>유진 26E 330억</td><td class="num">6.6배</td><td>—</td></tr>
+        <tr><td>PSR</td><td>유진 27E 823억</td><td class="num">2.6배</td><td>—</td></tr>
+        <tr><td>PER</td><td>유진 26E 순이익 7억</td><td class="num">약 300배</td><td>실질 의미 없음</td></tr>
+        <tr class="emph"><td>PER</td><td>유진 27E 순이익 156억</td><td class="num">13.9배</td><td>EPS 1,887원 기준</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="cap"><b>주가는 2027년만 본다.</b> 2026년 이익으로는 어떤 배수도 성립하지 않으므로, 현재 주가의 정당성은 전적으로 "2027년에 양산 매출 500억대가 실제로 나오는가"에 달려 있다. 유진투자증권 추정의 2027년 매출 823억 중 <b>제품(양산) 536억, 용역 287억</b>이며, 메리츠는 705억/영업이익 88억을 본다. 두 곳 모두 <b>Not Rated로 목표주가를 제시하지 않는다.</b></p>
+
+  <h3>시나리오</h3>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>시나리오</th><th>전제</th><th>27년 매출</th><th>27년 순이익</th><th>현재가 기준 PER</th></tr></thead>
+      <tbody>
+        <tr><td>강세</td><td>빅테크 AR 글래스 27년 출시, 양산 물량 정상 인식</td><td class="num">823억</td><td class="num">156억</td><td class="num">13.9배</td></tr>
+        <tr class="emph"><td>기본</td><td>과거 3년과 같은 패턴으로 양산이 1년 더 지연</td><td class="num">400억</td><td class="num">20억</td><td class="num">109배</td></tr>
+        <tr><td>약세</td><td>빅테크 프로젝트 축소·취소, NRE 파이프라인 단절</td><td class="num">150억 이하</td><td class="num neg">적자</td><td class="num">—</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="cap">강세는 유진투자증권 추정치를 그대로 사용했고, 기본·약세는 필자가 상장 이후 실적 이력(3년 연속 추정치 50~60% 하회)과 §04 바텀업을 반영해 설정한 값이다. <b>회사 가이던스가 아니다.</b> 기본 시나리오에서도 매출은 여전히 성장하지만, PER 100배대 구간이라 현재 주가는 정당화되지 않는다.</p>
+</section>
+
+<section>
+  <div class="sechead"><span class="secno">§09</span><h2>리스크</h2></div>
+  <div class="risk">
+    <div class="rrow"><div class="rsev h">높음</div><div class="rbody"><div class="rt">하반기 매출 공백</div><div class="rd">상반기 매출의 대부분을 만든 NRE 3건이 진행률 87.5~93.0%로 소진돼 잔여 인식 가능액이 약 26억이다. 공시된 제품 수주는 23.5억 1건. 증권사 추정(330~355억)과 공시 기반 바텀업(249억) 사이 80~105억의 공백을 신규 수주로 메워야 한다.</div></div></div>
+    <div class="rrow"><div class="rsev h">높음</div><div class="rbody"><div class="rt">현금 소진과 조달 필요성</div><div class="rd">현금 41.8억, 반기 영업활동현금흐름 -68.8억, 유동비율 97.1%, 순차입금 50.4억. 계약부채(선수금)가 25.6억 → 5.3억으로 줄어 선수금 완충이 거의 사라졌다. 양산 단계는 선급금 없이 NET 30 결제이므로 운전자본 부담이 더 커진다. <strong>유상증자·차입 확대 가능성을 배제할 수 없다.</strong></div></div></div>
+    <div class="rrow"><div class="rsev h">높음</div><div class="rbody"><div class="rt">이익의 질</div><div class="rd">2분기 영업이익 3.12억은 계약 증액 소급 인식 약 12.7억(대응 원가 없음)과 대손충당금 환입 2.67억에 의존한다. 두 항목 모두 반복되지 않는다. 3분기에 같은 마진이 재현될 근거는 현재 공시상 없다.</div></div></div>
+    <div class="rrow"><div class="rsev m">중간</div><div class="rbody"><div class="rt">진행기준 수익인식의 추정 위험</div><div class="rd">삼일회계법인이 2025년 감사보고서에서 <strong>투입법 진행기준 수익인식을 핵심감사사항(KAM)</strong>으로 지정했다. 2025년 매출 173.1억 중 118.8억(68.6%)이 진행기준. 총계약원가 추정이 바뀌면 이미 인식한 매출이 소급 조정된다.</div></div></div>
+    <div class="rrow"><div class="rsev m">중간</div><div class="rbody"><div class="rt">관리종목 지정유예 종료</div><div class="rd">계속사업손실 요건 유예가 <strong>2026-12-31에 끝난다</strong>. 2024년 법인세차감전손실/자기자본 비율은 -103.9%였고 2025년은 -37.2%였다. 자본이 139.6억뿐이라 <strong>연간 약 70억 손실이면 요건에 다시 걸린다</strong>. 매출액 미달 요건 유예는 2028-12-31까지이나 매출이 30억을 넘어 해당 없음.</div></div></div>
+    <div class="rrow"><div class="rsev m">중간</div><div class="rbody"><div class="rt">고객 집중과 프로젝트 취소</div><div class="rd">상위 3개 고객이 매출의 89.3%. 빅테크 AR 프로젝트는 취소·연기가 흔하며, 회사는 이미 FALD-BLU에서 "주요 고객의 사업 변경"으로 매출이 소멸한 경험이 있다.</div></div></div>
+    <div class="rrow"><div class="rsev m">중간</div><div class="rbody"><div class="rt">밸류에이션 하방</div><div class="rd">PBR 15.6배는 자본 139.6억에 시총 2,171억을 얹은 값이다. 실적이 아니라 서사가 값을 지탱하므로, 개화 지연 뉴스 하나에 되돌림 폭이 크다. 실제로 2026-05-26 장중 56,000원에서 2026-07-30 19,000원까지 66% 하락한 이력이 있다.</div></div></div>
+    <div class="rrow"><div class="rsev l">낮음</div><div class="rbody"><div class="rt">환율</div><div class="rd">주요 계약이 전량 USD 표시다. 원화 약세는 매출에 유리하나, 상반기 외환 관련 순손익은 +0.06억 수준으로 아직 손익 영향은 크지 않다.</div></div></div>
+    <div class="rrow"><div class="rsev l">낮음</div><div class="rbody"><div class="rt">희석</div><div class="rd">2025년말 미행사 주식매수선택권 228,225주(발행주식의 2.76%), 가중평균 행사가 14,583원. 2020~2021년 부여분 행사가는 1,000원으로 전량 깊은 내가격이다. 미상환 CB·BW는 없다.</div></div></div>
+  </div>
+</section>
+
+<section>
+  <div class="sechead"><span class="secno">§10</span><h2>투자 전 확인할 것</h2></div>
+  <p class="lede">이 종목은 다음 분기 보고서 한 장으로 결론이 바뀐다. 확인 순서는 아래와 같다.</p>
+  <ol class="check">
+    <li><div class="ci"><b>3분기 보고서(11월 중순)의 주석 20-(3) 계약별 진행률표</b><span>새 계약명이 등장했는가. MA·SA·GA가 100%로 종결되고 그 자리를 무엇이 대체했는가. 이 표 한 장이 하반기 매출의 실체다.</span></div></li>
+    <li><div class="ci"><b>제품매출 비중이 실제로 오르는가</b><span>유진투자증권은 3분기 제품 비중 29.2%, 4분기 41.6%를 가정한다. 상반기는 1.1%였다. 주석 20-(1)의 "한 시점에 인식" 금액을 보면 바로 확인된다.</span></div></li>
+    <li><div class="ci"><b>영업활동현금흐름의 부호</b><span>상반기 -68.8억. 이익이 진짜라면 3분기부터 현금이 따라와야 한다. 현금 41.8억에서 같은 속도로 더 빠지면 조달 이슈가 실체가 된다.</span></div></li>
+    <li><div class="ci"><b>계약부채(선수금) 잔액</b><span>25.6억 → 5.3억으로 줄었다. 이 항목이 다시 늘어나는 것은 신규 NRE 수주의 가장 빠른 선행지표다. 늘지 않으면 파이프라인이 비어 있다는 뜻이다.</span></div></li>
+    <li><div class="ci"><b>4분기 단일판매·공급계약 공시</b><span>공시 의무 기준은 직전 연도 매출의 10%(17.3억)다. 그 미만 계약은 보이지 않으므로, 큰 계약이 없어도 실적은 나올 수 있다. 반대로 큰 계약이 뜨면 2027년 컨센서스의 근거가 된다.</span></div></li>
+    <li><div class="ci"><b>고객 3의 매출(북아메리카 지역 매출)</b><span>상반기 32.8억으로 북미 지역 매출과 정확히 일치한다. 미주 빅테크 단일 고객의 규모를 이 숫자로 추적할 수 있다.</span></div></li>
+    <li><div class="ci"><b>2026년 결산 시 법인세차감전손익 / 자기자본 비율</b><span>관리종목 계속사업손실 요건 유예가 2026-12-31 종료된다. 자기자본 대비 -50%(약 -70억) 선을 넘는지 확인해야 한다.</span></div></li>
+    <li><div class="ci"><b>유상증자·전환사채 발행 공시</b><span>현재 CB·BW 잔액은 0이다. 이 상태가 유지되는지가 재무 위생의 핵심 지표다.</span></div></li>
+  </ol>
+</section>
+
+<section>
+  <div class="sechead"><span class="secno">§11</span><h2>데이터 검증 노트</h2></div>
+  <p class="lede">수치를 쓰기 전에 걸러낸 것들. 잘못된 신호를 바로잡는 것이 분석보다 먼저다.</p>
+
+  <details>
+    <summary>네이버 금융의 52주 최고가 57,200원은 사실과 다르다</summary>
+    <div class="dbody">
+      <p>일별시세 API(<span class="mono">siseJson.naver</span>)로 2025-08-24 이후 전 거래일을 직접 스캔한 결과, 이 기간 최고 고가는 <strong>2026-05-26의 56,000원</strong>(시가 54,900 / 종가 50,500)이었다. 종가 기준 최고는 2026-05-22의 53,000원. 57,200원에 해당하는 거래일은 존재하지 않는다. 유진투자증권 리포트도 52주 최고를 <strong>56,000원</strong>으로 표기하고 있어 일치한다.</p>
+      <p>52주 최저는 <strong>2026-07-30의 19,000원</strong>으로 네이버 표기와 일치한다. 참고로 상장 이후 최고가는 상장 이튿날(2024-02-20)의 59,200원, 최저는 2024-12-09의 9,280원이다.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>계약 원화금액을 그대로 더하면 안 되는 이유</summary>
+    <div class="dbody">
+      <p>단일판매·공급계약 공시의 원화 금액은 <strong>각 공시일 전영업일의 매매기준율로 환산한 값</strong>이다. MA 계약의 경우 2025-08-29 공시는 1,395.70원, 2026-05-27 정정공시는 1,513.30원을 적용했다. 두 시점의 원화 금액 차이(120.28억 → 145.15억, +24.87억)에는 <strong>계약 증액(USD +974,000)과 환율 상승(+8.4%)이 섞여 있다.</strong></p>
+      <p>이를 원화로 그대로 계산하면 2분기 MA 매출을 22.6억으로 과대 계상하게 되는데, 실제 북아메리카 지역 매출은 반기 32.8억이었다. USD로 다시 계산하면 상반기 MA 증분이 USD 2,200,547 → 약 32.3억으로 지역별 매출과 맞아떨어진다. <strong>이 리포트의 계약 계산은 전부 USD 기준이다.</strong></p>
+    </div>
+  </details>
+
+  <details>
+    <summary>4분기 실적은 연간에서 3분기 누적을 빼야 한다</summary>
+    <div class="dbody">
+      <p>DART 재무제표 API는 분기·반기 손익을 <span class="mono">thstrm_amount</span>(3개월)와 <span class="mono">thstrm_add_amount</span>(누적) 두 벌로 제공한다. 4분기 단독 수치는 어느 쪽에도 없으므로 (연간 − 3분기 누적)으로 산출했다. 예: 2025년 4분기 영업이익 = -45.65 − (-45.81) = <strong>+0.16억</strong>.</p>
+      <p>메리츠증권 2026-02-12 리포트는 4Q25 영업이익을 3억으로 적었는데, 이는 감사 전 잠정치(4Q25P)다. 감사받은 확정치는 0.16억이므로 이 리포트는 DART 확정치를 사용했다.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>매출 계정이 표시되지 않은 보고서가 있다</summary>
+    <div class="dbody">
+      <p>2026년 반기보고서의 XBRL 상세 계정에는 <span class="mono">수익(매출액)</span> 행이 누락돼 있다. 매출원가(104.14억)와 매출총이익(39.34억)을 합산해 <strong>143.49억</strong>을 얻었고, 이는 「제품별 매출 현황」 표의 14,349백만원과 일치한다. 2분기 단독 매출 72.15억도 같은 방식으로 역산했다.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>공시상 "계약상대방 최근 매출액" 필드는 신뢰할 수 없다</summary>
+    <div class="dbody">
+      <p>미주 빅테크 계약 공시의 상대방 최근 매출액은 2025-08-29 공시 7.59억, 2026-04-07 공시 85.98억, 2026-05-27 공시 82.27억으로 기재돼 있다. 빅테크 규모와 전혀 맞지 않고 한 달 사이 감소하기까지 한다. <strong>이 필드는 이 리포트에서 사용하지 않았다.</strong></p>
+    </div>
+  </details>
+
+  <details>
+    <summary>교차검증 통과 항목</summary>
+    <div class="dbody">
+      <p>· 발행주식 8,255,421주 × 종가 26,300원 = 2,171.2억 → 네이버 표기 시총과 일치<br>
+      · 자본총계 139.55억 ÷ 8,255,421주 = BPS 1,690.4원 → 네이버 BPS 1,691원과 일치<br>
+      · 분기별 매출총이익 − 판관비 = 영업이익, 전 분기 일치 확인<br>
+      · 계약 3건 역산 매출(1Q26 71.2억) vs 실제 1분기 매출 71.3억 → 99.9% 일치<br>
+      · 지역별 매출 북아메리카 32.83억 = 고객 3 매출 32.83억 → 완전 일치<br>
+      · 2026년 반기 계약별 진행률로 산출한 누적 인식액과 제품별 매출 현황표 정합 확인</p>
+    </div>
+  </details>
+</section>
+
+<footer>
+  <p><b>데이터 출처</b> — 금융감독원 전자공시시스템(DART) 정기보고서 및 주요사항보고서 원문(2026년 반기보고서 20260812000701, 2026년 1분기보고서 20260514000071, 2025년 사업보고서 20260320000130, 단일판매·공급계약 공시 6건), DART OpenAPI 재무제표(fnlttSinglAcntAll), 한경컨센서스 증권사 리포트 3사, 네이버 금융 시세·일별시세 API, Omdia·IDC 시장 전망 인용 보도.</p>
+  <div class="srcs">
+    <span>· 유진투자증권 2026-08-24 「2Q26 Review」 (NR)</span>
+    <span>· 메리츠증권 2026-02-12 「자리는 이미 선점」 (NR)</span>
+    <span>· SK증권 2025-09-12 「스마트글래스 실적주 도약 임박」 (NR)</span>
+    <span>· Omdia AR display / Micro LED 시장 전망</span>
+    <span>· JBD Roadrunner 플랫폼 발표자료</span>
+    <span>· 세미파이브 · 사피엔반도체 MOU 보도자료(2026-01)</span>
+  </div>
+  <p style="margin-top:18px"><b>고지</b> — 이 문서는 공개된 공시자료와 시장 데이터를 정리·분석한 것으로, <b>특정 종목의 매수·매도를 권유하지 않습니다.</b> 추정치와 시나리오는 필자의 가정에 기반하며 회사의 공식 전망이 아닙니다. 투자 판단과 그 결과에 대한 책임은 투자자 본인에게 있습니다. 작성 기준일 2026-08-24, 주가는 같은 날 종가입니다.</p>
+</footer>
+
+</div>
+
+</body></html>

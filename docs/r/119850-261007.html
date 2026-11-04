@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<title>지엔씨에너지 기업리포트</title>
+<meta name="description" content="지엔씨에너지(119850) 심층 리포트: 데이터센터 비상발전기 수주·이익·밸류에이션 검증. 2026-10-07">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@600;700&family=Noto+Sans+KR:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+:root{
+  color-scheme:light;
+  --bg:#F3F4F7; --surface:#FFFFFF; --surface2:#F7F8FB; --surface3:#E9EBF2;
+  --ink:#15172B; --ink2:#454A61; --muted:#737A90;
+  --line:#D8DCE6; --line2:#BFC5D3;
+  --accent:#1F5F8B; --accent-soft:#E3EEF7;
+  --pos:#1B6E52; --neg:#B23A2C;
+  --c1:#1F5F8B; --c2:#E8792B; --c3:#1baf7a; --c4:#8B93A7; --c5:#7B4FB3;
+  --c1-soft:rgba(31,95,139,.12); --c2-soft:rgba(232,121,43,.14);
+  --shadow:0 1px 2px rgba(21,23,43,.06), 0 10px 28px rgba(21,23,43,.06);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#0F1118; --surface:#171A24; --surface2:#1D2130; --surface3:#252A3B;
+    --ink:#ECEEF5; --ink2:#B4BACB; --muted:#8D94A8;
+    --line:#2A2F40; --line2:#3B4155;
+    --accent:#7FB5E0; --accent-soft:#1E2E3E;
+    --pos:#4FB58C; --neg:#E07A5F;
+    --c1:#5B9BD5; --c2:#F08A3E; --c3:#2BC48E; --c4:#7C8499; --c5:#A283D6;
+    --c1-soft:rgba(91,155,213,.16); --c2-soft:rgba(240,138,62,.18);
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 28px rgba(0,0,0,.3);
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#0F1118; --surface:#171A24; --surface2:#1D2130; --surface3:#252A3B;
+  --ink:#ECEEF5; --ink2:#B4BACB; --muted:#8D94A8;
+  --line:#2A2F40; --line2:#3B4155;
+  --accent:#7FB5E0; --accent-soft:#1E2E3E;
+  --pos:#4FB58C; --neg:#E07A5F;
+  --c1:#5B9BD5; --c2:#F08A3E; --c3:#2BC48E; --c4:#7C8499; --c5:#A283D6;
+  --c1-soft:rgba(91,155,213,.16); --c2-soft:rgba(240,138,62,.18);
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 28px rgba(0,0,0,.3);
+}
+html{color-scheme:light dark}
+*{box-sizing:border-box}
+body{margin:0; background:var(--bg); color:var(--ink);
+  font-family:"Noto Sans KR","Malgun Gothic",system-ui,sans-serif; font-size:15.5px; line-height:1.75;
+  -webkit-text-size-adjust:100%}
+img{max-width:100%} [hidden]{display:none!important}
+.mono{font-family:"IBM Plex Mono","Consolas",ui-monospace,monospace; font-variant-numeric:tabular-nums}
+.serif{font-family:"Noto Serif KR","Noto Serif","Batang",serif}
+.wrap{max-width:920px; margin:0 auto; padding:0 22px 90px}
+a{color:var(--accent)}
+p{margin:0 0 14px} .lede{font-size:16.5px; color:var(--ink2)}
+ul,ol{margin:0 0 14px; padding-left:20px} li{margin-bottom:7px}
+strong,b{font-weight:700}
+.small{font-size:13px; color:var(--muted); line-height:1.6}
+.pos{color:var(--pos)} .neg{color:var(--neg)}
+
+.mast{background:var(--surface); border-bottom:1px solid var(--line)}
+.mast-in{max-width:920px; margin:0 auto; padding:34px 22px 26px}
+.eyebrow{font-family:"IBM Plex Mono",monospace; font-size:11.5px; letter-spacing:.06em; color:var(--muted)}
+h1{font-family:"Noto Serif KR",serif; font-size:clamp(30px,6.6vw,48px); line-height:1.18; margin:.3em 0 .15em; font-weight:700; letter-spacing:-.015em; text-wrap:balance}
+h1 .em{color:var(--accent)}
+.sub{color:var(--ink2); font-size:15.5px; max-width:64ch; margin:.4em 0 0}
+.tickerline{display:flex; flex-wrap:wrap; gap:6px 16px; align-items:baseline; margin-top:14px; font-family:"IBM Plex Mono",monospace; font-size:12.5px; color:var(--muted)}
+.tickerline b{color:var(--ink); font-weight:600}
+.stats{display:grid; grid-template-columns:repeat(auto-fit,minmax(138px,1fr)); gap:1px; background:var(--line); border:1px solid var(--line); margin-top:24px}
+.stat{background:var(--surface); padding:13px 14px 14px; min-width:0}
+.stat .k{font-family:"IBM Plex Mono",monospace; font-size:11px; letter-spacing:.02em; color:var(--muted)}
+.stat .v{font-family:"IBM Plex Mono",monospace; font-weight:600; font-size:clamp(19px,4.6vw,24px); line-height:1.25; margin-top:5px; overflow-wrap:anywhere}
+.stat .n{font-size:11.5px; color:var(--muted); margin-top:2px; line-height:1.4}
+.toc{display:flex; flex-wrap:wrap; gap:8px; margin:22px 0 0}
+.toc a{font-size:12.5px; text-decoration:none; color:var(--ink2); background:var(--surface); border:1px solid var(--line); padding:5px 11px; border-radius:999px}
+.toc a:hover{border-color:var(--accent); color:var(--accent)}
+
+section{margin-top:56px; scroll-margin-top:16px}
+.sec-h{display:flex; gap:14px; align-items:baseline; border-bottom:2px solid var(--ink); padding-bottom:9px; margin-bottom:20px}
+.sec-n{font-family:"IBM Plex Mono",monospace; font-size:12px; font-weight:600; color:var(--accent); letter-spacing:.06em; padding-top:4px}
+.sec-h h2{margin:0; font-family:"Noto Serif KR",serif; font-size:clamp(20px,4.2vw,26px); font-weight:700; letter-spacing:-.01em; text-wrap:balance; flex:1; min-width:0}
+h3{font-size:17px; font-weight:700; margin:32px 0 8px; letter-spacing:-.01em}
+h4{font-size:14.5px; font-weight:700; margin:20px 0 6px; color:var(--ink2)}
+
+.take{border-left:3px solid var(--accent); background:var(--surface2); padding:14px 16px; margin:18px 0; font-size:14.5px}
+.take .lbl{font-family:"IBM Plex Mono",monospace; font-size:11px; letter-spacing:.03em; color:var(--accent); display:block; margin-bottom:5px; font-weight:600}
+.take p:last-child{margin-bottom:0}
+.keypoints{display:grid; gap:1px; background:var(--line); border:1px solid var(--line); margin:22px 0}
+.kp{background:var(--surface); padding:15px 17px; display:grid; grid-template-columns:30px 1fr; gap:12px}
+.kp .num{font-family:"IBM Plex Mono",monospace; font-size:12px; color:var(--accent); font-weight:600; padding-top:3px}
+.kp .txt{min-width:0} .kp .t{font-weight:700; margin-bottom:2px} .kp .d{font-size:14px; color:var(--ink2)}
+.grid2{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:16px 0}
+.pane{background:var(--surface); border:1px solid var(--line); padding:14px 16px; min-width:0}
+.pane h4{margin-top:0}
+.pane.yes{border-top:3px solid var(--pos)} .pane.no{border-top:3px solid var(--neg)}
+.pane ul{margin-bottom:0; padding-left:18px} .pane li{font-size:14px; margin-bottom:6px}
+
+.vc{display:grid; grid-template-columns:repeat(6,1fr); gap:6px; margin:16px 0}
+.vc .c{background:var(--surface); border:1px solid var(--line); padding:10px 9px; font-size:12.5px; line-height:1.45; min-width:0}
+.vc .c b{display:block; font-size:13px; margin-bottom:3px}
+.vc .c.me{border:2px solid var(--accent); background:var(--accent-soft)}
+.vc .c .who{color:var(--muted); font-size:11.5px; margin-top:4px}
+
+.tbl-scroll{overflow-x:auto; margin:16px -22px 20px; padding:0 22px; -webkit-overflow-scrolling:touch}
+table{border-collapse:collapse; width:100%; min-width:560px; font-size:13.5px}
+caption{caption-side:top; text-align:left; font-family:"IBM Plex Mono",monospace; font-size:11.5px; letter-spacing:.02em; color:var(--muted); padding-bottom:8px}
+th,td{padding:8px 10px; border-bottom:1px solid var(--line); text-align:left; vertical-align:top}
+th.num,td.num{text-align:right; white-space:nowrap; font-family:"IBM Plex Mono",monospace; font-variant-numeric:tabular-nums}
+thead th{border-bottom:1.5px solid var(--line2); font-weight:600; color:var(--ink2); font-size:12.5px}
+tbody tr:hover{background:var(--surface2)}
+tfoot td{border-top:1.5px solid var(--line2); font-weight:600}
+td.hl{background:var(--accent-soft)}
+tr.sum td{font-weight:700; background:var(--surface2)}
+table.peers td,table.peers th{white-space:nowrap}
+.tnote{font-size:12.5px; color:var(--muted); margin-top:-10px; margin-bottom:16px; line-height:1.55}
+.bar{display:inline-block; height:9px; background:var(--c1); vertical-align:middle; border-radius:2px; margin-right:6px}
+.bar.o{background:var(--c2)}
+
+.chart{background:var(--surface); border:1px solid var(--line); padding:14px 14px 10px; margin:16px 0 8px}
+.chart .ct{font-weight:700; font-size:14.5px; margin:0 0 2px}
+.chart .cs{font-size:12.5px; color:var(--muted); margin:0 0 8px}
+.chart svg{display:block; width:100%; height:auto; touch-action:pan-y}
+.chart text{font-family:"IBM Plex Mono",monospace; font-size:11px; fill:var(--ink2)}
+.chart text.lab{font-family:"Noto Sans KR",sans-serif; fill:var(--ink)}
+.chart text.mut{fill:var(--muted)}
+.chart .grid{stroke:var(--line); stroke-width:1}
+.chart .axis{stroke:var(--line2); stroke-width:1}
+.legend{display:flex; flex-wrap:wrap; gap:6px 16px; font-size:12px; color:var(--ink2); margin:6px 0 4px}
+.legend i{display:inline-block; width:12px; height:12px; border-radius:2px; vertical-align:-1px; margin-right:6px}
+.tip{position:fixed; z-index:50; pointer-events:none; background:var(--ink); color:var(--bg); font-size:12px; line-height:1.5; padding:7px 10px; border-radius:4px; max-width:min(260px,calc(100vw - 20px)); box-shadow:var(--shadow); display:none; font-family:"IBM Plex Mono",monospace}
+.tip b{font-weight:600}
+
+.risk{display:grid; gap:10px; margin:14px 0}
+.risk .r{display:grid; grid-template-columns:64px 1fr; gap:12px; background:var(--surface); border:1px solid var(--line); padding:12px 14px}
+.chip{font-family:"IBM Plex Mono",monospace; font-size:10.5px; letter-spacing:.08em; padding:3px 7px; border-radius:3px; display:inline-block; text-align:center; align-self:start; white-space:nowrap}
+.chip.h{background:var(--neg); color:#fff} .chip.m{background:var(--c2); color:#fff} .chip.l{background:var(--c4); color:#fff} .chip.u{background:var(--pos); color:#fff}
+.risk .t{font-weight:700} .risk .d{font-size:14px; color:var(--ink2)}
+
+.qs{display:grid; gap:12px; margin:16px 0}
+.q{background:var(--surface); border:1px solid var(--line); border-left:4px solid var(--accent); padding:13px 16px}
+.q .qh{display:flex; gap:10px; align-items:baseline}
+.q .qn{font-family:"IBM Plex Mono",monospace; font-size:12px; color:var(--accent); font-weight:600}
+.q .qt{font-weight:700; font-size:15px}
+.q .why{font-size:13.5px; color:var(--ink2); margin:6px 0 0}
+.q .why b{color:var(--ink)}
+.tl{list-style:none; padding:0; margin:14px 0}
+.tl li{display:grid; grid-template-columns:96px 1fr; gap:12px; padding:8px 0; border-bottom:1px solid var(--line); font-size:14px}
+.tl .d{font-family:"IBM Plex Mono",monospace; font-size:12px; color:var(--muted); padding-top:3px}
+.check li{margin-bottom:9px}
+.src{font-size:12.5px; color:var(--muted); line-height:1.6} .src li{margin-bottom:4px}
+.foot{margin-top:60px; padding-top:18px; border-top:1px solid var(--line); font-size:12.5px; color:var(--muted); line-height:1.6}
+
+@media (max-width:620px){
+  body{font-size:14.5px}
+  .wrap{padding:0 14px 70px} .mast-in{padding:26px 14px 20px}
+  table{min-width:0; font-size:12.5px} th,td{padding:7px 7px}
+  .tbl-scroll{margin:14px -14px 18px; padding:0 14px}
+  .grid2{grid-template-columns:1fr}
+  .vc{grid-template-columns:repeat(2,1fr)}
+  .risk .r{grid-template-columns:56px 1fr}
+  .kp{grid-template-columns:24px 1fr; gap:9px}
+  .chart{padding:12px 10px 8px}
+  .tl li{grid-template-columns:78px 1fr}
+  .bar{display:none}
+}
+@media (max-width:400px){
+  .wrap{padding:0 11px 60px} .mast-in{padding:22px 11px 18px}
+  .tbl-scroll{margin:14px -11px 18px; padding:0 11px}
+  .stats{grid-template-columns:repeat(2,1fr)}
+}
+@media (prefers-reduced-motion:reduce){ *{transition:none!important; animation:none!important} }
+</style>
+</head>
+<body>
+<div class="tip" id="tip"></div>
+<header class="mast"><div class="mast-in">
+  <div class="eyebrow">기업리포트 · 지엔씨에너지 119850 · 2026-10-07 · 기준가 10/6 KRX 종가</div>
+  <h1 class="serif">지엔씨에너지, <span class="em">수주잔고는 매출 2년치로 불었는데 올해 영업이익은 거꾸로 간다. 주가는 2027년 이익의 12~14배다</span></h1>
+  <p class="sub">데이터센터용 비상발전기를 설계·조립·설치하는 국내 1위 업체다. 2026년 1~9월 공시한 수주가 2,922억으로 2025년 매출(2,626억)의 111%인데, 계약 종료일은 전부 2027년 이후다. 반면 2026년 상반기 영업이익은 146억으로 전년 대비 46% 줄었다. 발전기 부문 이익률이 19.8%에서 8.4%로 떨어졌고, 연결 영업이익의 79%는 파푸아뉴기니 발전소에서 나왔다. 순이익 264억은 환차익·통화선도·삼성전자 주식 평가이익 200억이 떠받쳤다. DART 정기보고서 13년치, 수시공시 546건, 전용 증권사 리포트 31건, 다른 회사·산업 리포트 94건, 웹 자료 약 270건을 대조해 확인된 것과 확인되지 않은 것을 나눴다.</p>
+  <div class="tickerline"><span>종가 <b>53,200원</b> (10/6)</span><span>시가총액 <b>8,751억</b></span><span>발행주식 <b>1,645만주</b></span><span>순현금 <b>약 827억</b> (6월말)</span><span>PBR <b>3.5배</b></span><span>외국인 <b>8.6%</b></span></div>
+  <div class="stats">
+    <div class="stat"><div class="k">52주 고점 대비</div><div class="v neg">-9.8%</div><div class="n">59,000원 (9/30 장중). 종가 고점 56,400원 대비 -5.7%</div></div>
+    <div class="stat"><div class="k">2026년 공시 수주</div><div class="v">2,922억</div><div class="n">7건, 9/11까지. 2025년 매출의 111%. 종료일 전부 2027년 이후</div></div>
+    <div class="stat"><div class="k">수주잔고 (6월말, 별도)</div><div class="v">4,147억</div><div class="n">2025년 별도매출의 2.0배. 7월 이후 공시 6건 2,541억은 미포함</div></div>
+    <div class="stat"><div class="k">1H26 영업이익</div><div class="v neg">145.6억</div><div class="n">-46.5% YoY. 1Q 44.0억(이익률 7.9%), 2Q 101.6억(15.3%)</div></div>
+    <div class="stat"><div class="k">PER</div><div class="v">20.2배</div><div class="n">2026년 컨센서스 EPS 2,635원 기준. 2027년 증권사 추정으로는 11.8~14.3배</div></div>
+    <div class="stat"><div class="k">자사주</div><div class="v">2주</div><div class="n">9.3%(153만주)를 2025년 교환사채 2건·블록딜로 409억에 전량 현금화</div></div>
+  </div>
+  <nav class="toc">
+    <a href="#s1">01 요약</a><a href="#s2">02 바로잡을 숫자</a><a href="#s3">03 주가</a><a href="#s4">04 비즈니스 모델</a><a href="#s5">05 13년 실적</a><a href="#s6">06 수주 원장</a><a href="#s7">07 상반기 해부</a><a href="#s8">08 캐파·엔진</a><a href="#s9">09 전방 산업</a><a href="#s10">10 경쟁사</a><a href="#s11">11 증권사 시각</a><a href="#s12">12 해자 검증</a><a href="#s13">13 지배구조·수급</a><a href="#s14">14 밸류에이션</a><a href="#s15">15 리스크</a><a href="#s16">16 확인할 것</a><a href="#s17">17 출처</a>
+  </nav>
+</div></header>
+
+<main class="wrap">
+
+<section id="s1">
+  <div class="sec-h"><span class="sec-n">01</span><h2>한 장 요약</h2></div>
+  <p class="lede">지엔씨에너지는 커민스·캐터필러·미쓰비시 등에서 엔진을 사다가 발전기로 조립해 데이터센터에 설치하는 회사다. 2024년부터 데이터센터 수요가 매출총이익률을 10%대에서 25%로 끌어올렸고, 2026년에는 수주가 폭발했다. 그런데 2026년 상반기 이익은 거꾸로 갔다. 이 리포트의 결론은 세 줄이다.</p>
+  <div class="keypoints">
+    <div class="kp"><div class="num">1</div><div class="txt"><div class="t">수주는 진짜다. 매출은 2027년 하반기부터다.</div><div class="d">2026년 공시 수주 7건 2,922억 중 2026년 안에 끝나는 계약은 0건이다. 종료일은 2027년 755억, 2028년 1,542억, 2029년 626억이다. 6월말 수주잔고 4,147억에 7월 이후 공시분 2,541억을 더하면 연말 잔고는 5,000~6,400억이 된다(회사 목표 5,000억, NH 6,000억, IBK 6,398억). 발전기 매출로 바뀌는 속도는 역사적으로 연 33~43%다.</div></div></div>
+    <div class="kp"><div class="num">2</div><div class="txt"><div class="t">2026년 이익은 환율·대손·파푸아뉴기니가 쥐고 있다.</div><div class="d">상반기 발전기 부문 영업이익은 74.6억(이익률 8.4%)으로 전년 185.3억(19.8%)의 40%다. 원인은 달러 엔진 매입과 원화 매출 사이의 시차, 대손상각비 42억(전년 4.8억), 성격 미공시의 연결조정 -43.5억이다. 파푸아뉴기니 34MW 중유발전소가 영업이익 115.7억을 냈다. 하반기에 컨센서스(연 463억)를 맞추려면 317억, 회사 가이던스(한 자릿수 중반 성장)를 맞추려면 373억이 필요하다. 2025년 하반기 실적은 222억이었다.</div></div></div>
+    <div class="kp"><div class="num">3</div><div class="txt"><div class="t">주가 53,200원은 2026년 이익의 20배, 2027년 이익의 12~14배다.</div><div class="d">최근 4분기 PER 20.0배는 금융수익 200억(환차익·통화선도·삼성전자 주식)이 포함된 숫자다. 그것을 빼면 28배다. 2027년 증권사 추정 순이익 610~739억으로는 11.8~14.3배, 2028년으로는 8.9~10.8배다. 결국 2027~2028년 영업이익 700~1,000억이 실현되느냐의 문제이고, 그 전제는 ① 발전기 이익률이 16% 이상으로 돌아오고 ② 엔진을 제때 받고 ③ 국내 데이터센터가 전력계통 승인(2026년 3월까지 신청 대비 3%)을 넘어 착공하는 것이다.</div></div></div>
+  </div>
+  <div class="take"><span class="lbl">먼저 알아둘 것</span><p>이 회사는 <b>엔진을 만들지 않는다.</b> 발전기 원재료의 79%(2026년 상반기 91%)가 엔진이고, 그중 74%를 커민스 한 곳에서 산다. 글로벌 대형 디젤 엔진의 납기는 2028년 하반기까지 밀려 있다(커민스 2분기 실적발표). 공급자 우위 업황이 지엔씨에너지에 유리한 동시에 지엔씨에너지의 병목이기도 하다. 그리고 증권사가 쓰는 "점유율 70%(또는 90%, 60%, 40%)"는 회사가 어느 공시에도 적은 적 없는 숫자다.</p></div>
+</section>
+
+<section id="s2">
+  <div class="sec-h"><span class="sec-n">02</span><h2>분석에 앞서 바로잡을 숫자 열두 개</h2></div>
+  <p>시세 사이트·증권사 리포트·기사에 떠다니는 숫자 중 공시 원문과 다르거나 기준이 섞인 것을 먼저 정리한다. 이 리포트의 본문은 전부 바로잡은 쪽을 쓴다.</p>
+  <div class="tbl-scroll"><table>
+    <caption>항목 · 떠도는 숫자 · 공시 기준 · 근거</caption>
+    <thead><tr><th>#</th><th>항목</th><th>떠도는 숫자</th><th>공시 원문 기준</th><th>왜 다른가</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>지엔원에너지(270520)</td><td>"지엔씨에너지의 자회사(지열·신재생)"</td><td><b>관계 없음.</b> 2022-12-21 보유지분 35.14% 전량을 400.0억에 매각. 이후 지오릿에너지→앱트뉴로사이언스(앱튼)로 사명 변경, 최대주주 에이프로젠</td><td>2022년 순이익 260억 중 233억이 이 처분이익(중단영업). 지엔씨 재무제표에 지엔원 손익 반영 0</td></tr>
+      <tr><td>2</td><td>데이터센터 비상발전기 점유율</td><td>90%(삼성 2월), 70%(삼성 5·7월, IBK, 하나, LS), 60%(NH), 전체 40%</td><td><b>회사 공시에 점유율 수치 없음.</b> 13개 사업보고서·IPO 투자설명서 모두 "주 공급처", "과점", "가스터빈 점유율 확대 중"만 서술</td><td>전부 증권사 추정. 분모(국내 DC 비상발전기 시장 규모)를 제시한 리포트도 없다</td></tr>
+      <tr><td>3</td><td>수주잔고</td><td>2025년말 3,966억(IBK), 1H26 4,853억(IB토마토), "잔고 6,700억"(7월 이후 공시 합산)</td><td>2025년말 <b>3,996억</b>, 2026년 6월말 <b>4,147억</b>(둘 다 별도 기준). 7월 이후 공시 2,541억은 하반기 납품분 차감 전이라 더하면 안 됨</td><td>사업보고서는 별도 기준 잔고만 기재. 수주총액·기납품액 미공시</td></tr>
+      <tr><td>4</td><td>2026년 6~7월 "수주 6건"</td><td>하나증권 표 기준 6건</td><td>신규는 4건(네이버 세종 명의변경, LGU+ 파주2, 삼성SDS 구미, 삼성물산 용인). KT클라우드 247억·LG CNS 고양삼송 252억은 <b>종료일 연장 정정</b>이지 신규 수주가 아님</td><td>2023년 계약의 납기 연장 공시가 2026년 6월에 나와 신규처럼 보임</td></tr>
+      <tr><td>5</td><td>네이버 각 세종 627억</td><td>"2026-06-01 자이씨앤에이 수주"</td><td>2025-08-20 네이버와 계약. 2026-06-01은 발주자→시공사(자이씨앤에이)로 <b>명의 승계</b> 정정. 금액·종료일(2029-03) 불변</td><td>2026년 수주 2,922억에는 포함하지 않았다</td></tr>
+      <tr><td>6</td><td>2025년 매출·PER</td><td>매출 2,029억, PER 15.1배(하나 7/16)</td><td>연결 매출 <b>2,626.3억</b>, 영업이익 493.7억. 하나증권 표는 별도 기준</td><td>별도 매출 2,028.6억은 파푸아뉴기니·한빛에너지 제외 수치</td></tr>
+      <tr><td>7</td><td>1분기 영업이익 급감 원인</td><td>"환율 때문"</td><td>환손실에 더해 <b>대손상각비 24.7억</b>(전년 1.1억)과 <b>연결조정 -24.1억</b>(전년 +3.9억)이 있었다. 발전기 부문 원가율 74%→89%</td><td>분기보고서 판관비 명세·부문 주석</td></tr>
+      <tr><td>8</td><td>1H26 순이익 264억 &gt; 영업이익 146억</td><td>"호실적"</td><td>금융수익 <b>223.6억</b>: 외환차익·환산이익 96.6억, 통화선도 평가이익 46.9억, 금융자산 평가이익 30.6억(삼성전자 16,000주 +23.6억 포함), 이자 40.4억</td><td>원화 강세 전환 시 반대로 움직이는 항목. 환율 10% 변동 시 세전손익 ±88.5억(회사 공시)</td></tr>
+      <tr><td>9</td><td>계약부채(선수금)</td><td>"39.7억(3Q25) → 568억(4Q25) 급증"</td><td>3분기까지 선수금 380.5억이 <b>기타유동부채</b>에 있었음. 실질은 약 420억 → 568억 → 614억(6월말)</td><td>재분류 효과. 증가 자체는 사실(네이버 세종 선급 30% 190억 등)</td></tr>
+      <tr><td>10</td><td>2021년 매출</td><td>1,225억 / 1,465억 혼재</td><td>구 연결 1,465.2억, 지엔원 매각 후 재작성치 1,224.9억. 이 리포트는 2021년까지 구 연결, 2022년부터 계속영업 기준</td><td>2022-02 실적 공시가 열흘 간격으로 두 번(1,225→1,469억) 나왔다</td></tr>
+      <tr><td>11</td><td>52주 고저·계약금액 오기</td><td>삼성 7/21 "52주 259,000/711,000원", 국가AI컴퓨팅센터 "959.6억"</td><td>52주 18,350~59,000원. 국가AI컴퓨팅센터 <b>359.6억</b>(당일 정정, 총액 칸 오기)</td><td>리포트·공시 원문 오기</td></tr>
+      <tr><td>12</td><td>자사주 9.3%</td><td>"주주환원 여력"</td><td>2025년 교환사채 2건(246.8억)과 블록딜(162.5억)로 <b>전량 처분</b>, 잔량 2주. 교환가 17,120원·34,450원 투자자는 5만원대에서 전량 교환 완료(8/4)</td><td>회사로 현금 409억 유입. 2.59%(42.6만주)가 8월에 시장에 나왔다</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">그 밖에 네이버 PER 19.8배(최근 4분기 EPS 2,656원)와 와이즈리포트 21.9배(2025년 EPS 2,428원)는 분모 기준 차이. 씽크풀 "2Q26 매출 370억·영업이익 30억"은 다른 회사 수치로 보여 사용하지 않았다.</p>
+</section>
+
+<section id="s3">
+  <div class="sec-h"><span class="sec-n">03</span><h2>주가: 2025년 +257%, 2026년 저점에서 넉 달 만에 3.1배</h2></div>
+  <div class="chart" id="ch-px"><p class="ct">일별 종가와 사건</p><p class="cs">2023-01-02 ~ 2026-10-07. 회색 선은 코스닥 지수를 시작일 종가에 맞춘 것. 번호는 아래 표. 점을 누르면 그날 종가·시총이 뜬다.</p><svg></svg>
+    <div class="legend"><span><i style="background:var(--c1)"></i>지엔씨에너지 종가</span><span><i style="background:var(--c4)"></i>코스닥(기준화)</span><span><i style="background:var(--c2)"></i>사건</span></div></div>
+  <ul class="tl">
+    <li><span class="d">① 24-06-28</span><span>파푸아뉴기니 34MW 중유발전소 인수 종결(295.5억). 연결 '전력판매 해외' 신설, 염가매수차익 138억</span></li>
+    <li><span class="d">② 25-02-17</span><span>2024년 실적 공시: 매출 2,259억(+36%), 영업이익 316억(+187%). 흥국 TP 23,000원</span></li>
+    <li><span class="d">③ 25-03-28</span><span>2회차 교환사채 100억(교환가 17,120원, 자사주 58.4만주). 5월 전량 교환</span></li>
+    <li><span class="d">④ 25-07-03</span><span>자사주 50만주 블록딜 162.5억(32,490원, 종가 -5%)</span></li>
+    <li><span class="d">⑤ 25-08-11</span><span>SK 울산 AI DC 422억 수주. 8/20 네이버 각 세종 627억(선급 30%)</span></li>
+    <li><span class="d">⑥ 25-10-15</span><span>+22%(거래량 361만주). 가스터빈 품귀 테마. 10/29 장중 43,950원 당시 고점 후 11월 -27%</span></li>
+    <li><span class="d">⑦ 26-02-19</span><span>2025년 실적 공시: 매출 2,626억·영업이익 494억(18.8%)</span></li>
+    <li><span class="d">⑧ 26-05-15</span><span>1분기 보고서: 영업이익 44억(7.9%). 5/18 -9.4%</span></li>
+    <li><span class="d">⑨ 26-06-08</span><span>저점 18,350원. 코스닥 급락기(5/21~7/30 -41.7%)와 겹침. 3/5 고점 35,650원 대비 -48.5%</span></li>
+    <li><span class="d">⑩ 26-07-23</span><span>+30.0% 상한가(거래량 289만주). NH 41쪽 심층 리포트 당일. 이후 사흘간 -37%</span></li>
+    <li><span class="d">⑪ 26-08-03</span><span>KT 군산 755억(사상 최대) 공시. 8/4 KINX 가스터빈 328억, +21.9%. 8/13 반기보고서 +14.9%</span></li>
+    <li><span class="d">⑫ 26-09-09</span><span>IBK 매수·목표가 70,000원 개시(유일한 공식 TP). 9/11 LGU+ 파주 4동 469억</span></li>
+    <li><span class="d">⑬ 26-09-30</span><span>장중 59,000원 고점, 종가 56,400원. 10/6 53,200원</span></li>
+  </ul>
+  <div class="tbl-scroll"><table>
+    <caption>연도별 수익률 (종가 기준)</caption>
+    <thead><tr><th>연도</th><th class="num">첫 종가</th><th class="num">끝 종가</th><th class="num">수익률</th><th class="num">연중 고점</th><th class="num">연중 저점</th><th>비고</th></tr></thead>
+    <tbody>
+      <tr><td>2023</td><td class="num">3,485</td><td class="num">4,255</td><td class="num pos">+22.1%</td><td class="num">6,230</td><td class="num">3,485</td><td>5월 조회공시(강남DC 222억 수주 전)</td></tr>
+      <tr><td>2024</td><td class="num">4,315</td><td class="num">8,210</td><td class="num pos">+90.3%</td><td class="num">10,430</td><td class="num">4,055</td><td>11월 한 달 +64%(LS 월간 수익률 1위)</td></tr>
+      <tr><td>2025</td><td class="num">8,660</td><td class="num">30,900</td><td class="num pos">+256.8%</td><td class="num">43,950</td><td class="num">7,960</td><td>중소형주 상승률 10위 안(신한)</td></tr>
+      <tr><td>2026 (~10/6)</td><td class="num">31,050</td><td class="num">53,200</td><td class="num pos">+71.3%</td><td class="num">56,400</td><td class="num">18,350</td><td>저점 대비 고점 3.07배. 10/7 장중 52,600원</td></tr>
+    </tbody>
+  </table></div>
+  <p>2023년 초 3,485원에서 10/6 53,200원까지 15.3배다. 2026년 흐름은 두 개의 급변으로 요약된다. 5~6월 코스닥 급락과 1분기 어닝쇼크가 겹치며 반토막 났고, 7월 말부터 두 달 동안 대형 수주 공시 6건과 증권사 리포트 7건이 이어지며 3배가 됐다. 7/23 상한가 뒤 사흘간 -37%, 8/4 +21.9% 뒤 8/31 -11.7%처럼 하루 10% 이상 변동한 날이 2025년 6월 이후 21거래일이다. 기관 보유는 2026년 들어 KB자산운용(ETF) 7.21%, 브이아이피자산운용 5.37%(8월 5만원대에서 3.82%로 축소)가 보고됐고, 외국인 비중은 2025년 2% 안팎에서 8.6~9.3%로 올라왔다.</p>
+</section>
+
+<section id="s4">
+  <div class="sec-h"><span class="sec-n">04</span><h2>비즈니스 모델: 엔진을 사다 발전기를 만들어 데이터센터에 설치한다</h2></div>
+  <p>데이터센터는 정전 시 수초 안에 UPS(배터리)가 받고, 10~15초 안에 비상발전기가 기동해 전력을 넘겨받아야 한다. 발전기는 IT 부하가 아니라 수전용량의 110%(신한), AI 데이터센터는 IT 부하의 120~150%(NH)만큼 설치된다. 100MW급 데이터센터 한 곳에 3MW급 발전기 40~50대, 금액으로 700~800억(삼성증권 코퍼레이트데이 Q&amp;A)이 들어간다. 지엔씨에너지는 이 발전기를 설계하고, 수입 엔진에 발전기(알터네이터)·제어반·소음기·연료계통을 붙여 당진 석문공장에서 조립·시운전한 뒤 현장에 설치하고 유지보수한다.</p>
+  <div class="vc">
+    <div class="c"><b>엔진 메이커</b>커민스·캐터필러·미쓰비시·보두앙(웨이차이)·MTU·니가타(가스터빈)<div class="who">납기 2028년까지, 가격 +20%</div></div>
+    <div class="c me"><b>발전기 패키저·EPC</b>지엔씨에너지, 코스탈파워, 혜인(CAT 딜러), 커민스코리아<div class="who">설계·조립·설치·시운전·AS</div></div>
+    <div class="c"><b>시공사</b>자이씨앤에이·DL이앤씨·삼성물산·대우건설·GS네오텍<div class="who">공시 계약상대의 절반</div></div>
+    <div class="c"><b>개발·운영사</b>LG CNS·KT클라우드·SK·네이버·LGU+·삼성SDS·이지스·KINX<div class="who">나머지 절반, 직접 발주</div></div>
+    <div class="c"><b>임차인</b>하이퍼스케일러·CSP(AWS·MS 등)·국가 AI컴퓨팅센터<div class="who">사양 결정권</div></div>
+    <div class="c"><b>전력계통</b>한전 전기사용신청·전력계통영향평가<div class="who">승인률 3%(용량 기준)</div></div>
+  </div>
+  <h3>무엇을 팔아 얼마를 버는가 (2025년 연결)</h3>
+  <div class="tbl-scroll"><table>
+    <caption>품목별 매출과 부문별 영업이익 (억원). 사업보고서 II-4, 연결주석 26</caption>
+    <thead><tr><th>부문</th><th class="num">매출</th><th class="num">비중</th><th class="num">영업이익</th><th class="num">이익률</th><th>내용</th></tr></thead>
+    <tbody>
+      <tr><td>발전기 - 데이터센터·R&amp;D센터</td><td class="num">1,513.6</td><td class="num">57.6%</td><td class="num" rowspan="3">312.6</td><td class="num" rowspan="3">15.8%</td><td>내수 1,503.9 + 해외 9.7. 발전기 매출의 76.5%</td></tr>
+      <tr><td>발전기 - 주택·일반건축</td><td class="num">384.3</td><td class="num">14.6%</td><td>10년째 380~650억. 법정 의무설치 수요</td></tr>
+      <tr><td>발전기 - 발전소·플랜트·쇼핑몰</td><td class="num">80.9</td><td class="num">3.1%</td><td>2015년 353억에서 축소</td></tr>
+      <tr><td>전력판매 - 파푸아뉴기니(PNG) 34MW</td><td class="num">386.5</td><td class="num">14.7%</td><td class="num" rowspan="2">158.8</td><td class="num" rowspan="2">36.9%</td><td>2024-06 인수. 중유발전, PNG 전력공사에 장기 PPA</td></tr>
+      <tr><td>전력판매 - 바이오가스·태양광</td><td class="num">48.1</td><td class="num">1.8%</td><td>국내 8개소 약 7MW. SMP·REC 연동. 2022년 82.5억이 고점</td></tr>
+      <tr><td>기계설비 공사(한빛에너지 75.4%)</td><td class="num">211.1</td><td class="num">8.0%</td><td class="num">1.4</td><td class="num">0.7%</td><td>냉난방 공조·연료전지 시공. 이익 기여 거의 없음</td></tr>
+      <tr><td>임대·기타 / 연결조정</td><td class="num">1.7</td><td class="num">0.1%</td><td class="num">+20.9</td><td class="num">-</td><td>내부거래 제거</td></tr>
+      <tr class="sum"><td>합계</td><td class="num">2,626.3</td><td class="num">100%</td><td class="num">493.7</td><td class="num">18.8%</td><td>지배주주 순이익 399.4억</td></tr>
+    </tbody>
+  </table></div>
+  <div class="chart" id="ch-dc"><p class="ct">발전기 매출 중 데이터센터·R&amp;D센터향 (억원)</p><p class="cs">2016~2025년. 진한 막대가 데이터센터·R&amp;D센터, 연한 부분이 주택·플랜트·쇼핑몰. 사업보고서 '수요처별 매출' 표(2024년부터 품목별 실적에서 환산).</p><svg></svg></div>
+  <p>2011~2019년 데이터센터향 매출은 155~362억 박스에 머물렀다. 2020년 558억으로 뛰었고 2024년 1,195억, 2025년 1,514억이 됐다. 같은 기간 주택·일반건축은 380~650억에서 움직이지 않았다. 즉 이 회사의 성장은 전부 데이터센터 한 수요처에서 왔고, 2025년에는 상위 2개 고객이 연결 매출의 41.6%(1,093억)를 차지했다(고객명 미공시).</p>
+  <h3>단가와 원가 구조</h3>
+  <ul>
+    <li><b>MW당 수주단가</b>: 2022년 4~5억 → 2025년 이후 평균 7.6억(수전용량 기준, LS 계산). 건별로는 SK 울산 10.5억, 네이버 세종 7.8억, 삼성물산 용인 4.1억(IT 부하 80MW 기준)으로 편차가 크다. 가스터빈은 디젤보다 대당 2~4배 비쌌으나 MW당으로는 6.9억 대 6.8억으로 격차가 거의 사라졌다(NH). 2026년 들어 엔진 가격 상승분 20%를 수주단가에 전가했다고 회사가 밝혔다(삼성 7/21, 9/22).</li>
+    <li><b>원재료의 79%가 엔진</b>(2026년 상반기 91%). 2025년 엔진 매입 942억 중 커민스(해외 348억 + 국내 판매법인 131억) 51%, 두산커머셜엔진 54억, 캐터필러 30억, 그 외 해외 211억. 2026년 상반기에는 커민스 비중이 73.6%로 올랐다. 해외 매입 비중 51~53%로 달러·엔화·위안화 노출. 사업보고서는 2019년부터 엔진 가격 변동표를 "현장별 상이"를 이유로 뺐다.</li>
+    <li><b>매출 인식은 납품 시점</b>(한 시점). 준공 6~12개월 전 반입, 현장 시운전 3~4개월. 그래서 데이터센터 준공이 밀리면 매출이 분기 단위로 밀린다. 공시 계약 23건 중 6건이 종료일을 연장했고(죽전 +15개월, 삼성바이오 6회 +6개월), 2024년에는 신규 공시 수주가 0건이었는데도 매출이 36% 늘었다.</li>
+    <li><b>선수금 구조</b>: 네이버 세종 30%, 김포·부천·필리핀 20%, SK 울산·삼송 5%, LGU+ 파주는 선급 없이 중도금 90%(4동은 공장검수 후 100%). 대형 수주가 늘며 선수금은 6월말 614억까지 쌓였고, 반대로 매출채권 688억·재고 422억(원재료 295억 선매입)도 늘어 상반기 영업현금흐름은 -150억이다.</li>
+  </ul>
+  <div class="take"><span class="lbl">정리</span><p>밸류체인에서 지엔씨에너지의 칸은 "엔진 메이커와 건설사 사이의 패키저·설치업자"다. 기술 진입장벽보다 레퍼런스·시운전 능력·엔진 확보력이 경쟁 요소다. 2025년 발전기 부문 이익률 15.8%는 2019~2022년 4~6%의 세 배인데, 그 차이가 데이터센터 믹스와 공급자 우위 가격 때문인지 일시적 환율 효과인지가 2026년 상반기(8.4%)에 시험대에 올랐다.</p></div>
+</section>
+
+<section id="s5">
+  <div class="sec-h"><span class="sec-n">05</span><h2>13년 실적: 10년 동안 10%대 매출총이익률, 2024년부터 다른 회사</h2></div>
+  <div class="chart" id="ch-ann"><p class="ct">연간 매출과 영업이익 (억원)</p><p class="cs">2013~2025년 실적(2013~2016년은 종속회사가 없거나 작아 별도≈연결), 2026년은 컨센서스(2곳), 2027년은 NH 추정. 2021년까지 구 연결(지엔원에너지 포함), 2022년부터 계속영업 기준.</p><svg></svg>
+    <div class="legend"><span><i style="background:var(--c1)"></i>매출(좌)</span><span><i style="background:var(--c2)"></i>영업이익(우)</span></div></div>
+  <div class="tbl-scroll"><table>
+    <caption>연결 손익 요약 (억원). DART 재무 API + 사업보고서. 2013·2014년은 사업보고서 기재값</caption>
+    <thead><tr><th>연도</th><th class="num">매출</th><th class="num">증감</th><th class="num">매출총이익률</th><th class="num">영업이익</th><th class="num">이익률</th><th class="num">지배주주 순이익</th><th>그해의 일</th></tr></thead>
+    <tbody>
+      <tr><td>2013</td><td class="num">685.3</td><td class="num">+13.4%</td><td class="num">-</td><td class="num">58.5</td><td class="num">8.5%</td><td class="num">42.6</td><td>10월 코스닥 상장(공모가 6,000원). 데이터센터향 234억</td></tr>
+      <tr><td>2014</td><td class="num">724.1</td><td class="num">+5.7%</td><td class="num">-</td><td class="num">52.5</td><td class="num">7.3%</td><td class="num">41.9</td><td>유상증자 88.7억(석문공장 토지), 무상증자 30%</td></tr>
+      <tr><td>2015</td><td class="num">1,102.8</td><td class="num">+52.3%</td><td class="num">12.5%</td><td class="num">92.0</td><td class="num">8.3%</td><td class="num">63.9</td><td>이라크·베트남 수출 167억, NH 의왕 5.2MW 가스터빈 4대</td></tr>
+      <tr><td>2016</td><td class="num">1,164.4</td><td class="num">+5.6%</td><td class="num">12.5%</td><td class="num">108.3</td><td class="num">9.3%</td><td class="num">69.2</td><td>수출 비중 27.5% 고점. 주택 649억 최대</td></tr>
+      <tr><td>2017</td><td class="num">966.7</td><td class="num">-17.0%</td><td class="num">11.5%</td><td class="num">67.0</td><td class="num">6.9%</td><td class="num">57.8</td><td>수출 320→75억. 코텍엔지니어링(후 지엔원) 80.5억 인수, 무상증자 1:1</td></tr>
+      <tr><td>2018</td><td class="num">1,260.5</td><td class="num">+30.4%</td><td class="num">11.4%</td><td class="num">65.2</td><td class="num">5.2%</td><td class="num">68.1</td><td>지엔원 연결 294억. 석문 제2공장 준공. 한빛에너지 42억 인수</td></tr>
+      <tr><td>2019</td><td class="num">1,683.5</td><td class="num">+33.6%</td><td class="num">10.5%</td><td class="num">90.6</td><td class="num">5.4%</td><td class="num">67.0</td><td>KT 용산 가스터빈 188.7억(당시 최대). 수주잔고 857억</td></tr>
+      <tr><td>2020</td><td class="num">1,610.2</td><td class="num">-4.4%</td><td class="num">9.6%</td><td class="num">68.3</td><td class="num">4.2%</td><td class="num">29.3</td><td>지엔원 스팩 상장(합병비용 49억). 데이터센터향 558억(+54%)</td></tr>
+      <tr><td>2021</td><td class="num">1,465.2</td><td class="num">-8.7%</td><td class="num">11.4%</td><td class="num">55.6</td><td class="num">3.8%</td><td class="num">44.1</td><td>이익률 저점. 지엔원 300억 매각 시도(이듬해 무산)</td></tr>
+      <tr><td>2022</td><td class="num">1,485.5</td><td class="num">+21.3%*</td><td class="num">9.5%</td><td class="num">60.9</td><td class="num">4.1%</td><td class="num">273.9</td><td>지엔원 400억 매각(처분이익 233억). 환율로 원가 상승. 연료전지 물적분할</td></tr>
+      <tr><td>2023</td><td class="num">1,664.2</td><td class="num">+12.0%</td><td class="num">13.5%</td><td class="num">110.2</td><td class="num">6.6%</td><td class="num">113.9</td><td>4분기 매출 649억·영업이익 67.5억 서프라이즈. 수주잔고 2,458억(+53%)</td></tr>
+      <tr><td>2024</td><td class="num">2,263.2</td><td class="num">+36.0%</td><td class="num">19.2%</td><td class="num">317.0</td><td class="num">14.0%</td><td class="num">384.8</td><td>데이터센터향 1,195억(+63%). PNG 인수(염가매수차익 138억)</td></tr>
+      <tr class="sum"><td>2025</td><td class="num">2,626.3</td><td class="num">+16.0%</td><td class="num">25.3%</td><td class="num">493.7</td><td class="num">18.8%</td><td class="num">399.4</td><td>창사 최대. 데이터센터향 1,514억. 자사주 409억 현금화</td></tr>
+      <tr><td>1H26</td><td class="num">1,219.2</td><td class="num">-4.1%</td><td class="num">21.5%</td><td class="num">145.6</td><td class="num">11.9%</td><td class="num">265.1</td><td>발전기 부문 이익률 8.4%. 금융수익 223.6억</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">* 2022년 증감률은 재작성된 2021년 계속영업 매출 1,224.9억 대비. 2013·2014년 매출총이익률은 재무 API 미제공.</p>
+  <p>숫자가 말하는 것은 분명하다. 2013~2022년 열 해 동안 매출총이익률은 9.5~12.5%, 영업이익률은 3.8~9.3%였다. 그 사이 데이터센터향 매출이 234억에서 629억으로 2.7배가 됐는데도 이익률은 오히려 내려갔다. 상상인증권이 2020년에 "비상발전기 GPM 10.4%(2016)→6.8%(2019), 보국전기공업의 저가수주 경쟁이 배경"이라고 썼던 시기다. 2023년부터 세 해 연속 매출총이익률이 13.5→19.2→25.3%로 뛰었다. 2024년은 매출 +36%에 매출총이익 +94%, 영업이익 +188%. 2025년은 매출 +16%에 매출총이익 +53%였다. 물량보다 단가·믹스가 이익을 만들었다는 뜻이고, 그 단가는 "공급자 우위" 업황에서 왔다. 2026년 상반기 21.5%는 그 추세가 처음 꺾인 숫자다.</p>
+  <div class="chart" id="ch-q"><p class="ct">분기 매출, 영업이익률, 매출총이익률</p><p class="cs">2018년 1분기 ~ 2026년 2분기(연결, 4분기는 연간에서 3분기 누계 차감). 막대 매출(좌, 억원), 실선 영업이익률(우), 점선 매출총이익률(우).</p><svg></svg>
+    <div class="legend"><span><i style="background:var(--c1)"></i>매출</span><span><i style="background:var(--c2)"></i>영업이익률</span><span><i style="background:var(--c3)"></i>매출총이익률</span></div></div>
+  <p>분기 영업이익률은 2024년 3분기부터 2025년 3분기까지 다섯 분기 연속 17.9~22.6%였다가 2025년 4분기 14.2%, 2026년 1분기 7.9%, 2분기 15.3%다. 1분기는 매출총이익률 19.2%에 판관비가 62억(전년 38억)으로 뛰었다. 회사는 "엔진 매입(달러)과 매출 인식 사이의 환율 시차"를 들었고 2026년부터 환정산 조건 계약과 달러 결제(삼성물산 국가AI컴퓨팅센터 76%)를 도입했다. 다음 장에서 숫자로 뜯는다.</p>
+</section>
+
+<section id="s6">
+  <div class="sec-h"><span class="sec-n">06</span><h2>수주 원장: 공시 계약 23건, 2026년 수주의 종료일은 전부 2027년 이후</h2></div>
+  <p>단일판매·공급계약 공시(매출의 10% 이상 또는 자율공시)를 2019년부터 전수 확인했다. 23건 전부 데이터센터용 비상·가스터빈 발전기였고 예외는 2021년 삼성바이오로직스 공장과 2025년 필리핀 수출 둘뿐이다. 바이오가스·연료전지 관련 공급계약 공시는 없다.</p>
+  <div class="chart" id="ch-ord"><p class="ct">연도별 공시 수주 합계 (억원)</p><p class="cs">기재정정 반영 최종 금액. 공시 기준(매출 10%) 미만의 소액 계약은 빠져 있어 실제 신규 수주보다 작다. 2025년 공시 수주는 7건 2,148.5억, 실제 신규 수주는 3,300억(회사, 삼성 7/21)~3,404억(IBK).</p><svg></svg></div>
+  <div class="tbl-scroll"><table>
+    <caption>2026-10-07 현재 종료일이 지나지 않은 공시 계약 15건 (억원, 부가세 별도)</caption>
+    <thead><tr><th>공시일</th><th>발주처</th><th>프로젝트</th><th class="num">금액</th><th class="num">매출比</th><th>종료일</th><th>선수 조건·비고</th></tr></thead>
+    <tbody>
+      <tr><td>23-11-24</td><td>KT클라우드</td><td>KT클라우드 DC</td><td class="num">247.1</td><td class="num">16.6%</td><td>27-02-28</td><td>301.0억에서 -53.9억 감액(24-06), 종료일 8개월 연장(26-06). 수금 159억</td></tr>
+      <tr><td>25-04-04</td><td>콤텍시스템</td><td>안산 글로벌클라우드센터(이지스)</td><td class="num">265.0</td><td class="num">11.7%</td><td>27-05-31</td><td>선급 없음, 검수 후 100%</td></tr>
+      <tr><td>25-08-11</td><td>SK㈜</td><td>울산 AI DC A동(SK-AWS, 수전 100MW)</td><td class="num">421.9</td><td class="num">18.6%</td><td>27-10-31</td><td>선급 5%, 기성 15·50·15·10%</td></tr>
+      <tr><td>25-08-20</td><td>네이버→자이씨앤에이</td><td>각 세종 2~3차(80MW)</td><td class="num">627.1</td><td class="num">27.7%</td><td>29-03-31</td><td>선급 30%(190억 수령). 26-06 시공사로 명의 승계</td></tr>
+      <tr><td>25-08-29</td><td>DL이앤씨</td><td>김포 DC(디지털리얼티)</td><td class="num">180.2</td><td class="num">8.0%</td><td>27-10-24</td><td>선급 20%</td></tr>
+      <tr><td>25-09-03</td><td>VISTA(싱가포르)</td><td>필리핀 비상발전기(USD 9.64M)</td><td class="num">134.2</td><td class="num">5.9%</td><td>27-03-31</td><td>선수 20%. 캐터필러 현지 에이전트 대체(NH)</td></tr>
+      <tr><td>25-11-25</td><td>KT클라우드</td><td>부천 피치 DC 2단계</td><td class="num">204.0</td><td class="num">9.0%</td><td>27-10-31</td><td>선급 20%</td></tr>
+      <tr><td>25-12-31</td><td>LG CNS</td><td>이지스 삼송 2단계</td><td class="num">316.1</td><td class="num">14.0%</td><td>27-05-31</td><td>선급 5%</td></tr>
+      <tr><td>26-06-10</td><td>LG유플러스</td><td>파주센터 2단계</td><td class="num">381.6</td><td class="num">14.5%</td><td>28-03-31</td><td>선급 없음, 중도금 90%</td></tr>
+      <tr><td>26-07-02</td><td>삼성SDS</td><td>구미 AI DC</td><td class="num">297.5</td><td class="num">11.3%</td><td>29-05-31</td><td>중도금 40·10·40%, 잔금 10%</td></tr>
+      <tr><td>26-07-15</td><td>삼성물산</td><td>용인 덕성 AI DC(80MW)</td><td class="num">331.8</td><td class="num">12.6%</td><td>28-03-31</td><td>계약금 10%</td></tr>
+      <tr><td>26-07-30</td><td>삼성물산</td><td>국가 AI컴퓨팅센터(해남, 40→80MW)</td><td class="num">359.6</td><td class="num">13.7%</td><td>28-10-31</td><td>USD 1,869만(76%) + 원화 85.7억. 총액 칸 959.6억은 오기</td></tr>
+      <tr class="sum"><td>26-08-03</td><td>KT</td><td>SGC AI Infra 군산 DC(1단계 60MW)</td><td class="num">755.1</td><td class="num">28.8%</td><td>27-12-31</td><td>사상 최대. 계약금 5%, 중도 85%, 잔금 10%. 자체+외주생산</td></tr>
+      <tr><td>26-08-04</td><td>KINX</td><td>시흥 정왕 DC 가스터빈</td><td class="num">328.1</td><td class="num">12.5%</td><td>29-03-31</td><td>계약금 20%. 2026년 유일한 가스터빈 공시</td></tr>
+      <tr><td>26-09-11</td><td>LG유플러스</td><td>파주센터 4동</td><td class="num">468.6</td><td class="num">17.8%</td><td>28-09-30</td><td>공장검수 완료 후 100%. 공급기간 750일</td></tr>
+    </tbody>
+    <tfoot><tr><td colspan="3">합계 (계약총액 기준, 기납품분 포함 상한)</td><td class="num">5,317.8</td><td class="num"></td><td></td><td>2026년 공시 7건 2,922.2억 + 2025년 이전 8건 2,395.6억</td></tr></tfoot>
+  </table></div>
+  <p class="tnote">매출比는 공시 당시 직전 사업연도 매출 대비. 2023~2025년 종료된 계약(죽전 276.7, 강남 222.4, 가산 148.8, 고양삼송 252.2 등)은 표에서 뺐다. 기재정정으로 금액이 늘어난 사례는 없고 전부 감액(최대 KT클라우드 -17.9%).</p>
+  <div class="chart" id="ch-end"><p class="ct">미종료 공시 계약 5,318억의 종료일 분포 (억원)</p><p class="cs">종료일은 잔금 수령 기준이라 실제 납품(매출 인식)은 그보다 3~6개월 앞선다. 2025년 이전 계약 일부는 이미 납품·인식됐을 수 있어 상한으로 읽을 것.</p><svg></svg></div>
+  <div class="chart" id="ch-bl"><p class="ct">분기별 수주잔고 (별도, 억원)</p><p class="cs">2018년 1분기 ~ 2026년 2분기. 2018~2024년은 IV리서치 집계(연말 수치는 사업보고서와 일치), 2025년 이후는 IBK 집계·정기보고서. 진한 막대가 연말.</p><svg></svg></div>
+  <h3>잔고가 매출로 바뀌는 속도</h3>
+  <p>수주잔고는 2018년 말 679억에서 2024년 말 2,591억, 2025년 말 3,996억, 2026년 6월말 4,147억이 됐다. 2025년 별도 매출 2,029억의 2.0배다. LS증권이 정의한 회전율(발전기 매출 ÷ (기초잔고 + 당해 신규수주))은 2022년 43.3%, 2023년 36.3%, 2024년 40.7%, 2025년 33.1%다. 2025년 숫자를 재현하면 1,980 ÷ (2,591 + 3,404) = 33.0%로 맞는다. 이 비율이 떨어지는 것은 수주가 매출보다 빨리 늘고 있다는 뜻이지만, 동시에 2027~2029년 납기의 장기 계약이 많아졌다는 뜻이기도 하다.</p>
+  <div class="tbl-scroll"><table>
+    <caption>2027년 발전기 매출을 거꾸로 계산해 보면 (억원, 필자 계산)</caption>
+    <thead><tr><th>가정</th><th class="num">2026년말 잔고</th><th class="num">2027년 신규수주</th><th class="num">회전율 33%</th><th class="num">회전율 40%</th><th>증권사 2027E 비상발전기 매출</th></tr></thead>
+    <tbody>
+      <tr><td>회사 목표(2026 수주 3,400억, 잔고 5,000억)</td><td class="num">5,000</td><td class="num">4,400 (LS)</td><td class="num">3,100</td><td class="num">3,760</td><td rowspan="2">LS 2,620 / NH 3,410 / IBK 3,583(별도 전체)</td></tr>
+      <tr><td>IBK 경로(2026 수주 4,686억, 잔고 6,398억)</td><td class="num">6,400</td><td class="num">9,000 (IBK)</td><td class="num">5,080</td><td class="num">6,160</td></tr>
+    </tbody>
+  </table></div>
+  <p>즉 NH의 2027년 비상발전기 매출 3,410억(2026년 추정 2,434억 대비 +40%)은 2026년 말 잔고 5,000억과 2027년 신규 4,400억만 있어도 회전율 36%에서 나오는 숫자다. 공격적인 가정이 아니다. 문제는 매출이 아니라 두 가지다. 하나는 그 매출의 이익률이고(07·14장), 다른 하나는 공시 계약의 종료일이 2027년 하반기(1,561억)와 2028년 이후(2,794억)에 몰려 있어 <b>2027년 상반기까지는 2025년 계약분(울산·안산·삼송·김포·부천 1,387억)으로 버텨야 한다</b>는 점이다. 2026년 하반기 매출은 종료일이 9/30인 고양삼송 252억과 2025년 계약의 기성 인식, 공시 기준 미만 소액 계약에 달려 있다.</p>
+  <div class="take"><span class="lbl">수주 데이터 함정</span><p>① 사업보고서 수주잔고는 별도 기준이고 수주총액·기납품액이 없다. ② "7월 이후 6건 2,541억을 더해 6,688억"은 하반기 납품 차감 전이라 잔고가 아니다. ③ 하나증권 수주표의 2026년 6월 KT클라우드·LG CNS 건은 종료일 연장 정정이지 신규가 아니다. ④ IV리서치의 "2026년 7월 기준 3,967억"은 IBK의 1분기 말 수치와 같다(시점 표기 의심). ⑤ 2025년 신규 수주는 3,300억(삼성 7/21)·3,404억(IBK)·3,390억(LS)으로 리포트마다 다르고, 삼성 9/22의 "2026년 목표 3,400억 = 전년 대비 +20%"는 2025년 약 2,830억을 뜻해 자기 리포트와도 안 맞는다.</p></div>
+</section>
+
+<section id="s7">
+  <div class="sec-h"><span class="sec-n">07</span><h2>2026년 상반기 해부: 영업이익은 반토막, 순이익은 늘었다</h2></div>
+  <p>반기보고서(8/13)와 1분기 보고서(5/15)의 부문 주석·판관비 명세·금융수익 주석을 뜯었다. 세 가지가 동시에 일어났다.</p>
+  <div class="chart" id="ch-seg"><p class="ct">2026년 상반기 부문별 영업이익 (억원)</p><p class="cs">반기보고서 연결주석 25. 괄호는 2025년 상반기. 연결조정은 내부거래 미실현이익 제거로 추정되나 성격 공시 없음.</p><svg></svg></div>
+  <div class="tbl-scroll"><table>
+    <caption>부문별 매출·영업이익 (억원)</caption>
+    <thead><tr><th>부문</th><th class="num">1H25 매출</th><th class="num">1H25 OP</th><th class="num">이익률</th><th class="num">1H26 매출</th><th class="num">1H26 OP</th><th class="num">이익률</th><th>해석</th></tr></thead>
+    <tbody>
+      <tr><td>발전기</td><td class="num">937.0</td><td class="num">185.3</td><td class="num">19.8%</td><td class="num">892.1</td><td class="num">74.6</td><td class="num">8.4%</td><td>1Q 원가율 89.1%(전년 74.3%), 2Q 회복. 가스터빈 출하 없음</td></tr>
+      <tr><td>전력판매(PNG·바이오가스)</td><td class="num">217.7</td><td class="num">78.3</td><td class="num">36.0%</td><td class="num">222.2</td><td class="num">115.7</td><td class="num">52.1%</td><td>연결 영업이익의 79%. PNG 전력 202억</td></tr>
+      <tr><td>기계설비 공사·상품(한빛)</td><td class="num">122.6</td><td class="num">1.2</td><td class="num">1.0%</td><td class="num">123.4</td><td class="num">-0.9</td><td class="num">-</td><td>이익 기여 없음</td></tr>
+      <tr><td>기타·연결조정</td><td class="num">-6.3</td><td class="num">+7.2</td><td class="num">-</td><td class="num">-18.5</td><td class="num">-43.8</td><td class="num">-</td><td>1Q -24.1억, 2Q -19.4억. 성격 미공시</td></tr>
+      <tr class="sum"><td>합계</td><td class="num">1,271.0</td><td class="num">271.9</td><td class="num">21.4%</td><td class="num">1,219.2</td><td class="num">145.6</td><td class="num">11.9%</td><td></td></tr>
+    </tbody>
+  </table></div>
+  <h3>① 발전기 부문: 원가율과 대손</h3>
+  <p>1분기 발전기 매출 406.5억(-16.4%)에 원가 362.4억, 원가율 89.1%였다. 회사 설명은 "엔진을 달러로 사는 시점과 원화 매출을 인식하는 시점의 환율 차이"다. 2025년 하반기 원화 약세 구간에 산 엔진이 2026년 1분기 매출원가로 들어갔다는 뜻이다. 비용 성격별로 보면 상반기 원재료 사용 736억(+127억)에 외주비 70억(-166억), 재공품 감소 71억이다. 설치 외주가 급감하고 재공품이 빠진 것은 납품(매출 인식)이 밀리는 가운데 엔진은 먼저 들어왔다는 신호다. 재고자산 평가손실은 1억 미만으로 원가 상승의 원인이 아니다.</p>
+  <p>판관비는 상반기 116.9억으로 전년 78.8억보다 38억 늘었는데 <b>대손상각비 42.1억(전년 4.8억)</b>이 증가분의 거의 전부다. 반기말 매출채권 중 4~9개월 연체 채권이 230억(충당금 설정률 70~98%)이고, 2024년 PNG 연결 편입 때 충당금이 10억에서 155억으로 뛴 이력으로 보아 PNG 전력공사(PPL)의 전력대금 회수 지연이 핵심으로 추정된다. 회사는 거래처를 밝히지 않았다. 즉 1분기 영업이익 44억은 환율 시차에 더해 대손 25억과 연결조정 -24억이 겹친 결과다.</p>
+  <h3>② 파푸아뉴기니 발전소가 이익을 떠받쳤다</h3>
+  <p>2024년 6월 포스코인터내셔널에서 295.5억에 인수한 34MW 중유발전소(GnCenergy Power PNG)는 2025년 매출 386.5억·순이익 124.9억, 2026년 상반기 매출 202.4억·순이익 40.1억을 냈다. 부문 영업이익 115.7억은 바이오가스를 포함한 전력판매 부문 전체다. 연결 영업이익의 79%가 발전기가 아닌 곳에서 나온 반기였다. 인수가 대비 식별 순자산이 355억이라 염가매수차익 138억을 2024년에 인식했고, 별도 재무제표에는 PNG 배당금수익이 2024년 95.1억, 2025년 60.4억 잡혔다. 좋은 인수였다. 다만 이 자산은 키나화 환산손실(2025년 -46억), 전력대금 회수, 중유 가격이라는 세 개의 꼬리를 달고 있다.</p>
+  <h3>③ 영업이익 146억이 순이익 264억이 된 경로</h3>
+  <div class="chart" id="ch-bridge"><p class="ct">2026년 상반기 영업이익에서 순이익까지 (억원)</p><p class="cs">반기보고서 연결주석 28·29. 금융수익 223.6억의 구성을 펼쳤다. 회색은 소계.</p><svg></svg></div>
+  <p>외화자산이 962.6억이다. 달러 예금 308억, <b>호주달러 현금·예금 445.8억</b>(2026년 4월 브리즈번에 세운 호주법인의 투자 대기자금), 엔화 95억, 달러 채권 81억. 여기서 환차익·환산이익 96.6억이 났고, 통화선도 $65M 매도 포지션에서 평가이익 46.9억이 났다. 3월 19일 29.8억에 산 삼성전자 16,000주는 6월말 53.4억으로 평가이익 23.6억이다. 이 세 항목 170억은 다음 반기에 반대로 움직일 수 있는 돈이다. 회사가 공시한 민감도는 환율 10% 변동 시 세전손익 ±88.5억(달러 33.9억, 호주달러 44.6억, 엔화 9.5억)이다. 상반기 지배주주 순이익 265억 중 정상 영업과 이자·지분법에서 나온 몫은 대략 150억(세후)으로 본다.</p>
+  <h3>④ 재무상태: 선수금·재고·매출채권이 같이 늘었다</h3>
+  <div class="tbl-scroll"><table>
+    <caption>연결 재무상태 주요 항목 (억원)</caption>
+    <thead><tr><th>항목</th><th class="num">2024말</th><th class="num">2025말</th><th class="num">2026-06말</th><th>비고</th></tr></thead>
+    <tbody>
+      <tr><td>현금·단기금융자산</td><td class="num">467.0</td><td class="num">1,381.6</td><td class="num">1,199.1</td><td>2025년 자사주 처분 409억·영업현금 411억 유입</td></tr>
+      <tr><td>총차입금(교환사채 포함)</td><td class="num">215.5</td><td class="num">370.3</td><td class="num">372.4</td><td>8/4 교환사채 전량 교환으로 약 285억으로 감소. 전부 고정금리</td></tr>
+      <tr><td>순현금</td><td class="num">251.5</td><td class="num">1,011.3</td><td class="num">826.7</td><td>시가총액의 9.4%</td></tr>
+      <tr><td>계약부채(선수금)</td><td class="num">386.5</td><td class="num">568.4</td><td class="num">613.6</td><td>네이버 세종 190억 등 대형 DC 선급</td></tr>
+      <tr><td>재고자산</td><td class="num">146.0</td><td class="num">314.4</td><td class="num">422.2</td><td>원재료 294.7억(엔진 선매입), 미착 79억. 회전 12.0→8.5→5.2회</td></tr>
+      <tr><td>매출채권(순액)</td><td class="num">345.1</td><td class="num">350.8</td><td class="num">687.5</td><td>총액 888.9억, 충당금 201.3억(22.6%). 상위 2고객 34.6%</td></tr>
+      <tr><td>유형자산</td><td class="num">649.1</td><td class="num">620.3</td><td class="num">715.5</td><td>상반기 취득 107.5억: 마곡 엣지DC 시설 107억·석문 증축 47억 대체</td></tr>
+      <tr><td>영업활동현금흐름</td><td class="num">129.9</td><td class="num">410.8</td><td class="num">-150.3</td><td>법인세 146.5억 납부, 채권 +344억, 재고 +103억</td></tr>
+      <tr><td>부채비율</td><td class="num">64.3%</td><td class="num">67.4%</td><td class="num">65.8%</td><td>자본총계 2,469.8억, BPS 15,015원</td></tr>
+    </tbody>
+  </table></div>
+  <h3>하반기에 필요한 숫자</h3>
+  <p>2026년 영업이익 컨센서스 463억(2곳)을 맞추려면 하반기 317억, 회사가 7월 코퍼레이트데이에서 말한 "한 자릿수 중반 성장"을 맞추려면 373억이 필요하다. 2025년 하반기 실적은 222억, 2025년 상반기(사상 최고 분기 둘)는 272억이었다. 회사 측 근거는 ① 상반기에 없던 가스터빈 출하가 하반기에 몰리고(디젤보다 이익률 5~10%p 높음) ② 고환율기에 받은 수주가 인식되며 ③ 환정산·달러 계약으로 환 시차가 사라진다는 것이다. 반대로 대손이 멈추지 않거나 연결조정이 또 -40억이면 2025년 하반기 수준(222억)도 어렵다. 3분기 보고서(11월 6일 예정)에서 발전기 부문 이익률이 15%를 넘는지가 첫 번째 확인 지점이다.</p>
+</section>
+
+<section id="s8">
+  <div class="sec-h"><span class="sec-n">08</span><h2>생산능력과 엔진: 연 250대 캐파와 2년짜리 엔진 납기</h2></div>
+  <p>사업보고서는 13년 내내 생산능력·가동률을 "주문제작 방식이라 계량 불가"로 비워 뒀다. 그래서 캐파 숫자는 전부 증권사·회사 IR 발언이고, 하우스마다 다르다.</p>
+  <div class="tbl-scroll"><table>
+    <caption>캐파·출하 관련 발언 비교</caption>
+    <thead><tr><th>출처</th><th>캐파</th><th>출하·가동</th><th>증설</th></tr></thead>
+    <tbody>
+      <tr><td>NH 7/23·9/28</td><td>3,000kW 이상 연 최대 250대(대당 2.5~5.2MW)</td><td>2025년 70여 대 → 2026년 90~100대 → 2027년 130대</td><td>테스트베드 1→2대(2026년 3월), 공장 800평 증축. 보두앙 중국 현지 테스트 직도입으로 '250대+α'</td></tr>
+      <tr><td>IV리서치 7/27</td><td>연 250대 = 매출 약 5,000억</td><td>한 현장 100대 투입 시 전수 테스트가 병목</td><td>석문 증설 2026년 5월 완료</td></tr>
+      <tr><td>삼성 9/22</td><td>증설로 캐파 2배, 5~6천억</td><td>-</td><td>3월 완료, 유휴부지로 추가 증설 용이</td></tr>
+      <tr><td>LS 9/9</td><td>700~800MW × 7억 = 5천억(단가 상승 시 6천억+)</td><td>-</td><td>-</td></tr>
+      <tr><td>하나 7/16</td><td>석문 연면적 2,960평, 매출 캐파 3,000억</td><td>-</td><td>2018.08 준공·2026.04 증축</td></tr>
+      <tr><td>기사(파이낸스스코프 25-08, 이투데이 26-07)</td><td>당진 2,500억 → 3,000억+; 3,000kW 이상 120→240대</td><td>2026년 7월 풀가동</td><td>-</td></tr>
+      <tr><td>반기보고서</td><td>미공시</td><td>미공시</td><td>건설중자산 → 시설장치 107억·건물 47억 대체(마곡 엣지DC + 석문 증축). 교환사채 50억 증축 집행 완료</td></tr>
+    </tbody>
+  </table></div>
+  <p>어느 숫자를 택하든 결론은 같다. 2026년 출하 90~100대로는 매출 캐파의 40%를 쓰는 셈이고, 2027년 130대로도 절반이다. 캐파가 아니라 <b>엔진과 시운전 인력</b>이 제약이다. 직원은 2025년 말 118명, 6월말 126명이고 1인당 매출은 2025년 22억이다. 회사는 수주 급증 시 설치를 건설사에 위탁하는 방식을 검토한다고 했다(삼성 7/21).</p>
+  <h3>엔진: 누구에게서, 얼마나 기다려서</h3>
+  <ul>
+    <li><b>디젤</b>: 커민스(국내 판매법인 포함 2026년 상반기 엔진 매입의 73.6%), 캐터필러, 미쓰비시(엔화 결제 2025년 16.8억엔), 두산커머셜엔진(국산, 중소형), MTU(2016~17년만), 스카니아, 퍼킨스. 2026년 상반기 위안화 결제가 4,230만 위안으로 급증한 것은 중국 보두앙(웨이차이 산하) 엔진 도입과 맞물린다. 회사는 "납기가 급할 때 보두앙"(삼성 7/21), 증권사는 "DC 프로젝트에서 품질·납품 이력 확보 단계"(IV)라고 썼다.</li>
+    <li><b>가스터빈</b>: 니가타(IHI 파워시스템)와 국내 독점 협력, 가와사키는 국내 미활동. 사업보고서는 가스터빈 공급사를 한 번도 명시하지 않았다. NH는 국내 DC 가스터빈 비상발전기 13건을 전부 지엔씨가 했다고 썼다(KT 용산·백석, 상암 DRT, 퍼시픽써니 죽전, NH 의왕, 새마을금고, 현대정보기술 용인, 고양삼송). 2026년 공시 가스터빈 수주는 KINX 시흥 328억 1건이고 상반기 가스터빈 매출은 없었다.</li>
+    <li><b>납기</b>: 커민스는 2분기 실적발표에서 "대형 디젤 발전기 납기가 2028년 하반기까지"라고 했고, 캐터필러는 "2028년 깊숙이", 혜인(캐터필러 한국 딜러)은 "2년 이상 선발주"라고 했다. 커민스 리드타임 24개월(IV), 엔진 가격 +20% 전가(삼성 9/22). 커민스는 20GW 증설을 2027~2028년에 하고, 캐터필러는 2030년까지 대형 왕복엔진 캐파를 3배로 늘린다. 제네락은 납기 40~45주를 무기로 아마존과 24억 달러(최대 80억 달러) 계약을 맺었다.</li>
+    <li><b>상용 가스엔진</b>: HD현대중공업 힘센 엔진으로 데이터센터 상시발전 시장 진입을 준비한다고 NH가 썼다. 사업보고서에는 가스엔진·가스터빈 열병합이 2022년부터 상시 기재돼 있고, 2025년 정관에 정보통신업(엣지DC)·가스충전업이, 2026년에 부동산 투자업이 추가됐다. ESS는 2022년 정관에 넣었다가 "부적합 결정, 추진계획 없음"으로 명시했다.</li>
+  </ul>
+  <div class="take"><span class="lbl">판단</span><p>엔진 부족은 양날이다. 지엔씨에너지가 커민스·캐터필러·미쓰비시·보두앙·니가타 다섯 경로를 가진 것은 국내 경쟁사 대비 분명한 우위이고, 회사가 환정산 조건을 고객에게 관철한 것도 그 덕이다. 그러나 엔진 메이커들의 수주잔고가 2028년까지 차 있다는 말은 지엔씨가 2027~2028년 납품할 엔진을 지금 확보했는지가 곧 2027~2028년 매출이라는 뜻이다. 회사는 "니가타와 2028~2029년 물량 사전 확보 협상"(IV)이라고만 했다. 어느 보고서에도 엔진 확보 물량(대수·MW)은 없다.</p></div>
+</section>
+
+<section id="s9">
+  <div class="sec-h"><span class="sec-n">09</span><h2>전방 산업: 신청은 3.1GW, 승인은 3%</h2></div>
+  <h3>국내 데이터센터: 수요는 폭발, 병목은 송전</h3>
+  <div class="tbl-scroll"><table>
+    <caption>국내 데이터센터 전력 수치 (출처 명시)</caption>
+    <thead><tr><th>항목</th><th class="num">수치</th><th>출처·시점</th></tr></thead>
+    <tbody>
+      <tr><td>가동 중 수전용량</td><td class="num">1,986MW (150계약)</td><td>한전 계약 기준 2023년 말, 수도권 70.6%. ai-dc 센서스</td></tr>
+      <tr><td>2026년 1~8월 한전 전기사용신청</td><td class="num">88건 · 3,112MW</td><td>역대 최대(2025년 연간 46건). 건수는 수도권 79.5%, 용량은 비수도권 66.9%. 세계일보 9/28(이용우 의원실)</td></tr>
+      <tr><td>신청 → 최종 승인</td><td class="num">522건 33,592MW → 10건 1,010MW</td><td>건수 1.9%, 용량 3.0%. 2026년 3월 기준, ai-dc 센서스. 수도권 1차 검토 공급불가 53.4%</td></tr>
+      <tr><td>접속 대기 144곳 중 "고객 준비 중"</td><td class="num">127곳 (88.1%)</td><td>공사·인허가·투자유치 지연. 한국일보 9/14(박지혜 의원실)</td></tr>
+      <tr><td>154kV 변전소 신설 표준 공기</td><td class="num">6.5~7.5년</td><td>345kV 9년, 765kV 10년. 핀릿 9/21</td></tr>
+      <tr><td>2027년 공급 가능 계약용량</td><td class="num">4,718MW</td><td>11차 전기본. 교보 2/5</td></tr>
+      <tr><td>정부·SK·GS·네이버 메가프로젝트</td><td class="num">8.4GW (2027~28) → 18.4GW (2035)</td><td>센서스는 "발표형"(부지·전력·앵커 미확정)으로 분류. 싱크탱크 넥스트: 수요처 확보분 2030년 2.3GW</td></tr>
+      <tr><td>12차 전기본 반영</td><td class="num">20.8GW 중 10.8GW</td><td>구체화 수준 높은 1단계만 우선 반영. 2026년 8월 잠정안</td></tr>
+      <tr><td>AI 데이터센터 특별법</td><td class="num">2027-03-10 시행</td><td>비수도권 일정 규모 이하 전력계통영향평가 면제, 통합창구·150일. 2026-05-07 통과</td></tr>
+      <tr><td>데이터센터 전기요금</td><td class="num">128.5 → 173.0원/kWh (+35%)</td><td>2021 → 2025년 말. 한국데이터경제신문</td></tr>
+    </tbody>
+  </table></div>
+  <p>확정 프로젝트는 수백 MW 단위다. SK-AWS 울산 41MW(2027-11)→103MW(2029-02), 국가 AI컴퓨팅센터 해남 40→80MW(2026-08 착공), 네이버 각 세종 55→200MW(2028), LGU+ 165→400MW(2030), 디지털리얼티 김포 ICN11 64MW(2027), NFD 당진 140MW(2028), 삼성SDS 구미 60MW(2029), KT·SGC 군산 300MW(1단계 60MW). 지엔씨에너지는 이 중 울산·해남·세종·파주·구미·군산을 이미 수주했다. 즉 <b>확정된 프로젝트는 대부분 지엔씨의 수주잔고에 들어와 있고</b>, 다음 단계 성장은 "발표형" 8.4~18.4GW가 전력 승인과 PF를 통과해 발주로 바뀌느냐에 달려 있다. 증권사 환산(IBK)은 8.4GW × MW당 5억 = 4.2조, 점유율 70% 적용 2.9조다. 그 발주는 빨라야 2026년 하반기~2027년 샘플 계약, 매출은 2028~2029년이다.</p>
+  <h3>글로벌: 디젤 비상발전은 대체되지 않고 늘고 있다</h3>
+  <ul>
+    <li><b>시장 규모</b>는 기관별로 2025년 76억~131억 달러(Mordor vs Arizton), 2030~31년 98억~295억 달러로 범위가 넓다. 본체만 세느냐 설치·연료계통까지 넣느냐의 차이다. Mordor 기준 디젤 점유 81%.</li>
+    <li><b>공급자 숫자가 더 믿을 만하다.</b> 커민스 Power Systems 2분기 매출 23억 달러(+19%), 캐터필러 발전 매출 +29%(대형 발전기·터빈 판매 +72%, 수주잔고 721억 달러), 롤스로이스 Power Systems 마진 15.3→20.3%, 제네락 2026년 DC 매출 4.5억 달러·잔고 16억 달러. 미국 DC 디젤 비상발전 명판용량은 2018년 20GW에서 2024년 55GW가 됐다.</li>
+    <li><b>가스엔진·가스터빈·연료전지는 다른 시장이다.</b> xAI·Stargate의 가스터빈, INNIO·바르질라의 GW급 가스엔진, Bloom의 Oracle 2.8GW는 계통 접속 전 브리지·상시 전원이지 비상전원이 아니다. 상시 전원을 둔 데이터센터도 Tier 인증·보험 때문에 비상전원을 따로 둔다. 다만 한국에서도 "백업 디젤 → 상시 가스엔진" 전환이 시작되면 지엔씨가 HD현대 가스엔진으로 그 시장에 들어갈 수 있는지가 2027년 이후 관전 포인트다.</li>
+    <li><b>BESS 대체</b>는 마이크로소프트 스웨덴 4MWh 등 실증 단계이고, 마이크로소프트는 2030년 디젤 프리 목표를 두고도 신규 DC 허가에 발전기 150대를 넣었다. 한국은 미국 일리노이·버지니아 같은 Tier 4 배출 요구가 아직 없다(웹에서 2025~26년 규제 변경 확인 안 됨).</li>
+  </ul>
+  <div class="take"><span class="lbl">데이터센터 100MW 한 곳의 발전기 예산</span><p>IT 부하 100MW, PUE 1.3이면 시설 부하 130MW. N+1이면 3MW급 44~53대, 2N이면 87~104대(버지니아 평균 54대/사이트). 국내 단가 MW당 6~7억을 쓰면 700~800억(삼성), LS가 집계한 2025년 이후 평균 7.6억/MW를 쓰면 1,000억 안팎이다. KT 군산 1단계 60MW가 755억(12.6억/MW)으로 가장 비쌌고, 삼성물산 용인 80MW가 332억(4.1억/MW)으로 가장 쌌다. 가스터빈·2N 여부·수전 vs IT 기준이 섞여 있어 MW당 단가로 수주를 추정할 때 ±50%는 흔하다.</p></div>
+</section>
+
+<section id="s10">
+  <div class="sec-h"><span class="sec-n">10</span><h2>경쟁사 비교</h2></div>
+  <p>국내 상장사 중 데이터센터 비상발전기를 주력으로 하는 회사는 없다. 직접 경쟁자는 비상장(코스탈파워, 대흥기전, 썬테크, 이스트파워, 회생절차를 밟은 보국전기공업)이거나 글로벌 엔진 메이커의 한국 딜러(혜인 = 캐터필러, 커민스코리아)다. 아래 표는 <b>밸류체인 인접군</b>이다. 엔진(STX엔진·한화엔진·케이에스피), 전력기기(HD현대일렉트릭·효성중공업·LS ELECTRIC·산일전기·제룡전기·일진전기·비츠로테크), 데이터센터 운영(케이아이엔엑스), 발전 정비(금화피에스씨), 연료전지(두산퓨얼셀·범한퓨얼셀)로 성격이 다르다는 점을 전제로 읽을 것.</p>
+  <div class="tbl-scroll"><table class="peers">
+    <caption>인접군 비교 (억원, 2026-10-06 종가. 최근 4분기 = 2025년 + 1H26 - 1H25. DART·와이즈리포트)</caption>
+    <thead><tr><th>종목</th><th>성격</th><th class="num">시총</th><th class="num">최근 4분기 매출</th><th class="num">영업이익</th><th class="num">1H26 매출 YoY</th><th class="num">1H26 OPM</th><th class="num">1H26 GPM</th><th class="num">PSR</th><th class="num">시총/OP</th><th class="num">PBR</th></tr></thead>
+    <tbody>
+      <tr class="sum"><td><b>지엔씨에너지</b></td><td>DC 비상발전기 EPC·발전</td><td class="num">8,751</td><td class="num">2,574.6</td><td class="num">367.4</td><td class="num neg">-4.1%</td><td class="num">11.9%</td><td class="num">21.5%</td><td class="num">3.40</td><td class="num">23.8</td><td class="num">3.93</td></tr>
+      <tr><td>STX엔진</td><td>디젤엔진·발전기(방산)</td><td class="num">9,274</td><td class="num">8,385.5</td><td class="num">632.6</td><td class="num">+13.9%</td><td class="num">10.6%</td><td class="num">18.3%</td><td class="num">1.11</td><td class="num">14.7</td><td class="num">2.70</td></tr>
+      <tr><td>한화엔진</td><td>선박·발전 중속엔진</td><td class="num">39,596</td><td class="num">13,726.3</td><td class="num">1,632.7</td><td class="num">+0.2%</td><td class="num">12.6%</td><td class="num">19.9%</td><td class="num">2.88</td><td class="num">24.3</td><td class="num">7.12</td></tr>
+      <tr><td>케이에스피</td><td>중속엔진 밸브</td><td class="num">1,288</td><td class="num">1,065.0</td><td class="num">137.1</td><td class="num">+24.1%</td><td class="num">14.8%</td><td class="num">20.3%</td><td class="num">1.21</td><td class="num">9.4</td><td class="num">1.55</td></tr>
+      <tr><td>HD현대일렉트릭</td><td>변압기·발전기</td><td class="num">246,202</td><td class="num">43,369.2</td><td class="num">11,133.0</td><td class="num">+13.4%</td><td class="num">25.0%</td><td class="num">34.2%</td><td class="num">5.68</td><td class="num">22.1</td><td class="num">12.12</td></tr>
+      <tr><td>효성중공업</td><td>변압기·건설</td><td class="num">261,740</td><td class="num">64,122.8</td><td class="num">8,969.3</td><td class="num">+17.1%</td><td class="num">13.7%</td><td class="num">22.0%</td><td class="num">4.08</td><td class="num">29.2</td><td class="num">11.11</td></tr>
+      <tr><td>LS ELECTRIC</td><td>배전·전력기기</td><td class="num">326,250</td><td class="num">56,942.2</td><td class="num">5,355.9</td><td class="num">+32.7%</td><td class="num">10.3%</td><td class="num">21.4%</td><td class="num">5.73</td><td class="num">60.9</td><td class="num">15.63</td></tr>
+      <tr><td>산일전기</td><td>특수변압기</td><td class="num">72,011</td><td class="num">5,893.6</td><td class="num">2,124.4</td><td class="num">+38.5%</td><td class="num">37.4%</td><td class="num">47.1%</td><td class="num">12.22</td><td class="num">33.9</td><td class="num">12.20</td></tr>
+      <tr><td>제룡전기</td><td>배전 변압기</td><td class="num">8,095</td><td class="num">1,837.8</td><td class="num">416.7</td><td class="num neg">-36.4%</td><td class="num">15.8%</td><td class="num">48.0%</td><td class="num">4.40</td><td class="num">19.4</td><td class="num">3.38</td></tr>
+      <tr><td>일진전기</td><td>전선·변압기</td><td class="num">41,915</td><td class="num">22,078.2</td><td class="num">2,023.0</td><td class="num">+16.7%</td><td class="num">10.7%</td><td class="num">16.4%</td><td class="num">1.90</td><td class="num">20.7</td><td class="num">7.12</td></tr>
+      <tr><td>비츠로테크</td><td>배전반·방산</td><td class="num">3,089</td><td class="num">4,588.7</td><td class="num">586.9</td><td class="num">+13.1%</td><td class="num">11.0%</td><td class="num">26.0%</td><td class="num">0.67</td><td class="num">5.3</td><td class="num">1.19</td></tr>
+      <tr><td>케이아이엔엑스</td><td>DC·IX 운영</td><td class="num">6,271</td><td class="num">1,657.2</td><td class="num">307.9</td><td class="num">+8.2%</td><td class="num">20.8%</td><td class="num">35.9%</td><td class="num">3.78</td><td class="num">20.4</td><td class="num">3.04</td></tr>
+      <tr><td>금화피에스씨</td><td>발전소 정비</td><td class="num">2,004</td><td class="num">4,478.5</td><td class="num">373.9</td><td class="num">+12.4%</td><td class="num">8.2%</td><td class="num">13.1%</td><td class="num">0.45</td><td class="num">5.4</td><td class="num">0.51</td></tr>
+      <tr><td>두산퓨얼셀</td><td>연료전지</td><td class="num">31,110</td><td class="num">4,156.8</td><td class="num neg">-1,444.1</td><td class="num neg">-17.1%</td><td class="num neg">-27.6%</td><td class="num neg">-16.0%</td><td class="num">7.48</td><td class="num">-</td><td class="num">10.58</td></tr>
+      <tr><td>범한퓨얼셀</td><td>연료전지(잠수함)</td><td class="num">2,221</td><td class="num">487.3</td><td class="num neg">-53.6</td><td class="num">+30.7%</td><td class="num neg">-23.5%</td><td class="num neg">-13.2%</td><td class="num">4.56</td><td class="num">-</td><td class="num">1.35</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">PER은 일회성 손익(지엔씨 금융수익, 제룡전기 등) 영향이 커 시총/영업이익으로 비교했다. 두산퓨얼셀·범한퓨얼셀은 적자라 배수 산출 불가. HD현대인프라코어(엔진)는 2026-01-01 HD건설기계로 통합돼 제외.</p>
+  <div class="chart" id="ch-pop"><p class="ct">시총 ÷ 최근 4분기 영업이익 (배)</p><p class="cs">지엔씨에너지는 2026년 컨센서스 영업이익 463억 기준 18.9배, 2027년 증권사 추정 660~750억 기준 11.7~13.3배.</p><svg></svg></div>
+  <div class="tbl-scroll"><table>
+    <caption>글로벌 발전기·엔진 메이커 (2026-10 초, 출처 StockAnalysis·GuruFocus·회사 컨센서스. 선행 PER은 출처별 편차 있음)</caption>
+    <thead><tr><th>회사</th><th class="num">시총</th><th class="num">선행 PER</th><th>DC 관련 수치(2Q26 실적발표)</th></tr></thead>
+    <tbody>
+      <tr><td>Cummins</td><td class="num">$874억</td><td class="num">19.8배</td><td>Power Systems 매출 +19%, "극단적 DC 수요가 제조 한계 초과", 디젤 납기 2028년 하반기, 20GW 증설</td></tr>
+      <tr><td>Caterpillar</td><td class="num">$3,968억</td><td class="num">31~41배</td><td>발전 매출 +29%, 수주잔고 $721억(+92%), 2030년 대형 왕복엔진 캐파 3배</td></tr>
+      <tr><td>Rolls-Royce(mtu)</td><td class="num">£1,203억</td><td class="num">32~40배</td><td>Power Systems 마진 20.3%, 발전 OE 성장 전망 연 25%로 상향</td></tr>
+      <tr><td>Generac</td><td class="num">$122억</td><td class="num">20.6배</td><td>DC 매출 2026년 $4.5억, 잔고 $16억, 아마존 $24억(최대 $80억) 장기계약, 납기 40~45주</td></tr>
+      <tr><td>Vertiv</td><td class="num">$975억</td><td class="num">약 33배</td><td>DC 전력·냉각 인프라. 2027E EPS +37%</td></tr>
+      <tr><td>Weichai(보두앙 모회사)</td><td class="num">-</td><td class="num">19.0배 (LS 인용)</td><td>지엔씨의 중국 엔진 조달처</td></tr>
+    </tbody>
+  </table></div>
+  <p>LS증권이 집계한 글로벌 엔진·발전기 피어 8사의 2026E PER 평균은 18.9배, 2027E 15.0배다. 국내 전력기기 Big3·산일전기는 2026E 30~40배대다. 지엔씨에너지는 2026E 20배, 2027E 12~14배로 글로벌 피어와 비슷하고 국내 전력기기의 절반이다. 시장이 이 회사를 "전력기기"가 아니라 "기계·EPC"로 분류해 왔기 때문이다(대신·유안타 리스트 업종 '기계'). 2026년 8월 RISE AI전력인프라 ETF 편입(6.94%), TIME 코스닥액티브 ETF 편입 1위(5.5%), 코스닥150 편입 후보(대신 8~9월 7회 반복) 등 지수·ETF 수급이 2026년 주가 상승의 배경 중 하나다.</p>
+  <h3>국내에서 실제로 부딪히는 상대</h3>
+  <ul>
+    <li><b>커민스코리아</b>: 지엔씨의 최대 엔진 공급자이면서 패키지 경쟁자. LG CNS 부산 27MW(12대)를 2006년부터 직접 공급했고 네이버 하이퍼스케일 DC 사례연구를 자사 사이트에 올렸다. 커민스는 전 세계에서 발전기 완제품(Centum 3.5MW)을 팔기 때문에 한국 대형 DC에 직납할 수 있다.</li>
+    <li><b>혜인(캐터필러 딜러)</b>: C175-20 3,900kW를 반도체·병원에서 AI DC로 확대한다고 2026년 9월 밝혔다. NH는 "2021년 가산 142억 이후 대형 DC 수주 공시 없음"이라고 썼다. 캐피탈랜드-에퀴닉스에 CAT 3,900kW 10대를 넣은 쪽은 지엔씨다.</li>
+    <li><b>HD현대 3사</b>: HD현대중공업 힘센 중속엔진 + HD현대일렉트릭 발전기 패키지로 미국 DC 상시전원 1조 5,831억을 수주했다. 10~20MW 상시 전원이라 세그먼트가 다르지만, 국내 DC가 상시 가스발전으로 가면 그룹 차원의 경쟁자가 된다. 지엔씨는 거꾸로 HD현대 가스엔진을 쓰겠다고 한다.</li>
+    <li><b>코스탈파워</b>: 사업보고서가 2013~2021년 "코스탈파워·보국전기공업과 과점"이라고 쓴 회사이자 2011~2017년 엔진 매입처, 2011년 IDC 발주처 2위였다. 2026년 3월 퇴임한 영업총괄 사내이사 장규식이 이 회사 상무 출신이다. 2022년부터 사업보고서에서 경쟁사 실명이 사라졌다.</li>
+  </ul>
+</section>
+
+<section id="s11">
+  <div class="sec-h"><span class="sec-n">11</span><h2>증권사 시각: 2026년 추정은 40% 깎였고, 2027년은 아직 안 깎였다</h2></div>
+  <p>2019년 12월부터 2026년 9월까지 전용 리포트 31건을 읽었다. 2021년 2월(유화)부터 2023년 11월(한국IR협의회)까지 공백이 있었고, 2026년에 삼성·NH·IBK·LS·교보·하나·IV 7개 하우스가 몰렸다. 공식 목표주가는 IBK 70,000원(9/9 매수 개시) 하나다. 신한 41,000원(2025-11)은 2026년 4월 이후 갱신이 없다.</p>
+  <div class="chart" id="ch-est"><p class="ct">2026년 영업이익 추정치가 걸어온 길 (억원)</p><p class="cs">발행 시점 순. 같은 하우스(흥국→교보 박희철)가 2024년 12월 640억에서 2026년 7월 413억으로 내렸다. 주황은 현재 컨센서스(2곳 평균).</p><svg></svg></div>
+  <div class="tbl-scroll"><table>
+    <caption>2026년 리포트의 연간 추정 (억원, 원). A=실적</caption>
+    <thead><tr><th>하우스 (날짜)</th><th>의견/TP</th><th class="num">2026E 매출/OP</th><th class="num">2027E 매출/OP/순이익</th><th class="num">2028E 매출/OP/순이익</th><th>밸류 근거</th></tr></thead>
+    <tbody>
+      <tr><td>NH 목진원 (9/28)</td><td>NR</td><td class="num">3,067 / 421</td><td class="num">4,103 / 750 / 647</td><td class="num">5,129 / 1,023 / 860</td><td>역사적 PER 상단 15배 돌파 시도. 2027F PER 8.9배(7/23 당시)</td></tr>
+      <tr><td>IBK 조은애 (9/9)</td><td>매수 70,000</td><td class="num">2,857 / 421</td><td class="num">4,235 / 713 / 739</td><td class="num">5,430 / 1,019 / 982</td><td>12M Fwd 순이익 639억 × 18배(현대건설·GS건설·비에이치아이·성광벤드). DPS 2026F 500원 가정</td></tr>
+      <tr><td>LS 김세련 (9/9)</td><td>NR</td><td class="num">2,740 / 500</td><td class="num">3,340 / 660 / 610</td><td class="num">4,050 / 940 / 810</td><td>2026E PER 13배 vs 글로벌 피어 18.9배</td></tr>
+      <tr><td>교보 박희철 (7/3)</td><td>NR</td><td class="num">2,986 / 413</td><td class="num">3,795 / 742 / -</td><td class="num">5,119 / 1,109 / -</td><td>4년 도달가능 매출 4조원(점유율 75%, MW당 8~9.3억)</td></tr>
+      <tr><td>삼성 이경자 (2/3·5/7·7/21·9/22)</td><td>NR</td><td class="num">회사: OP 한 자릿수 중반 성장</td><td class="num">-</td><td class="num">-</td><td>Fn컨센 2026 PER 9→12→17배, 2027 10배. 2030년까지 12조 시장</td></tr>
+      <tr><td>하나 박찬솔 (7/16)</td><td>NR</td><td class="num">(별도) 26년 POR 12배</td><td class="num">-</td><td class="num">-</td><td>향후 3년 연 25% 성장</td></tr>
+      <tr><td>IV리서치 (7/27)</td><td>NR</td><td class="num">-</td><td class="num">-</td><td class="num">-</td><td>EPC 할인(PER 5~10배) → "AIDC 전력 인프라 사업자" 재평가 주장</td></tr>
+      <tr class="sum"><td>컨센서스 (와이즈리포트, 2곳)</td><td>TP 71,900</td><td class="num">2,946 / 463 / 478</td><td class="num">-</td><td class="num">-</td><td>2026E EPS 2,635원 → PER 20.2배</td></tr>
+    </tbody>
+  </table></div>
+  <h3>추정의 정확도: 방향은 맞혔고 크기는 번번이 틀렸다</h3>
+  <ul>
+    <li><b>2020~2022년</b>: SK·상상인·NH의 영업이익 추정은 실제의 약 2배였다(2021E 125~179억 vs 실제 56억). 지엔원 지열 저가수주, 코로나 납품 지연, 2022년 환율 원가 상승을 못 봤다. SK증권 TP 9,000원(2021-01) 직후 주가는 2022년 3,420원까지 갔다.</li>
+    <li><b>2023~2024년</b>: 반대로 과소. 한국IR협의회 2024F 영업이익 86억 vs 실제 317억(3.7배). 흥국이 2024년 12월 PER 5배로 TP 12,000원을 낸 뒤 석 달 만에 PER 9배 23,000원으로 올렸다.</li>
+    <li><b>2025년</b>: 흥국 매출 3,007~3,104억 vs 실제 2,626억(13~15% 과대), 영업이익 439~452억 vs 494억(과소). 신한은 결산 한 달 전 4Q25를 749/141억으로 봤는데 실제 660/94억.</li>
+    <li><b>2026년</b>: 2024~2025년에 발행된 추정은 2026년 영업이익 600~777억이었다. 1분기 쇼크 뒤 413~500억으로 30~45% 하향됐다. 2027년 추정(660~864억)과 2028년(940~1,109억)은 2026년 하향 폭을 반영하지 않은 채 "회복" 가정 위에 서 있다. 모든 하우스가 분기 이익률이 22.6%→7.9%로 흔들리는 납품 시점 인식 구조를 반복해서 놓쳤다.</li>
+  </ul>
+  <div class="take"><span class="lbl">읽는 법</span><p>IBK 목표가 70,000원의 산식은 12개월 선행 순이익 639억 × 18배다. 분모 639억은 2026E 440억과 2027E 739억의 가중평균이고, 2027E 순이익 739억은 영업이익 713억보다 크다(PNG 배당·금융수익 가정). 18배는 건설·플랜트 기자재 피어 평균이다. 피어를 글로벌 엔진 메이커(15배)로 바꾸면 59,000원, 역사적 PER 상단(15배)에 NH 2027E 순이익 647억을 넣으면 59,000원이다. 즉 <b>목표가 59,000~72,000원은 전부 "2027년 순이익 650~740억"을 전제로 한다.</b> 그 숫자의 성립 조건을 14장에서 본다.</p></div>
+</section>
+
+<section id="s12">
+  <div class="sec-h"><span class="sec-n">12</span><h2>해자 검증: 찬성 근거와 반증</h2></div>
+  <p>증권사 리포트는 "국내 유일 디젤·가스엔진·가스터빈 3종 제조", "점유율 70%", "경쟁사 부재"를 해자로 든다. 공시와 숫자로 양쪽을 나란히 놓는다.</p>
+  <div class="grid2">
+    <div class="pane yes"><h4>해자가 있다는 근거</h4><ul>
+      <li><b>가스터빈 비상발전기 13건 전부 수주</b>(NH 집계): NH 의왕 5.2MW×4(2015, "세계 최대 단일용량"), KT 용산 4.8MW×10(2019), 상암 DRT, 삼성바이오로직스 P4, 퍼시픽써니 죽전 30대, 고양삼송, KINX 시흥(2026). 니가타와 국내 독점 협력, 가와사키는 국내 미활동.</li>
+      <li><b>엔진 다섯 경로</b>: 커민스·캐터필러·미쓰비시·보두앙·니가타(+두산·HD현대). 엔진 납기 2년의 시장에서 단일 딜러(혜인=CAT)보다 조달 유연성이 높다.</li>
+      <li><b>공급자 우위의 증거</b>: 2026년 신규 계약에 환정산 조건과 달러 결제(국가AI컴퓨팅센터 76%)를 관철했고, 엔진 가격 상승분 20%를 단가에 전가했다. 선수금 614억은 고객이 먼저 돈을 넣고 줄을 선다는 뜻이다.</li>
+      <li><b>레퍼런스 축적</b>: 네이버 세종, SK 울산, KT 용산·군산, LG CNS 죽전·삼송, LGU+ 파주, 삼성SDS 구미, 삼성물산 용인·해남, 카카오 안산, 디지털리얼티, 에퀴닉스. 국내 대형 DC 운영사 전부가 고객이다. 조달청 우수조달물품 지정으로 공공 수의계약 가능.</li>
+      <li><b>법정 의무 수요</b>: 비상발전기는 소방시설법상 일정 규모 건축물 의무설치. 주택·일반건축 380~650억이 10년간 바닥을 받쳤다.</li>
+      <li><b>시운전 인프라</b>: 3,000kW급 전수 테스트가 가능한 테스트베드 2대(2026년 3월), 당진 석문 부지 1.5만 평. 발전기 100대를 한 현장에 넣는 프로젝트를 소화할 국내 업체가 달리 없다(IV).</li>
+    </ul></div>
+    <div class="pane no"><h4>반증</h4><ul>
+      <li><b>회사 스스로 점유율을 쓴 적이 없다.</b> 13개 사업보고서와 IPO 투자설명서 어디에도 "1위", "x%"가 없다. 2022년부터는 경쟁사 실명도 지웠다. 특허 목록 공시도 없고 연구개발비는 매출의 0.7%(2025년 14.3억), 그마저 바이오가스 과제 위주다.</li>
+      <li><b>과점이면 왜 10년 동안 매출총이익률이 10~12%였나.</b> 2013~2022년 데이터센터향 매출이 2.7배가 되는 동안 이익률은 내려갔다. 2017~2019년 보국전기공업의 저가수주에 GPM이 10.4%→6.8%로 밀렸다(상상인). 가격 결정력은 2024년 이후 공급 부족 국면의 산물이지 구조적 지위가 아닐 수 있다.</li>
+      <li><b>엔진 메이커가 곧 경쟁자다.</b> 커민스는 발전기 완제품을 팔고 네이버·LG CNS 부산에 직납한 이력이 있다. 1H26 엔진 매입의 74%가 커민스 한 곳이라 공급자 교섭력은 지엔씨 쪽에 있지 않다. 보두앙(중국) 도입은 납기 대안이지만 품질·고객 승인 리스크를 회사가 진다.</li>
+      <li><b>발주권은 건설사·운영사에 있다.</b> 공시 계약상대 23건의 절반이 시공사(자이씨앤에이·DL이앤씨·삼성물산·대우건설)다. 삼성물산·현대건설·SK에코플랜트가 패키지를 직접 조달하거나 글로벌 OEM과 직거래하면 지엔씨는 설치 하도급으로 밀릴 수 있다. 회사도 "설치는 건설사 위탁 검토"라고 했다.</li>
+      <li><b>이익률이 1분기 만에 8.4%로 떨어졌다.</b> 환율 시차·대손·연결조정이 겹쳤다지만, 해자가 있는 사업은 원가 상승을 그렇게 빨리 이익률로 받지 않는다. 2026년 신규 계약부터 환정산이 들어갔으니 2027년 이후 이익률이 증거가 된다.</li>
+      <li><b>내수 100%.</b> 2025년 해외 발전기 매출 9.7억(0.4%). 2015~2016년 수출 27%는 이라크·베트남 플랜트 일회성이었고, 2017년 이후 사업보고서의 "해외 비중 확대" 문구는 매년 반복됐지만 1~3%였다. 필리핀 134억(2025)과 호주법인(부동산투자업)이 재시도다.</li>
+    </ul></div>
+  </div>
+  <div class="take"><span class="lbl">판정</span><p>해자는 "기술"이 아니라 <b>레퍼런스·시운전 능력·엔진 다변화가 만든 전환비용</b>이고, 그 전환비용은 2024~2028년 공급 부족 국면에서 가장 크다. 공급이 풀리는 시점(커민스 20GW 증설 2028년, 캐터필러 3배 2030년)에 가격 결정력이 유지되는지는 아직 검증되지 않았다. 투자 판단의 핵심은 해자의 유무가 아니라 <b>이 공급 부족 창이 2~3년 더 열려 있다고 믿느냐</b>다.</p></div>
+</section>
+
+<section id="s13">
+  <div class="sec-h"><span class="sec-n">13</span><h2>지배구조·자사주·수급</h2></div>
+  <div class="tbl-scroll"><table>
+    <caption>주주 구성 (2026-06-30 반기보고서 + 이후 5% 보고)</caption>
+    <thead><tr><th>주주</th><th class="num">주식수</th><th class="num">지분</th><th>비고</th></tr></thead>
+    <tbody>
+      <tr><td>안병철 (대표이사, 1958년생, 1989년 창업)</td><td class="num">5,009,546</td><td class="num">30.46%</td><td>2022년 32.45% → 증여 21.6만주, 2024~25년 장내매도 12.8만주(약 21억) → 2025-05 5,000,000주 → 2026년 5~6월 2만원대에서 9,000주 재매수</td></tr>
+      <tr><td>특수관계인 6인 (장남 안윤한 1.93%, 차남 안현환 0.97% 등)</td><td class="num">513,132</td><td class="num">3.11%</td><td>합계 5,522,678주 33.57%. 감사 이영주·이사 김건 소량</td></tr>
+      <tr><td>KB자산운용</td><td class="num">1,185,495</td><td class="num">7.21%</td><td>2026-05 5.98% 신규(ETF 설정) → 07-14 7.21%. 패시브</td></tr>
+      <tr><td>브이아이피자산운용</td><td class="num">628,777</td><td class="num">3.82%</td><td>07-31 5.37% 신규 보고 → 8월 5만원대에서 25.5만주 매도 → 3.82%</td></tr>
+      <tr><td>에셋플러스자산운용</td><td class="num">650,911</td><td class="num">3.96%</td><td>2025-03 5.00% → 2026-01 3.96%(2.6~3.6만원대 매도)</td></tr>
+      <tr><td>자기주식 / 우리사주</td><td class="num">2 / 2,212</td><td class="num">0.0%</td><td>2024년 말 1,533,962주(9.33%)에서 전량 소진</td></tr>
+      <tr><td>소액주주</td><td class="num">8,515,548</td><td class="num">51.77%</td><td>34,893명(2025년 말). 1년 전 8,256명 42.66%</td></tr>
+      <tr><td>외국인</td><td class="num">-</td><td class="num">8.6~9.3%</td><td>2025년 0.4~2.5% → 2026년 7월 4.4% → 10월 9.3%(네이버)</td></tr>
+    </tbody>
+  </table></div>
+  <h3>자사주 9.3%가 2주가 된 경로</h3>
+  <p>2014~2023년 주가 2,500~4,300원 구간에서 자사주를 158.6만주(9.6%)까지 모았다. 2025년 주가가 10배가 된 구간에서 전량 현금화했다. 3월 2회차 교환사채 100억(교환가 17,120원, 58.4만주, 오라이언자산운용 펀드), 7월 블록딜 50만주 162.5억(32,490원, NH 20만주 + 국내 기관 30만주), 9월 3회차 교환사채 146.8억(교환가 34,450원, 42.6만주, KDBC-한국투자증권 메자닌 조합). 세 건 모두 0% 쿠폰, 10% 할증, 리픽싱 없음이었고 투자자는 교환 개시 직후 전량 교환했다(3회차 잔량은 2026-07-27·08-04). 회사에 들어온 현금은 409.2억(평균 24,429원), 교환사채 투자자의 차익은 교환 시점 주가로 어림잡아 100억 이상이다. 1회차(2020년, 20.8억)는 10%만 교환되고 만기 상환됐다. 성과급으로 매년 2월 임직원에게 자사주 1~5만주를 주는 관행은 유지된다(2026년 59명 10,117주).</p>
+  <h3>이사회와 보수</h3>
+  <ul>
+    <li>2026년 3월 주총에서 영업총괄 사내이사(장규식, 코스탈파워 출신)가 임기 만료로 물러나 <b>이사회 3명</b>(안병철·김건 사내이사, 백승호 독립이사 = 두산퓨얼셀 상임고문·두산중공업 총괄전무 출신). 감사위원회·이사회 내 위원회 없음. 상근감사 이영주는 최대주주 특수관계인으로 분류되며 한빛에너지·평택당진항개발·석문그린에너지 감사를 겸직한다.</li>
+    <li>이사 보수한도 11억 → 20억 상향(2025년 실지급 5.9억). 대표이사 개인 연대보증 125억 + $25M(산은·우리·국민·부산은행). 주식매수선택권 잔여 0.</li>
+    <li>배당은 13년 연속. 2025년 결산 150원(총 24.3억, 배당성향 6.1%, 시가배당률 0.5%). 자본준비금 50억 + 10억을 이익잉여금으로 돌려 감액배당(비과세)으로 지급. 배당정책 문구는 "별도 순이익 10% 이상"에서 2024년 "5% 이상"으로 낮췄다. 자사주 매입·소각 계획 "없음". IBK의 2026F DPS 500원 가정은 다른 어느 리포트에도 없다.</li>
+    <li>신사업 자본 배분: 당진 석문 160MW AI DC(SPC, 2조원, 2031년), 2026-09-04 SK TNS 인수 조합에 300억 LP 출자(지분 26.71%, 최다 출자자는 에프투텔레콤 700억), 호주법인 투자 대기 자금 446억(AUD), 마곡 엣지DC 120~150억, 관이에너지 수소연료전지(한전 입찰 낙찰) 증자 32.9억, 2026년 3월 삼성전자 주식 29.8억. 2025년 7월 정관에 가스충전업, 2026년 3월 부동산 투자·임대업을 추가했다. 본업(발전기) 밖으로 나가는 돈이 2026년에만 800억을 넘는다.</li>
+  </ul>
+  <h3>수급</h3>
+  <p>2026년 들어 주가를 밀어 올린 쪽은 ETF(KB자산운용 7.21%)와 외국인(9%)이고, 차익실현한 쪽은 VIP·에셋플러스와 교환사채 투자자(2.59%)다. 코스닥150 정기변경(12월) 편입 후보로 대신증권 전략 리포트에 7회 반복 수록됐다. 2025년 한국증권금융 담보 5% 보고(최대 6.61%)는 개인 신용매수 비중이 높았음을 뜻한다. 유통주식 비율 66.4%.</p>
+</section>
+
+<section id="s14">
+  <div class="sec-h"><span class="sec-n">14</span><h2>밸류에이션: 어느 해의 이익으로 볼 것인가</h2></div>
+  <div class="tbl-scroll"><table>
+    <caption>시가총액 8,751억 (53,200원 × 16,448,909주) 기준 배수. 억원</caption>
+    <thead><tr><th>기준</th><th class="num">매출</th><th class="num">영업이익</th><th class="num">지배주주 순이익</th><th class="num">PER</th><th class="num">시총/OP</th><th>출처·계산</th></tr></thead>
+    <tbody>
+      <tr><td>최근 4분기 (3Q25~2Q26)</td><td class="num">2,574.7</td><td class="num">367.4</td><td class="num">436.8</td><td class="num">20.0</td><td class="num">23.8</td><td>DART 분기 합산</td></tr>
+      <tr><td>최근 4분기, 환·주식평가 제외</td><td class="num">2,574.7</td><td class="num">367.4</td><td class="num">312.0</td><td class="num">28.0</td><td class="num">23.8</td><td>영업이익 + 이자수익 68.1 - 이자비용 7.1 + 지분법 -12.4 = 세전 416.0, 세율 25% (필자 계산)</td></tr>
+      <tr><td>2026E 컨센서스 (2곳)</td><td class="num">2,946</td><td class="num">463</td><td class="num">478</td><td class="num">20.2</td><td class="num">18.9</td><td>EPS 2,635원. 와이즈리포트 10/6</td></tr>
+      <tr><td>2026E 증권사 범위</td><td class="num">2,740~3,067</td><td class="num">413~500</td><td class="num">417~550</td><td class="num">15.9~21.0</td><td class="num">17.5~21.2</td><td>교보·NH·IBK·LS</td></tr>
+      <tr class="sum"><td>2027E 증권사 범위</td><td class="num">3,340~4,235</td><td class="num">660~750</td><td class="num">610~739</td><td class="num">11.8~14.3</td><td class="num">11.7~13.3</td><td>LS 하단, IBK·NH 상단</td></tr>
+      <tr><td>2028E 증권사 범위</td><td class="num">4,050~5,430</td><td class="num">940~1,109</td><td class="num">810~982</td><td class="num">8.9~10.8</td><td class="num">7.9~9.3</td><td>LS·NH·IBK·교보</td></tr>
+      <tr><td>자산 기준</td><td class="num"></td><td class="num"></td><td class="num">자본 2,469.8</td><td class="num">PBR 3.5</td><td class="num"></td><td>BPS 15,015원. 순현금 827억, EV 7,924억(최근 4분기 OP의 21.6배)</td></tr>
+    </tbody>
+  </table></div>
+  <p>역사적으로 이 주식은 PER 5~10배(IV: 2022년 2.1배, 2023년 6.1배, 2024년 3.5배)에 거래됐고 2025년에 12.7배, 지금 20배다. 2025년 EPS는 3.8% 늘었을 뿐인데 주가가 3.6배가 됐으니 상승의 대부분이 멀티플이었다(IV). 그 멀티플 확장의 근거는 "EPC가 아니라 AI 전력 인프라 기업"이라는 재분류인데, 1H26 발전기 부문 이익률 8.4%는 그 재분류에 반대되는 증거다.</p>
+  <h3>2027년 영업이익 700억대가 되기 위한 조건</h3>
+  <div class="tbl-scroll"><table>
+    <caption>2027년 시나리오 (억원, 필자 계산). 전력판매(PNG·바이오가스) 영업이익은 1H26 연환산 230억 → 2027년 200억으로 보수적 가정</caption>
+    <thead><tr><th>시나리오</th><th class="num">발전기 매출</th><th class="num">발전기 OPM</th><th class="num">발전기 OP</th><th class="num">연결 OP</th><th class="num">순이익(세율 25%, 이자 +50)</th><th class="num">PER</th><th>조건</th></tr></thead>
+    <tbody>
+      <tr><td>약세: 2026년 이익률이 굳어진다</td><td class="num">2,800</td><td class="num">10%</td><td class="num">280</td><td class="num">450</td><td class="num">375</td><td class="num">23.3</td><td>엔진 지연으로 출하 110대, 환정산 효과 미미, 대손 지속</td></tr>
+      <tr><td>기본: 2025년 수준 회복</td><td class="num">3,400</td><td class="num">16%</td><td class="num">544</td><td class="num">714</td><td class="num">573</td><td class="num">15.3</td><td>출하 130대, 가스터빈 매출 재개, 연결조정 정상화. NH·교보·IBK 수준</td></tr>
+      <tr><td>강세: 2025년 상반기 수준</td><td class="num">3,600</td><td class="num">20%</td><td class="num">720</td><td class="num">890</td><td class="num">705</td><td class="num">12.4</td><td>단가 전가 완전 반영, 가스터빈 비중 30%, 캐파 60% 가동</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">연결 OP = 발전기 OP + 전력판매 200 - 한빛·기타·조정 30. 순이익 = (연결 OP + 이자수익 50) × 0.75. 환차익·주식평가손익은 0으로 두었다. IBK의 2027E 순이익 739억(OP 713억)은 PNG 배당·금융수익을 영업외에 크게 반영한 것으로 보인다.</p>
+  <p>기본 시나리오의 핵심 가정은 두 개다. 첫째, 발전기 매출 3,400억은 수주잔고 5,000~6,400억에 회전율 33~40%를 적용하면 나오는 숫자라 무리가 없다(06장). 둘째, 발전기 이익률 16%는 2025년 연간 15.8%와 같다. 즉 <b>2027년 영업이익 700억대는 "2025년이 정상이고 2026년이 예외"라는 가정</b>이다. 2026년 상반기 신규 계약부터 환정산이 들어갔고 가스터빈이 하반기에 재개된다면 가능한 가정이지만, 공시로 확인할 수 있는 것은 아직 2분기 15.3%(발전기 부문은 미공시, 전사 기준)뿐이다.</p>
+  <h3>그래서 지금 가격은</h3>
+  <ul>
+    <li>2026년 이익(컨센서스 478억) 기준 20.2배는 글로벌 엔진 메이커(19~20배)와 같고, 국내 전력기기(30~40배)의 절반이다. 2026년 이익이 전년 대비 늘지 않는 해에 20배는 성장주 멀티플이다.</li>
+    <li>2027년 기본 시나리오(순이익 573억) 기준 15.3배, 증권사 상단(739억) 기준 11.8배. 역사적 상단 15배를 적용하면 573억 × 15 = 8,595억으로 지금 시총 8,751억과 거의 같다. 즉 <b>현재 주가는 2027년 기본 시나리오를 역사적 상단 멀티플로 산 가격</b>이다. 상승 여력은 ① 2027년 이익이 상단(700억대 순이익)으로 가거나 ② 멀티플이 전력기기(25배+)로 재평가되거나 ③ 메가프로젝트 발주로 2028~2029년 가시성이 생길 때 나온다.</li>
+    <li>하방은 2026년 하반기 영업이익이 2025년 하반기(222억)에 못 미치는 경우다. 그때 2026년 영업이익은 370억 이하, 순이익은 환 평가손 가능성까지 겹쳐 350억 안팎이 되고 PER은 25배로 올라간다. 2026년 6월 저점 18,350원은 시총 3,018억, 당시 2025년 이익 기준 PER 7.6배였다.</li>
+  </ul>
+</section>
+
+<section id="s15">
+  <div class="sec-h"><span class="sec-n">15</span><h2>리스크</h2></div>
+  <div class="risk">
+    <div class="r"><span class="chip h">높음</span><div><div class="t">발전기 이익률이 돌아오지 않는 경우</div><div class="d">1H26 발전기 부문 OPM 8.4%(1Q 5.1%, 2Q 추정 11%대). 2027년 영업이익 700억대는 16%로의 복귀를 전제한다. 환정산 계약은 2026년 신규분부터라 2026년 하반기~2027년 상반기 인식분(2025년 원화 고정 계약)은 환 시차에 그대로 노출된다. 10% 환율 변동 시 세전 ±88.5억.</div></div></div>
+    <div class="r"><span class="chip h">높음</span><div><div class="t">엔진 확보 실패·납기 지연</div><div class="d">커민스 납기 2028년 하반기, 캐터필러 2028년. 1H26 엔진 매입의 74%가 커민스. 2027년 출하 130대분 엔진이 확보됐는지 어떤 공시에도 없다. 보두앙(중국) 대체는 고객 승인·품질 리스크. 재고 원재료 295억은 이미 선매입이 시작됐다는 신호이자 운전자본 부담.</div></div></div>
+    <div class="r"><span class="chip h">높음</span><div><div class="t">데이터센터 착공·준공 지연</div><div class="d">전력계통 최종 승인률 3%(용량), 154kV 변전소 6.5~7.5년, 접속 대기 144곳 중 127곳이 사업자 사정으로 대기. 공시 계약 23건 중 6건이 종료일을 연장했고(최대 +15개월), 2024년 신규 수주 0건이 그 결과였다. 메가프로젝트 18.4GW 중 전력계약이 확정된 것은 수백 MW.</div></div></div>
+    <div class="r"><span class="chip m">중간</span><div><div class="t">파푸아뉴기니 발전소 의존과 채권</div><div class="d">1H26 연결 영업이익의 79%. PNG 전력공사 채권 회수 지연으로 추정되는 대손상각비 42억(1H26), 충당금 201억(채권의 22.6%). 키나화 환산손실 2025년 -46억. 중유 가격·PPA 조건·정치 리스크가 한 자산에 묶여 있다.</div></div></div>
+    <div class="r"><span class="chip m">중간</span><div><div class="t">고객 집중과 발주 구조</div><div class="d">2025년 상위 2개 고객 41.6%, 단일 계약이 매출의 13~29%(KT 군산 28.8%). 계약상대의 절반이 건설사라 건설사가 글로벌 OEM과 직거래하거나 패키지를 자체 조달하면 하도급으로 밀린다. 커민스코리아·혜인·HD현대의 DC 직납 확대.</div></div></div>
+    <div class="r"><span class="chip m">중간</span><div><div class="t">비경상 이익의 되돌림</div><div class="d">1H26 금융수익 223.6억 중 환·통화선도·주식 평가 170억. 외화자산 963억(호주달러 446억 포함), 통화선도 $65M, 삼성전자 16,000주. 원화 강세·주가 하락 시 반대 방향. 최근 4분기 PER 20배는 이 이익이 들어간 숫자다.</div></div></div>
+    <div class="r"><span class="chip m">중간</span><div><div class="t">본업 밖 자본 배분</div><div class="d">SK TNS 인수 조합 300억(자기자본 13.6%, 목적·시너지 설명 1문장), 당진 160MW AI DC 2조 SPC, 호주 부동산투자업 법인, 마곡 엣지DC 150억(회사 스스로 "사업경험 부족·고객모집" 리스크 기재), 수소연료전지, 삼성전자 주식. 2026년 한 해 800억 이상이 발전기 밖으로 간다. 자사주는 전량 매각돼 주가 방어 수단이 없다.</div></div></div>
+    <div class="r"><span class="chip m">중간</span><div><div class="t">매출 인식의 분기 변동성</div><div class="d">납품 시점 일괄 인식. 분기 영업이익률이 22.6%(1Q25)→7.9%(1Q26)→15.3%(2Q26). 2026년 하반기 가스터빈 출하가 4분기로 몰리면 3분기가 다시 실망스러울 수 있다. 증권사 분기 추정은 2Q26도 76억(NH) vs 실제 102억으로 빗나갔다.</div></div></div>
+    <div class="r"><span class="chip l">낮음</span><div><div class="t">지배구조</div><div class="d">이사회 3명(독립이사 1), 감사가 최대주주 특수관계인, 대표 연대보증 125억+$25M, 보수한도 2배 상향, 2세(장남 재직) 승계 미정. 최대주주는 2024~25년 급등기에 12.8만주를 팔았고 2026년 저점에서 9,000주를 샀다. 배당성향 6%.</div></div></div>
+    <div class="r"><span class="chip l">낮음</span><div><div class="t">디젤 대체 기술·배출 규제</div><div class="d">BESS·연료전지 백업은 실증 단계, 미국 Tier 4 요구는 한국 미도입. 다만 서울시가 비상발전기의 연료전지 대체를 연구 중이고, 하이퍼스케일러의 "디젤 프리" 목표는 장기 수요를 깎는다. 가스터빈 믹스 전환은 기회.</div></div></div>
+    <div class="r"><span class="chip l">낮음</span><div><div class="t">수급 오버행</div><div class="d">3회차 교환사채 교환분 42.6만주(2.59%)가 8월 이후 출회 가능. VIP자산운용이 8월 25.5만주 매도. 코스닥150 편입 기대가 빠지면 ETF 수급도 반대로.</div></div></div>
+    <div class="r"><span class="chip u">참고</span><div><div class="t">상방 변수</div><div class="d">2026년 하반기 GS·SK 메가프로젝트 샘플 계약(회사 언급), 2027년 가스터빈 매출 본격화(디젤 대비 +5~10%p), 호주 NextDC 등 첫 해외 가스터빈 수주, 코스닥150 편입, HD현대 가스엔진 상시발전 진입, 2027-03 AI 데이터센터 특별법 시행으로 비수도권 승인 가속.</div></div></div>
+  </div>
+</section>
+
+<section id="s16">
+  <div class="sec-h"><span class="sec-n">16</span><h2>투자 전 확인할 것</h2></div>
+  <p>순서는 시점 순이다. 앞의 네 개는 11월 6일 3분기 보고서에서 확인된다.</p>
+  <div class="qs">
+    <div class="q"><div class="qh"><span class="qn">01</span><span class="qt">3분기 발전기 부문 영업이익률이 15%를 넘는가</span></div><p class="why">분기보고서 연결주석 '부문정보'. 2Q26 전사 15.3%였지만 부문별로는 미공시. <b>발전기 부문이 15% 미만이면 2027년 700억대 영업이익 가정이 흔들린다.</b> 전력판매(PNG) 비중도 함께 볼 것.</p></div>
+    <div class="q"><div class="qh"><span class="qn">02</span><span class="qt">대손상각비와 연결조정이 멈췄는가</span></div><p class="why">1H26 대손 42.1억·연결조정 -43.5억. 판관비 명세와 부문 조정란. 연체 4~9개월 채권 230억의 상대방이 PNG 전력공사인지 IR에 물을 것. 3분기에도 20억대 대손이면 구조적.</p></div>
+    <div class="q"><div class="qh"><span class="qn">03</span><span class="qt">가스터빈 매출이 하반기에 실제로 인식됐는가</span></div><p class="why">상반기 가스터빈 매출 0. 회사는 하반기 인식·이익률 개선을 약속했다. 고양삼송(LG CNS, 종료 9/30) 잔여분과 KINX 시흥은 2029년 납기라 2026년 매출이 아니다. 어느 현장 가스터빈이 하반기 매출인지 확인.</p></div>
+    <div class="q"><div class="qh"><span class="qn">04</span><span class="qt">금융수익이 반대로 돌아섰는가</span></div><p class="why">3분기 원/달러·원/호주달러 방향과 삼성전자 주가. 외화자산 963억·통화선도 $65M. 순이익이 영업이익보다 작아지는 분기가 나오면 PER 20배의 분모가 바뀐다.</p></div>
+    <div class="q"><div class="qh"><span class="qn">05</span><span class="qt">2026년 말 수주잔고가 5,000억을 넘는가</span></div><p class="why">회사 목표 5,000억, NH 6,000억, IBK 6,398억. 사업보고서(2027년 3월)의 별도 수주잔고. 6월말 4,147억 + 7월 이후 공시 2,541억 - 하반기 납품. 5,000억 미만이면 하반기 납품이 많았거나(좋음) 공시 외 소액 수주가 줄었다는(나쁨) 뜻이라 매출과 함께 읽어야 한다.</p></div>
+    <div class="q"><div class="qh"><span class="qn">06</span><span class="qt">2027~2028년 납품분 엔진을 몇 대 확보했는가</span></div><p class="why">공시에 없는 숫자. 커민스 배정 물량, 니가타 2028~29년 협상 결과, 보두앙 도입 대수와 고객 승인 현장. 이것이 확인되지 않으면 2027년 출하 130대는 가정일 뿐이다.</p></div>
+    <div class="q"><div class="qh"><span class="qn">07</span><span class="qt">메가프로젝트 샘플 계약이 2026년 안에 나오는가</span></div><p class="why">회사가 7월에 "GS컨소시엄·SK그룹과 협상, 빠르면 하반기 샘플 계약 → 2027년 본계약"이라고 했다. GS 동해 2.4GW·SK 울산 1GW. 나오면 2028~2029년 가시성, 안 나오면 "발표형" GW가 그대로 발표형이라는 뜻.</p></div>
+    <div class="q"><div class="qh"><span class="qn">08</span><span class="qt">SK TNS 300억 출자의 목적과 회수 구조</span></div><p class="why">2026-09-04 공시. 조합 1,123억 중 26.71%, 최다 출자자 에프투텔레콤. SK TNS는 통신·전력 인프라 시공사. "시너지 + 투자수익" 한 문장뿐이고 풋옵션 없음. 지엔씨의 발전기 설치를 SK TNS에 맡기는 그림인지, 단순 재무투자인지.</p></div>
+    <div class="q"><div class="qh"><span class="qn">09</span><span class="qt">호주달러 446억의 용처</span></div><p class="why">2026년 4월 설립한 호주법인(브리즈번, 부동산투자업외)의 대기자금으로 추정. 삼성증권은 "브리즈번 빌딩 매입·엣지DC·NextDC 가스터빈 타깃". 공시된 투자 결정은 없다. 자기자본의 18%가 외화 예금으로 해외에 놓여 있다.</p></div>
+    <div class="q"><div class="qh"><span class="qn">10</span><span class="qt">2026년 배당</span></div><p class="why">IBK만 DPS 500원을 가정. 회사 정책은 "별도 순이익 5% 이상", 2025년 150원. 자사주 소진 후 주주환원은 배당뿐이라 2027년 2월 배당 공시가 회사의 자본 배분 우선순위를 보여준다.</p></div>
+    <div class="q"><div class="qh"><span class="qn">11</span><span class="qt">코스닥150 12월 정기변경</span></div><p class="why">대신·LS가 편입 후보로 반복 거론. 편입되면 패시브 매수, 안 되면 기대 되돌림.</p></div>
+    <div class="q"><div class="qh"><span class="qn">12</span><span class="qt">2027년 3월 사업보고서: 생산능력·점유율·엔진 확보를 처음으로 숫자로 쓰는가</span></div><p class="why">13년 동안 "계량 불가"였다. 2026년 증설 이후 회사가 캐파를 공시하기 시작하면 IR 발언(250대)과 대조할 수 있다. 쓰지 않으면 증권사 숫자에 계속 의존해야 한다.</p></div>
+  </div>
+</section>
+
+<section id="s17">
+  <div class="sec-h"><span class="sec-n">17</span><h2>출처와 방법</h2></div>
+  <ul class="src">
+    <li><b>DART</b>: 사업보고서 FY2013~FY2025(2026-03-31 기재정정본), 반기보고서 2014~2026, 분기보고서 2013~2026, IPO 투자설명서(2013-09), 증권신고서(2014-06), 감사보고서. 수시공시 546건 중 단일판매·공급계약 23건(정정 포함 전건), 교환사채 3회차, 자기주식 취득·처분 전건, 타법인 취득·양도, 임원·주요주주 보고서, 5% 보고, 주총 참고서류를 원문(document.xml)으로 평문화해 읽었다. 재무 수치는 fnlttSinglAcntAll(2015~2026 연·분기, 연결·별도).</li>
+    <li><b>시세</b>: 네이버 일별시세(2023-01-02~2026-10-07), 코스닥 지수, 네이버·와이즈리포트 기업현황(10/6 기준). 기준가는 10/6 KRX 종가 53,200원. 10/7 장중 52,600원(13:30).</li>
+    <li><b>증권사 리포트</b>: 전용 31건(SK 2019-12 ~ NH 2026-09-28, 한국IR협의회·SMIC 포함), 지엔씨가 언급된 타사·전략·산업 리포트 79건, 2025~2026년 데이터센터 전력·전력기기·BTM·선박엔진·제네락 산업 리포트 15건. 리포트 간 숫자 충돌은 02장과 각 장 '함정'에 적었다. 한경컨센서스는 검색 기능 장애로 미사용.</li>
+    <li><b>웹</b>: 회사 홈페이지·IR 게시판, 커민스·캐터필러·롤스로이스·제네락 2Q26 실적발표 원문, ai-dc 센서스, 세계일보·한국일보·한국데이터경제신문 의원실 자료, Mordor·Arizton 등 시장조사, 삼성증권 PDF 3건 원문. 약 270건, 2026-10-07 접속.</li>
+    <li><b>필자 계산(공시에 없는 값)</b>: 최근 4분기 합산, 정상화 순이익(환·주식평가 제외), 2027년 시나리오, 회전율 재현, 계약 종료일 분포, 100MW당 발전기 예산, MW당 단가. 각 표 아래 산식을 적었다. 수치 검증 스크립트로 본문 숫자와 원자료를 대조해 불일치 0건을 확인한 뒤 게시했다.</li>
+    <li><b>확인하지 못한 것</b>: 생산능력·가동률(공시 없음), 점유율(공시 없음), 엔진 확보 물량, 대손 상대방, 연결조정의 성격, 가스터빈 공급사(공시 없음), 10% 고객명, 호주법인 투자 계획, 환경부 비상발전기 배출 규제의 2025~26년 변경 여부.</li>
+  </ul>
+  <div class="foot">이 문서는 공개 자료를 바탕으로 한 개인 분석 기록이며 투자 권유가 아니다. 모든 수치는 2026-10-07 기준이고 이후 공시로 달라질 수 있다. 추정치는 해당 증권사 리포트의 것이며 필자 계산은 그렇게 표시했다.</div>
+</section>
+</main>
+<script type="application/json" id="cd">{"px":53200,"shares":16448909,"daily":[["20230102",3485],["20230103",3540],["20230104",3720],["20230105",3710],["20230106",3765],["20230109",3820],["20230110",3825],["20230111",3870],["20230112",3920],["20230113",3930],["20230116",3930],["20230117",3850],["20230118",3880],["20230119",3885],["20230120",3875],["20230125",3995],["20230126",4100],["20230127",4070],["20230130",4060],["20230131",4085],["20230201",4040],["20230202",4105],["20230203",4065],["20230206",4115],["20230207",4130],["20230208",4110],["20230209",4110],["20230210",4000],["20230213",4005],["20230214",4030],["20230215",3895],["20230216",3885],["20230217",3885],["20230220",3920],["20230221",3920],["20230222",3890],["20230223",3865],["20230224",3750],["20230227",3740],["20230228",3740],["20230302",3845],["20230303",3860],["20230306",3880],["20230307",3830],["20230308",3990],["20230309",3920],["20230310",3830],["20230313",3710],["20230314",3615],["20230315",3700],["20230316",3640],["20230317",3680],["20230320",3700],["20230321",3640],["20230322",3665],["20230323",3620],["20230324",3610],["20230327",3550],["20230328",3655],["20230329",3660],["20230330",3815],["20230331",3760],["20230403",3860],["20230404",3900],["20230405",3965],["20230406",3855],["20230407",3905],["20230410",3920],["20230411",3915],["20230412",3960],["20230413",3965],["20230414",3980],["20230417",3985],["20230418",3900],["20230419",3960],["20230420",3825],["20230421",3840],["20230424",3720],["20230425",3665],["20230426",3660],["20230427",3670],["20230428",4770],["20230502",4750],["20230503",4550],["20230504",5910],["20230508",5030],["20230509",5090],["20230510",4980],["20230511",5050],["20230512",5250],["20230515",5150],["20230516",5870],["20230517",5680],["20230518",6140],["20230519",5850],["20230522",5890],["20230523",5650],["20230524",5890],["20230525",6230],["20230526",5960],["20230530",5730],["20230531",5550],["20230601",5470],["20230602",5400],["20230605",5410],["20230607",5340],["20230608",5250],["20230609",5150],["20230612",5140],["20230613",5110],["20230614",5040],["20230615",4895],["20230616",4960],["20230619",5120],["20230620",5010],["20230621",4940],["20230622",4885],["20230623",4915],["20230626",4905],["20230627",4860],["20230628",4750],["20230629",4710],["20230630",4775],["20230703",4890],["20230704",4835],["20230705",4740],["20230706",4660],["20230707",4540],["20230710",4625],["20230711",4665],["20230712",4570],["20230713",4540],["20230714",4505],["20230717",4500],["20230718",4360],["20230719",4300],["20230720",4380],["20230721",4270],["20230724",4240],["20230725",4095],["20230726",3850],["20230727",4045],["20230728",4145],["20230731",4175],["20230801",4150],["20230802",4140],["20230803",4075],["20230804",4125],["20230807",4125],["20230808",4010],["20230809",4140],["20230810",4120],["20230811",4160],["20230814",4230],["20230816",4030],["20230817",4055],["20230818",4065],["20230821",4115],["20230822",4095],["20230823",4130],["20230824",4160],["20230825",4080],["20230828",4195],["20230829",4230],["20230830",4260],["20230831",4250],["20230901",4280],["20230904",4380],["20230905",4315],["20230906",4370],["20230907",4280],["20230908",4585],["20230911",4420],["20230912",4430],["20230913",4800],["20230914",4550],["20230915",4515],["20230918",4355],["20230919",4205],["20230920",4195],["20230921",4065],["20230922",4030],["20230925",3940],["20230926",3935],["20230927",4015],["20231004",3955],["20231005",3890],["20231006",4105],["20231010",4435],["20231011",4370],["20231012",4460],["20231013",4460],["20231016",4265],["20231017",4370],["20231018",4315],["20231019",4020],["20231020",3995],["20231023",3900],["20231024",3985],["20231025",3985],["20231026",3810],["20231027",3900],["20231030",4020],["20231031",3880],["20231101",3930],["20231102",4050],["20231103",4070],["20231106",4110],["20231107",4015],["20231108",3995],["20231109",3920],["20231110",3830],["20231113",3920],["20231114",4050],["20231115",4110],["20231116",4130],["20231117",4120],["20231120",4160],["20231121",4260],["20231122",4270],["20231123",4315],["20231124",4315],["20231127",4300],["20231128",4275],["20231129",4270],["20231130",4310],["20231201",4315],["20231204",4335],["20231205",4295],["20231206",4300],["20231207",4310],["20231208",4325],["20231211",4300],["20231212",4280],["20231213",4215],["20231214",4205],["20231215",4270],["20231218",4290],["20231219",4270],["20231220",4290],["20231221",4295],["20231222",4290],["20231226",4300],["20231227",4245],["20231228",4255],["20240102",4315],["20240103",4310],["20240104",4325],["20240105",4355],["20240108",4320],["20240109",4310],["20240110",4675],["20240111",4675],["20240112",4665],["20240115",4640],["20240116",4650],["20240117",4470],["20240118",4465],["20240119",4420],["20240122",4370],["20240123",4420],["20240124",4290],["20240125",4160],["20240126",4220],["20240129",4155],["20240130",4150],["20240131",4065],["20240201",4070],["20240202",4155],["20240205",4120],["20240206",4055],["20240207",4125],["20240208",4105],["20240213",4180],["20240214",4560],["20240215",4480],["20240216",4470],["20240219",4570],["20240220",4550],["20240221",4775],["20240222",4805],["20240223",4660],["20240226",4640],["20240227",4570],["20240228",4570],["20240229",4490],["20240304",4580],["20240305",4510],["20240306",4460],["20240307",4510],["20240308",4580],["20240311",4670],["20240312",4720],["20240313",4735],["20240314",4735],["20240315",4750],["20240318",4785],["20240319",4845],["20240320",4900],["20240321",4885],["20240322",4980],["20240325",5060],["20240326",5740],["20240327",5600],["20240328",6350],["20240329",6200],["20240401",7100],["20240402",6920],["20240403",7170],["20240404",7480],["20240405",7770],["20240408",7540],["20240409",8040],["20240411",7970],["20240412",8300],["20240415",8740],["20240416",8140],["20240417",8460],["20240418",8130],["20240419",7780],["20240422",7500],["20240423",7550],["20240424",7570],["20240425",7300],["20240426",7730],["20240429",7990],["20240430",7830],["20240502",7610],["20240503",7680],["20240507",8290],["20240508",7920],["20240509",7710],["20240510",7590],["20240513",9860],["20240514",9650],["20240516",9950],["20240517",9050],["20240520",8860],["20240521",8650],["20240522",8950],["20240523",8600],["20240524",8840],["20240527",8760],["20240528",8700],["20240529",8000],["20240530",7650],["20240531",7670],["20240603",7890],["20240604",7700],["20240605",7580],["20240607",7200],["20240610",7570],["20240611",7580],["20240612",7840],["20240613",8030],["20240614",7660],["20240617",7380],["20240618",7470],["20240619",7390],["20240620",7690],["20240621",7500],["20240624",7770],["20240625",7610],["20240626",7670],["20240627",7740],["20240628",7750],["20240701",7720],["20240702",7150],["20240703",7040],["20240704",7180],["20240705",6880],["20240708",6910],["20240709",6940],["20240710",7060],["20240711",6850],["20240712",6770],["20240715",6650],["20240716",6540],["20240717",6360],["20240718",6300],["20240719",6300],["20240722",6150],["20240723",6090],["20240724",6080],["20240725",5920],["20240726",6140],["20240729",6130],["20240730",6010],["20240731",6130],["20240801",6350],["20240802",5810],["20240805",5050],["20240806",5420],["20240807",5400],["20240808",5370],["20240809",6060],["20240812",6240],["20240813",6230],["20240814",6190],["20240816",6230],["20240819",6230],["20240820",6450],["20240821",6360],["20240822",6250],["20240823",6260],["20240826",6070],["20240827",6310],["20240828",6110],["20240829",5830],["20240830",6090],["20240902",6070],["20240903",5950],["20240904",5580],["20240905",5480],["20240906",5310],["20240909",5440],["20240910",5300],["20240911",5570],["20240912",5870],["20240913",5870],["20240919",5850],["20240920",6050],["20240923",5900],["20240924",5720],["20240925",5500],["20240926",5740],["20240927",5780],["20240930",5650],["20241002",5500],["20241004",5520],["20241007",5680],["20241008",5510],["20241010",5500],["20241011",5450],["20241014",5670],["20241015",5590],["20241016",5480],["20241017",5510],["20241018",5270],["20241021",5420],["20241022",5230],["20241023",5280],["20241024",5110],["20241025",5100],["20241028",5180],["20241029",5040],["20241030",4930],["20241031",5060],["20241101",4915],["20241104",5130],["20241105",5240],["20241106",5150],["20241107",5250],["20241108",5300],["20241111",5180],["20241112",6730],["20241113",7590],["20241114",7630],["20241115",7930],["20241118",8580],["20241119",8660],["20241120",8930],["20241121",8650],["20241122",8720],["20241125",8870],["20241126",8850],["20241127",8660],["20241128",8630],["20241129",8800],["20241202",8930],["20241203",9450],["20241204",8740],["20241205",8880],["20241206",9680],["20241209",8880],["20241210",10430],["20241211",10170],["20241212",9900],["20241213",9300],["20241216",9710],["20241217",9100],["20241218",9600],["20241219",9290],["20241220",9650],["20241223",9230],["20241224",8700],["20241226",8660],["20241227",8290],["20241230",8210],["20250102",8660],["20250103",7960],["20250106",8210],["20250107",8460],["20250108",8460],["20250109",8700],["20250110",8550],["20250113",8320],["20250114",8580],["20250115",9760],["20250116",9840],["20250117",9940],["20250120",9610],["20250121",10150],["20250122",13190],["20250123",12450],["20250124",13330],["20250131",12410],["20250203",12820],["20250204",13680],["20250205",12850],["20250206",12830],["20250207",12660],["20250210",12410],["20250211",13290],["20250212",14050],["20250213",13180],["20250214",13260],["20250217",16690],["20250218",16300],["20250219",17340],["20250220",16850],["20250221",16520],["20250224",15860],["20250225",15730],["20250226",15850],["20250227",15500],["20250228",15600],["20250304",16090],["20250305",16570],["20250306",15690],["20250307",16260],["20250310",16030],["20250311",15850],["20250312",16180],["20250313",16860],["20250314",16800],["20250317",16120],["20250318",17190],["20250319",17330],["20250320",16690],["20250321",16510],["20250324",16430],["20250325",15200],["20250326",15240],["20250327",14250],["20250328",14350],["20250331",14230],["20250401",15120],["20250402",15130],["20250403",15000],["20250404",15290],["20250407",13750],["20250408",14700],["20250409",14120],["20250410",15340],["20250411",16950],["20250414",18580],["20250415",18180],["20250416",17930],["20250417",17790],["20250418",19200],["20250421",19250],["20250422",21600],["20250423",22450],["20250424",22500],["20250425",22250],["20250428",22700],["20250429",23100],["20250430",22700],["20250502",23000],["20250507",24600],["20250508",26450],["20250509",26600],["20250512",26650],["20250513",27550],["20250514",26800],["20250515",27350],["20250516",28700],["20250519",28650],["20250520",29950],["20250521",29300],["20250522",27300],["20250523",28000],["20250526",27300],["20250527",27500],["20250528",25500],["20250529",26500],["20250530",26000],["20250602",27000],["20250604",29600],["20250605",28500],["20250609",28100],["20250610",28000],["20250611",28250],["20250612",28600],["20250613",29650],["20250616",32500],["20250617",32750],["20250618",35650],["20250619",35000],["20250620",36000],["20250623",35000],["20250624",33750],["20250625",33500],["20250626",32500],["20250627",33500],["20250630",35950],["20250701",35900],["20250702",34150],["20250703",34200],["20250704",32150],["20250707",35700],["20250708",35850],["20250709",34900],["20250710",35750],["20250711",36400],["20250714",36000],["20250715",37700],["20250716",37450],["20250717",37050],["20250718",36050],["20250721",33800],["20250722",32550],["20250723",32200],["20250724",33150],["20250725",32550],["20250728",32550],["20250729",32700],["20250730",31900],["20250731",34050],["20250801",32800],["20250804",34200],["20250805",34600],["20250806",34450],["20250807",33500],["20250808",34850],["20250811",37000],["20250812",32700],["20250813",31450],["20250814",31150],["20250818",30500],["20250819",31400],["20250820",30150],["20250821",31550],["20250822",32500],["20250825",32250],["20250826",30600],["20250827",30350],["20250828",30100],["20250829",28750],["20250901",27950],["20250902",29200],["20250903",31300],["20250904",30150],["20250905",30050],["20250908",31150],["20250909",31500],["20250910",34750],["20250911",35550],["20250912",35000],["20250915",35200],["20250916",35000],["20250917",33850],["20250918",34000],["20250919",32500],["20250922",30250],["20250923",31250],["20250924",32650],["20250925",30800],["20250926",30150],["20250929",32000],["20250930",31450],["20251001",31800],["20251002",32300],["20251010",32750],["20251013",32300],["20251014",33900],["20251015",41350],["20251016",39400],["20251017",35800],["20251020",35700],["20251021",34800],["20251022",36200],["20251023",37800],["20251024",37700],["20251027",36050],["20251028",37300],["20251029",43950],["20251030",39300],["20251031",40700],["20251103",41700],["20251104",43000],["20251105",41250],["20251106",40500],["20251107",39650],["20251110",40500],["20251111",38050],["20251112",35100],["20251113",35000],["20251114",31800],["20251117",31250],["20251118",29300],["20251119",29650],["20251120",29800],["20251121",28400],["20251124",28650],["20251125",28300],["20251126",29900],["20251127",29850],["20251128",31000],["20251201",31200],["20251202",31100],["20251203",33750],["20251204",35450],["20251205",35100],["20251208",34500],["20251209",34500],["20251210",33450],["20251211",32900],["20251212",34800],["20251215",33800],["20251216",32500],["20251217",32100],["20251218",30700],["20251219",31100],["20251222",31500],["20251223",31700],["20251224",31400],["20251226",30800],["20251229",31500],["20251230",30900],["20260102",31050],["20260105",32650],["20260106",32900],["20260107",31600],["20260108",31350],["20260109",32100],["20260112",31800],["20260113",32650],["20260114",34950],["20260115",34850],["20260116",33850],["20260119",35400],["20260120",35750],["20260121",34500],["20260122",34400],["20260123",36400],["20260126",35850],["20260127",36450],["20260128",36150],["20260129",38400],["20260130",36600],["20260202",34350],["20260203",36300],["20260204",39850],["20260205",39000],["20260206",37800],["20260209",38600],["20260210",36550],["20260211",38000],["20260212",39300],["20260213",37900],["20260219",40450],["20260220",39050],["20260223",39800],["20260224",40150],["20260225",39300],["20260226",38500],["20260227",39000],["20260303",36200],["20260304",31150],["20260305",35650],["20260306",37050],["20260309",34950],["20260310",36800],["20260311",35800],["20260312",36500],["20260313",35800],["20260316",34550],["20260317",35350],["20260318",34950],["20260319",33650],["20260320",35550],["20260323",32650],["20260324",33300],["20260325",35800],["20260326",33950],["20260327",33200],["20260330",31700],["20260331",30700],["20260401",32900],["20260402",30900],["20260403",31250],["20260406",30500],["20260407",29650],["20260408",31800],["20260409",30800],["20260410",33350],["20260413",33550],["20260414",34750],["20260415",33900],["20260416",33950],["20260417",35650],["20260420",35000],["20260421",34650],["20260422",34500],["20260423",34850],["20260424",34900],["20260427",36100],["20260428",36000],["20260429",35950],["20260430",36650],["20260504",37050],["20260506",36750],["20260507",36950],["20260508",38000],["20260511",36500],["20260512",35000],["20260513",35500],["20260514",34650],["20260515",32000],["20260518",29000],["20260519",26850],["20260520",25000],["20260521",27000],["20260522",27800],["20260526",27350],["20260527",25050],["20260528",24100],["20260529",22700],["20260601",21950],["20260602",21100],["20260604",21100],["20260605",20700],["20260608",18350],["20260609",19740],["20260610",21400],["20260611",21250],["20260612",22000],["20260615",23000],["20260616",23500],["20260617",24350],["20260618",23050],["20260619",21700],["20260622",21800],["20260623",19700],["20260624",19920],["20260625",19700],["20260626",19110],["20260629",22350],["20260630",22700],["20260701",27850],["20260702",27250],["20260703",27800],["20260706",29650],["20260707",27900],["20260708",26300],["20260709",26400],["20260710",27650],["20260713",26750],["20260714",30000],["20260715",32250],["20260716",33950],["20260720",35500],["20260721",35750],["20260722",35050],["20260723",45550],["20260724",45300],["20260727",37400],["20260728",32000],["20260729",28600],["20260730",29750],["20260731",36600],["20260803",42000],["20260804",51200],["20260805",50000],["20260806",51100],["20260807",52300],["20260810",52800],["20260811",49900],["20260812",48200],["20260813",55400],["20260814",54900],["20260818",53900],["20260819",54900],["20260820",50100],["20260821",48250],["20260824",49000],["20260825",50900],["20260826",51600],["20260827",50300],["20260828",52200],["20260831",46100],["20260901",43750],["20260902",41850],["20260903",41850],["20260904",44900],["20260907",44500],["20260908",44800],["20260909",48300],["20260910",51200],["20260911",50600],["20260914",48750],["20260915",49050],["20260916",47450],["20260917",51200],["20260918",54000],["20260921",53000],["20260922",54600],["20260923",56100],["20260928",54400],["20260929",56100],["20260930",56400],["20261001",54800],["20261002",53400],["20261006",53200],["20261007",52600]],"kq":[3485,3503,3548,3529,3575,3639,3612,3684,3689,3694,3721,3683,3694,3700,3726,3801,3835,3847,3833,3843,3897,3968,3979,3951,4011,4048,4072,4009,4009,4046,3973,4072,4025,4094,4118,4040,4065,4042,4050,4108,4085,4164,4238,4234,4224,4200,4093,4094,3934,4054,4058,4138,4163,4165,4222,4215,4277,4296,4326,4380,4414,4398,4437,4449,4527,4492,4567,4607,4665,4622,4641,4691,4720,4718,4719,4597,4509,4438,4353,4310,4412,4374,4440,4376,4386,4371,4338,4306,4279,4268,4227,4239,4329,4338,4368,4422,4459,4440,4399,4376,4419,4447,4483,4505,4517,4571,4547,4586,4597,4654,4525,4557,4608,4612,4600,4545,4548,4540,4564,4537,4499,4473,4506,4615,4619,4625,4518,4501,4465,4560,4566,4635,4652,4662,4744,4794,4835,4850,4826,4878,4674,4587,4742,4857,4877,4721,4776,4766,4662,4631,4717,4729,4734,4680,4558,4598,4553,4612,4636,4582,4680,4668,4719,4755,4794,4818,4773,4770,4782,4764,4704,4744,4736,4661,4581,4668,4666,4626,4587,4581,4467,4449,4355,4296,4365,4190,4157,4237,4126,4241,4336,4270,4207,4258,4198,4069,3992,3963,4073,4001,3860,3885,3929,3820,3836,4011,4059,4357,4278,4209,4167,4096,4019,4122,4200,4209,4147,4220,4240,4228,4235,4230,4205,4237,4268,4316,4293,4300,4221,4253,4220,4309,4335,4357,4304,4362,4351,4416,4454,4479,4460,4435,4403,4462,4497,4561,4523,4496,4558,4564,4591,4543,4580,4505,4462,4436,4323,4361,4373,4358,4360,4340,4275,4345,4251,4250,4148,4145,4228,4193,4188,4214,4290,4386,4428,4459,4451,4455,4495,4484,4516,4508,4502,4431,4481,4479,4531,4496,4519,4481,4532,4546,4617,4619,4606,4569,4642,4629,4626,4693,4691,4742,4754,4729,4723,4699,4735,4627,4567,4582,4527,4466,4460,4453,4466,4424,4322,4323,4441,4369,4390,4388,4475,4428,4447,4514,4510,4502,4492,4522,4528,4516,4485,4434,4474,4517,4438,4396,4393,4389,4394,4356,4401,4417,4351,4318,4359,4384,4390,4415,4495,4488,4507,4519,4522,4475,4458,4458,4469,4450,4425,4367,4370,4370,4352,4362,4397,4307,4339,4364,4398,4459,4465,4456,4424,4413,4426,4357,4304,4269,4301,4204,4215,4226,4138,4139,4193,4171,4168,4222,4045,3588,3803,3885,3868,3967,4010,3969,4032,4081,4035,4087,4047,4014,4013,3979,3970,3957,3924,3984,3992,3946,3798,3764,3667,3708,3665,3682,3794,3805,3838,3884,3919,3982,3941,4044,4019,3964,3955,3991,4053,4039,4025,4001,3997,4016,3974,3971,3909,3944,3832,3867,3812,3775,3843,3862,3831,3856,3784,3914,3902,3858,3807,3858,3783,3687,3579,3537,3557,3579,3561,3544,3533,3514,3616,3597,3591,3604,3520,3507,3585,3514,3482,3432,3254,3434,3508,3546,3600,3625,3604,3620,3552,3468,3525,3530,3506,3456,3520,3563,3663,3726,3728,3735,3755,3726,3675,3726,3693,3759,3761,3776,3768,3801,3757,3782,3780,3653,3736,3794,3842,3855,3891,3890,3867,3889,3925,3988,4015,4039,3987,4020,4013,3993,4003,4001,3861,3830,3877,3814,3777,3767,3744,3786,3751,3811,3859,3869,3832,3763,3734,3738,3691,3718,3672,3600,3492,3588,3554,3547,3567,3380,3417,3339,3538,3610,3679,3695,3628,3694,3725,3713,3717,3768,3768,3787,3734,3770,3722,3746,3751,3786,3750,3765,3798,3836,3805,3763,3704,3714,3755,3725,3716,3764,3774,3782,3821,3811,3842,3893,3925,3966,4002,4081,4097,3990,4034,4025,4047,4061,4108,4073,4157,4143,4089,4056,4056,4067,4059,4117,4026,4040,4070,4102,4140,4154,4149,4219,4215,4247,4259,4264,4219,4222,4203,4188,4175,4175,4171,4179,4011,4069,4145,4170,4182,4200,4213,4189,4225,4231,4142,4089,4036,4034,4061,4142,4160,4161,4144,4136,4074,4121,4135,4180,4211,4248,4281,4323,4332,4396,4425,4421,4388,4448,4479,4538,4527,4468,4424,4334,4394,4370,4387,4433,4461,4466,4401,4488,4491,4461,4545,4528,4563,4526,4583,4685,4688,4679,4623,4673,4746,4809,4681,4661,4550,4610,4589,4705,4766,4660,4685,4560,4522,4629,4484,4445,4443,4553,4567,4737,4787,4818,4837,4826,4799,4815,4834,4852,4851,4865,4872,4754,4728,4678,4750,4822,4772,4750,4773,4840,4803,4907,4969,4961,4917,4899,4920,4929,4925,4890,4936,4954,5026,5067,4937,5036,5158,5524,5618,5883,6043,5965,5700,5939,5965,5752,5609,5852,5788,5786,5844,5740,6024,5989,5979,6046,6047,6166,6190,5904,5078,5794,5993,5721,5904,5900,5960,5984,5907,5900,6043,5934,6028,5693,5820,6018,5899,5924,5745,5462,5793,5482,5521,5436,5380,5656,5584,5676,5708,5822,5981,6036,6072,6097,6119,6130,6094,6248,6364,6309,6333,6188,6299,6281,6223,6268,6266,6120,6108,6182,5864,5766,5628,5481,5740,6026,6085,5881,5731,5578,5449,5325,5448,5202,4730,5023,4939,5174,5341,5366,5287,5356,5195,5016,5026,4627,4719,4608,4418,4778,4755,4823,4498,4507,4396,4314,4074,4121,4346,4149,4069,4305,4109,3890,3910,3898,4101,3883,3969,3663,3439,3346,3735,3827,4052,4150,4161,4146,4435,4452,4458,4470,4487,4329,4279,4364,4162,4221,4293,4291,4347,4351,4330,4262,4172,4101,4222,4267,4213,4309,4343,4259,4187,4216,4235,4267,4293,4340,4330,4383,4394,4410,4442,4641,4636,4774,4691],"kqraw":[671.5,675.0,683.7,679.9,688.9,701.2,696.0,709.8,710.8,711.8,716.9,709.7,711.8,712.9,718.0,732.4,738.9,741.2,738.6,740.5,751.0,764.6,766.8,761.3,772.8,780.0,784.6,772.4,772.5,779.6,765.5,784.7,775.6,788.9,793.4,778.5,783.3,778.9,780.3,791.6,787.2,802.4,816.5,815.8,814.0,809.2,788.6,788.9,758.0,781.2,782.0,797.4,802.2,802.5,813.4,812.2,824.1,827.7,833.5,843.9,850.5,847.5,855.0,857.2,872.4,865.6,880.1,887.8,898.9,890.6,894.2,903.8,909.5,909.0,909.2,885.7,868.8,855.2,838.7,830.4,850.2,842.8,855.6,843.2,845.1,842.3,835.9,829.7,824.5,822.4,814.5,816.8,834.2,835.9,841.7,852.0,859.2,855.5,847.7,843.2,851.5,856.9,863.8,868.1,870.3,880.7,876.1,883.7,885.8,896.8,871.8,878.0,888.0,888.6,886.4,875.7,876.4,874.8,879.5,874.1,867.0,861.8,868.2,889.3,890.0,891.2,870.5,867.3,860.4,878.7,879.9,893.1,896.3,898.3,914.1,923.7,931.6,934.6,929.9,940.0,900.6,883.8,913.7,936.0,939.7,909.8,920.3,918.4,898.2,892.3,909.0,911.3,912.2,901.7,878.3,886.0,877.3,888.7,893.3,882.9,901.7,899.4,909.4,916.2,923.8,928.4,919.7,919.2,921.5,918.0,906.4,914.2,912.5,898.0,882.7,899.5,899.0,891.3,883.9,882.7,860.7,857.4,839.2,827.8,841.0,807.4,801.0,816.4,795.0,817.1,835.5,822.8,810.5,820.4,808.9,784.0,769.2,763.7,784.9,770.8,743.9,748.5,757.1,736.1,739.2,772.8,782.0,839.5,824.4,811.0,802.9,789.3,774.4,794.2,809.4,811.1,799.1,813.1,817.0,814.6,816.0,815.0,810.2,816.4,822.4,831.7,827.2,828.5,813.4,819.5,813.2,830.4,835.2,839.5,829.3,840.6,838.3,851.0,858.3,863.0,859.4,854.6,848.3,859.8,866.6,878.9,871.6,866.2,878.3,879.3,884.6,875.5,882.5,868.1,859.7,854.8,833.0,840.3,842.7,839.7,840.1,836.2,823.7,837.2,819.1,818.9,799.2,798.7,814.8,808.0,807.0,811.9,826.6,845.1,853.3,859.2,857.6,858.5,866.2,864.1,870.1,868.6,867.4,853.8,863.4,863.0,873.0,866.4,870.7,863.4,873.2,875.9,889.7,889.9,887.5,880.5,894.5,891.9,891.5,904.3,904.0,913.7,916.1,911.2,910.0,905.5,912.5,891.6,880.0,882.9,872.3,860.6,859.3,858.1,860.5,852.4,832.8,833.0,855.6,841.9,845.8,845.4,862.2,853.3,856.8,869.7,868.9,867.5,865.6,871.3,872.4,870.1,864.2,854.4,862.1,870.4,855.1,847.1,846.5,845.7,846.6,839.4,848.0,851.0,838.5,832.0,840.0,844.7,845.8,850.8,866.2,864.7,868.4,870.7,871.3,862.2,859.0,859.0,861.2,857.5,852.7,841.5,842.0,842.1,838.6,840.4,847.1,829.9,836.1,840.8,847.5,859.3,860.4,858.5,852.4,850.4,852.9,839.6,829.4,822.5,828.7,810.0,812.1,814.2,797.3,797.6,808.0,803.8,803.1,813.5,779.3,691.3,732.9,748.5,745.3,764.4,772.7,764.9,776.8,786.3,777.5,787.4,779.9,773.5,773.3,766.8,765.0,762.5,756.0,767.7,769.2,760.4,731.8,725.3,706.6,714.5,706.2,709.4,731.0,733.2,739.5,748.3,755.1,767.4,759.3,779.2,774.5,763.9,762.1,769.0,781.0,778.2,775.5,771.0,770.3,773.8,765.8,765.1,753.2,760.0,738.3,745.2,734.6,727.4,740.5,744.2,738.2,743.1,729.0,754.1,751.8,743.3,733.5,743.4,728.8,710.5,689.6,681.6,685.4,689.5,686.1,682.9,680.7,677.0,696.8,693.1,692.0,694.4,678.2,675.8,690.8,677.1,670.9,661.3,627.0,661.6,675.9,683.4,693.7,698.5,694.5,697.6,684.4,668.3,679.2,680.1,675.6,666.0,678.2,686.6,705.8,718.0,718.3,719.6,723.5,717.9,708.2,718.0,711.6,724.2,724.7,727.7,726.1,732.3,724.0,728.7,728.3,703.8,719.9,731.0,740.3,742.9,749.7,749.6,745.2,749.3,756.3,768.5,773.6,778.3,768.3,774.6,773.3,769.4,771.4,770.9,744.0,737.9,747.0,734.9,727.7,725.8,721.5,729.5,722.8,734.3,743.5,745.5,738.4,725.1,719.4,720.2,711.3,716.5,707.5,693.8,672.9,691.5,684.9,683.5,687.4,651.3,658.5,643.4,681.8,695.6,709.0,711.9,699.1,711.8,717.8,715.5,716.1,726.1,726.1,729.7,719.4,726.5,717.2,721.9,722.8,729.6,722.5,725.4,731.9,739.0,733.2,725.1,713.8,715.5,723.6,717.7,716.0,725.3,727.1,728.8,736.3,734.4,740.3,750.2,756.2,764.2,771.2,786.3,789.5,768.9,777.3,775.6,779.7,782.5,791.5,784.8,800.9,798.2,788.0,781.6,781.5,783.7,782.2,793.3,775.8,778.5,784.2,790.4,797.7,800.5,799.4,812.9,812.2,818.3,820.7,821.7,813.0,813.6,809.9,807.0,804.4,804.5,803.7,805.2,772.8,784.1,798.6,803.5,805.8,809.3,811.9,807.2,814.1,815.3,798.0,788.0,777.6,777.2,782.5,798.0,801.7,801.7,798.4,796.9,785.0,794.0,796.8,805.4,811.4,818.6,824.8,833.0,834.8,847.1,852.7,851.8,845.5,857.1,863.1,874.4,872.2,860.9,852.5,835.2,846.7,842.0,845.3,854.2,859.5,860.5,848.0,864.7,865.4,859.5,875.8,872.5,879.1,872.0,883.1,902.7,903.3,901.6,890.9,900.4,914.5,926.6,901.9,898.2,876.8,888.4,884.3,906.5,918.4,897.9,902.7,878.7,871.3,891.9,864.0,856.4,856.0,877.3,880.1,912.7,922.4,928.4,932.0,929.8,924.7,927.8,931.4,935.0,934.6,937.3,938.8,916.1,911.1,901.3,915.3,929.1,919.6,915.2,919.7,932.6,925.5,945.6,957.5,956.0,947.4,944.1,947.9,949.8,949.0,942.2,951.2,954.6,968.4,976.4,951.3,970.4,993.9,1064.4,1082.6,1133.5,1164.4,1149.4,1098.4,1144.3,1149.4,1108.4,1080.8,1127.5,1115.2,1114.9,1126.0,1106.1,1160.7,1154.0,1152.0,1165.0,1165.2,1188.2,1192.8,1137.7,978.4,1116.4,1154.7,1102.3,1137.7,1136.8,1148.4,1153.0,1138.3,1136.9,1164.4,1143.5,1161.5,1096.9,1121.4,1159.5,1136.6,1141.5,1107.0,1052.4,1116.2,1056.3,1063.8,1047.4,1036.7,1089.8,1076.0,1093.6,1099.8,1121.9,1152.4,1163.0,1170.0,1174.8,1179.0,1181.1,1174.3,1203.8,1226.2,1215.6,1220.3,1192.3,1213.7,1210.2,1199.2,1207.7,1207.3,1179.3,1176.9,1191.1,1129.8,1111.1,1084.4,1056.1,1106.0,1161.1,1172.5,1133.1,1104.4,1074.8,1050.0,1026.0,1049.7,1002.4,911.4,967.8,951.6,996.9,1029.0,1034.0,1018.7,1032.0,1000.9,966.6,968.4,891.5,909.3,887.8,851.4,920.6,916.2,929.4,866.7,868.4,847.1,831.2,785.0,794.0,837.4,799.4,784.0,829.4,791.8,749.6,753.3,751.1,790.3,748.2,764.9,705.9,662.7,644.8,719.8,737.4,780.7,799.6,801.7,798.8,854.5,857.8,858.9,861.4,864.6,834.2,824.5,840.9,801.9,813.3,827.1,826.9,837.6,838.4,834.3,821.2,804.0,790.2,813.5,822.2,811.9,830.4,836.9,820.6,806.8,812.4,816.0,822.2,827.1,836.3,834.4,844.5,846.6,849.8,855.9,894.3,893.3,919.9,903.9],"events":[["20240628",1,-30],["20250217",2,-34],["20250328",3,30],["20250703",4,-32],["20250811",5,-34],["20251015",6,-36],["20260219",7,34],["20260515",8,34],["20260608",9,30],["20260723",10,-34],["20260803",11,34],["20260909",12,34],["20260930",13,-30]],"annual":[{"y":2013,"rev":685.3,"op":58.5,"ni":42.6,"n":"상장 첫해. 사업보고서 기재값"},{"y":2014,"rev":724.1,"op":52.5,"ni":41.9,"n":"사업보고서 기재값"},{"y":2015,"rev":1102.8,"op":92.0,"ni":63.9,"n":"별도 기준(종속회사 없음)"},{"y":2016,"rev":1164.4,"op":108.3,"ni":69.2,"n":"별도 기준(종속회사 없음)"},{"y":2017,"rev":966.7,"op":67.0,"ni":57.8,"n":"지엔원에너지 포함 구 연결"},{"y":2018,"rev":1260.5,"op":65.2,"ni":68.1,"n":"지엔원에너지 포함 구 연결"},{"y":2019,"rev":1683.5,"op":90.6,"ni":67.0,"n":"지엔원에너지 포함 구 연결"},{"y":2020,"rev":1610.2,"op":68.3,"ni":29.3,"n":"지엔원에너지 포함 구 연결"},{"y":2021,"rev":1465.2,"op":55.6,"ni":44.1,"n":"지엔원에너지 포함 구 연결"},{"y":2022,"rev":1485.5,"op":60.9,"ni":273.9},{"y":2023,"rev":1664.2,"op":110.2,"ni":113.9},{"y":2024,"rev":2263.2,"op":317.0,"ni":384.8},{"y":2025,"rev":2626.3,"op":493.7,"ni":399.4},{"y":2026,"rev":2946,"op":463,"ni":478,"e":1,"n":"컨센서스 2곳(와이즈리포트 10/6). 증권사 범위 영업이익 413~500억"},{"y":2027,"rev":4103,"op":750,"ni":647,"e":1,"n":"NH 9/28 추정. 증권사 범위 매출 3,340~4,235억 / 영업이익 660~750억"}],"quarterly":[{"q":"2018Q1","rev":261.8,"op":16.5,"opm":6.3,"gpm":13.2,"ni":32.0},{"q":"2018Q2","rev":309.0,"op":13.2,"opm":4.3,"gpm":10.4,"ni":3.0},{"q":"2018Q3","rev":287.7,"op":14.8,"opm":5.1,"gpm":12.5,"ni":25.7},{"q":"2018Q4","rev":402.2,"op":20.7,"opm":5.1,"gpm":10.1,"ni":13.6},{"q":"2019Q1","rev":348.2,"op":18.0,"opm":5.2,"gpm":10.9,"ni":14.3},{"q":"2019Q2","rev":439.0,"op":33.9,"opm":7.7,"gpm":12.9,"ni":21.1},{"q":"2019Q3","rev":370.9,"op":23.6,"opm":6.4,"gpm":10.6,"ni":20.8},{"q":"2019Q4","rev":525.3,"op":15.2,"opm":2.9,"gpm":8.2,"ni":25.2},{"q":"2020Q1","rev":378.7,"op":16.8,"opm":4.4,"gpm":10.6,"ni":-39.2},{"q":"2020Q2","rev":469.5,"op":10.5,"opm":2.2,"gpm":6.9,"ni":30.8},{"q":"2020Q3","rev":336.5,"op":9.8,"opm":2.9,"gpm":8.8,"ni":0.3},{"q":"2020Q4","rev":425.6,"op":31.1,"opm":7.3,"gpm":12.3,"ni":14.2},{"q":"2021Q1","rev":298.0,"op":8.5,"opm":2.9,"gpm":11.5,"ni":9.8},{"q":"2021Q2","rev":317.9,"op":10.7,"opm":3.4,"gpm":8.6,"ni":-5.1},{"q":"2021Q3","rev":338.2,"op":17.3,"opm":5.1,"gpm":9.3,"ni":14.9},{"q":"2021Q4","rev":574.7,"op":20.8,"opm":3.6,"gpm":14.8,"ni":18.0},{"q":"2022Q1","rev":255.6,"op":11.3,"opm":4.4,"gpm":12.2,"ni":10.8},{"q":"2022Q2","rev":327.2,"op":8.8,"opm":2.7,"gpm":7.3,"ni":-5.7},{"q":"2022Q3","rev":557.1,"op":10.7,"opm":1.9,"gpm":6.6,"ni":-17.0},{"q":"2022Q4","rev":345.6,"op":30.2,"opm":8.7,"gpm":14.1,"ni":271.9,"n":"순이익에 지엔원에너지 처분이익(중단영업) 포함"},{"q":"2023Q1","rev":286.0,"op":13.6,"opm":4.8,"gpm":13.4,"ni":13.7},{"q":"2023Q2","rev":472.0,"op":19.7,"opm":4.2,"gpm":9.4,"ni":17.9},{"q":"2023Q3","rev":257.5,"op":9.4,"opm":3.7,"gpm":13.6,"ni":12.2},{"q":"2023Q4","rev":648.6,"op":67.5,"opm":10.4,"gpm":16.4,"ni":73.2},{"q":"2024Q1","rev":402.6,"op":23.8,"opm":5.9,"gpm":12.0,"ni":33.7},{"q":"2024Q2","rev":369.8,"op":29.7,"opm":8.0,"gpm":13.8,"ni":169.0,"n":"순이익에 PNG 염가매수차익 138억 포함"},{"q":"2024Q3","rev":739.7,"op":132.3,"opm":17.9,"gpm":22.6,"ni":127.2},{"q":"2024Q4","rev":751.0,"op":131.3,"opm":17.5,"gpm":22.3,"ni":58.7},{"q":"2025Q1","rev":662.8,"op":149.9,"opm":22.6,"gpm":28.3,"ni":130.9},{"q":"2025Q2","rev":608.3,"op":122.1,"opm":20.1,"gpm":26.8,"ni":97.3},{"q":"2025Q3","rev":695.0,"op":127.7,"opm":18.4,"gpm":24.1,"ni":117.8},{"q":"2025Q4","rev":660.4,"op":94.1,"opm":14.2,"gpm":22.1,"ni":54.2},{"q":"2026Q1","rev":554.3,"op":44.0,"opm":7.9,"gpm":19.2,"ni":123.3,"n":"대손상각비 24.7억, 연결조정 -24.1억"},{"q":"2026Q2","rev":665.0,"op":101.6,"opm":15.3,"gpm":23.5,"ni":140.9,"n":"금융수익 98억(환·통화선도·주식평가)"}],"backlog":[["2018Q1",649],["2018Q2",695],["2018Q3",740],["2018Q4",679],["2019Q1",746],["2019Q2",739],["2019Q3",979],["2019Q4",857],["2020Q1",786],["2020Q2",747],["2020Q3",801],["2020Q4",778],["2021Q1",775],["2021Q2",797],["2021Q3",834],["2021Q4",1240],["2022Q1",1575],["2022Q2",1658],["2022Q3",1536],["2022Q4",1610],["2023Q1",1970],["2023Q2",1979],["2023Q3",2061],["2023Q4",2458],["2024Q1",2486],["2024Q2",2442],["2024Q3",2320],["2024Q4",2591],["2025Q1",2814],["2025Q2",2904],["2025Q3",3877],["2025Q4",3996],["2026Q1",3967],["2026Q2",4147]],"dc":[[2016,228,1114.0],[2017,236,870.9],[2018,281,914.8],[2019,362,1152.6],[2020,558,1128.2],[2021,564,1016.5],[2022,629,1230.0],[2023,735,1398.9],[2024,1195,1779.6],[2025,1513.6,1978.8]],"orders":[["2019",188.7,"KT 용산 가스터빈 188.7억",0],["2020",140.8,"상암 DC(대림산업) 140.8억(정정 후)",0],["2021",166.0,"삼성바이오로직스 Edison-4 166억",0],["2022",442.5,"퍼시픽써니 죽전 276.7 + 카카오 165.8",0],["2023",870.4,"강남 222.4 + 가산 148.8 + 고양삼송 252.2 + KT클라우드 247.1(정정 후)",0],["2024",0,"신규 공시 0건. 정정 3건(죽전 연장 2회, KT클라우드 -53.9억)",0],["2025",2148.5,"7건: 안산 265 + 울산 421.9 + 세종 627.1 + 김포 180.2 + 필리핀 134.2 + 부천 204 + 삼송2 316.1",0],["2026 (~9/11)",2922.2,"7건: 파주2 381.6 + 구미 297.5 + 용인 331.8 + 국가AI 359.6 + 군산 755.1 + 시흥 328.1 + 파주4 468.6",1]],"ends":[["2027 상반기",962.4,"케이티클라우드 DC 247.1억(2027-02), 안산 글로벌클라우드센터 265.0억(2027-05), 필리핀 비상발전기 134.2억(2027-03), 이지스 삼송 2단계 316.1억(2027-05)","2027 상"],["2027 하반기",1561.2,"울산 AI DC A동 421.9억(2027-10), 김포 DC 180.2억(2027-10), 부천 피치 DC 2단계 204.0억(2027-10), SGC AI Infra 군산 DC 755.1억(2027-12)","2027 하"],["2028 상반기",713.4,"파주센터 2단계 381.6억(2028-03), 용인 덕성 AI DC 331.8억(2028-03)","2028 상"],["2028 하반기",828.2,"국가 AI컴퓨팅센터(해남) 359.6억(2028-10), 파주센터 4동 468.6억(2028-09)","2028 하"],["2029 상반기",1252.7,"각 세종 2~3차 627.1억(2029-03), 구미 AI DC 297.5억(2029-05), 시흥 정왕 DC 가스터빈 328.1억(2029-03)","2029 상"]],"seg":[["발전기 (1H25 185.3)",74.6,"매출 892.1억, 이익률 8.4% (1H25 19.8%)","발전기"],["전력판매 PNG·바이오 (78.3)",115.7,"매출 222.2억, 이익률 52.1%","전력판매"],["기계설비·상품 한빛 (1.2)",-0.9,"매출 123.4억","한빛"],["기타 (0.2)",-0.3,"임대 등","기타"],["연결조정 (+7.0)",-43.5,"1Q -24.1억, 2Q -19.4억. 성격 미공시","연결조정"]],"bridge":[["영업이익",145.6,"발전기 74.6 + 전력판매 115.7 + 조정 등 -44.7","영업이익",1],["이자수익",40.4,"현금성·단기금융 1,076억","이자",0],["외환차익·환산이익",96.6,"외화자산 962.6억(AUD 445.8억 포함)","외환",0],["통화선도 평가이익",46.9,"$65M 매도 선도(씨티·삼성선물)","통화선도",0],["금융자산 평가·처분",32.0,"삼성전자 16,000주 +23.6억, MMF·피앤씨테크 등","주식평가",0],["기타 금융수익",7.7,"파생 거래이익 6.7 + 배당 1.0","기타금융",0],["금융비용",-23.6,"외환차손 15.9, 이자 4.9, 환산손 1.5 등","금융비용",0],["기타손익",-5.8,"기타수익 0.3 - 기타비용 6.1","기타",0],["지분법(석문그린에너지)",13.2,"19.8MW 연료전지 50%, 피투자회사 순이익 26.6억","지분법",0],["세전이익",353.0,"1H25 306.9억","세전",1],["법인세",-88.8,"유효세율 25.2%","법인세",0],["순이익",264.2,"지배주주 265.1억, 주당 1,640원","순이익",1]],"est":[["흥국 24-12",640,"",0],["흥국 25-03",600,"",0],["SMIC 25-04",718,"",0],["신한 25-11",777,"",0],["교보 26-02",692,"",0],["신한 26-04",777,"",0],["교보 26-07",413,"",0],["NH 26-07",416,"",0],["IBK 26-09",421,"",0],["LS 26-09",500,"",0],["NH 26-09",421,"",0],["컨센서스(2곳)",463,"",1]],"pop":[["LS ELECTRIC",60.9,"시총 326,250억 · 최근 4분기 매출 56,942.2억 · 영업이익 5,355.9억","LS일렉",0],["산일전기",33.9,"시총 72,011억 · 최근 4분기 매출 5,893.6억 · 영업이익 2,124.4억","산일전기",0],["효성중공업",29.2,"시총 261,740억 · 최근 4분기 매출 64,122.8억 · 영업이익 8,969.3억","효성중공업",0],["한화엔진",24.3,"시총 39,596억 · 최근 4분기 매출 13,726.3억 · 영업이익 1,632.7억","한화엔진",0],["지엔씨에너지",23.8,"시총 8,751억 · 최근 4분기 매출 2,574.6억 · 영업이익 367.4억","지엔씨에너지",1],["HD현대일렉트릭",22.1,"시총 246,202억 · 최근 4분기 매출 43,369.2억 · 영업이익 11,133.0억","HD현대일렉",0],["일진전기",20.7,"시총 41,915억 · 최근 4분기 매출 22,078.2억 · 영업이익 2,023.0억","일진전기",0],["케이아이엔엑스",20.4,"시총 6,271억 · 최근 4분기 매출 1,657.2억 · 영업이익 307.9억","KINX",0],["제룡전기",19.4,"시총 8,095억 · 최근 4분기 매출 1,837.8억 · 영업이익 416.7억","제룡전기",0],["STX엔진",14.7,"시총 9,274억 · 최근 4분기 매출 8,385.5억 · 영업이익 632.6억","STX엔진",0],["케이에스피",9.4,"시총 1,288억 · 최근 4분기 매출 1,065.0억 · 영업이익 137.1억","케이에스피",0],["금화피에스씨",5.4,"시총 2,004억 · 최근 4분기 매출 4,478.5억 · 영업이익 373.9억","금화PSC",0],["비츠로테크",5.3,"시총 3,089억 · 최근 4분기 매출 4,588.7억 · 영업이익 586.9억","비츠로테크",0]]}</script>
+<script>
+(function(){
+const CD = JSON.parse(document.getElementById('cd').textContent);
+const tip = document.getElementById('tip');
+function showTip(html, x, y){
+  tip.innerHTML = html; tip.style.display='block';
+  const r = tip.getBoundingClientRect();
+  let L = x + 14, T = y + 14;
+  if (L + r.width > window.innerWidth - 8) L = x - r.width - 14;
+  if (L < 8) L = 8;
+  if (T + r.height > window.innerHeight - 8) T = y - r.height - 14;
+  if (T < 8) T = 8;
+  tip.style.left = L + 'px'; tip.style.top = T + 'px';
+}
+function hideTip(){ tip.style.display='none'; }
+window.addEventListener('scroll', hideTip, {passive:true});
+document.addEventListener('pointerdown', e => { if (!e.target.closest('.chart svg')) hideTip(); });
+const fmtN = v => v == null ? '-' : v.toLocaleString('ko-KR');
+const d1 = v => v == null ? '-' : v.toFixed(1);
+const f1 = v => v.toLocaleString('ko-KR', {minimumFractionDigits:1, maximumFractionDigits:1});
+const sg = v => (v > 0 ? '+' : '') + v.toFixed(1);
+function bindHits(svg, onHit){
+  if (svg._bound) { svg._onHit = onHit; return; }
+  svg._bound = true; svg._onHit = onHit;
+  let down = false;
+  const handler = e => { const t = e.target.closest('[data-hit]'); if (!t){ hideTip(); return; } svg._onHit(t, e); };
+  svg.addEventListener('pointerdown', e => { down = true; handler(e); });
+  svg.addEventListener('pointermove', e => { if (e.pointerType === 'mouse' || down) handler(e); });
+  ['pointerup','pointercancel','pointerleave'].forEach(ev => svg.addEventListener(ev, () => { down=false; if (ev!=='pointerup') hideTip(); }));
+}
+function responsive(id, draw){
+  const box = document.getElementById(id); if (!box) return; const svg = box.querySelector('svg');
+  let t;
+  const render = () => { const W = Math.max(280, Math.floor(box.clientWidth - (parseFloat(getComputedStyle(box).paddingLeft)*2))); const H = draw(svg, W); svg.setAttribute('viewBox', `0 0 ${W} ${H}`); svg.setAttribute('height', H); };
+  render();
+  new ResizeObserver(() => { clearTimeout(t); t = setTimeout(render, 120); }).observe(box);
+}
+
+/* ---------- price ---------- */
+responsive('ch-px', (svg, W) => {
+  const narrow = W < 560;
+  const ML = narrow ? 34 : 50, MR = 10, MT = 24, MB = 26;
+  const Hh = narrow ? 280 : 360; const ph = Hh - MT - MB, pw = W - ML - MR;
+  const D = CD.daily; const n = D.length; const yMax = 60000;
+  const x = i => ML + i/(n-1)*pw; const y = v => MT + (yMax - Math.min(v, yMax))/yMax*ph;
+  let s = '';
+  [0,15000,30000,45000,60000].forEach(v => { s += `<line class="${v===0?'axis':'grid'}" x1="${ML}" x2="${W-MR}" y1="${y(v)}" y2="${y(v)}"/><text x="${ML-4}" y="${y(v)+4}" text-anchor="end" class="mut" style="font-size:${narrow?9.5:11}px">${v ? (narrow ? (v/10000).toFixed(1).replace('.0','') + '만' : fmtN(v)) : '0'}</text>`; });
+  let lastY = '';
+  D.forEach((d,i) => { const yy = d[0].slice(0,4); if (yy !== lastY){ lastY = yy; if (i > 0) s += `<line class="grid" x1="${x(i)}" x2="${x(i)}" y1="${MT}" y2="${MT+ph}"/>`; s += `<text x="${x(i)+3}" y="${Hh-8}" class="mut" style="font-size:${narrow?9:11}px">${yy}</text>`; } });
+  s += `<path d="${CD.kq.map((v,i) => (i?'L':'M') + x(i).toFixed(1) + ' ' + y(v).toFixed(1)).join(' ')}" fill="none" stroke="var(--c4)" stroke-width="1.2"/>`;
+  const path = D.map((d,i) => (i?'L':'M') + x(i).toFixed(1) + ' ' + y(d[1]).toFixed(1)).join(' ');
+  s += `<path d="${path} L${x(n-1).toFixed(1)} ${y(0)} L${x(0)} ${y(0)} Z" fill="var(--c1-soft)"/><path d="${path}" fill="none" stroke="var(--c1)" stroke-width="1.5"/>`;
+  CD.events.forEach(([dt, num, off]) => { let idx = D.findIndex(d => d[0] >= dt); if (idx < 0) idx = n-1; const px = Math.min(Math.max(x(idx), ML+9), W-MR-9), py = y(D[idx][1]); const cy = Math.min(Math.max(MT+9, py+off), MT+ph-9);
+    s += `<line x1="${px}" x2="${px}" y1="${py}" y2="${cy}" stroke="var(--c2)" stroke-width="1"/><circle cx="${px}" cy="${cy}" r="${narrow?7:8.5}" fill="var(--c2)"/><text x="${px}" y="${cy+3.5}" text-anchor="middle" style="font-size:${narrow?8.5:10}px; fill:#fff; font-weight:600">${num}</text>`; });
+  const step = Math.max(1, Math.floor(n / Math.max(60, Math.floor(pw/3))));
+  for (let i = 0; i < n; i += step) s += `<rect data-hit="${i}" x="${x(i) - pw/(n-1)*step/2}" y="${MT}" width="${pw/(n-1)*step}" height="${ph}" fill="transparent"/>`;
+  svg.innerHTML = s;
+  bindHits(svg, (t, e) => { const i = +t.dataset.hit; const d = D[i];
+    showTip(`<b>${d[0].slice(0,4)}-${d[0].slice(4,6)}-${d[0].slice(6)}</b><br>종가 ${fmtN(d[1])}원<br>시총 약 ${fmtN(Math.round(d[1]*CD.shares/1e8))}억<br>10/6 종가 ${fmtN(CD.px)}원 대비 ${sg((CD.px/d[1]-1)*100)}%<br>코스닥 ${CD.kqraw[i].toFixed(1)}`, e.clientX, e.clientY); });
+  return Hh;
+});
+
+/* ---------- annual ---------- */
+responsive('ch-ann', (svg, W) => {
+  const narrow = W < 560; const A = CD.annual;
+  const ML = narrow ? 38 : 48, MR = narrow ? 34 : 44, MT = 18, MB = 28;
+  const Hh = narrow ? 270 : 340; const ph = Hh - MT - MB, pw = W - ML - MR;
+  const yMax = 4500; const y = v => MT + (yMax - v)/yMax*ph;
+  const oMax = 900, oMin = -100; const yo = v => MT + (oMax - v)/(oMax - oMin)*ph;
+  const gw = pw/A.length; const bw = Math.min(narrow ? 13 : 26, gw*0.62);
+  let s = '', labs = '';
+  [0,1000,2000,3000,4000].forEach(v => s += `<line class="${v===0?'axis':'grid'}" x1="${ML}" x2="${W-MR}" y1="${y(v)}" y2="${y(v)}"/><text x="${ML-4}" y="${y(v)+4}" text-anchor="end" class="mut" style="font-size:${narrow?9:11}px">${fmtN(v)}</text>`);
+  [0,300,600,900].forEach(v => s += `<text x="${W-MR+4}" y="${yo(v)+4}" style="font-size:${narrow?9:10.5}px; fill:var(--c2)">${fmtN(v)}</text>`);
+  s += `<line x1="${ML}" x2="${W-MR}" y1="${yo(0)}" y2="${yo(0)}" stroke="var(--c2)" stroke-width="1" stroke-dasharray="2 3" opacity=".6"/>`;
+  A.forEach((a,i) => { const xc = ML + i*gw + gw/2;
+    s += `<rect x="${xc-bw/2}" y="${y(a.rev)}" width="${bw}" height="${y(0)-y(a.rev)}" fill="var(--c1)" opacity="${a.e?0.35:1}" rx="1"/>`;
+    if (!narrow || i%2===0 || i>=A.length-2) labs += `<text x="${xc}" y="${y(a.rev)-5}" text-anchor="middle" style="font-size:${narrow?8.5:10.5}px; paint-order:stroke; stroke:var(--surface); stroke-width:3px">${fmtN(Math.round(a.rev))}</text>`;
+    s += `<text x="${xc}" y="${Hh-10}" text-anchor="middle" class="mut" style="font-size:${narrow?8:11}px">${"'"+String(a.y).slice(2)}${a.e?'E':''}</text>`;
+    s += `<rect data-hit="${i}" x="${ML+i*gw}" y="${MT}" width="${gw}" height="${ph}" fill="transparent"/>`; });
+  const pts = A.map((a,i) => [ML + i*gw + gw/2, yo(a.op)]);
+  const k = A.findIndex(a => a.e);
+  s += `<path d="${pts.slice(0,k).map((p,i)=>(i?'L':'M')+p[0]+' '+p[1]).join(' ')}" fill="none" stroke="var(--c2)" stroke-width="2"/>`;
+  s += `<path d="${pts.slice(k-1).map((p,i)=>(i?'L':'M')+p[0]+' '+p[1]).join(' ')}" fill="none" stroke="var(--c2)" stroke-width="2" stroke-dasharray="5 3"/>`;
+  pts.forEach(p => s += `<circle cx="${p[0]}" cy="${p[1]}" r="${narrow?2.4:3.2}" fill="var(--c2)"/>`);
+  svg.innerHTML = s + labs;
+  bindHits(svg, (t, e) => { const a = A[+t.dataset.hit]; showTip(`<b>${a.y}${a.e?' (추정)':''}</b><br>매출 ${d1(a.rev)}억<br>영업이익 ${d1(a.op)}억 (이익률 ${(a.op/a.rev*100).toFixed(1)}%)` + (a.ni!=null?`<br>순이익 ${d1(a.ni)}억`:'') + (a.n?`<br>${a.n}`:''), e.clientX, e.clientY); });
+  return Hh;
+});
+
+/* ---------- quarterly ---------- */
+responsive('ch-q', (svg, W) => {
+  const narrow = W < 560; const Q = CD.quarterly;
+  const ML = narrow ? 30 : 40, MR = narrow ? 30 : 38, MT = 18, MB = 30;
+  const Hh = narrow ? 250 : 320; const ph = Hh - MT - MB, pw = W - ML - MR;
+  const yMax = 800; const y = v => MT + (yMax - v)/yMax*ph;
+  const oMax = 40, oMin = -10; const yo = v => MT + (oMax - v)/(oMax - oMin)*ph;
+  const gw = pw/Q.length; const bw = Math.min(narrow ? 7 : 15, gw*0.72);
+  let s = '';
+  [0,200,400,600,800].forEach(v => s += `<line class="${v===0?'axis':'grid'}" x1="${ML}" x2="${W-MR}" y1="${y(v)}" y2="${y(v)}"/><text x="${ML-4}" y="${y(v)+4}" text-anchor="end" class="mut" style="font-size:${narrow?9:11}px">${v}</text>`);
+  [0,10,20,30,40].forEach(v => s += `<text x="${W-MR+4}" y="${yo(v)+4}" style="font-size:${narrow?9:10.5}px; fill:var(--c2)">${v}%</text>`);
+  s += `<line x1="${ML}" x2="${W-MR}" y1="${yo(0)}" y2="${yo(0)}" stroke="var(--c2)" stroke-width="1" stroke-dasharray="2 3" opacity=".6"/>`;
+  Q.forEach((q,i) => { const xc = ML + i*gw + gw/2;
+    s += `<rect x="${xc-bw/2}" y="${y(q.rev)}" width="${bw}" height="${y(0)-y(q.rev)}" fill="var(--c1)" rx="1"/>`;
+    if (q.q.endsWith('Q1')) s += `<text x="${xc}" y="${Hh-10}" text-anchor="middle" class="mut" style="font-size:${narrow?9:11}px">${narrow ? "'"+q.q.slice(2,4) : q.q.slice(0,4)}</text>`;
+    s += `<rect data-hit="${i}" x="${ML+i*gw}" y="${MT}" width="${gw}" height="${ph}" fill="transparent"/>`; });
+  s += `<path d="${Q.map((q,i)=>(i?'L':'M')+(ML+i*gw+gw/2).toFixed(1)+' '+yo(q.gpm).toFixed(1)).join(' ')}" fill="none" stroke="var(--c3)" stroke-width="1.4" stroke-dasharray="3 3"/>`;
+  s += `<path d="${Q.map((q,i)=>(i?'L':'M')+(ML+i*gw+gw/2).toFixed(1)+' '+yo(q.opm).toFixed(1)).join(' ')}" fill="none" stroke="var(--c2)" stroke-width="1.8"/>`;
+  Q.forEach((q,i) => s += `<circle cx="${ML+i*gw+gw/2}" cy="${yo(q.opm)}" r="${narrow?1.8:2.4}" fill="var(--c2)"/>`);
+  svg.innerHTML = s;
+  bindHits(svg, (t, e) => { const i = +t.dataset.hit; const q = Q[i]; const py = Q[i-4]; showTip(`<b>${q.q.replace('Q',' Q')}</b><br>매출 ${d1(q.rev)}억${py?` (YoY ${sg((q.rev/py.rev-1)*100)}%)`:''}<br>영업이익 ${d1(q.op)}억 (${d1(q.opm)}%)<br>매출총이익률 ${d1(q.gpm)}%<br>순이익 ${d1(q.ni)}억` + (q.n?`<br>${q.n}`:''), e.clientX, e.clientY); });
+  return Hh;
+});
+
+/* ---------- backlog ---------- */
+responsive('ch-bl', (svg, W) => {
+  const narrow = W < 560; const B = CD.backlog;
+  const ML = narrow ? 34 : 46, MR = 10, MT = 18, MB = 30;
+  const Hh = narrow ? 230 : 290; const ph = Hh - MT - MB, pw = W - ML - MR;
+  const yMax = 4500; const y = v => MT + (yMax - v)/yMax*ph;
+  const gw = pw/B.length; const bw = Math.min(narrow ? 7 : 15, gw*0.72);
+  let s = '';
+  [0,1000,2000,3000,4000].forEach(v => s += `<line class="${v===0?'axis':'grid'}" x1="${ML}" x2="${W-MR}" y1="${y(v)}" y2="${y(v)}"/><text x="${ML-4}" y="${y(v)+4}" text-anchor="end" class="mut" style="font-size:${narrow?9:11}px">${fmtN(v)}</text>`);
+  B.forEach((b,i) => { const xc = ML + i*gw + gw/2; const q4 = b[0].endsWith('Q4');
+    s += `<rect x="${xc-bw/2}" y="${y(b[1])}" width="${bw}" height="${y(0)-y(b[1])}" fill="${q4?'var(--c1)':'var(--c4)'}" opacity="${q4?1:0.75}" rx="1"/>`;
+    if (b[0].endsWith('Q1')) s += `<text x="${xc}" y="${Hh-10}" text-anchor="middle" class="mut" style="font-size:${narrow?9:11}px">${narrow ? "'"+b[0].slice(2,4) : b[0].slice(0,4)}</text>`;
+    if (q4 || i === B.length-1) s += `<text x="${xc}" y="${y(b[1])-4}" text-anchor="middle" style="font-size:${narrow?8:10}px; paint-order:stroke; stroke:var(--surface); stroke-width:3px">${fmtN(b[1])}</text>`;
+    s += `<rect data-hit="${i}" x="${ML+i*gw}" y="${MT}" width="${gw}" height="${ph}" fill="transparent"/>`; });
+  svg.innerHTML = s;
+  bindHits(svg, (t, e) => { const i = +t.dataset.hit; const b = B[i]; const p = B[i-4]; showTip(`<b>${b[0].replace('Q',' Q')} 말</b><br>수주잔고 ${fmtN(b[1])}억 (별도)${p?`<br>YoY ${sg((b[1]/p[1]-1)*100)}%`:''}`, e.clientX, e.clientY); });
+  return Hh;
+});
+
+/* ---------- DC share of generator sales ---------- */
+responsive('ch-dc', (svg, W) => {
+  const narrow = W < 560; const D = CD.dc;
+  const ML = narrow ? 36 : 46, MR = 10, MT = 18, MB = 28;
+  const Hh = narrow ? 230 : 290; const ph = Hh - MT - MB, pw = W - ML - MR;
+  const yMax = 2000; const y = v => MT + (yMax - v)/yMax*ph;
+  const gw = pw/D.length; const bw = Math.min(narrow ? 16 : 34, gw*0.66);
+  let s = '';
+  [0,500,1000,1500,2000].forEach(v => s += `<line class="${v===0?'axis':'grid'}" x1="${ML}" x2="${W-MR}" y1="${y(v)}" y2="${y(v)}"/><text x="${ML-4}" y="${y(v)+4}" text-anchor="end" class="mut" style="font-size:${narrow?9:11}px">${fmtN(v)}</text>`);
+  D.forEach((d,i) => { const xc = ML + i*gw + gw/2; const [yr, dc, gen] = d;
+    s += `<rect x="${xc-bw/2}" y="${y(gen)}" width="${bw}" height="${y(dc)-y(gen)}" fill="var(--c4)" opacity=".55" rx="1"/>`;
+    s += `<rect x="${xc-bw/2}" y="${y(dc)}" width="${bw}" height="${y(0)-y(dc)}" fill="var(--c1)" rx="1"/>`;
+    s += `<text x="${xc}" y="${y(gen)-4}" text-anchor="middle" style="font-size:${narrow?8.5:10}px">${Math.round(dc/gen*100)}%</text>`;
+    s += `<text x="${xc}" y="${Hh-10}" text-anchor="middle" class="mut" style="font-size:${narrow?8.5:11}px">${"'"+String(yr).slice(2)}</text>`;
+    s += `<rect data-hit="${i}" x="${ML+i*gw}" y="${MT}" width="${gw}" height="${ph}" fill="transparent"/>`; });
+  svg.innerHTML = s;
+  bindHits(svg, (t, e) => { const d = D[+t.dataset.hit]; showTip(`<b>${d[0]}</b><br>발전기 매출 ${fmtN(Math.round(d[2]))}억<br>데이터센터·R&amp;D향 ${fmtN(Math.round(d[1]))}억 (${(d[1]/d[2]*100).toFixed(0)}%)<br>그 외(주택·플랜트·쇼핑몰) ${fmtN(Math.round(d[2]-d[1]))}억`, e.clientX, e.clientY); });
+  return Hh;
+});
+
+/* ---------- generic horizontal bars ---------- */
+function hbars(id, rows, opt){
+  responsive(id, (svg, W) => {
+    const narrow = W < 560;
+    const ML = narrow ? opt.mlN : opt.ml, MR = narrow ? 56 : 70, MT = 6, rowH = narrow ? opt.rowN||30 : opt.row||34;
+    const Hh = MT + rows.length*rowH + 18; const pw = W - ML - MR; const min = opt.min||0; const x = v => ML + (v-min)/(opt.max-min)*pw;
+    let s = '';
+    opt.ticks.forEach(v => s += `<line class="${v===0?'axis':'grid'}" x1="${x(v)}" x2="${x(v)}" y1="${MT}" y2="${Hh-18}"/><text x="${x(v)}" y="${Hh-5}" text-anchor="middle" class="mut" style="font-size:${narrow?9:10.5}px">${fmtN(v)}${opt.unit||''}</text>`);
+    rows.forEach((r,i) => { const y0 = MT + i*rowH; const bh = narrow ? 13 : 15; const v = Math.max(Math.min(r.val, opt.max), min);
+      s += `<text x="${ML-6}" y="${y0+rowH/2+4}" text-anchor="end" class="lab" style="font-size:${narrow?10.5:12}px; font-weight:${r.me?700:400}">${narrow && r.short ? r.short : r.label}</text>`;
+      const x0 = Math.min(x(0), x(v)), w = Math.abs(x(v) - x(0));
+      s += `<rect x="${x0}" y="${y0+rowH/2-bh/2}" width="${w}" height="${bh}" fill="${r.fill||'var(--c1)'}" rx="2"/>`;
+      s += `<text x="${(v<0 ? x(0) : x(v))+5}" y="${y0+rowH/2+4}" style="font-size:${narrow?10:11}px">${r.txt}</text>`;
+      s += `<rect data-hit="${i}" x="0" y="${y0}" width="${W}" height="${rowH}" fill="transparent"/>`; });
+    svg.innerHTML = s;
+    bindHits(svg, (t, e) => showTip(rows[+t.dataset.hit].tip, e.clientX, e.clientY));
+    return Hh;
+  });
+}
+hbars('ch-ord', CD.orders.map(m => ({label:m[0], val:m[1], fill:m[3]?'var(--c2)':'var(--c1)', me:!!m[3], txt:f1(m[1])+'억', tip:`<b>${m[0]}</b><br>공시 수주 ${f1(m[1])}억<br>${m[2]}`})), {ml:100, mlN:80, max:3200, ticks:[0,800,1600,2400,3200], row:30, rowN:28});
+hbars('ch-end', CD.ends.map(m => ({label:m[0], short:m[3], val:m[1], fill:'var(--c1)', txt:f1(m[1])+'억', tip:`<b>${m[0]} 종료</b><br>${f1(m[1])}억<br>${m[2]}`})), {ml:96, mlN:76, max:1700, ticks:[0,400,800,1200,1600], row:32, rowN:30});
+hbars('ch-seg', CD.seg.map(b => ({label:b[0], short:b[3], val:b[1], fill:b[1]<0?'var(--neg)':'var(--c1)', txt:(b[1]>0?'+':'')+b[1].toFixed(1)+'억', tip:`<b>${b[0]}</b><br>영업이익 ${b[1].toFixed(1)}억<br>${b[2]}`})), {ml:150, mlN:96, min:-60, max:140, ticks:[-50,0,50,100], row:30, rowN:28});
+hbars('ch-bridge', CD.bridge.map(b => ({label:b[0], short:b[3], val:b[1], fill:b[4]?'var(--c4)':(b[1]<0?'var(--neg)':'var(--c1)'), me:!!b[4], txt:(b[4]?'':(b[1]>0?'+':''))+b[1].toFixed(1)+'억', tip:`<b>${b[0]}</b><br>${b[1].toFixed(1)}억<br>${b[2]}`})), {ml:140, mlN:96, min:-100, max:380, ticks:[-100,0,100,200,300], row:30, rowN:28});
+hbars('ch-est', CD.est.map(m => ({label:m[0], val:m[1], fill:m[3]?'var(--c2)':'var(--c1)', me:!!m[3], txt:fmtN(m[1])+'억', tip:`<b>${m[0]}</b><br>2026년 영업이익 추정 ${fmtN(m[1])}억<br>${m[2]}`})), {ml:104, mlN:84, max:900, ticks:[0,300,600,900], row:28, rowN:26});
+hbars('ch-pop', CD.pop.map(p => ({label:p[0], short:p[3], val:p[1], me:!!p[4], fill:p[4]?'var(--accent)':'var(--c4)', txt:p[1].toFixed(1)+'배', tip:`<b>${p[0]}</b><br>시총 ÷ 최근 4분기 영업이익 ${p[1].toFixed(1)}배<br>${p[2]}`})), {ml:120, mlN:92, max:65, ticks:[0,15,30,45,60], row:26, rowN:24, unit:'배'});
+})();
+
+</script>
+</body>
+</html>

@@ -1,0 +1,794 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>켄코아에어로스페이스 274090</title>
+
+<!--
+  ============================================================================
+  Deep Stock Report — HTML 골격 (deep_report_base.html) — 신포맷 v3 (2026-09-21)
+  ----------------------------------------------------------------------------
+  사용법 (deep-stock-report 스킬이 이 골격을 채우는 방법):
+
+  1. 치환 지점 (문자열을 직접 편집 — 중괄호 치환 토큰 사용 금지, 검증 스크립트가
+     완성본에 중괄호 두 개짜리 잔여 토큰이 남아있지 않은지로 치환 여부를 체크한다):
+     - <title> 텍스트: "종목명 종목코드" → 실제 값 (예: 마이크로컨텍솔루션 098120)
+     - .topbar .path: "시장 종목코드 · 날짜" (예: KOSDAQ 098120 · 2026-08-18)
+     - .mast h1: 종목명 + <span class="tk">종목코드</span>
+     - .report-footer: 종목명 종목코드 · 버전 · 기준일
+
+  2. 대시보드 영역 (.wrap 상단, 본문 장 이전) — ★ v3부터 리본 + TL;DR만
+     (BULL/BEAR·WATCHLIST는 여기서 제거됨 — 종합 섹션으로 이동, 아래 3번 참고.
+     독자가 회사를 이해하기도 전에 강세/약세 판단부터 보이던 v2의 문제 해소):
+     - .ribbon .row: 스탯 4칸 — 시가총액 / 최근 분기 실적(+부가 지표) /
+       회사 고유 핵심 지표(가동률·점유율 등, .k 라벨은 종목마다 다르게 작성) /
+       대표 배수(EV/OP 등)
+     - .tldr: 넘버드 리스트 3~4개, 각 항목 <strong>로 핵심 문장 강조 후 근거
+       서술. ★ 1번 항목은 반드시 "이 회사는 ___로 돈 버는 ___다" 형태의 한
+       문장 정의로 시작(무엇을 팔아 어떻게 돈 버는지). ★ 컨센서스가 있으면
+       (data/consensus.json has_estimates:true) 3~4개 항목 중 한 항목은
+       반드시 미래 실적 코멘트로 채운다 — FY1·FY2 컨센서스 매출/영업이익과
+       리비전 방향을 포함하고, 출처는 `[컨센: 네이버]`로 표기.
+
+  3. 종합 섹션(<section class="chapter" id="synthesis">, ★ id="ch-8" 금지) —
+     본문 7장(ch-1~ch-7)을 모두 읽은 "다음"에 나오는 섹션으로, 구 대시보드의
+     BULL/BEAR(.bbgrid)·WATCHLIST(.watch)를 그대로 담는다. 위치는 ch-7
+     </section> 뒤, .appendix 앞(<main> 안).
+     - .bbgrid: 본문 1~6장에서 이미 제시한 논거의 "요약"만 — 여기서 신규
+       주장을 추가하지 않는다.
+     - .watch: 7장(추가로 확인이 필요한 부분) 질문 중 상위 3개를 승격 +
+       각 항목에 선행 신호(무엇을 먼저 보면 알 수 있는지)를 병기.
+     - secnav에도 REF 앵커 앞에 <a href="#synthesis"> 항목이 있어야 함.
+
+  4. 본문 7장 구조 (report_structure.md) — 각 <section class="chapter" id="ch-N">
+     안의 안내 주석 위치에 콘텐츠 삽입. 주석은 지워도 되고 남겨도 됨.
+     - id="ch-1" ~ id="ch-7"은 finalize CLI의 chapters_present 감지 계약이므로
+       ★ 절대 값을 변경하지 말 것(N을 다른 숫자/문자로 바꾸지 않는다). 종합
+       섹션은 별도 id="synthesis"를 쓰며 이 계약과 무관.
+     - 각 장 머리 <p class="chapter-q">에 그 장의 핵심 질문을 배치.
+     - ★ ch-1~ch-6은 chapter-q 바로 아래 .takeaway 요지 박스(2~3줄 선요약)를
+       둔다. 마크업 계약: <div class="takeaway"><span class="label">요지
+       </span> 본문…</div>. ch-7(질문 목록)은 대상 아님.
+     - 소제목은 <h3>(왼쪽 세로선 자동), 더 아래 위계는 <h4>.
+     - ★ 01장: h3 "1-1. 부문별 숫자"가 서술보다 먼저 나온다. <table class=
+       "data">(table-scroll 래핑 + table-note), 열 = 연간 3개년 + 최신
+       반기/분기(해당 열에 하이라이트 클래스 부여), 행 = 부문별 매출·영업이익
+       (공시 시)·OPM. YoY 증감은 <span class="yoy up">+18%</span> /
+       <span class="yoy down">−12%</span>로 셀에 병기(적색=상승,
+       청색=하락 — 한국 관례). 표 다음 부문별 서술은 표의 행 순서를 따른다.
+     - 02장 표: 최근 분기·추정 등 강조가 필요한 열은 ★ <th class="c-hl">/
+       <td class="c-hl"> 셀 클래스 권장 — 열 위치와 무관해 열이 추가·이동돼도
+       깨지지 않는다(강조할 열의 th와 그 열의 각 행 td 모두에 부여). 기존
+       t-hl6(6번째 열 강조)/t-hl3(3번째 열)/t-hlg(5~7열 그룹)는 레거시로
+       남아있으나 열 번호가 정확히 그 위치와 일치할 때만 쓸 것 — v1 리포트가
+       정의되지 않은 t-hl2·t-hl4를 써서 조용히 무효화된 사고가 있었다.
+       강조가 필요 없으면 클래스 생략.
+       ★ 구성: 2-1 간단 손익(컨센서스 있으면 연간 열 뒤에 E열 추가, 아래 2-1
+       스켈레톤 주석 참고) / 2-2 Key Stats(grid3) / 2-3 간단 밸류에이션 /
+       2-4 경쟁사 대조(신설 — "선정 근거" 열 필수, 근거 없는 경쟁사 나열 금지).
+       구 v2의 "2-2 매출 Breakdown"은 01장 1-1로 이관되어 여기엔 없음.
+     - 04장: .moat 블록(.mhd 태그+제목 / .row3 3개 — 근거 숫자·복제 비용·시간·
+       소멸 조건 / .counterview) 반복 구조.
+     - 06장: .risk 블록(.rt 번호+제목 / 설명 <p> / .sig 시그널) 반복 구조.
+       ★ 표 사용 금지 — 리스크는 반드시 .risk 블록으로만 작성.
+     - 07장: <ul class="qlist">로 확인 필요 질문 나열.
+     - 미사용 장은 삭제하지 말고 빈 상태로 두거나, "7장으로 이관" 규칙에 따라
+       내용을 7장에 편입. finalize의 chapters_present는 실제 내용이 있는
+       <section>을 감지.
+     - ★ 블록(.moat/.risk/.card/.counterview/.takeaway) 내부 라벨(태그명·
+       지표명·시그널명 등)은 각 블록의 "첫 자식" <b>로만 스타일이 걸리도록
+       CSS 셀렉터가 :first-child로 한정돼 있다(v2 사고: 본문 인라인 <b>가
+       라벨 스타일을 뒤집어써 렌더링이 깨짐). 따라서 이 블록들 내부의 인라인
+       강조는 반드시 <strong>만 사용하고 <b>는 절대 쓰지 말 것 — <b>는
+       오직 각 블록의 라벨(첫 자식) 자리에만 등장해야 한다.
+
+  5. 각주/인용 (★ finalize CLI가 파싱하는 계약):
+     - 본문에서 근거를 인용할 때 <sup class="cite"> 안에 <a href="#ref-ID">를
+       넣고, sup에 data-analyst-id 또는 data-dart-rcept 속성을 부여.
+         · 애널리스트 리포트 → data-analyst-id="<analyst_reports.id>"
+         · DART 공시/재무제표 → data-dart-rcept="<dart_reports.rcept_no>"
+       (뉴스는 참조 ID가 없으므로 data-* 없이 <sup class="cite">만, 또는
+        각주 링크만 사용)
+     - ★ 신규 규칙(2026-08-18): 인용 첨자는 문장부호(마침표 등) 뒤에 배치한다.
+       예: "...확인된다.<sup class="cite" data-dart-rcept="...">
+       <a href="#ref-...">[공시]</a></sup>" — sup.cite는 기본 opacity가
+       낮고 호버 시에만 진하게 보이도록 CSS가 되어 있어, 마침표 앞에 두면
+       비표시 상태에서 문장부호 앞 공백처럼 보이는 문제가 있었다.
+     - 참고자료 <section id="references">의 각 <li>도 동일한 data-* 속성과
+       id="ref-<ID>"를 보유해야 함. finalize는 여기 <li>들에서
+       source_analyst_report_ids / source_dart_rcept_nos를 수집.
+     - 본문 <sup>의 data-*와 참고자료 <li>의 data-*는 서로 대응.
+
+  6. 완성 후 <code>-<name>-<YYYYMMDD>-vN.html로 저장 → kp-report finalize.
+
+  7. 브랜딩 배지(.brand)와 푸터 크레딧("만든 사람: 갬이")은 제작자 표시용 —
+     리포트 작성 시 절대 제거하지 말 것.
+
+  기술 제약: 외부 CSS/폰트/JS 로드 없음. 모든 스타일은 아래 style 태그 안에
+  인라인 (파일 전체에 style 태그는 정확히 1개여야 함 — 검증 스크립트가
+  정규식으로 첫 블록을 잡는다). 스크롤은 CSS scroll-behavior로 처리(JS 불필요).
+  다크 터미널 고정(라이트 모드 없음) — KP-Scope 대시보드 다크 토큰 계승.
+  본문 폰트: 시스템 고딕(Pretendard/Apple SD Gothic Neo) 고정, 세리프 재도입
+  금지(2026-07-21 고딕화 결정, 2026-08-04 명조 회귀 사고 재발 방지 — --serif
+  토큰을 다시 만들지 말 것). 표/숫자는 모노스페이스(--mono).
+  이 템플릿의 CSS는 변형하지 말 것 — 콘텐츠(대시보드 값 + 장 본문)만 채운다.
+  ============================================================================
+-->
+
+<style>
+/* KP-Scope Terminal — 딥리포트 신포맷 v3 (대시보드 다크 토큰 계승) */
+:root{
+  --bg:#0d0f14; --panel:#13161d; --panel2:#181c24; --line:#252b36; --line-soft:#1c212b;
+  --ink:#e2e8f0; --muted:#a3adbe; --dim:#8b94a3;
+  --up:#f6465d; --down:#3b82f6; --key:#f0b90b; --pos:#2ebd85;
+  --sans:"Pretendard",-apple-system,BlinkMacSystemFont,system-ui,"Apple SD Gothic Neo",sans-serif;
+  --mono:"SF Mono","JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
+  --measure:860px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.85;letter-spacing:-0.005em;word-break:keep-all;overflow-wrap:break-word;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+.wrap{max-width:var(--measure);margin:0 auto;padding:0 20px}
+td,th,.stat b{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.topbar{border-bottom:1px solid var(--line);background:var(--panel)}
+.topbar .inner{max-width:var(--measure);margin:0 auto;padding:14px 20px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.chip{font-family:var(--mono);font-size:.72rem;letter-spacing:.05em;color:var(--key);border:1px solid var(--key);border-radius:3px;padding:2px 8px}
+.topbar .path{font-family:var(--mono);font-size:.72rem;color:var(--dim)}
+.brand{margin-left:auto;display:flex;align-items:center;gap:9px;text-decoration:none;background:var(--panel2);border:1px solid var(--line);border-radius:999px;padding:5px 14px 5px 6px}
+.brand:hover{border-color:var(--muted)}
+.brand img{width:30px;height:30px;border-radius:50%;display:block;box-shadow:0 0 0 2px var(--line)}
+.brand .brand-name{display:block;font-weight:800;font-size:.82rem;color:var(--ink);line-height:1.2}
+.brand .brand-url{display:block;font-family:var(--mono);font-size:.6rem;color:var(--muted);line-height:1.3}
+.mast{max-width:var(--measure);margin:0 auto;padding:40px 20px 6px}
+.mast h1{font-size:1.9rem;font-weight:800;line-height:1.3;letter-spacing:-.02em;margin:0 0 10px}
+.mast h1 .tk{font-family:var(--mono);font-weight:400;font-size:1.05rem;color:var(--muted)}
+.mast .thesis{font-size:1.02rem;color:var(--muted);border-left:2px solid var(--key);padding-left:14px;margin:14px 0 0;line-height:1.65}
+.mast .thesis b{color:var(--key);font-weight:700}
+.ribbon{max-width:var(--measure);margin:26px auto 0;padding:0 20px}
+.ribbon .row{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);background:var(--panel)}
+.stat{padding:15px 16px;border-right:1px solid var(--line)}
+.stat:last-child{border-right:none}
+.stat .k{font-family:var(--mono);font-size:.62rem;letter-spacing:.09em;color:var(--dim);text-transform:uppercase;margin-bottom:6px}
+.stat b{display:block;font-size:1.3rem;font-weight:700;line-height:1.25}
+@media(max-width:640px){.ribbon .row{grid-template-columns:repeat(2,1fr)}.stat:nth-child(2){border-right:none}}
+main{padding-bottom:90px}
+section.chapter{max-width:var(--measure);margin:0 auto;padding:80px 20px 0;scroll-margin-top:20px}
+.sec-label{display:flex;align-items:baseline;gap:10px;border-bottom:1px solid var(--line);padding-bottom:10px;margin-bottom:6px}
+.sec-label .idx{font-family:var(--mono);font-size:1.3rem;font-weight:800;color:var(--key)}
+.sec-label h2{font-size:1.28rem;font-weight:800;margin:0;letter-spacing:-.01em}
+.chapter-q{font-family:var(--mono);font-size:.95rem;font-weight:700;color:var(--ink);margin:14px 0 30px}
+.chapter-q::before{content:"Q // ";color:var(--key)}
+h3{font-size:1.05rem;font-weight:700;margin:46px 0 16px;padding-left:12px;border-left:2px solid var(--muted)}
+h4{font-size:1.12rem;font-weight:800;color:#fff;margin:38px 0 14px}
+p{margin:0 0 22px}
+ul,ol{margin:0 0 22px;padding-left:1.35em}
+li{margin-bottom:10px}
+strong{color:#fff;font-weight:700}
+em{font-style:normal;color:var(--key)}
+a{color:var(--down)}
+/* 인용 앵커 — 호버 시에만 표시 (finalize 계약 유지: data-* + #ref-) */
+sup.cite{font-size:.64em;vertical-align:super;line-height:0;margin-left:1px;white-space:nowrap;opacity:.12;transition:opacity .15s}
+p:hover sup.cite,li:hover sup.cite,td:hover sup.cite,.table-note:hover sup.cite,div:hover>sup.cite{opacity:1}
+sup.cite a{color:var(--dim);font-family:var(--mono);text-decoration:none}
+sup.cite a:hover{color:var(--key)}
+.tldr{border:1px solid var(--line);background:var(--panel);margin:26px 0 0}
+.tldr .hd{font-family:var(--mono);font-size:.66rem;letter-spacing:.1em;color:var(--key);padding:9px 16px;border-bottom:1px solid var(--line)}
+.tldr ol{margin:0;padding:18px 18px 18px 2.4em}
+.tldr li{margin-bottom:14px;font-size:1rem}
+.tldr li:last-child{margin-bottom:0}
+.bbgrid{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--line);margin:16px 0}
+.bbcol{padding:17px 18px;font-size:.95rem;line-height:1.75;background:var(--panel)}
+.bbcol.bull{border-right:1px solid var(--line);box-shadow:inset 3px 0 0 var(--pos)}
+.bbcol.bear{box-shadow:inset 3px 0 0 var(--up)}
+.bbcol .hd{font-family:var(--mono);font-size:.64rem;letter-spacing:.1em;margin-bottom:8px}
+.bbcol.bull .hd{color:var(--pos)}
+.bbcol.bear .hd{color:var(--up)}
+.bbcol ul{margin:0;padding-left:1.2em}
+.bbcol li{margin-bottom:9px}
+@media(max-width:640px){.bbgrid{grid-template-columns:1fr}.bbcol.bull{border-right:none;border-bottom:1px solid var(--line)}}
+.watch{border:1px solid var(--key);background:var(--panel);margin:16px 0 8px}
+.watch .hd{font-family:var(--mono);font-size:.66rem;letter-spacing:.1em;color:var(--bg);background:var(--key);padding:8px 16px;font-weight:700}
+.watch .body{padding:17px 18px}
+.watch .item{display:flex;gap:12px;margin-bottom:16px}
+.watch .item:last-child{margin-bottom:0}
+.watch .n{font-family:var(--mono);color:var(--key);font-size:.85rem;flex:none;padding-top:2px}
+.watch .item p{margin:0;font-size:1rem}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin:16px 0}
+@media(max-width:640px){.grid3{grid-template-columns:1fr}}
+.card{background:var(--panel);padding:16px}
+.card>b:first-child{display:block;font-family:var(--mono);font-size:.62rem;letter-spacing:.08em;color:var(--dim);text-transform:uppercase;margin-bottom:5px}
+.card .big{font-family:var(--mono);font-size:1.25rem;font-weight:700;display:block;margin-bottom:4px}
+.card p{font-size:.84rem;color:var(--muted);margin:0;line-height:1.65}
+.table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:22px 0;border:1px solid var(--line)}
+table.data{width:100%;border-collapse:collapse;font-size:.9rem;line-height:1.6;background:var(--panel)}
+table.data th{font-weight:600;color:var(--muted);text-align:right;padding:10px 12px;border-bottom:1px solid var(--line);white-space:nowrap;font-size:.78rem}
+table.data thead th{background:var(--panel2);border-top:2px solid rgba(240,185,11,.45)}
+table.data td{padding:10px 12px;border-bottom:1px solid var(--line-soft);text-align:right;color:var(--ink)}
+table.data th:first-child,table.data td:first-child{text-align:left;white-space:normal;font-family:var(--sans)}
+table.data tbody tr:hover td{background:var(--panel2)}
+table.data tbody tr:last-child td{border-bottom:none}
+table.data tr.hl td{color:var(--key);font-weight:700}
+.table-note{font-size:.84rem;color:var(--muted);margin:-4px 0 26px;line-height:1.68}
+.counterview{border:1px dashed var(--line);border-left:2px solid var(--down);background:var(--panel);padding:14px 17px;margin:24px 0;font-size:.95rem;line-height:1.75;color:#c3ccda}
+.counterview .label{display:block;font-family:var(--mono);font-size:.62rem;letter-spacing:.1em;color:var(--down);margin-bottom:5px}
+.counterview strong{color:var(--ink)}
+.moat{border:1px solid var(--line);background:var(--panel);margin:24px 0;padding:19px 20px}
+.moat .mhd{display:flex;align-items:baseline;gap:10px;margin-bottom:10px}
+.moat .mhd .tag{font-family:var(--mono);font-size:.64rem;letter-spacing:.08em;color:var(--key)}
+.moat .mhd b{font-size:1rem;color:#fff}
+/* row3: 좌측 고정폭 라벨(absolute) + 우측 본문, 행 사이 구분선(첫 행 제외).
+   ★ grid/flex 금지 — row3 내용은 <b>라벨</b> + 생 텍스트 + 인라인 강조/인용이
+   섞인 인라인 콘텐츠라, 그리드/플렉스 컨테이너로 만들면 텍스트 런과 인라인
+   요소가 각각 별개 아이템으로 쪼개져 라벨 열/본문 열에 번갈아 흩뿌려진다
+   (v3 1차 사고). absolute 포지셔닝 + padding-left로 라벨을 띄워 본문은
+   항상 하나의 연속 인라인 흐름으로 유지한다. */
+.moat .row3{position:relative;padding:10px 0 10px 112px;font-size:.95rem;line-height:1.7;color:var(--ink)}
+.moat .row3+.row3{border-top:1px solid var(--line-soft)}
+.moat .row3>b:first-child{position:absolute;left:0;top:12px;width:96px;font-family:var(--mono);font-size:.68rem;letter-spacing:.06em;color:var(--dim);text-transform:uppercase;font-weight:700;line-height:1.5}
+@media(max-width:640px){.moat .row3{padding-left:0}.moat .row3>b:first-child{position:static;display:block;width:auto;margin-bottom:2px}}
+.moat .counterview{margin:12px 0 0}
+.appendix{border-top:1px solid var(--line);background:var(--panel2);margin-top:80px;padding:34px 0 14px}
+.appendix .inner{max-width:var(--measure);margin:0 auto;padding:0 20px}
+.appendix .hd{font-family:var(--mono);font-size:.7rem;letter-spacing:.1em;color:var(--key);margin-bottom:4px}
+.appendix h2{font-size:1.15rem;font-weight:800;margin:0 0 18px}
+.appendix table.data{background:var(--panel)}
+#references{max-width:var(--measure);margin:0 auto;padding:40px 20px 0}
+#references h2{font-size:1rem;font-weight:800;margin:0 0 14px;color:var(--muted)}
+#references ol{font-family:var(--mono);font-size:.72rem;color:var(--dim);line-height:1.7;padding-left:1.6em}
+#references li{margin-bottom:6px;scroll-margin-top:24px}
+#references li:target{color:var(--key)}
+#references .src-tag{color:var(--muted);font-weight:700}
+.report-footer{max-width:var(--measure);margin:44px auto 0;padding:20px;font-family:var(--mono);font-size:.68rem;color:var(--dim);border-top:1px solid var(--line);line-height:1.8}
+@media(max-width:768px){body{font-size:14.5px}section.chapter{padding:52px 16px 0}.mast h1{font-size:1.5rem}}
+
+/* v4 추가: 챕터 내비 · Q리스트 · 리스크 블록 · 최근분기 하이라이트 */
+.secnav{max-width:var(--measure);margin:0 auto;padding:12px 20px 0;font-family:var(--mono);font-size:.8rem;display:flex;flex-wrap:wrap;gap:6px 16px}
+.secnav a{color:var(--muted);text-decoration:none}
+.secnav a b{color:var(--key);font-weight:800}
+.secnav a:hover{color:var(--key)}
+.qlist{list-style:none;padding-left:0}
+.qlist li{margin-bottom:16px}
+.qlist li::before{content:"Q) ";font-family:var(--mono);font-weight:800;color:var(--key)}
+.risk{border:1px solid var(--line);background:var(--panel);padding:18px 20px;margin:18px 0}
+.risk .rt{font-size:1.05rem;margin:0 0 7px}
+.risk .rt .rn{font-family:var(--mono);color:var(--key);font-weight:800;margin-right:8px}
+.risk p{margin:0 0 11px;font-size:.95rem;line-height:1.75}
+.risk .sig{font-size:.88rem;color:var(--muted);margin:0}
+.risk .sig>b:first-child{color:var(--key);font-family:var(--mono);font-size:.72rem;letter-spacing:.06em;margin-right:8px}
+/* v3 추가: 요지 박스(.takeaway) · 표 셀 YoY 병기(.yoy) */
+.takeaway{border-left:2px solid var(--key);background:var(--panel);padding:12px 16px;margin:0 0 30px;font-size:.95rem;line-height:1.75;color:var(--ink)}
+.takeaway .label{font-family:var(--mono);font-size:.64rem;font-weight:700;letter-spacing:.08em;color:var(--key);text-transform:uppercase;margin-right:8px}
+.yoy{font-family:var(--mono);font-size:.72rem;margin-left:5px;white-space:nowrap}
+.yoy.up{color:var(--up)}
+.yoy.down{color:var(--down)}
+.t-hl6 thead th:nth-child(6),.t-hl6 tbody td:nth-child(6){background:rgba(240,185,11,.08);border-left:1px solid var(--key);border-right:1px solid var(--key)}
+.t-hl6 thead th:nth-child(6){border-top:1px solid var(--key)}
+.t-hl6 tbody tr:last-child td:nth-child(6){border-bottom:1px solid var(--key)}
+.t-hl3 thead th:nth-child(3),.t-hl3 tbody td:nth-child(3){background:rgba(240,185,11,.08);border-left:1px solid var(--key);border-right:1px solid var(--key)}
+.t-hl3 thead th:nth-child(3){border-top:1px solid var(--key)}
+.t-hl3 tbody tr:last-child td:nth-child(3){border-bottom:1px solid var(--key)}
+.t-hlg thead th:nth-child(n+5):nth-child(-n+7),.t-hlg tbody td:nth-child(n+5):nth-child(-n+7){background:rgba(240,185,11,.05)}
+.t-hlg thead th:nth-child(5),.t-hlg tbody td:nth-child(5){border-left:1px solid var(--key)}
+.t-hlg thead th:nth-child(7),.t-hlg tbody td:nth-child(7){border-right:1px solid var(--key)}
+/* c-hl: 열 위치 무관 셀 단위 하이라이트 — 최근 분기 열의 th/td에 부여 (t-hl*은 레거시 유지) */
+table.data th.c-hl,table.data td.c-hl{background:rgba(240,185,11,.08);border-left:1px solid var(--key);border-right:1px solid var(--key)}
+table.data thead th.c-hl{border-top:1px solid var(--key)}
+table.data tbody tr:last-child td.c-hl{border-bottom:1px solid var(--key)}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="inner">
+    <span class="chip">KP-SCOPE / DEEP</span>
+    <span class="path">KOSDAQ 274090 · 2026-09-23</span>
+    <a class="brand" href="https://blog.naver.com/darkgd01" target="_blank" rel="noopener">
+      <img src="data:image/png;base64,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" alt="서핑하는 스누피">
+      <span><span class="brand-name">갬이</span><span class="brand-url">blog.naver.com/darkgd01</span></span>
+    </a>
+  </div>
+</div>
+
+<nav class="secnav"><a href="#ch-1"><b>01</b> 핵심 비즈니스 모델</a><a href="#ch-2"><b>02</b> 기본 숫자</a><a href="#ch-3"><b>03</b> 사업의 전망</a><a href="#ch-4"><b>04</b> 이 기업의 해자</a><a href="#ch-5"><b>05</b> 경영진 평가</a><a href="#ch-6"><b>06</b> 리스크 요인</a><a href="#ch-7"><b>07</b> 추가로 확인이 필요한 부분</a><a href="#synthesis"><b>★</b> 종합</a><a href="#references"><b>REF</b></a></nav>
+
+<div class="mast">
+  <h1>켄코아에어로스페이스 <span class="tk">274090</span></h1>
+</div>
+
+<div class="ribbon">
+  <div class="row">
+    <div class="stat"><div class="k">시가총액</div><b>1,718억</b></div>
+    <div class="stat"><div class="k">최근 분기 실적 (2Q26)</div><b>매출 285억 · OP 12억 <small>2Q26</small></b></div>
+    <div class="stat"><div class="k">미국 부문 매출 비중 (1H26)</div><b style="color:var(--key)">49% <small>1H26</small></b></div>
+    <div class="stat"><div class="k">PBR (영구CB 포함 자본)</div><b>0.99배</b></div>
+  </div>
+</div>
+
+<div class="wrap">
+
+<div class="tldr">
+  <div class="hd">TL;DR</div>
+  <ol>
+    <li><strong>이 회사는 미국 방산·우주 부품 가공(조지아)과 특수 원소재 유통(캘리포니아), 사천의 기체 구조물·화물기 개조 부품 생산으로 돈 버는 한·미 이원 항공 부품 Tier 2~3 제조사다.</strong> 1H26 매출 577억 중 미국 부문 285억(49%), 원소재 139억(24%), MRO 93억(16%), 국내 항공기 60억(11%)이다.<sup class="cite" data-dart-rcept="20260814003607"><a href="#ref-20260814003607">[반기 2026]</a></sup></li>
+    <li><strong>2020~2023년 성장을 이끈 싱가포르 STEA향 A320 화물기 개조(P2F) 매출이 3년 새 3분의 1로 줄었고, 2024~2025년 적자는 이 공백과 재고·자산 손상에서 나왔다.</strong> 싱가포르 매출은 416억(2023)에서 325억(2024), 135억(2025)으로 줄었다.<sup class="cite" data-dart-rcept="20250321001613"><a href="#ref-20250321001613">[사보 2024]</a></sup> 2025년 영업손실 92억에는 재고평가손실 56억이 들어 있고, 영업외로 유·무형·사용권자산 손상 72억이 추가로 잡혔다.<sup class="cite" data-dart-rcept="20260323001536"><a href="#ref-20260323001536">[사보 2025]</a></sup></li>
+    <li><strong>1H26에 흑자로 돌아섰다(매출 +50% YoY, 영업이익 14억).</strong> 미국 부문 +83%와 브라질(Embraer C-390) 매출 100억이 주도했다.<sup class="cite" data-dart-rcept="20260814003607"><a href="#ref-20260814003607">[반기 2026]</a></sup> 다만 이익률은 2.4%로, 2022년(10.5%)과는 거리가 있다.</li>
+    <li><strong>PBR 0.99배는 착시에 가깝다.</strong> 자본 1,732억 중 약 1,299억은 최대주주 케플러가 보유한 영구전환사채(자본 분류)다.<sup class="cite" data-dart-rcept="20250321001613"><a href="#ref-20250321001613">[사보 2024]</a></sup> 이를 빼면 보통주 귀속 자본은 약 433억으로, PBR은 약 4.0배가 된다. 전환 가능 주식 929만주는 발행주식의 67%에 해당한다(전환가 13,995원, 2026.04.11부터 청구 가능).<sup class="cite" data-dart-rcept="20260814003607"><a href="#ref-20260814003607">[반기 2026]</a></sup> 네이버 컨센서스 추정치는 없다.</li>
+  </ol>
+</div>
+
+</div>
+
+<main>
+
+<!-- ═══ 01 ═══ -->
+<section class="chapter" id="ch-1">
+<div class="sec-label"><span class="idx">01</span><h2>핵심 비즈니스 모델</h2></div>
+<p class="chapter-q">누구에게, 무엇을, 어떤 구조로 팔아 돈을 버는가</p>
+
+<div class="takeaway"><span class="label">요지</span> 이 회사는 미국 방산·우주 부품 가공과 특수 원소재 유통, 한국 사천의 기체 구조물·화물기 개조 부품 생산으로 돈 버는 한·미 이원 항공 부품 제조사다. 2023년 매출의 50%였던 MRO(P2F)가 1H26 16%로 줄고, 미국 부문이 16%에서 49%로 올라 <strong>매출의 무게중심이 한국 PTF에서 미국 방산·우주로 옮겨졌다.</strong></div>
+
+<h3>1-1. 부문별 숫자</h3>
+<div class="table-scroll">
+<table class="data">
+<thead><tr><th>부문 · 억원</th><th>2023</th><th>2024</th><th>2025</th><th>1H25</th><th class="c-hl">1H26</th></tr></thead>
+<tbody>
+<tr><td>미국 민수·방산 항공기, 우주발사체</td><td>148.6</td><td>242.4 <span class="yoy up">+63%</span></td><td>330.1 <span class="yoy up">+36%</span></td><td>155.9</td><td class="c-hl">284.9 <span class="yoy up">+83%</span></td></tr>
+<tr><td>　비중</td><td>16.3%</td><td>28.1%</td><td>43.2%</td><td>40.5%</td><td class="c-hl">49.4%</td></tr>
+<tr><td>우주항공 원소재</td><td>183.7</td><td>173.6 <span class="yoy down">−5%</span></td><td>213.8 <span class="yoy up">+23%</span></td><td>104.2</td><td class="c-hl">138.9 <span class="yoy up">+33%</span></td></tr>
+<tr><td>　비중</td><td>20.2%</td><td>20.1%</td><td>28.0%</td><td>27.1%</td><td class="c-hl">24.1%</td></tr>
+<tr><td>MRO (군용기, P2F Conversion)</td><td>457.1</td><td>348.0 <span class="yoy down">−24%</span></td><td>132.1 <span class="yoy down">−62%</span></td><td>79.4</td><td class="c-hl">93.2 <span class="yoy up">+17%</span></td></tr>
+<tr><td>　비중</td><td>50.1%</td><td>40.4%</td><td>17.3%</td><td>20.6%</td><td class="c-hl">16.1%</td></tr>
+<tr><td>국내 민수·방산 항공기</td><td>122.1</td><td>97.6 <span class="yoy down">−20%</span></td><td>88.0 <span class="yoy down">−10%</span></td><td>45.3</td><td class="c-hl">60.0 <span class="yoy up">+33%</span></td></tr>
+<tr><td>　비중</td><td>13.4%</td><td>11.3%</td><td>11.5%</td><td>11.8%</td><td class="c-hl">10.4%</td></tr>
+<tr><td><strong>합계</strong></td><td>911.4</td><td>861.5 <span class="yoy down">−5%</span></td><td>763.9 <span class="yoy down">−11%</span></td><td>384.7</td><td class="c-hl">577.0 <span class="yoy up">+50%</span></td></tr>
+</tbody>
+</table>
+</div>
+<p class="table-note">회사는 연결실체 전체를 단일 영업부문으로 보고해 <strong>부문별 영업이익은 공시되지 않는다</strong>. 위 표는 '주요 제품 등의 매출 현황'(천원 단위, 합계가 XBRL 매출과 일치)을 옮긴 것이다. 2025년 정합성 WARN은 단위 인식 오류였고, 원문 대조로 해소했다.</p>
+
+<p><strong>미국 민수·방산 항공기, 우주발사체(조지아 Kencoa Aerospace LLC).</strong> 2017년 인수한 조지아 법인이 록히드마틴·보잉 방산·Pratt &amp; Whitney 등에 F-35·F-22·C-130·AH-64·V-22 기체 및 엔진 부품을 가공 납품하고, NASA SLS·Blue Origin 엔진 부품도 만든다.<sup class="cite" data-analyst-id="40345"><a href="#ref-40345">[리포트: 한국IR협의회 25.11.06]</a></sup> 이 법인은 미 방산 부품이라 대부분 자체 생산하고, 열처리 같은 특수 공정만 외주로 돌린다.<sup class="cite" data-dart-rcept="20260323001536"><a href="#ref-20260323001536">[사보 2025]</a></sup> 2025년 11월에는 조지아 열처리 업체의 자산을 75.9억(순자산 61.3억, 영업권 14.6억)에 양수해 그 외주 공정을 내재화했다.<sup class="cite" data-dart-rcept="20260323001536"><a href="#ref-20260323001536">[사보 2025]</a></sup> 매출은 148.6억(2023)에서 330.1억(2025)으로 2.2배가 됐고, 1H26은 284.9억(+83% YoY)이다. 법인 가동률은 81%(2025)에서 85%(1H26)로 올랐다.<sup class="cite" data-dart-rcept="20260814003607"><a href="#ref-20260814003607">[반기 2026]</a></sup> 이 부문의 수익성은 공시되지 않는다. 대표는 인터뷰에서 "영업이익률이 20%를 육박하는 미국 법인"이라고 밝혔다[뉴스: 한국경제TV 26.06]. 공시로 검증할 수 없는 회사 측 발언이다.</p>
+
+<p><strong>우주항공 원소재(캘리포니아 California Metal &amp; Supply).</strong> 티타늄·니켈 특수강 등을 조달·절단해 NASA·SpaceX·Blue Origin 등 30여 개 우주 업체와 방산 업체에 공급하는 유통형 사업이다.<sup class="cite" data-analyst-id="40345"><a href="#ref-40345">[리포트: 한국IR협의회 25.11.06]</a></sup> 2024년 상반기에 2배 규모 사업장으로 이전했고<sup class="cite" data-analyst-id="40345"><a href="#ref-40345">[리포트: 한국IR협의회 25.11.06]</a></sup>, 매출은 173.6억(2024)에서 213.8억(2025)으로 늘었다. 가동률은 61%에서 74%(2025), 79%(1H26)로 올랐다.<sup class="cite" data-dart-rcept="20260814003607"><a href="#ref-20260814003607">[반기 2026]</a></sup></p>
+
+<p><strong>MRO(사천 본사).</strong> 싱가포르 ST Engineering Aerospace(STEA)의 A320/A330 여객기→화물기 개조(P2F) 키트 구조물을 만든다. 2020년 2,629억, 2021년 1,213억을 수주해 코로나 기간 주력 사업이 됐다.<sup class="cite" data-dart-rcept="20260323001536"><a href="#ref-20260323001536">[사보 2025]</a></sup> 공시상 싱가포르 매출은 416.0억(2023), 325.4억(2024), 134.8억(2025)이고, 1H26은 82.7억이다.<sup class="cite" data-dart-rcept="20250321001613"><a href="#ref-20250321001613">[사보 2024]</a></sup><sup class="cite" data-dart-rcept="20260814003607"><a href="#ref-20260814003607">[반기 2026]</a></sup> 여기에 대한항공·한화시스템과 하는 군용기 창정비가 붙는다.</p>
+
+<p><strong>국내 민수·방산 항공기(사천 본사).</strong> KAI·대한항공·한화에어로스페이스의 1차 협력사로 KUH(수리온)·KF-21·MUAV 등의 구조물과 부품을 만든다.<sup class="cite" data-analyst-id="40345"><a href="#ref-40345">[리포트: 한국IR협의회 25.11.06]</a></sup> 브라질 Embraer C-390 수송기 구조물(2024.03 수주, 확정 611.7억, 계약기간 2030.09까지)도 사천에서 만들어 브라질로 수출한다.<sup class="cite" data-dart-rcept="20260128900531"><a href="#ref-20260128900531">[공급계약 정정 26.01]</a></sup> 1H26 브라질향 매출은 99.7억으로 최대 고객(매출의 17.29%, 99.7억)과 금액이 같다.<sup class="cite" data-dart-rcept="20260814003607"><a href="#ref-20260814003607">[반기 2026]</a></sup> 두 번째 고객(14.34%, 82.7억)은 싱가포르 매출과 금액이 같다. 공시가 고객명을 밝히지 않으므로 각각 Embraer, STEA로 <strong>추정</strong>한다[추정].</p>
+
+<h3>가치사슬과 매출 리듬</h3>
+<p>원소재를 사서(원재료 매입의 약 80%가 수입) 가공·조립한 뒤, 매출의 약 80% 이상을 외화로 받는다.<sup class="cite" data-dart-rcept="20260323001536"><a href="#ref-20260323001536">[사보 2025]</a></sup> 사천 본사는 국내 항공기 생산과 P2F 물량의 30~40%를 외주로 돌리고 수주·프로젝트 관리를 직접 한다.<sup class="cite" data-dart-rcept="20260814003607"><a href="#ref-20260814003607">[반기 2026]</a></sup> <strong>표면 고객과 실질 수요처가 다르다.</strong> P2F의 표면 고객은 STEA지만, 실제 수요는 노후 A320·A330을 화물기로 바꾸려는 항공사·리스사의 결정에서 나온다. C-390의 표면 고객은 Embraer지만, 실질 수요처는 C-390을 도입하는 각국 공군(한국 방사청 대형수송기 2차 사업 포함)이다.<sup class="cite" data-analyst-id="40345"><a href="#ref-40345">[리포트: 한국IR협의회 25.11.06]</a></sup> 수주 후에는 고객의 생산계획에 따라 납품하는 구조다. 회사는 수주 내역을 "영업에 중대한 손실"을 이유로 공시하지 않는다.<sup class="cite" data-dart-rcept="20260814003607"><a href="#ref-20260814003607">[반기 2026]</a></sup> 그래서 수주→매출 인식 시차는 외부에서 측정할 수 없다.</p>
+
+<div class="counterview"><span class="label">▽ COUNTER</span>미국 부문 비중 49%는 그 부문이 커진 결과이기도 하지만, <strong>분모인 MRO가 무너진 결과</strong>이기도 하다. 미국 부문 매출이 2023→2025년 +182억 늘어나는 동안 MRO는 −325억 줄었다. 원화 약세도 미국 부문의 원화 환산 매출을 끌어올린다. 조지아 법인의 달러 생산실적은 $15.5M(2024)에서 $16.3M(2025)로 +5%에 그쳤는데, 원화 부문 매출은 +36%였다.<sup class="cite" data-dart-rcept="20260323001536"><a href="#ref-20260323001536">[사보 2025]</a></sup> 부문 정의가 법인과 1:1로 대응하는지는 확인되지 않으므로 이 괴리는 7장으로 넘긴다.</div>
+
+</section>
+
+<!-- ═══ 02 ═══ -->
+<section class="chapter" id="ch-2">
+<div class="sec-label"><span class="idx">02</span><h2>기본 숫자</h2></div>
+<p class="chapter-q">손익 · 구성 · 핵심 지표 · 가격 — 비용 구조·트랙레코드 상세는 부록 A</p>
+
+<div class="takeaway"><span class="label">요지</span> 분기 영업이익은 3Q25 −43억에서 2Q26 +12억으로 돌아섰지만, TTM은 여전히 −61억 적자다. 이익 기반 배수는 기준이 되지 못하고, PBR은 영구CB를 어떻게 보느냐에 따라 0.99배에서 4.0배까지 벌어진다. <strong>밸류에이션의 핵심 변수는 이익이 아니라 자본 구조다.</strong></div>
+
+<h3>2-1. 간단 손익</h3>
+<div class="table-scroll">
+<table class="data">
+<thead><tr><th>억원</th><th>4Q24</th><th>1Q25</th><th>2Q25</th><th>3Q25</th><th>4Q25</th><th>1Q26</th><th class="c-hl">2Q26</th><th>2023</th><th>2024</th><th>2025</th></tr></thead>
+<tbody>
+<tr><td>매출액</td><td>191.9</td><td>168.8</td><td>215.9</td><td>177.6</td><td>201.6</td><td>292.2</td><td class="c-hl">284.7 <span class="yoy up">+32%</span></td><td>911.4</td><td>861.5 <span class="yoy down">−5%</span></td><td>763.9 <span class="yoy down">−11%</span></td></tr>
+<tr><td>매출총이익</td><td>−3.2</td><td>30.3</td><td>12.8</td><td>−6.7</td><td>5.8</td><td>43.4</td><td class="c-hl">51.4</td><td>101.8</td><td>62.6</td><td>42.2</td></tr>
+<tr><td>GPM</td><td>−1.7%</td><td>18.0%</td><td>5.9%</td><td>−3.8%</td><td>2.9%</td><td>14.9%</td><td class="c-hl">18.1%</td><td>11.2%</td><td>7.3%</td><td>5.5%</td></tr>
+<tr><td>판관비</td><td>38.3</td><td>29.2</td><td>30.9</td><td>36.3</td><td>38.1</td><td>41.2</td><td class="c-hl">39.5</td><td>93.0</td><td>116.1</td><td>134.5</td></tr>
+<tr><td>영업이익</td><td>−41.8</td><td>1.1</td><td>−18.0</td><td>−43.1</td><td>−32.3</td><td>2.2</td><td class="c-hl">11.8 <span class="yoy up">흑전</span></td><td>8.8</td><td>−53.5 <span class="yoy down">적전</span></td><td>−92.3 <span class="yoy down">적지</span></td></tr>
+<tr><td>OPM</td><td>−21.8%</td><td>0.7%</td><td>−8.3%</td><td>−24.3%</td><td>−16.0%</td><td>0.8%</td><td class="c-hl">4.1%</td><td>1.0%</td><td>−6.2%</td><td>−12.1%</td></tr>
+<tr><td>당기순이익</td><td>−59.4</td><td>−3.8</td><td>−25.6</td><td>−28.2</td><td>−97.1</td><td>9.4</td><td class="c-hl">3.3</td><td>−18.5</td><td>−77.1</td><td>−154.7</td></tr>
+</tbody>
+</table>
+</div>
+<p class="table-note">4Q 단독값은 연간에서 1~3Q를 뺀 역산값이다[추정]. 네이버 컨센서스(has_estimates:false)에 2026·2027년 추정치가 없어 E열은 생략했다.</p>
+
+<p><strong>이익 증폭 계수.</strong> 변동비(원재료 매입+재고변동+외주가공비+지급수수료)는 매출의 59.8%(2023·2024), 52.6%(2025), 48.2%(1H26)다.<sup class="cite" data-dart-rcept="20260323001536"><a href="#ref-20260323001536">[사보 2025]</a></sup><sup class="cite" data-dart-rcept="20260814003607"><a href="#ref-20260814003607">[반기 2026]</a></sup> 이론적으로는 <strong>매출 +10%일 때 공헌이익이 약 +4~5%p 늘어나는 구조</strong>다. 교과서식 증폭 계수는 1/(1−변동비율) = 1.9~2.5배다[추정]. 하지만 영업이익이 0 근처라 실제 탄력은 훨씬 크다. 1H26 매출이 전년보다 192억 늘었는데 영업이익은 30.9억 개선됐다(한계 이익률 16%). 같은 기간 급여가 98.9억에서 121.5억으로, 감가상각비가 신규 공장·설비로 늘면서 공헌이익 증가분의 대부분을 흡수했다.<sup class="cite" data-dart-rcept="20260814003607"><a href="#ref-20260814003607">[반기 2026]</a></sup> 반대로 매출이 꺾이면 연 570억 규모의 고정비(1H26 연환산[추정])가 그대로 남아 적자가 곧바로 벌어진다. 3Q25(매출 178억, 영업이익 −43억)가 실측 사례다.</p>
+
+<h3>2-2. Key Stats</h3>
+<div class="grid3">
+  <div class="card"><b>미국 부문 매출 (1H26)</b><span class="big">284.9억</span><p>+83% YoY, 비중 49%. 2023년 비중 16%에서 3배가 됐다. 가동률 85%(1H26)로 증설 여력이 가장 적은 법인이다.</p></div>
+  <div class="card"><b>싱가포르(STEA) 매출 (1H26)</b><span class="big">82.7억</span><p>2023년 416.0억 → 2025년 134.8억. 연환산 165억은 2025년 수준을 소폭 웃돈다. P2F의 바닥 확인 여부를 가르는 숫자다.</p></div>
+  <div class="card"><b>본사 가동률 (1H26)</b><span class="big">58%</span><p>2023년 81% → 2024년 70% → 2025년 52%. 가공동·제2공장 증설로 능력이 늘어난 상태라, 이 숫자가 다시 오르는지가 본사 흑자의 조건이다.</p></div>
+  <div class="card"><b>재고자산 (1H26)</b><span class="big">609.7억</span><p>1H26 연환산 매출의 53%. 2025년 평가충당금은 93.0억(전년 37.4억), 평가손실은 55.8억이었다. 재고 회전이 이익의 질을 좌우한다.</p></div>
+  <div class="card"><b>순차입금 (1H26)</b><span class="big">77억</span><p>차입금 346.5억 − 현금성 269.3억. 2025년 말 130억에서 줄었다. 9회차 CB 잔액 105억이 주식으로 전환된 영향이다(리스부채 103.5억 제외).</p></div>
+  <div class="card"><b>잠재 희석 (1H26)</b><span class="big">929만주</span><p>영구CB 1,300억, 전환가 13,995원. 발행주식 1,377만주 대비 67.4%. 전부 전환되면 케플러 지분은 25.8%에서 55.7%가 된다.</p></div>
+</div>
+
+<h3>2-3. 간단 밸류에이션</h3>
+<div class="table-scroll">
+<table class="data">
+<thead><tr><th>기준</th><th>분모</th><th>배수</th><th>판정</th></tr></thead>
+<tbody>
+<tr><td>① 2Q26 영업이익 ×4</td><td>47.2억</td><td>시총/OP 36.4배</td><td>✗ 단일 흑자 분기, 4Q25 −32억 직후</td></tr>
+<tr><td>② 1H26 영업이익 ×2</td><td>28.0억</td><td>시총/OP 61.4배</td><td>△ 흑자 2분기 합, OPM 2.4%</td></tr>
+<tr><td>③ TTM (3Q25~2Q26)</td><td>영업이익 −61.4억</td><td>산출 안 함</td><td>✗ 적자 (G7)</td></tr>
+<tr><td>⑤ 2025 실적</td><td>영업이익 −92.3억</td><td>산출 안 함</td><td>✗ 적자 (G7)</td></tr>
+<tr class="c-hl"><td>PSR (TTM 매출 956억)</td><td>956.1억</td><td>1.80배</td><td>◎ 적자기 대체 좌표</td></tr>
+<tr><td>PSR (1H26 매출 ×2)</td><td>1,153.9억</td><td>1.49배</td><td>△ 현재 페이스 유지 가정</td></tr>
+<tr><td>PBR (자본 1,731.5억, 영구CB 포함)</td><td>1,731.5억</td><td>0.99배</td><td>✗ 자본의 75%가 영구CB</td></tr>
+<tr><td>PBR (영구CB 제외 보통주 자본 약 433억)</td><td>432.7억</td><td>3.97배</td><td>◎ 보통주 관점</td></tr>
+<tr><td>완전희석 PBR (2,306만주 × 12,470원 = 2,876억)</td><td>1,731.5억</td><td>1.66배</td><td>◎ 전환 가정</td></tr>
+</tbody>
+</table>
+</div>
+<p class="table-note">순차입금 77억은 시가총액의 4.5%라 EV 열은 생략했다(EV 약 1,795억). ④ 컨센서스·애널리스트 추정 행은 네이버 추정치가 없고 최신 증권사 추정도 없어 뺐다.</p>
+
+<p>기준 좌표는 <strong>PSR과 보통주 기준 PBR</strong>이다. 영업이익은 2분기째 흑자지만 OPM이 2.4%라, 배수가 36배냐 61배냐는 분모의 작은 흔들림에 따라 달라진다. 더 중요한 단서는 자본 구조다. 연결 자본 1,731.5억의 약 1,299억은 케플러(주)가 보유한 11회차 영구CB(신종자본증권, 표면이율 3%)다.<sup class="cite" data-dart-rcept="20250321001613"><a href="#ref-20250321001613">[사보 2024]</a></sup> 이 CB의 이자 연 39억은 비용이 아니라 자본 배분(배당)으로 나간다. 그래서 1H26 순이익이 흑자(12.7억)인데도 기본주당손익은 −50원으로 산출됐다.<sup class="cite" data-analyst-id="142202"><a href="#ref-142202">[리포트: 한국IR협의회 26.09.16]</a></sup> 보통주 주주에게 귀속되는 이익은 손익계산서 순이익보다 연 39억 적다. 시가총액 1,718억이 1H26 연환산 영업이익 28억을 정당화하려면, 매출 성장과 이익률 회복이 함께 필요하다.</p>
+
+<h3>2-4. 경쟁사 대조</h3>
+<div class="table-scroll">
+<table class="data">
+<thead><tr><th>기업</th><th>매출 (2025)</th><th>영업이익 (2025)</th><th>OPM</th><th>시총</th><th>PSR (2025)</th><th>선정 근거</th></tr></thead>
+<tbody>
+<tr><td>아스트 (067390)</td><td>2,544억</td><td>74억</td><td>2.9%</td><td>2,523억</td><td>0.99배</td><td>사천 소재 동체 구조물 가공·조립. 보잉 B737 동체 구조물이 주력이고, 인천 B777 P2F 사업에서 화물창 구조물을 맡아 <strong>기체 구조물·P2F 구간이 직접 겹친다</strong></td></tr>
+<tr><td>하이즈항공 (221840)</td><td>846억</td><td>46억</td><td>5.4%</td><td>391억</td><td>0.46배</td><td>사천 소재 보잉·KAI향 부품 가공. 켄코아 국내 민수·방산 부문과 <strong>같은 원청(KAI)의 부품 가공 발주</strong>를 놓고 경쟁한다</td></tr>
+<tr><td>한국항공우주 (047810)</td><td>36,964억</td><td>2,692억</td><td>7.3%</td><td>127,010억</td><td>3.44배</td><td><strong>경쟁사가 아니라 원청·업종 좌표.</strong> 켄코아 국내 부문의 발주처이고, 시장이 이 업종을 어떤 배수로 보는지 보여주는 기준점이다</td></tr>
+<tr class="c-hl"><td>켄코아에어로스페이스</td><td>764억</td><td>−92억</td><td>−12.1%</td><td>1,718억</td><td>2.25배</td><td>대상 종목</td></tr>
+</tbody>
+</table>
+</div>
+<p class="table-note">피어 재무는 각 사 DART 연결 실적 합산이고, 시총은 2026-09-22 종가 기준이다. 아스트 1H26은 별도 기준 매출 1,284억·영업이익 108억, 하이즈항공 1Q26은 매출 203억·영업이익 12억이다. 아스트·하이즈항공 2025 수치는 한국IR협의회 26.09.16 자료와도 일치한다.<sup class="cite" data-analyst-id="142202"><a href="#ref-142202">[리포트: 한국IR협의회 26.09.16]</a></sup></p>
+<p>국내 항공 부품 3사 가운데 켄코아의 PSR(2025 기준 2.25배)은 아스트(0.99배)의 2.3배, 하이즈항공(0.46배)의 4.9배다. 그런데 2025 OPM은 셋 중 유일하게 적자였다. 이 프리미엄은 이익이 아니라 사업 구성의 차이, 즉 <strong>매출의 절반 가까이가 미국 방산·우주에서 나온다는 점</strong>에 대한 값으로 읽어야 한다. 아스트·하이즈항공은 보잉 민항기 가동률에 실적이 연동되는 구조라는 평가가 있다.<sup class="cite" data-analyst-id="40345"><a href="#ref-40345">[리포트: 한국IR협의회 25.11.06]</a></sup> 반대로 이 프리미엄은 5월 34,250원 → 7월 7,600원의 주가 진폭이 보여주듯, 우주 테마 수급에 크게 흔들린다.<sup class="cite" data-analyst-id="142202"><a href="#ref-142202">[리포트: 한국IR협의회 26.09.16]</a></sup></p>
+
+</section>
+
+<!-- ═══ 03 ═══ -->
+<section class="chapter" id="ch-3">
+<div class="sec-label"><span class="idx">03</span><h2>사업의 전망</h2></div>
+<p class="chapter-q">앞으로 2~3년, 이익은 어떤 경로로 움직이는가</p>
+
+<div class="takeaway"><span class="label">요지</span> 이익 경로는 세 변수가 가른다. ① C-390 등 방산 기체 구조물 물량 확대(상방), ② P2F 수요의 바닥 여부(양면), ③ 증설 고정비가 흡수되는 속도(양면)다. 현재 페이스(1H26×2)가 기준 시나리오로 매출 1,154억·영업이익 28억이다. <strong>회사가 제시한 "1~2년 내 매출 2배"는 낙관 경로에 해당한다.</strong></div>
+
+<h4>변화 ① 방산 수송기·군용기 구조물 수요 — C-390 확산 [상방]</h4>
+<p>공시된 C-390 계약은 확정 611.7억(USD 45.7M)으로, 2030년 9월까지 이어지는 다년 계약이다.<sup class="cite" data-dart-rcept="20260128900531"><a href="#ref-20260128900531">[공급계약 정정 26.01]</a></sup> 2026년 1월 정정에서 금액이 605.2억에서 611.7억으로 늘었다. 브라질향 매출은 2024년 0원에서 2025년 58.8억, 1H26 99.7억으로 커져 최대 고객이 됐다.<sup class="cite" data-dart-rcept="20260323001536"><a href="#ref-20260323001536">[사보 2025]</a></sup><sup class="cite" data-dart-rcept="20260814003607"><a href="#ref-20260814003607">[반기 2026]</a></sup> 2026년 3월에는 유럽 항공 방산업체와 C-390 판금 부품 공급 계약도 맺었다. 금액은 비밀유지 조항으로 공개되지 않았다[뉴스: 이투데이 26.03]. 대표는 "우리나라뿐 아니라 유럽과 북중남미 국가의 C-390 군용 수송기 사업을 추진한다"며 C-390 구조물 제작사로서 "낙수 효과를 보고 있다"고 말했다[뉴스: 한국경제TV 26.06]. <strong>경쟁사 대비 상대 관점:</strong> 방사청 절충교역 컨소시엄에서 켄코아가 Embraer 물량의 과반을 맡은 것으로 알려져 있다.<sup class="cite" data-analyst-id="40345"><a href="#ref-40345">[리포트: 한국IR협의회 25.11.06]</a></sup> 보잉 민항기 물량이 주력인 아스트·하이즈항공이 이 수요에 노출되는 경로는 확인되지 않는다.</p>
+<div class="counterview"><span class="label">▽ COUNTER</span>611.7억을 6.5년(2024.03~2030.09)에 나누면 연 94억이다. 1H26 브라질 매출 99.7억은 이 평균의 2배 페이스라, <strong>초기 납품이 앞당겨졌을 가능성</strong>이 있다. 추가 수주 없이 이 페이스가 이어지면 계약 잔액이 2027년 전후에 소진된다[추정]. 유럽 판금 계약은 금액 미공개이고, 2026년 목표도 "초도품 개발·납품" 단계라[뉴스: 이투데이 26.03] 단기 매출 기여는 작을 수 있다.</div>
+
+<h4>변화 ② P2F(여객기→화물기 개조) 수요 — 바닥인가 순연인가 [양면]</h4>
+<p>싱가포르 매출은 416억(2023)에서 135억(2025)으로 68% 줄었다.<sup class="cite" data-dart-rcept="20260323001536"><a href="#ref-20260323001536">[사보 2025]</a></sup> 한국IR협의회는 원인을 두 가지로 봤다. 여객 수요 회복으로 개조할 노후기(feedstock)가 줄었고, 항공화물 운임이 정상화됐다는 것이다. 보잉은 신규기 공급이 수요를 따라잡는 데 2020년대 말까지 걸린다고 전망했다.<sup class="cite" data-analyst-id="40345"><a href="#ref-40345">[리포트: 한국IR협의회 25.11.06]</a></sup> 같은 자료에 따르면 2024년 말 수주잔고 8,200억 가운데 STEA가 57%다(회사 제공 수치). "PTF 매출이 없어진 것이 아니라 순연된 것"이라는 해석이다.<sup class="cite" data-analyst-id="40345"><a href="#ref-40345">[리포트: 한국IR협의회 25.11.06]</a></sup> 1H26 싱가포르 매출은 82.7억이고, 2Q26 단독은 51.7억으로 1Q26(31.0억)보다 늘었다.<sup class="cite" data-dart-rcept="20260814003607"><a href="#ref-20260814003607">[반기 2026]</a></sup></p>
+<div class="counterview"><span class="label">▽ COUNTER</span>"순연"이라는 판단의 근거인 수주잔고는 DART에 한 번도 기재되지 않은 <strong>회사 제공 수치</strong>다. 사업보고서 수주상황 절은 "기재를 생략"한다.<sup class="cite" data-dart-rcept="20260323001536"><a href="#ref-20260323001536">[사보 2025]</a></sup> 2025년 재고평가손실 55.8억과 무형자산 손상 37.4억은 P2F 관련 재고·개발비의 회수 가능성을 낮춰 잡은 흔적일 수 있다.<sup class="cite" data-dart-rcept="20260323001536"><a href="#ref-20260323001536">[사보 2025]</a></sup> 손상 대상 자산의 명세는 확인하지 못했다(7장). 잔고의 상당 부분이 실제 매출로 전환되지 않을 경로도 열려 있다.</div>
+
+<h4>변화 ③ 증설 고정비의 흡수 — 본사 가동률 [양면]</h4>
+<p>본사 가공동(2025.06 준공), 제2공장(2025년 4분기 양산), 조지아 열처리 자산 인수(2025.11)로 생산능력이 늘었다.<sup class="cite" data-dart-rcept="20260323001536"><a href="#ref-20260323001536">[사보 2025]</a></sup> 유형자산은 364.5억(2023)에서 841.0억(1H26)으로 2.3배가 됐다.<sup class="cite" data-dart-rcept="20260814003607"><a href="#ref-20260814003607">[반기 2026]</a></sup> 본사 가동률은 81%(2023)에서 52%(2025)로 떨어졌다가 58%(1H26)로 반등했다.<sup class="cite" data-dart-rcept="20260814003607"><a href="#ref-20260814003607">[반기 2026]</a></sup> 대표는 "단기적으로는 공장을 짓고 인력을 뽑느라 막대한 지출이 있었지만 중장기적으로는 실적에 반영될 것"이라고 말했다[뉴스: 한국경제TV 26.06]. <strong>경쟁사 대비:</strong> 사천에 동종 설비가 모여 있어, 가동률이 낮은 동안에는 KAI·보잉 물량 단가 경쟁에서 고정비 부담이 가장 큰 쪽이 불리하다[추정].</p>
+<div class="counterview"><span class="label">▽ COUNTER</span>가동률이 오르면 같은 고정비로 매출이 늘어 이익이 크게 뛴다. 공헌이익률 약 50%(1H26 변동비율 48.2%)를 적용하면 매출 100억 증가당 영업이익은 최대 50억 늘 수 있다[추정]. 반대로 1H26처럼 인건비가 함께 늘면 한계 이익률은 16%에 머문다.</div>
+
+<h3>시나리오 (2026년 연간)</h3>
+<div class="table-scroll">
+<table class="data">
+<thead><tr><th>시나리오</th><th>매출</th><th>영업이익</th><th>가정과 근거</th></tr></thead>
+<tbody>
+<tr><td>보수</td><td>약 960억</td><td>−61억</td><td>TTM(3Q25~2Q26) 실측 반복. 하반기가 3Q25~4Q25처럼 P2F 부진과 재고손실을 되풀이하는 경로</td></tr>
+<tr class="c-hl"><td>기준</td><td>약 1,154억</td><td>약 28억</td><td>1H26 ×2. 미국 부문·C-390 페이스 유지, 싱가포르 반기 83억 유지</td></tr>
+<tr><td>낙관</td><td>약 1,528억</td><td>약 88억</td><td>대표 발언 "1~2년 안에 매출 두 배"(2025년 764억 기준)[뉴스: 한국경제 25.11]. 기준 대비 증분 374억에 1H26 실측 한계 이익률 16% 적용[추정]</td></tr>
+</tbody>
+</table>
+</div>
+
+</section>
+
+<!-- ═══ 04 ═══ -->
+<section class="chapter" id="ch-4">
+<div class="sec-label"><span class="idx">04</span><h2>이 기업의 해자</h2></div>
+<p class="chapter-q">경쟁우위는 무엇이고, 언제까지 유효한가</p>
+
+<div class="takeaway"><span class="label">요지</span> 구조적 해자는 <strong>미국 현지 방산 부품 공급 자격(ITAR·록히드/보잉 벤더 코드)</strong>과 <strong>항공 품질 인증 묶음</strong> 두 가지다. P2F 레퍼런스는 한때 해자처럼 보였지만 수요 사이클에 따른 일시적 상태였다. 조지아 법인의 수익성이 공시되지 않아, 가장 강한 해자의 크기를 숫자로 확인할 수 없다.</div>
+
+<div class="moat">
+  <div class="mhd"><span class="tag">MOAT 01</span><b>미국 현지 방산·우주 부품 공급 자격 (조지아·캘리포니아)</b></div>
+  <div class="row3"><b>근거 숫자</b>조지아 법인은 ITAR 인증을 보유하고, 록히드마틴 판금 성형 공정 승인을 받았다.<sup class="cite" data-analyst-id="142202"><a href="#ref-142202">[리포트: 한국IR협의회 26.09.16]</a></sup> F-35·F-22·F-18·V-22 부품을 납품한다.<sup class="cite" data-analyst-id="40345"><a href="#ref-40345">[리포트: 한국IR협의회 25.11.06]</a></sup> 미국 부문 매출은 148.6억(2023)에서 330.1억(2025), 284.9억(1H26, +83%)으로 늘었고, 가동률은 85%(1H26)다.<sup class="cite" data-dart-rcept="20260814003607"><a href="#ref-20260814003607">[반기 2026]</a></sup></div>
+  <div class="row3"><b>복제 비용·시간</b>미 방산 부품은 미국 내 ITAR 등록 사업장에서만 생산할 수 있다. 한국 본사가 직접 따낼 수 없는 물량이라, 경쟁사가 따라오려면 미국 법인을 인수해야 한다. 켄코아는 2017년 HGMC 인수로 25년 업력의 Tier 1 지위를 샀다.<sup class="cite" data-analyst-id="40345"><a href="#ref-40345">[리포트: 한국IR협의회 25.11.06]</a></sup> 신규 업체가 벤더 코드와 공정 승인을 쌓으려면 수년이 걸린다[추정].</div>
+  <div class="row3"><b>소멸 조건</b>미 국방 예산의 기종별 조정(F-35 생산 감소 등), 주요 원청의 공급사 재평가, 미국 법인 핵심 인력 이탈. 조지아 법인은 원가를 달러로 쓰는 현지 생산이라, 해자의 크기가 한국 원가 경쟁력이 아닌 <strong>현지 자격</strong>에서 나온다는 점이 핵심이다.</div>
+  <div class="counterview"><span class="label">▽ COUNTER</span>이 해자가 얼마나 돈이 되는지는 공시로 확인되지 않는다. 대표는 미국 법인의 영업이익률이 20%에 육박한다고 말했다[뉴스: 한국경제TV 26.06]. 그런데 미국 법인들을 묶은 Kencoa Group LLC의 1H25 매출은 205억, 순이익은 15억(순이익률 7.3%)이었다.<sup class="cite" data-analyst-id="40345"><a href="#ref-40345">[리포트: 한국IR협의회 25.11.06]</a></sup> 20%라는 수치와는 간극이 있다.</div>
+</div>
+
+<div class="moat">
+  <div class="mhd"><span class="tag">MOAT 02</span><b>항공 품질·공정 인증 묶음 (본사)</b></div>
+  <div class="row3"><b>근거 숫자</b>AS9100, NADCAP 열처리 인증, BOEING·Spirit의 DPD/MBD 인증, EMBRAER의 21개 이상 공정 인증을 보유한다.<sup class="cite" data-analyst-id="142202"><a href="#ref-142202">[리포트: 한국IR협의회 26.09.16]</a></sup> Embraer 공정 인증은 C-390 확정 611.7억 계약으로 이어졌다.<sup class="cite" data-dart-rcept="20260128900531"><a href="#ref-20260128900531">[공급계약 정정 26.01]</a></sup></div>
+  <div class="row3"><b>복제 비용·시간</b>원청별 공정 인증은 부품·공정마다 따로 받아야 하고, 초도품 승인에 1년 이상이 걸린다. 유럽 C-390 판금 계약도 2025년 판금 설비 투자 뒤에야 수주했다[뉴스: 이투데이 26.03].</div>
+  <div class="row3"><b>소멸 조건</b>인증 자체는 사천의 아스트·하이즈항공도 보유한 <strong>업계 입장권</strong>이라 배타성이 약하다. 원청이 단가 경쟁 입찰로 돌아서면 인증만으로는 물량을 지키지 못한다.</div>
+  <div class="counterview"><span class="label">▽ COUNTER</span>2025년 본사 가동률 52%는 인증이 물량을 보장하지 않는다는 실측이다.<sup class="cite" data-dart-rcept="20260323001536"><a href="#ref-20260323001536">[사보 2025]</a></sup> 이 해자는 "진입 자격"이지 "초과 수익"이 아니다.</div>
+</div>
+
+<div class="moat">
+  <div class="mhd"><span class="tag">일시적 상태</span><b>P2F 레퍼런스 (STEA A320/A330)</b></div>
+  <div class="row3"><b>근거 숫자</b>2020~2021년 누적 3,842억을 수주했고<sup class="cite" data-analyst-id="40345"><a href="#ref-40345">[리포트: 한국IR협의회 25.11.06]</a></sup>, 싱가포르 매출은 2023년 416억이었다.<sup class="cite" data-dart-rcept="20250321001613"><a href="#ref-20250321001613">[사보 2024]</a></sup></div>
+  <div class="row3"><b>복제 비용·시간</b>STEA와의 관계로 B757 P2T·위그선(200억대) 같은 후속 계약이 파생됐다[뉴스: 아시아경제 24.08].</div>
+  <div class="row3"><b>소멸 조건</b>이미 진행 중이다. 싱가포르 매출은 2025년 135억으로 줄었다. 해자라기보다 코로나기 화물 특수가 만든 사이클 수혜였다.</div>
+  <div class="counterview"><span class="label">▽ COUNTER</span>여객기 공급이 정상화되는 2020년대 말에는 노후기 개조 수요가 다시 커질 수 있다(보잉은 2044년까지 신규 화물기 수요 2,900대 중 약 2/3를 개조기로 전망).<sup class="cite" data-analyst-id="40345"><a href="#ref-40345">[리포트: 한국IR협의회 25.11.06]</a></sup> 그때 이 레퍼런스가 다시 해자로 작동할지는 열려 있다.</div>
+</div>
+
+</section>
+
+<!-- ═══ 05 ═══ -->
+<section class="chapter" id="ch-5">
+<div class="sec-label"><span class="idx">05</span><h2>경영진 평가</h2></div>
+<p class="chapter-q">누가 소유하고, 약속을 지켜왔고, 번 돈을 잘 써왔는가</p>
+
+<div class="takeaway"><span class="label">요지</span> 창업자 이민규 대표와 IMM PE가 50:50으로 지배하는 케플러(주)가 보통주 25.8%와 영구CB 1,300억을 함께 쥐고 있다. 자본 확충은 성공적이었지만, 2024년 가이던스성 전망(2025년 매출 1,320억)은 764억으로 크게 빗나갔다. <strong>수주잔고를 공시하지 않는 회사의 전망은 할인해서 읽어야 한다.</strong></div>
+
+<h3>5-1. 오너십 구조</h3>
+<div class="table-scroll">
+<table class="data">
+<thead><tr><th>주주</th><th>지분율 (1H26)</th><th>비고</th></tr></thead>
+<tbody>
+<tr><td>케플러 주식회사</td><td>25.76% (3,548,261주)</td><td>이민규 대표 50% + 케플러투(주) 50%. 케플러투는 페트라9호 사모투자합자회사(IMM 계열)가 100% 보유한다. 2024.04 대표가 보유 주식을 현물출자해 최대주주가 바뀌었다<sup class="cite" data-dart-rcept="20260814003607"><a href="#ref-20260814003607">[반기 2026]</a></sup></td></tr>
+<tr><td>케플러 보유 11회차 영구CB</td><td>전환 시 9,289,031주</td><td>권면 1,300억, 표면 3%, 만기 2054.04(1년 단위 연장 가능), 전환가 13,995원, 2026.04.11부터 전환 청구 가능<sup class="cite" data-dart-rcept="20250331004234"><a href="#ref-20250331004234">[CB 발행결정 정정 25.03]</a></sup><sup class="cite" data-dart-rcept="20250321001613"><a href="#ref-20250321001613">[사보 2024]</a></sup></td></tr>
+<tr><td>소액주주</td><td>61.67%</td><td>48,895명<sup class="cite" data-dart-rcept="20260814003607"><a href="#ref-20260814003607">[반기 2026]</a></sup></td></tr>
+<tr><td>자기주식</td><td>0%</td><td>보유 없음</td></tr>
+</tbody>
+</table>
+</div>
+<p><strong>구조적 함의.</strong> 창업자와 재무적 투자자가 한 지주회사를 공동 지배하는 구조다. PE는 대개 투자 회수 시점이 있다. 그래서 최대주주 지분 25.76%가 아니라 <strong>영구CB 전환권의 행사 여부가 향후 지배구조와 주주 희석을 결정한다</strong>. 전부 전환되면 케플러 지분은 55.7%가 된다[추정]. 이사회는 4인(사내 2, 사외 1, 기타비상무 1)이고, 기타비상무이사 백진흠은 현직 IMM인베스트먼트 투자본부 전무다. 이사회 4석 중 1석을 재무적 투자자가 직접 차지하고 있다.<sup class="cite" data-dart-rcept="20260323001536"><a href="#ref-20260323001536">[사보 2025]</a></sup></p>
+
+<h3>5-2. 자본재배치 사후 평가</h3>
+<ul>
+<li><strong>IMM 영구CB 1,300억 유치(2024.04) — 성공 확정(자본 측면).</strong> 조달 목적은 시설 600억·운영 400억·타법인 취득 300억이었다.<sup class="cite" data-dart-rcept="20250331004234"><a href="#ref-20250331004234">[CB 발행결정 정정 25.03]</a></sup> 부채비율은 156.6%(2023)에서 38.0%(2024)로 낮아졌다.<sup class="cite" data-dart-rcept="20250321001613"><a href="#ref-20250321001613">[사보 2024]</a></sup> 비용은 이자 연 39억(자본 차감)과 잠재 희석 67%다.</li>
+<li><strong>국내·미국 증설(2024~2025) — 미확정.</strong> CAPEX는 2024년 242억, 2025년 261억이었다.<sup class="cite" data-analyst-id="142202"><a href="#ref-142202">[리포트: 한국IR협의회 26.09.16]</a></sup> 유형자산은 2.3배가 됐지만, 본사 가동률은 58%(1H26)에 그친다.<sup class="cite" data-dart-rcept="20260814003607"><a href="#ref-20260814003607">[반기 2026]</a></sup> 유안타는 2024년 당시 증설로 "생산 CAPA 1.5배"를 기대했다.<sup class="cite" data-analyst-id="59868"><a href="#ref-59868">[리포트: 유안타 24.09.12]</a></sup> 매출은 오히려 11% 줄었다(2025).</li>
+<li><strong>조지아 열처리 자산 인수 75.9억(2025.11) — 미확정·방향은 긍정.</strong> 가동률이 가장 높은(85%) 미국 법인의 외주 공정을 내재화했다.<sup class="cite" data-dart-rcept="20260323001536"><a href="#ref-20260323001536">[사보 2025]</a></sup></li>
+<li><strong>STEA P2F 대형 수주(2020~2021) — 평가 뒤집힘.</strong> 2023년까지 매출 성장을 이끌었으나, 2025년 매출은 정점 대비 68% 줄었다. 재고평가손실 55.8억과 무형자산 손상 37.4억이 뒤따랐다.<sup class="cite" data-dart-rcept="20260323001536"><a href="#ref-20260323001536">[사보 2025]</a></sup></li>
+<li><strong>9회차 CB 풋 상환(2025) → 잔액 전환(2026).</strong> 풋옵션 행사로 2025년에 73억·7억·55억을 자기자금으로 상환했다.<sup class="cite" data-dart-rcept="20250523900545"><a href="#ref-20250523900545">[CB 취득 25.05]</a></sup><sup class="cite" data-dart-rcept="20250825900314"><a href="#ref-20250825900314">[CB 취득 25.08]</a></sup><sup class="cite" data-dart-rcept="20251124900542"><a href="#ref-20251124900542">[CB 취득 25.11]</a></sup> 잔액 105억은 1H26 주가 상승기에 669,457주로 전환돼 부채가 사라졌다.<sup class="cite" data-dart-rcept="20260814003607"><a href="#ref-20260814003607">[반기 2026]</a></sup> 결과적으로 보통주 희석 5.1%(기초 발행주식 대비)로 정리됐다.</li>
+<li><strong>보통주 배당 — 없음.</strong> 현금 배당은 영구CB 이자뿐이다(2024년 20억, 2025년 39억).<sup class="cite" data-analyst-id="142202"><a href="#ref-142202">[리포트: 한국IR협의회 26.09.16]</a></sup></li>
+</ul>
+
+<h3>5-3. 발언 vs 결과</h3>
+<ul>
+<li><strong>"2025년부터 급증한 수주가 매출로 반영, 2025년 매출 1,320억·영업이익 122억"</strong>(유안타, 회사 수주잔고 기반 전망, 2024.09)<sup class="cite" data-analyst-id="59868"><a href="#ref-59868">[리포트: 유안타 24.09.12]</a></sup> → 실제 764억·−92억. 매출 −42%, 영업이익은 214억 미달이다. 같은 리포트는 수주잔고를 "매출액 대비 9배", "9,000억원에 육박"이라고 적었다.</li>
+<li><strong>"ST엔지니어링 외 고객사 3~4곳 이상과 추가 협상 중, 최대 4,000억"</strong>(2024.09)<sup class="cite" data-analyst-id="59868"><a href="#ref-59868">[리포트: 유안타 24.09.12]</a></sup> → 14개월 뒤에도 "ST ENG 규모 대형 고객사 3~4곳 추가 확보 완료", "신규 4,000억 이상 협의 중"으로 거의 같은 문구가 반복됐다.<sup class="cite" data-analyst-id="40345"><a href="#ref-40345">[리포트: 한국IR협의회 25.11.06]</a></sup> 이 기간 DART 신규 단일판매·공급계약 공시는 0건이다(C-390 정정만 있음).</li>
+<li><strong>"1~2년 안에 매출을 두 배 증가시킬 것"</strong>(대표, 2025.11)[뉴스: 한국경제 25.11] → 1H26 매출 577억(+50% YoY), 연환산 1,154억으로 2025년의 1.51배. 검증이 진행 중이다.</li>
+<li><strong>"지난해를 따라 올해도 방산 부문 최대 실적 경신 기대"</strong>(대표, 2026.06)[뉴스: 한국경제TV 26.06] → 방산 부문 매출이 따로 공시되지 않아 검증할 수 없다(7장).</li>
+</ul>
+<div class="counterview"><span class="label">▽ COUNTER</span>2024년 전망이 빗나간 주된 원인은 회사가 통제할 수 없는 P2F 수요 붕괴(여객 회복·화물 운임 정상화)였다. 반면 미국 부문 성장은 2024.09 당시 기대와 같은 방향으로 실현됐다(+63%·+36%·+83%). 약속의 "방향"은 맞았고 "규모와 시점"이 틀렸다고 읽을 수도 있다.</div>
+
+</section>
+
+<!-- ═══ 06 ═══ -->
+<section class="chapter" id="ch-6">
+<div class="sec-label"><span class="idx">06</span><h2>리스크 요인</h2></div>
+<p class="chapter-q">무엇이 이 회사를 죽일 수 있고, 어떤 지표가 먼저 움직이는가</p>
+
+<div class="takeaway"><span class="label">요지</span> 가장 큰 리스크는 사업이 아니라 <strong>자본 구조</strong>다. 발행주식의 67%에 해당하는 영구CB 전환권이 주가에 걸려 있다. 그다음은 P2F 잔고의 실현 가능성, 재고 609억의 회수, 공시되지 않는 수주·고객 정보다.</div>
+
+<div class="risk"><p class="rt"><span class="rn">R1</span><strong>영구CB 전환에 따른 희석과 지배구조 변화</strong></p>
+<p>전환 가능 주식 9,289,031주는 발행주식 13,774,207주의 67.4%다. 전환가는 13,995원이고, 2026.04.11부터 2054.03.11까지 언제든 청구할 수 있다.<sup class="cite" data-dart-rcept="20260814003607"><a href="#ref-20260814003607">[반기 2026]</a></sup> 현재 주가 12,470원은 전환가를 11% 밑돌지만, 2026년 5월 고점 34,250원에서는 전환가의 2.4배였다. 전환가 조정 조항(시가 하회 발행 시)도 있다.<sup class="cite" data-dart-rcept="20250331004234"><a href="#ref-20250331004234">[CB 발행결정 정정 25.03]</a></sup> 전환되지 않는 동안에는 연 39억 이자가 보통주 이익에서 먼저 빠진다. 보유자(케플러)가 최대주주라, 전환 시점 결정권이 한쪽에만 있다.</p>
+<p class="sig"><b>SIGNAL</b>주가의 13,995원 상회 여부 · '추가상장(전환)' 공시 · 전환가액 조정 공시 · 케플러투(IMM) 지분 변동·대량보유 보고</p></div>
+
+<div class="risk"><p class="rt"><span class="rn">R2</span><strong>P2F 잔고의 실현 실패 — 단일 고객 STEA</strong></p>
+<p>싱가포르 매출은 416억에서 135억으로 줄었다.<sup class="cite" data-dart-rcept="20260323001536"><a href="#ref-20260323001536">[사보 2025]</a></sup> 회사 제공 수치로는 잔고의 57%가 STEA다.<sup class="cite" data-analyst-id="40345"><a href="#ref-40345">[리포트: 한국IR협의회 25.11.06]</a></sup> 잔고가 매출로 전환되지 않으면 사천 본사의 P2F 전용 설비·재고가 추가 손상으로 이어진다(2025년 재고평가손실 55.8억, 무형자산 손상 37.4억).<sup class="cite" data-dart-rcept="20260323001536"><a href="#ref-20260323001536">[사보 2025]</a></sup></p>
+<p class="sig"><b>SIGNAL</b>분기 싱가포르 지역 매출(연결 주석) · 에어버스 A320/A321 P2F 재도입·인도 대수 · IATA 항공화물 운임(Cargo Yield) · 재고평가충당금 증감</p></div>
+
+<div class="risk"><p class="rt"><span class="rn">R3</span><strong>재고자산 609.7억 — 매출의 절반이 넘는 운전자본</strong></p>
+<p>재고는 1H26 연환산 매출의 53%이고, 영업CF는 2023~2025년 3년 연속 마이너스였다(−73억·−226억·−6억).<sup class="cite" data-dart-rcept="20260323001536"><a href="#ref-20260323001536">[사보 2025]</a></sup> 2025년 평가충당금은 93.0억으로 전년(37.4억)의 2.5배다. 1H26 영업CF가 +92.4억으로 돌아섰지만, 재고 회전이 다시 둔화되면 증설 CAPEX와 겹쳐 차입이 늘어난다.</p>
+<p class="sig"><b>SIGNAL</b>분기 재고자산/매출 비율 · 재고평가손실 계상액 · 반기 영업CF 부호 · 단기차입금 증감</p></div>
+
+<div class="risk"><p class="rt"><span class="rn">R4</span><strong>공시 불투명성 — 수주·고객·부문 이익 비공개</strong></p>
+<p>수주상황은 "기재 생략", 고객별 매출은 NDA·ITAR를 이유로 비기재, 부문 이익은 단일 부문 보고다.<sup class="cite" data-dart-rcept="20260814003607"><a href="#ref-20260814003607">[반기 2026]</a></sup> 투자자는 회사 제공 잔고(9,300억 예상)<sup class="cite" data-analyst-id="40345"><a href="#ref-40345">[리포트: 한국IR협의회 25.11.06]</a></sup>와 대표 발언에 의존할 수밖에 없다. 2024~2025년에 그 전망이 크게 빗나간 이력(5-3)이 있다. 2026년 초 투자경고종목 지정(2026.01.06)처럼 주가가 테마 수급에 크게 흔들리는 원인이기도 하다.<sup class="cite" data-analyst-id="142202"><a href="#ref-142202">[리포트: 한국IR협의회 26.09.16]</a></sup></p>
+<p class="sig"><b>SIGNAL</b>단일판매·공급계약 공시 발생 여부 · 주요 고객 비율(17.29%·14.34%) 변화 · IR 자료의 잔고 수치와 사업보고서 기재 여부</p></div>
+
+<div class="risk"><p class="rt"><span class="rn">R5</span><strong>본사 고정비 — 가동률 58%에서의 인건비·감가상각</strong></p>
+<p>1H26 급여는 121.5억으로 전년 동기(98.9억)보다 23% 늘었고, 유형자산은 841억으로 늘었다.<sup class="cite" data-dart-rcept="20260814003607"><a href="#ref-20260814003607">[반기 2026]</a></sup> 본사 가동률이 52~58%에 머무는 한, 1H26의 한계 이익률 16%가 이어져 매출 성장이 이익으로 잘 전환되지 않는다.</p>
+<p class="sig"><b>SIGNAL</b>반기 본사 가동률 · 매출총이익률(1H26 16.4%) · 급여/매출 비율 · 추가 유형·무형자산 손상 공시</p></div>
+
+<div class="counterview"><span class="label">▽ COUNTER</span>R1은 양면이다. 전환이 일어나는 조건은 주가 상승이고, 전환되면 연 39억 이자 부담이 사라져 보통주 이익이 오히려 늘어난다. R2~R5는 하나의 고리로 이어진다. P2F가 바닥이면 재고·손상·가동률 리스크가 동시에 줄어든다. 1H26의 싱가포르 반기 매출(82.7억)이 2025년 연간(134.8억)의 61%라는 점은 그 방향을 가리킨다.</div>
+
+</section>
+
+<!-- ═══ 07 ═══ -->
+<section class="chapter" id="ch-7">
+<div class="sec-label"><span class="idx">07</span><h2>추가로 확인이 필요한 부분</h2></div>
+<p class="chapter-q">확인되면 무엇이 달라지는가</p>
+<ul class="qlist">
+<li><strong>2026년 6월 말 수주잔고와 고객별 구성(STEA 비중)은?</strong> → 기준 시나리오(1,154억)가 하한인지 상한인지 판정할 수 있다. 사업보고서에 잔고가 기재되지 않는 한 회사 제공 수치의 검증은 불가하다.</li>
+<li><strong>케플러(IMM)의 영구CB 전환 의사와 회수 계획은?</strong> → 67% 희석이 현실화되는 시점과 PE 지분 매각에 따른 오버행 여부가 결정된다.</li>
+<li><strong>조지아·캘리포니아 법인별 영업이익률은?</strong> → 대표 발언(20% 육박)과 Kencoa Group LLC 1H25 순이익률 7.3%의 간극이 해소돼야 MOAT 01의 크기를 숫자로 확인할 수 있다.</li>
+<li><strong>미국 부문 원화 매출 +36%(2025)와 조지아 법인 달러 생산실적 +5%의 괴리 원인은?</strong> → 부문 정의에 조지아 외 다른 법인·거래가 섞였는지, 환율 효과가 얼마인지 가려 미국 부문의 실제 물량 성장을 측정할 수 있다.</li>
+<li><strong>2025년 무형자산 손상 37.4억·유형자산 손상 29.4억의 대상 자산은?</strong> → P2F 관련이면 R2의 손상이 이미 상당 부분 반영된 것이고, 다른 사업이면 추가 손상 위험이 남는다.</li>
+<li><strong>C-390 계약 잔액과 추가 국가 발주 시점은?</strong> → 1H26 브라질 매출 99.7억이 계약 평균(연 94억)의 2배 페이스라, 후속 계약 없이 2027년 이후 매출 절벽이 생기는지 알 수 있다.</li>
+<li><strong>유럽 C-390 판금 계약(2026.03)의 금액과 양산 시점은?</strong> → 매출 5% 미만이라 DART 공시 기준에 걸리지 않을 수 있어, 회사 IR로만 확인할 수 있다.</li>
+</ul>
+</section>
+
+<!-- ═══ 종합 ═══ -->
+<section class="chapter" id="synthesis">
+<div class="sec-label"><span class="idx">★</span><h2>종합</h2></div>
+<p class="chapter-q">본문을 다 읽은 지금, 강세와 약세 논거는 무엇이고 무엇을 지켜봐야 하는가</p>
+
+<div class="bbgrid">
+  <div class="bbcol bull">
+    <div class="hd">▲ BULL</div>
+    <ul>
+      <li>미국 방산·우주 부문 매출 148.6억 → 330.1억 → 1H26 284.9억(+83%). 미국 현지 ITAR 자격이 매출 무게중심이 됐다 (1장·4장)</li>
+      <li>C-390 확정 611.7억 계약과 유럽 판금 추가 수주. 브라질이 최대 고객으로 올라섰다 (3장)</li>
+      <li>1H26 매출 +50%, 영업이익 흑자전환(14억). 영업CF +92억으로 3년 연속 마이너스를 끊었다 (2장·A-5)</li>
+      <li>P2F가 바닥이면 재고·손상·본사 가동률 리스크가 동시에 줄어든다. 싱가포르 1H26 매출은 2025년 연간의 61% (3장·6장)</li>
+    </ul>
+  </div>
+  <div class="bbcol bear">
+    <div class="hd">▼ BEAR</div>
+    <ul>
+      <li>발행주식 67%의 영구CB 전환권(13,995원)과 연 39억 이자. 보통주 기준 PBR 약 4.0배 (2장·6장)</li>
+      <li>TTM 영업이익 −61억, 1H26 OPM 2.4%. 한계 이익률 16%로 증설 고정비 흡수가 느리다 (2장·3장)</li>
+      <li>2024년 전망(2025년 매출 1,320억)이 764억으로 빗나갔고, 수주잔고는 공시되지 않는다 (5장)</li>
+      <li>재고 609.7억(연환산 매출의 53%)과 2025년 재고손실·자산손상 128억 (6장·A-1)</li>
+    </ul>
+  </div>
+</div>
+
+<div class="watch">
+  <div class="hd">WATCHLIST — 확인해야 할 세 가지</div>
+  <div class="body">
+    <div class="item"><span class="n">[1]</span><p><strong>영구CB 전환 여부.</strong> 67% 희석과 지배구조가 걸린 단일 최대 변수다. 선행 신호: 주가의 13,995원 상회, '추가상장(전환)' 공시, 케플러투 지분 변동.</p></div>
+    <div class="item"><span class="n">[2]</span><p><strong>싱가포르(STEA) 분기 매출의 반등 지속.</strong> P2F 잔고가 실재하는지 확인하는 유일한 공시 경로다. 선행 신호: 분기 지역별 매출 주석, 재고평가충당금 증감, 항공화물 운임.</p></div>
+    <div class="item"><span class="n">[3]</span><p><strong>본사 가동률과 GPM.</strong> 증설 고정비가 흡수되는지 보여준다. 선행 신호: 반기 가동률(58%→?), 분기 GPM 18% 유지 여부, C-390·유럽 판금 추가 발주.</p></div>
+  </div>
+</div>
+
+</section>
+
+</main>
+
+<!-- ═══ 부록 A ═══ -->
+<div class="appendix">
+<div class="inner">
+<div class="hd">APPENDIX A</div>
+<h2>상세 재무</h2>
+
+<h3>A-1. 비용 구조</h3>
+<div class="table-scroll">
+<table class="data">
+<thead><tr><th>성격별 비용 · 억원</th><th>성격</th><th>2023</th><th>2024</th><th>2025</th><th class="c-hl">1H26</th></tr></thead>
+<tbody>
+<tr><td>원재료·상품 매입 + 재고변동</td><td>변동</td><td>354.0</td><td>330.6</td><td>269.6</td><td class="c-hl">190.9</td></tr>
+<tr><td>외주가공비</td><td>변동</td><td>173.7</td><td>159.6</td><td>106.4</td><td class="c-hl">74.9</td></tr>
+<tr><td>지급수수료</td><td>변동(근사)</td><td>17.1</td><td>25.1</td><td>26.1</td><td class="c-hl">12.3</td></tr>
+<tr><td>급여·퇴직급여·복리후생</td><td>고정</td><td>238.4</td><td>258.5</td><td>250.5</td><td class="c-hl">143.8</td></tr>
+<tr><td>감가상각·사용권·무형상각</td><td>고정</td><td>52.7</td><td>61.8</td><td>75.1</td><td class="c-hl">43.5</td></tr>
+<tr><td>대손상각비</td><td>기타</td><td>2.3</td><td>12.2</td><td>10.1</td><td class="c-hl">11.4</td></tr>
+<tr><td>소모품·기타</td><td>혼합</td><td>64.3</td><td>67.3</td><td>118.4</td><td class="c-hl">86.1</td></tr>
+<tr><td><strong>합계 (= 매출원가+판관비)</strong></td><td></td><td>902.7</td><td>915.1</td><td>856.2</td><td class="c-hl">563.0</td></tr>
+<tr><td>변동비율 (변동/매출)</td><td></td><td>59.8%</td><td>59.8%</td><td>52.6%</td><td class="c-hl">48.2%</td></tr>
+</tbody>
+</table>
+</div>
+<p class="table-note">2025년 정합성 WARN(성격별 비용 480.3억 vs XBRL 856.2억)은 번들이 <strong>별도</strong> 주석을 집어 와서 생긴 것이다. 위 표는 사업보고서 연결 주석 28번(합계 85,624,981천원, XBRL과 일치)으로 대체했다.<sup class="cite" data-dart-rcept="20260323001536"><a href="#ref-20260323001536">[사보 2025]</a></sup> 2025년 '기타 비용' 105.0억에는 재고평가손실 55.8억이 들어 있을 가능성이 있다[추정].</p>
+
+<h3>A-2. 지역별 매출 구성</h3>
+<div class="table-scroll">
+<table class="data">
+<thead><tr><th>지역 · 억원</th><th>2023</th><th>2024</th><th>2025</th><th class="c-hl">1H26</th></tr></thead>
+<tbody>
+<tr><td>미국</td><td>—</td><td>387.2</td><td>440.1</td><td class="c-hl">300.5</td></tr>
+<tr><td>싱가포르 (STEA 추정)</td><td>416.0</td><td>325.4</td><td>134.8</td><td class="c-hl">82.7</td></tr>
+<tr><td>브라질 (Embraer 추정)</td><td>—</td><td>0.0</td><td>58.8</td><td class="c-hl">99.7</td></tr>
+<tr><td>국내</td><td>—</td><td>139.1</td><td>124.2</td><td class="c-hl">77.5</td></tr>
+<tr><td>기타</td><td>8.3</td><td>9.8</td><td>6.1</td><td class="c-hl">16.5</td></tr>
+<tr><td>합계</td><td>911.4</td><td>861.5</td><td>763.9</td><td class="c-hl">577.0</td></tr>
+</tbody>
+</table>
+</div>
+<p class="table-note">2024·2025년은 2025 사업보고서<sup class="cite" data-dart-rcept="20260323001536"><a href="#ref-20260323001536">[사보 2025]</a></sup>, 2023년 싱가포르·기타는 2024 사업보고서 비교열<sup class="cite" data-dart-rcept="20250321001613"><a href="#ref-20250321001613">[사보 2024]</a></sup>, 1H26은 반기보고서<sup class="cite" data-dart-rcept="20260814003607"><a href="#ref-20260814003607">[반기 2026]</a></sup> 수익 주석 기준이다. 2023년 미국·국내 분리값은 원문에서 확인하지 못해 비워 뒀다. 최대 고객 비중은 2025년 17.65%(134.8억 = 싱가포르), 1H26 17.29%·14.34%다.</p>
+
+<h3>A-3. 트랙레코드</h3>
+<div class="table-scroll">
+<table class="data">
+<thead><tr><th>억원</th><th>2022</th><th>2023</th><th>2024</th><th>2025</th><th class="c-hl">1H26</th></tr></thead>
+<tbody>
+<tr><td>매출액</td><td>758.6</td><td>911.4</td><td>861.5</td><td>763.9</td><td class="c-hl">577.0</td></tr>
+<tr><td>GPM</td><td>19.9%</td><td>11.2%</td><td>7.3%</td><td>5.5%</td><td class="c-hl">16.4%</td></tr>
+<tr><td>영업이익 (OPM)</td><td>79.9 (10.5%)</td><td>8.8 (1.0%)</td><td>−53.5 (−6.2%)</td><td>−92.3 (−12.1%)</td><td class="c-hl">14.0 (2.4%)</td></tr>
+<tr><td>당기순이익</td><td>32.4</td><td>−18.5</td><td>−77.1</td><td>−154.7</td><td class="c-hl">12.7</td></tr>
+<tr><td>영업CF</td><td>−38</td><td>−72.9</td><td>−226.1</td><td>−6.2</td><td class="c-hl">92.4</td></tr>
+<tr><td>부채비율</td><td>240.1%</td><td>156.6%</td><td>38.0%</td><td>45.2%</td><td class="c-hl">38.9%</td></tr>
+<tr><td>보통주 배당</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="c-hl">0</td></tr>
+</tbody>
+</table>
+</div>
+<p class="table-note">2022년은 네이버 컨센서스 실적(A) 행과 한국IR협의회 재무표 기준이다.<sup class="cite" data-analyst-id="40345"><a href="#ref-40345">[리포트: 한국IR협의회 25.11.06]</a></sup> 2023~2025년 XBRL 값은 네이버 (A) 행과 오차 0.33% 이내로 일치했다(재작성 없음).</p>
+
+<h4>결정적 분기</h4>
+<ul>
+<li><strong>2Q24 — 자본 구조의 전환.</strong> IMM 영구CB 1,300억이 들어오며 자본이 602.8억에서 1,881.6억이 됐고, 부채비율은 161.6%에서 41.4%로 떨어졌다.<sup class="cite" data-dart-rcept="20240814001207"><a href="#ref-20240814001207">[반기 2024]</a></sup> 드러낸 성격: 이후 모든 증설의 재원이 이 한 번의 조달에서 나왔다.</li>
+<li><strong>4Q24 — P2F 감소의 첫 손익 충격.</strong> 매출 191.9억에 GPM −1.7%, 영업이익 −41.8억(역산)이었다.<sup class="cite" data-dart-rcept="20250321001613"><a href="#ref-20250321001613">[사보 2024]</a></sup> 드러낸 성격: 매출이 200억 아래로 내려가면 고정비가 그대로 적자로 넘어온다.</li>
+<li><strong>3Q25 — 최저점.</strong> 매출 177.6억(−24% YoY), 매출총손실 −6.7억, 영업이익 −43.1억.<sup class="cite" data-dart-rcept="20251114002859"><a href="#ref-20251114002859">[분기 25.3Q]</a></sup> 드러낸 성격: P2F 감소와 신규 공장 가동 초기 비용이 겹친 구간.</li>
+<li><strong>4Q25 — 비용 정리.</strong> 영업이익 −32.3억, 순이익 −97.1억(역산). 연간 재고평가손실 55.8억, 유·무형·사용권자산 손상 72.3억이 계상됐다.<sup class="cite" data-dart-rcept="20260323001536"><a href="#ref-20260323001536">[사보 2025]</a></sup> 드러낸 성격: 경영진이 P2F 관련 자산의 회수 가능성을 낮춰 잡은 분기.</li>
+<li><strong>1Q26 — 매출 전환.</strong> 매출 292.2억(+73% YoY, +45% QoQ), 영업이익 2.2억.<sup class="cite" data-dart-rcept="20260515003106"><a href="#ref-20260515003106">[분기 26.1Q]</a></sup> 드러낸 성격: 미국 부문·C-390이 P2F 공백을 매출 규모로는 메웠다.</li>
+<li><strong>2Q26 — 마진 회복의 시작.</strong> 매출 284.7억(+32%), GPM 18.1%, 영업이익 11.8억.<sup class="cite" data-dart-rcept="20260814003607"><a href="#ref-20260814003607">[반기 2026]</a></sup> 드러낸 성격: 매출이 늘지 않은 분기(−3% QoQ)에 이익이 늘어, 믹스·가동률 효과가 처음 나타났다.</li>
+</ul>
+
+<h4>전망 vs 실제 대조</h4>
+<div class="table-scroll">
+<table class="data">
+<thead><tr><th>출처 (발간일)</th><th>대상</th><th>당시 전망</th><th>실제</th><th>괴리</th></tr></thead>
+<tbody>
+<tr><td>네이버 컨센서스 9개월 전(E)</td><td>2023 매출</td><td>1,044.3억</td><td>911.4억</td><td>−12.7%</td></tr>
+<tr><td>네이버 컨센서스 3개월 전(E)</td><td>2024 매출</td><td>1,060.0억</td><td>862.4억</td><td>−18.6%</td></tr>
+<tr><td>유안타 (24.09.12)<sup class="cite" data-analyst-id="59868"><a href="#ref-59868">[리포트: 유안타 24.09.12]</a></sup></td><td>2024 매출 / 영업이익</td><td>1,060억 / −12억</td><td>861.5억 / −53.5억</td><td>−19% / 적자 4.5배</td></tr>
+<tr><td>유안타 (24.09.12)<sup class="cite" data-analyst-id="59868"><a href="#ref-59868">[리포트: 유안타 24.09.12]</a></sup></td><td>2025 매출 / 영업이익</td><td>1,320억 / 122억</td><td>763.9억 / −92.3억</td><td>−42% / −214억</td></tr>
+<tr><td>한국IR협의회 (25.11.06)<sup class="cite" data-analyst-id="40345"><a href="#ref-40345">[리포트: 한국IR협의회 25.11.06]</a></sup></td><td>2025 매출 / 영업이익</td><td>816억 / −61억</td><td>763.9억 / −92.3억</td><td>−6% / 적자 1.5배</td></tr>
+<tr><td>한국IR협의회 (25.11.06)<sup class="cite" data-analyst-id="40345"><a href="#ref-40345">[리포트: 한국IR협의회 25.11.06]</a></sup></td><td>2025 MRO 매출</td><td>174억</td><td>132.1억</td><td>−24%</td></tr>
+</tbody>
+</table>
+</div>
+<p><strong>괴리의 메커니즘.</strong> 세 시점의 전망이 모두 실제를 웃돌았고, 모든 오차의 중심에 MRO(P2F)가 있다. 유안타 2024.09 전망은 "수주잔고 9,000억 근접, 매출액 대비 9배"라는 회사 제공 잔고를 매출로 선형 외삽했다.<sup class="cite" data-analyst-id="59868"><a href="#ref-59868">[리포트: 유안타 24.09.12]</a></sup> P2F 잔고는 고객(STEA)의 개조 착수 시점에 따라 인식되는 구조다. 여객 수요 회복으로 개조 대상 기체가 줄자 잔고가 그대로 남은 채 매출만 미뤄졌다.<sup class="cite" data-analyst-id="40345"><a href="#ref-40345">[리포트: 한국IR협의회 25.11.06]</a></sup> 2025년 11월 전망(4분기 한 분기만 남은 시점)조차 영업이익이 31억 빗나갔다. 4Q25의 재고평가손실·손상이 예측 밖의 비용으로 들어왔기 때문이다. <strong>수주잔고를 매출로 선형 외삽하면 안 되는 이유가 이 회사의 3년 트랙레코드에 그대로 남아 있다.</strong> 참고로 컨센서스 3개월 전(E)의 FY1(2026) 매출 추정은 860억이었다. 1H26 연환산 1,154억은 이를 34% 웃돈다.</p>
+
+<h3>A-4. 성장 민감도</h3>
+<div class="table-scroll">
+<table class="data">
+<thead><tr><th>매출 성장 가정 (1H26×2 = 1,153.9억 기준)</th><th>근거</th><th>매출</th><th>영업이익</th><th>PSR</th><th>시총/OP</th></tr></thead>
+<tbody>
+<tr><td>0%</td><td>현재 페이스 동결</td><td>1,153.9억</td><td>28.0억</td><td>1.49배</td><td>61.4배</td></tr>
+<tr><td>−8.4%</td><td>2023→2025 매출 CAGR</td><td>1,057억</td><td>12.5억</td><td>1.63배</td><td>137배</td></tr>
+<tr><td>+50.0%</td><td>1H26 매출 YoY</td><td>1,731억</td><td>120억</td><td>0.99배</td><td>14.3배</td></tr>
+</tbody>
+</table>
+</div>
+<p class="table-note">영업이익 = 28.0억 + 매출 증감 × 1H26 실측 한계 이익률 16.1%[추정]. 한계 이익률이 공헌이익률(약 50%)에 가까워지면 +50% 행의 영업이익은 300억을 넘는다. 영업이익이 0 근처라 성장 가정이 조금만 바뀌어도 배수가 10배 단위로 움직인다.</p>
+
+<h3>A-5. Balance Sheet &amp; Cash</h3>
+<p style="font-size:.88rem;color:var(--muted)">자산 2,407.0억, 부채 674.5억, 자본 1,732.5억(1H26)이다.<sup class="cite" data-dart-rcept="20260814003607"><a href="#ref-20260814003607">[반기 2026]</a></sup> 차입금은 단기 108.7억, 유동성장기 29.0억, 장기 208.8억으로 합계 346.5억이고, 리스부채는 103.5억이다. 현금성자산 233.3억과 단기금융상품 36.0억을 빼면 순차입금은 77.2억이다. 이 밖에 당기손익-공정가치 금융자산 193.5억이 있다. <strong>영업CF와 순이익의 괴리</strong>는 2023~2024년 운전자본 증가에서 나왔다(재고 499억 → 610억).<sup class="cite" data-analyst-id="142202"><a href="#ref-142202">[리포트: 한국IR협의회 26.09.16]</a></sup> 2025년에는 순손실 −154.7억에도 영업CF가 −6.2억에 그쳤는데, 비현금성 손상·재고손실이 순손실의 상당 부분을 차지했기 때문이다. 1H26에는 영업CF +92.4억이 순이익 12.7억을 크게 웃돌았다. 매출채권이 185.8억에서 227.5억으로 늘었지만 매입채무가 91.2억에서 134.2억으로 함께 늘어 상쇄했다.<sup class="cite" data-dart-rcept="20260814003607"><a href="#ref-20260814003607">[반기 2026]</a></sup> <strong>자금조달 이력</strong>: 7회차 CB 300억(2021), 9회차 CB(2023, 풋 상환 135억 후 잔액 105억 전환), 11회차 영구CB 1,300억(2024, 케플러)이다. 조달이 거의 전부 주식 연계 증권이었다는 점이, 다음 조달도 같은 형태일 가능성을 예고한다.</p>
+
+<h3>A-6. 수주 공시 트랙레코드</h3>
+<p>최근 24개월(2024-09-23~) 신규 단일판매·공급계약 공시는 <strong>0건</strong>이다. 기간 내 공시는 기존 계약의 정정 1건뿐이다(A-6b). 사업보고서 연혁에 남은 대형 계약은 STEA P2F 2,629억(2020.04)·1,213억(2021.10), Embraer C-390 605억(2024.03)이다.<sup class="cite" data-dart-rcept="20260323001536"><a href="#ref-20260323001536">[사보 2025]</a></sup></p>
+<div class="table-scroll">
+<table class="data">
+<caption>표 A-6b. 기존 계약 정정 (참고, 신규 합계 제외) · 출처: DART 단일판매·공급계약체결</caption>
+<thead><tr><th>공시일</th><th>계약상대방</th><th>내용</th><th>계약금액</th><th>매출액 대비</th><th>계약기간</th></tr></thead>
+<tbody>
+<tr><td><a href="https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260128900531" target="_blank" rel="noopener">2026-01-28</a></td><td>EMBRAER S.A.</td><td>Embraer C-390 (원계약 2024.03.20, 정정: 605.2억 → 611.7억)</td><td>611.7억</td><td>80.64%</td><td>2024.03.20~2030.09.30</td></tr>
+</tbody>
+</table>
+</div>
+<p class="table-note">매출액 대비는 2022년 매출(758.6억) 기준이다. 비공시 수주는 따로 확인했다. 유럽 방산업체 C-390 판금(2026.03, 금액 비밀유지)[뉴스: 이투데이 26.03], STEA 위그선 200억대(2024.08)[뉴스: 아시아경제 24.08], STEA B757 P2T(2024.08, 금액 미공개)가 있다.<sup class="cite" data-analyst-id="59868"><a href="#ref-59868">[리포트: 유안타 24.09.12]</a></sup></p>
+
+<h3>A-7. 경쟁 구도 상세</h3>
+<p><strong>① 공정·제품 스코프.</strong> 사천 3사(켄코아·아스트·하이즈항공)는 모두 기체 구조물·부품 가공·조립을 한다. 겹치는 구간은 <strong>KAI·보잉향 기체 부품 가공과 P2F 구조물</strong>이다. 아스트는 인천 B777 P2F 사업에서 대형 화물창·보강 구조물을 맡아 PMA를 받았다[뉴스: 브릿지경제 26.08]. 켄코아는 STEA의 A320/A330 P2F를 맡아 기종·발주처는 다르지만 P2F 구조물이라는 공정이 같다. 반대로 <strong>안 겹치는 구간</strong>은 켄코아의 미국 현지 방산 부품(ITAR)과 특수 원소재 유통으로, 1H26 매출의 73%다. 한국항공우주·한화에어로스페이스는 네이버 업종 비교의 상위 종목이지만 켄코아의 발주처다. 경쟁사에서 빼고 업종 좌표로만 썼다.</p>
+<p><strong>② 발주처 중복도.</strong> 국내 부문(1H26 매출의 10%)은 KAI 외주 물량을 놓고 사천 업체들과 겹친다. 유안타는 2024년 당시 켄코아가 "KAI 방산 외주사업의 80% 이상을 단독으로 협상 중"이라고 적었다.<sup class="cite" data-analyst-id="59868"><a href="#ref-59868">[리포트: 유안타 24.09.12]</a></sup> 브라질(Embraer)과 싱가포르(STEA)는 켄코아 단독 거래처로, 국내 동종사와의 중복이 확인되지 않는다.</p>
+<p><strong>③ 관측 가능성 대조.</strong> 켄코아의 단일판매 공시 기준(최근 매출의 5%)은 약 38억이다(2025년 매출 763.9억 기준). 그런데 유럽 C-390 판금 계약은 금액 자체가 비밀유지로 공개되지 않았고, 수주상황 절도 기재가 생략된다.<sup class="cite" data-dart-rcept="20260323001536"><a href="#ref-20260323001536">[사보 2025]</a></sup> <strong>"공시에 없다 = 수주가 없다"가 아니다.</strong> 하지만 회사가 제시한 "신규 4,000억 협의"도 공시로는 한 건도 확인되지 않았다(5-3). 대리 관측소로 쓸 만한 것은 Embraer의 C-390 인도·수주 발표와 STEA의 P2F 인도 실적이다. 둘 다 이 번들에는 없어 7장으로 넘긴다.</p>
+
+</div>
+</div>
+
+<!-- ═══ 참고자료 ═══ -->
+<section id="references">
+<h2>참고자료</h2>
+<ol>
+<li id="ref-20260814003607" data-dart-rcept="20260814003607"><span class="src-tag">[공시]</span> DART 켄코아에어로스페이스 반기보고서 (2026.06) (rcept 20260814003607)</li>
+<li id="ref-20260515003106" data-dart-rcept="20260515003106"><span class="src-tag">[공시]</span> DART 분기보고서 (2026.03) (rcept 20260515003106)</li>
+<li id="ref-20260323001536" data-dart-rcept="20260323001536"><span class="src-tag">[공시]</span> DART 사업보고서 (2025.12) (rcept 20260323001536)</li>
+<li id="ref-20251114002859" data-dart-rcept="20251114002859"><span class="src-tag">[공시]</span> DART 분기보고서 (2025.09) (rcept 20251114002859)</li>
+<li id="ref-20250814004211" data-dart-rcept="20250814004211"><span class="src-tag">[공시]</span> DART 반기보고서 (2025.06) (rcept 20250814004211)</li>
+<li id="ref-20250515002593" data-dart-rcept="20250515002593"><span class="src-tag">[공시]</span> DART 분기보고서 (2025.03) (rcept 20250515002593)</li>
+<li id="ref-20250321001613" data-dart-rcept="20250321001613"><span class="src-tag">[공시]</span> DART 사업보고서 (2024.12) (rcept 20250321001613)</li>
+<li id="ref-20241114000219" data-dart-rcept="20241114000219"><span class="src-tag">[공시]</span> DART 분기보고서 (2024.09) (rcept 20241114000219)</li>
+<li id="ref-20240814001207" data-dart-rcept="20240814001207"><span class="src-tag">[공시]</span> DART 반기보고서 (2024.06) (rcept 20240814001207)</li>
+<li id="ref-20240514001035" data-dart-rcept="20240514001035"><span class="src-tag">[공시]</span> DART 분기보고서 (2024.03) (rcept 20240514001035)</li>
+<li id="ref-20240321001939" data-dart-rcept="20240321001939"><span class="src-tag">[공시]</span> DART 사업보고서 (2023.12) (rcept 20240321001939)</li>
+<li id="ref-20231114002034" data-dart-rcept="20231114002034"><span class="src-tag">[공시]</span> DART 분기보고서 (2023.09) (rcept 20231114002034)</li>
+<li id="ref-20260128900531" data-dart-rcept="20260128900531"><span class="src-tag">[공시]</span> DART [기재정정]단일판매ㆍ공급계약체결 — Embraer C-390 (rcept 20260128900531)</li>
+<li id="ref-20250331004234" data-dart-rcept="20250331004234"><span class="src-tag">[공시]</span> DART [기재정정]주요사항보고서(전환사채권발행결정) — 11회차 영구CB (rcept 20250331004234)</li>
+<li id="ref-20250523900545" data-dart-rcept="20250523900545"><span class="src-tag">[공시]</span> DART 전환사채 만기전사채취득 9회차 (2025.05.23) (rcept 20250523900545)</li>
+<li id="ref-20250825900314" data-dart-rcept="20250825900314"><span class="src-tag">[공시]</span> DART 전환사채 만기전사채취득 9회차 (2025.08.25) (rcept 20250825900314)</li>
+<li id="ref-20251124900542" data-dart-rcept="20251124900542"><span class="src-tag">[공시]</span> DART 전환사채 만기전사채취득 9회차 (2025.11.24) (rcept 20251124900542)</li>
+<li id="ref-142202" data-analyst-id="142202"><span class="src-tag">[리포트]</span> 한국IR협의회, 2026-09-16, "켄코아에어로스페이스 261H 보고서" (AI 생성 기업보고서) (id 142202)</li>
+<li id="ref-40345" data-analyst-id="40345"><span class="src-tag">[리포트]</span> 한국IR협의회 기업리서치센터(이원재), 2025-11-06, "숨고르기에 들어간 PTF, 성장세를 이어가는 미국" (id 40345)</li>
+<li id="ref-59868" data-analyst-id="59868"><span class="src-tag">[리포트]</span> 유안타증권(손현정), 2024-09-12, "수주러시로 고속성장 가속화" (Not Rated) (id 59868)</li>
+<li id="ref-60163" data-analyst-id="60163"><span class="src-tag">[리포트]</span> SK증권(나승두), 2024-09-04, "바쁘다 바빠 / 글로벌 기업이 주목하는 국내 항공 부품 기업" (Not Rated) (id 60163)</li>
+<li><span class="src-tag">[뉴스]</span> 한국경제TV, 2026-06-02, "이민규 켄코아에어로 대표 '4조 군 수송기 부품 납품' [CEO 초대석]"</li>
+<li><span class="src-tag">[뉴스]</span> 한국경제, 2025-11-19, "보잉이 인정한 켄코아 '군용기 MRO 도전'"</li>
+<li><span class="src-tag">[뉴스]</span> 이투데이, 2026-03-10, "켄코아에어로스페이스, 유럽 항공 방산업체와 엠브레어 C-390 부품 공급 계약 체결"</li>
+<li><span class="src-tag">[뉴스]</span> 아시아경제, 2024-08-29, "켄코아에어로스페이스, ST엔지니어링과 '위그선' 수주 계약"</li>
+<li><span class="src-tag">[뉴스]</span> 브릿지경제, 2026-08-06, "인천공항, 항공 MRO 허브 도약 '시동'…화물기 개조 핵심공정 착수"</li>
+<li><span class="src-tag">[데이터]</span> 네이버(FnGuide) 컨센서스 — 연간 실적(A)·리비전(추정치 없음) / 피어 실적: 아스트·하이즈항공·한국항공우주 DART 연결 실적(DB quarterly_earnings) / 시총: daily_prices 2026-09-22 확정 종가</li>
+</ol>
+<p style="font-family:var(--mono);font-size:.68rem;color:var(--dim);line-height:1.7">커버리지 한계 — ① 애널리스트: PDF 보유 리포트는 1건(142202, 한국IR협의회 AI 생성 보고서)뿐이고, 번들 manifest의 나머지 3건(40345·59868·60163)은 PDF 파일이 없어 DB analyst_reports.body_text 원문 전문을 정독했다. 4건 전체가 8건 이하라 전건 정독했고, 추출본만 참조한 건은 0건이다(최신 4 = 전건). 4건 모두 투자의견·목표주가가 없는 Not Rated·비영리 IR 자료이며, 2024.09 이후 증권사 커버리지가 없다. 섹터 리포트 2건(UAM 산업, 하이즈항공)은 본문에 인용하지 않았다. ② 수주잔고는 DART에 기재되지 않고 회사 제공 수치(IR 자료 경유)만 있다. ③ 부문별 영업이익은 비공시(단일 부문 보고)다. ④ 번들 operating/latest_metrics는 가동률·수주 표를 검출하지 못해(WARN), 가동률은 원문 txt에서 직접 읽었다. 수주잔고는 원문에서도 "기재 생략"이다. ⑤ 2025년 성격별 비용·부문 매출 WARN은 원문 연결 주석으로 해소했다(A-1·1-1 주석). ⑥ 뉴스 번들은 2026년 테마성 텔레그램 메시지 위주라, 2.6단계 웹검색((a) CEO 인터뷰·(c) 산업·(d) 경쟁사·(e) 수주)으로 보강했다. 네이버 프리미엄콘텐츠·IR 미팅노트는 0건이다. ⑦ 컨센서스 추정치가 없어 2-1 E열·2-3 ④행을 생략했다.</p>
+</section>
+
+<footer class="report-footer">
+켄코아에어로스페이스 274090 · 심층 리포트 v1 · 시총 기준일 2026-09-22 종가(12,470원) · 최신 공시 2026H1 반기보고서 · 바이사이드 이해 목적 리포트 (매수/매도 판단 아님)
+<br>만든 사람: <strong>갬이</strong> · <a href="https://blog.naver.com/darkgd01" target="_blank" rel="noopener">blog.naver.com/darkgd01</a>
+</footer>
+
+</body>
+</html>

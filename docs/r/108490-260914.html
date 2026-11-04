@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<title>로보티즈, 수주잔고 50만개의 값</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@600;700&family=Noto+Sans+KR:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+:root{
+  color-scheme:light;
+  --bg:#F3F4F7; --surface:#FFFFFF; --surface2:#F7F8FB; --surface3:#E9EBF2;
+  --ink:#15172B; --ink2:#454A61; --muted:#737A90;
+  --line:#D8DCE6; --line2:#BFC5D3;
+  --accent:#1F5F8B; --accent-soft:#E3EEF7;
+  --pos:#1B6E52; --neg:#B23A2C;
+  --c1:#1F5F8B; --c2:#E8792B; --c3:#1baf7a; --c4:#8B93A7; --c5:#7B4FB3;
+  --c1-soft:rgba(31,95,139,.12); --c2-soft:rgba(232,121,43,.14);
+  --shadow:0 1px 2px rgba(21,23,43,.06), 0 10px 28px rgba(21,23,43,.06);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#0F1118; --surface:#171A24; --surface2:#1D2130; --surface3:#252A3B;
+    --ink:#ECEEF5; --ink2:#B4BACB; --muted:#8D94A8;
+    --line:#2A2F40; --line2:#3B4155;
+    --accent:#7FB5E0; --accent-soft:#1E2E3E;
+    --pos:#4FB58C; --neg:#E07A5F;
+    --c1:#5B9BD5; --c2:#F08A3E; --c3:#2BC48E; --c4:#7C8499; --c5:#A283D6;
+    --c1-soft:rgba(91,155,213,.16); --c2-soft:rgba(240,138,62,.18);
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 28px rgba(0,0,0,.3);
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#0F1118; --surface:#171A24; --surface2:#1D2130; --surface3:#252A3B;
+  --ink:#ECEEF5; --ink2:#B4BACB; --muted:#8D94A8;
+  --line:#2A2F40; --line2:#3B4155;
+  --accent:#7FB5E0; --accent-soft:#1E2E3E;
+  --pos:#4FB58C; --neg:#E07A5F;
+  --c1:#5B9BD5; --c2:#F08A3E; --c3:#2BC48E; --c4:#7C8499; --c5:#A283D6;
+  --c1-soft:rgba(91,155,213,.16); --c2-soft:rgba(240,138,62,.18);
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 28px rgba(0,0,0,.3);
+}
+html{color-scheme:light dark}
+*{box-sizing:border-box}
+body{margin:0; background:var(--bg); color:var(--ink);
+  font-family:"Noto Sans KR","Malgun Gothic",system-ui,sans-serif; font-size:15.5px; line-height:1.75;
+  -webkit-text-size-adjust:100%}
+img{max-width:100%} [hidden]{display:none!important}
+.mono{font-family:"IBM Plex Mono","Consolas",ui-monospace,monospace; font-variant-numeric:tabular-nums}
+.serif{font-family:"Noto Serif KR","Noto Serif","Batang",serif}
+.wrap{max-width:920px; margin:0 auto; padding:0 22px 90px}
+a{color:var(--accent)}
+p{margin:0 0 14px} .lede{font-size:16.5px; color:var(--ink2)}
+ul,ol{margin:0 0 14px; padding-left:20px} li{margin-bottom:7px}
+strong,b{font-weight:700}
+.small{font-size:13px; color:var(--muted); line-height:1.6}
+.pos{color:var(--pos)} .neg{color:var(--neg)}
+
+.mast{background:var(--surface); border-bottom:1px solid var(--line)}
+.mast-in{max-width:920px; margin:0 auto; padding:34px 22px 26px}
+.eyebrow{font-family:"IBM Plex Mono",monospace; font-size:11.5px; letter-spacing:.06em; color:var(--muted)}
+h1{font-family:"Noto Serif KR",serif; font-size:clamp(30px,6.6vw,48px); line-height:1.18; margin:.3em 0 .15em; font-weight:700; letter-spacing:-.015em; text-wrap:balance}
+h1 .em{color:var(--accent)}
+.sub{color:var(--ink2); font-size:15.5px; max-width:64ch; margin:.4em 0 0}
+.tickerline{display:flex; flex-wrap:wrap; gap:6px 16px; align-items:baseline; margin-top:14px; font-family:"IBM Plex Mono",monospace; font-size:12.5px; color:var(--muted)}
+.tickerline b{color:var(--ink); font-weight:600}
+.stats{display:grid; grid-template-columns:repeat(auto-fit,minmax(138px,1fr)); gap:1px; background:var(--line); border:1px solid var(--line); margin-top:24px}
+.stat{background:var(--surface); padding:13px 14px 14px; min-width:0}
+.stat .k{font-family:"IBM Plex Mono",monospace; font-size:11px; letter-spacing:.02em; color:var(--muted)}
+.stat .v{font-family:"IBM Plex Mono",monospace; font-weight:600; font-size:clamp(19px,4.6vw,24px); line-height:1.25; margin-top:5px; overflow-wrap:anywhere}
+.stat .n{font-size:11.5px; color:var(--muted); margin-top:2px; line-height:1.4}
+.toc{display:flex; flex-wrap:wrap; gap:8px; margin:22px 0 0}
+.toc a{font-size:12.5px; text-decoration:none; color:var(--ink2); background:var(--surface); border:1px solid var(--line); padding:5px 11px; border-radius:999px}
+.toc a:hover{border-color:var(--accent); color:var(--accent)}
+
+section{margin-top:56px; scroll-margin-top:16px}
+.sec-h{display:flex; gap:14px; align-items:baseline; border-bottom:2px solid var(--ink); padding-bottom:9px; margin-bottom:20px}
+.sec-n{font-family:"IBM Plex Mono",monospace; font-size:12px; font-weight:600; color:var(--accent); letter-spacing:.06em; padding-top:4px}
+.sec-h h2{margin:0; font-family:"Noto Serif KR",serif; font-size:clamp(20px,4.2vw,26px); font-weight:700; letter-spacing:-.01em; text-wrap:balance; flex:1; min-width:0}
+h3{font-size:17px; font-weight:700; margin:32px 0 8px; letter-spacing:-.01em}
+h4{font-size:14.5px; font-weight:700; margin:20px 0 6px; color:var(--ink2)}
+
+.take{border-left:3px solid var(--accent); background:var(--surface2); padding:14px 16px; margin:18px 0; font-size:14.5px}
+.take .lbl{font-family:"IBM Plex Mono",monospace; font-size:11px; letter-spacing:.03em; color:var(--accent); display:block; margin-bottom:5px; font-weight:600}
+.take p:last-child{margin-bottom:0}
+.keypoints{display:grid; gap:1px; background:var(--line); border:1px solid var(--line); margin:22px 0}
+.kp{background:var(--surface); padding:15px 17px; display:grid; grid-template-columns:30px 1fr; gap:12px}
+.kp .num{font-family:"IBM Plex Mono",monospace; font-size:12px; color:var(--accent); font-weight:600; padding-top:3px}
+.kp .txt{min-width:0} .kp .t{font-weight:700; margin-bottom:2px} .kp .d{font-size:14px; color:var(--ink2)}
+.grid2{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:16px 0}
+.pane{background:var(--surface); border:1px solid var(--line); padding:14px 16px; min-width:0}
+.pane h4{margin-top:0}
+.pane.yes{border-top:3px solid var(--pos)} .pane.no{border-top:3px solid var(--neg)}
+.pane ul{margin-bottom:0; padding-left:18px} .pane li{font-size:14px; margin-bottom:6px}
+
+.tbl-scroll{overflow-x:auto; margin:16px -22px 20px; padding:0 22px; -webkit-overflow-scrolling:touch}
+table{border-collapse:collapse; width:100%; min-width:560px; font-size:13.5px}
+caption{caption-side:top; text-align:left; font-family:"IBM Plex Mono",monospace; font-size:11.5px; letter-spacing:.02em; color:var(--muted); padding-bottom:8px}
+th,td{padding:8px 10px; border-bottom:1px solid var(--line); text-align:left; vertical-align:top}
+th.num,td.num{text-align:right; white-space:nowrap; font-family:"IBM Plex Mono",monospace; font-variant-numeric:tabular-nums}
+thead th{border-bottom:1.5px solid var(--line2); font-weight:600; color:var(--ink2); font-size:12.5px}
+tbody tr:hover{background:var(--surface2)}
+tfoot td{border-top:1.5px solid var(--line2); font-weight:600}
+td.hl{background:var(--accent-soft)}
+tr.sum td{font-weight:700; background:var(--surface2)}
+.tnote{font-size:12.5px; color:var(--muted); margin-top:-10px; margin-bottom:16px; line-height:1.55}
+.bar{display:inline-block; height:9px; background:var(--c1); vertical-align:middle; border-radius:2px; margin-right:6px}
+.bar.o{background:var(--c2)}
+
+.chart{background:var(--surface); border:1px solid var(--line); padding:14px 14px 10px; margin:16px 0 8px}
+.chart .ct{font-weight:700; font-size:14.5px; margin:0 0 2px}
+.chart .cs{font-size:12.5px; color:var(--muted); margin:0 0 8px}
+.chart svg{display:block; width:100%; height:auto; touch-action:pan-y}
+.chart text{font-family:"IBM Plex Mono",monospace; font-size:11px; fill:var(--ink2)}
+.chart text.lab{font-family:"Noto Sans KR",sans-serif; fill:var(--ink)}
+.chart text.mut{fill:var(--muted)}
+.chart .grid{stroke:var(--line); stroke-width:1}
+.chart .axis{stroke:var(--line2); stroke-width:1}
+.legend{display:flex; flex-wrap:wrap; gap:6px 16px; font-size:12px; color:var(--ink2); margin:6px 0 4px}
+.legend i{display:inline-block; width:12px; height:12px; border-radius:2px; vertical-align:-1px; margin-right:6px}
+.tip{position:fixed; z-index:50; pointer-events:none; background:var(--ink); color:var(--bg); font-size:12px; line-height:1.5; padding:7px 10px; border-radius:4px; max-width:min(260px,calc(100vw - 20px)); box-shadow:var(--shadow); display:none; font-family:"IBM Plex Mono",monospace}
+.tip b{font-weight:600}
+
+.risk{display:grid; gap:10px; margin:14px 0}
+.risk .r{display:grid; grid-template-columns:64px 1fr; gap:12px; background:var(--surface); border:1px solid var(--line); padding:12px 14px}
+.chip{font-family:"IBM Plex Mono",monospace; font-size:10.5px; letter-spacing:.08em; padding:3px 7px; border-radius:3px; display:inline-block; text-align:center; align-self:start; white-space:nowrap}
+.chip.h{background:var(--neg); color:#fff} .chip.m{background:var(--c2); color:#fff} .chip.l{background:var(--c4); color:#fff} .chip.u{background:var(--pos); color:#fff}
+.risk .t{font-weight:700} .risk .d{font-size:14px; color:var(--ink2)}
+
+.qs{display:grid; gap:12px; margin:16px 0}
+.q{background:var(--surface); border:1px solid var(--line); border-left:4px solid var(--accent); padding:13px 16px}
+.q .qh{display:flex; gap:10px; align-items:baseline}
+.q .qn{font-family:"IBM Plex Mono",monospace; font-size:12px; color:var(--accent); font-weight:600}
+.q .qt{font-weight:700; font-size:15px}
+.q .why{font-size:13.5px; color:var(--ink2); margin:6px 0 0}
+.q .why b{color:var(--ink)}
+.q .ask{font-size:13.5px; margin:8px 0 0; padding:9px 12px; background:var(--surface2); border-radius:4px}
+.q .ask .lbl{font-family:"IBM Plex Mono",monospace; font-size:10.5px; color:var(--muted); letter-spacing:.05em; display:block; margin-bottom:3px}
+.tl{list-style:none; padding:0; margin:14px 0}
+.tl li{display:grid; grid-template-columns:96px 1fr; gap:12px; padding:8px 0; border-bottom:1px solid var(--line); font-size:14px}
+.tl .d{font-family:"IBM Plex Mono",monospace; font-size:12px; color:var(--muted); padding-top:3px}
+.check li{margin-bottom:9px}
+.src{font-size:12.5px; color:var(--muted); line-height:1.6} .src li{margin-bottom:4px}
+.foot{margin-top:60px; padding-top:18px; border-top:1px solid var(--line); font-size:12.5px; color:var(--muted); line-height:1.6}
+
+@media (max-width:620px){
+  body{font-size:14.5px}
+  .wrap{padding:0 14px 70px} .mast-in{padding:26px 14px 20px}
+  table{min-width:0; font-size:12.5px} th,td{padding:7px 7px}
+  .tbl-scroll{margin:14px -14px 18px; padding:0 14px}
+  .grid2{grid-template-columns:1fr}
+  .risk .r{grid-template-columns:56px 1fr}
+  .kp{grid-template-columns:24px 1fr; gap:9px}
+  .chart{padding:12px 10px 8px}
+  .tl li{grid-template-columns:78px 1fr}
+  .bar{display:none}
+}
+@media (max-width:400px){
+  .wrap{padding:0 11px 60px} .mast-in{padding:22px 11px 18px}
+  .tbl-scroll{margin:14px -11px 18px; padding:0 11px}
+  .stats{grid-template-columns:repeat(2,1fr)}
+}
+@media (prefers-reduced-motion:reduce){ *{transition:none!important; animation:none!important} }
+</style>
+</head>
+<body>
+<div class="tip" id="tip"></div>
+<header class="mast"><div class="mast-in">
+  <div class="eyebrow">기업리포트 · 로보티즈 108490 · 2026-09-14 · 탐방 전 정리</div>
+  <h1 class="serif">로보티즈, <span class="em">수주잔고 50만개</span>의 값은 얼마인가</h1>
+  <p class="sub">26년간 연구용 로봇 관절을 팔던 회사가 휴머노이드 양산 시대의 부품사로 재평가받아 1년 만에 시가총액이 15배가 됐다. 매출 389억원짜리 회사를 4.7조원에 사는 논리와, 그 논리가 깨지는 지점을 DART 원문과 증권사 추정치로 짚는다. 내일 탐방에서 반드시 확인할 열 가지 질문을 마지막에 붙였다.</p>
+  <div class="tickerline"><span>종가 <b>317,500원</b> (9/14)</span><span>시가총액 <b>4조 6,568억</b></span><span>발행주식 <b>1,466.7만주</b></span><span>외국인 <b>7.18%</b></span><span>PBR <b>12.9배</b></span><span>순현금 <b>2,887억</b></span></div>
+  <div class="stats">
+    <div class="stat"><div class="k">52주 저점 대비</div><div class="v pos">+227%</div><div class="n">96,993원 (2025-09-17)</div></div>
+    <div class="stat"><div class="k">52주 고점 대비</div><div class="v neg">-31.6%</div><div class="n">464,000원 (2026-06-02 장중)</div></div>
+    <div class="stat"><div class="k">2Q26 매출</div><div class="v">153.7억</div><div class="n">+95.1% YoY, 분기 최대</div></div>
+    <div class="stat"><div class="k">2Q26 영업이익</div><div class="v">19.8억</div><div class="n">OPM 12.9%, 액추에이터 부문 22.5%</div></div>
+    <div class="stat"><div class="k">PSR (2025 매출)</div><div class="v">119.6배</div><div class="n">2027E 매출 컨센 1,170억 기준 40배</div></div>
+    <div class="stat"><div class="k">목표주가 범위</div><div class="v">35~63만</div><div class="n">9개사, 중앙값 40만. 2026E는 전부 적자 추정</div></div>
+  </div>
+  <nav class="toc">
+    <a href="#s1">한 장 요약</a><a href="#s2">주가가 담은 것</a><a href="#s3">비즈니스 모델</a><a href="#s4">실적 10년</a><a href="#s5">성장 엔진</a><a href="#s6">경쟁사</a><a href="#s7">해자 검증</a><a href="#s8">주주·자본</a><a href="#s9">리스크</a><a href="#s10">증권사 추정</a><a href="#s11">탐방 질문 10</a><a href="#s12">출처</a>
+  </nav>
+</div></header>
+
+<main class="wrap">
+
+<section id="s1">
+  <div class="sec-h"><span class="sec-n">01</span><h2>한 장 요약</h2></div>
+  <p class="lede">로보티즈는 모터·감속기·제어기·통신을 한 모듈에 넣은 로봇 관절 <b>다이나믹셀</b>을 1999년부터 만들어 온 회사다. 2025년까지 매출의 98%가 이 부품에서 나왔고, 나머지 자율주행 배송로봇은 6년째 적자다. 주가를 움직인 것은 실적이 아니라 <b>"휴머노이드가 양산되면 관절 수요가 수백만 개 단위로 늘고, 그때 바로 공급할 수 있는 회사는 로보티즈뿐"</b>이라는 서사였다. 이 서사는 2Q26에 처음으로 숫자로 확인되기 시작했다(매출 +95%, 북미 +143%, 중국 +154%).</p>
+  <div class="keypoints">
+    <div class="kp"><span class="num">1</span><div class="txt"><div class="t">이익이 아니라 물량을 산다: 2025년 22만개 → 2027년 100만개+</div><div class="d">회사 가이던스는 출하 2026년 40~50만개, 2027년 100만개 이상, 액추에이터 매출 2026년 500억·2027년 1,000억이다. 수주잔고는 50만개 이상(한국투자증권, 9/10)이고 김병수 대표는 "주문의 약 절반을 못 맞추는 상태"라고 말했다. 2025년 실적 기준 PSR 120배는 이 물량이 실현된다는 가정 위에서만 성립한다.</div></div></div>
+    <div class="kp"><span class="num">2</span><div class="txt"><div class="t">단가는 내려간다: 개당 17.2만원(2025) → 12.7만원(1H26) → 11만원대(2026 가이던스)</div><div class="d">출하 22만개에 액추에이터 매출 378억이던 2025년 평균단가는 17.2만원, 1H26은 출하 약 21만개에 267억으로 12.7만원이다. 2026년 가이던스(500억/40~50만개)는 10~12.5만원을 뜻한다. 허깅페이스용 XL330(개당 2만원대)과 중국산 가격의 DXL-Q가 늘수록 물량 성장률과 매출 성장률의 간격이 벌어진다. GPM도 62.4%(2025)에서 54.1%(1H26)로 내려왔다.</div></div></div>
+    <div class="kp"><span class="num">3</span><div class="txt"><div class="t">1Q26 영업손실 -118억은 자사주 교부 117.8억이 만든 착시, 조정하면 -0.6억</div><div class="d">1월 26일 임직원 30명에게 자사주 42,000주를 교부했고 그날 종가 280,500원으로 평가한 117.8억이 1분기 판관비에 한꺼번에 들어갔다. 이를 빼면 1Q26 영업이익은 -0.6억, 1H26은 +19.2억이다. 반대로 2025년 4개 분기 연속 흑자 뒤에는 환율(2Q25 이후 1,420~1,465원)과 정부지원금이 있었다.</div></div></div>
+    <div class="kp"><span class="num">4</span><div class="txt"><div class="t">돈은 충분하다: 순현금 2,887억, 부채 110억, 차입 0</div><div class="d">2025년 11월 주주배정 유상증자로 2,098억을 조달했다. 예정발행가 74,100원이 청약 직전 155,500원으로 확정되면서 조달액이 계획(1,000억)의 두 배가 됐다. 우즈베키스탄 공장(총 7,000만달러, 1차 출자 294억)과 생산자동화 조합 181억을 다 쓰고도 2,000억 이상이 남는다. 추가 희석 리스크는 낮다.</div></div></div>
+    <div class="kp"><span class="num">5</span><div class="txt"><div class="t">최대주주는 9월 8일 1,007억을 팔았다(지분 23.7% → 21.2%)</div><div class="d">366,525주를 전일 종가 대비 8.9% 할인한 274,667원에 외국계 2곳에 넘겼다. 명목은 로보티즈AI 출자와 국민성장펀드 매칭 투자다. 2025년 9월에는 유상증자 신주인수권증서 349,898주 매도 계획을 내고 실제 유증에는 87,474주만 참여했다. 1월에는 회사 자사주 174,161주(412억)를 Weiss Asset Management에 블록딜로 넘겼다. 자본시장에서 현금을 뽑아내는 방향의 결정이 세 번 연속이다.</div></div></div>
+    <div class="kp"><span class="num">6</span><div class="txt"><div class="t">지금 주가는 2031년 매출 목표(10억달러)를 PER 20배로 미리 사는 값</div><div class="d">회사의 2031년 목표 매출 10억달러(약 1.47조원)에 영업이익률 20%, 순이익률 16%를 적용하면 순이익 2,300억원이다. 시가총액 4.66조원은 그 이익의 20배다. 2027E 순이익(iM증권 150억)으로는 PER 310배, 2028E(360억)로는 129배다. 5년 뒤 목표가 전부 실현돼야 정상 밸류에이션에 도달한다는 뜻이다.</div></div></div>
+  </div>
+  <div class="take"><span class="lbl">결론</span><p><b>액추에이터 부문만 보면 실체가 분명하고 초과수요도 진짜다. 그러나 주가는 2027년 100만개, 2031년 500만개 캐파가 전부 팔린다는 가정을 이미 반영했고, 단가 하락과 신사업 적자가 그 가정을 갉아먹는다.</b> 탐방에서 확인할 핵심은 세 가지다. (1) 수주잔고 50만개의 고객·제품·납기 구성, (2) DXL-Q와 XL330 확대 이후의 단가·마진 경로, (3) 우즈베키스탄 공장의 10월 부분가동 이후 램프업 속도와 LG전자 지분투자 조건. 이 셋이 확인되면 2027년 매출 1,000억(EV/Sales 44배)이 하한이 되고, 하나라도 밀리면 2026년 연간 적자(컨센서스 EPS -101원)가 주가에 먼저 반영된다. 하방 기준선은 한화·삼성증권 목표주가 350,000원이 아니라 6~7월 조정 저점 183,800원(고점 대비 -60%)이다. 본 리포트는 투자 권유가 아니다.</p></div>
+</section>
+
+<section id="s2">
+  <div class="sec-h"><span class="sec-n">02</span><h2>주가가 담고 있는 것</h2></div>
+  <p>연말 종가 기준 2024년 22,641원이던 주가는 2025년 261,000원(11.5배)으로 끝났고, 2026년 6월 2일 장중 464,000원까지 오른 뒤 7월 말 183,800원으로 60% 조정받았다. 9월 들어 골드만삭스 목표주가 630,000원(9/4)과 한국투자증권 수주잔고 코멘트(9/10)로 32만원대를 회복했다. 아래 차트에 이벤트를 표시했다.</p>
+  <div class="chart" id="ch-px">
+    <p class="ct">주가(주봉 종가)와 주요 이벤트, 2024-01 ~ 2026-09-14</p>
+    <p class="cs">막대 위 번호는 아래 표의 이벤트. 손을 대면 날짜와 종가가 뜬다.</p>
+    <svg></svg>
+  </div>
+  <div class="tbl-scroll"><table>
+    <caption>주가를 움직인 이벤트 (종가는 네이버 일별시세)</caption>
+    <thead><tr><th>#</th><th>날짜</th><th>사건</th><th class="num">종가</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>2025-07-15</td><td>오픈AI에 AI 워커 공급 추진 보도(한국경제TV 단독)</td><td class="num">79,756 (7월말)</td></tr>
+      <tr><td>2</td><td>2025-08-28</td><td>1,000억 주주배정 유상증자 + 우즈베키스탄 공장 발표. 9월 한 달 +82%</td><td class="num">91,150</td></tr>
+      <tr><td>3</td><td>2025-11-05</td><td>유증 발행가 155,500원 확정(예정가 74,100원의 2.1배), 조달 2,098억</td><td class="num">269,000 (11/4)</td></tr>
+      <tr><td>4</td><td>2026-01-07</td><td>자사주 174,161주 Weiss AM 블록딜 412억, 1/26 임직원 자사주 42,000주 교부</td><td class="num">254,500</td></tr>
+      <tr><td>5</td><td>2026-06-02</td><td>AI 사피엔스 공개(4월)·다올 TP 435,000(5월) 이후 장중 464,000원 고점</td><td class="num">405,000</td></tr>
+      <tr><td>6</td><td>2026-07-28</td><td>로봇주 동반 급락, 고점 대비 -60%</td><td class="num">183,800 (7월말)</td></tr>
+      <tr><td>7</td><td>2026-08-14</td><td>2Q26 흑자 전환(매출 +95%, 중국 3배), 8/19 삼성·iM 목표주가 상향</td><td class="num">257,500 (8월말)</td></tr>
+      <tr><td>8</td><td>2026-09-08</td><td>김병수 대표 366,525주 1,007억 블록딜(-8.9% 할인)</td><td class="num">284,000</td></tr>
+      <tr><td>9</td><td>2026-09-10</td><td>한국투자증권 TP 450,000, 수주잔고 50만개+</td><td class="num">323,500</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>밸류에이션을 어느 해 숫자로 보느냐</h3>
+  <p>순이익이 작아 PER은 의미가 없고, 증권사들도 PSR로 목표주가를 낸다(iM증권은 2028E 매출에 PSR 30배, 교보는 2028년 풀가동 캐파 기준). 그래서 <b>어느 해 매출을 분모에 놓느냐</b>가 곧 투자 판단이다.</p>
+  <div class="tbl-scroll"><table>
+    <caption>시가총액 4조 6,568억 · EV 4조 3,681억(순현금 2,887억 차감) 기준 배수</caption>
+    <thead><tr><th>기준</th><th class="num">매출</th><th class="num">영업이익</th><th class="num">순이익</th><th class="num">EV/Sales</th><th class="num">PER</th><th>출처</th></tr></thead>
+    <tbody>
+      <tr><td>2025 실적</td><td class="num">389억</td><td class="num">33.5억</td><td class="num">50.7억(지배)</td><td class="num">112배</td><td class="num">918배</td><td>DART 사업보고서</td></tr>
+      <tr><td>2026E 회사 가이던스</td><td class="num">500억(액추에이터)</td><td class="num">-</td><td class="num">-</td><td class="num">87배</td><td class="num">-</td><td>ZDNet 7/1</td></tr>
+      <tr><td>2026E 증권사 (8~9월 7개사)</td><td class="num">550~730억 (평균 639)</td><td class="num">-75~+76억</td><td class="num">컨센 EPS -101원</td><td class="num">60~79배</td><td class="num">적자</td><td>한화·삼성·교보·iM·현대차·미래에셋·신한</td></tr>
+      <tr><td>2027E 증권사</td><td class="num">940~1,500억 (평균 1,170)</td><td class="num">160~300억 (평균 230)</td><td class="num">140~270억</td><td class="num">29~46배</td><td class="num">172~333배</td><td>같은 7개사. 하나증권 인용 컨센 1,171/211/216</td></tr>
+      <tr><td>2028E 증권사</td><td class="num">1,170~3,040억</td><td class="num">190~830억</td><td class="num">180~670억</td><td class="num">14~37배</td><td class="num">70~259배</td><td>삼성 1,170 / 신한 1,667 / iM 1,970 / 미래에셋 2,010 / 교보 3,040</td></tr>
+      <tr class="sum"><td>2031 회사 목표</td><td class="num">10억달러 ≈ 1.47조</td><td class="num">2,930억(OPM 20% 가정)</td><td class="num">2,300억(순이익률 16% 가정)</td><td class="num">3.0배</td><td class="num">20배</td><td>ZDNet 7/1, 마진은 필자 가정</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">EV = 시가총액 − (현금 849 + 단기금융상품 816 + 당기손익공정가치금융자산 688 + 장기금융자산 200 + 비유동 공정가치금융자산 334) 억원, 2026-06-30 연결. 차입금·전환사채 잔액 0. 2031년 환율 1,465원/달러(반기보고서 적용환율). PER은 지배주주 순이익 기준.</p>
+  <div class="take"><span class="lbl">읽는 법</span><p>2027E EV/Sales 29~46배는 국내 로봇주 안에서는 흔한 숫자다(레인보우로보틱스 2025 매출 341억에 시총 8.1조 = 237배). 즉 상대가치로는 싸 보일 수 있다. 증권사 목표주가도 전부 PSR이다. 삼성은 2028E 매출에 국내 로봇 밸류체인 평균 PSR 39배, iM은 2028E에 30배, 현대차증권은 2027E에 46배, 교보는 "국내 30만개 × 18만원 + 우즈벡 100만개 × 35만원 = 매출환산 캐파 4,040억"에 14.9배를 곱해 목표 시총 6.69조를 냈다. <b>어느 쪽도 이익으로 값을 매기지 않는다.</b> 절대가치로는 2031년 목표 매출 전부에 PER 20배를 지금 지불하는 셈이고, 목표 달성 확률과 5년 할인(연 15%면 현재가치는 절반)을 감안하면 상승 여력은 "목표 초과 달성" 시나리오에서만 나온다. 반대로 하락 시나리오의 앵커는 3월 초 커버리지 개시 당시의 목표주가 300,000~340,000원(당시 2026E는 흑자 추정)과 7월 저점 183,800원이다.</p></div>
+</section>
+
+<section id="s3">
+  <div class="sec-h"><span class="sec-n">03</span><h2>비즈니스 모델: 밸류체인 어디에서 무엇을 파는가</h2></div>
+  <p>휴머노이드 밸류체인을 "핵심부품(모터·감속기·센서) → 관절모듈(액추에이터) → 완성 로봇 → AI·데이터"로 나누면 로보티즈는 <b>관절모듈 칸</b>에 서 있고, 위아래 두 칸으로 동시에 확장하려 한다. 아래로는 감속기(DYD, 사이클로이드)와 모터(국산화율 95%)를 내재화했고, 위로는 완성 로봇(AI 워커, AI 사피엔스, 개미)과 데이터 팩토리를 붙이고 있다.</p>
+  <div class="tbl-scroll"><table>
+    <caption>사업 부문과 매출 비중 (연결, DART)</caption>
+    <thead><tr><th>부문</th><th>제품</th><th class="num">2024 매출</th><th class="num">2025 매출</th><th class="num">1H26 매출</th><th class="num">1H26 비중</th><th>돈 버는 방식</th></tr></thead>
+    <tbody>
+      <tr><td><b>액추에이터</b></td><td>다이나믹셀 X(매출의 약 90%)·P·Y, 2H26 Q 시리즈, 감속기 DYD, 로봇핸드 HX5-D20, AI 워커·AI 사피엔스 플랫폼</td><td class="num">295.8억</td><td class="num">378.3억</td><td class="num">266.7억</td><td class="num">98.0%</td><td>제품 판매. 수출 72%, 그중 도매(협력점 경유) 55%·직판 21%. 대학·연구소·로봇 스타트업·빅테크 연구조직이 고객, 약 70개사</td></tr>
+      <tr><td>자율주행로봇</td><td>실외 배송로봇 개미(GAEMI), 실내 배송·엘리베이터 연동. 2025-06 물적분할 → (주)로보티즈AI 100%</td><td class="num">4.6억</td><td class="num">11.1억</td><td class="num">5.5억</td><td class="num">2.0%</td><td>월 88만원 구독(한양대 ERICA 10대 등). 1H26 로보티즈AI 순손실 -70.8억</td></tr>
+      <tr><td>데이터·플랫폼(예정)</td><td>우즈베키스탄에 휴머노이드 1,000대+ 배치, 동작 데이터 생산·판매(시간당 500~1,200달러 과금 모델), CYCLO 소프트웨어</td><td class="num">-</td><td class="num">-</td><td class="num">-</td><td class="num">-</td><td>2027년 가동 목표. 하나증권은 4Q26 첫 매출 기대</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">부문 매출은 연결조정 전 부문합계. 자율주행로봇 2025년 11.1억 중 국내 도매 10.1억은 로보티즈AI 향 내부거래로 연결에서 제거된다.</p>
+
+  <h3>단가와 물량: 매출 성장의 3분해</h3>
+  <p>공시된 출하량(회사 발표, 기사 기준)과 부문 매출로 평균단가를 역산하면 물량 성장과 매출 성장의 간격이 보인다.</p>
+  <div class="tbl-scroll"><table>
+    <thead><tr><th>기간</th><th class="num">출하량</th><th class="num">액추에이터 매출</th><th class="num">평균단가</th><th class="num">물량 YoY</th><th class="num">매출 YoY</th><th class="num">단가 효과</th></tr></thead>
+    <tbody>
+      <tr><td>2024</td><td class="num">15만개</td><td class="num">295.8억</td><td class="num">19.7만원</td><td class="num">-</td><td class="num">+1.9%</td><td class="num">-</td></tr>
+      <tr><td>2025</td><td class="num">22만개</td><td class="num">378.3억</td><td class="num">17.2만원</td><td class="num">+46.7%</td><td class="num">+27.9%</td><td class="num neg">-12.8%</td></tr>
+      <tr><td>1H26</td><td class="num">약 21만개</td><td class="num">266.7억</td><td class="num">12.7만원</td><td class="num">-</td><td class="num">+55.0% (연결 +50.3%)</td><td class="num neg">-26% (2025 연평균 대비)</td></tr>
+      <tr><td>2026E 가이던스</td><td class="num">40~50만개</td><td class="num">500억</td><td class="num">10~12.5만원</td><td class="num">+82~127%</td><td class="num">+32%</td><td class="num neg">-27~42%</td></tr>
+      <tr><td>2027E 가이던스</td><td class="num">100만개+</td><td class="num">1,000억</td><td class="num">10만원</td><td class="num">+100%+</td><td class="num">+100%</td><td class="num">0%</td></tr>
+      <tr><td>2027E 한화투자</td><td class="num">88.5만개</td><td class="num">1,202억(전사)</td><td class="num">13.6만원</td><td class="num">-</td><td class="num">-</td><td class="num">-</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">출하량 출처: ZDNet 2026-07-01(2024 15만, 2025 22만, 2026 목표 40~50만, 2027 100만+). 1H26 출하는 증권사별로 20만(교보)·약 21만(마켓잉크)·23.5만개(하나)로 갈리며, 교보는 2Q26 10.6만개(+12.8% QoQ), 1H26 평균단가 14.3만원으로 계산했다. 단가 = 부문 매출 ÷ 출하량이며 회사가 발표한 값이 아니다. 반기보고서의 대표 품목 XM540-W270-T 판가는 국내 42.6만원·수출 32.5만원(1H26)으로 2025년 대비 6~8% 올랐으므로, 평균단가 하락은 개별 제품 가격 인하가 아니라 <b>저가 소형 제품(XL330·리치미니용)의 비중 확대와 고사양 Y·P 시리즈의 출고 지연</b>이 원인이다. 한화·삼성·교보·다올 모두 "희토류 이슈로 고사양 모터 수급이 막혀 저가형 위주로 팔리고 있다"고 썼고, 이것이 8월 2026E 하향의 공통 사유였다. 2027년 단가는 교보 19.5만원(Y·P 정상화 가정) vs 한화 13.6만원(저가 지속)으로 갈린다.</p>
+
+  <h3>어디에 파는가: 2Q26에 해외가 73%</h3>
+  <div class="chart" id="ch-geo">
+    <p class="ct">지역별 분기 매출, 2Q25 vs 2Q26 (억원, 연결)</p>
+    <p class="cs">반기보고서 주석 '고객과의 계약에서 생기는 수익의 구분'. 막대에 손을 대면 증가율이 뜬다.</p>
+    <div class="legend"><span><i style="background:var(--c4)"></i>2Q25</span><span><i style="background:var(--c1)"></i>2Q26</span></div>
+    <svg></svg>
+  </div>
+  <div class="tbl-scroll"><table>
+    <thead><tr><th>지역</th><th class="num">2Q25</th><th class="num">2Q26</th><th class="num">YoY</th><th class="num">1H25</th><th class="num">1H26</th><th class="num">1H26 비중</th></tr></thead>
+    <tbody>
+      <tr><td>북미</td><td class="num">22.2</td><td class="num">53.9</td><td class="num pos">+142.4%</td><td class="num">72.6</td><td class="num">89.4</td><td class="num">32.9%</td></tr>
+      <tr><td>한국</td><td class="num">27.1</td><td class="num">41.2</td><td class="num pos">+52.2%</td><td class="num">52.3</td><td class="num">77.4</td><td class="num">28.4%</td></tr>
+      <tr><td>유럽</td><td class="num">9.2</td><td class="num">21.0</td><td class="num pos">+128.5%</td><td class="num">16.8</td><td class="num">42.2</td><td class="num">15.5%</td></tr>
+      <tr><td>기타</td><td class="num">7.8</td><td class="num">15.7</td><td class="num pos">+101.2%</td><td class="num">17.2</td><td class="num">25.3</td><td class="num">9.3%</td></tr>
+      <tr><td>중국</td><td class="num">5.9</td><td class="num">14.9</td><td class="num pos">+153.9%</td><td class="num">7.8</td><td class="num">21.9</td><td class="num">8.0%</td></tr>
+      <tr><td>일본</td><td class="num">6.7</td><td class="num">7.2</td><td class="num">+7.2%</td><td class="num">14.2</td><td class="num">16.0</td><td class="num">5.9%</td></tr>
+      <tr class="sum"><td>합계</td><td class="num">78.8</td><td class="num">153.7</td><td class="num pos">+95.1%</td><td class="num">181.0</td><td class="num">272.1</td><td class="num">100%</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">1H25 북미 72.6억 중 1Q25에 50.4억이 몰려 있어(단일 고객 A사 22.5억 포함) 1H 기준 북미 성장률(+23%)은 2Q 기준(+143%)보다 낮다. 중국은 2026년 2월 베이징 지사 영업 재개 후 반기 8만개(KB) 내지 13만개(교보) 출하로 2025년 연간(8만개)을 넘었다. 2025년 연간 지역 비중은 국내 40%·미국 32%·중국 12%·기타 아시아 10%·유럽 6%(하나증권)였으니, 1H26에 유럽(16%)이 가장 크게 올라왔다. 미국 자회사 ROBOTIS Inc.(지분 81.9%)는 1H26 매출 82.3억·순이익 13.4억으로 그룹 내 유일하게 이익을 내는 자회사다. 삼성증권은 "북미 현지 생산 거점 부재"를, 하나증권은 "FCC 인증 문제로 미국 공장 건설 필요성이 논의 중"이라고 썼다.</p>
+
+  <h3>원가 구조: 노무비가 매출원가의 절반</h3>
+  <p>iM증권에 따르면 연간 노무비가 매출원가의 50% 이상이다. 액추에이터 조립은 노동집약적이고, 이것이 우즈베키스탄(인건비 중국 대비 -28%, KB증권)을 고른 이유다. 반기보고서 매입 현황을 보면 1H26 원재료 매입 145억이 이미 2025년 연간(105억)을 넘었고 재고자산은 136억 → 193억으로 늘었다. 하반기 출하 확대를 위한 선행 매입이다. 마곡 공장 가동률은 2024년 70.3% → 2025년 86.9% → 1H26 81.8%로, 국내 캐파(연 30만개)는 사실상 한계에 와 있다.</p>
+</section>
+
+<section id="s4">
+  <div class="sec-h"><span class="sec-n">04</span><h2>실적 10년: 부품은 늘 벌었고, 로봇이 늘 까먹었다</h2></div>
+  <p>2018년 상장 이후 매출은 243억 → 389억으로 7년간 연평균 7% 성장에 그쳤다. 그 사이 영업이익은 2020~2024년 5년 연속 적자였는데, 회사 스스로 사업보고서에 "액추에이터의 현금흐름이 배송로봇 연구개발비 상승분으로 상쇄되는 구조"라고 썼다. 2025년 흑자전환의 원인으로 회사는 매출 성장에 따른 고정비 완화, 전시·홍보비 감소, 정부지원 효과 세 가지를 들었다(2026-01-28 공시).</p>
+  <div class="chart" id="ch-ann">
+    <p class="ct">연간 매출·영업이익과 수출 비중, 2015 ~ 2025 (억원, %)</p>
+    <p class="cs">막대는 매출(파랑 수출, 회색 내수), 선은 영업이익. 2015~2017년은 별도, 2018년부터 연결.</p>
+    <div class="legend"><span><i style="background:var(--c1)"></i>수출</span><span><i style="background:var(--c4)"></i>내수</span><span><i style="background:var(--c2)"></i>영업이익</span></div>
+    <svg></svg>
+  </div>
+  <div class="tbl-scroll"><table>
+    <caption>연결 손익 (억원, DART fnlttSinglAcntAll)</caption>
+    <thead><tr><th>연도</th><th class="num">매출</th><th class="num">YoY</th><th class="num">매출총이익률</th><th class="num">판관비</th><th class="num">R&amp;D</th><th class="num">영업이익</th><th class="num">OPM</th><th class="num">지배순이익</th><th class="num">자본총계</th></tr></thead>
+    <tbody id="ann-body"></tbody>
+  </table></div>
+  <p class="tnote">R&amp;D는 사업보고서 연구개발비용(전액 판관비 처리, 자산화 0). 2025년 영업이익 33.5억은 사업보고서 기준이며 1/28 잠정공시(33.6억)와 0.1억 차이. 2023년 영업손실 -53억은 실외 배송로봇 상용화 비용이 정점이던 해.</p>
+
+  <h3>분기: 2Q26이 처음으로 "물량이 마진을 이긴" 분기</h3>
+  <div class="chart" id="ch-q">
+    <p class="ct">분기 매출과 영업이익률, 1Q23 ~ 2Q26</p>
+    <p class="cs">1Q26 OPM은 자사주 교부 117.8억을 제외한 조정치(-0.5%)로 표시하고 보고치(-100%)는 툴팁에 넣었다.</p>
+    <div class="legend"><span><i style="background:var(--c1)"></i>매출(억원)</span><span><i style="background:var(--c2)"></i>영업이익률(%)</span></div>
+    <svg></svg>
+  </div>
+  <div class="tbl-scroll"><table>
+    <caption>분기 손익 (억원). 4분기는 연간 − 3분기 누적으로 계산</caption>
+    <thead><tr><th>분기</th><th class="num">매출</th><th class="num">YoY</th><th class="num">GPM</th><th class="num">판관비</th><th class="num">영업이익</th><th class="num">OPM</th><th class="num">지배순이익</th></tr></thead>
+    <tbody id="q-body"></tbody>
+  </table></div>
+  <p class="tnote">2Q26 매출은 손익계산서 계정명이 '수익'으로 바뀌어 DART API의 '매출액' 매핑에서 빠지는 것을 원문으로 보정했다. 1Q26 지배순이익은 총포괄손익 귀속분(-94.8억)이 아니라 당기순이익 귀속분(-100.6억)이다.</p>
+  <div class="take"><span class="lbl">읽는 법</span><p>GPM은 2025년 61~65%에서 2Q26 56.3%로 내려왔다. 반기보고서는 매출원가에서 종업원급여비용이 1H25 대비 크게 늘었다고 보여주고(성격별 비용 기준 190.6억, 자사주 교부 포함), 저가 제품 비중 확대가 겹쳤다. <b>2Q26 액추에이터 부문 영업이익률 22.5%</b>(iM증권 추정)가 유지되는지가 2027년 이익 추정의 핵심 변수다. 삼성증권이 2026E 영업이익을 -60억으로 보는 것은 자사주 비용 118억을 연간에 포함했기 때문이고, 다올이 +150억으로 보는 것은 매출 800억을 가정하기 때문이다. 두 추정의 간격(210억)이 곧 시장의 불확실성이다.</p></div>
+</section>
+
+<section id="s5">
+  <div class="sec-h"><span class="sec-n">05</span><h2>성장 엔진: 캐파 30만개를 500만개로</h2></div>
+  <p>회사가 2026~2028년 중장기 전략으로 공시한 것은 세 가지다. DXL-Q의 글로벌 표준화, AI 사피엔스 오픈소스 생태계, 북미·중국 영업 거점 다변화. 그 물리적 토대가 우즈베키스탄 공장이다.</p>
+  <div class="tbl-scroll"><table>
+    <caption>생산능력 로드맵 (액추에이터 연간, 개)</caption>
+    <thead><tr><th>시점</th><th>마곡(국내)</th><th>우즈베키스탄</th><th class="num">합계</th><th>근거</th></tr></thead>
+    <tbody>
+      <tr><td>2025 말</td><td><span class="bar" style="width:30px"></span>30만</td><td>-</td><td class="num">30만</td><td>뉴스핌 8/5, KB증권. 가동률 86.9%</td></tr>
+      <tr><td>2026 말</td><td><span class="bar" style="width:30px"></span>30만</td><td><span class="bar o" style="width:25px"></span>20~30만 (10월 부분가동, Q 시리즈)</td><td class="num">50~60만</td><td>메리츠 1/29, 뉴스핌 8/5, 반기보고서</td></tr>
+      <tr><td>2027</td><td><span class="bar" style="width:30px"></span>30만</td><td><span class="bar o" style="width:210px"></span>210~300만 (본격 가동)</td><td class="num">240~330만</td><td>더구루 6/22, ZDNet 8/14. 매출 기여는 2027년 초부터</td></tr>
+      <tr><td>2028 말</td><td>30만</td><td>300만 추가 목표</td><td class="num">330만</td><td>메리츠 1/29</td></tr>
+      <tr><td>2031</td><td>-</td><td>500만+</td><td class="num">500만+</td><td>KB증권 9/4, 회사 2031 매출 10억달러 목표</td></tr>
+    </tbody>
+  </table></div>
+  <p>우즈베키스탄 타슈켄트 '양기 아블로드' 특별산업구역 10ha를 무상으로 받았고 국가전략사업으로 지정돼 세제 혜택이 있다. 총 투자 7,000만달러 중 1차로 2,000만달러(294억)를 ROBOTIS FE LLC에 출자했고(6월 말 자산 320억), 2026년 6월 15일 기공했다. 현지 고용 목표는 2,000명 이상이다. 국내 직원(별도 111명, 2025년 말)의 18배를 해외에서 뽑는 계획이며, 관리 역량이 검증된 적은 없다.</p>
+
+  <h3>수요 쪽: 세 갈래</h3>
+  <div class="tbl-scroll"><table>
+    <thead><tr><th>수요원</th><th>내용</th><th>물량·금액</th><th>확인 수준</th></tr></thead>
+    <tbody>
+      <tr><td><b>허깅페이스(Pollen Robotics)</b></td><td>오픈소스 소형 로봇 마이크로덕(399달러, XL330 15개, 8/27 출시)·리치미니(9개)</td><td>사전주문 1.5만대+(한투). 골드만은 초기 주문 액추에이터 33만개·66억, 한투는 중장기 390만개·780억</td><td>출시 확인. 물량은 증권사 추정</td></tr>
+      <tr><td><b>중국 휴머노이드 중소업체</b></td><td>2월 베이징 지사 재개. 중국 중소업체 출하 1H25 600대 → 1H26 2,600대. DXL-Q가 중국 개발 방향(보급형 QDD)과 일치</td><td>1H26 8만개+, 2Q26 매출 14.9억(+154%). 3Q부터 주요 고객 물량 확대 예정(iM)</td><td>DART 지역별 매출로 확인</td></tr>
+      <tr><td><b>북미 빅테크·연구기관·방산</b></td><td>보스턴다이내믹스 GR2 로봇손용 700개(2025-10), 스탠포드 ALOHA, 테슬라·구글·유니트리 공급 보도. FCC 인증 보유 + 미국의 중국산 휴머노이드 수입 제한(2026-08)</td><td>2Q26 북미 53.9억(+143%). 개별 고객 물량 비공개</td><td>보도 기준. 양산 채택 여부 미확인</td></tr>
+      <tr><td>완성 로봇</td><td>AI 워커(액추에이터 25개) 2026년 200대 가이던스, 로봇핸드 HX5-D20 완판, AI 사피엔스 2H26 출시(목표 수천 대)</td><td>1H26 완성 로봇 매출은 부문 매출에 포함, 별도 공시 없음</td><td>가이던스</td></tr>
+    </tbody>
+  </table></div>
+  <div class="take"><span class="lbl">핵심 질문</span><p>수주잔고 50만개(2분기 말)는 2025년 출하량의 2.3배이고 교보는 연말 100만개를 기대한다. 그러나 그 안에 개당 2만원대 XL330(허깅페이스)이 얼마나 들어 있느냐에 따라 매출 환산액이 100억에서 800억까지 달라진다. iM증권은 마이크로덕·리치미니 물량을 연 90~95억으로 추정하면서도 "국내 캐파가 부족해 매출 인식에 상당 기간 소요"라고 썼다. 교보는 한 발 더 나가 "1티어 OEM(테슬라·피규어·BD)은 액추에이터를 자체 개발하므로 로보티즈의 1티어 직납 개연성은 낮고, 신흥 OEM·2티어·연구용이 주 성장 경로"라고 명시했다. 탐방 질문 1·2·6번이 여기에 해당한다.</p></div>
+</section>
+
+<section id="s6">
+  <div class="sec-h"><span class="sec-n">06</span><h2>경쟁사 비교: 국내 로봇주는 전부 "미래 매출"에 값을 매긴다</h2></div>
+  <p>로보티즈의 직접 경쟁자는 국내에 없다. 국내 상장 로봇주는 완성 로봇(레인보우·두산·뉴로메카), 감속기(에스피지·에스비비테크·이랜시스), 모터·구동모듈(하이젠알앤엠·한국피아이엠·삼현), 소프트웨어(클로봇)로 밸류체인 칸이 다르다. 아래 표는 <b>밸류체인 인접군</b>이며, 진짜 경쟁자는 중국 로컬 액추에이터 업체(유니트리 내재화 포함)와 고객사의 자체 개발(테슬라·피규어·삼성전자·LG전자 '악시움')이다.</p>
+  <div class="tbl-scroll"><table>
+    <caption>국내 밸류체인 인접군 (시총은 2026-09-14 네이버, 실적은 DART 연결·억원)</caption>
+    <thead><tr><th>종목</th><th>칸</th><th class="num">시총</th><th class="num">2025 매출</th><th class="num">2025 OP</th><th class="num">OPM</th><th class="num">1H26 매출</th><th class="num">1H26 OP</th><th class="num">PSR(2025)</th><th class="num">PBR</th></tr></thead>
+    <tbody id="peer-body"></tbody>
+  </table></div>
+  <p class="tnote">PSR = 시총 ÷ 2025 매출. PBR은 네이버 표기. 두산로보틱스 1H26 매출은 ONExia 인수 효과 포함. 삼현 1H26은 방산 매출 감소로 적자. 로보티즈 1H26 OP는 보고치이며 자사주 조정 시 +19.2억.</p>
+  <div class="tbl-scroll"><table>
+    <caption>글로벌 액추에이터·감속기·휴머노이드 (시총은 기사 기준, 달러)</caption>
+    <thead><tr><th>회사</th><th>국가</th><th>칸</th><th class="num">시총</th><th>비고</th></tr></thead>
+    <tbody>
+      <tr><td>Unitree (688836)</td><td>중국</td><td>완성 휴머노이드·4족, 액추에이터 내재화</td><td class="num">약 530억</td><td>2026-08-19 상해 STAR 상장 첫날 +487%. 미국 국방부 CMC 리스트·FCC Covered List 등재</td></tr>
+      <tr><td>Figure AI</td><td>미국</td><td>완성 휴머노이드, 액추에이터 자체 설계</td><td class="num">약 390억(비상장)</td><td>2025-09 시리즈C</td></tr>
+      <tr><td>Leader Drive (绿的谐波)</td><td>중국</td><td>하모닉 감속기</td><td class="num">약 47억</td><td>iM증권이 로보티즈 PSR 산정 시 비교군(12M fwd PSR 20.2배)으로 사용</td></tr>
+      <tr><td>Nabtesco</td><td>일본</td><td>RV 감속기(산업로봇 60%+)</td><td class="num">약 34억</td><td>KraneShares KOID 2026-04 기준</td></tr>
+      <tr><td>Harmonic Drive Systems</td><td>일본</td><td>하모닉 감속기(점유율 70%+)</td><td class="num">약 27억</td><td>동상</td></tr>
+      <tr><td><b>로보티즈</b></td><td>한국</td><td>일체형 액추에이터</td><td class="num">약 32억</td><td>4조 6,568억 ÷ 1,465원</td></tr>
+    </tbody>
+  </table></div>
+  <div class="take"><span class="lbl">읽는 법</span><p>로보티즈의 달러 시총(32억)은 하모닉드라이브(27억)·납테스코(34억)와 같은 급이다. 두 회사는 각각 연매출 4~7억달러, 30년 넘게 검증된 산업용 감속기 독점 사업자다. 로보티즈 매출은 그 1/15이다. 시장은 로보티즈를 "기존 감속기 회사"가 아니라 "휴머노이드 시대의 표준 관절 공급자"로 값 매기고 있다. 반대로 말하면, 휴머노이드 양산이 2027년에 안 오면 비교 기준은 하모닉드라이브(PSR 5~7배)로 내려온다.</p></div>
+</section>
+
+<section id="s7">
+  <div class="sec-h"><span class="sec-n">07</span><h2>해자 검증: 찬성 근거와 반증을 나란히</h2></div>
+  <div class="grid2">
+    <div class="pane yes"><h4>해자가 있다는 근거</h4><ul>
+      <li><b>개발자 생태계 락인.</b> 다이나믹셀은 2003년 출시 후 ROS 공식 교육 플랫폼 터틀봇3(2017, Open Robotics 공동)와 NVIDIA Isaac Sim 표준 자산에 들어가 있다. 스탠포드 ALOHA, 허깅페이스 LeRobot이 채택했다. 연구실에서 배운 규격이 스타트업 양산 설계로 이어지는 경로가 실제 매출(2Q26 북미 +143%)로 나타났다.</li>
+      <li><b>일체형 모듈 + 내재화.</b> 모터·감속기(사이클로이드 DYD)·제어기·통신을 한 모듈에 넣고 데이지체인으로 묶는 구조를 20년 전 특허(2007~2013 액추에이터 모듈 특허군)로 잡았다. 등록 특허 91건(한국 53, 미국 17, 중국 15, 일본 6).</li>
+      <li><b>규제 진입장벽.</b> FCC·CE·CCC 인증을 제품군별로 보유. 2026년 8월 미국이 중국산 휴머노이드·4족 로봇을 FCC Covered List에 올리고 유니트리를 CMC 리스트에 올리면서 북미 고객의 중국산 대체 수요가 생겼다.</li>
+      <li><b>선행 증설.</b> 국내 경쟁사 중 유일하게 2026년에 실제 공장을 짓고 있다. "초과수요 상태(주문의 50% 미충족)"에서 캐파가 곧 점유율이다.</li>
+      <li><b>가격 경쟁력 확보 수단.</b> 노무비가 원가의 절반인 사업에서 인건비가 중국보다 28% 낮은 우즈베키스탄 생산은 중국산과 같은 가격대의 DXL-Q를 가능하게 한다.</li>
+    </ul></div>
+    <div class="pane no"><h4>해자가 약하다는 반증</h4><ul>
+      <li><b>고객이 곧 경쟁자.</b> 테슬라·피규어·유니트리는 액추에이터를 자체 설계한다. 삼성전자는 가전 모터 기술로 휴머노이드 액추에이터를 개발 중이고(2026-08), 6.56% 주주인 LG전자는 2026년 자체 액추에이터 브랜드 '악시움'을 냈다. 양산 단계의 대형 고객일수록 외부 모듈을 쓰지 않는다.</li>
+      <li><b>연구용 표준 ≠ 양산 표준.</b> 매출의 90%가 X 시리즈(연구·교육·소형 로봇용)다. 휴머노이드 다리·관절용 DXL-Q는 2H26 출시 예정이라 양산 레퍼런스가 아직 없다. 보스턴다이내믹스 700개(로봇손용)도 100세트 수준의 시제품 물량이다.</li>
+      <li><b>특허 갱신이 멈췄다.</b> 등록 특허 취득 건수가 2021년 10건 → 2024년 4건 → 2025년 1건. 사업보고서 연구개발 실적표의 최신 과제는 2024~2027년 1건뿐이다. 핵심 특허(2007~2014)는 2027년부터 20년 만료가 시작된다.</li>
+      <li><b>단가가 내려간다.</b> 평균단가 17.2만원(2025) → 12.7만원(1H26). 허깅페이스용 XL330은 개당 2만원대다. 중국 로컬 업체가 같은 스펙을 더 싸게 내면 '표준'의 프리미엄이 얼마나 남는지 검증된 바 없다. 김병수 대표 스스로 "가장 큰 위협은 중국 업체"라고 했다.</li>
+      <li><b>고객 집중 데이터가 없다.</b> 매출 10% 이상 고객이 1H26에 없다(A사 10.1억). 약 70개 고객사에 분산돼 있다는 것은 안정적이지만, 반대로 "빅테크 양산 채택"이 아직 매출에 없다는 뜻이다.</li>
+    </ul></div>
+  </div>
+  <div class="take"><span class="lbl">판정</span><p>연구·개발자 시장에서의 해자는 실재하고, 2Q26 숫자가 그것을 증명한다. 그러나 주가가 가정하는 것은 <b>양산 시장의 해자</b>이고, 그 증거는 아직 없다. DXL-Q의 첫 양산 고객이 누구인지, 그 고객이 듀얼소싱을 요구하는지가 해자 판정의 다음 데이터다.</p></div>
+</section>
+
+<section id="s8">
+  <div class="sec-h"><span class="sec-n">08</span><h2>주주와 자본: 1년간 일어난 일</h2></div>
+  <ul class="tl">
+    <li><span class="d">2025-08-28</span><span>이사회, 주주배정 후 실권주 일반공모 유상증자 1,349,528주 결의. 예정발행가 74,100원(1,000억). 회사는 제3자배정을 검토했으나 "특정 업체 종속 우려"로 주주배정 선택. 같은 날 우즈베키스탄 공장 발표.</span></li>
+    <li><span class="d">2025-09-19</span><span>김병수 대표, 신주인수권증서 349,898주 매도 계획 공시(9/24 정정: 장외매도). 실제 유증 참여는 87,474주.</span></li>
+    <li><span class="d">2025-11-05</span><span>확정발행가 <b>155,500원</b>. 조달액 2,098.5억(시설 600억·운영 1,498.5억). 구주주 청약 91.7% + 초과청약, 실권 단수주 11,347주만 주관사 인수.</span></li>
+    <li><span class="d">2025-11-21</span><span>김병수 3,474,620주(23.72%). LG전자 961,550주는 유증 불참으로 7.36% → 6.56%.</span></li>
+    <li><span class="d">2026-01-06~07</span><span>자사주 174,161주(보통주 97,646 + 기타주식 76,515)를 Weiss Asset Management에 5~9.9% 할인, 411.9억에 블록딜. 2021~22년 평균 19,231원에 산 자사주였다.</span></li>
+    <li><span class="d">2026-01-26</span><span>임직원 30명(로보티즈 20·로보티즈AI 10)에 자사주 42,000주 성과보상 교부. 종가 280,500원 기준 117.8억이 1Q26 판관비로 인식. 자사주 잔여 17,000주(0.11%).</span></li>
+    <li><span class="d">2026-01-26</span><span>ROBOTIS FE LLC(우즈베키스탄) 설립, 2,000만달러(294억) 현금출자 결의.</span></li>
+    <li><span class="d">2026-02~04</span><span>삼성자산운용 5% 신규 보고(2/2, 774,719주) → 921,865주(6.29%, 4/2). 삼성액티브 위탁분 2.18% 포함. 보유목적 단순투자.</span></li>
+    <li><span class="d">2026-06-22</span><span>LG전자와 우즈베키스탄 공장 지분투자·모터 공급 MOU. 금액·지분율 미정.</span></li>
+    <li><span class="d">2026-07-08</span><span>현대투자파트너스 CL 로보오토메이션 신기술조합에 181억 출자(조합 288억의 62.85%, LP). 목적 "액추에이터 생산 자동화 시너지".</span></li>
+    <li><span class="d">2026-08-06</span><span>김병수, 366,525주 매도 계획 사전공시(예정 242,000원, 887억). 목적 "자회사 투자 및 국민성장펀드 매칭 투자 참여 등 자금 마련".</span></li>
+    <li><span class="d">2026-09-08</span><span>시간외 매매 <b>274,667원 × 366,525주 = 1,006.7억</b>. 지분 21.19%(3,108,095주). 당일 주가 -6.1%.</span></li>
+  </ul>
+  <div class="tbl-scroll"><table>
+    <caption>주주 구성 (2026-09-08 기준, 발행주식 14,667,028주)</caption>
+    <thead><tr><th>주주</th><th class="num">주식수</th><th class="num">지분</th><th>비고</th></tr></thead>
+    <tbody>
+      <tr><td>김병수 대표이사 외 1인</td><td class="num">3,123,482</td><td class="num">21.30%</td><td>2025-09 27.4%(신주인수권 포함) → 21.3%. 임광은 부사장 15,387주</td></tr>
+      <tr><td>LG전자</td><td class="num">961,550</td><td class="num">6.56%</td><td>2017년 90억 투자(당시 10.1%). 유증 불참, 매각 없음</td></tr>
+      <tr><td>삼성자산운용</td><td class="num">921,865</td><td class="num">6.29%</td><td>단순투자, ETF 성격 추정</td></tr>
+      <tr><td>Weiss Asset Management</td><td class="num">174,161</td><td class="num">1.19%</td><td>2026-01 자사주 블록딜 인수분(이후 변동 미공시)</td></tr>
+      <tr><td>자기주식</td><td class="num">17,000</td><td class="num">0.12%</td><td></td></tr>
+      <tr><td>소액주주</td><td class="num">9,811,748</td><td class="num">68.1%</td><td>2025-12-31 기준 149,804명</td></tr>
+    </tbody>
+  </table></div>
+  <div class="take"><span class="lbl">읽는 법</span><p>1년간 회사와 최대주주가 시장에 판 주식은 유증 2,098억 + 자사주 블록딜 412억 + 대표 블록딜 1,007억 = <b>3,517억</b>이다. 같은 기간 회사가 실제로 집행한 투자는 우즈베키스탄 출자 294억, 자동화 조합 181억, 설비 117억(1H26 capex) 정도다. 조달은 앞섰고 집행은 뒤따른다. 이것이 나쁜 신호는 아니지만(증설 자금은 미리 확보하는 것이 맞다), 대표의 매도 자금 용처가 "로보티즈AI 출자"라면 상장사가 아니라 대표 개인이 적자 자회사를 사는 구조가 된다. iM증권(9/8)은 "로보티즈 차원의 추가 투자를 고려했으나 <b>이사회 단계에서 부결</b>돼 대표 본인의 사재를 출연하는 것"이라며 "로보티즈AI로의 추가 자금 유출이 없다는 점은 긍정적"이라고 해석했다. 하나증권은 로보티즈AI가 "연 120~140억 적자를 낼 수 있고 2~3년간 흑자 가능성이 높지 않아 액추에이터를 보고 투자한 주주에게 상당한 드래그"라고 썼다. 대표 출자의 밸류에이션과 지분율은 상장사 주주의 몫이 얼마나 희석되는지를 결정하므로 반드시 물어야 한다(탐방 질문 8·10).</p></div>
+</section>
+
+<section id="s9">
+  <div class="sec-h"><span class="sec-n">09</span><h2>리스크</h2></div>
+  <div class="risk">
+    <div class="r"><span class="chip h">HIGH</span><div><div class="t">단가 하락이 물량 성장을 상쇄한다</div><div class="d">2026 가이던스 자체가 물량 +82~127%에 매출 +32%다. DXL-Q를 "중국산 가격"으로 내면 GPM이 2025년 62%에서 얼마나 내려가는지 회사가 밝힌 적이 없다. 한화투자는 저사양 비중 확대를 이유로 2026 영업이익을 하향했다.</div></div></div>
+    <div class="r"><span class="chip h">HIGH</span><div><div class="t">우즈베키스탄 램프업 지연</div><div class="d">2026-10 부분가동 → 2027 210~300만개는 첫 해외공장에서 캐파를 8~10배 늘리는 계획이다. 인력 2,000명 채용, 수율, 물류(내륙국), 환율(숨) 리스크가 한 번에 걸린다. 2027년 매출 1,000억 추정의 대부분이 이 공장에 달려 있다.</div></div></div>
+    <div class="r"><span class="chip h">HIGH</span><div><div class="t">고객의 내재화</div><div class="d">테슬라·피규어·유니트리 자체 설계, 삼성전자 개발 중, LG전자 '악시움' 출시. 대형 고객의 양산 채택이 없으면 시장은 연구·소형로봇·중국 중소업체로 한정된다.</div></div></div>
+    <div class="r"><span class="chip h">HIGH</span><div><div class="t">고사양 모터(희토류) 수급 차질로 고마진 Y·P 시리즈 출고 지연</div><div class="d">삼성(3/11)은 "Dynamixel Y/P의 출고 지연이 우려"라고 썼고, 한화(8/24)는 이를 이유로 2026E 매출을 663억 → 606억으로 내렸다. 저가형 위주 출하가 이어지는 한 물량은 늘어도 GPM은 회복되지 않는다. 회사는 모터 내재화(국산화율 95%)와 LG전자 모터 결합을 대안으로 제시하지만 시점이 없다.</div></div></div>
+    <div class="r"><span class="chip m">MID</span><div><div class="t">2026년 연간 적자와 컨센서스 하향</div><div class="d">1Q26 자사주 비용으로 1H26 영업손실 -98.6억. 3월 초 커버리지 개시 때 2026E 영업이익 70~140억 흑자였던 추정이 8월에는 7개사 중 6개사가 적자로 바뀌었다(컨센서스 EPS -101원). 하반기 매출 350억 이상을 내야 연간 흑자인데, 우즈베키스탄 초기 가동비용이 4Q에 들어온다. 한화는 4Q26 영업이익을 7억으로 본다.</div></div></div>
+    <div class="r"><span class="chip m">MID</span><div><div class="t">북미 현지 생산 거점 부재</div><div class="d">미국 상무장관이 로봇의 미국 내 생산을 강조하는 국면에서 우즈베키스탄은 '비중국' 거점일 뿐 '미국' 거점이 아니다. 하나증권은 FCC 인증 문제로 미국 공장 건설이 논의 중이라고 썼다. 실행되면 추가 투자, 안 되면 북미 대체수요 논리가 약해진다.</div></div></div>
+    <div class="r"><span class="chip m">MID</span><div><div class="t">로보티즈AI 적자 누적과 대표 개인 출자의 이해상충</div><div class="d">1H26 순손실 -70.8억(영업손실 67억), 하나증권은 연 120~140억 적자 가능성과 "2~3년 내 흑자 가능성 낮음"을 지적. 실외 배송로봇은 인도 주행만 허용되는 규제 아래 월 88만원 구독 모델이다. 상장사의 추가 출자는 이사회에서 부결됐고 대표가 사재(블록딜 1,007억)로 출자할 예정이라 상장사 지분(100%)이 희석된다. 출자 밸류에이션이 낮으면 상장사 주주가, 높으면 대표가 손해를 보는 구조다.</div></div></div>
+    <div class="r"><span class="chip m">MID</span><div><div class="t">최대주주 추가 매도·오버행</div><div class="d">대표 지분 21.2%. 국민성장펀드 매칭 투자가 계속되면 추가 매도 가능. Weiss AM 1.19%, 삼성자산운용 6.29%(패시브)는 지수 이벤트에 따라 움직인다.</div></div></div>
+    <div class="r"><span class="chip m">MID</span><div><div class="t">중국 지정학</div><div class="d">중국 매출이 가장 빠르게 늘지만(2Q26 +154%), 미국이 중국 휴머노이드를 규제하는 국면에서 중국 업체에 관절을 파는 것이 북미 고객·규제와 충돌할 수 있다. 회사는 반대로 이를 "중국산 대체 수혜"로 설명한다.</div></div></div>
+    <div class="r"><span class="chip l">LOW</span><div><div class="t">희토류·부품 공급</div><div class="d">모터용 자석 희토류(KB증권 지적), 전자부품 가격. 모터 국산화율 95%, 원재료 수입 비중 8.8%로 노출은 제한적.</div></div></div>
+    <div class="r"><span class="chip l">LOW</span><div><div class="t">재무 안전성</div><div class="d">순현금 2,887억, 차입 0, 부채비율 3.0%. 자금 리스크는 없다. 오히려 현금의 상당액이 RP·MMF·IMA에 있어 금융수익(1H26 61.6억)이 영업이익보다 크다.</div></div></div>
+  </div>
+</section>
+
+<section id="s10">
+  <div class="sec-h"><span class="sec-n">10</span><h2>증권사 추정치 비교</h2></div>
+  <div class="tbl-scroll"><table>
+    <caption>2026년 발간 리포트 (억원). 목표주가는 최신 기준</caption>
+    <thead><tr><th>증권사</th><th>일자</th><th>의견·TP</th><th class="num">2026E 매출</th><th class="num">2026E OP</th><th class="num">2027E 매출</th><th class="num">2027E OP</th><th>밸류 방식·핵심 논리</th></tr></thead>
+    <tbody id="broker-body">
+      <tr><td>골드만삭스</td><td>09-04</td><td>Buy 630,000</td><td class="num">-</td><td class="num">-</td><td class="num">-</td><td class="num">-</td><td>허깅페이스 초기 주문 액추에이터 33만개·66억 추산 (기사 인용, 원문 미확보)</td></tr>
+      <tr><td>교보증권</td><td>08-19</td><td>BUY 460,000, Top-Pick</td><td class="num">660</td><td class="num">-20</td><td class="num">1,500</td><td class="num">300</td><td>매출환산 캐파 4,040억(국내 30만×18만원 + 우즈벡 100만×35만원) × PSR 14.9배 = 6.69조. 2028E 3,040/830. 수주잔고 연말 100만개 기대. 1티어 직납 개연성은 낮다고 명시</td></tr>
+      <tr><td>한국투자증권</td><td>09-10</td><td>매수 450,000</td><td class="num">-</td><td class="num">-</td><td class="num">-</td><td class="num">-</td><td>수주잔고 50만개+, 허깅페이스 중장기 390만개·780억, "업종 내 유일한 초과수요"</td></tr>
+      <tr><td>다올투자증권</td><td>05-06</td><td>BUY 435,000 (3/16 340,000)</td><td class="num">784~800</td><td class="num">142~150</td><td class="num">1,000</td><td class="num">220</td><td>12MF SPS × PSR 58배. QDD 박리다매로 단기 마진 희석 가능성 언급. 우즈벡 최저임금 월 15만원(한국의 25%)</td></tr>
+      <tr><td>iM증권</td><td>08-19</td><td>Buy 400,000 (신규)</td><td class="num">730</td><td class="num">10</td><td class="num">1,010</td><td class="num">190</td><td>2028E 매출 1,972억 × PSR 30배(중국 감속기 20.2배 + 프리미엄 50%). 2028E OP 430·NI 360. 3Q26E 182.9/35.7</td></tr>
+      <tr><td>현대차증권</td><td>08-26</td><td>BUY 380,000 (←403,000)</td><td class="num">621</td><td class="num">-55</td><td class="num">1,210</td><td class="num">270</td><td>2027F SPS 8,253원 × PSR 46배(피어 평균 10% 할인). 액추에이터가 휴머노이드 BOM의 40~60%</td></tr>
+      <tr><td>미래에셋증권</td><td>08-21</td><td>매수 356,000 (신규, 차선호)</td><td class="num">625</td><td class="num">OPM -7.9%</td><td class="num">1,233</td><td class="num">OPM 17.9%</td><td>2028F 2,010억·OPM 21.3%, P/S 19.5배. Top Pick은 유비테크</td></tr>
+      <tr><td>삼성증권</td><td>08-19</td><td>BUY 350,000 (←320,000)</td><td class="num">550</td><td class="num">-60</td><td class="num">940</td><td class="num">160</td><td>2028E 1,170/190 × PSR 39배. "2028년이 이익 창출 원년". 북미 생산거점 부재·Y/P 출고 지연 우려</td></tr>
+      <tr><td>한화투자증권</td><td>08-24</td><td>Buy 350,000 (←320,000)</td><td class="num">606</td><td class="num">-75</td><td class="num">1,202</td><td class="num">272</td><td>고사양 모터 수급 차질로 2026E 663 → 606 하향. 2027E 출하 88.5만개. 3Q26E 154/17, 4Q26E 180/7</td></tr>
+      <tr><td>신한투자증권</td><td>09-07</td><td>관심기업 (TP 없음)</td><td class="num">679</td><td class="num">76</td><td class="num">1,092</td><td class="num">209</td><td>2028F 1,667/438. WRC 2026에서 "관찰자가 아닌 공급자로 나선 유일한 한국 기업"</td></tr>
+      <tr><td>하나증권</td><td>08-18</td><td>Not Rated</td><td class="num">(컨센 620)</td><td class="num">(컨센 1)</td><td class="num">(컨센 1,171)</td><td class="num">(컨센 211)</td><td>1H26 23.5만개 출하 추정. 로보티즈AI 연 120~140억 적자 가능. 미국 공장 건설 논의. "1Q27 우즈벡 가동·데이터 판매 전에 투자 추천"</td></tr>
+      <tr><td>메리츠증권</td><td>01-29</td><td>-</td><td class="num">643</td><td class="num">80</td><td class="num">861</td><td class="num">163</td><td>4Q25 액추에이터 OPM 약 36%(환율). "기대감 선반영된 과열 국면"이나 최대 수혜주</td></tr>
+      <tr><td>KB증권</td><td>09-04</td><td>Not Rated</td><td class="num">-</td><td class="num">-</td><td class="num">-</td><td class="num">-</td><td>FCC 규제 최대 수혜. 캐파 30만 → 500만+(2031), 우즈벡 인건비 중국 대비 -28%</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">iM·교보·삼성·한화·하나·현대차·미래에셋·신한·다올·메리츠는 아카이브 리포트 원문(PDF 전문검색) 기준, 골드만·한투·KB는 기사 인용. 8~9월 7개사 평균: 2026E 매출 639억(범위 550~730), 2027E 매출 1,170억·영업이익 230억. 3월 초 커버리지 개시 당시 2026E 영업이익은 70~140억 흑자였으나 1Q26 자사주 비용 118억과 고사양 모터 수급 차질로 8월에 일제히 적자로 바뀌었고, 반대로 2027E 매출과 목표주가는 우즈베키스탄 반영으로 상향됐다. 즉 <b>지난 6개월간 "올해는 나빠지고 내후년은 좋아진다"는 방향으로 추정이 이동했다.</b></p>
+</section>
+
+<section id="s11">
+  <div class="sec-h"><span class="sec-n">11</span><h2>내일 탐방에서 반드시 확인할 질문 10개</h2></div>
+  <p>순서는 중요도순이다. 각 질문 아래에 <b>왜 묻는지</b>와 <b>답변에서 들어야 할 숫자</b>를 적었다. 회사가 숫자를 피하면 그 자체가 답이다.</p>
+  <div class="qs">
+    <div class="q"><div class="qh"><span class="qn">Q1</span><span class="qt">수주잔고 50만개의 구성: 고객군별·제품별·납기별로 나누면 어떻게 되는가?</span></div>
+      <p class="why">시장은 50만개를 "2025년 출하의 2.3배"로 읽지만, 개당 2만원대 XL330(허깅페이스)이 절반이면 매출 환산 50억, 개당 15만원 X·P 시리즈가 절반이면 400억이다. <b>같은 50만개가 매출로는 8배 차이</b>난다. "주문의 50%를 못 맞춘다"는 말도 리드타임이 몇 주인지에 따라 의미가 다르다.</p>
+      <p class="ask"><span class="lbl">들어야 할 숫자</span>허깅페이스·중국·북미·연구기관 비중(%), X/XL/P/Q 시리즈 비중, 6개월 내 납기 물량, 취소 가능 조건, 평균 리드타임(주), 잔고의 매출 환산액</p></div>
+    <div class="q"><div class="qh"><span class="qn">Q2</span><span class="qt">DXL-Q의 판가·원가 목표와 2027년 제품 믹스, 그때의 매출총이익률은?</span></div>
+      <p class="why">평균단가가 2025년 17.2만원에서 1H26 12.7만원으로 이미 26% 내려왔고, 회사는 DXL-Q를 "중국산 수준 가격"에 내겠다고 했다. GPM 62% → 54%(1H26)가 어디서 멈추는지가 2027년 이익의 전부다. 한화투자가 2026 영업이익을 하향한 이유이기도 하다.</p>
+      <p class="ask"><span class="lbl">들어야 할 숫자</span>DXL-Q 목표 판가(달러)와 목표 GPM, 2027년 X:Q 비중(회사는 1:1이라 했음), 우즈벡 생산 원가 절감률(노무비 기준), 액추에이터 부문 OPM 22.5%(2Q26) 유지 여부</p></div>
+    <div class="q"><div class="qh"><span class="qn">Q3</span><span class="qt">고사양 모터(희토류) 수급 차질: Y·P 시리즈 출고 지연이 현재 얼마나 되고, 언제 정상화되는가?</span></div>
+      <p class="why">삼성(3월)·한화·교보·다올(8월)이 공통으로 지적한 2026E 하향 사유다. 고마진 라인이 막히면서 저가형 위주로 팔려 단가와 GPM이 함께 내려왔다. 회사는 모터 국산화율 95%라 하지만 자석(희토류)은 수입이고, LG전자 모터 결합 MOU가 이 문제의 해법인지도 불분명하다. 이 질문의 답이 2027년 단가 반등(교보 19.5만원) 여부를 가른다.</p>
+      <p class="ask"><span class="lbl">들어야 할 숫자</span>현재 미출고 Y·P 주문 물량과 금액, 모터·자석 공급사 수와 대체 소싱 진행률, 정상화 예상 분기, 고사양 비중 회복 시 GPM 목표, LG전자 모터 채택 시점</p></div>
+    <div class="q"><div class="qh"><span class="qn">Q4</span><span class="qt">우즈베키스탄 공장: 10월 부분가동 일정은 지켜지는가, 2027년 210~300만개까지의 램프업 커브는?</span></div>
+      <p class="why">2027년 매출 1,000억 추정의 대부분이 이 공장이다. 첫 해외 공장에서 캐파를 8~10배 늘리고 2,000명을 뽑는 계획이며, 반기보고서는 "매출 성과는 2027년 초부터 가시화"라고만 썼다. 총 투자 7,000만달러 중 1차 2,000만달러만 출자됐다.</p>
+      <p class="ask"><span class="lbl">들어야 할 숫자</span>10월 가동 라인 수와 월 생산량, 2027년 분기별 캐파(1Q/2Q/3Q/4Q), 현재 채용 인원과 숙련 소요기간, 잔여 투자 5,000만달러의 집행 시기와 재원, 초기 가동비용이 손익에 잡히는 시점</p></div>
+    <div class="q"><div class="qh"><span class="qn">Q5</span><span class="qt">LG전자와의 관계: 우즈벡 지분투자 MOU 조건, '악시움' 출시 이후 LG는 고객인가 경쟁자인가, 유증에 왜 불참했나?</span></div>
+      <p class="why">LG전자는 6.56% 주주이면서 자체 액추에이터 브랜드를 냈고, MOU는 "LG가 모터를 공급하고 로보티즈가 감속기·제어를 결합"하는 구조다. 이것이 공동 제품인지 LG 내재화의 전 단계인지에 따라 해자 판정이 갈린다. 유증 불참(7.36% → 6.56%)은 LG의 온도를 보여주는 신호다.</p>
+      <p class="ask"><span class="lbl">들어야 할 숫자</span>지분투자 예정 금액·지분율·체결 시기, 모터 공급 단가 구조, LG 가전·로봇 제품에 들어가는 다이나믹셀 연간 물량, 악시움과 DXL-Q의 스펙·가격 포지셔닝 차이</p></div>
+    <div class="q"><div class="qh"><span class="qn">Q6</span><span class="qt">북미 빅테크(테슬라·구글·보스턴다이내믹스)와 허깅페이스: 연구·시제품 물량인가, 양산 설계에 들어간 것인가?</span></div>
+      <p class="why">보스턴다이내믹스 700개는 100세트 수준이고, 테슬라·피규어는 액추에이터를 자체 설계한다. "양산 채택"이라면 통상 듀얼소싱·스펙 고정·가격 인하 조건이 붙는다. 허깅페이스 마이크로덕(399달러)은 물량은 크지만 개당 2만원대다.</p>
+      <p class="ask"><span class="lbl">들어야 할 숫자</span>양산 설계 확정(design-win) 고객 수와 연간 물량, 허깅페이스 사전주문의 실제 확정 물량과 2H26 출하 계획(iM은 "국내 캐파 부족으로 인식에 상당 기간"), 북미 방산 고객의 성격(연구용 vs 배치용), 단일 고객 10% 초과 시점, 미국 현지 공장 검토 여부와 조건(하나증권 언급)</p></div>
+    <div class="q"><div class="qh"><span class="qn">Q7</span><span class="qt">중국: 2Q26 매출 3배의 고객은 누구이며, 미국 규제 국면에서 중국 매출 확대가 북미 사업과 충돌하지 않는가?</span></div>
+      <p class="why">중국은 가장 빠르게 크는 지역(1H26 8만개+, 2Q +154%)이고 iM증권은 3Q부터 주요 고객 물량 확대를 예상한다. 동시에 회사는 "FCC 인증 기반 중국산 대체"를 북미 논리로 쓴다. 두 논리는 장기적으로 양립하기 어렵다. 대표는 "중국에 팔 수 있어야 경쟁력 인정"이라고 했다.</p>
+      <p class="ask"><span class="lbl">들어야 할 숫자</span>중국 상위 3개 고객 비중, 중국 판가와 북미 판가의 차이, 중국 로컬 액추에이터 대비 가격·성능 차(토크밀도, 백래시, 수명), 수출통제 대상 여부 검토 결과</p></div>
+    <div class="q"><div class="qh"><span class="qn">Q8</span><span class="qt">로보티즈AI(배송로봇): 1H26 -71억 적자의 출구는 무엇이고, 대표 개인 자금 출자의 조건은?</span></div>
+      <p class="why">6년 연속 액추에이터 이익을 갉아먹은 사업이다. 물적분할 후 100% 자회사이며, 대표는 블록딜 1,007억의 용처를 "자회사 투자"라고 했다. 대표 개인이 로보티즈AI에 출자하면 상장사의 100% 지분이 희석되고, 밸류에이션 조건에 따라 이해상충이 생긴다.</p>
+      <p class="ask"><span class="lbl">들어야 할 숫자</span>2026·2027 로보티즈AI 예상 손실, 손익분기 대수와 시점, 대표 출자 예정 금액·밸류에이션·지분율, 외부 투자 유치·분리 상장 계획, 연간 자금 지원 상한</p></div>
+    <div class="q"><div class="qh"><span class="qn">Q9</span><span class="qt">데이터 팩토리와 AI 사피엔스: 누가 얼마에 사는가, 4Q26에 매출이 실제로 잡히는가?</span></div>
+      <p class="why">2031년 매출 10억달러 목표에는 데이터 매출이 포함돼 있다. 우즈벡에 휴머노이드 1,000대를 놓고 시간당 500~1,200달러에 데이터를 판다는 모델은 아직 고객이 공개된 적 없다. AI 사피엔스 "수천 대" 목표도 가격이 없다.</p>
+      <p class="ask"><span class="lbl">들어야 할 숫자</span>데이터 구매 의향 고객 수와 계약 단계, 에피소드 단가, 4Q26·2027 데이터 매출 목표, AI 사피엔스 판가와 원가(액추에이터 몇 개 탑재), AI 워커 2026년 200대 인도 진행률</p></div>
+    <div class="q"><div class="qh"><span class="qn">Q10</span><span class="qt">자본배분: 현금 2,887억의 사용 계획, 성과보상·R&amp;D·감가상각 등 비용 계획, 최대주주의 추가 매도 가능성은?</span></div>
+      <p class="why">1년간 시장에서 3,517억을 조달·매도했고 집행은 600억 남짓이다. 자동화 조합 181억은 LP 출자라 회사가 직접 통제하지 않는다. 비용 쪽도 확인할 것이 많다. 1H26 R&amp;D 123억은 매출의 45%로 2025년(25%)의 두 배 페이스이고, 자사주 잔여가 17,000주뿐이라 다음 성과보상은 신주(스톡옵션·RSU)일 가능성이 크며, 우즈벡 설비 감가상각이 2027년부터 원가에 들어온다. 2027E 영업이익 160~300억 추정이 이 비용들을 담고 있는지가 문제다. 대표는 "국민성장펀드 매칭 투자"를 매도 사유로 들었는데 매칭 규모가 정해져 있다면 추가 매도 규모도 정해져 있다.</p>
+      <p class="ask"><span class="lbl">들어야 할 숫자</span>3년 자본지출 계획(우즈벡 잔여 5,000만달러 포함), 연간 성과보상 예산(원 또는 주식수)과 2026·2027 R&amp;D 절대액, 우즈벡 연간 감가상각비, 2H26 판관비 가이던스, 자동화 조합의 투자 대상과 회수 구조, 국민성장펀드 매칭 약정액과 대표 추가 매도 계획, 배당·자사주 정책</p></div>
+  </div>
+
+  <h3>투자 전 확인할 것</h3>
+  <ul class="check">
+    <li><b>3Q26 잠정실적(11월 중순)</b>: iM 추정 매출 182.9억·OP 35.7억. 매출 170억 미만이면 2027년 1,000억 경로가 흔들린다.</li>
+    <li><b>우즈벡 10월 가동 공시 또는 보도</b>: 라인 수·월 생산량이 숫자로 나오는지.</li>
+    <li><b>LG전자 지분투자 본계약</b>: 금액과 지분율. 미체결이 길어지면 MOU는 서사로 끝난다.</li>
+    <li><b>DXL-Q 출시 후 첫 양산 고객 공시</b>: 단일판매·공급계약 공시가 한 건도 없다는 점을 기억할 것.</li>
+    <li><b>임원·주요주주 거래계획보고서</b>: 대표의 다음 매도 사전공시(30일 전 의무).</li>
+    <li><b>2026E 컨센서스 방향</b>: 삼성(550억)과 다올(800억)의 간격이 좁혀지는 쪽이 어디인가.</li>
+    <li><b>로보티즈AI 자본 변동</b>: 대표 출자 시 유상증자 공시(자회사 주요 경영사항).</li>
+  </ul>
+</section>
+
+<section id="s12">
+  <div class="sec-h"><span class="sec-n">12</span><h2>데이터 출처와 계산 근거</h2></div>
+  <ul class="src">
+    <li>재무: DART OpenAPI fnlttSinglAcntAll, 연결(CFS) FY2018~FY2025 연간 및 2019~2026 분기 30개. 4분기 = 연간 − 3분기 누적.</li>
+    <li>공시 원문(document.xml): 2026 반기보고서(2026-08-14), 2025 사업보고서 정정본(2026-07-08), FY2018~FY2024 사업보고서 7건(매출실적 수출·내수), 유상증자 결정·정정(2025-08-28, 11-05), 증권발행실적보고서(11-17), 자기주식처분결과(2026-01-07, 01-30), 대량보유보고 4건(김병수 2025-11-21·2026-09-08, 삼성자산운용 2026-02-05·04-06), 임원 거래계획(2025-09-24, 2026-08-06), 소유상황보고(2026-09-08), 타법인 출자 2건(2026-01-26, 07-08), 매출·손익 30% 변동(2026-01-28).</li>
+    <li>시세: 네이버 siseJson 일별시세 2018-10-26~2026-09-14, 통합시세 API(시총·외국인·PBR). 52주 고가는 일별시세 장중 고가 464,000원(6/2)을 썼다. 네이버 통합시세는 492,000원을 표시하나 일별시세에 그 값이 없어 채택하지 않았다.</li>
+    <li>증권사: 텔레그램 리포트 아카이브 전문검색(2025-01 이후 적중 269건, 로보티즈 전용 리포트 24건 + 목표주가 제시 섹터 리포트 6건 + 언급 리포트 약 30건 원문). 한화(8/24)·교보(8/19, 6/29)·삼성(8/19, 6/25, 3/11)·하나(8/18, 4/23)·iM(9/8, 8/19)·현대차(8/26)·미래에셋(8/21)·신한(9/7)·다올(3/16)·메리츠(1/29)·LS(3/17, 9/2)·유진(4/20). 골드만·한국투자·KB·다올(5/6)은 기사 인용. 한경컨센서스 PDF 2건(iM, 메리츠) 별도 수집.</li>
+    <li>기사: ZDNet(2025-07-15, 08-28, 12-02, 2026-07-01, 08-07, 08-14), 뉴스핌(2026-04-23, 08-03, 08-05), 이코노미조선 대표 인터뷰(2026-08-14), 한국경제(2025-09-26, 2026-09-07, 09-10), 더구루(2026-06-22), 더벨(2026-01-05), 블로터(2025-08, 2026-07-14), 로봇신문, AI타임스(2026-08-27), 서울신문(2026-06-05), 파이낸셜뉴스(2026-09-08), KraneShares KOID(2026-04-30), Unitree IPO 트래커.</li>
+    <li>계산값: 평균단가 = 부문 매출 ÷ 회사 발표 출하량. EV = 시총 − 현금성 금융자산 2,887억. 2031 시나리오 마진(OPM 20%, 순이익률 16%)은 필자 가정. 특허 91건은 사업보고서 지적재산권 표를 국가·연도별로 집계.</li>
+    <li>미확인: 다이나믹셀 시장점유율(회사·기사 모두 수치 없음), 유증 청약률 세부, 허깅페이스 확정 물량, 우즈벡 잔여 투자 재원, KOSDAQ150 편입 여부.</li>
+  </ul>
+  <p class="foot">본 문서는 공개 자료를 정리한 개인 연구 노트이며 투자 권유가 아니다. 수치는 2026-09-14 기준이고 회사 가이던스·증권사 추정치는 언제든 바뀐다. 계산값과 가정은 본문에 명시했다.</p>
+</section>
+
+</main>
+
+<script id="cd" type="application/json">{"annual": {"2018": {"rev": 242.7, "gp": 108.5, "sga": 91.0, "op": 17.5, "ni": 23.6, "ni_ctrl": 23.4, "assets": 688.3, "liab": 72.9, "equity": 615.4, "cash": 135.1, "cfo": 5.3, "capex": 103.1}, "2019": {"rev": 252.3, "gp": 131.6, "sga": 114.8, "op": 16.8, "ni": 24.8, "ni_ctrl": 24.5, "assets": 646.7, "liab": 32.6, "equity": 614.1, "cash": 96.8, "cfo": 41.8, "capex": 8.8}, "2020": {"rev": 192.3, "gp": 98.3, "sga": 115.9, "op": -17.6, "ni": -1.4, "ni_ctrl": -3.7, "assets": 732.0, "liab": 98.2, "equity": 633.8, "cash": 92.3, "cfo": -5.7, "capex": 23.4}, "2021": {"rev": 223.6, "gp": 114.6, "sga": 123.9, "op": -9.3, "ni": 7.3, "ni_ctrl": 9.2, "assets": 801.3, "liab": 99.2, "equity": 702.1, "cash": 153.7, "cfo": 13.7, "capex": 14.0}, "2022": {"rev": 258.6, "gp": 139.6, "sga": 161.2, "op": -21.6, "ni": -2.2, "ni_ctrl": -0.3, "assets": 1227.9, "liab": 381.4, "equity": 846.6, "cash": 256.7, "cfo": 124.8, "capex": 36.2}, "2023": {"rev": 291.3, "gp": 154.7, "sga": 207.6, "op": -53.0, "ni": -13.0, "ni_ctrl": -13.5, "assets": 1150.0, "liab": 191.5, "equity": 958.4, "cash": 73.5, "cfo": -47.5, "capex": 22.4}, "2024": {"rev": 300.4, "gp": 162.5, "sga": 192.2, "op": -29.7, "ni": -30.4, "ni_ctrl": -31.4, "assets": 1002.5, "liab": 42.4, "equity": 960.1, "cash": 116.9, "cfo": 53.6, "capex": 42.6}, "2025": {"rev": 389.4, "gp": 243.1, "sga": 209.6, "op": 33.5, "ni": 53.0, "ni_ctrl": 50.7, "assets": 3197.1, "liab": 56.3, "equity": 3140.8, "cash": 310.4, "cfo": 70.8, "capex": 21.9}}, "quarterly": {"2019Q1": {"rev": 58.7, "gp": 28.8, "sga": 33.3, "op": -4.5, "ni": -1.1, "ni_ctrl": -0.8, "gpm": 49.1, "opm": -7.7}, "2019Q2": {"rev": 62.3, "gp": 32.5, "sga": 25.5, "op": 6.9, "ni": 9.0, "ni_ctrl": 10.0, "gpm": 52.2, "opm": 11.1}, "2019Q3": {"rev": 64.1, "gp": 35.7, "sga": 28.5, "op": 7.2, "ni": 11.4, "ni_ctrl": 11.4, "gpm": 55.7, "opm": 11.2}, "2019Q4": {"rev": 67.1, "gp": 34.6, "sga": 27.5, "op": 7.1, "ni": 5.5, "ni_ctrl": 3.8, "gpm": 51.6, "opm": 10.6}, "2020Q1": {"rev": 59.0, "gp": 31.8, "sga": 32.3, "op": -0.4, "ni": 7.2, "ni_ctrl": 9.1, "gpm": 53.9, "opm": -0.7}, "2020Q2": {"rev": 35.3, "gp": 18.3, "sga": 27.2, "op": -8.8, "ni": -8.1, "ni_ctrl": -10.3, "gpm": 51.8, "opm": -24.9}, "2020Q3": {"rev": 47.6, "gp": 22.2, "sga": 28.6, "op": -6.4, "ni": -5.8, "ni_ctrl": -6.8, "gpm": 46.6, "opm": -13.4}, "2020Q4": {"rev": 50.4, "gp": 25.9, "sga": 27.9, "op": -2.0, "ni": 5.3, "ni_ctrl": 2.8, "gpm": 51.4, "opm": -4.0}, "2021Q1": {"rev": 46.8, "gp": 21.3, "sga": 31.4, "op": -10.1, "ni": -6.3, "ni_ctrl": -5.5, "gpm": 45.5, "opm": -21.6}, "2021Q2": {"rev": 59.8, "gp": 28.8, "sga": 27.3, "op": 1.6, "ni": 0.6, "ni_ctrl": 2.2, "gpm": 48.2, "opm": 2.7}, "2021Q3": {"rev": 57.5, "gp": 34.0, "sga": 33.9, "op": 0.1, "ni": 5.9, "ni_ctrl": 5.3, "gpm": 59.1, "opm": 0.2}, "2021Q4": {"rev": 59.5, "gp": 30.4, "sga": 31.3, "op": -0.8, "ni": 7.1, "ni_ctrl": 7.0, "gpm": 51.1, "opm": -1.3}, "2022Q1": {"rev": 62.7, "gp": 34.2, "sga": 37.5, "op": -3.4, "ni": -2.9, "ni_ctrl": -2.5, "gpm": 54.5, "opm": -5.4}, "2022Q2": {"rev": 60.2, "gp": 30.9, "sga": 37.6, "op": -6.6, "ni": -7.3, "ni_ctrl": -5.4, "gpm": 51.3, "opm": -11.0}, "2022Q3": {"rev": 68.2, "gp": 37.4, "sga": 43.9, "op": -6.4, "ni": 3.4, "ni_ctrl": 2.7, "gpm": 54.8, "opm": -9.4}, "2022Q4": {"rev": 67.4, "gp": 37.1, "sga": 42.2, "op": -5.1, "ni": 4.5, "ni_ctrl": -0.5, "gpm": 55.0, "opm": -7.6}, "2023Q1": {"rev": 73.1, "gp": 35.8, "sga": 51.3, "op": -15.5, "ni": -5.9, "ni_ctrl": -4.8, "gpm": 49.0, "opm": -21.2}, "2023Q2": {"rev": 64.6, "gp": 35.9, "sga": 52.8, "op": -16.9, "ni": 2.9, "ni_ctrl": 2.5, "gpm": 55.6, "opm": -26.2}, "2023Q3": {"rev": 65.8, "gp": 36.5, "sga": 51.7, "op": -15.2, "ni": -6.1, "ni_ctrl": -6.4, "gpm": 55.5, "opm": -23.1}, "2023Q4": {"rev": 87.7, "gp": 46.4, "sga": 51.8, "op": -5.4, "ni": -3.9, "ni_ctrl": -3.9, "gpm": 52.9, "opm": -6.2}, "2024Q1": {"rev": 83.4, "gp": 43.5, "sga": 52.7, "op": -9.2, "ni": -26.4, "ni_ctrl": -26.7, "gpm": 52.2, "opm": -11.0}, "2024Q2": {"rev": 80.9, "gp": 45.2, "sga": 44.3, "op": 0.9, "ni": -4.1, "ni_ctrl": -4.4, "gpm": 55.9, "opm": 1.1}, "2024Q3": {"rev": 68.4, "gp": 40.0, "sga": 54.0, "op": -14.0, "ni": -15.0, "ni_ctrl": -15.4, "gpm": 58.5, "opm": -20.5}, "2024Q4": {"rev": 67.7, "gp": 33.8, "sga": 41.2, "op": -7.3, "ni": 15.1, "ni_ctrl": 15.1, "gpm": 49.9, "opm": -10.8}, "2025Q1": {"rev": 102.2, "gp": 63.1, "sga": 54.8, "op": 8.3, "ni": 12.0, "ni_ctrl": 11.4, "gpm": 61.7, "opm": 8.1}, "2025Q2": {"rev": 78.8, "gp": 48.1, "sga": 45.7, "op": 2.4, "ni": 1.7, "ni_ctrl": 1.3, "gpm": 61.0, "opm": 3.0}, "2025Q3": {"rev": 92.4, "gp": 59.9, "sga": 57.6, "op": 2.2, "ni": 9.2, "ni_ctrl": 8.1, "gpm": 64.8, "opm": 2.4}, "2025Q4": {"rev": 116.0, "gp": 72.0, "sga": 51.4, "op": 20.6, "ni": 30.1, "ni_ctrl": 29.9, "gpm": 62.1, "opm": 17.8}, "2026Q1": {"rev": 118.4, "gp": 60.7, "sga": 179.1, "op": -118.4, "ni": -99.5, "ni_ctrl": -100.6, "gpm": 51.3, "opm": -100.0, "sbc": 117.8, "op_adj": -0.6, "sga_adj": 61.3}, "2026Q2": {"rev": 153.7, "gp": 86.5, "sga": 66.7, "op": 19.8, "ni": 26.3, "ni_ctrl": 25.0, "gpm": 56.3, "opm": 12.9}}, "export": {"2015": [76.1, 59.5], "2016": [85.5, 63.2], "2017": [101.3, 77.8], "2018": [155.4, 87.3], "2019": [171.3, 81.0], "2020": [144.1, 48.2], "2021": [161.8, 61.8], "2022": [174.5, 84.1], "2023": [202.9, 88.4], "2024": [205.7, 94.7], "2025": [274.6, 114.9], "1H26": [194.7, 77.4]}, "geo": {"2Q25": {"한국": 27.1, "북미": 22.2, "일본": 6.7, "중국": 5.9, "유럽": 9.2, "기타": 7.8}, "2Q26": {"한국": 41.2, "북미": 53.9, "일본": 7.2, "중국": 14.9, "유럽": 21.0, "기타": 15.7}, "1H25": {"한국": 52.3, "북미": 72.6, "일본": 14.2, "중국": 7.8, "유럽": 16.8, "기타": 17.2}, "1H26": {"한국": 77.4, "북미": 89.4, "일본": 16.0, "중국": 21.9, "유럽": 42.2, "기타": 25.3}}, "weekly": [["20240105", 29458], ["20240112", 30237], ["20240119", 29799], ["20240126", 27510], ["20240202", 26147], ["20240208", 25903], ["20240216", 27023], ["20240223", 25806], ["20240229", 26488], ["20240308", 25416], ["20240315", 25952], ["20240322", 26585], ["20240329", 26001], ["20240405", 23663], ["20240412", 22884], ["20240419", 22738], ["20240426", 22349], ["20240503", 22933], ["20240510", 23371], ["20240517", 22836], ["20240524", 22349], ["20240531", 22105], ["20240607", 22008], ["20240614", 23615], ["20240621", 21813], ["20240628", 22982], ["20240705", 22495], ["20240712", 22738], ["20240719", 21813], ["20240726", 20352], ["20240802", 18736], ["20240809", 17178], ["20240816", 18278], ["20240823", 19408], ["20240830", 19135], ["20240906", 17304], ["20240913", 18405], ["20240920", 18483], ["20240927", 19359], ["20241004", 18337], ["20241011", 18093], ["20241018", 17723], ["20241025", 16730], ["20241101", 16993], ["20241108", 17567], ["20241115", 16681], ["20241122", 19622], ["20241129", 21229], ["20241206", 19622], ["20241213", 18755], ["20241220", 18989], ["20241227", 22008], ["20250103", 24394], ["20250110", 31162], ["20250117", 34327], ["20250124", 36615], ["20250131", 41241], ["20250207", 36469], ["20250214", 32963], ["20250221", 32720], ["20250228", 29652], ["20250307", 30918], ["20250314", 36275], ["20250321", 31259], ["20250328", 30188], ["20250404", 32233], ["20250411", 32915], ["20250418", 34035], ["20250425", 33986], ["20250502", 33207], ["20250509", 35203], ["20250516", 57455], ["20250523", 51125], ["20250530", 58234], ["20250605", 66414], ["20250613", 53755], ["20250620", 61351], ["20250627", 69141], ["20250704", 64954], ["20250711", 69336], ["20250718", 80243], ["20250725", 77808], ["20250801", 75179], ["20250808", 82775], ["20250814", 83846], ["20250822", 82190], ["20250829", 88520], ["20250905", 96116], ["20250912", 97382], ["20250919", 132635], ["20250926", 145100], ["20251002", 156800], ["20251010", 191300], ["20251017", 192200], ["20251024", 192900], ["20251031", 220500], ["20251107", 221000], ["20251114", 219000], ["20251121", 191800], ["20251128", 233500], ["20251205", 283000], ["20251212", 302500], ["20251219", 280500], ["20251226", 268500], ["20260102", 269500], ["20260109", 242000], ["20260116", 257500], ["20260123", 248500], ["20260130", 338500], ["20260206", 273000], ["20260213", 271500], ["20260220", 279500], ["20260227", 288500], ["20260306", 250500], ["20260313", 258500], ["20260320", 261000], ["20260327", 255000], ["20260403", 246000], ["20260410", 245500], ["20260417", 273000], ["20260424", 292500], ["20260430", 316500], ["20260508", 334500], ["20260515", 328500], ["20260522", 304500], ["20260529", 325500], ["20260605", 320500], ["20260612", 330000], ["20260619", 287000], ["20260626", 232000], ["20260703", 227500], ["20260710", 218000], ["20260716", 199900], ["20260724", 191400], ["20260731", 183800], ["20260807", 229500], ["20260814", 280000], ["20260821", 254000], ["20260828", 242000], ["20260904", 304500], ["20260911", 323500], ["20260914", 317500]], "peers": [{"name": "레인보우로보틱스", "seg": "협동·4족·휴머노이드", "mcap": 80994, "rev25": 341.2, "op25": -24.8, "rev26h": 213.8, "op26h": -35.9, "pbr": "60.96배"}, {"name": "로보티즈", "seg": "액추에이터", "mcap": 46568, "rev25": 389.4, "op25": 33.5, "rev26h": 272.1, "op26h": -98.6, "pbr": "12.92배"}, {"name": "두산로보틱스", "seg": "협동로봇", "mcap": 44531, "rev25": 329.8, "op25": -594.7, "rev26h": 329.7, "op26h": -264.9, "pbr": "13.53배"}, {"name": "에스피지", "seg": "감속기·모터", "mcap": 19738, "rev25": 3416.7, "op25": 179.4, "rev26h": 1696.0, "op26h": 84.8, "pbr": "7.20배"}, {"name": "삼현", "seg": "모터·감속기 모듈", "mcap": 12556, "rev25": 950.4, "op25": 8.1, "rev26h": 397.6, "op26h": -78.8, "pbr": "10.54배"}, {"name": "유일로보틱스", "seg": "산업용·물류로봇", "mcap": 7740, "rev25": 369.2, "op25": -126.2, "rev26h": 145.2, "op26h": -55.7, "pbr": "8.36배"}, {"name": "클로봇", "seg": "로봇 SW", "mcap": 6918, "rev25": 414.1, "op25": -31.8, "rev26h": 169.8, "op26h": -53.4, "pbr": "9.89배"}, {"name": "하이젠알앤엠", "seg": "모터·액추에이터", "mcap": 6208, "rev25": 735.4, "op25": -89.1, "rev26h": 394.3, "op26h": -48.6, "pbr": "5.62배"}, {"name": "뉴로메카", "seg": "협동로봇", "mcap": 4139, "rev25": 189.5, "op25": -148.6, "rev26h": 58.1, "op26h": -95.8, "pbr": "10.10배"}, {"name": "한국피아이엠", "seg": "구동모듈(MIM)", "mcap": 2861, "rev25": 369.3, "op25": 14.6, "rev26h": 188.2, "op26h": -5.7, "pbr": "4.85배"}, {"name": "에스비비테크", "seg": "하모닉 감속기", "mcap": 2592, "rev25": 72.0, "op25": -68.6, "rev26h": 44.8, "op26h": -48.0, "pbr": "12.82배"}, {"name": "이랜시스", "seg": "감속기·구동부", "mcap": 1645, "rev25": 695.7, "op25": 38.9, "rev26h": 398.8, "op26h": 25.5, "pbr": "2.99배"}]}</script>
+<script>
+(function(){
+const CD = JSON.parse(document.getElementById('cd').textContent);
+const tip = document.getElementById('tip');
+function showTip(html, x, y){
+  tip.innerHTML = html; tip.style.display='block';
+  const r = tip.getBoundingClientRect();
+  let L = x + 14, T = y + 14;
+  if (L + r.width > window.innerWidth - 8) L = x - r.width - 14;
+  if (L < 8) L = 8;
+  if (T + r.height > window.innerHeight - 8) T = y - r.height - 14;
+  if (T < 8) T = 8;
+  tip.style.left = L + 'px'; tip.style.top = T + 'px';
+}
+function hideTip(){ tip.style.display='none'; }
+window.addEventListener('scroll', hideTip, {passive:true});
+document.addEventListener('pointerdown', e => { if (!e.target.closest('.chart svg')) hideTip(); });
+const fmtN = v => v == null ? '-' : v.toLocaleString('ko-KR');
+const f1 = v => v == null ? '-' : (v>0?'+':'') + v.toFixed(1) + '%';
+const p1 = v => v == null ? '-' : v.toFixed(1) + '%';
+function bindHits(svg, onHit){
+  let down = false;
+  const handler = e => { const t = e.target.closest('[data-hit]'); if (!t){ hideTip(); return; } onHit(t, e); };
+  svg.addEventListener('pointerdown', e => { down = true; handler(e); });
+  svg.addEventListener('pointermove', e => { if (e.pointerType === 'mouse' || down) handler(e); });
+  ['pointerup','pointercancel','pointerleave'].forEach(ev => svg.addEventListener(ev, () => { down=false; if (ev!=='pointerup') hideTip(); }));
+}
+function responsive(id, draw){
+  const box = document.getElementById(id); const svg = box.querySelector('svg');
+  let t;
+  const render = () => { const W = Math.max(280, Math.floor(box.clientWidth - (parseFloat(getComputedStyle(box).paddingLeft)*2))); const H = draw(svg, W); svg.setAttribute('viewBox', `0 0 ${W} ${H}`); svg.setAttribute('height', H); };
+  render();
+  new ResizeObserver(() => { clearTimeout(t); t = setTimeout(render, 120); }).observe(box);
+}
+const cls = v => v == null ? '' : (v > 0 ? 'pos' : (v < 0 ? 'neg' : ''));
+
+/* ---------- annual table ---------- */
+const A = CD.annual; const RD = {2018:null,2019:null,2020:null,2021:null,2022:null,2023:110.3,2024:92.2,2025:98.0};
+const yrs = Object.keys(A).map(Number).sort();
+document.getElementById('ann-body').innerHTML = yrs.map((y,i) => {
+  const a = A[y]; const prev = i>0 ? A[yrs[i-1]] : null;
+  const yoy = prev ? (a.rev/prev.rev-1)*100 : null; const gpm = a.gp/a.rev*100; const opm = a.op/a.rev*100;
+  return `<tr><td>${y}</td><td class="num">${a.rev.toFixed(1)}</td><td class="num ${cls(yoy)}">${f1(yoy)}</td><td class="num">${p1(gpm)}</td><td class="num">${a.sga.toFixed(1)}</td><td class="num">${RD[y]==null?'-':RD[y].toFixed(1)}</td><td class="num ${cls(a.op)}">${a.op.toFixed(1)}</td><td class="num ${cls(opm)}">${p1(opm)}</td><td class="num ${cls(a.ni_ctrl)}">${a.ni_ctrl.toFixed(1)}</td><td class="num">${fmtN(Math.round(a.equity))}</td></tr>`;
+}).join('');
+
+/* ---------- quarterly table ---------- */
+const Q = CD.quarterly; const qk = Object.keys(Q).filter(k => k >= '2023Q1').sort();
+document.getElementById('q-body').innerHTML = qk.map(k => {
+  const q = Q[k]; const py = Q[(+k.slice(0,4)-1) + k.slice(4)]; const yoy = py ? (q.rev/py.rev-1)*100 : null;
+  const adj = k === '2026Q1';
+  const opTxt = adj ? `${q.op.toFixed(1)}<br><span class="small">조정 ${q.op_adj.toFixed(1)}</span>` : q.op.toFixed(1);
+  const opmTxt = adj ? `${p1(q.opm)}<br><span class="small">조정 ${p1(q.op_adj/q.rev*100)}</span>` : p1(q.opm);
+  const sgaTxt = adj ? `${q.sga.toFixed(1)}<br><span class="small">자사주 117.8 포함</span>` : q.sga.toFixed(1);
+  return `<tr${k==='2026Q2'?' class="sum"':''}><td>${k.replace('Q',' Q')}</td><td class="num">${q.rev.toFixed(1)}</td><td class="num ${cls(yoy)}">${f1(yoy)}</td><td class="num">${p1(q.gpm)}</td><td class="num">${sgaTxt}</td><td class="num ${cls(q.op)}">${opTxt}</td><td class="num ${cls(q.op)}">${opmTxt}</td><td class="num ${cls(q.ni_ctrl)}">${q.ni_ctrl==null?'-':q.ni_ctrl.toFixed(1)}</td></tr>`;
+}).join('');
+
+/* ---------- peers table ---------- */
+const P = CD.peers;
+document.getElementById('peer-body').innerHTML = P.map(p => {
+  const opm = p.op25 != null && p.rev25 ? p.op25/p.rev25*100 : null; const psr = p.mcap/p.rev25;
+  return `<tr${p.name==='로보티즈'?' class="sum"':''}><td>${p.name}</td><td>${p.seg}</td><td class="num">${fmtN(p.mcap)}억</td><td class="num">${p.rev25.toFixed(0)}</td><td class="num ${cls(p.op25)}">${p.op25==null?'-':p.op25.toFixed(0)}</td><td class="num ${cls(opm)}">${p1(opm)}</td><td class="num">${p.rev26h==null?'-':p.rev26h.toFixed(0)}</td><td class="num ${cls(p.op26h)}">${p.op26h==null?'-':p.op26h.toFixed(0)}</td><td class="num">${psr.toFixed(0)}배</td><td class="num">${p.pbr||'-'}</td></tr>`;
+}).join('');
+
+/* ---------- Chart: price weekly ---------- */
+responsive('ch-px', (svg, W) => {
+  const narrow = W < 560;
+  const ML = narrow ? 40 : 52, MR = 10, MT = 22, MB = 28;
+  const Hh = narrow ? 240 : 320; const ph = Hh - MT - MB, pw = W - ML - MR;
+  const D = CD.weekly; const n = D.length;
+  const yMax = 480000, yMin = 0;
+  const x = i => ML + i/(n-1)*pw; const y = v => MT + (yMax - v)/(yMax - yMin)*ph;
+  let s = '';
+  [0,100000,200000,300000,400000].forEach(v => { s += `<line class="${v===0?'axis':'grid'}" x1="${ML}" x2="${W-MR}" y1="${y(v)}" y2="${y(v)}"/><text x="${ML-4}" y="${y(v)+4}" text-anchor="end" class="mut" style="font-size:${narrow?9.5:11}px">${v/10000}만</text>`; });
+  // year ticks
+  let lastY = '';
+  D.forEach((d,i) => { const yy = d[0].slice(0,4); if (yy !== lastY){ lastY = yy; s += `<line class="grid" x1="${x(i)}" x2="${x(i)}" y1="${MT}" y2="${MT+ph}"/><text x="${x(i)+3}" y="${Hh-8}" class="mut" style="font-size:${narrow?9.5:11}px">${yy}</text>`; } });
+  const path = D.map((d,i) => (i?'L':'M') + x(i).toFixed(1) + ' ' + y(d[1]).toFixed(1)).join(' ');
+  s += `<path d="${path} L${x(n-1).toFixed(1)} ${y(0)} L${x(0)} ${y(0)} Z" fill="var(--c1-soft)"/>`;
+  s += `<path d="${path}" fill="none" stroke="var(--c1)" stroke-width="1.8"/>`;
+  const EV = [['20250718',1],['20250829',2],['20251107',3],['20260109',4],['20260605',5],['20260731',6],['20260814',7],['20260911',8],['20260914',9]];
+  EV.forEach(([dt, num]) => { let idx = D.findIndex(d => d[0] >= dt); if (idx < 0) idx = n-1; const px = x(idx), py = y(D[idx][1]); const up = num % 2 === 1 ? -14 : -26;
+    s += `<line x1="${px}" x2="${px}" y1="${py}" y2="${py+up+6}" stroke="var(--c2)" stroke-width="1"/><circle cx="${px}" cy="${py+up}" r="${narrow?7:8}" fill="var(--c2)"/><text x="${px}" y="${py+up+3.5}" text-anchor="middle" style="font-size:${narrow?9:10}px; fill:#fff; font-weight:600">${num}</text>`; });
+  const step = Math.max(1, Math.round(n / Math.floor(pw/6)));
+  D.forEach((d,i) => { if (i % 1 === 0) s += `<rect data-hit="${i}" x="${x(i) - pw/(n-1)/2}" y="${MT}" width="${pw/(n-1)}" height="${ph}" fill="transparent"/>`; });
+  svg.innerHTML = s;
+  bindHits(svg, (t, e) => { const d = D[+t.dataset.hit]; showTip(`<b>${d[0].slice(0,4)}-${d[0].slice(4,6)}-${d[0].slice(6)}</b><br>종가 ${fmtN(d[1])}원`, e.clientX, e.clientY); });
+  return Hh;
+});
+
+/* ---------- Chart: geo bars ---------- */
+responsive('ch-geo', (svg, W) => {
+  const narrow = W < 560;
+  const G = CD.geo; const regs = ['북미','한국','유럽','기타','중국','일본'];
+  const ML = narrow ? 44 : 60, MR = narrow ? 44 : 60, MT = 8, rowH = narrow ? 36 : 40;
+  const Hh = MT + regs.length*rowH + 8; const pw = W - ML - MR; const xMax = 60;
+  const x = v => ML + v/xMax*pw;
+  let s = '';
+  [0,20,40,60].forEach(v => s += `<line class="${v===0?'axis':'grid'}" x1="${x(v)}" x2="${x(v)}" y1="${MT}" y2="${Hh-8}"/>`);
+  regs.forEach((r,i) => { const y0 = MT + i*rowH; const a = G['2Q25'][r], b = G['2Q26'][r]; const bh = narrow ? 11 : 13;
+    s += `<text x="${ML-6}" y="${y0+rowH/2+4}" text-anchor="end" class="lab" style="font-size:${narrow?11:12}px">${r}</text>`;
+    s += `<rect x="${ML}" y="${y0+rowH/2-bh-1}" width="${x(a)-ML}" height="${bh}" fill="var(--c4)" rx="2"/>`;
+    s += `<rect x="${ML}" y="${y0+rowH/2+1}" width="${x(b)-ML}" height="${bh}" fill="var(--c1)" rx="2"/>`;
+    s += `<text x="${x(b)+5}" y="${y0+rowH/2+bh-1}" style="font-size:${narrow?10:11}px">${b.toFixed(1)} <tspan class="mut">(${f1((b/a-1)*100)})</tspan></text>`;
+    s += `<rect data-hit="${r}" x="${ML}" y="${y0}" width="${pw+MR}" height="${rowH}" fill="transparent"/>`; });
+  svg.innerHTML = s;
+  bindHits(svg, (t, e) => { const r = t.dataset.hit; showTip(`<b>${r}</b><br>2Q25 ${G['2Q25'][r]}억 → 2Q26 ${G['2Q26'][r]}억<br>1H26 ${G['1H26'][r]}억 (${f1((G['1H26'][r]/G['1H25'][r]-1)*100)})`, e.clientX, e.clientY); });
+  return Hh;
+});
+
+/* ---------- Chart: annual bars + op line ---------- */
+responsive('ch-ann', (svg, W) => {
+  const narrow = W < 560;
+  const E = CD.export; const keys = Object.keys(E).filter(k => k.length===4);
+  const ML = narrow ? 36 : 46, MR = narrow ? 34 : 44, MT = 16, MB = 28;
+  const Hh = narrow ? 250 : 320; const ph = Hh - MT - MB, pw = W - ML - MR;
+  const yMax = 400, yMin = -60; const y = v => MT + (yMax - v)/(yMax - yMin)*ph;
+  const gw = pw/keys.length; const bw = Math.min(narrow ? 16 : 26, gw*0.6);
+  let s = '';
+  [0,100,200,300,400].forEach(v => s += `<line class="${v===0?'axis':'grid'}" x1="${ML}" x2="${W-MR}" y1="${y(v)}" y2="${y(v)}"/><text x="${ML-4}" y="${y(v)+4}" text-anchor="end" class="mut" style="font-size:${narrow?9.5:11}px">${v}</text>`);
+  const OP = {2015:null,2016:null,2017:null};
+  keys.forEach((k,i) => { const [ex, dom] = E[k]; const xc = ML + i*gw + gw/2; const tot = ex+dom;
+    s += `<rect x="${xc-bw/2}" y="${y(tot)}" width="${bw}" height="${y(dom)-y(tot)}" fill="var(--c1)" rx="1"/>`;
+    s += `<rect x="${xc-bw/2}" y="${y(dom)}" width="${bw}" height="${y(0)-y(dom)}" fill="var(--c4)" rx="1"/>`;
+    s += `<text x="${xc}" y="${y(tot)-4}" text-anchor="middle" class="mut" style="font-size:${narrow?8.5:10}px">${Math.round(ex/tot*100)}%</text>`;
+    s += `<text x="${xc}" y="${Hh-10}" text-anchor="middle" class="mut" style="font-size:${narrow?9.5:11}px">${narrow? k.slice(2): k}</text>`;
+    s += `<rect data-hit="${k}" x="${ML+i*gw}" y="${MT}" width="${gw}" height="${ph}" fill="transparent"/>`; });
+  const pts = keys.map((k,i) => { const a = CD.annual[k]; return a ? [ML + i*gw + gw/2, y(a.op), a.op] : null; }).filter(Boolean);
+  s += `<path d="${pts.map((p,i)=>(i?'L':'M')+p[0]+' '+p[1]).join(' ')}" fill="none" stroke="var(--c2)" stroke-width="2"/>`;
+  pts.forEach(p => s += `<circle cx="${p[0]}" cy="${p[1]}" r="3.5" fill="var(--c2)"/>`);
+  svg.innerHTML = s;
+  bindHits(svg, (t, e) => { const k = t.dataset.hit; const [ex,dom] = E[k]; const a = CD.annual[k]; showTip(`<b>${k}</b><br>매출 ${(ex+dom).toFixed(1)}억 (수출 ${ex} / 내수 ${dom})<br>수출비중 ${Math.round(ex/(ex+dom)*100)}%${a?`<br>영업이익 ${a.op}억`:''}`, e.clientX, e.clientY); });
+  return Hh;
+});
+
+/* ---------- Chart: quarterly rev bars + opm line ---------- */
+responsive('ch-q', (svg, W) => {
+  const narrow = W < 560;
+  const ML = narrow ? 36 : 46, MR = narrow ? 34 : 44, MT = 16, MB = 30;
+  const Hh = narrow ? 250 : 320; const ph = Hh - MT - MB, pw = W - ML - MR;
+  const yMax = 160, yMin = 0; const y = v => MT + (yMax - v)/(yMax - yMin)*ph;
+  const oMax = 30, oMin = -30; const yo = v => MT + (oMax - v)/(oMax - oMin)*ph;
+  const gw = pw/qk.length; const bw = Math.min(narrow ? 12 : 22, gw*0.6);
+  let s = '';
+  [0,40,80,120,160].forEach(v => s += `<line class="${v===0?'axis':'grid'}" x1="${ML}" x2="${W-MR}" y1="${y(v)}" y2="${y(v)}"/><text x="${ML-4}" y="${y(v)+4}" text-anchor="end" class="mut" style="font-size:${narrow?9.5:11}px">${v}</text>`);
+  [-30,-15,0,15,30].forEach(v => s += `<text x="${W-MR+4}" y="${yo(v)+4}" class="mut" style="font-size:${narrow?9.5:11}px">${v}%</text>`);
+  s += `<line x1="${ML}" x2="${W-MR}" y1="${yo(0)}" y2="${yo(0)}" stroke="var(--c2)" stroke-dasharray="3 3" stroke-width="1" opacity=".5"/>`;
+  qk.forEach((k,i) => { const q = Q[k]; const xc = ML + i*gw + gw/2;
+    s += `<rect x="${xc-bw/2}" y="${y(q.rev)}" width="${bw}" height="${y(0)-y(q.rev)}" fill="var(--c1)" rx="1"/>`;
+    if (k.endsWith('Q1')) s += `<text x="${xc}" y="${Hh-10}" text-anchor="middle" class="mut" style="font-size:${narrow?9.5:11}px">${k.slice(0,4)}</text>`;
+    s += `<rect data-hit="${k}" x="${ML+i*gw}" y="${MT}" width="${gw}" height="${ph}" fill="transparent"/>`; });
+  const pts = qk.map((k,i) => { const q = Q[k]; const v = k==='2026Q1' ? q.op_adj/q.rev*100 : q.opm; return [ML + i*gw + gw/2, yo(v), v]; });
+  s += `<path d="${pts.map((p,i)=>(i?'L':'M')+p[0]+' '+p[1]).join(' ')}" fill="none" stroke="var(--c2)" stroke-width="2"/>`;
+  pts.forEach(p => s += `<circle cx="${p[0]}" cy="${p[1]}" r="3.5" fill="var(--c2)"/>`);
+  svg.innerHTML = s;
+  bindHits(svg, (t, e) => { const k = t.dataset.hit; const q = Q[k]; showTip(`<b>${k}</b><br>매출 ${q.rev}억, GPM ${p1(q.gpm)}<br>영업이익 ${q.op}억 (OPM ${p1(q.opm)})${k==='2026Q1'?`<br>자사주 117.8억 제외 시 ${q.op_adj}억`:''}`, e.clientX, e.clientY); });
+  return Hh;
+});
+})();
+</script>
+</body>
+</html>

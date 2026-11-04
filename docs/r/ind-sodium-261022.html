@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<title>소듐이온 배터리 산업 리포트</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;700&family=IBM+Plex+Mono:wght@400;600&family=Gothic+A1:wght@800;900&display=swap">
+<style>
+html{color-scheme:light dark}body{margin:0}img{max-width:100%}[hidden]{display:none!important}
+/* 레이아웃: 단일 본문 단. 색은 불꽃 반응 — 나트륨 D선 589nm(노랑), 리튬 671nm(진홍) */
+:root{
+  --bg:#f1f2f0; --paper:#fbfbfa; --fg:#1d2124; --muted:#5d666c; --line:#d3d7d6; --tint:#e8eae7;
+  --na:#b7820b; --na-soft:#f3e3b8; --li:#b2283f; --li-soft:#f1d3d8; --ink:#2f4a5a; --pos:#2a7a4b; --neg:#b3362e;
+  --f-display:"Gothic A1","IBM Plex Sans KR","Malgun Gothic",sans-serif;
+  --f-body:"IBM Plex Sans KR","Malgun Gothic","Apple SD Gothic Neo",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#141617; --paper:#1b1e20; --fg:#e6e8e7; --muted:#9aa3a8; --line:#30363a; --tint:#23282b;
+  --na:#f0b832; --na-soft:#4a3a12; --li:#f06a80; --li-soft:#4a1e27; --ink:#8fb5c9; --pos:#6cc995; --neg:#ef7a70; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#141617; --paper:#1b1e20; --fg:#e6e8e7; --muted:#9aa3a8; --line:#30363a; --tint:#23282b;
+  --na:#f0b832; --na-soft:#4a3a12; --li:#f06a80; --li-soft:#4a1e27; --ink:#8fb5c9; --pos:#6cc995; --neg:#ef7a70; color-scheme:dark}
+body{background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:15.5px;line-height:1.72;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:920px;margin:0 auto;padding-block:36px 72px}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;line-height:1.3;margin:0}
+h1{font-size:clamp(26px,5.2vw,40px);font-weight:900;letter-spacing:-.01em}
+h2{font-size:clamp(20px,3.6vw,25px);font-weight:800;margin-top:54px;padding-top:16px;border-top:2px solid var(--fg);display:flex;gap:12px;align-items:baseline}
+h2 .no{font-family:var(--f-mono);font-size:13px;color:var(--muted);font-weight:600}
+h3{font-size:17px;font-weight:800;margin-top:26px}
+p{margin:12px 0;max-width:68ch}
+.eyebrow{font-family:var(--f-mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.lede{font-size:17px;max-width:66ch}
+.na{color:var(--na);font-weight:700}.li{color:var(--li);font-weight:700}
+.pos{color:var(--pos)}.neg{color:var(--neg)}
+td.n,th.n,.mono{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+.meta{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:13px;color:var(--muted);margin-top:12px}
+.flame{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0 0;font-family:var(--f-mono);font-size:12px;color:var(--muted)}
+.flame span{display:inline-flex;align-items:center;gap:6px}
+.flame i{display:inline-block;width:28px;height:6px}
+.tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);margin:24px 0 8px}
+.tile{background:var(--paper);padding:14px 14px 12px;min-width:0}
+.tile .k{font-size:12px;color:var(--muted)}
+.tile .v{font-family:var(--f-mono);font-size:clamp(19px,4.6vw,27px);font-weight:600;overflow-wrap:anywhere;line-height:1.25;margin-top:4px}
+.tile .s{font-size:12px;color:var(--muted);margin-top:2px}
+.verdict{background:var(--paper);border:1px solid var(--line);border-top:4px solid var(--na);padding:16px 18px;margin:24px 0}
+.verdict p{margin:7px 0}
+.tbl-scroll{overflow-x:auto;margin:14px 0;-webkit-overflow-scrolling:touch}
+table{border-collapse:collapse;width:100%;font-size:13.5px;background:var(--paper)}
+th,td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{font-size:12px;color:var(--muted);font-weight:500;background:var(--tint);white-space:nowrap}
+td.n,th.n{text-align:right;white-space:nowrap}
+tr.hl td{background:var(--tint)}
+.cap{font-size:12px;color:var(--muted);margin-top:6px;max-width:none}
+.chart{background:var(--paper);border:1px solid var(--line);padding:12px 10px 8px;margin:16px 0}
+.chart svg{display:block;width:100%;height:auto;touch-action:pan-y}
+.legend{display:flex;flex-wrap:wrap;gap:4px 16px;font-size:12.5px;color:var(--muted);padding:0 4px 6px}
+.sw{display:inline-block;width:12px;height:10px;vertical-align:middle;margin-right:5px}
+.tip{position:fixed;z-index:20;pointer-events:none;background:var(--fg);color:var(--bg);font-size:12px;line-height:1.5;padding:7px 9px;max-width:min(260px,calc(100vw - 20px))}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:14px 0}
+.two>div{background:var(--paper);border:1px solid var(--line);padding:12px 16px;min-width:0}
+.two h3{margin-top:4px}
+.two ul{margin:8px 0;padding-left:18px}.two li{margin:6px 0}
+.chain{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px;margin:16px 0}
+.chain div{background:var(--paper);border:1px solid var(--line);padding:10px;font-size:13px;min-width:0}
+.chain b{display:block;font-size:12px;color:var(--muted);font-weight:500;margin-bottom:4px}
+.chain .kr{display:block;margin-top:6px;font-size:12px;color:var(--ink)}
+.chain .hot{border:2px solid var(--na)}
+.tag{display:inline-block;font-family:var(--f-mono);font-size:11px;padding:1px 6px;border:1px solid currentColor;white-space:nowrap}
+.tag.a{color:var(--pos)}.tag.b{color:var(--na)}.tag.c{color:var(--muted)}
+.sev{font-family:var(--f-mono);font-size:11px;padding:1px 6px;color:var(--paper);white-space:nowrap}
+.sev.h{background:var(--neg)}.sev.m{background:var(--na)}.sev.l{background:var(--muted)}
+.check{list-style:none;padding:0}.check li{padding:6px 0 6px 28px;position:relative;border-bottom:1px dashed var(--line)}
+.check li::before{content:"";position:absolute;left:4px;top:11px;width:12px;height:12px;border:1.5px solid var(--muted)}
+.src{font-size:12.5px;color:var(--muted);max-width:none}
+.src a,a{color:var(--ink)}
+a:focus-visible{outline:2px solid var(--na);outline-offset:2px}
+.note{font-size:13.5px;background:var(--tint);padding:10px 14px;margin:14px 0}
+@media (max-width:760px){.chain{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:620px){
+  body{font-size:15px;padding-left:max(14px,env(safe-area-inset-left,0px));padding-right:max(14px,env(safe-area-inset-right,0px))}
+  .tiles{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .two{grid-template-columns:1fr}
+  table{font-size:12.5px;min-width:0}
+  th,td{padding:7px}
+  .tbl-scroll{margin-left:-14px;margin-right:-14px}
+}
+@media (max-width:400px){
+  body{padding-left:max(11px,env(safe-area-inset-left,0px));padding-right:max(11px,env(safe-area-inset-right,0px))}
+  .tbl-scroll{margin-left:-11px;margin-right:-11px}
+  .chain{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="eyebrow">산업 리포트 · 2차전지 · 2026-10-22</div>
+<h1>소듐이온 배터리: 계약의 해, 출하는 아직</h1>
+<p class="lede">2026년 소듐이온(나트륨이온) 배터리는 CATL의 60GWh 공급계약, 국내 K-소듐 얼라이언스, 정부 로드맵으로 테마가 됐다. 실제 출하는 중국 상반기 약 1GWh다. 리튬 가격이 5월 고점에서 반 토막 나면서 원가 논리도 다시 약해졌다. 한국 기업의 소듐 매출은 현재 사실상 0이고, 의미 있는 매출은 2027~28년 이후다.</p>
+<div class="flame"><span><i style="background:var(--na)"></i>Na 589nm · 소듐</span><span><i style="background:var(--li)"></i>Li 671nm · 리튬(LFP)</span></div>
+<div class="meta"><span>국내 증권사 리포트 218건(2025-10~2026-10) + 해외 보도·논문 160여 건 정리</span><span>주가 2026-10-21 KRX 종가</span></div>
+
+<div class="tiles">
+  <div class="tile"><div class="k">중국 상반기 출하 (GGII)</div><div class="v">≈1 GWh</div><div class="s">2026 연간 전망 10→5GWh+로 하향</div></div>
+  <div class="tile"><div class="k">2030 전망 범위</div><div class="v">400~830</div><div class="s">GWh · 출처별 4종</div></div>
+  <div class="tile"><div class="k">셀 원가 (Mysteel)</div><div class="v">0.45 / 0.34</div><div class="s">위안/Wh · NFPP 소듐 / LFP</div></div>
+  <div class="tile"><div class="k">탄산리튬 (10-12)</div><div class="v">10.5만</div><div class="s">위안/t · 5월 고점 20.5만</div></div>
+</div>
+
+<div class="verdict">
+<p><b>핵심 결론.</b> 소듐이온은 리튬을 대체하는 기술이 아니라 <b>LFP 옆에 붙는 두 번째 화학계</b>다. 저온(-40℃에서 용량 약 90%), 0V 운송, 리튬·니켈·코발트 없는 원재료가 강점이다. 에너지밀도(최고 175Wh/kg, LFP 205)와 제조원가가 약점이다. 그래서 첫 시장은 ESS, 12/24V 납축전지 대체, 데이터센터 UPS, 소형 EV다.</p>
+<p>2026년의 실체는 "계약"이다. CATL–HyperStrong 60GWh(3년), Alfen 5GWh, HiNa–국내 Volta 10GWh(5년)가 체결됐다. 그러나 중국 상반기 출하는 약 1GWh였고, GGII는 연간 전망을 10GWh에서 5GWh+로 깎았다. 2030 전망치(400~830GWh)를 맞추려면 2026~30년에 매년 약 3배씩 커야 한다.</p>
+<p>원가 경쟁력은 리튬 가격보다 <b>규모</b>가 정한다. 2026년 셀 원가는 소듐 0.45위안/Wh, LFP 0.34위안이다. 차이의 대부분은 재료가 아니라 가동률 약 30%에서 오는 제조비(0.15 vs 0.03)다. 이 계산으로는 탄산리튬이 약 38만위안/t은 돼야 원가가 같아진다. 규모가 붙으면 약 26만위안으로 내려간다. 지금 가격은 10.5만위안이다. 중국이 리튬이온에만 매기는 소비세(2026-09 2%, 2027-09 4%, 소듐은 2028년 말까지 면세)가 이 차이를 일부 메운다.</p>
+<p><b>한국 주식 관점.</b> 국내 생태계는 중국보다 약 4년 늦다. 셀 3사의 양산은 2027~28년이고, 소재사(에코프로비엠 양극재, 애경케미칼 하드카본, 솔브레인 전해액, 포스코퓨처엠 하드카본)는 파일럿 단계다. GWh당 수요가 가장 크게 바뀌는 소재는 <b>알루미늄박</b>이다. 소듐은 음극에도 구리 대신 알루미늄을 써서 LFP의 약 3배(700~900t/GWh vs 250t)를 쓴다. 다만 2030년 생산능력의 95% 이상이 중국에 있어, 한국 박 업체가 닿을 수 있는 시장은 북미·유럽 비중국 공급망에 한정된다. 주가에 소듐이 직접 반영된 사례는 삼아알미늄(신한 TP 102,000원)이 사실상 유일하다.</p>
+</div>
+
+<h2><span class="no">01</span>소듐이온은 무엇이 다른가</h2>
+<p>리튬이온과 작동 원리는 같다. 이온이 양극과 음극 사이를 오가며 충방전한다. 나트륨 이온은 리튬보다 크고 무거워 같은 무게에 담는 에너지가 적다. 대신 나트륨은 바닷물과 소다회에서 나오고, 탄산나트륨 가격은 톤당 100~500달러로 탄산리튬의 수십 분의 1이다. 나트륨은 알루미늄과 합금을 만들지 않아 음극 집전체로 구리 대신 알루미늄박을 쓸 수 있다.</p>
+<div class="tbl-scroll"><table>
+<thead><tr><th>항목</th><th class="n">소듐이온(최고 수준)</th><th class="n">LFP</th><th class="n">NCM</th><th>출처</th></tr></thead>
+<tbody>
+<tr><td>셀 에너지밀도</td><td class="n">175 Wh/kg</td><td class="n">205</td><td class="n">265</td><td>IEA GEVO 2026</td></tr>
+<tr><td>부피 에너지밀도</td><td class="n">LFP 대비 -17~-49%</td><td class="n">기준</td><td class="n">-</td><td>논문별 편차 큼</td></tr>
+<tr><td>사이클 수명</td><td class="n">8,000~20,000회*</td><td class="n">4,000~10,000+</td><td class="n">1,000~3,000</td><td>*전부 회사 주장, 국가표준은 1,000회 후 90%</td></tr>
+<tr><td>-20℃ 용량 유지</td><td class="n">85~92%</td><td class="n">60~70%</td><td class="n">-20℃ 부근이 한계</td><td>Springer 2026 등</td></tr>
+<tr><td>-40℃ 용량 유지</td><td class="n">76~90%</td><td class="n">사용 불가</td><td class="n">사용 불가</td><td>CATL 90%, 타사 76~86%</td></tr>
+<tr><td>열폭주 임계 표면온도</td><td class="n">292℃</td><td class="n">346℃</td><td class="n">281~290℃</td><td>MDPI Batteries 2025</td></tr>
+<tr><td>0V 방전 운송</td><td class="n">가능</td><td class="n">불가</td><td class="n">불가</td><td>Energy Mater. Adv. 2021</td></tr>
+</tbody></table></div>
+<p class="cap">"LFP보다 안전하다"는 홍보와 달리 열폭주 시험에서는 LFP와 NCM 사이다. 에너지밀도는 국내 리포트끼리도 80~175Wh/kg로 넓게 갈린다(제품·계열이 다름).</p>
+
+<h3>양극재 세 갈래</h3>
+<div class="tbl-scroll"><table>
+<thead><tr><th>계열</th><th class="n">Wh/kg</th><th class="n">사이클</th><th class="n">2025 중국 출하 비중</th><th class="n">2026 셀 가격(위안/Wh)</th><th>특징·주요 업체</th></tr></thead>
+<tbody>
+<tr class="hl"><td>폴리음이온(NFPP)</td><td class="n">120~140</td><td class="n">10,000+</td><td class="n">70~75%</td><td class="n">0.36~0.38</td><td>수명·안정성. LFP 라인 전환 용이. ESS 주력. Cornex, CATL ESS</td></tr>
+<tr><td>층상산화물(NFM 등)</td><td class="n">160~175</td><td class="n">2,000~4,000</td><td class="n">20~25%</td><td class="n">0.38~0.40</td><td>밀도 우위, 공기·수분에 약함. EV용. HiNa, CATL Naxtra(추정 갈림)</td></tr>
+<tr><td>프러시안 블루/화이트</td><td class="n">100~130</td><td class="n">5,000~8,000</td><td class="n">~5%</td><td class="n">0.40~0.45</td><td>저원가 기대, 결정수 문제. Natron 폐업, 퇴출 추세</td></tr>
+</tbody></table></div>
+<p class="cap">출처: 키움증권 「소듐이온 상용화 초입」(2026-09-15)이 인용한 ZVEPOW 자료. 출하 비중은 EVTank(2025, NFPP 70%+)·SMM(1H25 폴리음이온 60%) 집계와 같은 방향. 반면 Benchmark 파이프라인은 층상 73%로, "생산은 NFPP, 계획은 층상"으로 갈린다. NH는 층상(NFM)을, DS는 NFPP를 유력하게 봤다.</p>
+
+<h2><span class="no">02</span>원가: 리튬보다 가동률이 문제다</h2>
+<div class="chart" id="c-cost">
+  <div class="legend"><span><i class="sw" style="background:var(--na)"></i>소듐(NFPP)</span><span><i class="sw" style="background:var(--li)"></i>LFP</span><span>짙은 칸 = 재료비, 옅은 칸 = 제조비 · 위안/Wh · Mysteel 2026-08-26</span></div>
+  <svg aria-label="소듐과 LFP 셀 원가 구성 비교"></svg>
+</div>
+<p>재료만 보면 소듐이 싸다(0.30 vs 0.31위안/Wh). 차이는 제조비다. 중국 소듐 라인 100GWh 이상이 지어졌지만 평균 가동률은 약 30%라, Wh당 제조비가 LFP의 5배(0.15 vs 0.03)다. 100GWh 규모에서 제조비가 0.09로 내려간다는 추정이 있다. CATL은 2028년 말까지 소듐 셀 0.35위안/Wh로 리튬과 같은 가격을 목표로 한다.</p>
+<p>실제 입찰가는 더 벌어져 있다. 2026년 9월 허베이 런추 ESS 입찰에서 CATL 소듐 40MWh 낙찰가는 4,142만위안, Envision LFP 360MWh는 1억 8,648만위안이었다. Wh당으로 1.035 vs 0.518위안, 약 2배다(시스템 기준, 낙찰액으로 직접 계산). 업계 인사는 "약 10% 비싸다"고 했지만 낙찰 금액과 맞지 않는다.</p>
+
+<h3>탄산리튬 가격과 손익분기선</h3>
+<div class="chart" id="c-li">
+  <div class="legend"><span><i class="sw" style="background:var(--li);height:3px"></i>탄산리튬 보도 지점값(위안/t)</span><span><i class="sw" style="background:var(--na-soft)"></i>소듐 손익분기 추정 구간</span></div>
+  <svg aria-label="탄산리튬 가격 추이와 소듐 손익분기선"></svg>
+</div>
+<div class="tbl-scroll"><table>
+<thead><tr><th>손익분기 리튬 가격</th><th class="n">위안/t</th><th>근거</th></tr></thead>
+<tbody>
+<tr><td>업계 주장 (양극재 원가 기준)</td><td class="n">15만</td><td>Deep News 2026-06, 셀 차이 0.1위안/Wh까지 축소 주장</td></tr>
+<tr class="hl"><td>규모 효과 반영 (제조비 0.09)</td><td class="n">≈26만</td><td>차이 0.048위안 ÷ 0.0049/만위안 ≈ +9.8만, 기준 16.1만</td></tr>
+<tr><td>현재 가동률 기준</td><td class="n">≈38만</td><td>차이 0.108위안 ÷ 0.0049/만위안 ≈ +22만, 기준 16.1만</td></tr>
+<tr><td>Thunder Said Energy</td><td class="n">≈28만</td><td>탄산리튬 40달러/kg</td></tr>
+</tbody></table></div>
+<p class="cap">계산: LFP 셀은 kWh당 탄산리튬 약 0.49kg을 쓴다. 탄산리튬이 1만위안/t 오르면 LFP 셀 원가가 0.0049위안/Wh 오른다. Mysteel 원가(2026-08-26) 시점의 탄산리튬 약 16.1만위안을 기준으로, 소듐–LFP 차이 0.108위안을 메우려면 약 22만위안 상승이 필요하다. 탄산리튬 지점값: 2025년 5~6월 저점 약 5.8~6만(SMM), 2026-05-12 고점 205,040(광저우선물거래소), 2026-08-31 16.1만, 2026-10-12 104,740(Mining Weekly). 국내 리포트는 손익분기 리튬 가격을 제시하지 않았다.</p>
+<p>2026년 초 리튬이 20만위안을 넘었을 때 "소듐 전환" 기사가 쏟아졌고, CATL·BYD의 대형 계약도 이 구간에 나왔다. 10월 리튬은 10만위안대로 내려왔다. 그래도 계약은 취소되지 않았다. 중국 정부가 정책으로 시장을 받치고 있기 때문이다. 리튬이온 배터리 소비세(2026-09-01 2%, 2027-09 4%)에서 소듐은 2028년 말까지 면세이고, SMM은 이 효과를 kWh당 8~16위안으로 추정한다. 2026-08 말에는 소듐 전용 국가표준 GB48072(안전)·GB48098(성능)도 나왔다.</p>
+
+<h2><span class="no">03</span>시장 규모: 전망과 현실의 간극</h2>
+<div class="chart" id="c-mkt">
+  <div class="legend"><span><i class="sw" style="background:var(--na);border-radius:50%"></i>실적·단기 전망</span><span><i class="sw" style="background:var(--ink);border-radius:50%"></i>2030 전망</span><span>세로축 로그(GWh)</span></div>
+  <svg aria-label="소듐이온 배터리 시장 실적과 전망치 비교"></svg>
+</div>
+<div class="tbl-scroll"><table>
+<thead><tr><th>연도</th><th class="n">GWh</th><th>기준</th><th>출처</th></tr></thead>
+<tbody>
+<tr><td>2025</td><td class="n">3.6</td><td>수요</td><td>대신증권(2026-05)</td></tr>
+<tr><td>2025</td><td class="n">8.1</td><td>중국 출하, ESS 60%+</td><td>EVTank 백서(2026-08)</td></tr>
+<tr><td>2025</td><td class="n">≈9</td><td>세계 출하, 중국 92%</td><td>키움증권(2026-09)</td></tr>
+<tr class="hl"><td>2026</td><td class="n">5+</td><td>중국 출하, 10GWh+에서 하향</td><td>GGII(2026-08)</td></tr>
+<tr class="hl"><td>2026</td><td class="n">6+</td><td>세계 출하</td><td>SMM(2026-09)</td></tr>
+<tr><td>2027</td><td class="n">15+</td><td>세계 출하</td><td>SMM(2026-09)</td></tr>
+<tr><td>2030</td><td class="n">400</td><td>생산</td><td>Benchmark (이 중 390GWh가 검증 안 된 3군 업체)</td></tr>
+<tr><td>2030</td><td class="n">435</td><td>중국 출하</td><td>EVTank</td></tr>
+<tr><td>2030</td><td class="n">590</td><td>생산능력</td><td>IEA (2025 90GWh에서)</td></tr>
+<tr><td>2030</td><td class="n">830</td><td>수요, 점유율 20%</td><td>Morgan Stanley (2차 인용)</td></tr>
+</tbody></table></div>
+<p class="cap">2035년 전망은 더 넓다. IDTechEx 약 90GWh, SNE 254.5GWh(2024년 발간), Morgan Stanley 2.4TWh. 점유율 전망은 전체 배터리 기준 4~25%, ESS 안 기준 16~35%로 분모가 다르다. 2026년 6GWh에서 2030년 400GWh가 되려면 연평균 약 186%, 830GWh면 약 243% 성장해야 한다.</p>
+<p>공급 쪽은 이미 과잉이다. 2026년 1~8월 중국에서 발표된 소듐 프로젝트만 39건, 433.9GWh(1,010억위안)다. 가동 중 설비 35GWh에 계획이 80GWh 이상 더해졌고, 출하는 연 5~6GWh다. 2030 파이프라인의 대부분이 실적 없는 업체라는 Benchmark 지적은 LFP 초기 증설기와 닮았다. 생산능력 전망은 실제 수요 전망으로 읽으면 안 된다.</p>
+
+<h3>어디에 먼저 쓰이나</h3>
+<div class="tbl-scroll"><table>
+<thead><tr><th>응용처</th><th>왜 소듐인가</th><th>2026 현황</th></tr></thead>
+<tbody>
+<tr><td>전력망 ESS</td><td>수명·안전·원재료 안정. 밀도 불리함이 덜 중요</td><td>CATL TENER Sodium 출시(6월), 9월 중국 첫 인도 계획·연 1GWh 목표. HyperStrong 60GWh, Alfen 5GWh(2027~)</td></tr>
+<tr><td>12/24V 납축 대체</td><td>저온 시동, 0V 운송. 시장 500~550GWh</td><td>CATL 24V 트럭 시동 배터리(2025-04). LGES 12/24V 시험 중, 2028 목표</td></tr>
+<tr><td>데이터센터 UPS·BBU</td><td>고출력, 화재 위험, 공간보다 안전 중시</td><td>Peak Energy–Energy Vault 1.5GWh(구매자는 개발사). 하이퍼스케일러 직접 계약은 확인 안 됨. 삼성SDI 1차 타깃</td></tr>
+<tr><td>소형·보급형 EV</td><td>-40℃ 성능, 원가</td><td>창안 A06 소듐 버전(45kWh, 400km+) 2026-02 공개, 고객 인도는 확인 안 됨</td></tr>
+<tr><td>이륜차·특수차</td><td>저가, 저온</td><td>Yadea 스쿠터, HiNa 676kWh 광산 덤프트럭(2026-08)</td></tr>
+</tbody></table></div>
+
+<h2><span class="no">04</span>플레이어</h2>
+<div class="tbl-scroll"><table>
+<thead><tr><th>업체</th><th>위치</th><th>2025~26 핵심</th></tr></thead>
+<tbody>
+<tr class="hl"><td>CATL</td><td>중국 · 1위</td><td>Naxtra 175Wh/kg(2025-04 발표, 양산 시점은 2025-06/연말/2026 4Q로 엇갈림). GB38031-2025 첫 통과. HyperStrong 60GWh, Alfen 5GWh, Solarpro 2GWh. 소듐 특허 444건으로 2위(41건)의 10배</td></tr>
+<tr><td>BYD</td><td>중국</td><td>쉬저우 30GWh 공장(100억위안, 2024-01 착공). 1만회 셀(2026-02). 2027 셀 40달러/kWh 목표</td></tr>
+<tr><td>HiNa(중과해나)</td><td>중국</td><td>층상 165Wh/kg. 국내 Volta와 5년 10GWh ESS 협약(2026-09, 금액 비공개)</td></tr>
+<tr><td>EVE, Cornex 등</td><td>중국</td><td>EVE 후이저우 2GWh 착공, Cornex 165Ah NFPP ESS 셀. 셀 업체 34곳·공장 45곳(SMM)</td></tr>
+<tr><td>Peak Energy</td><td>미국</td><td>GM벤처스 주도 1.08억달러 시리즈B(2026-10-21, LG테크놀로지벤처스 참여). 새크라멘토 4GWh, 2027 1Q 출하. Jupiter Power 4.75GWh</td></tr>
+<tr><td>Natron</td><td>미국</td><td>프러시안 블루. 2025-09-03 폐업, 14억달러 공장 계획 취소</td></tr>
+<tr><td>Unigrid, Altris, Moll</td><td>유럽</td><td>Unigrid 2026-01 상업 출하(아시아 위탁생산), Altris–Draslovka 양극재 협력, Moll 1GWh(독일 보조금 2,200만유로+)</td></tr>
+</tbody></table></div>
+
+<h3>한국 셀 3사 일정</h3>
+<div class="tbl-scroll"><table>
+<thead><tr><th>회사</th><th>확인된 계획</th><th>엇갈리는 지점</th></tr></thead>
+<tbody>
+<tr><td>LG에너지솔루션</td><td>파일럿 연 200MWh(2026-04), 2027 상반기 북미 ESS 샘플 약 30MWh, 2027 1세대 양산, 2028 납축 대체</td><td>파일럿 위치가 난징·오창·오송으로 보도마다 다름</td></tr>
+<tr><td>삼성SDI</td><td>AI 데이터센터 UPS·ESS용 개발, 양산 일정은 연말~내년 발표 예정</td><td>"울산 투자에 양산 포함"(키움·iM) vs "R&D 단계, 로드맵 없음"(대신·NH)</td></tr>
+<tr><td>SK온</td><td>2027 시제품, 2028 상용화</td><td>구체 일정 공시 없음</td></tr>
+</tbody></table></div>
+<p>정부는 2026-09-22 배터리 기술 로드맵에서 소듐 2027년 160Wh/kg, 2030년 220Wh/kg 목표를 냈다(2027~31 정부 R&D 약 4,000억원, 소듐 몫은 미공개). 국내 증권사는 한국과 중국의 격차를 3~4년으로 본다.</p>
+
+<h2><span class="no">05</span>밸류체인과 소재별 변화</h2>
+<div class="chain">
+  <div><b>양극재</b>NFPP·층상·PBA. 리튬·니켈·코발트 없음<span class="kr">에코프로비엠 · 엘앤에프 · 포스코퓨처엠 · LG화학</span></div>
+  <div class="hot"><b>음극재</b>하드카본. 2026 원가 병목, 흑연 대체<span class="kr">애경케미칼 · 포스코퓨처엠</span></div>
+  <div><b>전해질</b>NaPF6. LiPF6와 거의 같은 공정<span class="kr">솔브레인(얼라이언스)</span></div>
+  <div class="hot"><b>집전체</b>양·음극 모두 알루미늄박. 구리박 0<span class="kr">삼아알미늄 · DI동일 · 롯데알미늄(비상장) · 조일알미늄(원료)</span></div>
+  <div><b>셀</b>기존 리튬이온 라인 전환 가능(Fraunhofer)<span class="kr">LGES · 삼성SDI · SK온</span></div>
+</div>
+
+<h3>알루미늄박: GWh당 사용량이 가장 크게 바뀐다</h3>
+<div class="chart" id="c-foil">
+  <div class="legend"><span><i class="sw" style="background:var(--ink)"></i>알루미늄박</span><span><i class="sw" style="background:var(--li-soft)"></i>구리박</span><span>톤/GWh</span></div>
+  <svg aria-label="LFP와 소듐의 GWh당 알루미늄박·구리박 사용량"></svg>
+</div>
+<p>LFP 셀은 GWh당 알루미늄박 약 250톤(양극), 구리박 약 425톤(음극)을 쓴다(SMM 8GWh 프로젝트 기준, 12㎛ 알박 32.4g/㎡로 면적 검산). 소듐은 양극과 음극 모두 알루미늄이라 양이 두 배가 되고, 전압이 낮아 같은 Wh에 전극 면적이 더 필요하다. 면적 계수 1.0~1.4를 넣으면 약 500~700톤(12㎛), 업계 추정은 700~1,000톤(동오증권·EVTank 800톤)이다. 중앙값 700~900톤으로 보면 LFP의 약 3배다. 국내 리포트(키움)는 "약 2배"로 보는데, LIB 기준치를 300~400톤으로 잡았기 때문이다.</p>
+<div class="tbl-scroll"><table>
+<thead><tr><th>시나리오</th><th class="n">소듐 GWh</th><th class="n">알박 수요(800t/GWh)</th><th>한국 박 업체 관점</th></tr></thead>
+<tbody>
+<tr><td>2026 (SMM)</td><td class="n">6</td><td class="n">≈4,800t</td><td>삼아 연 캐파 33,600t의 약 14%. 대부분 중국 내 조달</td></tr>
+<tr><td>2027 (SMM)</td><td class="n">15</td><td class="n">≈12,000t</td><td>Peak Energy 4GWh 등 북미 첫 물량</td></tr>
+<tr class="hl"><td>2030 (Benchmark)</td><td class="n">400</td><td class="n">≈320,000t</td><td>중국 외 비중 5% 미만이면 비중국 몫 약 16,000t 이하</td></tr>
+</tbody></table></div>
+<p class="cap">계산: GWh × 800t. 2030 비중국 몫은 IEA "2030 생산능력의 95% 이상이 중국" 가정. 참고로 EVTank는 세계 양극박 수요를 2025 70.4만t → 2030 145.6만t로, SNE는 47.5만t → 80~100만t로 본다(조일알미늄 리포트, 2026-10-13). 소듐이 2030년에 400GWh에 닿으면 알박 32만t으로, 양극박 전체 전망(80~146만t)의 약 20~40%에 해당한다.</p>
+<p>그래서 한국 박 업체에게 소듐은 "LFP·ESS용 카본코팅 알박 쇼티지" 위에 얹히는 두 번째 수요다. 2026년 주가를 움직인 것은 LFP ESS이고, 소듐은 2028년 이후 북미·유럽 공급망이 생길 때 실적이 된다. 신한은 삼아가 CATL 품질테스트를 통과해 오더를 협상 중이고 GM과 소듐용 알박 직납을 협의 중이라고 썼다. 같은 리포트 본문은 CATL 접촉 이유를 CATL–포드 합작공장 원자재 요건으로 설명해, 이 오더가 소듐용인지 LFP용인지는 아직 갈린다.</p>
+
+<h3>하드카본: 2026년의 병목, 가격은 이미 무너졌다</h3>
+<p>소듐은 흑연에 잘 들어가지 않아 음극으로 하드카본을 쓴다. 중국 하드카본 가격은 2024년 톤당 6~7만위안에서 2026년 7월 3만위안 아래로 내려왔고 목표는 2만위안 미만이다. 원료를 야자껍질(수율 2.5%, 연 약 6.3GWh분이 한계)에서 무연탄(수율 45%)으로 바꾸는 중이다. GWh당 1,075~1,500톤이 필요하다. 애경케미칼의 하드카본 캐파 1,300톤은 소듐 약 1GWh분이다. 증설(장기 2만톤)과 고객 계약이 확인되기 전까지는 옵션 가치다.</p>
+
+<h2><span class="no">06</span>국내 관련주 지도</h2>
+<p>노출도는 소듐 관련 매출·계약·일정이 공시나 리포트로 확인되는 정도다. <span class="tag a">직접</span> 계약·캐파·양산 일정이 확인됨 <span class="tag b">준비</span> 파일럿·개발 단계 <span class="tag c">테마</span> 근거 없음.</p>
+<div class="tbl-scroll"><table>
+<thead><tr><th>회사</th><th>역할</th><th>소듐 관련 확인 사항</th><th>노출도</th><th class="n">시총(억)</th><th class="n">연초 대비</th></tr></thead>
+<tbody>
+<tr><td>LG에너지솔루션</td><td>셀</td><td>파일럿 200MWh, 2027 북미 ESS 샘플·1세대 양산. Peak Energy 투자 참여(관계사)</td><td><span class="tag b">준비</span></td><td class="n">965,250</td><td class="n pos">+14.3%</td></tr>
+<tr><td>삼성SDI</td><td>셀</td><td>데이터센터 UPS 1차 타깃, 양산 일정 발표 대기</td><td><span class="tag b">준비</span></td><td class="n">448,861</td><td class="n pos">+112.2%</td></tr>
+<tr><td>포스코퓨처엠</td><td>양·음극재</td><td>하드카본 2027 3Q 개발 완료·2028 양산, NFPP·NFM 양극재 개발. 국내 유일 양·음극 동시 대응</td><td><span class="tag b">준비</span></td><td class="n">160,726</td><td class="n pos">+2.1%</td></tr>
+<tr><td>에코프로비엠</td><td>양극재</td><td>파일럿 연 1,000t, 국책과제 106억(정부 52.5억), K-소듐 얼라이언스 양극 담당</td><td><span class="tag b">준비</span></td><td class="n">105,559</td><td class="n neg">-22.6%</td></tr>
+<tr><td>엘앤에프</td><td>양극재</td><td>소듐 양극재 2029(DS). 일정·계열은 리포트마다 다름</td><td><span class="tag b">준비</span></td><td class="n">40,321</td><td class="n pos">+5.1%</td></tr>
+<tr><td>솔브레인</td><td>전해액</td><td>K-소듐 얼라이언스 전해액 담당</td><td><span class="tag b">준비</span></td><td class="n">25,164</td><td class="n pos">+15.9%</td></tr>
+<tr><td>애경케미칼</td><td>하드카본</td><td>캐파 1,000→1,300t(2026 하반기), 장기 2만t. 셀사 테스트 중, 매출 없음</td><td><span class="tag b">준비</span></td><td class="n">5,891</td><td class="n pos">+32.1%</td></tr>
+<tr class="hl"><td>삼아알미늄</td><td>알박</td><td>CATL 품질테스트 통과·오더 협상, GM 소듐 알박 직납 협의(신한 10-15, TP 102,000원). 용도 해석 갈림</td><td><span class="tag a">직접</span>에 근접</td><td class="n">12,280</td><td class="n pos">+253.8%</td></tr>
+<tr><td>DI동일</td><td>알박</td><td>소듐 고유 언급 없음. 카본코팅 알박 1,108억 투자(27H2), 압연 6~8호기 증설</td><td><span class="tag b">준비</span></td><td class="n">5,800</td><td class="n pos">+48.9%</td></tr>
+<tr><td>조일알미늄</td><td>알박 원료 스트립</td><td>박 업체에 스트립 공급. 소듐 노출은 간접적</td><td><span class="tag c">간접</span></td><td class="n">1,299</td><td class="n neg">-21.1%</td></tr>
+</tbody></table></div>
+<p class="cap">시총·수익률: 다음금융 2026-10-21 종가, 상장주식수 기준. LG화학(소듐 양극재 고출력 2027 말, 장수명 2029)과 SK이노베이션(SK온)은 표에서 뺐다. 소듐 비중이 시총에 비해 너무 작다.</p>
+<div class="note"><b>소듐 테마로 묶이지만 근거를 찾지 못한 종목.</b> 에코앤드림(IR 자료상 노출 미미), 덕양에너젠, 이수스페셜티케미컬, 대주전자재료, 엔켐, 동화기업, 미래나노텍, 한솔케미칼, 천보. 국내 리포트 218건과 해외 보도 어디에도 이 회사들의 소듐 제품·고객·일정은 나오지 않았다. 일부는 전고체 리포트에서 같이 언급돼 테마 목록에 섞였다.</div>
+
+<h2><span class="no">07</span>한국에 위협인가 기회인가</h2>
+<div class="two">
+<div><h3 class="neg">위협으로 보는 근거</h3><ul>
+<li>LFP 실패의 반복. SK증권은 소듐에서도 늦으면 "케미스트리 격차"가 굳어진다고 봤다.</li>
+<li>중국이 셀 캐파 98%, 양극재 99% 이상을 갖고 있다. 2025-07부터 나트륨 양극재 기술 수출도 통제한다(대신). 해외 보도는 인산계 양극재 기술 통제가 소듐에 적용되는지 명확하지 않다고 본다.</li>
+<li>CATL이 ESS 소듐을 선점하면 한국 셀사의 북미 ESS 수주 논리가 약해진다(LS).</li>
+<li>CATL 특허 444건 vs 2위 41건. 중국이 소듐 특허 출원의 60% 이상.</li>
+</ul></div>
+<div><h3 class="pos">기회로 보는 근거</h3><ul>
+<li>미국은 중국산 ESS 배터리에 관세 37.5~41%와 FEOC 규제를 적용한다. 비중국 소듐 공급망은 공백이다(Natron 폐업, Peak는 2027 출하).</li>
+<li>GM이 Peak Energy에 투자했고 LG가 참여했다. 북미 소듐 셀–소재 공급망이 이제 짜이기 시작했다.</li>
+<li>소재는 기존 설비를 바꿔 쓸 수 있다. 알박은 그대로 쓰고, 양극재는 LFP 라인을 NFPP로 전환할 수 있다.</li>
+<li>정부 로드맵과 K-소듐 얼라이언스로 셀–소재 공동개발 틀이 생겼다.</li>
+</ul></div>
+</div>
+<p><b>판정.</b> 2030년까지 소듐은 한국 기업 실적에서 작은 숫자다. 셀 3사에게는 북미 ESS에서 중국 소듐을 막아야 하는 방어 과제다. 소재사에게는 2028년 이후 열리는 옵션이다. 주식 관점에서 "소듐 수혜"를 실적으로 확인할 수 있는 첫 지점은 북미 셀사(Peak·LGES)의 소재 공급계약이 될 가능성이 높다.</p>
+
+<h2><span class="no">08</span>리스크</h2>
+<div class="tbl-scroll"><table>
+<thead><tr><th>심각도</th><th>리스크</th><th>내용</th></tr></thead>
+<tbody>
+<tr><td><span class="sev h">높음</span></td><td>리튬 저가 지속</td><td>탄산리튬 10만위안대가 이어지면 손익분기(26~38만)까지 멀다. 정책 면세(2028년 말)가 끝나면 원가 논리가 다시 시험대에 오른다.</td></tr>
+<tr><td><span class="sev h">높음</span></td><td>중국 과잉 투자</td><td>발표 433.9GWh 대 출하 5~6GWh. 가동률 30%. 가격 경쟁이 비중국 업체 진입을 막는다.</td></tr>
+<tr><td><span class="sev m">중간</span></td><td>계약의 실체</td><td>HyperStrong 60GWh는 확정/최대치 해석과 체결일(4/27·5/17)이 엇갈린다. 창안 A06 소듐 버전과 CATL 9월 인도는 확인되지 않았다.</td></tr>
+<tr><td><span class="sev m">중간</span></td><td>기술 상한</td><td>하드카본 초기 손실(초기효율 90% 미만), 층상산화물 수분 민감성. 사이클 1만 회 이상은 모두 회사 주장이다.</td></tr>
+<tr><td><span class="sev m">중간</span></td><td>테마주 변동성</td><td>국내 관련주 상당수가 근거 없이 묶인다. 연초 이후 수익률이 -78%에서 +254%까지 벌어져 있다.</td></tr>
+<tr><td><span class="sev l">낮음</span></td><td>경쟁 기술</td><td>LMFP, 반고체, 바나듐 흐름전지 등 ESS 대체 기술.</td></tr>
+</tbody></table></div>
+
+<h2><span class="no">09</span>모니터링 지표</h2>
+<ul class="check">
+<li>GGII·SMM 분기 출하량: 2026 연간 5~6GWh 달성 여부, 2027 15GWh 경로</li>
+<li>탄산리튬 가격: 15만(업계 주장) / 26만(규모 반영) / 38만(현 가동률) 손익분기선과의 거리</li>
+<li>중국 ESS 입찰 Wh당 낙찰가: 런추형 2배 격차가 줄어드는지</li>
+<li>CATL TENER Sodium 실제 인도량(2026 목표 1GWh), Naxtra 탑재 차량 판매 대수</li>
+<li>Peak Energy 2027 1Q 출하와 소재 공급사 선정(양극재·알박·하드카본)</li>
+<li>LGES 2027 북미 ESS 샘플 공급, 삼성SDI 양산 일정 발표</li>
+<li>삼아알미늄의 CATL·GM 오더가 소듐용인지 공시로 확인되는지</li>
+<li>애경케미칼 하드카본 첫 공급계약, 에코프로비엠 파일럿 이후 증설 결정</li>
+</ul>
+
+<h2><span class="no">10</span>자료와 방법</h2>
+<p class="src">국내 증권사 리포트(텔레그램 공부방 아카이브 전문검색, 2025-10~2026-10, 218건): 키움 「소듐이온 상용화 초입」(2026-09-15), NH 「나트륨전지와 전고체전지는 게임체인저일까」(2026-02-24), 신한 삼아알미늄(2026-10-15), SK 「배터리 알루미늄박」(2026-06-01), 한화 리튬(2026-09-29), DS 엘앤에프(2026-09-18), 대신(2026-05-06), 하나 Weekly, 삼성 인터배터리 후기(2026-03-13), 한국IR협의회 조일알미늄(2026-10-13) 외.</p>
+<p class="src">해외: <a href="https://www.iea.org/reports/global-ev-outlook-2026/electric-vehicle-batteries">IEA Global EV Outlook 2026</a>, <a href="https://www.iea.org/commentaries/sodium-ion-battery-momentum-grows-but-challenges-remain">IEA commentary (2026-02-17)</a>, <a href="https://m.bjx.com.cn/mnews/20260804/1506952.shtml">GGII via BJX (2026-08-04)</a>, <a href="https://news.metal.com/newscontent/104140362-smm-analysis-sodium-ion-batteries-targeted-for-coordinated-development-as-industrialization-advances">SMM (2026-09-30)</a>, <a href="https://www.mysteel.net/analysis/5138261-sodium-ion-battery-cost-analysis-and-scalability-barriers">Mysteel 원가 분석</a>, <a href="https://news.qq.com/rain/a/20260916A0ATCO00">런추 입찰 (Tencent, 2026-09-16)</a>, <a href="https://www.miningweekly.com/article/chinese-lithium-prices-tumble-to-nearly-10-month-low-on-demand-concerns-2026-10-12">Mining Weekly 리튬 (2026-10-12)</a>, <a href="https://source.benchmarkminerals.com/article/sodium-ion-pipeline-dominated-by-unproven-cell-producers">Benchmark</a>, <a href="https://carnewschina.com/2026/04/27/catl-secures-worlds-largest-sodium-ion-battery-order-with-60-gwh-deal/">CATL 60GWh</a>, <a href="https://cnevpost.com/2026/07/17/china-to-impose-consumption-tax-lithium-batteries/">중국 소비세</a>, <a href="https://carnewschina.com/2026/07/01/china-sodium-battery-coal-anode-coconut-crisis/">하드카본 가격</a>, <a href="https://www.prnewswire.com/news-releases/peak-energy-raises-108-million-in-new-capital-announces-oversubscribed-series-b-to-scale-next-generation-energy-infrastructure-302914879.html">Peak Energy 시리즈B</a>, <a href="https://www.ess-news.com/2025/09/03/us-sodium-ion-specialist-natron-energy-ceases-operations">Natron 폐업</a>, <a href="https://www.businesskorea.co.kr/news/articleView.html?idxno=278669">LGES (BusinessKorea, 2026-10-13)</a>, <a href="https://www.ajunews.com/view/20260921190228250">정부 로드맵 (아주경제)</a>, <a href="https://m.dailian.co.kr/news/view/1670924">K-소듐 얼라이언스 (데일리안)</a>, <a href="https://news.stanford.edu/stories/2025/01/sodium-ion-batteries-need-breakthroughs-to-compete">Stanford / Nature Energy</a>, <a href="https://thundersaidenergy.com/downloads/sodium-ion-batteries-comparing-costs-versus-lfp/">Thunder Said Energy</a>.</p>
+<p class="src">출처끼리 다른 숫자는 맞추지 않고 범위로 적었다. 손익분기 리튬 가격, 알박 GWh당 사용량, 비중국 알박 수요는 이 리포트의 계산이며 가정을 본문에 적었다. 본 자료는 투자권유가 아니다.</p>
+
+</div>
+<div class="tip" id="tip" hidden></div>
+<script>
+const css=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const NS="http://www.w3.org/2000/svg";
+function el(t,a,p){const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);if(p)p.appendChild(e);return e}
+function tx(p,x,y,s,o){const t=el("text",Object.assign({x,y,"font-size":11,fill:css("--muted")},o||{}),p);t.textContent=s;return t}
+const tip=document.getElementById("tip");
+function showTip(x,y,h){tip.innerHTML=h;tip.hidden=false;const r=tip.getBoundingClientRect();let L=x+14,T=y+14;if(L+r.width>innerWidth-10)L=x-r.width-14;if(L<10)L=10;if(T+r.height>innerHeight-10)T=y-r.height-14;if(T<10)T=10;tip.style.left=L+"px";tip.style.top=T+"px"}
+function hideTip(){tip.hidden=true}
+addEventListener("scroll",hideTip,{passive:true});
+document.addEventListener("pointerdown",e=>{if(!e.target.closest(".chart"))hideTip()});
+function hot(node,html){let down=false;node.style.cursor="pointer";
+  node.addEventListener("pointerdown",e=>{down=true;showTip(e.clientX,e.clientY,html)});
+  node.addEventListener("pointermove",e=>{if(e.pointerType==="mouse"||down)showTip(e.clientX,e.clientY,html)});
+  node.addEventListener("pointerleave",()=>{down=false;hideTip()});
+  node.addEventListener("pointercancel",()=>{down=false;hideTip()});}
+
+function drawCost(svg,W){svg.innerHTML="";const small=W<560,H=small?170:180,m={l:small?64:84,r:16,t:12,b:28};
+  svg.setAttribute("viewBox",`0 0 ${W} ${H}`);const iw=W-m.l-m.r,max=0.5,X=v=>m.l+v/max*iw;
+  for(let v=0;v<=0.5001;v+=0.1){el("line",{x1:X(v),x2:X(v),y1:m.t,y2:H-m.b,stroke:css("--line"),"stroke-width":.6},svg);tx(svg,X(v),H-8,v.toFixed(1),{"text-anchor":"middle"})}
+  const rows=[["소듐 NFPP",0.30,0.15,"--na","--na-soft",0.45],["LFP",0.312,0.03,"--li","--li-soft",0.342]];
+  const bh=small?34:40;
+  rows.forEach((r,i)=>{const y=m.t+10+i*(bh+20);tx(svg,m.l-8,y+bh/2+4,r[0],{"text-anchor":"end",fill:css("--fg"),"font-size":small?11:12});
+    const a=el("rect",{x:X(0),y,width:X(r[1])-X(0),height:bh,fill:css(r[3])},svg);
+    const b=el("rect",{x:X(r[1]),y,width:X(r[1]+r[2])-X(r[1]),height:bh,fill:css(r[4]),stroke:css(r[3]),"stroke-width":1},svg);
+    tx(svg,X(r[5])+5,y+bh/2+4,r[5].toFixed(r[5]===0.45?2:3),{fill:css("--fg"),"font-weight":600,"font-family":"IBM Plex Mono,monospace"});
+    hot(a,`<b>${r[0]}</b><br>재료비 ${r[1]} 위안/Wh`);hot(b,`<b>${r[0]}</b><br>제조비 ${r[2]} 위안/Wh`)});
+  return H}
+
+const LI=[["2025-06",59000,"2025년 5~6월 저점 약 5.8~6만(SMM)"],["2026-05",205040,"2026-05-12 고점 205,040(광저우선물)"],["2026-08",161000,"2026-08-31 16.1만"],["2026-10",104740,"2026-10-12 104,740(Mining Weekly)"]];
+function drawLi(svg,W){svg.innerHTML="";const small=W<560,H=small?250:290,m={l:small?40:48,r:small?12:110,t:14,b:28};
+  svg.setAttribute("viewBox",`0 0 ${W} ${H}`);const iw=W-m.l-m.r,ih=H-m.t-m.b,ymax=400000,Y=v=>m.t+(1-v/ymax)*ih;
+  const t0=new Date("2025-05-01").getTime(),t1=new Date("2026-11-15").getTime(),X=d=>m.l+(new Date(d+"-15").getTime()-t0)/(t1-t0)*iw;
+  const bands=[[150000,"업계 주장 15만"],[260000,"규모 반영 ≈26만"],[380000,"현 가동률 ≈38만"]];
+  el("rect",{x:m.l,y:Y(380000),width:iw,height:Y(150000)-Y(380000),fill:css("--na-soft"),opacity:.7},svg);
+  for(let v=0;v<=400000;v+=100000){el("line",{x1:m.l,x2:m.l+iw,y1:Y(v),y2:Y(v),stroke:css("--line"),"stroke-width":.6},svg);tx(svg,m.l-6,Y(v)+4,v/10000+"만",{"text-anchor":"end","font-size":10})}
+  bands.forEach(([v,l])=>{el("line",{x1:m.l,x2:m.l+iw,y1:Y(v),y2:Y(v),stroke:css("--na"),"stroke-width":1,"stroke-dasharray":"4 3"},svg);
+    if(small)tx(svg,m.l+4,Y(v)-4,l,{fill:css("--na"),"font-size":10});else tx(svg,m.l+iw+6,Y(v)+4,l,{fill:css("--na"),"font-size":10.5})});
+  ["2025-07","2026-01","2026-07"].forEach(d=>tx(svg,X(d),H-8,d.replace("-","."),{"text-anchor":"middle","font-size":10}));
+  el("path",{d:LI.map((p,i)=>(i?"L":"M")+X(p[0]).toFixed(1)+" "+Y(p[1]).toFixed(1)).join(""),fill:"none",stroke:css("--li"),"stroke-width":2,"stroke-dasharray":"1 0"},svg);
+  LI.forEach(p=>{el("circle",{cx:X(p[0]),cy:Y(p[1]),r:4.5,fill:css("--li")},svg);const h=el("circle",{cx:X(p[0]),cy:Y(p[1]),r:16,fill:"transparent"},svg);hot(h,p[2]+" 위안/t")});
+  tx(svg,X("2026-10")+(small?-6:8),Y(104740)+(small?18:4),"10.5만",{fill:css("--li"),"font-weight":600,"text-anchor":small?"end":"start"});
+  return H}
+
+const MK=[[2025,3.6,"대신 수요"],[2025,8.1,"EVTank 중국 출하"],[2025,9,"키움 세계 출하"],[2026,5,"GGII 5+"],[2026,6,"SMM 6+"],[2027,15,"SMM 15+"],[2030,400,"Benchmark 생산"],[2030,435,"EVTank 중국"],[2030,590,"IEA 캐파"],[2030,830,"Morgan Stanley 수요"]];
+function drawMkt(svg,W){svg.innerHTML="";const small=W<560,H=small?270:310,m={l:44,r:small?14:150,t:14,b:28};
+  svg.setAttribute("viewBox",`0 0 ${W} ${H}`);const iw=W-m.l-m.r,ih=H-m.t-m.b,L=Math.log10,Y=v=>m.t+(1-(L(v)-0)/(L(1000)-0))*ih;
+  const yrs=[2025,2026,2027,2028,2029,2030],X=y=>m.l+(y-2025)/5*iw*0.94+iw*0.03;
+  [1,10,100,1000].forEach(v=>{el("line",{x1:m.l,x2:m.l+iw,y1:Y(v),y2:Y(v),stroke:css("--line"),"stroke-width":.7},svg);tx(svg,m.l-6,Y(v)+4,v,{"text-anchor":"end","font-size":10})});
+  yrs.forEach(y=>tx(svg,X(y),H-8,y,{"text-anchor":"middle","font-size":10.5}));
+  el("path",{d:`M${X(2026)} ${Y(6)} L${X(2030)} ${Y(400)}`,stroke:css("--muted"),"stroke-dasharray":"3 4",fill:"none"},svg);
+  tx(svg,(X(2026)+X(2030))/2-(small?20:0),(Y(6)+Y(400))/2+(small?26:18),"필요 성장률 연 +186%",{"font-size":10.5,fill:css("--muted"),"text-anchor":"middle"});
+  MK.forEach(([y,v,l],i)=>{const c=y===2030?css("--ink"):css("--na");const cy=Y(v);el("circle",{cx:X(y),cy,r:5.5,fill:c,opacity:.9},svg);
+    const h=el("circle",{cx:X(y),cy,r:16,fill:"transparent"},svg);hot(h,`<b>${y}</b> · ${v} GWh<br>${l}`);
+    if(!small&&y===2030)tx(svg,X(y)+10,cy+4,`${v} ${l}`,{"font-size":10.5,fill:css("--fg")})});
+  if(small)tx(svg,X(2030)-8,Y(830)-8,"400~830",{"text-anchor":"end","font-size":10.5,fill:css("--ink"),"font-weight":600});
+  return H}
+
+function drawFoil(svg,W){svg.innerHTML="";const small=W<560,H=small?170:180,m={l:small?64:84,r:small?60:90,t:12,b:28};
+  svg.setAttribute("viewBox",`0 0 ${W} ${H}`);const iw=W-m.l-m.r,max=1000,X=v=>m.l+v/max*iw;
+  for(let v=0;v<=1000;v+=250){el("line",{x1:X(v),x2:X(v),y1:m.t,y2:H-m.b,stroke:css("--line"),"stroke-width":.6},svg);tx(svg,X(v),H-8,v,{"text-anchor":"middle","font-size":10})}
+  const bh=small?34:40;
+  [["LFP",250,425],["소듐",800,0]].forEach((r,i)=>{const y=m.t+10+i*(bh+20);tx(svg,m.l-8,y+bh/2+4,r[0],{"text-anchor":"end",fill:css("--fg"),"font-size":12});
+    const a=el("rect",{x:X(0),y,width:X(r[1])-X(0),height:bh/2-1,fill:css("--ink")},svg);hot(a,`<b>${r[0]} 알루미늄박</b><br>${r[0]==="소듐"?"700~900t 중앙 800t (양·음극)":"약 250t (양극)"}`);
+    if(r[0]==="소듐"){el("rect",{x:X(700),y:y-3,width:X(900)-X(700),height:bh/2+5,fill:"none",stroke:css("--ink"),"stroke-dasharray":"3 2"},svg)}
+    if(r[2]){const b=el("rect",{x:X(0),y:y+bh/2+1,width:X(r[2])-X(0),height:bh/2-1,fill:css("--li-soft"),stroke:css("--li"),"stroke-width":.8},svg);hot(b,"<b>LFP 구리박</b><br>약 425t (음극)")}
+    else tx(svg,X(0)+4,y+bh-4,"구리박 0",{"font-size":10.5,fill:css("--li")});
+    tx(svg,X(r[1])+(r[0]==="소듐"?X(900)-X(800)+6:6),y+bh/4+4,r[0]==="소듐"?"≈800t":"250t",{fill:css("--fg"),"font-weight":600,"font-size":11})});
+  return H}
+
+const charts=[["c-cost",drawCost],["c-li",drawLi],["c-mkt",drawMkt],["c-foil",drawFoil]];
+function render(){charts.forEach(([id,f])=>{const b=document.getElementById(id);f(b.querySelector("svg"),Math.max(280,Math.round(b.clientWidth-20)))})}
+render();let to;addEventListener("resize",()=>{clearTimeout(to);to=setTimeout(render,150)});
+if(window.matchMedia){const mq=matchMedia("(prefers-color-scheme: dark)");mq.addEventListener&&mq.addEventListener("change",render)}
+new MutationObserver(render).observe(document.documentElement,{attributes:true,attributeFilter:["data-theme"]});
+</script>
+</body>
+</html>

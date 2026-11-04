@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<title>우주 산업 밸류체인</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@600;700&family=Noto+Sans+KR:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+:root{
+  color-scheme:light;
+  --bg:#F3F4F7; --surface:#FFFFFF; --surface2:#F7F8FB; --surface3:#E9EBF2;
+  --ink:#15172B; --ink2:#454A61; --muted:#737A90;
+  --line:#D8DCE6; --line2:#BFC5D3;
+  --accent:#1F5F8B; --accent-soft:#E3EEF7;
+  --pos:#1B6E52; --neg:#B23A2C;
+  --c1:#1F5F8B; --c2:#E8792B; --c3:#1baf7a; --c4:#8B93A7; --c5:#7B4FB3;
+  --c1-soft:rgba(31,95,139,.12); --c2-soft:rgba(232,121,43,.14);
+  --shadow:0 1px 2px rgba(21,23,43,.06), 0 10px 28px rgba(21,23,43,.06);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#0F1118; --surface:#171A24; --surface2:#1D2130; --surface3:#252A3B;
+    --ink:#ECEEF5; --ink2:#B4BACB; --muted:#8D94A8;
+    --line:#2A2F40; --line2:#3B4155;
+    --accent:#7FB5E0; --accent-soft:#1E2E3E;
+    --pos:#4FB58C; --neg:#E07A5F;
+    --c1:#5B9BD5; --c2:#F08A3E; --c3:#2BC48E; --c4:#7C8499; --c5:#A283D6;
+    --c1-soft:rgba(91,155,213,.16); --c2-soft:rgba(240,138,62,.18);
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 28px rgba(0,0,0,.3);
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#0F1118; --surface:#171A24; --surface2:#1D2130; --surface3:#252A3B;
+  --ink:#ECEEF5; --ink2:#B4BACB; --muted:#8D94A8;
+  --line:#2A2F40; --line2:#3B4155;
+  --accent:#7FB5E0; --accent-soft:#1E2E3E;
+  --pos:#4FB58C; --neg:#E07A5F;
+  --c1:#5B9BD5; --c2:#F08A3E; --c3:#2BC48E; --c4:#7C8499; --c5:#A283D6;
+  --c1-soft:rgba(91,155,213,.16); --c2-soft:rgba(240,138,62,.18);
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 28px rgba(0,0,0,.3);
+}
+html{color-scheme:light dark}
+*{box-sizing:border-box}
+body{margin:0; background:var(--bg); color:var(--ink);
+  font-family:"Noto Sans KR","Malgun Gothic",system-ui,sans-serif; font-size:15.5px; line-height:1.75;
+  -webkit-text-size-adjust:100%}
+img{max-width:100%} [hidden]{display:none!important}
+.mono{font-family:"IBM Plex Mono","Consolas",ui-monospace,monospace; font-variant-numeric:tabular-nums}
+.serif{font-family:"Noto Serif KR","Noto Serif","Batang",serif}
+.wrap{max-width:920px; margin:0 auto; padding:0 22px 90px}
+a{color:var(--accent)}
+p{margin:0 0 14px} .lede{font-size:16.5px; color:var(--ink2)}
+ul,ol{margin:0 0 14px; padding-left:20px} li{margin-bottom:7px}
+strong,b{font-weight:700}
+.small{font-size:13px; color:var(--muted); line-height:1.6}
+.pos{color:var(--pos)} .neg{color:var(--neg)}
+
+.mast{background:var(--surface); border-bottom:1px solid var(--line)}
+.mast-in{max-width:920px; margin:0 auto; padding:34px 22px 26px}
+.eyebrow{font-family:"IBM Plex Mono",monospace; font-size:11.5px; letter-spacing:.06em; color:var(--muted)}
+h1{font-family:"Noto Serif KR",serif; font-size:clamp(30px,6.6vw,48px); line-height:1.18; margin:.3em 0 .15em; font-weight:700; letter-spacing:-.015em; text-wrap:balance}
+h1 .em{color:var(--accent)}
+.sub{color:var(--ink2); font-size:15.5px; max-width:64ch; margin:.4em 0 0}
+.tickerline{display:flex; flex-wrap:wrap; gap:6px 16px; align-items:baseline; margin-top:14px; font-family:"IBM Plex Mono",monospace; font-size:12.5px; color:var(--muted)}
+.tickerline b{color:var(--ink); font-weight:600}
+.stats{display:grid; grid-template-columns:repeat(auto-fit,minmax(138px,1fr)); gap:1px; background:var(--line); border:1px solid var(--line); margin-top:24px}
+.stat{background:var(--surface); padding:13px 14px 14px; min-width:0}
+.stat .k{font-family:"IBM Plex Mono",monospace; font-size:11px; letter-spacing:.02em; color:var(--muted)}
+.stat .v{font-family:"IBM Plex Mono",monospace; font-weight:600; font-size:clamp(19px,4.6vw,24px); line-height:1.25; margin-top:5px; overflow-wrap:anywhere}
+.stat .n{font-size:11.5px; color:var(--muted); margin-top:2px; line-height:1.4}
+.toc{display:flex; flex-wrap:wrap; gap:8px; margin:22px 0 0}
+.toc a{font-size:12.5px; text-decoration:none; color:var(--ink2); background:var(--surface); border:1px solid var(--line); padding:5px 11px; border-radius:999px}
+.toc a:hover{border-color:var(--accent); color:var(--accent)}
+
+section{margin-top:56px; scroll-margin-top:16px}
+.sec-h{display:flex; gap:14px; align-items:baseline; border-bottom:2px solid var(--ink); padding-bottom:9px; margin-bottom:20px}
+.sec-n{font-family:"IBM Plex Mono",monospace; font-size:12px; font-weight:600; color:var(--accent); letter-spacing:.06em; padding-top:4px}
+.sec-h h2{margin:0; font-family:"Noto Serif KR",serif; font-size:clamp(20px,4.2vw,26px); font-weight:700; letter-spacing:-.01em; text-wrap:balance; flex:1; min-width:0}
+h3{font-size:17px; font-weight:700; margin:32px 0 8px; letter-spacing:-.01em}
+h4{font-size:14.5px; font-weight:700; margin:20px 0 6px; color:var(--ink2)}
+
+.take{border-left:3px solid var(--accent); background:var(--surface2); padding:14px 16px; margin:18px 0; font-size:14.5px}
+.take .lbl{font-family:"IBM Plex Mono",monospace; font-size:11px; letter-spacing:.03em; color:var(--accent); display:block; margin-bottom:5px; font-weight:600}
+.take p:last-child{margin-bottom:0}
+.keypoints{display:grid; gap:1px; background:var(--line); border:1px solid var(--line); margin:22px 0}
+.kp{background:var(--surface); padding:15px 17px; display:grid; grid-template-columns:30px 1fr; gap:12px}
+.kp .num{font-family:"IBM Plex Mono",monospace; font-size:12px; color:var(--accent); font-weight:600; padding-top:3px}
+.kp .txt{min-width:0} .kp .t{font-weight:700; margin-bottom:2px} .kp .d{font-size:14px; color:var(--ink2)}
+.grid2{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:16px 0}
+.pane{background:var(--surface); border:1px solid var(--line); padding:14px 16px; min-width:0}
+.pane h4{margin-top:0}
+.pane.yes{border-top:3px solid var(--pos)} .pane.no{border-top:3px solid var(--neg)}
+.pane ul{margin-bottom:0; padding-left:18px} .pane li{font-size:14px; margin-bottom:6px}
+
+.vc{display:grid; grid-template-columns:repeat(6,1fr); gap:6px; margin:16px 0}
+.vc .c{background:var(--surface); border:1px solid var(--line); padding:10px 9px; font-size:12.5px; line-height:1.45; min-width:0}
+.vc .c b{display:block; font-size:13px; margin-bottom:3px}
+.vc .c.me{border:2px solid var(--accent); background:var(--accent-soft)}
+.vc .c .who{color:var(--muted); font-size:11.5px; margin-top:4px}
+
+.tbl-scroll{overflow-x:auto; margin:16px -22px 20px; padding:0 22px; -webkit-overflow-scrolling:touch}
+table{border-collapse:collapse; width:100%; min-width:560px; font-size:13.5px}
+caption{caption-side:top; text-align:left; font-family:"IBM Plex Mono",monospace; font-size:11.5px; letter-spacing:.02em; color:var(--muted); padding-bottom:8px}
+th,td{padding:8px 10px; border-bottom:1px solid var(--line); text-align:left; vertical-align:top}
+th.num,td.num{text-align:right; white-space:nowrap; font-family:"IBM Plex Mono",monospace; font-variant-numeric:tabular-nums}
+thead th{border-bottom:1.5px solid var(--line2); font-weight:600; color:var(--ink2); font-size:12.5px}
+tbody tr:hover{background:var(--surface2)}
+tfoot td{border-top:1.5px solid var(--line2); font-weight:600}
+td.hl{background:var(--accent-soft)}
+tr.sum td{font-weight:700; background:var(--surface2)}
+.tnote{font-size:12.5px; color:var(--muted); margin-top:-10px; margin-bottom:16px; line-height:1.55}
+.bar{display:inline-block; height:9px; background:var(--c1); vertical-align:middle; border-radius:2px; margin-right:6px}
+.bar.o{background:var(--c2)}
+
+.chart{background:var(--surface); border:1px solid var(--line); padding:14px 14px 10px; margin:16px 0 8px}
+.chart .ct{font-weight:700; font-size:14.5px; margin:0 0 2px}
+.chart .cs{font-size:12.5px; color:var(--muted); margin:0 0 8px}
+.chart svg{display:block; width:100%; height:auto; touch-action:pan-y}
+.chart text{font-family:"IBM Plex Mono",monospace; font-size:11px; fill:var(--ink2)}
+.chart text.lab{font-family:"Noto Sans KR",sans-serif; fill:var(--ink)}
+.chart text.mut{fill:var(--muted)}
+.chart .grid{stroke:var(--line); stroke-width:1}
+.chart .axis{stroke:var(--line2); stroke-width:1}
+.legend{display:flex; flex-wrap:wrap; gap:6px 16px; font-size:12px; color:var(--ink2); margin:6px 0 4px}
+.legend i{display:inline-block; width:12px; height:12px; border-radius:2px; vertical-align:-1px; margin-right:6px}
+.tip{position:fixed; z-index:50; pointer-events:none; background:var(--ink); color:var(--bg); font-size:12px; line-height:1.5; padding:7px 10px; border-radius:4px; max-width:min(260px,calc(100vw - 20px)); box-shadow:var(--shadow); display:none; font-family:"IBM Plex Mono",monospace}
+.tip b{font-weight:600}
+
+.risk{display:grid; gap:10px; margin:14px 0}
+.risk .r{display:grid; grid-template-columns:64px 1fr; gap:12px; background:var(--surface); border:1px solid var(--line); padding:12px 14px}
+.chip{font-family:"IBM Plex Mono",monospace; font-size:10.5px; letter-spacing:.08em; padding:3px 7px; border-radius:3px; display:inline-block; text-align:center; align-self:start; white-space:nowrap}
+.chip.h{background:var(--neg); color:#fff} .chip.m{background:var(--c2); color:#fff} .chip.l{background:var(--c4); color:#fff} .chip.u{background:var(--pos); color:#fff}
+.risk .t{font-weight:700} .risk .d{font-size:14px; color:var(--ink2)}
+
+.qs{display:grid; gap:12px; margin:16px 0}
+.q{background:var(--surface); border:1px solid var(--line); border-left:4px solid var(--accent); padding:13px 16px}
+.q .qh{display:flex; gap:10px; align-items:baseline}
+.q .qn{font-family:"IBM Plex Mono",monospace; font-size:12px; color:var(--accent); font-weight:600}
+.q .qt{font-weight:700; font-size:15px}
+.q .why{font-size:13.5px; color:var(--ink2); margin:6px 0 0}
+.q .why b{color:var(--ink)}
+.tl{list-style:none; padding:0; margin:14px 0}
+.tl li{display:grid; grid-template-columns:96px 1fr; gap:12px; padding:8px 0; border-bottom:1px solid var(--line); font-size:14px}
+.tl .d{font-family:"IBM Plex Mono",monospace; font-size:12px; color:var(--muted); padding-top:3px}
+.check li{margin-bottom:9px}
+.src{font-size:12.5px; color:var(--muted); line-height:1.6} .src li{margin-bottom:4px}
+.foot{margin-top:60px; padding-top:18px; border-top:1px solid var(--line); font-size:12.5px; color:var(--muted); line-height:1.6}
+
+@media (max-width:620px){
+  body{font-size:14.5px}
+  .wrap{padding:0 14px 70px} .mast-in{padding:26px 14px 20px}
+  table{min-width:0; font-size:12.5px} th,td{padding:7px 7px}
+  .tbl-scroll{margin:14px -14px 18px; padding:0 14px}
+  .grid2{grid-template-columns:1fr}
+  .vc{grid-template-columns:repeat(2,1fr)}
+  .risk .r{grid-template-columns:56px 1fr}
+  .kp{grid-template-columns:24px 1fr; gap:9px}
+  .chart{padding:12px 10px 8px}
+  .tl li{grid-template-columns:78px 1fr}
+  .bar{display:none}
+}
+@media (max-width:400px){
+  .wrap{padding:0 11px 60px} .mast-in{padding:22px 11px 18px}
+  .tbl-scroll{margin:14px -11px 18px; padding:0 11px}
+  .stats{grid-template-columns:repeat(2,1fr)}
+}
+@media (prefers-reduced-motion:reduce){ *{transition:none!important; animation:none!important} }
+
+.wrap{padding-left:max(22px,env(safe-area-inset-left)); padding-right:max(22px,env(safe-area-inset-right))}
+@media (max-width:620px){ .wrap{padding-left:16px; padding-right:16px} .mast-in{padding-left:16px; padding-right:16px} .tbl-scroll{margin-left:-16px; margin-right:-16px; padding:0 16px} }
+</style>
+</head>
+<body>
+<div class="tip" id="tip" role="status" aria-live="polite"></div>
+
+<header class="mast">
+  <div class="mast-in">
+    <div class="eyebrow">SECTOR REPORT · 우주 · 작성 2026-09-27</div>
+    <h1>우주 산업, 테마가 걷힌 뒤 <span class="em">남은 숫자</span></h1>
+    <p class="sub">스페이스X 상장으로 처음 공개된 실적, 고점에서 절반 넘게 내려온 국내 밸류체인, 그리고 "우주가 AI보다 빨리 크는가"에 대한 답을 증권사 리포트 약 170건과 1차 공시로 정리했다.</p>
+    <div class="tickerline">
+      <span>스페이스X <b>SPCX</b> 종가 <b>$148.68</b> (9/25)</span>
+      <span>국내 종가 기준일 <b>9/23</b> (추석 연휴 전 마지막 거래일)</span>
+      <span>금액 단위: 달러 또는 억 원</span>
+    </div>
+    <div class="stats">
+      <div class="stat"><div class="k">SPCX 시가총액</div><div class="v">$2.02T</div><div class="n">135.7억 주 × $148.68. 공모가 $135 대비 +10.1%</div></div>
+      <div class="stat"><div class="k">SPCX 주가매출비율</div><div class="v">87.6배</div><div class="n">최근 12개월 매출 $23.0B 기준. 2026E 기준 45.0배</div></div>
+      <div class="stat"><div class="k">스타링크 가입자</div><div class="v">1,200만</div><div class="n">2Q26, 1년 전 600만. 월 ARPU는 $85 → $66</div></div>
+      <div class="stat"><div class="k">세계 궤도 발사</div><div class="v">329회</div><div class="n">2025년. 2019년 102회, 연평균 +21.6%</div></div>
+      <div class="stat"><div class="k">2025년 성장률</div><div class="v">3~12%</div><div class="n">우주경제 전체. 같은 해 AI 인프라 투자는 +64~72%</div></div>
+      <div class="stat"><div class="k">국내 20종목 낙폭</div><div class="v">-59.8%</div><div class="n">52주 고점 대비 하락률의 중앙값</div></div>
+    </div>
+    <nav class="toc" aria-label="목차">
+      <a href="#s1">1 결론</a><a href="#s2">2 바로잡을 숫자</a><a href="#s3">3 왜 우주인가</a><a href="#s4">4 우주 vs AI</a>
+      <a href="#s5">5 스페이스X</a><a href="#s6">6 스페이스X 밸류체인</a><a href="#s7">7 경쟁자 전략</a><a href="#s8">8 경쟁자 밸류체인</a>
+      <a href="#s9">9 국방·통신</a><a href="#s10">10 우주데이터센터</a><a href="#s11">11 국내 종목 비교</a><a href="#s12">12 해자 검증</a>
+      <a href="#s13">13 리스크</a><a href="#s14">14 확인할 것</a><a href="#s15">15 출처</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+<section id="s1">
+  <div class="sec-h"><span class="sec-n">01</span><h2>결론부터</h2></div>
+  <p class="lede">질문 네 가지에 대한 답이다. 세 번째 답은 기대와 다를 수 있다. 우주는 AI보다 느리게 큰다.</p>
+  <div class="keypoints">
+    <div class="kp"><div class="num">Q1</div><div class="txt"><div class="t">왜 우주에 투자하는가</div><div class="d">kg당 발사비가 우주왕복선 약 $54,000에서 팰컨9 약 $2,700으로 95% 내려가면서 물량이 늘었다. 세계 궤도 발사는 6년 만에 3.2배, 운용 위성은 6.2배가 됐다. 여기에 2026년 6월 스페이스X 상장으로 이 산업의 실제 손익이 분기마다 공시되기 시작했다. 내러티브로만 거래되던 업종이 검증 가능한 업종으로 바뀐 것이 가장 큰 변화다.</div></div></div>
+    <div class="kp"><div class="num">Q2</div><div class="txt"><div class="t">스페이스X 밸류체인에 투자할 이유</div><div class="d">스페이스X는 엔진·위성·단말을 직접 만들지만 특수합금 원소재는 정련하지 않는다. 국내에서 이 칸의 실적이 확인되는 곳은 에이치브이엠(1H26 우주 매출 346억 원)과 스피어(1H26 매출 1,221억 원)다. 다만 두 회사 모두 매출은 뛰는데 이익률이 낮고, 공시에는 고객 실명이 없다. 세아베스틸지주·켄코아·와이제이링크는 스페이스X향 금액이 어디에도 없다.</div></div></div>
+    <div class="kp"><div class="num">Q3</div><div class="txt"><div class="t">우주(데이터센터 제외)가 AI보다 빨리 크는가</div><div class="d"><b>아니다.</b> 2025년 우주경제 성장률은 집계 기관에 따라 +3~12%, 같은 해 하이퍼스케일러 설비투자는 +64~72%다. 장기 전망도 우주 연 5.5~9%, AI 연 32~38%다. AI에 근접한 곳은 스타링크(+66%), 로켓랩(+62%), 상업 위성 제조(+67%) 같은 일부 구간뿐이고 규모가 작다.</div></div></div>
+    <div class="kp"><div class="num">Q4</div><div class="txt"><div class="t">경쟁자 밸류체인에서는 어디인가</div><div class="d">경쟁자가 모두 외부에서 사 오는 것은 아니다. 로켓랩·AST·아마존·블루오리진은 스페이스X처럼 내재화를 택했다. 외부조달형은 유텔샛 원웹·텔레샛·미 우주개발청(SDA) 쪽이고, 돈이 흘러가는 칸은 게이트웨이·단말 안테나와 위성 제조 주계약이다. 국내에서는 인텔리안테크가 여기에 해당한다(1H26 원웹향 591억 원, 게이트웨이 513억 원).</div></div></div>
+    <div class="kp"><div class="num">+</div><div class="txt"><div class="t">국방은 확정 예산과 요청 예산을 구분해야 한다</div><div class="d">미 우주군 예산은 확정 기준 FY2021 $15.4B에서 FY2026 $32B로 연평균 15.8% 늘었다. FY2027 요청 $71.3B(약 2.2배)는 의회를 통과하지 않았다. 흔히 인용되는 "FY26 399억 달러, +39.5%"는 요청액이다.</div></div></div>
+    <div class="kp"><div class="num">+</div><div class="txt"><div class="t">우주데이터센터는 실적이 아니라 옵션이다</div><div class="d">1GW를 10년 운영하는 비용은 지상 $35B, 우주 $42.3B(LS증권)이고 건설비만 보면 우주가 약 3배다. 손익분기 발사비 $200/kg은 현재의 1/14 수준이다. 다만 스페이스X 주가매출비율 87.6배는 이 옵션 없이는 설명되지 않는다.</div></div></div>
+  </div>
+  <div class="take"><span class="lbl">한 줄 판단</span><p>성장률만 보면 AI가 앞선다. 우주를 볼 이유는 속도가 아니라 <b>가격과 검증 가능성</b>이다. 국내 밸류체인은 고점 대비 중앙값 -59.8%로 내려왔고, 이제 분기 실적으로 가려낼 수 있다. 가려낼 기준은 "스페이스X 관련주인가"가 아니라 "우주 매출이 공시 숫자로 찍히는가, 그 매출에 이익이 남는가"다.</p></div>
+</section>
+
+<section id="s2">
+  <div class="sec-h"><span class="sec-n">02</span><h2>먼저 바로잡을 숫자</h2></div>
+  <p>우주 업종은 비상장 시절의 추정치와 요청 단계의 예산이 확정치처럼 돌아다닌다. 증권사 리포트끼리도 같은 항목의 값이 다르다. 본문에 들어가기 전에 기준을 맞춘다.</p>
+  <div class="tbl-scroll"><table>
+    <caption>자주 인용되는 값과 확인된 값</caption>
+    <thead><tr><th>항목</th><th class="num">흔히 인용</th><th class="num">확인값</th><th>차이가 나는 이유</th></tr></thead>
+    <tbody>
+      <tr><td>스페이스X 2025년 매출</td><td class="num">$15~16B</td><td class="num hl">$18.67B</td><td>앞의 값은 상장 전 언론 추정. S-1은 xAI·X를 합친 연결 기준이고 영업손실 $2.59B, 순손실 $4.94B다</td></tr>
+      <tr><td>스페이스X IPO 조달액</td><td class="num">$75B</td><td class="num hl">$85.7B</td><td>$75B는 기본 공모 5.56억 주 × $135. 초과배정 8,333만 주까지 행사한 순조달액이 $85.7B(회사 8-K)</td></tr>
+      <tr><td>미 우주군 FY2026 예산</td><td class="num">$39.9B (+39.5%)</td><td class="num hl">$32B</td><td>$39.9~40.1B는 조정법 자금을 포함한 요청액. 확정은 기본 세출 $26.1B + 조정법 $5.9B</td></tr>
+      <tr><td>골든돔 총사업비</td><td class="num">$185B</td><td class="num hl">$185B ~ $1.2T</td><td>$185B는 행정부 제시액. 미 의회예산국(CBO)은 20년간 $1.2T로 추정. 6배 넘게 차이 난다</td></tr>
+      <tr><td>스피어 장기공급계약</td><td class="num">1.5조 원</td><td class="num hl">2026년 확정 $55.5M</td><td>회사 IR은 첫해 수요예측 $111.0M, 확정 $55.5M만 제시한다. 1.5조 원은 첫해 예측 1,544억 원에 10년을 곱한 값</td></tr>
+      <tr><td>인텔리안테크와 스페이스X</td><td>스페이스X 수혜주</td><td class="hl">공급 관계 없음</td><td>스타링크는 단말·게이트웨이를 자체 제작. 인텔리안테크는 스타링크를 제외한 사업자에 납품한다</td></tr>
+      <tr><td>2025년 세계 궤도 발사</td><td class="num">324 / 325 / 329회</td><td class="num hl">329회(시도)</td><td>집계 기관 차이. McDowell 329회 시도·321회 성공, BryceTech·SIA 325회. 본문은 McDowell 시계열을 쓴다</td></tr>
+      <tr><td>팰컨9 kg당 발사비</td><td class="num">$400 ~ $5,000</td><td class="num hl">약 $2,700~3,600</td><td>$400~1,000은 내부 원가 추정, $2,700 이상은 외부 고객 가격. 섞어 쓰면 10배 차이가 난다</td></tr>
+      <tr><td>국내 종가(9/23)</td><td class="num">한화에어로 1,031,000원</td><td class="num hl">1,021,000원</td><td>네이버 시세는 20:20 시간외 거래까지 반영한 값. 본문 시가총액은 정규장 종가 × 발행주식수로 계산했다</td></tr>
+      <tr><td>52주 최고가</td><td class="num">쎄트렉아이 231,000원</td><td class="num hl">224,000원</td><td>네이버 요약값과 일별 시세의 장중 고가 최대값이 다르다. 본문 낙폭은 일별 시세 기준</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">출처: SEC 8-K(2026-08-04), Aerospace Corp FY27 Budget Brief(2026-08-17), 스피어 IR Book(2026-09), 네이버 일별 시세, FnGuide.</p>
+</section>
+
+<section id="s3">
+  <div class="sec-h"><span class="sec-n">03</span><h2>왜 우주인가: 가격이 내려가자 물량이 늘었다</h2></div>
+  <p>우주 산업의 구조 변화는 한 줄로 요약된다. 궤도에 1kg을 올리는 값이 내려갔고, 그만큼 올리는 양이 늘었다. 재사용 로켓이 이 변화를 만들었다. 팰컨9 부스터는 한 기체가 최대 37회 비행했고, 2025년 발사의 85% 이상이 재사용 부스터였다.</p>
+  <div class="tbl-scroll"><table>
+    <caption>저궤도 kg당 발사 가격</caption>
+    <thead><tr><th>발사체</th><th class="num">$/kg</th><th>성격</th></tr></thead>
+    <tbody>
+      <tr><td>우주왕복선 (1981~2011)</td><td class="num">약 54,000</td><td>실적</td></tr>
+      <tr><td>일렉트론 (로켓랩, 소형)</td><td class="num">약 25,000~28,000</td><td>실적. 전용 발사라 단가가 높다</td></tr>
+      <tr><td>누리호</td><td class="num">약 26,000</td><td>실적</td></tr>
+      <tr><td>팰컨9 (외부 고객 가격)</td><td class="num hl">약 2,700~3,600</td><td>실적. 왕복선 대비 약 -95%</td></tr>
+      <tr><td>스타십 (목표)</td><td class="num">100~200</td><td>설계 목표. 완전 재사용 상업 운용 실적은 아직 없다</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="chart" id="ch-launch">
+    <p class="ct">세계 궤도 발사 시도는 6년 만에 3.2배가 됐다</p>
+    <p class="cs">연도별 궤도 발사 시도 횟수. 스페이스X 팰컨 발사는 출처가 확인되는 2022년부터 표시</p>
+    <div class="legend"><span><i style="background:var(--c4)"></i>세계 전체</span><span><i style="background:var(--c1)"></i>그중 스페이스X 팰컨</span></div>
+    <svg role="img" aria-label="연도별 세계 궤도 발사 횟수와 스페이스X 발사 횟수 막대 차트"></svg>
+  </div>
+  <p class="tnote">출처: Jonathan McDowell, Space Activities in 2025(세계 전체). 스페이스X는 S-1 및 Space.com. 2025년 스페이스X 비중 50.2%.</p>
+
+  <div class="tbl-scroll"><table>
+    <caption>물량 지표 (McDowell 집계)</caption>
+    <thead><tr><th>지표</th><th class="num">2019</th><th class="num">2022</th><th class="num">2025</th><th class="num">연평균</th></tr></thead>
+    <tbody>
+      <tr><td>궤도 발사 시도(회)</td><td class="num">102</td><td class="num">186</td><td class="num">329</td><td class="num">+21.6%</td></tr>
+      <tr><td>발사된 탑재체(기)</td><td class="num">500</td><td class="num">2,495</td><td class="num">4,526</td><td class="num">+44.4%</td></tr>
+      <tr><td>운용 중 탑재체(연말, 기)</td><td class="num">2,286</td><td class="num">6,719</td><td class="num">14,245</td><td class="num">+35.7%</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>돈은 발사가 아니라 지상과 서비스에 있다</h3>
+  <p>발사 서비스는 눈에 띄지만 시장은 작다. 2025년 기준 상업 발사 매출은 $12.4B로 우주경제 $429B의 3%에 못 미친다(SIA). 지상 장비가 $165.2B, 위성 서비스가 $105.0B다. 위성 제조는 $20.4B다. 밸류체인 투자에서 지상 장비와 서비스 쪽을 먼저 봐야 하는 이유다.</p>
+
+  <h3>2026년에는 증가세가 둔화했다</h3>
+  <p>우주에 불리한 숫자도 있다. 2026년 상반기 세계 발사는 153회로 전년 동기 대비 +2.7%에 그쳤다. 스페이스X는 상반기 78회로 1년 전 84회보다 줄었고, 궤도에 올린 질량도 1,102톤에서 1,041톤으로 5.5% 감소했다. 팰컨9 발사 능력이 포화에 가까워졌고, 다음 증가분은 스타십이 상업 운용에 들어가야 나온다.</p>
+</section>
+
+<section id="s4">
+  <div class="sec-h"><span class="sec-n">04</span><h2>우주는 AI보다 빨리 크는가</h2></div>
+  <p class="lede">우주데이터센터를 뺀 수요(국방, 통신, 관측, 항법)만 놓고 보면, 산업 전체의 성장률은 AI보다 낮다. 어느 기준으로 봐도 같다.</p>
+
+  <div class="chart" id="ch-growth">
+    <p class="ct">산업 전체로는 AI가 몇 배 빠르고, 우주 안의 일부 구간만 AI에 근접한다</p>
+    <p class="cs">전년 대비 성장률(%). 연간 수치는 2025년, 분기 수치는 2026년 2분기 기준</p>
+    <div class="legend"><span><i style="background:var(--c1)"></i>우주</span><span><i style="background:var(--c2)"></i>AI</span></div>
+    <svg role="img" aria-label="우주와 AI의 성장률 비교 가로 막대 차트"></svg>
+  </div>
+  <p class="tnote">출처: SIA, Space Foundation, SEC 공시(스페이스X·로켓랩·엔비디아·코어위브), Epoch AI, Dell'Oro. 매출·투자·예산이 섞여 있어 엄밀히 같은 개념은 아니다.</p>
+
+  <div class="tbl-scroll"><table>
+    <caption>같은 성격끼리 묶은 비교</caption>
+    <thead><tr><th>구분</th><th>우주 (데이터센터 제외)</th><th class="num">성장률</th><th>AI</th><th class="num">성장률</th></tr></thead>
+    <tbody>
+      <tr><td>2025년 실적</td><td>세계 우주경제 (SIA / Space Foundation)</td><td class="num">+3% / +12%</td><td>하이퍼스케일러 5사 설비투자</td><td class="num">+72%</td></tr>
+      <tr><td>2026년</td><td>정부 우주예산 FY26 (43개국)</td><td class="num">+11.8%</td><td>빅4 설비투자 가이던스</td><td class="num">약 +77%</td></tr>
+      <tr><td>2026년 물량</td><td>세계 궤도 발사 (상반기)</td><td class="num">+2.7%</td><td>세계 데이터센터 설비투자 (2Q26)</td><td class="num">+92%</td></tr>
+      <tr><td>장기 전망</td><td>Novaspace 2025~34 / McKinsey·WEF 2023~35</td><td class="num">연 5.5% / 9%</td><td>IDC AI 지출 2025~29</td><td class="num">연 31.9%</td></tr>
+      <tr><td>국방</td><td>미 우주군 확정 예산 FY21→FY26</td><td class="num">연 15.8%</td><td>5사 설비투자 2023→2025</td><td class="num">연 약 67%</td></tr>
+      <tr><td>대표 기업</td><td>스페이스X (AI 부문 제외, 2Q26)</td><td class="num">+57.6%</td><td>엔비디아 (2Q FY27)</td><td class="num">+106%</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="grid2">
+    <div class="pane no"><h4>우주에 불리한 사실</h4><ul>
+      <li>2026년 빅4 설비투자 가이던스 약 $730B는 세계 우주경제 전체($686B, Space Foundation)보다 크다.</li>
+      <li>가장 최근에 나온 전문기관 전망(Novaspace, 2026-01)이 가장 낮다. 연 5.5%다.</li>
+      <li>위성 서비스 전체는 2024~34년 연 1.9% 전망이다. 위성방송 감소(-8.2%)가 데이터 성장을 상쇄한다.</li>
+      <li>스페이스X 스스로 S-1에서 시장 규모를 AI $26.5T, 우주와 통신 합계 약 $2T로 제시했다. 2분기 설비투자의 86%가 AI에 들어갔다.</li>
+    </ul></div>
+    <div class="pane yes"><h4>우주에 유리한 사실</h4><ul>
+      <li>우주 성장률은 가속 중이다. Space Foundation 기준 최근 5년 연평균 9.8%로 직전 5년보다 2%p 이상 높다.</li>
+      <li>AI 설비투자 증가율은 2027년 +22%로 둔화한다는 것이 컨센서스다. 빅4 잉여현금흐름은 2024년 $257B에서 2025년 $150B로 줄었다.</li>
+      <li>저궤도 통신은 연 24~28% 성장 전망이다(정지궤도는 -4%). 위성 광대역 가입자는 2025년 +62% 늘었다.</li>
+      <li>저궤도 위성 수명은 5~7년이다. 한번 깔린 군집은 교체 수요를 반복해서 만든다.</li>
+    </ul></div>
+  </div>
+  <div class="take"><span class="lbl">해석</span><p>"우주가 AI보다 빨리 큰다"는 전제로 투자 논리를 세우면 안 된다. 성립하는 논리는 다르다. 우주는 <b>성장률은 낮지만 가속 중이고, 정부 예산이 하방을 받치며, 주가가 이미 크게 조정된</b> 업종이다. AI는 성장률은 높지만 감속 전망이 나와 있고 현금흐름 부담이 커지는 업종이다. 둘은 대체재가 아니라 성격이 다른 자산이다.</p></div>
+</section>
+
+<section id="s5">
+  <div class="sec-h"><span class="sec-n">05</span><h2>스페이스X: 세 회사, 하나의 흑자</h2></div>
+  <p>스페이스X는 2026년 6월 12일 나스닥에 상장했다(티커 SPCX, 공모가 $135). 2월에 xAI를 주식교환으로 합병했기 때문에, 상장된 회사는 발사·통신·AI 세 사업을 가진 회사다. 이 가운데 돈을 버는 곳은 통신(스타링크) 하나다.</p>
+
+  <div class="chart" id="ch-seg">
+    <p class="ct">스타링크만 흑자이고, 발사와 AI는 적자다</p>
+    <p class="cs">부문별 영업이익(억 달러). 2023~2025년은 연간, 1H26은 상반기 합계</p>
+    <div class="legend"><span><i style="background:var(--c1)"></i>통신(스타링크)</span><span><i style="background:var(--c3)"></i>발사(Space)</span><span><i style="background:var(--c2)"></i>AI(xAI·X)</span></div>
+    <svg role="img" aria-label="스페이스X 부문별 영업이익 막대 차트"></svg>
+  </div>
+  <p class="tnote">출처: 스페이스X S-1(삼성증권 2026-05-22 정리), SEC 8-K(2026-08-04). 1H26은 1분기와 2분기를 더한 값.</p>
+
+  <div class="tbl-scroll"><table>
+    <caption>2026년 2분기 부문 실적 (백만 달러)</caption>
+    <thead><tr><th>부문</th><th class="num">매출</th><th class="num">전년비</th><th class="num">영업이익</th><th class="num">설비투자</th></tr></thead>
+    <tbody>
+      <tr><td>통신 (스타링크)</td><td class="num">4,291</td><td class="num">+66%</td><td class="num pos">+1,656</td><td class="num">1,367</td></tr>
+      <tr><td>발사 (Space)</td><td class="num">962</td><td class="num">+29%</td><td class="num neg">-542</td><td class="num">1,174</td></tr>
+      <tr><td>AI (xAI·X)</td><td class="num">2,561</td><td class="num">+247%</td><td class="num neg">-1,257</td><td class="num">15,828</td></tr>
+      <tr class="sum"><td>합계</td><td class="num">7,814</td><td class="num">+92%</td><td class="num">-143</td><td class="num">18,369</td></tr>
+      <tr><td>AI 제외 (통신 + 발사)</td><td class="num">5,253</td><td class="num hl">+57.6%</td><td class="num">+1,114</td><td class="num">2,541</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">계산 근거: AI 제외 성장률 = (962 + 4,291) ÷ (746 + 2,588) - 1. AI 설비투자 비중 = 15,828 ÷ 18,369 = 86.2%.</p>
+
+  <h3>스타링크: 가입자는 두 배, 단가는 하락</h3>
+  <div class="tbl-scroll"><table>
+    <thead><tr><th>시점</th><th class="num">가입자(만 명)</th><th class="num">소비자 월 ARPU($)</th></tr></thead>
+    <tbody>
+      <tr><td>2023년 말</td><td class="num">230</td><td class="num">99</td></tr>
+      <tr><td>2024년 말</td><td class="num">440</td><td class="num">91</td></tr>
+      <tr><td>2025년 말</td><td class="num">890</td><td class="num">81</td></tr>
+      <tr><td>2026년 6월 말</td><td class="num hl">1,200</td><td class="num hl">66</td></tr>
+    </tbody>
+  </table></div>
+  <p>가입자가 1년 만에 두 배가 됐는데 매출은 66% 늘었다. 저가 요금제와 신흥국 확대로 가입자당 매출이 2년 반 만에 33% 내려갔기 때문이다. 그래도 통신 부문 영업이익률은 38.6%(2Q26)로 유지됐다. 기업·정부 매출이 1년 새 두 배 넘게 늘어 통신 매출의 42%를 차지한 것이 마진을 받쳤다.</p>
+
+  <h3>발사: 세계 점유율 50%, 그런데 적자</h3>
+  <p>2025년 팰컨 발사 165회 가운데 외부 고객 발사는 43회였다. 나머지 122회는 자사 스타링크 위성을 올린 것이다. 발사 서비스 매출은 2024년 $2.584B에서 2025년 $2.576B로 제자리였다. 발사 부문은 스타십 연구개발비(2025년 $3.0B) 때문에 영업손실이다. 발사는 그 자체로 이익을 내는 사업이 아니라 스타링크의 원가를 낮추는 수단이다.</p>
+
+  <h3>주가와 수급</h3>
+  <div class="tbl-scroll"><table>
+    <caption>상장 후 주가 경로</caption>
+    <thead><tr><th>날짜</th><th class="num">주가($)</th><th>내용</th></tr></thead>
+    <tbody>
+      <tr><td>06-11</td><td class="num">135.00</td><td>공모가</td></tr>
+      <tr><td>06-12</td><td class="num">161</td><td>첫날 종가 (+19%)</td></tr>
+      <tr><td>52주 고가 / 저가</td><td class="num">225.64 / 104.83</td><td>고가는 6월, 저가는 7~8월</td></tr>
+      <tr><td>08-04</td><td class="num">125.33</td><td>2분기 실적 발표. 매출은 예상($6.8B)을 넘었지만 설비투자 $18.4B가 예상(약 $13B)을 크게 넘어 시간외 -7%대</td></tr>
+      <tr><td>09-25</td><td class="num hl">148.68</td><td>공모가 대비 +10.1%, 첫날 종가 대비 -7.7%, 고가 대비 -34.1%</td></tr>
+    </tbody>
+  </table></div>
+  <ul class="tl">
+    <li><span class="d">08-06</span><span>약 9.11억 주 락업 해제. 당일 주가 +6%</span></li>
+    <li><span class="d">08-20</span><span>약 3.19억 주 해제. 당일 -4%</span></li>
+    <li><span class="d">09-09</span><span>약 3.19억 주 해제. 당일 -3.9%</span></li>
+    <li><span class="d">09-24</span><span>최대 3.284억 주 해제. 종가 $148.03(전일 $148.36)</span></li>
+    <li><span class="d">10-09 · 10-24</span><span>각 최대 3.284억 주 해제 예정</span></li>
+    <li><span class="d">11월</span><span>3분기 실적 발표 뒤 최대 13억 주 해제 예정</span></li>
+    <li><span class="d">12-08</span><span>상장 180일. 약 8억 주 해제 예정</span></li>
+    <li><span class="d">2027-06-12</span><span>머스크 보유분(366일) 해제</span></li>
+  </ul>
+  <p>상장 시점 유통 물량은 전체의 약 5%였고, 12월 8일까지 약 40%로 늘어난다. S&amp;P 500은 흑자 요건 때문에 빨라야 2027년 중반에 편입될 수 있다. 앞으로 석 달은 지수 편입 매수보다 락업 해제 물량이 더 큰 구간이다.</p>
+
+  <h3>밸류에이션</h3>
+  <div class="tbl-scroll"><table>
+    <caption>시가총액 $2.02T 기준 주가매출비율</caption>
+    <thead><tr><th>기준 매출</th><th class="num">매출($B)</th><th class="num">배수</th><th>비고</th></tr></thead>
+    <tbody>
+      <tr><td>2025년 실적</td><td class="num">18.67</td><td class="num">108.0배</td><td>S-1</td></tr>
+      <tr><td>최근 12개월</td><td class="num">23.04</td><td class="num hl">87.6배</td><td>시세 사이트 집계</td></tr>
+      <tr><td>2분기 연환산</td><td class="num">31.26</td><td class="num">64.6배</td><td>7.814 × 4</td></tr>
+      <tr><td>2026년 컨센서스</td><td class="num">44.8</td><td class="num">45.0배</td><td>회사 공식 가이던스는 없다</td></tr>
+      <tr><td>2027년 컨센서스</td><td class="num">108.3</td><td class="num">18.6배</td><td>2026년의 2.4배 매출을 전제</td></tr>
+    </tbody>
+  </table></div>
+  <p>비교 대상인 엔비디아는 2026년 예상 매출의 14.5배 수준이었다(하나증권, 5월). 2027년 컨센서스 매출 $108.3B는 AI 부문이 연환산 $100B에 도달한다는 경영진 목표를 상당 부분 받아들인 숫자다. 이 주식의 값은 우주가 아니라 AI 부문 전망이 정한다.</p>
+</section>
+
+<section id="s6">
+  <div class="sec-h"><span class="sec-n">06</span><h2>스페이스X 밸류체인: 내재화하지 못한 칸을 찾는다</h2></div>
+  <h3>비즈니스 모델: 어디를 직접 만들고 어디를 사 오는가</h3>
+  <div class="vc">
+    <div class="c me"><b>원소재</b>니켈계 초내열합금 잉곳·분말, 고강도 스테인리스<div class="who">외부 조달</div></div>
+    <div class="c"><b>엔진·기체</b>멀린·랩터 엔진, 스타십 기체<div class="who">자체 제작</div></div>
+    <div class="c"><b>위성</b>스타링크 위성, 위성 간 레이저<div class="who">자체 제작</div></div>
+    <div class="c me"><b>반도체·부품</b>RF 칩, GPU, MLCC, 증폭기<div class="who">외부 조달</div></div>
+    <div class="c"><b>단말·게이트웨이</b>위상배열 안테나, 지상국<div class="who">자체 제작</div></div>
+    <div class="c"><b>서비스</b>가입자 직접 모집<div class="who">자체 운영</div></div>
+  </div>
+  <p>스페이스X는 S-1 위험요인에 "수직계열화에 집중하지만 핵심 부품은 제3자에 의존한다"고 적었다. 외부 공급사가 들어갈 수 있는 칸은 좁다. 확인되는 사례는 STMicroelectronics(스타링크 안테나용 RF 칩 누적 50억 개 이상, 회사 발표), Filtronic(E밴드 증폭기 $62.5M 수주), 테슬라(메가팩), 엔비디아(GPU)다. 흔히 말하는 "자체 제작 80~85%"는 1차 출처로 확인하지 못한 통용 수치다.</p>
+
+  <h3>밸류체인에 투자할 이유와 반증</h3>
+  <div class="grid2">
+    <div class="pane yes"><h4>투자 논리</h4><ul>
+      <li><b>정보 공개.</b> 상장으로 고객사의 발사 횟수, 설비투자, 스타십 일정이 분기마다 공시된다. 공급사 실적을 앞서 읽을 수 있다.</li>
+      <li><b>엔진 수.</b> 스타십은 엔진이 39기(1단 33, 2단 6)다. 기존 발사체는 약 10기다. 기체당 합금 사용량이 늘어난다.</li>
+      <li><b>공급 병목.</b> 미국 특수합금 업체(Carpenter, ATI)의 납기는 50주 이상이다. 스피어는 4~12주 납기를 내세운다.</li>
+      <li><b>실적 확인.</b> 에이치브이엠 우주 매출은 2024년 75억 → 2025년 395억 → 1H26 346억 원, 우주 수주잔고는 2Q26 말 500억 원이다.</li>
+      <li><b>가격.</b> 상장 기대가 빠진 뒤 세 종목 모두 고점 대비 52~59% 내려왔다.</li>
+    </ul></div>
+    <div class="pane no"><h4>반증</h4><ul>
+      <li><b>고객 실명이 공시에 없다.</b> 스피어 공시·IR은 "미국 글로벌 우주항공 발사업체"로만 적는다. 에이치브이엠은 중간 업체를 거쳐 납품해 최종 사용처 특정이 어렵다(신한).</li>
+      <li><b>이익이 안 남는다.</b> 스피어는 1H26 매출 +200%에 영업이익률 1.9%, 원가율이 73.6%에서 89.0%로 올랐다. 에이치브이엠 2Q26 영업이익률은 6.9%로 컨센서스를 59% 밑돌았다.</li>
+      <li><b>물량이 아직 시험 단계.</b> 스피어 측 설명으로는 현재 물량이 양산 전 납기 능력 평가용 최소 규모다.</li>
+      <li><b>팰컨 발사는 줄었다.</b> 상반기 78회로 전년 84회보다 적다. 수요 증가는 스타십 양산 시점에 달려 있다.</li>
+      <li><b>내재화 확대.</b> 스페이스X는 태양전지와 칩까지 자체 생산을 추진 중이다.</li>
+    </ul></div>
+  </div>
+
+  <h3>국내 기업별 확인 수준</h3>
+  <p>"스페이스X 관련주"로 묶이는 종목은 근거의 단단함이 크게 다르다. 증권사 리포트가 말한 계약과 공시로 확인되는 계약을 구분했다.</p>
+  <div class="tbl-scroll"><table>
+    <thead><tr><th>기업</th><th>무엇을</th><th>확인 수준</th><th>스페이스X향 수치</th></tr></thead>
+    <tbody>
+      <tr><td><b>스피어</b><br><span class="small">347700</span></td><td>니켈·초합금을 외주 네트워크로 조달해 공급. 자체 제조는 아니다</td><td><span class="chip u">공시+IR</span><br>10년+3년 장기공급계약(2025-07-31). 상대방은 익명</td><td>2026년 수요예측 $111.0M, 확정 $55.5M. 개별 수주 공시 19건</td></tr>
+      <tr><td><b>에이치브이엠</b><br><span class="small">295310</span></td><td>진공용해 니켈계·티타늄계 특수합금 제조</td><td><span class="chip u">IR</span><br>우주 매출은 실적으로 확인. 고객 실명은 증권사 서술뿐</td><td>우주 매출 1H26 346억 원(비중 66%). 고객별 금액은 없다</td></tr>
+      <tr><td><b>세아베스틸지주</b><br><span class="small">001430</span></td><td>텍사스 SST 공장, 초내열합금 연 6,000톤. 2027년 상업가동</td><td><span class="chip m">언론</span><br>2023년 협상 보도. 회사 공식 발표 없음</td><td>없음. SST 2027E 매출 추정은 800억~2,971억 원으로 갈린다</td></tr>
+      <tr><td><b>켄코아에어로스페이스</b><br><span class="small">274090</span></td><td>미국 자회사를 통한 우주 원소재 공급, 발사체 부품</td><td><span class="chip m">서술</span><br>벤더 등록 보도(2021). 계약 공시와 연결되지 않는다</td><td>없음. 실적은 보잉 등 민항기와 직결(신한)</td></tr>
+      <tr><td><b>와이제이링크</b><br><span class="small">209640</span></td><td>SMT 공정 장비</td><td><span class="chip m">서술</span><br>"직납"이라는 증권사 서술. 근거 미제시</td><td>없음</td></tr>
+      <tr><td><b>하이록코리아</b><br><span class="small">013030</span></td><td>피팅·밸브</td><td><span class="chip l">없음</span><br>리포트 어디에도 스페이스X와 연결한 서술이 없다</td><td>없음. 실적 동인은 LNG</td></tr>
+      <tr><td><b>인텔리안테크 · 쎄트렉아이</b></td><td>위성 안테나 / 관측위성</td><td><span class="chip l">무관</span><br>공급 관계 없음. 쎄트렉아이는 팰컨9 발사 고객</td><td>해당 없음</td></tr>
+    </tbody>
+  </table></div>
+  <div class="take"><span class="lbl">판단</span><p>이 밸류체인에서 실적으로 검증할 수 있는 종목은 <b>에이치브이엠과 스피어</b> 두 곳이다. 둘의 차이는 제조와 유통이다. 에이치브이엠은 직접 녹여 만들고(1H26 영업이익률 12.3%), 스피어는 조달해 공급한다(1.9%). 같은 고객의 같은 수요를 놓고 이익이 남는 구조는 제조 쪽이다. 나머지 종목은 스페이스X 매출을 확인할 방법이 없으므로 본업 실적으로 평가하는 편이 맞다.</p></div>
+</section>
+
+<section id="s7">
+  <div class="sec-h"><span class="sec-n">07</span><h2>경쟁자들의 전략: 피하거나, 따라 하거나, 나라가 밀거나</h2></div>
+  <p>스페이스X와 같은 방식으로 정면 대결하는 경쟁자는 없다. 전략은 세 갈래다.</p>
+  <div class="tbl-scroll"><table>
+    <thead><tr><th>전략</th><th>사업자</th><th>스페이스X와 다른 점</th><th>현재 상태 (2026년 9월)</th></tr></thead>
+    <tbody>
+      <tr><td rowspan="3"><b>시장을 피한다</b><br><span class="small">소비자 대신 정부·기업</span></td><td>유텔샛 원웹</td><td>정부·국방·항공·해상 전용. 위성·단말·발사 전부 외부 조달</td><td>에어버스에 차세대 위성 669기 발주. 정부 주도 증자 약 €1.5B. 저궤도 매출 €297M(+69.5%)</td></tr>
+      <tr><td>텔레샛</td><td>기업·정부 품질보장형. 전부 외부 조달</td><td>위성 0기. 군집 156 → 225기로 확대, 캐나다 군 계약 C$2.7B. 서비스는 2028년 1분기로 지연</td></tr>
+      <tr><td>EU IRIS²</td><td>정부 보안통신. 공공 주도</td><td>위성 0기. 최소 348기, 초기 서비스 2030년</td></tr>
+      <tr><td rowspan="4"><b>구조를 따라 한다</b><br><span class="small">수직계열화</span></td><td>로켓랩</td><td>발사 + 위성 제조. 인수합병으로 부품을 내재화하고 남에게도 판다</td><td>2Q26 매출 $234M(+62%), 그중 81%가 위성 시스템. 수주잔고 $2.36B. 중형 로켓 뉴트론은 4분기 목표</td></tr>
+      <tr><td>아마존 레오</td><td>위성·단말·칩 자체 설계. 발사만 전량 외부</td><td>7/2 기준 398기 발사. FCC 중간기한 면제. 상용 서비스는 "연내"로 후퇴</td></tr>
+      <tr><td>AST 스페이스모바일</td><td>휴대폰 직접 연결(D2D). 95% 내재화</td><td>궤도 13기. 2Q26 매출 $31.5M, 2026년 가이던스 $150~200M</td></tr>
+      <tr><td>블루오리진</td><td>대형 재사용 로켓, 엔진 자체 제작</td><td>뉴글렌 3회 비행 후 5/28 지상 폭발. 복귀 목표 연말</td></tr>
+      <tr><td><b>나라가 민다</b></td><td>중국 궈왕·첸판, 국영·민간 발사체</td><td>국가 물량 전담</td><td>궈왕 186기, 첸판 약 250기. 장정-10B 해상 회수 성공(7/10), 주췌-3 착륙 성공(8/18)</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>경쟁자 공통의 병목은 발사다</h3>
+  <p>2026년에 미국의 대형 발사체 두 기종이 동시에 멈췄다. ULA 벌컨은 2월 12일 비행에서 고체 부스터 이상이 재발한 뒤 비행이 없고, 뉴글렌은 5월 28일 지상 시험 중 폭발했다. 아마존 레오는 벌컨 38회, 뉴글렌 24회를 계약했지만 두 로켓으로 올린 위성은 아직 없다. AST는 4월 뉴글렌 발사에서 위성 1기를 잃었다.</p>
+  <p>결과는 역설적이다. 아마존·AST·텔레샛이 모두 팰컨9을 사서 쓴다. 경쟁자의 설비투자 일부가 스페이스X 매출로 들어간다.</p>
+  <div class="take"><span class="lbl">시사점</span><p>경쟁자 밸류체인에 투자할 때 가장 먼저 볼 것은 수요가 아니라 <b>발사 일정</b>이다. 경쟁자의 위성이 궤도에 올라가지 못하면 지상 장비 발주도 밀린다. 뉴글렌 복귀(연말 목표), 벌컨 비행 재개, 뉴트론 첫 발사가 경쟁자 진영 전체의 선행 지표다.</p></div>
+</section>
+
+<section id="s8">
+  <div class="sec-h"><span class="sec-n">08</span><h2>경쟁자 밸류체인: 외부조달형 사업자가 사는 것</h2></div>
+  <p>"스페이스X는 내재화, 경쟁자는 외부 조달"이라는 구분은 절반만 맞다. 사업자별로 갈린다. 외부조달 비중을 수치로 제시한 리포트는 없었다.</p>
+  <div class="tbl-scroll"><table>
+    <caption>경쟁자 설비투자가 외부로 나가는 칸</caption>
+    <thead><tr><th>칸</th><th>발주 사례</th><th>수혜 기업</th><th>근거 강도</th></tr></thead>
+    <tbody>
+      <tr><td><b>위성 제조 주계약</b></td><td>원웹 차세대 669기, 텔레샛 225기</td><td>에어버스, MDA 스페이스(2Q26 위성 매출 +44%)</td><td><span class="chip u">강함</span></td></tr>
+      <tr><td><b>게이트웨이·단말 안테나</b></td><td>아마존 게이트웨이 300곳 이상 계획, 텔레샛·AST 게이트웨이</td><td>인텔리안테크</td><td><span class="chip u">강함</span></td></tr>
+      <tr><td><b>정부 군집 부품</b></td><td>SDA 추적 위성 72기 약 $3.5B</td><td>로켓랩($816M 주계약), 록히드마틴, 노스롭그러먼, L3해리스</td><td><span class="chip u">강함</span></td></tr>
+      <tr><td><b>발사</b></td><td>아마존 발사 계약 총액 $10B 초과</td><td>ULA, 아리안스페이스, 블루오리진, 스페이스X</td><td><span class="chip m">지연 중</span></td></tr>
+      <tr><td><b>위성 본체 부품</b></td><td>아마존·AST·로켓랩은 자체 제작</td><td>제한적</td><td><span class="chip l">약함</span></td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>인텔리안테크: 근거가 가장 단단한 국내 종목</h3>
+  <div class="tbl-scroll"><table>
+    <caption>공시 형식으로 확인되는 공급계약</caption>
+    <thead><tr><th>상대방</th><th>품목</th><th>계약기간</th><th class="num">금액(억 원)</th></tr></thead>
+    <tbody>
+      <tr><td>A사 (실명 비공개)</td><td>게이트웨이</td><td>2024-09 ~ 2026-10</td><td class="num">891</td></tr>
+      <tr><td>A사 (실명 비공개)</td><td>게이트웨이</td><td>2025-12 ~ 2028-02</td><td class="num">864</td></tr>
+      <tr><td>SES</td><td>안테나</td><td>2021-10 ~ 2026-08</td><td class="num">711</td></tr>
+      <tr><td>파나소닉 에이비오닉스</td><td>항공용 안테나</td><td>2025-09 ~ 2030-09</td><td class="num">409</td></tr>
+      <tr><td>Network Innovations</td><td>군용 위성단말</td><td>2026-09 ~ 2032-12</td><td class="num">409</td></tr>
+      <tr><td>텔레샛</td><td>게이트웨이</td><td>2024-10 ~ 2027-12</td><td class="num">290</td></tr>
+      <tr><td>AST 스페이스모바일</td><td>게이트웨이</td><td>2025-08 ~ 2026-12</td><td class="num">280</td></tr>
+      <tr><td>SES</td><td>안테나</td><td>2025-06 ~ 2029-09</td><td class="num">253</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">출처: 키움증권(2026-07-31)이 회사 자료로 정리한 표, 뉴스핌(2026-09-11). A사의 실명은 어느 리포트도 밝히지 않았다. 미국 세관 기록에 아마존 계열 법인으로의 선적 이력이 있으나 계약 상대방이라는 공식 확인은 없다.</p>
+  <p>1H26 매출 1,620억 원 가운데 원웹향이 591억 원(36.5%), 게이트웨이가 513억 원(31.7%)이다. 2Q26 매출은 972억 원(+30%)으로 분기 최대였고 영업이익은 71억 원이었다. 회사 가이던스는 매출 성장률 25~30%, 영업이익률 7~8%다.</p>
+  <div class="grid2">
+    <div class="pane yes"><h4>긍정</h4><ul>
+      <li>특정 위성망 하나에 걸지 않고 여러 사업자의 설비투자를 함께 받는다.</li>
+      <li>군용 휴대형 단말은 판가가 일반 안테나의 2~3배다. 분기 120억 원 이상 매출이 나온다.</li>
+      <li>2026년 예상 매출 대비 시가총액 1.86배로 국내 우주 종목 가운데 낮은 편이다.</li>
+    </ul></div>
+    <div class="pane no"><h4>부정</h4><ul>
+      <li>영업이익률 7%대다. 미국 공장과 인력 확충으로 판관비가 늘고 있다(2Q26 +26.9%).</li>
+      <li>고객의 발사 일정에 매출이 연동된다.</li>
+      <li>아마존은 단말을 자체 설계한다. 사업자의 내재화 확대는 직접적인 위협이다.</li>
+    </ul></div>
+  </div>
+
+  <h3>이름은 우주, 실적은 다른 곳</h3>
+  <div class="tbl-scroll"><table>
+    <thead><tr><th>기업</th><th>우주 연결고리</th><th>실제 실적 동인</th><th>경쟁자향 매출</th></tr></thead>
+    <tbody>
+      <tr><td><b>RFHIC</b></td><td>위성용 질화갈륨 증폭기 개발</td><td>레이시온향 미국 항공관제 레이더(수주 약 720억 원)</td><td>확인 안 됨</td></tr>
+      <tr><td><b>RF머트리얼즈</b></td><td>RFHIC 동반 성장 기대</td><td>루멘텀향 광통신 패키지. AI 데이터센터 연결 종목에 가깝다</td><td>확인 안 됨</td></tr>
+      <tr><td><b>LIG아큐버</b></td><td>위성통신 시험장비</td><td>차량용 51%, 5G 스몰셀. 방산 매출은 5%</td><td>확인 안 됨</td></tr>
+      <tr><td><b>컨텍</b></td><td>지상국 서비스, 자회사 안테나</td><td>KSAT 6기·블루오리진 3기 안테나 수주(금액 미공개). 1H26 영업손실 103억 원</td><td>초기 단계</td></tr>
+      <tr><td><b>쎄트렉아이</b></td><td>관측위성 제조</td><td>해외 정부 수출, 국내 군 위성. 통신 군집과 무관</td><td>없음</td></tr>
+    </tbody>
+  </table></div>
+  <div class="take"><span class="lbl">판단</span><p>경쟁자 밸류체인에서 "어디에 투자하는가"의 답은 <b>지상 장비</b>다. 위성 본체는 경쟁자들도 직접 만들려 하지만, 게이트웨이와 단말 안테나는 원웹·텔레샛·AST가 모두 밖에서 산다. 국내에서 이 칸의 매출이 고객별로 확인되는 곳은 인텔리안테크 하나다. RFHIC·RF머트리얼즈·LIG아큐버는 실적이 좋더라도 그 이유가 우주가 아니므로, 우주 논리로 사면 검증할 지표가 없다.</p></div>
+</section>
+
+<section id="s9">
+  <div class="sec-h"><span class="sec-n">09</span><h2>국방과 통신: 데이터센터 없이도 있는 수요</h2></div>
+  <h3>국방: 확정과 요청을 구분한다</h3>
+  <div class="tbl-scroll"><table>
+    <caption>미 우주군 예산 ($B)</caption>
+    <thead><tr><th>회계연도</th><th class="num">금액</th><th>성격</th><th class="num">전년비</th></tr></thead>
+    <tbody>
+      <tr><td>FY2021</td><td class="num">15.4</td><td>확정 (첫 정식 예산)</td><td class="num">-</td></tr>
+      <tr><td>FY2022</td><td class="num">18.0</td><td>확정</td><td class="num">+17%</td></tr>
+      <tr><td>FY2023</td><td class="num">26.3</td><td>확정</td><td class="num">+46%</td></tr>
+      <tr><td>FY2024 · FY2025</td><td class="num">약 29~30</td><td>FY25는 연속결의로 동결</td><td class="num">약 0~10%</td></tr>
+      <tr><td>FY2026</td><td class="num hl">32</td><td>확정 (요청은 40.1)</td><td class="num">약 +7~10%</td></tr>
+      <tr><td>FY2027</td><td class="num">71.3</td><td><b>요청, 의회 미통과</b></td><td class="num">약 2.2배</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">출처: Aerospace Corp FY27 Budget Brief(2026-08-17), SpacePolicyOnline. FY2021 → FY2026 확정 기준 연평균 15.8%.</p>
+  <ul>
+    <li><b>골든돔.</b> 행정부 제시 $185B, 의회예산국 추정 20년간 $1.2T. 우주기반 요격체는 12개사 20건, 잠재 총액 $3.2B로 기술 검증 단계다. FY2027 골든돔 예산의 95.5%가 예산조정 절차에 달려 있다.</li>
+    <li><b>스페이스X의 몫.</b> 2026년 5월에 공중이동표적 탐지 위성 $4.16B, 우주 데이터망 $2.29B를 수주했다. 국방 물량에서도 가장 큰 수혜자는 스페이스X다.</li>
+    <li><b>미국 밖.</b> 독일은 2030년까지 군사 우주에 €35B, 유럽우주국은 3년간 €22.1B(+32%)를 배정했다. 반면 Novaspace는 세계 정부 우주예산이 2025~30년 연 +1%로 정체한다고 전망한다.</li>
+    <li><b>민간 우주는 삭감.</b> NASA FY2027 요청은 $18.8B로 전년 $24.4B보다 23% 적다.</li>
+  </ul>
+
+  <h3>한국 국방 우주</h3>
+  <div class="tbl-scroll"><table>
+    <thead><tr><th>사업</th><th class="num">규모</th><th>상태</th><th>참여 기업</th></tr></thead>
+    <tbody>
+      <tr><td>425사업 (정찰위성 5기)</td><td class="num">약 1.2~1.3조 원</td><td>2026년 4월 전력화 완료</td><td>KAI, 한화시스템, 쎄트렉아이</td></tr>
+      <tr><td>초소형위성체계</td><td class="num">1.4조 원</td><td>2026년 하반기 사업자 선정 예정</td><td>KAI·제노코 대 한화시스템·쎄트렉아이</td></tr>
+      <tr><td>한국형 위성항법(KPS)</td><td class="num">3.72조 원</td><td>1호기 2027-12 → 2029-09로 20개월 연기</td><td>AP위성, LIG디펜스앤에어로스페이스</td></tr>
+      <tr><td>저궤도 위성통신 기술개발</td><td class="num">3,200억 원</td><td>2025~2030년, 시험위성 2기</td><td>미정</td></tr>
+    </tbody>
+  </table></div>
+  <p>우주항공청 2026년 예산은 1조 1,201억 원(+16.1%)이다. 국방예산 안의 우주 항목만 따로 집계한 수치는 확인하지 못했다. 한국 사업은 규모에 비해 일정 지연이 잦다. 초소형위성체계 규모는 같은 리포트 안에서도 1.4조 원과 1.8조 원으로 다르게 적혀 있어 사업자 선정 공고로 확인해야 한다.</p>
+
+  <h3>통신</h3>
+  <div class="tbl-scroll"><table>
+    <thead><tr><th>구분</th><th>수치</th><th>출처</th></tr></thead>
+    <tbody>
+      <tr><td>위성 광대역 (2025)</td><td>매출 +16%, 가입자 +62%(1,000만 명 이상)</td><td>SIA</td></tr>
+      <tr><td>저궤도 대 정지궤도</td><td>저궤도 연 +24~28%, 정지궤도 연 -4%</td><td>Eutelsat·Novaspace</td></tr>
+      <tr><td>휴대폰 직접 연결(D2D)</td><td>2030년 $2.6B ~ $12.0B. 기관별로 4.5배 차이</td><td>MarketsandMarkets, Omdia</td></tr>
+      <tr><td>지상국</td><td>2025~30년 연 15.1%</td><td>MarketsandMarkets</td></tr>
+      <tr><td>비스타링크 게이트웨이</td><td>2025년 4,660억 원 → 2030년 1.5조 원</td><td>iM증권 추정</td></tr>
+      <tr><td>위성 서비스 전체</td><td>2024~34년 연 1.9%</td><td>Novaspace</td></tr>
+    </tbody>
+  </table></div>
+  <p>통신 수요는 시장이 커지는 것이 아니라 <b>자리가 바뀌는 것</b>에 가깝다. 정지궤도 위성방송이 줄고 저궤도 광대역이 그 자리를 차지한다. 휴즈넷 가입자는 122만(2022)에서 78만(3Q25)으로 줄었다. 그래서 위성 서비스 전체 성장률은 낮고 저궤도만 높다.</p>
+</section>
+
+<section id="s10">
+  <div class="sec-h"><span class="sec-n">10</span><h2>우주데이터센터: 실적이 아니라 옵션</h2></div>
+  <p>지상 데이터센터는 전력과 인허가에서 막혀 있다. 미국 50개 주 가운데 26개 주가 데이터센터 제한을 시행하거나 검토 중이고, 대형 가스터빈은 2030년분까지 팔렸다. 궤도에서는 햇빛이 연중 95% 이상 들고 냉각수가 필요 없다. 여기까지가 찬성 논리다.</p>
+  <div class="tbl-scroll"><table>
+    <caption>경제성 추정 비교</caption>
+    <thead><tr><th>출처</th><th>기준</th><th class="num">지상</th><th class="num">우주</th><th class="num">우주 ÷ 지상</th></tr></thead>
+    <tbody>
+      <tr><td>LS증권 (2026-09)</td><td>1GW, 10년 총비용, 서버 제외. 발사비 $200/kg 가정</td><td class="num">$35.0B</td><td class="num">$42.3B</td><td class="num">1.21배</td></tr>
+      <tr><td>LS증권, 지상 3년 지연 시</td><td>지연 기회비용 연 $3B 반영</td><td class="num">$44.0B</td><td class="num">$42.3B</td><td class="num">0.96배</td></tr>
+      <tr><td>Varda 엔지니어 계산</td><td>1GW 건설비</td><td class="num">$14.1B</td><td class="num">$42.4B</td><td class="num">3.01배</td></tr>
+      <tr><td>유진투자증권 (2026-08)</td><td>1MW 구축비, 팰컨9 $1,000/kg 가정</td><td class="num">$53.9M</td><td class="num">$166.6M</td><td class="num">3.09배</td></tr>
+      <tr><td>유진투자증권, 스타십</td><td>1MW 구축비, 발사비 $100/kg 가정</td><td class="num">$53.9M</td><td class="num">$113.5M</td><td class="num">2.11배</td></tr>
+    </tbody>
+  </table></div>
+  <ul>
+    <li><b>손익분기 발사비는 $200/kg이다</b>(구글 논문). 현재 팰컨9 약 $2,720/kg의 1/14이다. 구글은 2030년대 중반에 도달할 수 있다고 본다.</li>
+    <li><b>발사비를 낮춰도 제조비가 남는다.</b> 유진 계산에서 발사비를 1/10로 줄여도 우주가 지상의 2.1배다. 방열판과 태양전지, 위성체 값이 크다.</li>
+    <li><b>규모가 맞지 않는다.</b> 100GW를 올리려면 스타십 4만~6만 회 발사가 필요하다(ARK). 2025년 세계 발사 329회의 122~182배다.</li>
+    <li><b>5년마다 교체한다.</b> LS증권 모델에서 가장 큰 비용 항목이 5년 주기 위성 교체비 $19.7B다.</li>
+    <li><b>신청 물량의 실체.</b> FCC에 신청된 데이터센터 위성은 스페이스X 100만 기, 스타클라우드 8.8만 기, 블루오리진 5.16만 기 등 114만 기가 넘는다. 현재 운용 위성의 80배다. 유진은 상당수가 궤도·주파수 선점용일 가능성을 지적했다.</li>
+  </ul>
+  <p>스페이스X의 일정은 2027년 4분기 첫 발사(머스크, 8월), S-1 기재로는 이르면 2028년 배치다. 2분기 AI 설비투자 $15.8B와 컴퓨트 1.4GW는 대부분 지상 설비다.</p>
+  <div class="take"><span class="lbl">판단</span><p>우주 산업 자체는 데이터센터 없이도 성장한다. 기관 전망(연 5.5~9%)은 모두 데이터센터를 성장 동인에 넣지 않은 숫자다. 반대로 <b>스페이스X의 주가는 데이터센터와 AI 없이는 설명되지 않는다</b>. 국내 밸류체인 종목을 데이터센터 논리로 사는 것은 2027~28년 이후의 옵션을 지금 값에 넣는 일이다. 옵션으로 보되, 가격에 얼마나 반영됐는지를 따져야 한다.</p></div>
+</section>
+
+<section id="s11">
+  <div class="sec-h"><span class="sec-n">11</span><h2>국내 종목 비교</h2></div>
+  <p>20개 종목을 세 묶음으로 나눴다. 직접 경쟁 관계가 아니라 <b>밸류체인 인접군</b>이다. 시가총액은 9/23 정규장 종가에 발행주식수를 곱해 계산했고, 실적과 컨센서스는 FnGuide 기준이다.</p>
+
+  <div class="chart" id="ch-dd">
+    <p class="ct">국내 우주 종목은 고점에서 절반 넘게 내려왔다</p>
+    <p class="cs">52주 고점(일별 장중 고가) 대비 9/23 종가 하락률(%). 고점은 대부분 2~5월</p>
+    <div class="legend"><span><i style="background:var(--c1)"></i>A 스페이스X 공급망</span><span><i style="background:var(--c2)"></i>B 통신·지상장비</span><span><i style="background:var(--c3)"></i>C 위성·발사·방산</span></div>
+    <svg role="img" aria-label="국내 우주 종목의 고점 대비 하락률 가로 막대 차트"></svg>
+  </div>
+  <p class="tnote">RF머트리얼즈는 기간 중 주가 수정이 있어 수정주가 기준 고점(63,420원)을 썼다. 나라스페이스는 2025-12-17 상장 이후 기준.</p>
+
+  <div class="tbl-scroll"><table>
+    <caption>국내 우주 밸류체인 인접군 (억 원, 9/23 종가 기준)</caption>
+    <thead><tr><th>종목</th><th class="num">시가총액</th><th class="num">고점 대비</th><th class="num">1H26 매출</th><th class="num">증감</th><th class="num">1H26 영업이익률</th><th class="num">26E 매출</th><th class="num">26E 영업이익</th><th class="num">주가매출비율</th><th class="num">시총/영업이익</th></tr></thead>
+    <tbody>
+      <tr class="sum"><td colspan="10">A · 스페이스X 공급망으로 거론되는 종목</td></tr>
+      <tr><td><b>세아베스틸</b><br><span class="small">001430</span></td><td class="num">15,887</td><td class="num">-52.1%</td><td class="num">21,033</td><td class="num">+12.8%</td><td class="num pos">4.3%</td><td class="num">41,065</td><td class="num">1,663</td><td class="num">0.4배</td><td class="num">9.6배</td></tr>
+      <tr><td><b>스피어</b><br><span class="small">347700</span></td><td class="num">12,011</td><td class="num">-59.3%</td><td class="num">1,221</td><td class="num">+200.0%</td><td class="num pos">1.9%</td><td class="num">2,944</td><td class="num">144</td><td class="num">4.1배</td><td class="num">83.7배</td></tr>
+      <tr><td><b>에이치브이엠</b><br><span class="small">295310</span></td><td class="num">7,957</td><td class="num">-56.2%</td><td class="num">524</td><td class="num">+76.5%</td><td class="num pos">12.3%</td><td class="num">1,102</td><td class="num">166</td><td class="num">7.2배</td><td class="num">47.9배</td></tr>
+      <tr><td><b>켄코아</b><br><span class="small">274090</span></td><td class="num">1,781</td><td class="num">-67.3%</td><td class="num">577</td><td class="num">+50.0%</td><td class="num pos">2.4%</td><td class="num">-</td><td class="num">-</td><td class="num">2.3배*</td><td class="num">-</td></tr>
+      <tr><td><b>와이제이링크</b><br><span class="small">209640</span></td><td class="num">1,069</td><td class="num">-63.7%</td><td class="num">332</td><td class="num">+85.5%</td><td class="num pos">10.9%</td><td class="num">-</td><td class="num">-</td><td class="num">2.3배*</td><td class="num">-</td></tr>
+      <tr class="sum"><td colspan="10">B · 통신·지상장비</td></tr>
+      <tr><td><b>RFHIC</b><br><span class="small">218410</span></td><td class="num">15,573</td><td class="num">-53.8%</td><td class="num">946</td><td class="num">+23.6%</td><td class="num pos">20.0%</td><td class="num">2,624</td><td class="num">550</td><td class="num">5.9배</td><td class="num">28.3배</td></tr>
+      <tr><td><b>RF머트리얼즈</b><br><span class="small">327260</span></td><td class="num">8,463</td><td class="num">-25.8%</td><td class="num">451</td><td class="num">+58.9%</td><td class="num pos">18.8%</td><td class="num">1,011</td><td class="num">181</td><td class="num">8.4배</td><td class="num">46.8배</td></tr>
+      <tr><td><b>인텔리안테크</b><br><span class="small">189300</span></td><td class="num">7,484</td><td class="num">-61.3%</td><td class="num">1,620</td><td class="num">+37.2%</td><td class="num pos">4.8%</td><td class="num">4,018</td><td class="num">368</td><td class="num">1.9배</td><td class="num">20.4배</td></tr>
+      <tr><td><b>LIG아큐버</b><br><span class="small">073490</span></td><td class="num">2,429</td><td class="num">-48.9%</td><td class="num">1,091</td><td class="num">+31.8%</td><td class="num pos">4.9%</td><td class="num">2,354</td><td class="num">191</td><td class="num">1.0배</td><td class="num">12.7배</td></tr>
+      <tr><td><b>컨텍</b><br><span class="small">451760</span></td><td class="num">1,370</td><td class="num">-68.5%</td><td class="num">362</td><td class="num">-20.2%</td><td class="num neg">-28.6%</td><td class="num">-</td><td class="num">-</td><td class="num">1.6배*</td><td class="num">-</td></tr>
+      <tr><td><b>AP위성</b><br><span class="small">211270</span></td><td class="num">1,362</td><td class="num">-59.7%</td><td class="num">108</td><td class="num">-59.3%</td><td class="num neg">-45.0%</td><td class="num">-</td><td class="num">-</td><td class="num">2.8배*</td><td class="num">-</td></tr>
+      <tr class="sum"><td colspan="10">C · 위성·발사·방산</td></tr>
+      <tr><td><b>한화에어로</b><br><span class="small">012450</span></td><td class="num">526,462</td><td class="num">-38.3%</td><td class="num">150,439</td><td class="num">+27.5%</td><td class="num pos">13.3%</td><td class="num">324,104</td><td class="num">46,454</td><td class="num">1.6배</td><td class="num">11.3배</td></tr>
+      <tr><td><b>LIG D&A</b><br><span class="small">079550</span></td><td class="num">152,240</td><td class="num">-38.1%</td><td class="num">22,780</td><td class="num">+22.9%</td><td class="num pos">12.1%</td><td class="num">51,200</td><td class="num">4,490</td><td class="num">3.0배</td><td class="num">33.9배</td></tr>
+      <tr><td><b>한화시스템</b><br><span class="small">272210</span></td><td class="num">139,611</td><td class="num">-59.8%</td><td class="num">19,246</td><td class="num">+32.0%</td><td class="num pos">7.2%</td><td class="num">45,525</td><td class="num">2,502</td><td class="num">3.1배</td><td class="num">55.8배</td></tr>
+      <tr><td><b>KAI</b><br><span class="small">047810</span></td><td class="num">124,281</td><td class="num">-40.8%</td><td class="num">22,606</td><td class="num">+48.0%</td><td class="num pos">5.1%</td><td class="num">53,662</td><td class="num">3,447</td><td class="num">2.3배</td><td class="num">36.1배</td></tr>
+      <tr><td><b>쎄트렉아이</b><br><span class="small">099320</span></td><td class="num">8,531</td><td class="num">-65.2%</td><td class="num">883</td><td class="num">+4.5%</td><td class="num neg">-0.7%</td><td class="num">2,449</td><td class="num">183</td><td class="num">3.5배</td><td class="num">46.5배</td></tr>
+      <tr><td><b>이노스페이스</b><br><span class="small">462350</span></td><td class="num">2,236</td><td class="num">-68.3%</td><td class="num">39</td><td class="num">+459.9%</td><td class="num neg">적자</td><td class="num">-</td><td class="num">-</td><td class="num">81.3배*</td><td class="num">-</td></tr>
+      <tr><td><b>나라스페이스</b><br><span class="small">478340</span></td><td class="num">1,648</td><td class="num">-78.0%</td><td class="num">24</td><td class="num">-68.6%</td><td class="num neg">적자</td><td class="num">-</td><td class="num">-</td><td class="num">12.4배*</td><td class="num">-</td></tr>
+      <tr><td><b>제노코</b><br><span class="small">361390</span></td><td class="num">1,285</td><td class="num">-64.2%</td><td class="num">224</td><td class="num">-8.5%</td><td class="num neg">-8.6%</td><td class="num">-</td><td class="num">-</td><td class="num">2.2배*</td><td class="num">-</td></tr>
+      <tr><td><b>루미르</b><br><span class="small">474170</span></td><td class="num">1,237</td><td class="num">-69.4%</td><td class="num">61</td><td class="num">+79.1%</td><td class="num neg">-21.4%</td><td class="num">-</td><td class="num">-</td><td class="num">11.7배*</td><td class="num">-</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">계산 근거: 주가매출비율 = 시가총액 ÷ 2026E 매출(컨센서스가 없으면 2025년 실적, * 표시). 시총/영업이익 = 시가총액 ÷ 2026E 영업이익. 1H26 증감은 전년 동기 대비이며 1H25는 (2025 연간 - 3분기 - 4분기)로 역산. 에이치브이엠·AP위성·제노코·루미르·나라스페이스는 별도 기준, 나머지는 연결 기준. 공시 원문(DART)과는 대조하지 못했다.</p>
+
+  <h3>표에서 읽히는 것</h3>
+  <ul>
+    <li><b>이익이 나는 곳은 방산 대형주와 소재·부품 몇 곳이다.</b> 위성·발사·지상국 소형주 7곳(쎄트렉아이, 이노스페이스, 나라스페이스, 제노코, 루미르, 컨텍, AP위성)은 1H26에 모두 영업손실이다. 쎄트렉아이도 상반기 영업손실 6억 원이다.</li>
+    <li><b>스페이스X 공급망 두 종목은 매출 대비 가장 비싸다.</b> 에이치브이엠은 2026E 매출의 7.2배, 영업이익의 47.9배다. 스피어는 4.1배, 83.7배다. 2027E 영업이익 기준으로는 각각 26.4배, 22.5배로 내려간다. 2027년 추정이 맞아야 하는 값이다.</li>
+    <li><b>인텔리안테크는 매출 대비 1.9배, 2026E 영업이익의 20.4배다.</b> 2027E 기준 13.2배다. 같은 묶음의 RFHIC(28.3배), RF머트리얼즈(46.8배)보다 낮다.</li>
+    <li><b>세아베스틸지주는 다른 종류의 주식이다.</b> 매출 4조 원대 특수강 회사이고 2026E 영업이익의 9.6배다. 우주(SST)는 2027년부터의 옵션이고, 본업은 중국산 저가 봉강 반덤핑 판정(최종 2027-02)에 달려 있다.</li>
+  </ul>
+</section>
+
+<section id="s12">
+  <div class="sec-h"><span class="sec-n">12</span><h2>해자 검증</h2></div>
+  <h3>스페이스X의 해자</h3>
+  <div class="grid2">
+    <div class="pane yes"><h4>있다는 근거</h4><ul>
+      <li>2025년 세계 발사 횟수의 50%, 궤도 투입 질량의 80% 이상을 차지한다.</li>
+      <li>팰컨 누적 703회 발사 중 700회 성공. 부스터 착륙 성공률 98%.</li>
+      <li>경쟁 군집도 팰컨9을 사서 쓴다. 발사 능력이 경쟁자의 배치 속도를 좌우한다.</li>
+      <li>운용 위성 약 11,000기. 아마존은 398기다. 궤도와 주파수는 먼저 쓴 쪽이 유리하다.</li>
+      <li>통신 부문 영업이익률 38.6%. 자기 돈으로 다음 세대 위성을 올린다.</li>
+    </ul></div>
+    <div class="pane no"><h4>반증</h4><ul>
+      <li>발사 부문은 영업손실이고 외부 발사 매출은 2년째 제자리다.</li>
+      <li>스타십은 아직 궤도 진입과 궤도 급유, 부스터 회수를 V3에서 보여주지 못했다. 누적 투자 $15B 이상.</li>
+      <li>중국이 재사용을 따라오고 있다. 장정-10B와 주췌-3가 2026년 7~8월에 1단 회수에 성공했다.</li>
+      <li>가입자당 매출이 2년 반 만에 33% 내려갔다.</li>
+      <li>머스크 의결권 82~85%, 일몰 조항 없음. 테슬라·xAI와의 관계자 거래가 많다.</li>
+    </ul></div>
+  </div>
+  <h3>국내 공급사의 해자</h3>
+  <div class="grid2">
+    <div class="pane yes"><h4>있다는 근거</h4><ul>
+      <li>특수합금은 고객 인증에 수년이 걸린다. 한번 들어가면 교체 비용이 크다.</li>
+      <li>에이치브이엠은 진공용해 설비를 갖춘 제조사다. 3공장 완공 시 매출 기준 생산능력 5,000억~7,000억 원.</li>
+      <li>인텔리안테크는 원웹·텔레샛·AST·SES·파나소닉을 동시에 고객으로 둔 드문 사례다.</li>
+    </ul></div>
+    <div class="pane no"><h4>반증</h4><ul>
+      <li>스피어는 자체 제조가 아닌 조달·공급 모델이다. 영업이익률 1.9%는 가격 결정력이 없다는 신호다.</li>
+      <li>고객 집중. 에이치브이엠 우주 비중 66%, 스피어 특수합금 비중 80% 이상.</li>
+      <li>스피어·에이치브이엠·켄코아·와이제이링크 모두 전환사채를 발행했다. 에이치브이엠 920억 원.</li>
+      <li>납품 단가 인하 압력이나 공급사 교체 가능성을 분석한 리포트는 없었다. 확인되지 않은 위험이다.</li>
+    </ul></div>
+  </div>
+</section>
+
+<section id="s13">
+  <div class="sec-h"><span class="sec-n">13</span><h2>리스크</h2></div>
+  <div class="risk">
+    <div class="r"><span class="chip h">HIGH</span><div><div class="t">락업 해제 물량</div><div class="d">10월 9일·24일 각 최대 3.284억 주, 11월 실적 발표 뒤 최대 13억 주, 12월 8일 약 8억 주. 유통 물량이 5%에서 약 40%로 늘어난다. 스페이스X 주가가 흔들리면 국내 관련주도 같이 움직여 왔다.</div></div></div>
+    <div class="r"><span class="chip h">HIGH</span><div><div class="t">스타십 일정</div><div class="d">차세대 스타링크, 궤도 데이터센터, 달 착륙선, 국내 합금 공급사의 물량이 모두 스타십 양산에 걸려 있다. 첫 궤도 진입을 시도하는 14차 비행은 세 차례 연기돼 9월 28일 예정이고, 궤도 급유 시연은 일정이 없다.</div></div></div>
+    <div class="r"><span class="chip h">HIGH</span><div><div class="t">밸류에이션</div><div class="d">스페이스X는 최근 12개월 매출의 87.6배, 로켓랩 약 91배, AST는 2026년 예상 매출의 약 260배다. S&amp;P 500 평균은 3.7배다. 2021년 우주 SPAC 종목들은 이후 85~97% 하락했다.</div></div></div>
+    <div class="r"><span class="chip m">MID</span><div><div class="t">경쟁자 발사 중단</div><div class="d">벌컨과 뉴글렌이 멈춰 있다. 아마존·AST의 위성 배치가 늦어지면 지상 장비 발주도 밀린다. 인텔리안테크 매출 인식 시점에 영향을 준다.</div></div></div>
+    <div class="r"><span class="chip m">MID</span><div><div class="t">미국 예산 절차</div><div class="d">우주군 FY2027 요청과 골든돔 예산은 세출법·조정법 모두 미통과다. 11월 중간선거 전에 처리되지 않으면 FY2026 수준으로 묶인다. NASA는 23% 삭감 요청이 나와 있다.</div></div></div>
+    <div class="r"><span class="chip m">MID</span><div><div class="t">AI 부문이 우주 부문의 현금을 쓴다</div><div class="d">스페이스X 2025년 잉여현금흐름은 -$13.8B, 부채는 약 $39.4B다. 앤트로픽·구글과의 컴퓨트 임대 계약은 90일 전 통지로 해지할 수 있다.</div></div></div>
+    <div class="r"><span class="chip m">MID</span><div><div class="t">국내 종목의 이익 부진과 희석</div><div class="d">매출은 느는데 이익률이 낮다(스피어 1.9%, 인텔리안테크 4.8%). 전환사채 전환 물량이 남아 있다.</div></div></div>
+    <div class="r"><span class="chip l">LOW</span><div><div class="t">궤도 혼잡</div><div class="d">유럽우주국 우주환경 건전성 지수가 1년 만에 10배가량 악화했다. 스타링크 충돌 회피 기동은 연 35만 회를 넘는다. 당장의 실적 변수는 아니지만 규제로 이어질 수 있다.</div></div></div>
+  </div>
+</section>
+
+<section id="s14">
+  <div class="sec-h"><span class="sec-n">14</span><h2>투자 전 확인할 것</h2></div>
+  <ul class="tl">
+    <li><span class="d">09-28</span><span>스타십 14차 비행. 첫 궤도 진입, V3 위성 26기 배치 시도. FAA 발사 면허 발급 여부부터 확인</span></li>
+    <li><span class="d">10-07</span><span>누리호 5차 발사. 한화에어로스페이스가 기술이전 후 주관</span></li>
+    <li><span class="d">10-09 · 10-24</span><span>스페이스X 락업 해제. 당일 주가 반응은 지금까지 방향이 일정하지 않았다</span></li>
+    <li><span class="d">11월 초</span><span>스페이스X 3분기 실적. 설비투자 규모, 통신 부문 이익률, 발사 횟수</span></li>
+    <li><span class="d">11월 중순</span><span>국내 3분기 보고서. 아래 체크리스트</span></li>
+    <li><span class="d">11월</span><span>이노스페이스 한빛-나노 2차 발사</span></li>
+    <li><span class="d">연말</span><span>뉴글렌 복귀, 뉴트론 첫 발사, 벌컨 비행 재개 여부</span></li>
+    <li><span class="d">2H26</span><span>초소형위성체계 사업자 선정</span></li>
+  </ul>
+  <ol class="check">
+    <li><b>에이치브이엠:</b> 우주 수주잔고가 500억 원에서 늘었는가. 영업이익률이 2분기 6.9%에서 회복됐는가.</li>
+    <li><b>스피어:</b> 원가율 89%가 내려왔는가. 니켈 제련소 지분법이익이 4분기부터 잡히는가. 공시 수주가 2026년 수요예측 $111M에 얼마나 접근했는가.</li>
+    <li><b>인텔리안테크:</b> 게이트웨이 매출이 분기 250억 원 안팎을 유지하는가. A사 2차 계약(864억 원) 인식 속도. 영업이익률 가이던스 7~8% 달성 여부.</li>
+    <li><b>세아베스틸지주:</b> SST 고객 인증이나 장기공급계약 공시가 나오는가. 나오기 전까지 우주 매출은 0으로 본다.</li>
+    <li><b>쎄트렉아이:</b> 수주잔고 5,574억 원이 매출로 넘어가는 속도. 상반기 영업손실에서 벗어나는가.</li>
+    <li><b>공통:</b> 증권사 리포트가 말한 고객 이름이 공시에 나오는가. 나오지 않으면 추정으로 취급한다.</li>
+    <li><b>공통:</b> 스타십이 상업 운용에 들어가기 전에는 팰컨 발사 횟수(상반기 78회, 전년 84회)가 합금 수요의 실제 지표다.</li>
+  </ol>
+</section>
+
+<section id="s15">
+  <div class="sec-h"><span class="sec-n">15</span><h2>출처와 한계</h2></div>
+  <h4>한계</h4>
+  <ul class="src">
+    <li>스페이스X S-1 원문은 용량 문제로 직접 열지 못했다. S-1 수치는 증권사 리포트와 전문 매체를 거친 값이다. 2분기 실적은 SEC 8-K 원문으로 확인했다.</li>
+    <li>국내 종목 재무는 FnGuide 기준이며 DART 공시 원문과 대조하지 못했다.</li>
+    <li>증권사 리포트 약 170건 가운데 100쪽 이상 인뎁스 리포트는 관련 구간 위주로 읽었다.</li>
+    <li>Gartner, OpenAI·앤트로픽 매출 등 검색 요약으로만 확인한 수치는 본문에서 제외하거나 범위로만 적었다.</li>
+    <li>2025년 스페이스X 궤도 투입 질량은 2,213톤(S-1)과 1,800톤 이상(2차 자료)으로 갈린다. 본문은 "80% 이상"만 썼다.</li>
+  </ul>
+  <h4>1차 자료</h4>
+  <ul class="src">
+    <li>SpaceX 2026년 2분기 실적 보도자료, SEC 8-K (2026-08-04)</li>
+    <li>SpaceX S-1 (2026-05-20 공개) · Payload, Via Satellite, SatNews 정리</li>
+    <li>Aerospace Corp, FY2027 Budget Brief (2026-08-17)</li>
+    <li>Space Foundation, Global Space Economy Report (2026-07) · SIA, 29th State of the Satellite Industry Report (2026-05-13) · Novaspace, Space Economy Report (2026-01-29)</li>
+    <li>Jonathan McDowell, Space Activities in 2025 (2026-02-04)</li>
+    <li>Rocket Lab, AST SpaceMobile, Planet Labs, Firefly, Eutelsat, Telesat, NVIDIA, CoreWeave 2026년 2분기 실적 자료</li>
+    <li>Epoch AI 하이퍼스케일러 설비투자 집계 · Dell'Oro · IDC</li>
+    <li>스피어 IR Book 한글·영문판 (2026-09) · 쎄트렉아이 IR Book</li>
+    <li>네이버 일별 시세, FnGuide, stockanalysis.com (SPCX 9/25 종가)</li>
+  </ul>
+  <h4>증권사 리포트 (T9 아카이브, 2026년 발간)</h4>
+  <ul class="src">
+    <li>대신증권 「우주, 숫자는 지상에서 시작된다」(09-14) · 「우주, 이벤트와 기술혁신이 만드는 장기 성장 사이클」(03-24)</li>
+    <li>LS증권 「AI 데이터센터; 지상의 한계, 우주의 기회」(09-15)</li>
+    <li>삼성증권 「스페이스X S-1 분석」(05-22) · 「SpaceX, 우주가 상장된다」(06-04) · 「우주 데이터센터, 그 실체를 파헤치다」(03-30)</li>
+    <li>유진투자증권 「SpaceX S-1 분석」(06-01) · 「Orbital AI Infrastructure」(08-05) · 「All About SpaceX」(01-22) · 뉴글렌 2건</li>
+    <li>한화투자증권 「스페이스X: 궤도 데이터센터 풀스택」(06-17) · 「Would you Bet on 우주?」(04-14)</li>
+    <li>하나증권 「미국 우주 산업, 발사대에 서다」(05-18) · 「IPO 단계별 ETF 가이드」(06-24) · 「별빛 아래의 전쟁」(02-23)</li>
+    <li>KB증권 「일론, 우주시대가 올까요?」(03-18) · 「D-1, ETF로 SpaceX를 사는 법」(06-11) · 「중국판 SpaceX, LandSpace」(07-10)</li>
+    <li>키움증권 「눈 앞으로 다가온 우주 시대」(04-22) · 유안타증권 「우주는 우리 안에」(05-06) · 신한투자증권 「우주: 요람을 떠나」(01-26) · SK증권 「우주 경제 리프라이싱 시대」(02-09) · iM증권 「AIDC, 통신업 성장 신항로」(07-23)</li>
+    <li>종목: 메리츠·iM·대신(스피어), 메리츠·신한·하나(에이치브이엠), NH·한화·신한·LS(세아베스틸지주), 대신·신한·iM·키움·유진(인텔리안테크), KB·상상인(쎄트렉아이)</li>
+  </ul>
+  <div class="foot">
+    이 문서는 공개 자료를 정리한 참고용 분석이며 특정 종목의 매수·매도를 권유하지 않는다. 추정치와 일정은 작성일(2026-09-27) 기준이고 이후 바뀔 수 있다. 투자 판단과 그 결과는 투자자 본인에게 있다.
+  </div>
+</section>
+
+</main>
+<script type="application/json" id="cd">{"launch": [{"y": 2019, "w": 102, "s": null, "p": 500}, {"y": 2020, "w": 114, "s": null, "p": 1263}, {"y": 2021, "w": 146, "s": null, "p": 1824}, {"y": 2022, "w": 186, "s": 61, "p": 2495}, {"y": 2023, "w": 223, "s": 96, "p": 2908}, {"y": 2024, "w": 263, "s": 134, "p": 2863}, {"y": 2025, "w": 329, "s": 165, "p": 4526}], "growth": [["우주경제 전체 (SIA)", 3, "s", "2025년, 세계 우주경제 $429B", "우주경제(SIA)"], ["우주경제 전체 (Space Foundation)", 12, "s", "2025년, $686B. 다운스트림 광의 포함", "우주경제(SF)"], ["위성 광대역 매출", 16, "s", "2025년, SIA", "위성 광대역"], ["스페이스X 발사 부문", 29, "s", "2Q26 매출 $962M", "스페이스X 발사"], ["상업 발사 매출", 33, "s", "2025년, SIA $12.4B", "상업 발사"], ["로켓랩", 62, "s", "2Q26 매출 $234M", "로켓랩"], ["스타링크", 66, "s", "2Q26 통신 부문 매출 $4.29B", "스타링크"], ["상업 위성 제조", 67, "s", "2025년, Space Foundation $10.4B", "위성 제조"], ["하이퍼스케일러 5사 설비투자", 72, "a", "2025년, $448.3B (Epoch AI)", "5사 설비투자"], ["빅4 설비투자 가이던스", 77, "a", "2026년, 약 $725~735B", "빅4 가이던스"], ["세계 데이터센터 설비투자", 92, "a", "2Q26, Dell'Oro", "DC 설비투자"], ["코어위브", 112, "a", "2Q26 매출 $2.6B", "코어위브"], ["엔비디아 데이터센터", 117, "a", "2Q FY27 매출 $89.0B", "엔비디아 DC"]], "seg": [{"y": "2023", "v": [4.69, -0.01, -39.73]}, {"y": "2024", "v": [20.06, 0.21, -15.61]}, {"y": "2025", "v": [44.23, -6.57, -63.55]}, {"y": "1H26", "v": [28.44, -12.04, -37.26]}], "dd": [["나라스페이스테크놀로지", -78.0, "C", 64600, "2026-02-03", "나라스페이스", 14190], ["루미르", -69.4, "C", 22650, "2026-02-10", "루미르", 6940], ["컨텍", -68.5, "B", 26350, "2026-02-11", "컨텍", 8300], ["이노스페이스", -68.3, "C", 20808, "2026-01-14", "이노스페이스", 6600], ["켄코아에어로스페이스", -67.3, "A", 39600, "2026-05-27", "켄코아", 12930], ["쎄트렉아이", -65.2, "C", 224000, "2026-02-03", "쎄트렉아이", 77900], ["제노코", -64.2, "C", 36900, "2026-03-26", "제노코", 13200], ["와이제이링크", -63.7, "A", 10350, "2026-05-08", "와이제이링크", 3760], ["인텔리안테크", -61.3, "B", 180200, "2026-05-12", "인텔리안테크", 69700], ["한화시스템", -59.8, "C", 184000, "2026-03-04", "한화시스템", 73900], ["AP위성", -59.7, "B", 22400, "2026-02-03", "AP위성", 9030], ["스피어", -59.3, "A", 57300, "2026-03-17", "스피어", 23300], ["에이치브이엠", -56.2, "A", 144000, "2026-05-26", "에이치브이엠", 63100], ["RFHIC", -53.8, "B", 126900, "2026-05-12", "RFHIC", 58600], ["세아베스틸지주", -52.1, "A", 92500, "2026-02-04", "세아베스틸", 44300], ["LIG아큐버", -48.9, "B", 62500, "2026-04-21", "LIG아큐버", 31950], ["한국항공우주", -40.8, "C", 215500, "2026-03-03", "KAI", 127500], ["한화에어로스페이스", -38.3, "C", 1655000, "2026-03-04", "한화에어로", 1021000], ["LIG디펜스앤에어로스페이스", -38.1, "C", 1118000, "2026-04-22", "LIG D&A", 692000], ["RF머트리얼즈", -25.8, "B", 63420, "2026-05-12", "RF머트리얼즈", 47050]]}</script>
+<script>
+(function(){
+const CD = JSON.parse(document.getElementById('cd').textContent);
+const tip = document.getElementById('tip');
+function showTip(html, x, y){
+  tip.innerHTML = html; tip.style.display='block';
+  const r = tip.getBoundingClientRect();
+  let L = x + 14, T = y + 14;
+  if (L + r.width > window.innerWidth - 8) L = x - r.width - 14;
+  if (L < 8) L = 8;
+  if (T + r.height > window.innerHeight - 8) T = y - r.height - 14;
+  if (T < 8) T = 8;
+  tip.style.left = L + 'px'; tip.style.top = T + 'px';
+}
+function hideTip(){ tip.style.display='none'; }
+window.addEventListener('scroll', hideTip, {passive:true});
+document.addEventListener('pointerdown', e => { if (!e.target.closest('.chart svg')) hideTip(); });
+function bindHits(svg, onHit){
+  if (svg._bound) { svg._onHit = onHit; return; }
+  svg._bound = true; svg._onHit = onHit;
+  let down = false;
+  const handler = e => { const t = e.target.closest('[data-hit]'); if (!t){ hideTip(); return; } svg._onHit(t, e); };
+  svg.addEventListener('pointerdown', e => { down = true; handler(e); });
+  svg.addEventListener('pointermove', e => { if (e.pointerType === 'mouse' || down) handler(e); });
+  ['pointerup','pointercancel','pointerleave'].forEach(ev => svg.addEventListener(ev, () => { down=false; if (ev!=='pointerup') hideTip(); }));
+}
+function responsive(id, draw){
+  const box = document.getElementById(id); if (!box) return; const svg = box.querySelector('svg');
+  let t;
+  const render = () => { const W = Math.max(280, Math.floor(box.clientWidth - (parseFloat(getComputedStyle(box).paddingLeft)*2))); const H = draw(svg, W); svg.setAttribute('viewBox', `0 0 ${W} ${H}`); svg.setAttribute('height', H); };
+  render();
+  new ResizeObserver(() => { clearTimeout(t); t = setTimeout(render, 120); }).observe(box);
+}
+
+/* ---------- launches ---------- */
+responsive('ch-launch', (svg, W) => {
+  const narrow = W < 560; const A = CD.launch;
+  const ML = narrow ? 30 : 40, MR = 8, MT = 22, MB = 28;
+  const Hh = narrow ? 250 : 320; const ph = Hh - MT - MB, pw = W - ML - MR;
+  const yMax = 350; const y = v => MT + (yMax - v)/yMax*ph;
+  const gw = pw/A.length; const bw = Math.min(narrow ? 26 : 52, gw*0.68);
+  let s = '';
+  [0,100,200,300].forEach(v => s += `<line class="${v===0?'axis':'grid'}" x1="${ML}" x2="${W-MR}" y1="${y(v)}" y2="${y(v)}"/><text x="${ML-4}" y="${y(v)+4}" text-anchor="end" class="mut" style="font-size:${narrow?9.5:11}px">${v}</text>`);
+  A.forEach((a,i) => { const xc = ML + i*gw + gw/2;
+    s += `<rect x="${xc-bw/2}" y="${y(a.w)}" width="${bw}" height="${y(0)-y(a.w)}" fill="var(--c4)" opacity="0.55" rx="2"/>`;
+    if (a.s != null) s += `<rect x="${xc-bw/2}" y="${y(a.s)}" width="${bw}" height="${y(0)-y(a.s)}" fill="var(--c1)" rx="2"/>`;
+    s += `<text x="${xc}" y="${y(a.w)-5}" text-anchor="middle" style="font-size:${narrow?9.5:11}px">${a.w}</text>`;
+    if (a.s != null && !narrow) s += `<text x="${xc}" y="${y(a.s)+14}" text-anchor="middle" style="font-size:10.5px; fill:#fff">${a.s}</text>`;
+    s += `<text x="${xc}" y="${Hh-9}" text-anchor="middle" class="mut" style="font-size:${narrow?9.5:11}px">${narrow? "'"+String(a.y).slice(2) : a.y}</text>`;
+    s += `<rect data-hit="${i}" x="${ML+i*gw}" y="${MT}" width="${gw}" height="${ph+MB}" fill="transparent"/>`; });
+  svg.innerHTML = s;
+  bindHits(svg, (t, e) => { const a = A[+t.dataset.hit]; showTip(`<b>${a.y}년</b><br>세계 궤도 발사 ${a.w}회${a.s!=null?`<br>스페이스X 팰컨 ${a.s}회 (${(a.s/a.w*100).toFixed(1)}%)`:'<br>스페이스X: 출처 미확인으로 표시 안 함'}<br>발사된 탑재체 ${a.p.toLocaleString('ko-KR')}기`, e.clientX, e.clientY); });
+  return Hh;
+});
+
+/* ---------- generic horizontal bars ---------- */
+function hbars(id, rows, opt){
+  responsive(id, (svg, W) => {
+    const narrow = W < 560;
+    const ML = narrow ? opt.mlN : opt.ml, MR = narrow ? 46 : 58, MT = 6, rowH = narrow ? (opt.rowN||28) : (opt.row||30);
+    const Hh = MT + rows.length*rowH + 20; const pw = W - ML - MR; const x = v => ML + v/opt.max*pw;
+    let s = '';
+    opt.ticks.forEach(v => s += `<line class="${v===0?'axis':'grid'}" x1="${x(v)}" x2="${x(v)}" y1="${MT}" y2="${Hh-20}"/><text x="${x(v)}" y="${Hh-6}" text-anchor="middle" class="mut" style="font-size:${narrow?9:10.5}px">${opt.neg&&v?'-':''}${v}${opt.unit||''}</text>`);
+    rows.forEach((r,i) => { const y0 = MT + i*rowH; const bh = narrow ? 12 : 14;
+      s += `<text x="${ML-6}" y="${y0+rowH/2+4}" text-anchor="end" class="lab" style="font-size:${narrow?10.5:12}px">${narrow && r.short ? r.short : r.label}</text>`;
+      s += `<rect x="${ML}" y="${y0+rowH/2-bh/2}" width="${Math.max(1,x(r.val)-ML)}" height="${bh}" fill="${r.fill}" rx="2"/>`;
+      s += `<text x="${x(r.val)+5}" y="${y0+rowH/2+4}" style="font-size:${narrow?10:11}px">${r.txt}</text>`;
+      s += `<rect data-hit="${i}" x="0" y="${y0}" width="${W}" height="${rowH}" fill="transparent"/>`; });
+    svg.innerHTML = s;
+    bindHits(svg, (t, e) => showTip(rows[+t.dataset.hit].tip, e.clientX, e.clientY));
+    return Hh;
+  });
+}
+hbars('ch-growth', CD.growth.map(g => ({label:g[0], short:g[4], val:g[1], fill:g[2]==='s'?'var(--c1)':'var(--c2)', txt:'+'+g[1]+'%', tip:`<b>${g[0]}</b><br>${g[2]==='s'?'우주':'AI'} · +${g[1]}%<br>${g[3]}`})), {ml:196, mlN:118, max:130, ticks:[0,25,50,75,100,125], unit:'', row:30, rowN:28});
+const GC = {A:'var(--c1)', B:'var(--c2)', C:'var(--c3)'}; const GN = {A:'스페이스X 공급망', B:'통신·지상장비', C:'위성·발사·방산'};
+hbars('ch-dd', CD.dd.map(d => ({label:d[0], short:d[5], val:-d[1], fill:GC[d[2]], txt:d[1].toFixed(1)+'%', tip:`<b>${d[0]}</b><br>${GN[d[2]]}<br>52주 고점 ${d[3].toLocaleString('ko-KR')}원 (${d[4]})<br>9/23 종가 ${d[6].toLocaleString('ko-KR')}원<br>고점 대비 ${d[1].toFixed(1)}%`})), {ml:170, mlN:104, max:80, ticks:[0,20,40,60,80], unit:'', neg:true, row:26, rowN:25});
+
+/* ---------- SpaceX segments ---------- */
+responsive('ch-seg', (svg, W) => {
+  const narrow = W < 560; const S = CD.seg;
+  const ML = narrow ? 32 : 42, MR = 8, MT = 16, MB = 28;
+  const Hh = narrow ? 270 : 340; const ph = Hh - MT - MB, pw = W - ML - MR;
+  const yMax = 50, yMin = -70; const y = v => MT + (yMax - v)/(yMax - yMin)*ph;
+  const gw = pw/S.length; const bw = Math.min(narrow ? 17 : 34, gw*0.26); const gap = 2;
+  const cols = ['var(--c1)','var(--c3)','var(--c2)']; const names = ['통신(스타링크)','발사(Space)','AI(xAI·X)'];
+  let s = '';
+  [-60,-40,-20,0,20,40].forEach(v => s += `<line class="${v===0?'axis':'grid'}" x1="${ML}" x2="${W-MR}" y1="${y(v)}" y2="${y(v)}"/><text x="${ML-4}" y="${y(v)+4}" text-anchor="end" class="mut" style="font-size:${narrow?9.5:11}px">${v}</text>`);
+  S.forEach((g,i) => { const x0 = ML + i*gw + gw/2 - (bw*3 + gap*2)/2;
+    g.v.forEach((v,k) => { const bx = x0 + k*(bw+gap); const top = v >= 0 ? y(v) : y(0); const h = Math.max(1, Math.abs(y(v) - y(0)));
+      s += `<rect x="${bx}" y="${top}" width="${bw}" height="${h}" fill="${cols[k]}" rx="2"/>`;
+      if (!narrow || k !== 1) s += `<text x="${bx+bw/2}" y="${v >= 0 ? top-4 : top+h+11}" text-anchor="middle" style="font-size:${narrow?8.5:10}px">${v.toFixed(1)}</text>`; });
+    s += `<text x="${ML + i*gw + gw/2}" y="${Hh-9}" text-anchor="middle" class="mut" style="font-size:${narrow?9.5:11}px">${g.y}</text>`;
+    s += `<rect data-hit="${i}" x="${ML+i*gw}" y="${MT}" width="${gw}" height="${ph+MB}" fill="transparent"/>`; });
+  svg.innerHTML = s;
+  bindHits(svg, (t, e) => { const g = S[+t.dataset.hit]; const sum = g.v.reduce((a,b)=>a+b,0);
+    showTip(`<b>${g.y} 영업이익 (억 달러)</b><br>${g.v.map((v,k)=>`${names[k]} ${v>0?'+':''}${v.toFixed(1)}`).join('<br>')}<br>세 부문 합계 ${sum>0?'+':''}${sum.toFixed(1)}`, e.clientX, e.clientY); });
+  return Hh;
+});
+})();
+
+</script>
+</body>
+</html>

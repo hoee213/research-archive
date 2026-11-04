@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<title>매드업 해부</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap">
+<style>
+:root{
+  --bg:#EEF1F4; --surface:#FFFFFF; --surface2:#F7F9FA; --surface3:#E7ECF1;
+  --ink:#101519; --ink2:#46525E; --muted:#6C7A87;
+  --line:#D6DEE5; --line2:#BFCBD5;
+  --accent:#8A5D12; --accent-mark:#B0761A;
+  --pos:#1B6E52; --neg:#A63A28;
+  --s1:#2E6FA3; --s2:#B0761A; --s3:#2AA694; --s4:#9A3F72;
+  --shadow:0 1px 2px rgba(16,30,45,.06), 0 8px 24px rgba(16,30,45,.05);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0D1216; --surface:#151B21; --surface2:#1B232A; --surface3:#212B33;
+    --ink:#E9EFF4; --ink2:#AAB7C2; --muted:#8797A3;
+    --line:#263039; --line2:#33404B;
+    --accent:#D8A63E; --accent-mark:#D8A63E;
+    --pos:#4FB58C; --neg:#E07A5F;
+    --s1:#4A8CC4; --s2:#BC8828; --s3:#28A892; --s4:#B14C82;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.28);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0D1216; --surface:#151B21; --surface2:#1B232A; --surface3:#212B33;
+  --ink:#E9EFF4; --ink2:#AAB7C2; --muted:#8797A3;
+  --line:#263039; --line2:#33404B;
+  --accent:#D8A63E; --accent-mark:#D8A63E;
+  --pos:#4FB58C; --neg:#E07A5F;
+  --s1:#4A8CC4; --s2:#BC8828; --s3:#28A892; --s4:#B14C82;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.28);
+}
+*{box-sizing:border-box}
+body{margin:0; background:var(--bg); color:var(--ink);
+  font-family:"IBM Plex Sans KR","Malgun Gothic",system-ui,sans-serif;
+  font-size:15.5px; line-height:1.72; -webkit-text-size-adjust:100%}
+.mono{font-family:"IBM Plex Mono","Consolas",ui-monospace,monospace; font-variant-numeric:tabular-nums}
+.wrap{max-width:940px; margin:0 auto; padding:0 22px 96px}
+.mast{border-bottom:1px solid var(--line); background:var(--surface)}
+.mast-in{max-width:940px; margin:0 auto; padding:30px 22px 24px}
+.eyebrow{font-family:"IBM Plex Mono",monospace; font-size:11.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--muted)}
+h1{font-size:clamp(29px,6.4vw,44px); line-height:1.15; margin:.32em 0 .12em; font-weight:700; letter-spacing:-.02em; text-wrap:balance}
+.sub{color:var(--ink2); font-size:15px; max-width:62ch; margin:.5em 0 0}
+.tickerline{display:flex; flex-wrap:wrap; gap:8px 14px; align-items:baseline; margin-top:14px; font-family:"IBM Plex Mono",monospace; font-size:12.5px; color:var(--muted)}
+.tickerline b{color:var(--ink); font-weight:600}
+.stats{display:grid; grid-template-columns:repeat(auto-fit,minmax(126px,1fr)); gap:1px; background:var(--line); border:1px solid var(--line); margin-top:26px}
+.stat{background:var(--surface); padding:13px 14px 15px}
+.stat .k{font-family:"IBM Plex Mono",monospace; font-size:10.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--muted)}
+.stat .v{font-family:"IBM Plex Mono",monospace; font-weight:600; font-size:clamp(19px,4.6vw,25px); line-height:1.25; margin-top:5px; overflow-wrap:anywhere}
+.stat .n{font-size:11.5px; color:var(--muted); margin-top:2px; line-height:1.4}
+.neg{color:var(--neg)} .pos{color:var(--pos)}
+section{margin-top:52px; scroll-margin-top:16px}
+.sec-h{display:flex; gap:14px; align-items:baseline; border-bottom:2px solid var(--ink); padding-bottom:9px; margin-bottom:20px}
+.sec-n{font-family:"IBM Plex Mono",monospace; font-size:12px; font-weight:600; color:var(--accent); letter-spacing:.06em; padding-top:4px}
+.sec-h h2{margin:0; font-size:clamp(19px,4vw,24px); font-weight:700; letter-spacing:-.015em; text-wrap:balance; flex:1; min-width:0}
+h3{font-size:16.5px; font-weight:600; margin:32px 0 8px; letter-spacing:-.01em}
+h4{font-size:14.5px; font-weight:600; margin:20px 0 6px; color:var(--ink2)}
+p{margin:0 0 14px}
+.lede{font-size:16.5px; color:var(--ink2)}
+ul,ol{margin:0 0 14px; padding-left:20px}
+li{margin-bottom:7px}
+strong,b{font-weight:600}
+a{color:var(--accent)}
+.small{font-size:13px; color:var(--muted); line-height:1.6}
+.take{border-left:3px solid var(--accent-mark); background:var(--surface2); padding:14px 16px; margin:18px 0; font-size:14.5px}
+.take .lbl{font-family:"IBM Plex Mono",monospace; font-size:10.5px; letter-spacing:.12em; text-transform:uppercase; color:var(--accent); display:block; margin-bottom:5px}
+.take p:last-child{margin-bottom:0}
+.keypoints{display:grid; gap:1px; background:var(--line); border:1px solid var(--line); margin:22px 0}
+.kp{background:var(--surface); padding:15px 17px; display:grid; grid-template-columns:34px 1fr; gap:14px}
+.kp .num{font-family:"IBM Plex Mono",monospace; font-size:12px; color:var(--accent); font-weight:600; padding-top:3px}
+.kp .txt{min-width:0}
+.kp .t{font-weight:600; margin-bottom:2px}
+.kp .d{font-size:14px; color:var(--ink2)}
+.tbl-scroll{overflow-x:auto; margin:18px -22px 20px; padding:0 22px; -webkit-overflow-scrolling:touch}
+table{border-collapse:collapse; width:100%; min-width:520px; font-size:13.5px}
+caption{caption-side:top; text-align:left; font-family:"IBM Plex Mono",monospace; font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); padding-bottom:8px}
+th,td{padding:9px 11px; border-bottom:1px solid var(--line); text-align:left; vertical-align:top}
+th.num,td.num{text-align:right; white-space:nowrap}
+thead th{border-bottom:1.5px solid var(--line2); font-weight:600; color:var(--ink2); font-size:12.5px}
+tbody tr:hover{background:var(--surface2)}
+td.num,th.num{font-family:"IBM Plex Mono",monospace; font-variant-numeric:tabular-nums}
+tfoot td{border-top:1.5px solid var(--line2); border-bottom:none; font-weight:600}
+tr.hl td{background:var(--surface2); font-weight:600}
+.tbl-note{font-size:12px; color:var(--muted); margin:-8px 0 22px; line-height:1.55}
+figure{margin:22px 0 24px; background:var(--surface); border:1px solid var(--line); padding:16px 16px 12px}
+figure .cap{font-family:"IBM Plex Mono",monospace; font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); margin-bottom:2px}
+figure .ttl{font-weight:600; font-size:15px; margin-bottom:12px; line-height:1.4}
+figcaption{font-size:12px; color:var(--muted); margin-top:8px; line-height:1.55}
+.chart{width:100%; position:relative; touch-action:pan-y}
+.chart svg{display:block; width:100%; height:auto}
+.legend{display:flex; flex-wrap:wrap; gap:8px 16px; margin-bottom:10px; font-family:"IBM Plex Mono",monospace; font-size:11.5px; color:var(--ink2)}
+.legend span{display:inline-flex; align-items:center; gap:6px}
+.legend i{width:11px; height:11px; border-radius:2px; display:inline-block}
+.tip{position:fixed; z-index:50; pointer-events:none; background:var(--surface); border:1px solid var(--line2); box-shadow:var(--shadow); padding:8px 10px; font-size:12.5px; max-width:min(268px,calc(100vw - 20px)); line-height:1.5; display:none}
+.tip .th{font-family:"IBM Plex Mono",monospace; font-size:11px; color:var(--muted); letter-spacing:.06em; margin-bottom:4px}
+.tip .tr{display:flex; justify-content:space-between; gap:14px}
+.tip .tr b{font-family:"IBM Plex Mono",monospace; font-weight:600}
+.duo{display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--line); border:1px solid var(--line); margin:20px 0}
+.duo>div{background:var(--surface); padding:16px 17px}
+.duo h4{margin-top:0; font-family:"IBM Plex Mono",monospace; font-size:11px; letter-spacing:.11em; text-transform:uppercase}
+.duo .for h4{color:var(--pos)} .duo .against h4{color:var(--neg)}
+.duo ul{padding-left:17px; margin-bottom:0} .duo li{font-size:13.8px; color:var(--ink2)}
+.risk{border:1px solid var(--line); background:var(--surface); padding:14px 16px; margin-bottom:1px}
+.risk-list{background:var(--line); border:1px solid var(--line); display:grid; gap:1px}
+.risk .rh{display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin-bottom:5px}
+.tag{font-family:"IBM Plex Mono",monospace; font-size:10px; letter-spacing:.1em; text-transform:uppercase; padding:2px 7px; border:1px solid currentColor; font-weight:600}
+.tag.high{color:var(--neg)} .tag.mid{color:var(--accent)} .tag.low{color:var(--muted)}
+.risk .rt{font-weight:600; font-size:14.5px}
+.risk p{font-size:13.8px; color:var(--ink2); margin:0}
+.check{display:grid; gap:1px; background:var(--line); border:1px solid var(--line)}
+.check div{background:var(--surface); padding:12px 16px; display:grid; grid-template-columns:22px 1fr; gap:12px; font-size:14px}
+.check .box{width:13px; height:13px; border:1.5px solid var(--line2); margin-top:5px}
+.qgroup{margin:22px 0 6px}
+.qgroup h3{margin:26px 0 6px}
+.qgroup .why{font-size:13px; color:var(--muted); margin-bottom:10px}
+.qs{display:grid; gap:1px; background:var(--line); border:1px solid var(--line)}
+.q{background:var(--surface); padding:12px 15px; display:grid; grid-template-columns:38px 1fr; gap:12px}
+.q .qn{font-family:"IBM Plex Mono",monospace; font-size:11.5px; color:var(--accent); font-weight:600; padding-top:3px}
+.q .qt{font-size:14.5px; font-weight:600; line-height:1.55}
+.q .qw{font-size:13px; color:var(--ink2); margin-top:3px; line-height:1.55}
+.q .qw b{color:var(--ink)}
+.tl{border-left:2px solid var(--line2); margin:18px 0 22px; padding-left:0}
+.tl li{list-style:none; position:relative; padding:0 0 16px 20px; margin:0}
+.tl li::before{content:""; position:absolute; left:-5px; top:9px; width:8px; height:8px; background:var(--accent-mark); border:2px solid var(--surface)}
+.tl .d{font-family:"IBM Plex Mono",monospace; font-size:11.5px; color:var(--muted); letter-spacing:.05em}
+.tl .b{font-size:14.2px}
+.srcgrid{display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:1px; background:var(--line); border:1px solid var(--line)}
+.srcgrid div{background:var(--surface); padding:13px 15px}
+.srcgrid .n{font-family:"IBM Plex Mono",monospace; font-size:20px; font-weight:600; color:var(--accent)}
+.srcgrid .l{font-size:13px; color:var(--ink2); margin-top:2px}
+.flow{display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--line); border:1px solid var(--line); margin:18px 0 6px}
+.flow div{background:var(--surface); padding:12px 13px; min-width:0}
+.flow .fk{font-family:"IBM Plex Mono",monospace; font-size:10.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--muted)}
+.flow .fv{font-family:"IBM Plex Mono",monospace; font-weight:600; font-size:clamp(17px,4vw,22px); margin-top:4px; overflow-wrap:anywhere}
+.flow .fd{font-size:12px; color:var(--ink2); margin-top:2px; line-height:1.45}
+.flow .me .fv{color:var(--accent)}
+footer{margin-top:56px; border-top:1px solid var(--line); padding-top:18px; font-size:12.5px; color:var(--muted); line-height:1.65}
+@media (max-width:720px){ .duo{grid-template-columns:1fr} .flow{grid-template-columns:1fr 1fr} }
+@media (max-width:620px){
+  body{font-size:15px}
+  .wrap{padding:0 14px 72px}
+  .mast-in{padding:24px 14px 20px}
+  .tbl-scroll{margin-left:-14px; margin-right:-14px; padding:0 14px}
+  table{font-size:12.5px; min-width:0}
+  th,td{padding:7px 8px}
+  figure{padding:13px 12px 10px}
+  .kp{grid-template-columns:28px 1fr; gap:10px; padding:13px 14px}
+  .q{grid-template-columns:30px 1fr; gap:9px; padding:11px 12px}
+}
+@media (max-width:400px){
+  .wrap{padding:0 11px 64px}
+  .mast-in{padding:20px 11px 18px}
+  .tbl-scroll{margin-left:-11px; margin-right:-11px; padding:0 11px}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important; transition:none!important}}
+:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
+</style>
+</head>
+<body>
+
+<div class="mast">
+  <div class="mast-in">
+    <div class="eyebrow">KOSDAQ 0039P0 · AI 퍼포먼스 마케팅 · 2026.09.09 장중 기준</div>
+    <h1>매드업 해부</h1>
+    <p class="sub">공모가 8,000원, 시초가 22,250원, 한 달 만에 4,560원. 7월 1일 상장한 'AI 마케팅' 첫 종목은 두 달 동안 시장이 가격을 찾지 못했다.
+      상반기 매출 +51%·영업이익 +193%라는 헤드라인을 부문별로 뜯어보면 절반은 주스 판매고, 인건비 레버리지는 상반기에 멈춰 있다.
+      10월 1일 보호예수 190만 주 해제와 풋백옵션 만료가 겹친다. 기업미팅에서 물어야 할 것들을 마지막 장에 모았다.</p>
+    <div class="tickerline">
+      <span>대표 <b>이주민·이동호</b> (각자대표, 합산 38.5%)</span><span>본사 <b>서울 서초</b></span>
+      <span>설립 <b>2015.01</b></span><span>상장 <b>2026.07.01</b> 이익미실현 특례 · 공모가 8,000원</span>
+      <span>발행주식 <b>18,807,400주</b></span><span>직원 <b>541명</b> (26.6말)</span>
+    </div>
+    <div class="stats">
+      <div class="stat"><div class="k">주가</div><div class="v">8,770</div><div class="n">원 · 09/09 09:48 · 공모가 대비 +9.6%</div></div>
+      <div class="stat"><div class="k">시가총액</div><div class="v">1,649</div><div class="n">억원 · 자사주 22.2만주 포함</div></div>
+      <div class="stat"><div class="k">PER (TTM)</div><div class="v">13.3</div><div class="n">배 · 지배주주 EPS 662원 · FY25 기준 21.1배</div></div>
+      <div class="stat"><div class="k">PBR</div><div class="v">2.98</div><div class="n">배 · BPS 2,943원 (26.6말)</div></div>
+      <div class="stat"><div class="k">PSR (TTM)</div><div class="v">2.70</div><div class="n">배 · 순액 매출 610억 기준</div></div>
+      <div class="stat"><div class="k">시초가 대비</div><div class="v neg">−60.6</div><div class="n">% · 26/07/01 22,250원 · 저점 26/07/28 4,560원</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+
+<section id="s1">
+  <div class="sec-h"><span class="sec-n">01</span><h2>한 줄 결론</h2></div>
+  <p class="lede">매드업은 "광고비의 10%를 수수료로 받는 대행사"가 AI로 인건비를 줄여 이익률을 두 자릿수로 올린 회사다. 2025년의 흑자 전환은 진짜다. 다만 2026년 상반기 숫자는 헤드라인보다 훨씬 평범하고, 주가는 이미 국내 대행사 밸류의 두 배를 받고 있다. 지금 사는 사람은 '2027년 영업이익 221억'이라는 SK증권의 숫자를 사는 것이고, 그 숫자가 맞으려면 3분기 인건비와 4분기 매체 인센티브가 계획대로 나와야 한다.</p>
+  <div class="keypoints">
+    <div class="kp"><div class="num">1</div><div class="txt"><div class="t">상반기 매출 +50.8% 중 절반(48.5%)은 클렌즈주스·바디케어 자회사의 '상품매출'이다</div><div class="d">브랜드빌드업 부문이 27억→79억(+193%)으로 늘었는데 영업이익은 1.1억(OPM 1.4%). 이를 뺀 광고·솔루션 매출 성장률은 <b>+30.0%</b>. 매출총이익률이 94.5%→85.4%로 떨어진 것도 악화가 아니라 이 믹스 때문이다.</div></div></div>
+    <div class="kp"><div class="num">2</div><div class="txt"><div class="t">인건비 레버리지는 연간으로는 선명한데 상반기에는 멈췄다</div><div class="d">광고수익 대비 인건비율 FY24 77.1% → FY25 65.2%. 그러나 1H25 61.9% → 1H26 61.8%로 제자리. 직원이 463명→541명(+17%)으로 늘었고 SK증권은 연말 563명을 전망한다. 2026년은 회사 스스로 '인력 선투자' 해라고 말한다.</div></div></div>
+    <div class="kp"><div class="num">3</div><div class="txt"><div class="t">순이익은 세금을 거의 안 낸 숫자다</div><div class="d">상반기 세전이익 47.9억에 법인세 0.14억. 이월결손·세액공제로 미인식 이연법인세자산이 약 90억 남아 있어 앞으로도 한동안 순이익≈세전이익. 22% 정상 세율을 적용하면 TTM PER은 13.3배가 아니라 <b>17.0배</b>다.</div></div></div>
+    <div class="kp"><div class="num">4</div><div class="txt"><div class="t">벌면 벌수록 현금이 나가는 구조 — 상반기 순이익 48억, 영업현금흐름 −57억</div><div class="d">매출은 수수료(순액)로 잡지만 매출채권은 광고비 총액으로 잡힌다. 매출채권 632억이 반기 매출 320억의 두 배. 취급고가 30~40%씩 크는 한 운전자금이 이익을 삼킨다. 공모자금 155억은 아직 전액 예금.</div></div></div>
+    <div class="kp"><div class="num">5</div><div class="txt"><div class="t">10월 1일 — 보호예수 190만 주(10.1%) 해제와 풋백옵션 만료가 같은 날이다</div><div class="d">FI 3곳은 상장 첫날 18,000원대에서 165만 주를 팔았고, 스톤브릿지는 8월에 9,000~10,000원대에서 60만 주를 더 팔았다. 남은 FI 지분 27.6% 중 3개월 락업분이 10/1에 풀린다. 자사주 15.6억 매입(평균 7,041원)은 이 물량 앞에서 작다.</div></div></div>
+  </div>
+</section>
+
+<section id="s2">
+  <div class="sec-h"><span class="sec-n">02</span><h2>비즈니스 모델 — 밸류체인의 어느 칸인가</h2></div>
+  <p>디지털 광고의 돈은 <b>광고주 → 대행사 → 매체(구글·메타·네이버·카카오·틱톡)</b>로 흐른다. 매드업은 가운데 칸이다. 광고주 대신 매체에 광고비를 집행해 주고 수수료를 받는 '퍼포먼스 마케팅 대행사'로 출발해, 그 일을 하려고 만든 내부 자동화 도구(Argo → LEVER → LEVER Xpert)를 2024년 하반기부터 외부에 파는 회사가 됐다. 회사가 직접 밝힌 매출 3갈래는 다음과 같다.</p>
+  <div class="flow">
+    <div><div class="fk">① 마케팅 (대행)</div><div class="fv">69.3%</div><div class="fd">1H26 매출 222억 · OPM 16.7%. 취급고(광고비 총액)의 약 10%를 수수료로 인식. 매체 인센티브가 분기 말월에 더해진다</div></div>
+    <div class="me"><div class="fk">② 솔루션 (LEVER Xpert)</div><div class="fv">5.9%</div><div class="fd">1H26 매출 19억 · OPM 16.3%. 월 59만~389만원 구독료 + 매체 운영 인센티브 1~5%. 2024년 17억 → 2025년 49억</div></div>
+    <div><div class="fk">③ 브랜드빌드업</div><div class="fv">24.8%</div><div class="fd">1H26 매출 79억 · OPM 1.4%. 자회사 Latib 클렌즈주스(네이키드베지터블스)·1950 바디케어. 유일하게 총액 인식</div></div>
+    <div><div class="fk">취급고 (참고)</div><div class="fv">3,825억</div><div class="fd">FY25 별도 광고비 총액, +39.6%. 국내 온라인 광고비 10.7조의 3.6%. 1Q26 1,023억(+20.5%)</div></div>
+  </div>
+  <p class="small">부문 비중은 2026년 상반기 연결 외부매출 기준(반기보고서 주석 34). 취급고는 매출이 아니라 매드업을 거쳐 매체로 흘러간 광고비 총액이다.</p>
+
+  <h3>순액 인식 — 이 회사 숫자를 읽는 첫 번째 열쇠</h3>
+  <p>투자설명서 문장 그대로: <i>"당사는 매출액을 총액이 아닌 순액(수수료)으로 인식하고 있으나, 매출채권은 광고집행비 총액으로 인식."</i> 그래서 매출총이익률이 94%다. 매체비가 매출에도 원가에도 없기 때문이다. 같은 이유로 매출채권 회전율은 1.16회에 불과하고, 플레이디·이엠넷처럼 검색광고를 총액으로 잡는 경쟁사와 매출 규모를 그대로 비교하면 안 된다. 비교는 취급고나 영업이익으로 해야 한다.</p>
+  <figure>
+    <div class="cap">Chart 1 · 별도 기준, 억원</div>
+    <div class="ttl">취급고 3,825억이 매출 400억이 되고, 매출채권은 632억으로 남는다</div>
+    <div class="legend" id="lg3"></div>
+    <div class="chart" id="c3"></div>
+    <figcaption>취급고·마케팅 매출은 별도 기준(증권신고서), 매출채권은 연결 기말 잔액(1H26은 2026.6.30). 마케팅 매출/취급고 = 실현 수수료율: 2023 11.2% → 2024 10.3% → 2025 10.0%(연결 마케팅 기준). 증권신고서가 적은 "11~15%"보다 낮다.</figcaption>
+  </figure>
+
+  <div class="tbl-scroll"><table>
+    <caption>매체별 수수료 구조 (증권신고서 회사위험 '아')</caption>
+    <thead><tr><th>매체 · 상품</th><th class="num">매체가 주는 수수료</th><th class="num">광고주에게 청구</th><th>비고</th></tr></thead>
+    <tbody>
+      <tr><td>네이버 검색</td><td class="num">15%</td><td class="num">0%</td><td>매체 수수료 모델</td></tr>
+      <tr><td>네이버 DA</td><td class="num">15~30%</td><td class="num">0%</td><td></td></tr>
+      <tr><td>카카오 검색·DA</td><td class="num">15%</td><td class="num">0%</td><td></td></tr>
+      <tr><td>구글 검색</td><td class="num">0%</td><td class="num">10~15%</td><td>광고주 청구 모델</td></tr>
+      <tr><td>메타 · 틱톡 · X</td><td class="num">0%</td><td class="num">10~15%</td><td>퍼포먼스 광고의 주력 매체</td></tr>
+      <tr class="hl"><td>연간 집행 규모 인센티브</td><td class="num">별도</td><td class="num">—</td><td>"연 50억 달성 시 환급" 식. 매 분기 말월(3·6·9·12월)에 인식 → 3월 매출 55억 vs 1·2월 31억</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tbl-note">매체별 취급고 비중은 미공시. 인센티브 조건은 "매체 내부 정책에 따라 변화폭이 크다"고 회사가 적었다. 인센티브가 영업이익에서 차지하는 몫은 공시에 없다 — 미팅 질문 A-2.</p>
+
+  <h3>LEVER Xpert — 무엇을 파는가</h3>
+  <p>23개 매체와 AppsFlyer·GA·Airbridge 트래커에서 데이터를 자동 수집·통합하고(데이터센터), 광고 소재를 AI로 분석·레이블링하며(소재센터), 입찰·예산·소재 교체를 자동화하고(운영센터), 리포트를 생성한다(AI 리포트). 학습 자산은 5년치 라벨 데이터(이미지 320만, 비디오 8만, 카피 200만 건)와 디지털광고 특화 파인튜닝 sLLM+RAG. 회사가 내세우는 실증은 "데이터 통합 12시간→1.5시간(−88%)", ACL 2026 논문의 "인간 전문가 대비 평균 27% 성과 개선", A/B 테스트 CTR +21.2%·CPC −46.0%·ROAS +13.9%(SK증권 인용)다.</p>
+  <p>판매 대상은 매드업이 직접 하지 않는 시장이다. 상위 10개사를 뺀 온라인종합광고대행사 857개와 월 광고비 2억원 이하 인하우스 광고주. 2025년까지는 대행사(=경쟁사) 중심으로 초기 물량을 확보했고, 2026년부터 광고주 직접 영업으로 넓힌다. <b>유료 고객 수·ARR은 공시에 없다.</b> 있는 것은 "평균 계약기간 1년, 누적 이탈률 20% 미만"과 부문 매출뿐이다. 2025년 솔루션 매출 49억 중 34억(69%)이 4분기에 몰렸다 — 구독이라면 나올 수 없는 분포다. 미팅 질문 B-1.</p>
+</section>
+
+<section id="s3">
+  <div class="sec-h"><span class="sec-n">03</span><h2>실적 해부 — '+51%'의 실체</h2></div>
+  <figure>
+    <div class="cap">Chart 2 · 연결, 억원</div>
+    <div class="ttl">연간 매출 구성과 영업이익률 — 2025년에 무엇이 달라졌나</div>
+    <div class="legend" id="lg1"></div>
+    <div class="chart" id="c1"></div>
+    <figcaption>2023년 매출 감소는 총액 인식 사업의 중단(회사 설명). 2024년 적자는 솔루션 투자. 2025년 흑자 전환은 "일회성이 아닌 영업 레버리지"라고 회사가 증권신고서에 명시했다. 1H 막대는 반기 실적이라 연간 막대의 절반 크기다.</figcaption>
+  </figure>
+
+  <div class="tbl-scroll"><table>
+    <caption>연결 손익 요약 (억원)</caption>
+    <thead><tr><th></th><th class="num">2023</th><th class="num">2024</th><th class="num">2025</th><th class="num">1H25</th><th class="num">1H26</th><th class="num">YoY</th></tr></thead>
+    <tbody>
+      <tr><td>매출액</td><td class="num">280.8</td><td class="num">349.9</td><td class="num">502.3</td><td class="num">212.3</td><td class="num">320.2</td><td class="num pos">+50.8%</td></tr>
+      <tr><td>　마케팅</td><td class="num">246.8</td><td class="num">282.6</td><td class="num">381.9</td><td class="num">175.6</td><td class="num">221.9</td><td class="num">+26.3%</td></tr>
+      <tr><td>　솔루션</td><td class="num">—</td><td class="num">17.4</td><td class="num">49.4</td><td class="num">9.6</td><td class="num">18.9</td><td class="num">+97.1%</td></tr>
+      <tr><td>　브랜드빌드업</td><td class="num">34.0</td><td class="num">49.9</td><td class="num">71.0</td><td class="num">27.1</td><td class="num">79.4</td><td class="num">+193.0%</td></tr>
+      <tr><td>매출원가 (상품매출원가만)</td><td class="num">15.7</td><td class="num">21.0</td><td class="num">29.9</td><td class="num">11.6</td><td class="num">46.6</td><td class="num"></td></tr>
+      <tr><td>매출총이익률</td><td class="num">94.4%</td><td class="num">94.0%</td><td class="num">94.1%</td><td class="num">94.6%</td><td class="num">85.4%</td><td class="num"></td></tr>
+      <tr><td>판매관리비</td><td class="num">258.2</td><td class="num">332.9</td><td class="num">387.0</td><td class="num">186.7</td><td class="num">232.4</td><td class="num">+24.5%</td></tr>
+      <tr class="hl"><td>영업이익</td><td class="num">6.9</td><td class="num neg">−4.1</td><td class="num">85.5</td><td class="num">14.1</td><td class="num">41.2</td><td class="num pos">+192.9%</td></tr>
+      <tr><td>영업이익률</td><td class="num">2.4%</td><td class="num neg">−1.2%</td><td class="num">17.0%</td><td class="num">6.6%</td><td class="num">12.9%</td><td class="num"></td></tr>
+      <tr><td>금융비용</td><td class="num">60.2</td><td class="num">38.1</td><td class="num">42.1</td><td class="num">18.7</td><td class="num">2.5</td><td class="num"></td></tr>
+      <tr><td>법인세비용</td><td class="num">0</td><td class="num">0.0</td><td class="num pos">−22.5 (수익)</td><td class="num">0</td><td class="num">0.1</td><td class="num"></td></tr>
+      <tr class="hl"><td>지배주주순이익</td><td class="num neg">−42.9</td><td class="num neg">−27.5</td><td class="num">78.0</td><td class="num">1.4</td><td class="num">47.7</td><td class="num pos">35.4배</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tbl-note">출처: 증권신고서(FY23~25), 반기보고서·DART 재무API(1H). 매출총이익−판관비=영업이익이 5개 기간 모두 ±0.01억 내로 일치함을 확인. 2023~24년 금융비용 대부분은 상환전환우선주(RCPS) 관련 이자·파생평가손실로, 2025년 10월 전량 보통주 전환되며 사라졌다.</p>
+
+  <h3>이익 급증을 세 조각으로 나누면</h3>
+  <p>상반기 지배주주순이익이 1.4억에서 47.7억이 된 46.4억의 증가분은 ① 영업이익 +27.2억(41.2−14.1), ② 금융비용 감소 +16.2억(RCPS 이자·파생손실 소멸, 현금과 무관한 회계상 비용의 제거), ③ 법인세 ≈ 0으로 구성된다. 영업에서 온 것은 27억이고, 그 27억 중에서도 마케팅 부문이 22.3억(14.8→37.1)을 만들었다. 솔루션 부문 기여는 2.3억이다.</p>
+
+  <figure>
+    <div class="cap">Chart 3 · 연결, 억원</div>
+    <div class="ttl">분기 매출과 영업이익률 — 1분기는 적자, 4분기에 몰린다</div>
+    <div class="legend" id="lg2"></div>
+    <div class="chart" id="c2"></div>
+    <figcaption>3Q25·4Q25 영업이익은 개별 공시가 없어 하반기 합계 71.4억(OPM 24.6%)을 두 분기에 걸쳐 표시. 1분기가 약한 이유는 "광고주 예산 수립 시기"(회사)와 1·3분기 성과급 집중(SK증권). 4분기가 강한 이유는 연간 매체 인센티브 인식.</figcaption>
+  </figure>
+  <div class="take"><span class="lbl">읽는 법</span><p>2026년 연간 영업이익 가이던스 120~125억(회사·증권사)이 나오려면 하반기에 79~84억이 필요하다. 2025년 하반기가 71억이었으니 불가능한 숫자는 아니지만, SK증권조차 3분기는 성과급과 상장 포상비로 OPM 6.1%(10억)를 예상한다. 즉 <b>연간 목표의 60%가 4분기 한 분기에 걸려 있다.</b> 4분기 매체 인센티브 규모가 곧 연간 실적이다.</p></div>
+</section>
+
+<section id="s4">
+  <div class="sec-h"><span class="sec-n">04</span><h2>인건비 레버리지 — AI가 숫자로 보이는가</h2></div>
+  <p>퍼포먼스 마케팅은 비용의 약 80%가 인건비인 노동집약 산업이다. 매드업의 투자 논리는 "같은 취급고를 더 적은 마케터로 운영한다"는 한 문장으로 요약된다. 그러니 검증도 한 가지다. 광고수익(마케팅+솔루션, 주스 제외) 1원을 벌기 위해 인건비를 얼마나 쓰는가.</p>
+  <figure>
+    <div class="cap">Chart 4 · 연결, 급여+퇴직급여+복리후생비</div>
+    <div class="ttl">광고수익 대비 인건비율: 연간은 12%p 개선, 상반기는 0.1%p</div>
+    <div class="legend" id="lg4"></div>
+    <div class="chart" id="c4"></div>
+    <figcaption>인건비 = 판관비 중 급여·퇴직급여·복리후생비 합계(주식보상·경상연구개발비 제외). SK증권의 "총인건비 비중 68.1→57.3→55.3%"는 연구개발비·인건비성 경비를 포함하고 분모가 총매출이라 수치가 다르다. 방향은 같다.</figcaption>
+  </figure>
+  <div class="tbl-scroll"><table>
+    <caption>인력과 생산성</caption>
+    <thead><tr><th></th><th class="num">2023</th><th class="num">2024</th><th class="num">2025</th><th class="num">1H25</th><th class="num">1H26</th></tr></thead>
+    <tbody>
+      <tr><td>인건비 (억원)</td><td class="num">184.6</td><td class="num">231.4</td><td class="num">281.1</td><td class="num">114.7</td><td class="num">148.8</td></tr>
+      <tr><td>광고수익 (억원, 상품매출 제외)</td><td class="num">246.8</td><td class="num">300.0</td><td class="num">431.3</td><td class="num">185.2</td><td class="num">240.8</td></tr>
+      <tr class="hl"><td>인건비 / 광고수익</td><td class="num">74.8%</td><td class="num">77.1%</td><td class="num">65.2%</td><td class="num">61.9%</td><td class="num">61.8%</td></tr>
+      <tr><td>직원 수 (기말)</td><td class="num">—</td><td class="num">—</td><td class="num">463</td><td class="num">—</td><td class="num">541</td></tr>
+      <tr><td>　마케팅 / 솔루션 / 지원</td><td class="num"></td><td class="num"></td><td class="num">373 / 67 / 16</td><td class="num"></td><td class="num">425 / 83 / 33</td></tr>
+      <tr><td>취급고 / 마케터 (억원)</td><td class="num"></td><td class="num"></td><td class="num">10.3</td><td class="num"></td><td class="num">—</td></tr>
+      <tr><td>연구개발비 (억원, 전액 비용처리)</td><td class="num">42.5</td><td class="num">47.2</td><td class="num">47.9</td><td class="num">24.2</td><td class="num">25.6</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tbl-note">직원 수는 사업보고서·반기보고서 기준(기간제 포함). 2025년 평균근속 1.9년, 1인 평균 급여 44.8백만원. 1H26 반기 급여총액 132.9억(1인 29백만원).</p>
+  <p>상반기 인건비가 +29.7% 늘 때 광고수익도 +30.0% 늘었다. 효율이 나빠진 것은 아니지만 좋아지지도 않았다. 회사와 SK증권의 설명은 "올리브영 글로벌·네이버웹툰 등 대형 광고주 온보딩 인력과 2025년 10월 시작한 AMS(AI Managed Service) 인력을 미리 뽑았다"는 것이다. 이 설명이 맞다면 하반기부터 인건비율이 다시 떨어져야 한다. 틀리다면 매드업은 여전히 사람 수로 크는 대행사다. <b>3분기 보고서의 직원 수와 인건비율 한 줄이 이 리포트에서 가장 중요한 후속 확인 항목이다.</b></p>
+</section>
+
+<section id="s5">
+  <div class="sec-h"><span class="sec-n">05</span><h2>현금과 운전자금 — 이익이 현금이 되지 않는 이유</h2></div>
+  <div class="tbl-scroll"><table>
+    <caption>연결 재무상태 (억원)</caption>
+    <thead><tr><th></th><th class="num">2025.12</th><th class="num">2026.03</th><th class="num">2026.06</th><th>메모</th></tr></thead>
+    <tbody>
+      <tr><td>현금및현금성자산</td><td class="num">255.5</td><td class="num">147.4</td><td class="num">326.0</td><td>6월 공모 순수입 154.9억 포함(전액 예·적금, 집행 0)</td></tr>
+      <tr><td>단기금융상품</td><td class="num">17.0</td><td class="num">23.8</td><td class="num">23.8</td><td>전액 질권 설정</td></tr>
+      <tr><td>매출채권 (총액)</td><td class="num">443.2</td><td class="num">484.3</td><td class="num">632.4</td><td>손실충당금 3.1억(0.5%), 6개월 이하 99.5%</td></tr>
+      <tr><td>매입채무 등</td><td class="num">451.4</td><td class="num">391.2</td><td class="num">547.5</td><td>매체비 미지급</td></tr>
+      <tr><td>단기차입금</td><td class="num">64.0</td><td class="num">64.0</td><td class="num">64.0</td><td>기업은행 · 기보 보증 · 34억은 7/31 만기</td></tr>
+      <tr><td>리스부채</td><td class="num">7.4</td><td class="num">—</td><td class="num">79.0</td><td>서초타워 신규 리스 84.5억</td></tr>
+      <tr class="hl"><td>순현금 (현금+단기금융−차입)</td><td class="num">208.5</td><td class="num">107.2</td><td class="num">285.8</td><td>리스 차감 시 206.8</td></tr>
+      <tr><td>자본총계 / 부채비율</td><td class="num">344.1 / 156%</td><td class="num">353.5 / 140%</td><td class="num">554.0 / 128%</td><td>2023~24년은 RCPS 부채 분류로 자본잠식</td></tr>
+      <tr class="hl"><td>영업활동현금흐름 (누적)</td><td class="num">91.1 (FY)</td><td class="num neg">−90.6 (1Q)</td><td class="num neg">−57.4 (1H)</td><td>매출채권 증가 −189억, 매입채무 증가 +86억</td></tr>
+    </tbody>
+  </table></div>
+  <p>구조를 그림으로 그리면 이렇다. 광고주에게는 당월 말 광고비+수수료를 청구해 익월 마지막 주에 받고, 매체에는 익월 말에 지급하거나 일부는 선충전한다(월평균 선지급 1Q25 49억 → 4Q25 133억 → 1Q26 115억). 취급고가 40% 늘면 그 사이에 끼는 돈도 40% 는다. 2025년 영업현금흐름 +91억은 매입채무가 함께 늘어 준 덕이고, 2026년 상반기는 채권 증가가 앞섰다. 회사도 이걸 알고 공모자금 137억 중 <b>68억을 '매출확대 운전자금'</b>으로 배정했다. AI 서버(GPU 22억)보다 세 배 크다.</p>
+  <div class="take"><span class="lbl">함의</span><p>매드업의 성장은 자본이 든다. 순현금 286억은 취급고 5,000억 시대(2026년 회사 목표)의 운전자금 완충이지 '남는 돈'이 아니다. 주주환원율 40% 정책(배당+자사주)은 이 현금에서 나간다. 배당·자사주·운전자금·GPU가 같은 지갑을 본다는 점을 미팅에서 확인해야 한다 — 질문 D-1.</p></div>
+</section>
+
+<section id="s6">
+  <div class="sec-h"><span class="sec-n">06</span><h2>경쟁사 비교 — 대행사 밸류의 두 배</h2></div>
+  <p>매드업이 증권신고서에서 지목한 경쟁사는 퍼포먼스 대행 <b>에코마케팅·플레이디·와이즈버즈·이엠넷</b>, 솔루션 <b>아드리엘·몰로코·Appier</b>(비상장·해외)다. 공모가 산정에는 이들 대신 차이커뮤니케이션·와이즈버즈·레뷰코퍼레이션·링크제니시스·비아이매트릭스 5곳의 PER 평균 24.57배가 쓰였다.</p>
+  <div class="tbl-scroll"><table>
+    <caption>상장 대행사·인접군 비교 (시가총액 2026.09.08~09, 실적 연결 FY25 · 억원)</caption>
+    <thead><tr><th>회사</th><th class="num">시총</th><th class="num">매출</th><th class="num">영업이익</th><th class="num">OPM</th><th class="num">1H26 매출 YoY</th><th class="num">1H26 OP YoY</th><th class="num">PER</th><th class="num">PBR</th><th class="num">PSR</th></tr></thead>
+    <tbody>
+      <tr class="hl"><td>매드업</td><td class="num">1,649</td><td class="num">502</td><td class="num">85</td><td class="num">17.0%</td><td class="num pos">+50.8%</td><td class="num pos">+192.9%</td><td class="num">13.3</td><td class="num">2.98</td><td class="num">3.28</td></tr>
+      <tr><td>에코마케팅</td><td class="num">4,960</td><td class="num">4,488</td><td class="num">454</td><td class="num">10.1%</td><td class="num">+14.9%</td><td class="num">+41.3%</td><td class="num">25.2</td><td class="num">—</td><td class="num">1.11</td></tr>
+      <tr><td>나스미디어</td><td class="num">1,514</td><td class="num">1,179</td><td class="num">123</td><td class="num">10.4%</td><td class="num">+18.0%</td><td class="num">+121.3%</td><td class="num">10.2</td><td class="num">0.72</td><td class="num">1.28</td></tr>
+      <tr><td>인크로스</td><td class="num">616</td><td class="num">505</td><td class="num">115</td><td class="num">22.8%</td><td class="num">+8.0%</td><td class="num">+2.7%</td><td class="num">5.4</td><td class="num">0.46</td><td class="num">1.22</td></tr>
+      <tr><td>와이즈버즈 *</td><td class="num">470</td><td class="num">455</td><td class="num">76</td><td class="num">16.6%</td><td class="num">+25.2%</td><td class="num">+125.4%</td><td class="num">7.7</td><td class="num">0.80</td><td class="num">1.03</td></tr>
+      <tr><td>레뷰코퍼레이션 *</td><td class="num">624</td><td class="num">565</td><td class="num">89</td><td class="num">15.7%</td><td class="num">+9.1%</td><td class="num neg">−11.6%</td><td class="num">11.8</td><td class="num">1.21</td><td class="num">1.10</td></tr>
+      <tr><td>플레이디</td><td class="num">292</td><td class="num">402</td><td class="num">62</td><td class="num">15.5%</td><td class="num">+15.3%</td><td class="num neg">적자전환</td><td class="num">7.1</td><td class="num">0.33</td><td class="num">0.73</td></tr>
+      <tr><td>모비데이즈</td><td class="num">268</td><td class="num">444</td><td class="num">45</td><td class="num">10.2%</td><td class="num neg">−3.1%</td><td class="num neg">−13.3%</td><td class="num">16.4</td><td class="num">0.67</td><td class="num">0.60</td></tr>
+      <tr><td>이엠넷</td><td class="num">367</td><td class="num">323</td><td class="num">3</td><td class="num">0.8%</td><td class="num">+5.0%</td><td class="num pos">흑자전환</td><td class="num">17.7</td><td class="num">0.37</td><td class="num">1.14</td></tr>
+      <tr><td>차이커뮤니케이션 *</td><td class="num">280</td><td class="num">665</td><td class="num">44</td><td class="num">6.7%</td><td class="num">+101.1%</td><td class="num">+136.8%</td><td class="num">적자</td><td class="num">0.52</td><td class="num">0.42</td></tr>
+      <tr><td>제일기획</td><td class="num">21,743</td><td class="num">45,469</td><td class="num">3,369</td><td class="num">7.4%</td><td class="num neg">−3.1%</td><td class="num neg">−14.2%</td><td class="num">9.9</td><td class="num">1.19</td><td class="num">0.48</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tbl-note">* 공모가 산정 비교기업. 시총·PER·PBR은 네이버 금융(에코마케팅은 별도 시세 사이트), 실적은 DART 재무API 연결 기준. PER은 각 사이트의 최근 결산 기준이라 시점이 통일돼 있지 않다. 매출 인식 기준이 회사마다 달라(플레이디·이엠넷·제일기획은 총액 비중 큼) PSR과 OPM은 참고만. 에코마케팅은 안다르·데일리앤코 등 소비재 자회사가 매출 대부분이라 대행사 비교군으로는 부적합하다.</p>
+
+  <figure>
+    <div class="cap">Chart 5 · PER, 배</div>
+    <div class="ttl">공모가 산정 비교기업 5곳의 PER — 4월 3일과 지금</div>
+    <div class="legend" id="lg6"></div>
+    <div class="chart" id="c6"></div>
+    <figcaption>2026.04.03 기준 PER은 증권신고서, 현재는 네이버 금융(09.08). 차이커뮤니케이션은 1H26 순손실로 산출 불가, 비아이매트릭스는 이익 급감으로 51.8배. 5곳 평균은 24.6배에서 사라졌고 중앙값은 10.0배. 매드업 TTM 13.3배는 이 중앙값보다 33% 높다.</figcaption>
+  </figure>
+  <p>매드업이 국내 대행사보다 높은 배수를 받는 근거는 성장률이다. 2025년 취급고 +39.6%, 2023~25년 매출 CAGR 33% 대 국내 대행사 한 자릿수. SK증권은 그래서 국내 대행사가 아니라 Zeta Global·AppLovin(2027E PER 평균 20.5배)에 40% 할인한 12배를 2027년 EPS에 적용해 14,500원을 냈다. 이 논리의 약한 고리는 두 개다. AppLovin은 자체 광고 네트워크(매체)이고 매드업은 매체 위에서 일하는 대행사라는 점, 그리고 2027년 EPS 1,227원에는 법인세가 사실상 0으로 들어가 있다는 점이다.</p>
+</section>
+
+<section id="s7">
+  <div class="sec-h"><span class="sec-n">07</span><h2>해자 검증 — 찬성과 반증을 나란히</h2></div>
+  <div class="duo">
+    <div class="for"><h4>해자가 있다는 근거</h4><ul>
+      <li><b>데이터 독점성</b>: 3년 누적 취급고 8,762억, 5년치 라벨 데이터. 대행사는 광고주의 실집행 성과 데이터를 보지만 SaaS 업체는 못 본다. 앱 개발사로 출발해 대행으로 간 역순 이력이라 엔지니어 조직(83명)이 대행사치고 크다.</li>
+      <li><b>매체가 인정했다</b>: 2023년 메타 SPI(전략적 파트너십 투자) 아시아 최초 선정, 2025년 SPI Lite 한국 단독. 구글·메타·네이버·카카오·틱톡 프리미어 파트너 동시 보유.</li>
+      <li><b>인건비율이 실제로 떨어졌다</b>: FY24 77.1% → FY25 65.2%. 취급고/마케터 10.3억. 흑자 전환이 회계가 아니라 영업 레버리지에서 왔다.</li>
+      <li><b>고객 분산</b>: 10% 이상 고객 없음, 상위 5개사 17.9%(2025). 취급고 10억 이상 광고주 57곳. 삼성금융·올리브영·무신사·토스뱅크·두나무·네이버웹툰.</li>
+      <li><b>대형 광고주 전환비용</b>: 다년 운영 데이터가 대행사에 쌓여 있어 이전 시 데이터가 끊긴다(회사 주장).</li>
+    </ul></div>
+    <div class="against"><h4>반증</h4><ul>
+      <li><b>솔루션은 아직 5.9%</b>: 2년째 외판 중인 LEVER Xpert가 상반기 19억. 고객 수·ARR 미공시, 4Q25에 연간 매출의 69% 집중. 회사 가치의 대부분은 여전히 '사람이 하는 대행'에서 나온다.</li>
+      <li><b>매체가 직접 자동화한다</b>: 구글 Performance Max, 메타 Advantage+가 입찰·소재·타겟팅을 매체 안에서 자동화한다. 회사도 증권신고서에 "플랫폼 자체 자동화로 대행사 역할 축소" 위험을 적었다. 매체가 데이터 API를 좁히면 23개 매체 연동은 매체의 허락 위에 있는 자산이다.</li>
+      <li><b>수수료율이 내려간다</b>: 실현 수수료율 11.2% → 10.3% → 10.0%. 대형 광고주는 2~4개 대행사를 병행시켜 경쟁시킨다. 규모가 커질수록 협상력은 광고주 쪽이다.</li>
+      <li><b>특허 0건, R&amp;D 자산화 0</b>: 출원 4건 진행 중. 누적 R&amp;D 278억은 전액 비용 처리됐고 회계상 무형자산이 없다. 경쟁사(플레이디 R&amp;D 3.7%)와의 차이는 '투자를 더 했다'이지 '남이 못 한다'가 아니다.</li>
+      <li><b>고객 수의 급변</b>: 별도 고객 수 2023년 357 → 2024년 169 → 2025년 208. 반토막 났다 회복 중인데 사유가 공시에 없다.</li>
+      <li><b>상반기 인건비율 정체</b>: 직원 +17%에 광고수익 +30%인데 인건비도 +30%. 선투자라면 하반기에 증명돼야 한다.</li>
+    </ul></div>
+  </div>
+  <div class="take"><span class="lbl">판단</span><p>해자는 '데이터'가 아니라 <b>'대형 광고주 다수를 동시에 운영하며 얻는 규모의 경제'</b>에 가깝다. 이것은 실재하지만 얕다. 솔루션 매출이 두 자릿수 비중으로 올라오고 대행사 고객(경쟁사)이 계속 돈을 내는 것이 확인돼야 SaaS 배수를 논할 수 있다. 그 전까지는 성장률 높은 대행사다.</p></div>
+</section>
+
+<section id="s8">
+  <div class="sec-h"><span class="sec-n">08</span><h2>주가와 수급 — 10월 1일</h2></div>
+  <figure>
+    <div class="cap">Chart 6 · 일별 종가, 원</div>
+    <div class="ttl">상장 후 49거래일: 22,250 → 4,560 → 8,770</div>
+    <div class="legend" id="lg5"></div>
+    <div class="chart" id="c5"></div>
+    <figcaption>네이버 일별 시세. 7/1 시초가 22,250원(공모가 +178%), 종가 10,080원. 7/28 저점 4,560원은 공모가의 57%로, 풋백옵션 행사가(7,200원)보다 37% 낮았다. 8/1 1개월 락업 해제 이후 7,000원대 회복, 9/1 SK증권 커버리지 개시로 +17%. 베타 4.96(유진, 8월).</figcaption>
+  </figure>
+
+  <div class="tbl-scroll"><table>
+    <caption>보호예수 해제 스케줄 (상장일 2026.07.01 기준, 발행주식 18,807,400주)</caption>
+    <thead><tr><th>시점</th><th>날짜</th><th class="num">해제 주식</th><th class="num">누적 유통가능</th><th>누구의 물량</th></tr></thead>
+    <tbody>
+      <tr><td>상장일</td><td>2026.07.01</td><td class="num">5,786,500</td><td class="num">30.9%</td><td>공모주 200만 + FI 자발적 락업 없는 1/3 (마하 85만·KIF 55만 등)</td></tr>
+      <tr><td>1개월</td><td>2026.08.01</td><td class="num">2,563,800</td><td class="num">44.5%</td><td>FI 1/3 (마하 85만·KIF 55만 등) — 해제 완료</td></tr>
+      <tr class="hl"><td>3개월</td><td>2026.10.01</td><td class="num">1,898,200</td><td class="num">54.7%</td><td>FI 1/3 (마하 60만·KIF 38만 등) + 주관사 의무인수 6만. <b>풋백옵션 만료일과 같다</b></td></tr>
+      <tr><td>6개월</td><td>2027.01.01</td><td class="num">840,400</td><td class="num">59.2%</td><td>FI 잔여 + 제3자배정 소액주주 · 임원 스톡옵션 의무보유 해제</td></tr>
+      <tr><td>1년</td><td>2027.07.01</td><td class="num">421,900</td><td class="num">61.4%</td><td>기유진·송호중</td></tr>
+      <tr><td>2년</td><td>2028.07.01</td><td class="num">7,236,000</td><td class="num">100%</td><td>이주민·이동호 (3년 공동보유 확약은 2029.07까지)</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tbl-note">증권신고서 기타위험 '가'. 스톡옵션 미행사 237,200주(행사가 100원, 1.3%)는 별도. 7/2에 60,600주가 이미 행사됐다.</p>
+
+  <h3>FI는 팔고 있다</h3>
+  <div class="tbl-scroll"><table>
+    <caption>재무적 투자자 지분 변동 (대량보유 보고서)</caption>
+    <thead><tr><th>투자자</th><th class="num">상장 시</th><th>매도</th><th class="num">현재</th><th class="num">지분율</th></tr></thead>
+    <tbody>
+      <tr><td>크로스로드두나무 PEF 그룹 (경영참여 목적)</td><td class="num">2,327,908</td><td>7/1 207,080주 @17,222~19,478</td><td class="num">2,120,828</td><td class="num">11.31%</td></tr>
+      <tr><td>마하홀딩스 (프랙시스캐피탈)</td><td class="num">2,563,400</td><td>7/1 854,600주 @18,365</td><td class="num">1,708,800</td><td class="num">9.12%</td></tr>
+      <tr><td>스톤브릿지 (KIF·신한유니콘)</td><td class="num">1,968,236</td><td>7/1 586,236주 @18,025 · 8/7~13 595,681주 @9,141~10,389</td><td class="num">786,319</td><td class="num">4.18%</td></tr>
+      <tr><td>IMM Growth 1호</td><td class="num">579,400</td><td>5% 미만 → 보고 의무 없음</td><td class="num">≤579,400</td><td class="num">≤3.08%</td></tr>
+      <tr class="hl"><td>FI 합계</td><td class="num">7,438,944</td><td>2,243,597주 매도</td><td class="num">≤5,195,347</td><td class="num">≤27.6%</td></tr>
+    </tbody>
+  </table></div>
+  <p>세 FI 모두 상장 첫날 시초가 부근에서 락업 없는 물량을 전량 처분했다. 스톤브릿지는 1개월 해제분도 8월에 팔았다. 10/1에 풀리는 190만 주의 대부분이 같은 손에 있다. 한편 최대주주 측(이주민·이동호·임원)은 한 주도 팔지 않았고, 회사는 상장 7영업일 만에 자사주 15.6억(222,184주, 평균 7,041원)과 분기배당 54원(총 10.1억)을 결의했다. 9/29 임시주총에서 자사주 처분계획(임직원 보상 + 잔여 소각)을 승인받는다.</p>
+  <p class="small">시초가 22,250원의 매수자는 개인이었다(첫날 거래량 7,268만 주 = 발행주식의 3.9배). 외국인 지분율은 0.5~3.9% 사이를 오간다. 기관 수요예측 확약 27.4%였던 물량은 15일·1개월 확약이 대부분(373.5백만 주·80.3백만 주)이라 이미 풀렸다.</p>
+</section>
+
+<section id="s9">
+  <div class="sec-h"><span class="sec-n">09</span><h2>밸류에이션 — 무엇을 사고 있는가</h2></div>
+  <div class="tbl-scroll"><table>
+    <caption>EPS 기준 × 배수 = 주가 (원). 현재 주가 8,770원</caption>
+    <thead><tr><th>EPS 기준</th><th class="num">EPS</th><th class="num">8배</th><th class="num">10배</th><th class="num">12배</th><th class="num">현재 주가 내재 배수</th></tr></thead>
+    <tbody>
+      <tr><td>FY25 공모가 산정용 조정 EPS</td><td class="num">471</td><td class="num">3,768</td><td class="num">4,710</td><td class="num">5,652</td><td class="num">18.6</td></tr>
+      <tr><td>TTM 지배주주 (2H25+1H26)</td><td class="num">662</td><td class="num">5,292</td><td class="num">6,615</td><td class="num">7,939</td><td class="num">13.3</td></tr>
+      <tr><td>TTM, 법인세 22% 정상화</td><td class="num">516</td><td class="num">4,128</td><td class="num">5,160</td><td class="num">6,192</td><td class="num">17.0</td></tr>
+      <tr><td>2026E (SK증권 순이익 133억)</td><td class="num">707</td><td class="num">5,657</td><td class="num">7,072</td><td class="num">8,486</td><td class="num">12.4</td></tr>
+      <tr><td>2027E (유진 1,073 / SK 1,227)</td><td class="num">1,073~1,227</td><td class="num">8,584~9,816</td><td class="num">10,730~12,270</td><td class="num">12,876~14,724</td><td class="num">7.1~8.2</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tbl-note">EPS는 발행주식 18,807,400주 기준(자사주 미차감). SK증권 목표주가 14,500원 = 2027E EPS 1,227원 × 12배. 민트투자자문 수요예측 당시 밸류 10,500원 = 조정 EPS 468원 × 22.3배. 공모가 8,000원 = 471원 × 24.57배 × (1−30.9%).</p>
+  <p>현재가는 국내 대행사 중앙값(PER 10배)으로는 2027년 이익을 이미 절반 넘게 당겨 온 가격이고, SK증권의 '글로벌 AI 마케팅 할인 배수' 12배로는 2026년 이익에 딱 맞는 가격이다. 어느 쪽이든 <b>2026년 하반기 영업이익 80억 이상, 2027년 200억 이상</b>이 나와야 지금 가격이 싸다. 2025년 하반기 71억, 상반기 41억이 출발점이다.</p>
+  <div class="tbl-scroll"><table>
+    <caption>증권사 추정치 (연결, 억원)</caption>
+    <thead><tr><th></th><th class="num">2025A</th><th class="num">2026E 유진</th><th class="num">2026E SK</th><th class="num">2027E 유진</th><th class="num">2027E SK</th></tr></thead>
+    <tbody>
+      <tr><td>매출</td><td class="num">502</td><td class="num">660</td><td class="num">706</td><td class="num">873</td><td class="num">1,013</td></tr>
+      <tr><td>영업이익</td><td class="num">85</td><td class="num">120</td><td class="num">125</td><td class="num">203</td><td class="num">221</td></tr>
+      <tr><td>OPM</td><td class="num">17.0%</td><td class="num">18.2%</td><td class="num">17.7%</td><td class="num">23.3%</td><td class="num">21.9%</td></tr>
+      <tr><td>순이익</td><td class="num">78</td><td class="num">124</td><td class="num">133</td><td class="num">204</td><td class="num">229</td></tr>
+      <tr><td>순이익 &gt; 영업이익?</td><td class="num">—</td><td class="num">예</td><td class="num">예</td><td class="num">예</td><td class="num">예</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tbl-note">두 증권사 모두 2026~27년 순이익이 영업이익보다 크다 = 법인세 0 가정. 회사 가이던스(다인·민트 인용)는 2026년 매출 678억·영업이익 120억·취급고 5,000억. SK증권 분기 추정: 3Q26 영업이익 10억(OPM 6.1%), 4Q26 73억(33.9%).</p>
+</section>
+
+<section id="s10">
+  <div class="sec-h"><span class="sec-n">10</span><h2>리스크</h2></div>
+  <div class="risk-list">
+    <div class="risk"><div class="rh"><span class="tag high">High</span><span class="rt">10/1 오버행 — FI 3개월 락업 190만 주 + 풋백옵션 만료</span></div><p>FI는 지금까지 풀리는 족족 팔았다. 잔여 FI 지분 ≤27.6%. 풋백옵션(7,200원)이 사라지면 개인 공모주 보유자의 하방 안전판도 없어진다. 자사주 매입 여력은 배당가능이익 228억 한도 내이나 실제 결의는 15.6억이었다.</p></div>
+    <div class="risk"><div class="rh"><span class="tag high">High</span><span class="rt">4분기 집중 — 연간 이익의 60%가 한 분기에</span></div><p>매체 인센티브 인식과 광고주 연말 집행이 4분기에 몰린다. 인센티브 조건은 매체가 정하고 "변화폭이 크다". 4분기 한 번의 실망이 연간 컨센서스를 무너뜨린다.</p></div>
+    <div class="risk"><div class="rh"><span class="tag high">High</span><span class="rt">인건비 선투자가 매출로 안 이어지는 경우</span></div><p>2026년 563명 계획. 온보딩한 대형 광고주(올리브영 글로벌·네이버웹툰)의 취급고가 계획대로 안 나오면 인건비율이 2024년 수준(77%)으로 되돌아가고 OPM 두 자릿수가 사라진다.</p></div>
+    <div class="risk"><div class="rh"><span class="tag mid">Mid</span><span class="rt">매체의 자체 자동화(PMax·Advantage+)와 API 정책</span></div><p>매드업의 자동화 가치는 매체 데이터 접근 위에 있다. 매체가 대행사 없이 광고주를 직접 자동화하거나 API를 좁히면 대행 수수료와 솔루션 가치가 동시에 눌린다.</p></div>
+    <div class="risk"><div class="rh"><span class="tag mid">Mid</span><span class="rt">운전자금 — 취급고 성장 = 현금 유출</span></div><p>매출채권 632억, 상반기 영업현금흐름 −57억. 대손충당금 0.5%. 광고주 한 곳의 부실이 순액 매출이 아니라 총액 채권으로 온다(고객 A 매출 10억 = 채권 100억 규모).</p></div>
+    <div class="risk"><div class="rh"><span class="tag mid">Mid</span><span class="rt">순이익의 세금 착시</span></div><p>미인식 이연법인세자산 약 90억 = 세전이익 약 410억까지 무세금. 2027~28년경 소진되면 순이익 성장률이 영업이익 성장률보다 20%p 이상 낮아지는 해가 온다.</p></div>
+    <div class="risk"><div class="rh"><span class="tag mid">Mid</span><span class="rt">회계 신뢰 — FY23 재무제표 재작성, 내부회계 미구축</span></div><p>2023년 재무제표가 스톡옵션·장기종업원급여·서비스매출 오류로 재작성됐다(FY24 감사보고서 강조사항). 감사인 3년간 3곳 교체(세일원→삼정 지정→대주). 내부회계관리제도는 2025.09 삼일과 구축 중.</p></div>
+    <div class="risk"><div class="rh"><span class="tag low">Low</span><span class="rt">브랜드빌드업 자회사</span></div><p>주스·바디케어가 매출의 25%를 만들며 성장률을 부풀린다. 이익 기여 1.4%. 트렌데코는 청산 중(투자 3.6억·대여 1.8억 전액 손실), 1950은 적자. 광고 회사가 왜 소비재를 하는지 설명이 필요하다.</p></div>
+    <div class="risk"><div class="rh"><span class="tag low">Low</span><span class="rt">미국 — 2027년 하반기 전 매출 없음</span></div><p>MADUP Global 상반기 매출 0, 손실 0.2억. 공동창업자 이동호 대표 현지 상주. 공모자금 8.5억 배정. 민트투자자문은 의미 있는 매출 시점을 2027년 하반기로 봤다. 국내 고객 글로벌 캠페인 321억(2025)이 씨앗.</p></div>
+  </div>
+</section>
+
+<section id="s11">
+  <div class="sec-h"><span class="sec-n">11</span><h2>기업미팅 질문 리스트</h2></div>
+  <p class="lede">공시와 리포트를 다 읽고도 남는 빈칸만 모았다. 각 질문 아래에 '어떤 답이 나오면 어떻게 읽을지'를 적어 뒀다. 순서는 중요도순이며, 시간이 20분이면 A·B·D 그룹만 한다.</p>
+
+  <div class="qgroup">
+    <h3>A. 매출 구조와 회계 — 숫자를 믿기 위한 질문</h3>
+    <div class="why">이 회사의 손익은 매체 인센티브·수수료율·주스 매출 세 가지 변수로 크게 흔들린다. 셋 다 공시에 크기가 없다.</div>
+    <div class="qs">
+      <div class="q"><div class="qn">A-1</div><div><div class="qt">증권신고서의 순액 수수료율 "11~15%"와 실현 수수료율 10.0%(FY25 마케팅 매출 382억 / 취급고 3,825억)의 차이는 어디서 오나? 대형 광고주 할인인가, 매체가 주는 수수료가 광고주에게 일부 환급되는 구조인가?</div><div class="qw"><b>할인이라면</b> 취급고가 커질수록 수수료율은 더 떨어진다. <b>환급 구조라면</b> 취급고 성장이 매출로 1:1 전환되지 않는 이유가 설명된다. 어느 쪽이든 2027년 매출 1,013억(SK)에 깔린 수수료율 가정을 확인할 것.</div></div></div>
+      <div class="q"><div class="qn">A-2</div><div><div class="qt">매체 인센티브(연간 집행 규모 달성 보너스)가 2025년 영업이익 85억 중 얼마인가? 분기별로 어떻게 인식되고, 2026년 매체별 목표 구간은 어디까지 확보됐나?</div><div class="qw">3월 매출 55억 vs 1·2월 31억, 4Q25 매출 172억 vs 3Q 118억이 이 항목 때문이다. <b>인센티브가 영업이익의 30% 이상</b>이면 이익의 주인은 매드업이 아니라 매체의 인센티브 정책이다. 4Q26 영업이익 73억(SK)이 어떤 인센티브 가정 위에 있는지 물을 것.</div></div></div>
+      <div class="q"><div class="qn">A-3</div><div><div class="qt">브랜드빌드업(Latib 주스·1950)이 상반기 매출 증가분의 절반을 차지했다. 이 부문의 연간 계획, 이익 목표, 그리고 매각·분리 계획은? 광고 회사가 소비재를 계속 들고 갈 이유는?</div><div class="qw"><b>"AI 마케팅 실증 쇼케이스"</b>라는 답이면 매출 기여는 앞으로도 저마진일 것이고, 성장률은 이 부문을 빼고 봐야 한다. <b>분리·매각 검토</b> 답이면 헤드라인 성장률이 30%대로 정직해지는 대신 밸류에이션이 깨끗해진다.</div></div></div>
+      <div class="q"><div class="qn">A-4</div><div><div class="qt">미인식 이연법인세자산 약 90억(더벨 보도)의 정확한 잔액과 소진 예상 시점은? 2027년 순이익 추정에 법인세를 얼마로 넣어야 하나?</div><div class="qw">증권사 두 곳 모두 순이익 &gt; 영업이익으로 추정했다. 소진 시점이 <b>2027년 이내</b>면 2027E EPS 1,227원은 950원대로 내려간다.</div></div></div>
+      <div class="q"><div class="qn">A-5</div><div><div class="qt">별도 기준 고객 수가 2023년 357 → 2024년 169 → 2025년 208 → 1Q26 244로 움직인 이유는? 2024년에 어떤 고객군이 빠졌나?</div><div class="qw"><b>소형 고객 정리</b>라면 의도된 선택(월 2억 이상 대형 집중)이고 LEVER Xpert가 그 빈자리를 메우는 구도가 맞는지 이어서 물을 것. <b>이탈</b>이라면 2024년 적자 원인이 솔루션 투자만이 아니었다는 뜻.</div></div></div>
+    </div>
+  </div>
+
+  <div class="qgroup">
+    <h3>B. LEVER Xpert — SaaS인가, 대행의 부산물인가</h3>
+    <div class="why">회사 가치에 'AI 프리미엄'을 붙일지 결정하는 그룹. 유료 고객 수와 ARR이 공시에 없다는 것 자체가 첫 번째 답이다.</div>
+    <div class="qs">
+      <div class="q"><div class="qn">B-1</div><div><div class="qt">유료 고객 수, 월 구독료 분포(59만~389만원 구간별), ARR, 월 이탈률을 숫자로 줄 수 있나? 2025년 솔루션 매출 49억 중 34억이 4분기에 잡힌 이유는?</div><div class="qw"><b>ARR을 못 주면</b> 아직 SaaS 지표로 관리되지 않는 사업이다. 4분기 집중이 <b>매체 운영 인센티브(1~5%)</b> 때문이면 솔루션 매출의 상당 부분도 구독이 아니라 매체 리베이트다.</div></div></div>
+      <div class="q"><div class="qn">B-2</div><div><div class="qt">솔루션 부문 영업이익률 16.3%는 개발 인력 83명의 인건비와 R&amp;D 25억을 전부 부담한 숫자인가? 마케팅 부문과의 원가 배분 기준은?</div><div class="qw">부문 OPM이 마케팅(16.7%)과 거의 같다는 것이 이상하다. <b>R&amp;D가 본사 공통비로 빠져 있다면</b> 솔루션은 아직 적자이고, 회사는 "솔루션 부문 BEP 돌파"를 2027년 성장 요인으로 꼽았다(SK).</div></div></div>
+      <div class="q"><div class="qn">B-3</div><div><div class="qt">2025년까지의 고객은 다른 대행사였다. 2026년 광고주 직접 영업 전환 후 대행사 고객은 남아 있나, 아니면 경쟁 관계가 돼 이탈하나? 직접 영업으로 확보한 광고주 수는?</div><div class="qw">대행사에 도구를 팔면서 그 대행사의 광고주를 직접 영업하는 것은 채널 충돌이다. <b>대행사 고객 잔존율</b>이 답의 핵심.</div></div></div>
+      <div class="q"><div class="qn">B-4</div><div><div class="qt">구글 Performance Max·메타 Advantage+ 같은 매체 자체 자동화와 LEVER Xpert의 차별점은 정확히 무엇인가? 매체가 대행사 API 접근을 제한한 사례가 있었나?</div><div class="qw"><b>"크로스 매체 통합"</b>이 답이면 매체가 못 하는 영역이 맞다. <b>"소재·입찰 최적화"</b>가 답이면 매체와 정면 경쟁이다. API 제한 사례 유무는 23개 매체 연동 자산의 내구성을 말해 준다.</div></div></div>
+      <div class="q"><div class="qn">B-5</div><div><div class="qt">메타 SPI 투자의 금액·조건·기간은? 메타 지분이나 독점 조항이 있나? 2025년 SPI Lite 한국 단독 선정의 실질 혜택은?</div><div class="qw">모든 리포트가 "메타가 인정했다"를 근거로 쓰는데 금액은 어디에도 없다. <b>과제비 수천만 원 수준</b>이면 마케팅 문구이고, <b>데이터 접근 특권</b>이 따라오면 진짜 해자다.</div></div></div>
+      <div class="q"><div class="qn">B-6</div><div><div class="qt">토큰 사용량 과금 전환 시점과 LLM API 원가(현재 외부 LLM 비율)는? 공모자금 GPU 22억 투자로 자체 모델 비중이 얼마나 오르나?</div><div class="qw">매출원가 없는 94% GPM 구조에 LLM 원가가 들어오기 시작하는 시점. SK증권이 2026년 매출원가를 30억→110억으로 급증시켜 놓았는데 설명이 없다.</div></div></div>
+    </div>
+  </div>
+
+  <div class="qgroup">
+    <h3>C. 인력과 마진 — 하반기 숫자를 미리 보는 질문</h3>
+    <div class="why">2026년 영업이익 120~125억은 하반기 80억 이상을 전제한다. 그 전제는 인건비 한 줄로 검증된다.</div>
+    <div class="qs">
+      <div class="q"><div class="qn">C-1</div><div><div class="qt">연말 목표 인원 563명(SK)이 맞나? 3분기 채용 계획과 3분기 성과급·상장 기념 포상 비용의 규모는?</div><div class="qw">SK는 3Q OPM 6.1%를 예상한다. <b>포상비가 10억 이상</b>이면 3Q 영업이익은 한 자릿수. 미리 알고 있으면 3Q 실적에 놀라지 않는다.</div></div></div>
+      <div class="q"><div class="qn">C-2</div><div><div class="qt">마케터 1인당 취급고(2025년 10.3억)의 2026·2027년 목표는? AMS(AI Managed Service)가 붙은 마케터와 아닌 마케터의 1인당 취급고 차이가 실측으로 있나?</div><div class="qw">이것이 'AI가 숫자로 보이는가'의 직접 지표다. <b>차이를 못 대면</b> 자동화율 88%는 내부 업무시간 이야기이지 이익 이야기가 아니다.</div></div></div>
+      <div class="q"><div class="qn">C-3</div><div><div class="qt">상반기 온보딩한 대형 광고주(올리브영 글로벌·네이버웹툰 등)의 취급고 램프업 일정은? 계약 기간과 예산 규모의 계약상 확약 여부는?</div><div class="qw">대형 광고주는 2~4개 대행사를 병행한다. <b>예산 배분이 성과 연동</b>이면 램프업이 늦어질 수 있고, 인건비 선투자 회수가 2027년으로 밀린다.</div></div></div>
+      <div class="q"><div class="qn">C-4</div><div><div class="qt">2026년 영업이익 120억 가이던스는 유지되나? 하반기 분기별 형태(3Q 약, 4Q 강)의 회사 자체 그림은?</div><div class="qw">SK 4Q26 영업이익 73억(OPM 34%)은 2025년 4분기보다도 공격적이다. 회사 스스로 4Q에 얼마를 보는지 확인.</div></div></div>
+    </div>
+  </div>
+
+  <div class="qgroup">
+    <h3>D. 현금·운전자금·주주환원</h3>
+    <div class="why">순현금 286억이 동시에 네 가지 용도(운전자금·GPU·배당·자사주)를 본다.</div>
+    <div class="qs">
+      <div class="q"><div class="qn">D-1</div><div><div class="qt">취급고 5,000억(2026 목표)·6,600억(2027 SK)에서 필요한 운전자금은 얼마인가? 매체 후불 여신 한도와 선충전 비중, 광고주별 여신 한도 정책은?</div><div class="qw">상반기 매출채권 +189억. <b>연 200억 이상 운전자금이 는다면</b> 공모자금 155억은 1년 안에 운전자금으로 소진되고 주주환원 40%는 차입으로 하는 셈이다.</div></div></div>
+      <div class="q"><div class="qn">D-2</div><div><div class="qt">대손 정책: 광고주 부실 시 매체비 총액 채권을 매드업이 떠안나? 최근 3년 실제 대손 사례와 금액은? 서울보증 지급보증 153억은 무엇을 보증하나?</div><div class="qw">고객 A(매출 19억)의 채권은 약 190억. 대손충당금 3억은 채권의 0.5%. <b>한 건의 부실이 연간 이익을 지울 수 있는 구조</b>인지 확인.</div></div></div>
+      <div class="q"><div class="qn">D-3</div><div><div class="qt">주주환원율 40%(연결 지배순이익 기준)는 2026년 결산부터 매년인가? 분기배당 54원은 지속되나? 자사주 222,184주 중 소각 규모는?</div><div class="qw">상반기 기준 환원율은 이미 54%(배당 10.1억+자사주 15.6억 / 순이익 47.7억). <b>운전자금이 커지는 해에도 40%를 지키는지</b>가 정책의 진정성.</div></div></div>
+      <div class="q"><div class="qn">D-4</div><div><div class="qt">단기차입 64억(기업은행, 34억은 7/31 만기)은 상환했나, 연장했나? 공모자금 155억이 있는데 차입을 유지하는 이유는?</div><div class="qw">기보 보증부 저리 차입 유지는 흔하다. 다만 <b>"운전자금 때문"</b>이라는 답이면 D-1과 연결해 규모를 다시 물을 것.</div></div></div>
+    </div>
+  </div>
+
+  <div class="qgroup">
+    <h3>E. 지분과 오버행</h3>
+    <div class="why">10월 1일 이전에 반드시 확인할 것.</div>
+    <div class="qs">
+      <div class="q"><div class="qn">E-1</div><div><div class="qt">10/1 해제되는 FI 락업 물량(마하홀딩스 약 60만·KIF 약 38만 등 190만 주)에 대해 FI와 매도 방식(블록딜·장내) 협의가 있나? 회사가 자사주로 받을 계획은?</div><div class="qw">FI는 7/1과 8월에 풀리는 대로 팔았다. <b>블록딜 협의</b>가 있으면 충격은 하루, <b>장내 분할 매도</b>면 10월 내내 눌린다. 자사주 취득 한도(배당가능이익 228억) 대비 15.6억은 작다.</div></div></div>
+      <div class="q"><div class="qn">E-2</div><div><div class="qt">크로스로드두나무 PEF(11.3%)가 보유 목적을 '경영권 영향'으로 신고한 이유는? 이사 지명권·거부권이 남아 있나(마하홀딩스 등의 이사선임권 계약은 상장으로 종료됐다고 공시)?</div><div class="qw">경영참여형 신고는 <b>단순 세컨더리 매도 목적이 아니라는 신호</b>일 수 있다. 두나무(업비트) 계열이면 전략적 관계(고객·데이터)가 있는지도 물을 것.</div></div></div>
+      <div class="q"><div class="qn">E-3</div><div><div class="qt">스톡옵션 잔여 237,200주(행사가 100원) 외 추가 부여 계획은? 이사 보수 한도를 10억→30억으로 올린 이유는?</div><div class="qw">희석 1.3%는 작지만 행사가 100원은 사실상 무상. <b>상장 후 대규모 신규 부여</b>가 있으면 인건비율 개선분이 주식보상비용으로 되돌아온다.</div></div></div>
+    </div>
+  </div>
+
+  <div class="qgroup">
+    <h3>F. 회계·거버넌스</h3>
+    <div class="qs">
+      <div class="q"><div class="qn">F-1</div><div><div class="qt">2023년 재무제표 재작성(스톡옵션·장기종업원급여·서비스매출 오류)의 경위와 재작성 전후 영업이익 차이는? 감사인이 3년간 3곳(세일원→삼정→대주) 바뀐 이유는?</div><div class="qw">삼정은 지정감사였고 대주는 자유선임이다. <b>대주회계법인 선임 사유</b>와 내부회계관리제도 구축 완료 시점(2025.09 삼일과 착수)을 확인.</div></div></div>
+      <div class="q"><div class="qn">F-2</div><div><div class="qt">기타비상무이사 3인(FI 지명)이 상장 직전 사임한 뒤 이사회는 사내 3·사외 2다. 사외이사 추가 선임 계획과 감사위원회 설치 계획은?</div><div class="qw">이익미실현 특례 상장사에 대한 거래소 관리종목 요건(상장 후 5년 매출·이익 기준)도 함께 확인.</div></div></div>
+      <div class="q"><div class="qn">F-3</div><div><div class="qt">임직원 주택자금 대여 21억(18명, 사내이사 2억 포함)의 정책 근거와 상환 조건은?</div><div class="qw">금액은 작지만 상장사 기준 이해관계자 거래로 보이는 항목. 정책 문서 존재 여부로 거버넌스 성숙도를 가늠.</div></div></div>
+    </div>
+  </div>
+
+  <div class="qgroup">
+    <h3>G. 미국과 신사업</h3>
+    <div class="qs">
+      <div class="q"><div class="qn">G-1</div><div><div class="qt">MADUP Global의 현재 파이프라인(올리브영·메디힐·조선미녀 미국 캠페인)의 취급고와 첫 매출 인식 시점은? 2026년 예상 손실 규모(공시상 매몰비용 3억)는 유지되나?</div><div class="qw"><b>2027년 하반기</b>(민트)가 시장 기대치. 그보다 빠르면 서프라이즈, 늦으면 공동창업자가 뉴욕에 상주하는 기회비용이 문제.</div></div></div>
+      <div class="q"><div class="qn">G-2</div><div><div class="qt">아마존·틱톡샵 운영대행 테스트의 결과와 확대 여부는? 국내 고객 글로벌 캠페인 321억(2025)의 2026년 목표는?</div><div class="qw">글로벌 취급고가 <b>500억을 넘으면</b> 미국 법인 없이도 해외 매출이 만들어지는 구조. 법인 설립의 필요성을 역으로 확인.</div></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="s12">
+  <div class="sec-h"><span class="sec-n">12</span><h2>투자 전 확인할 것</h2></div>
+  <div class="check">
+    <div><span class="box"></span><span><b>3분기 보고서(11월)</b>의 직원 수와 인건비/광고수익 비율 — 61.8%에서 내려가는가. 이 한 줄이 인건비 레버리지 논리의 생사다.</span></div>
+    <div><span class="box"></span><span><b>10/1 전후 대량보유 보고서</b> — 마하홀딩스·크로스로드두나무·스톤브릿지의 매도 여부와 단가. 블록딜이면 상대방이 누구인지.</span></div>
+    <div><span class="box"></span><span><b>3Q26 영업이익</b>이 SK 추정 10억(OPM 6.1%) 근처인지. 여기서 크게 벗어나면 4Q 추정 73억의 신뢰도가 같이 움직인다.</span></div>
+    <div><span class="box"></span><span><b>브랜드빌드업 제외 매출 성장률</b>을 매 분기 직접 계산할 것(상반기 +30.0%). 헤드라인 성장률은 주스가 만든다.</span></div>
+    <div><span class="box"></span><span><b>솔루션 매출의 4분기 집중 재현 여부</b> — 4Q26에도 연간의 60~70%가 몰리면 구독 매출이 아니라 매체 인센티브다.</span></div>
+    <div><span class="box"></span><span><b>9/29 임시주총</b> 자사주 처분계획 — 소각 규모와 임직원 보상 배정 비율.</span></div>
+    <div><span class="box"></span><span><b>매출채권 잔액과 영업현금흐름</b> — 3분기 누적 CFO가 여전히 음수인지. 순이익과 현금의 괴리가 커지면 운전자금 차입이 뒤따른다.</span></div>
+    <div><span class="box"></span><span><b>매체 인센티브 관련 공시·언급</b> — 네이버·카카오·메타의 대행사 인센티브 정책 변경 뉴스는 이 회사의 4분기와 직결된다.</span></div>
+  </div>
+</section>
+
+<section id="s13">
+  <div class="sec-h"><span class="sec-n">13</span><h2>출처와 고지</h2></div>
+  <div class="srcgrid">
+    <div><div class="n">22</div><div class="l">DART 공시 원문 — 증권신고서(7회 정정)·투자설명서·반기보고서·잠정실적·자사주·배당·대량보유·임원소유·임시주총</div></div>
+    <div><div class="n">5</div><div class="l">증권사·자문사 리포트 — SK증권(9/1 커버리지 개시), 유진투자증권, 삼성증권, 다인자산운용, 민트투자자문</div></div>
+    <div><div class="n">3</div><div class="l">IPO 시장 리포트 — 유진 Korea IPO Market 7·8월호, 흥국증권 2026 IPO 중간점검</div></div>
+    <div><div class="n">6</div><div class="l">기사 — 블로터(2건), 더벨, 이데일리, 머니투데이, 아주경제</div></div>
+    <div><div class="n">11</div><div class="l">비교기업 시세·재무 — 네이버 금융 API, DART 재무API(FY24·25·1H26 연결)</div></div>
+    <div><div class="n">49</div><div class="l">일별 시세 — 2026.07.01~09.09, 네이버 금융</div></div>
+  </div>
+  <h3>수치 검증</h3>
+  <p class="small">연결 손익 5개 기간(FY23·24·25·1H25·1H26)과 분기 4개(1Q25·2Q25·1Q26·2Q26)에서 매출총이익−판관비=영업이익이 ±0.01억 내 일치. 부문 매출 합계가 연결 매출과 5개 기간 모두 일치. 잠정실적(7/29)과 반기보고서 확정치 일치. 리포트 간 불일치는 본문에 표기했다: 수수료율(SK 10% vs 증권신고서 11~15%), 매체 연동 수(12개 vs 23개), 시초가(유진 본문 22,250 vs 비교표 22,500 — 22,500은 첫날 고가), 발행주식수(18,746,800 → 7/2 스톡옵션 행사 후 18,807,400). PER·PBR·PSR은 2026.09.09 09:48 주가 8,770원과 발행주식 18,807,400주로 직접 계산했으며 네이버가 표시하는 PER 14.3배(FY25 EPS 614원, 무상증자 전 가중평균 주식수)와 다르다.</p>
+  <p class="small">이 문서는 공개 자료를 정리한 개인 분석이며 투자 권유가 아니다. 모든 수치는 작성 시점 공시·시세 기준이고 이후 정정될 수 있다. 취급고·조정 순이익·인건비율·정상화 PER 등 공시 원문에 없는 계산값은 각 표 아래 산식을 적었다.</p>
+</section>
+
+<footer>매드업(0039P0) 기업리포트 · 작성 2026-09-09 · 주가 8,770원(09:48 장중) 기준 · 다음 확인 시점: 9/29 임시주총 → 10/1 락업 해제·풋백옵션 만료 → 11월 3분기 보고서</footer>
+</div>
+
+<div class="tip" id="tip" role="tooltip"></div>
+
+<script>
+(function(){
+"use strict";
+const CS = getComputedStyle(document.documentElement);
+function tok(n){ return CS.getPropertyValue(n).trim(); }
+function T(){ return {
+  ink: tok('--ink'), ink2: tok('--ink2'), muted: tok('--muted'),
+  line: tok('--line'), line2: tok('--line2'), surface: tok('--surface'),
+  s:[tok('--s1'),tok('--s2'),tok('--s3'),tok('--s4')],
+  acc: tok('--accent-mark'), neg: tok('--neg'), pos: tok('--pos')
+};}
+const NS='http://www.w3.org/2000/svg';
+function el(t,a){ const e=document.createElementNS(NS,t); for(const k in a) e.setAttribute(k,a[k]); return e; }
+function txt(x,y,s,o){ o=o||{}; const t=el('text',{x:x,y:y,fill:o.fill||T().muted,
+  'font-size':o.fs||11, 'text-anchor':o.anchor||'middle',
+  'font-family':o.ff||'"IBM Plex Mono",monospace', 'font-weight':o.fw||400});
+  t.textContent=s; return t; }
+function fmt(n){ return Math.round(n).toLocaleString('ko-KR'); }
+const tip=document.getElementById('tip');
+function showTip(ev, html){
+  tip.innerHTML=html; tip.style.display='block';
+  const r=tip.getBoundingClientRect();
+  let x=ev.clientX+14, y=ev.clientY-r.height-12;
+  if(x+r.width>window.innerWidth-8) x=ev.clientX-r.width-14;
+  if(x<8) x=8;
+  if(y<8) y=ev.clientY+18;
+  if(y+r.height>window.innerHeight-8) y=window.innerHeight-r.height-8;
+  tip.style.left=x+'px'; tip.style.top=y+'px';
+}
+function hideTip(){ tip.style.display='none'; }
+window.addEventListener('scroll', hideTip, {passive:true});
+document.addEventListener('pointerdown', function(e){ if(!e.target.closest('.chart')) hideTip(); });
+function row(k,v){ return '<div class="tr"><span>'+k+'</span><b>'+v+'</b></div>'; }
+function bindTap(node, html){
+  node.style.cursor='pointer';
+  node.addEventListener('pointerdown', function(ev){ showTip(ev, html); });
+  node.addEventListener('pointerenter', function(ev){ if(ev.pointerType==='mouse') showTip(ev, html); });
+  node.addEventListener('pointerleave', function(ev){ if(ev.pointerType==='mouse') hideTip(); });
+}
+function legend(id, items){
+  const box=document.getElementById(id); if(!box) return;
+  box.innerHTML = items.map(function(it){ return '<span><i style="background:'+it.c+'"></i>'+it.n+'</span>'; }).join('');
+}
+
+/* ---------- data ---------- */
+const ANNUAL=[
+  {y:'2023', m:246.8, s:0, b:34.0, rev:280.8, opm:2.4},
+  {y:'2024', m:282.6, s:17.4, b:49.9, rev:349.9, opm:-1.2},
+  {y:'2025', m:381.9, s:49.4, b:71.0, rev:502.3, opm:17.0},
+  {y:'1H25', m:175.6, s:9.6, b:27.1, rev:212.3, opm:6.6, half:true},
+  {y:'1H26', m:221.9, s:18.9, b:79.4, rev:320.2, opm:12.9, half:true}
+];
+const QTR=[
+  {q:'25.1Q',rev:97.2,opm:-2.7,op:-2.7},{q:'2Q',rev:115.1,opm:14.5,op:16.7},
+  {q:'3Q',rev:118.1,opm:24.6,op:null,half:'2H25 합계 71.4'},{q:'4Q',rev:171.9,opm:24.6,op:null,half:'2H25 합계 71.4'},
+  {q:'26.1Q',rev:137.6,opm:2.4,op:3.3,y26:true},{q:'2Q',rev:182.6,opm:20.8,op:37.9,y26:true}
+];
+const GROSS=[
+  {k:'2023', gb:2197, rev:246.8, ar:null},
+  {k:'2024', gb:2740, rev:282.6, ar:null},
+  {k:'2025', gb:3825, rev:381.9, ar:443.2},
+  {k:'1H26', gb:null, rev:221.9, ar:632.4, note:'취급고 미공시(1Q 1,023억)'}
+];
+const LABOR=[
+  {k:'2023', r:74.8, lab:184.6, ad:246.8},
+  {k:'2024', r:77.1, lab:231.4, ad:300.0},
+  {k:'2025', r:65.2, lab:281.1, ad:431.3},
+  {k:'1H25', r:61.9, lab:114.7, ad:185.2, half:true},
+  {k:'1H26', r:61.8, lab:148.8, ad:240.8, half:true}
+];
+const COMPS=[
+  {n:'차이커뮤니케이션', then:35.97, now:null},
+  {n:'와이즈버즈', then:26.34, now:7.66},
+  {n:'비아이매트릭스', then:23.42, now:51.79},
+  {n:'링크제니시스', then:18.79, now:8.19},
+  {n:'레뷰코퍼레이션', then:18.34, now:11.75},
+  {n:'매드업 (TTM)', then:null, now:13.3, me:true}
+];
+const PRICE=[["20260701",10080],["20260702",8000],["20260703",7770],["20260706",7030],["20260707",7450],["20260708",7600],["20260709",8230],["20260710",8020],["20260713",6480],["20260714",6030],["20260715",6040],["20260716",5050],["20260720",5400],["20260721",5700],["20260722",5830],["20260723",5570],["20260724",4955],["20260727",5040],["20260728",4560],["20260729",5920],["20260730",6600],["20260731",6500],["20260803",7350],["20260804",7320],["20260805",7650],["20260806",9940],["20260807",9550],["20260810",9770],["20260811",9000],["20260812",8620],["20260813",9250],["20260814",8160],["20260818",7560],["20260819",8140],["20260820",8590],["20260821",7780],["20260824",7250],["20260825",7070],["20260826",6950],["20260827",6870],["20260828",6830],["20260831",7600],["20260901",9180],["20260902",9260],["20260903",7830],["20260904",8180],["20260907",9340],["20260908",9130],["20260909",8770]];
+const NOW=8770;
+
+/* ---------- C1: annual stacked + OPM ---------- */
+function drawC1(host, W){
+  const t=T(), narrow=W<560;
+  const H=narrow?270:310, ml=narrow?38:46, mr=narrow?36:44, mt=26, mb=40;
+  const iw=W-ml-mr, ih=H-mt-mb, max=550;
+  const svg=el('svg',{viewBox:'0 0 '+W+' '+H,role:'img','aria-label':'연간 매출 구성과 영업이익률'});
+  [0,100,200,300,400,500].forEach(function(v){
+    const y=mt+ih-(v/max)*ih;
+    svg.appendChild(el('line',{x1:ml,x2:W-mr,y1:y,y2:y,stroke:t.line,'stroke-width':1}));
+    svg.appendChild(txt(ml-6,y+4,String(v),{anchor:'end',fs:narrow?9.5:10.5}));
+  });
+  const n=ANNUAL.length, slot=iw/n, bw=Math.min(narrow?38:56, slot*0.58);
+  const cols=[t.s[0],t.s[1],t.s[2]];
+  const opmPts=[];
+  ANNUAL.forEach(function(d,i){
+    const x=ml+slot*i+slot/2-bw/2; let y=mt+ih;
+    [['m',d.m,'마케팅'],['s',d.s,'솔루션'],['b',d.b,'브랜드빌드업']].forEach(function(p,j){
+      const h=(p[1]/max)*ih; y-=h;
+      const r=el('rect',{x:x,y:y,width:bw,height:h,fill:cols[j]});
+      if(d.half) r.setAttribute('opacity','0.72');
+      bindTap(r,'<div class="th">'+d.y+' · '+p[2]+'</div>'+row('매출',p[1].toFixed(1)+'억')+row('비중',(p[1]/d.rev*100).toFixed(1)+'%')+row('합계',d.rev.toFixed(1)+'억'));
+      svg.appendChild(r);
+    });
+    svg.appendChild(txt(x+bw/2, mt+ih-(d.rev/max)*ih-6, d.rev.toFixed(0), {fs:narrow?9.5:10.5, fill:t.ink, fw:600}));
+    svg.appendChild(txt(x+bw/2, H-14, d.y, {fs:narrow?10:11.5, fill:d.half?t.muted:t.ink2, ff:'"IBM Plex Sans KR",sans-serif'}));
+    // OPM point (right axis: -5..25)
+    const oy=mt+ih-((d.opm+5)/30)*ih; opmPts.push([x+bw/2,oy,d]);
+  });
+  // right axis
+  [-5,0,5,10,15,20,25].forEach(function(v){ const y=mt+ih-((v+5)/30)*ih; svg.appendChild(txt(W-mr+6,y+4,v+'%',{anchor:'start',fs:narrow?9:10,fill:t.acc})); });
+  let ps=''; opmPts.forEach(function(p,i){ ps+=(i?' L ':'M ')+p[0].toFixed(1)+' '+p[1].toFixed(1); });
+  svg.appendChild(el('path',{d:ps,fill:'none',stroke:t.acc,'stroke-width':2,'stroke-dasharray':'0'}));
+  opmPts.forEach(function(p){
+    const c=el('circle',{cx:p[0],cy:p[1],r:4.5,fill:t.acc,stroke:t.surface,'stroke-width':2});
+    bindTap(c,'<div class="th">'+p[2].y+'</div>'+row('영업이익률',p[2].opm.toFixed(1)+'%'));
+    svg.appendChild(c);
+    const hit=el('circle',{cx:p[0],cy:p[1],r:14,fill:'transparent'}); bindTap(hit,'<div class="th">'+p[2].y+'</div>'+row('영업이익률',p[2].opm.toFixed(1)+'%')); svg.appendChild(hit);
+  });
+  host.innerHTML=''; host.appendChild(svg);
+}
+
+/* ---------- C2: quarterly ---------- */
+function drawC2(host, W){
+  const t=T(), narrow=W<560;
+  const H=narrow?250:290, ml=narrow?36:44, mr=narrow?36:44, mt=24, mb=38;
+  const iw=W-ml-mr, ih=H-mt-mb, max=200;
+  const svg=el('svg',{viewBox:'0 0 '+W+' '+H,role:'img','aria-label':'분기 매출과 영업이익률'});
+  [0,50,100,150,200].forEach(function(v){
+    const y=mt+ih-(v/max)*ih;
+    svg.appendChild(el('line',{x1:ml,x2:W-mr,y1:y,y2:y,stroke:t.line,'stroke-width':1}));
+    svg.appendChild(txt(ml-6,y+4,String(v),{anchor:'end',fs:narrow?9.5:10.5}));
+  });
+  const n=QTR.length, slot=iw/n, bw=Math.min(narrow?30:44, slot*0.55);
+  const pts=[];
+  QTR.forEach(function(d,i){
+    const x=ml+slot*i+slot/2-bw/2, h=(d.rev/max)*ih, y=mt+ih-h;
+    const r=el('rect',{x:x,y:y,width:bw,height:h,fill:d.y26?t.s[3]:t.s[0]});
+    bindTap(r,'<div class="th">'+d.q+'</div>'+row('매출',d.rev.toFixed(1)+'억')+row('영업이익',d.op===null?d.half:d.op.toFixed(1)+'억')+row('OPM',d.opm.toFixed(1)+'%'+(d.op===null?' (2H)':'')));
+    svg.appendChild(r);
+    svg.appendChild(txt(x+bw/2,y-5,d.rev.toFixed(0),{fs:narrow?9.5:10.5,fill:t.ink,fw:600}));
+    svg.appendChild(txt(x+bw/2,H-12,d.q,{fs:narrow?9.5:11,fill:t.ink2}));
+    pts.push([x+bw/2, mt+ih-((d.opm+5)/35)*ih, d]);
+  });
+  [-5,0,10,20,30].forEach(function(v){ const y=mt+ih-((v+5)/35)*ih; svg.appendChild(txt(W-mr+6,y+4,v+'%',{anchor:'start',fs:narrow?9:10,fill:t.acc})); });
+  let ps=''; pts.forEach(function(p,i){ ps+=(i?' L ':'M ')+p[0].toFixed(1)+' '+p[1].toFixed(1); });
+  svg.appendChild(el('path',{d:ps,fill:'none',stroke:t.acc,'stroke-width':2}));
+  pts.forEach(function(p){
+    const c=el('circle',{cx:p[0],cy:p[1],r:4.5,fill:p[2].op===null?t.surface:t.acc,stroke:t.acc,'stroke-width':2});
+    svg.appendChild(c);
+    const hit=el('circle',{cx:p[0],cy:p[1],r:14,fill:'transparent'});
+    bindTap(hit,'<div class="th">'+p[2].q+'</div>'+row('영업이익률',p[2].opm.toFixed(1)+'%'+(p[2].op===null?' (하반기 합계)':'')));
+    svg.appendChild(hit);
+  });
+  host.innerHTML=''; host.appendChild(svg);
+}
+
+/* ---------- C3: gross billing vs net revenue vs AR ---------- */
+function drawC3(host, W){
+  const t=T(), narrow=W<560;
+  const H=narrow?260:300, ml=narrow?42:52, mr=12, mt=24, mb=40;
+  const iw=W-ml-mr, ih=H-mt-mb, max=4000;
+  const svg=el('svg',{viewBox:'0 0 '+W+' '+H,role:'img','aria-label':'취급고 매출 매출채권 비교'});
+  [0,1000,2000,3000,4000].forEach(function(v){
+    const y=mt+ih-(v/max)*ih;
+    svg.appendChild(el('line',{x1:ml,x2:W-mr,y1:y,y2:y,stroke:t.line,'stroke-width':1}));
+    svg.appendChild(txt(ml-6,y+4,v===0?'0':(v/1000)+'k',{anchor:'end',fs:narrow?9.5:10.5}));
+  });
+  const n=GROSS.length, slot=iw/n, bw=Math.min(narrow?16:26, slot*0.22), gap=narrow?3:5;
+  GROSS.forEach(function(d,i){
+    const cx=ml+slot*i+slot/2;
+    const series=[['취급고',d.gb,t.s[0]],['마케팅 매출(순액)',d.rev,t.acc],['매출채권(총액)',d.ar,t.s[3]]];
+    series.forEach(function(s,j){
+      const x=cx+(j-1)*(bw+gap)-bw/2;
+      if(s[1]===null){
+        svg.appendChild(el('line',{x1:x,x2:x+bw,y1:mt+ih-1,y2:mt+ih-1,stroke:t.line2,'stroke-width':2,'stroke-dasharray':'3 3'}));
+        return;
+      }
+      const h=(s[1]/max)*ih, y=mt+ih-h;
+      const r=el('rect',{x:x,y:y,width:bw,height:Math.max(h,1.5),fill:s[2]});
+      bindTap(r,'<div class="th">'+d.k+' · '+s[0]+'</div>'+row('금액',fmt(s[1])+'억')+(d.gb&&j===1?row('수수료율',(d.rev/d.gb*100).toFixed(1)+'%'):'')+(d.note?row('비고',d.note):''));
+      svg.appendChild(r);
+      svg.appendChild(txt(x+bw/2,y-5,fmt(s[1]),{fs:narrow?8.5:9.5,fill:t.ink,fw:600}));
+    });
+    svg.appendChild(txt(cx,H-12,d.k,{fs:narrow?10:11.5,fill:t.ink2,ff:'"IBM Plex Sans KR",sans-serif'}));
+  });
+  host.innerHTML=''; host.appendChild(svg);
+}
+
+/* ---------- C4: labor ratio ---------- */
+function drawC4(host, W){
+  const t=T(), narrow=W<560;
+  const H=narrow?240:280, ml=narrow?40:48, mr=narrow?12:16, mt=24, mb=40;
+  const iw=W-ml-mr, ih=H-mt-mb, lo=50, hi=85;
+  function py(v){ return mt+ih-((v-lo)/(hi-lo))*ih; }
+  const svg=el('svg',{viewBox:'0 0 '+W+' '+H,role:'img','aria-label':'광고수익 대비 인건비율'});
+  [50,60,70,80].forEach(function(v){
+    const y=py(v);
+    svg.appendChild(el('line',{x1:ml,x2:W-mr,y1:y,y2:y,stroke:t.line,'stroke-width':1}));
+    svg.appendChild(txt(ml-6,y+4,v+'%',{anchor:'end',fs:narrow?9.5:10.5}));
+  });
+  const n=LABOR.length, slot=iw/n;
+  const ann=LABOR.filter(function(d){return !d.half;}), hf=LABOR.filter(function(d){return d.half;});
+  function xOf(d){ return ml+slot*LABOR.indexOf(d)+slot/2; }
+  function line(arr,color){ let ps=''; arr.forEach(function(d,i){ ps+=(i?' L ':'M ')+xOf(d).toFixed(1)+' '+py(d.r).toFixed(1); }); svg.appendChild(el('path',{d:ps,fill:'none',stroke:color,'stroke-width':2.2,'stroke-linejoin':'round'})); }
+  line(ann,t.s[0]); line(hf,t.acc);
+  LABOR.forEach(function(d){
+    const x=xOf(d), y=py(d.r), c=d.half?t.acc:t.s[0];
+    svg.appendChild(el('circle',{cx:x,cy:y,r:5,fill:c,stroke:t.surface,'stroke-width':2}));
+    const hit=el('circle',{cx:x,cy:y,r:16,fill:'transparent'});
+    bindTap(hit,'<div class="th">'+d.k+'</div>'+row('인건비',d.lab.toFixed(1)+'억')+row('광고수익',d.ad.toFixed(1)+'억')+row('비율',d.r.toFixed(1)+'%'));
+    svg.appendChild(hit);
+    svg.appendChild(txt(x, y-11, d.r.toFixed(1)+'%', {fs:narrow?10:11.5, fill:t.ink, fw:600}));
+    svg.appendChild(txt(x, H-12, d.k, {fs:narrow?10:11.5, fill:d.half?t.muted:t.ink2, ff:'"IBM Plex Sans KR",sans-serif'}));
+  });
+  // divider between annual and half
+  const dx=ml+slot*3;
+  svg.appendChild(el('line',{x1:dx,x2:dx,y1:mt,y2:mt+ih,stroke:t.line2,'stroke-width':1,'stroke-dasharray':'4 4'}));
+  host.innerHTML=''; host.appendChild(svg);
+}
+
+/* ---------- C5: price ---------- */
+function drawC5(host, W){
+  const t=T(), narrow=W<560;
+  const H=narrow?290:340, ml=narrow?40:50, mr=narrow?8:12, mt=18, mb=32;
+  const iw=W-ml-mr, ih=H-mt-mb;
+  const d0=new Date(2026,5,29).getTime(), d1=new Date(2026,9,3).getTime(), max=24000;
+  function px(ds){ return ml+(new Date(+ds.slice(0,4),+ds.slice(4,6)-1,+ds.slice(6,8)).getTime()-d0)/(d1-d0)*iw; }
+  function py(v){ return mt+ih-(v/max)*ih; }
+  const svg=el('svg',{viewBox:'0 0 '+W+' '+H,role:'img','aria-label':'상장 후 주가'});
+  [0,5000,10000,15000,20000].forEach(function(v){
+    const y=py(v);
+    svg.appendChild(el('line',{x1:ml,x2:W-mr,y1:y,y2:y,stroke:t.line,'stroke-width':1}));
+    svg.appendChild(txt(ml-6,y+4,v===0?'0':(v/1000)+'k',{anchor:'end',fs:narrow?9.5:10.5}));
+  });
+  [['20260701','7/1'],['20260715','7/15'],['20260801','8/1'],['20260815','8/15'],['20260901','9/1'],['20260915','9/15'],['20261001','10/1']].forEach(function(p){
+    const x=px(p[0]);
+    svg.appendChild(el('line',{x1:x,x2:x,y1:mt+ih,y2:mt+ih+5,stroke:t.line2,'stroke-width':1}));
+    svg.appendChild(txt(x,H-10,p[1],{fs:narrow?9:10.5}));
+  });
+  // events
+  [['20260801','1개월 락업 해제',t.s[3]],['20261001','3개월 락업·풋백 만료',t.neg]].forEach(function(e){
+    const x=px(e[0]);
+    svg.appendChild(el('line',{x1:x,x2:x,y1:mt,y2:mt+ih,stroke:e[2],'stroke-width':1.2,'stroke-dasharray':'3 4'}));
+    svg.appendChild(txt(x-4, mt+12, e[1], {anchor:'end',fs:narrow?9:10,fill:e[2],fw:500,ff:'"IBM Plex Sans KR",sans-serif'}));
+  });
+  // reference lines
+  [[8000,t.s[2],'공모가 8,000'],[7200,t.s[1],'풋백 행사가 7,200'],[14500,t.s[0],'SK 목표가 14,500'],[7041,t.acc,'자사주 평균 7,041']].forEach(function(l,i){
+    const y=py(l[0]);
+    svg.appendChild(el('line',{x1:ml,x2:W-mr,y1:y,y2:y,stroke:l[1],'stroke-width':1.3,'stroke-dasharray':'5 4'}));
+    if(i!==3||!narrow) svg.appendChild(txt(W-mr-3, y+(i===1?12:(i===3?24:-4)), l[2], {anchor:'end',fs:9.5,fill:l[1],fw:500}));
+  });
+  // open marker
+  svg.appendChild(el('circle',{cx:px('20260701'),cy:py(22250),r:4,fill:t.surface,stroke:t.s[0],'stroke-width':2}));
+  svg.appendChild(txt(px('20260701')+8, py(22250)+4, '시초가 22,250', {anchor:'start',fs:narrow?9.5:10.5,fill:t.ink,fw:600}));
+  svg.appendChild(el('line',{x1:px('20260701'),x2:px('20260701'),y1:py(22250),y2:py(10080),stroke:t.s[0],'stroke-width':1.5,'stroke-dasharray':'2 3'}));
+  let ps='';
+  PRICE.forEach(function(p,i){ ps+=(i?' L ':'M ')+px(p[0]).toFixed(1)+' '+py(p[1]).toFixed(1); });
+  svg.appendChild(el('path',{d:ps,fill:'none',stroke:t.s[0],'stroke-width':2,'stroke-linejoin':'round','stroke-linecap':'round'}));
+  const lw=PRICE.reduce(function(a,b){ return b[1]<a[1]?b:a; });
+  const last=PRICE[PRICE.length-1];
+  [[lw,16,'저점 '+fmt(lw[1])],[last,-10,fmt(last[1])]].forEach(function(m){
+    svg.appendChild(el('circle',{cx:px(m[0][0]),cy:py(m[0][1]),r:4,fill:t.s[0],stroke:t.surface,'stroke-width':2}));
+    svg.appendChild(txt(Math.min(px(m[0][0]),W-mr-30), py(m[0][1])+m[1], m[2], {fs:narrow?10:11,fill:t.ink,fw:600}));
+  });
+  const hit=el('rect',{x:ml,y:mt,width:iw,height:ih,fill:'transparent'});
+  let down=false;
+  function near(ev){
+    const rect=svg.getBoundingClientRect(); const sx=(ev.clientX-rect.left)*(W/rect.width);
+    let best=null,bd=1e9; PRICE.forEach(function(p){ const d=Math.abs(px(p[0])-sx); if(d<bd){bd=d;best=p;} });
+    if(best) showTip(ev,'<div class="th">'+best[0].slice(0,4)+'.'+best[0].slice(4,6)+'.'+best[0].slice(6,8)+'</div>'+row('종가',fmt(best[1])+'원')+row('공모가 대비',((best[1]/8000-1)*100).toFixed(1)+'%')+row('현재가 대비',((NOW/best[1]-1)*100).toFixed(1)+'%'));
+  }
+  hit.addEventListener('pointerdown',function(ev){ down=true; near(ev); });
+  hit.addEventListener('pointermove',function(ev){ if(ev.pointerType==='mouse'||down) near(ev); });
+  ['pointerup','pointercancel','pointerleave'].forEach(function(n){ hit.addEventListener(n,function(){ down=false; if(n!=='pointerup') hideTip(); }); });
+  svg.appendChild(hit);
+  host.innerHTML=''; host.appendChild(svg);
+}
+
+/* ---------- C6: comps PER ladder ---------- */
+function drawC6(host, W){
+  const t=T(), narrow=W<560;
+  const rowH=narrow?34:38, ml=narrow?118:170, mr=50, mt=8, mb=8;
+  const H=mt+mb+COMPS.length*rowH, iw=W-ml-mr, max=55;
+  const svg=el('svg',{viewBox:'0 0 '+W+' '+H,role:'img','aria-label':'비교기업 PER 당시와 현재'});
+  COMPS.forEach(function(d,i){
+    const y=mt+i*rowH, bh=(rowH-10)/2;
+    svg.appendChild(txt(ml-8, y+rowH/2+4, d.n, {anchor:'end',fs:narrow?9.5:11.5, fill:d.me?t.ink:t.ink2, fw:d.me?600:400, ff:'"IBM Plex Sans KR",sans-serif'}));
+    if(d.then!==null){
+      const w=(d.then/max)*iw;
+      const r=el('rect',{x:ml,y:y+3,width:w,height:bh,fill:t.s[0],opacity:'0.45'});
+      bindTap(r,'<div class="th">'+d.n+' · 2026.04.03</div>'+row('PER',d.then.toFixed(1)+'배'));
+      svg.appendChild(r);
+      svg.appendChild(txt(ml+w+5, y+3+bh/2+3.5, d.then.toFixed(1), {anchor:'start',fs:narrow?9:10.5, fill:t.ink2}));
+    }
+    if(d.now!==null){
+      const w=(d.now/max)*iw;
+      const r=el('rect',{x:ml,y:y+5+bh,width:w,height:bh,fill:d.me?t.acc:t.s[0]});
+      bindTap(r,'<div class="th">'+d.n+' · 현재</div>'+row('PER',d.now.toFixed(1)+'배'));
+      svg.appendChild(r);
+      svg.appendChild(txt(ml+w+5, y+5+bh+bh/2+3.5, d.now.toFixed(1), {anchor:'start',fs:narrow?9.5:11, fill:t.ink, fw:600}));
+    } else {
+      svg.appendChild(txt(ml+5, y+5+bh+bh/2+3.5, '적자 (산출 불가)', {anchor:'start',fs:narrow?9:10.5, fill:t.neg, ff:'"IBM Plex Sans KR",sans-serif'}));
+    }
+  });
+  host.innerHTML=''; host.appendChild(svg);
+}
+
+legend('lg1',[{c:T().s[0],n:'마케팅(대행, 순액)'},{c:T().s[1],n:'솔루션(LEVER Xpert)'},{c:T().s[2],n:'브랜드빌드업(상품, 총액)'},{c:T().acc,n:'영업이익률(우축)'}]);
+legend('lg2',[{c:T().s[0],n:'2025년 분기 매출'},{c:T().s[3],n:'2026년'},{c:T().acc,n:'영업이익률(우축) · 빈 점 = 하반기 합계'}]);
+legend('lg3',[{c:T().s[0],n:'취급고(광고비 총액)'},{c:T().acc,n:'마케팅 매출(순액 수수료)'},{c:T().s[3],n:'매출채권 잔액(총액)'}]);
+legend('lg4',[{c:T().s[0],n:'연간'},{c:T().acc,n:'상반기'}]);
+legend('lg5',[{c:T().s[0],n:'종가'},{c:T().s[2],n:'공모가'},{c:T().s[1],n:'풋백옵션 행사가'},{c:T().acc,n:'자사주 평균단가'},{c:T().neg,n:'10/1 락업 해제'}]);
+legend('lg6',[{c:T().s[0],n:'2026.04.03 (공모가 산정 시)'},{c:T().acc,n:'현재 (2026.09.08)'}]);
+
+const charts=[['c1',drawC1],['c2',drawC2],['c3',drawC3],['c4',drawC4],['c5',drawC5],['c6',drawC6]];
+function renderAll(){
+  charts.forEach(function(c){ const h=document.getElementById(c[0]); if(!h) return; const W=Math.max(300, Math.floor(h.clientWidth||h.getBoundingClientRect().width||600)); c[1](h,W); });
+}
+let rt=null;
+window.addEventListener('resize', function(){ clearTimeout(rt); rt=setTimeout(renderAll,150); });
+if(window.matchMedia){ try{ window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', renderAll); }catch(e){} }
+if(document.fonts && document.fonts.ready){ document.fonts.ready.then(renderAll); }
+renderAll();
+})();
+</script>
+</body>
+</html>

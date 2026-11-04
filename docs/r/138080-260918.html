@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<title>오이솔루션, 레이저를 가진 트랜시버 회사의 값</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@600;700&family=Noto+Sans+KR:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+:root{
+  color-scheme:light;
+  --bg:#F3F4F7; --surface:#FFFFFF; --surface2:#F7F8FB; --surface3:#E9EBF2;
+  --ink:#15172B; --ink2:#454A61; --muted:#737A90;
+  --line:#D8DCE6; --line2:#BFC5D3;
+  --accent:#1F5F8B; --accent-soft:#E3EEF7;
+  --pos:#1B6E52; --neg:#B23A2C;
+  --c1:#1F5F8B; --c2:#E8792B; --c3:#1baf7a; --c4:#8B93A7; --c5:#7B4FB3;
+  --c1-soft:rgba(31,95,139,.12); --c2-soft:rgba(232,121,43,.14);
+  --shadow:0 1px 2px rgba(21,23,43,.06), 0 10px 28px rgba(21,23,43,.06);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#0F1118; --surface:#171A24; --surface2:#1D2130; --surface3:#252A3B;
+    --ink:#ECEEF5; --ink2:#B4BACB; --muted:#8D94A8;
+    --line:#2A2F40; --line2:#3B4155;
+    --accent:#7FB5E0; --accent-soft:#1E2E3E;
+    --pos:#4FB58C; --neg:#E07A5F;
+    --c1:#5B9BD5; --c2:#F08A3E; --c3:#2BC48E; --c4:#7C8499; --c5:#A283D6;
+    --c1-soft:rgba(91,155,213,.16); --c2-soft:rgba(240,138,62,.18);
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 28px rgba(0,0,0,.3);
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#0F1118; --surface:#171A24; --surface2:#1D2130; --surface3:#252A3B;
+  --ink:#ECEEF5; --ink2:#B4BACB; --muted:#8D94A8;
+  --line:#2A2F40; --line2:#3B4155;
+  --accent:#7FB5E0; --accent-soft:#1E2E3E;
+  --pos:#4FB58C; --neg:#E07A5F;
+  --c1:#5B9BD5; --c2:#F08A3E; --c3:#2BC48E; --c4:#7C8499; --c5:#A283D6;
+  --c1-soft:rgba(91,155,213,.16); --c2-soft:rgba(240,138,62,.18);
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 28px rgba(0,0,0,.3);
+}
+html{color-scheme:light dark}
+*{box-sizing:border-box}
+body{margin:0; background:var(--bg); color:var(--ink);
+  font-family:"Noto Sans KR","Malgun Gothic",system-ui,sans-serif; font-size:15.5px; line-height:1.75;
+  -webkit-text-size-adjust:100%}
+img{max-width:100%} [hidden]{display:none!important}
+.mono{font-family:"IBM Plex Mono","Consolas",ui-monospace,monospace; font-variant-numeric:tabular-nums}
+.serif{font-family:"Noto Serif KR","Noto Serif","Batang",serif}
+.wrap{max-width:920px; margin:0 auto; padding:0 22px 90px}
+a{color:var(--accent)}
+p{margin:0 0 14px} .lede{font-size:16.5px; color:var(--ink2)}
+ul,ol{margin:0 0 14px; padding-left:20px} li{margin-bottom:7px}
+strong,b{font-weight:700}
+.small{font-size:13px; color:var(--muted); line-height:1.6}
+.pos{color:var(--pos)} .neg{color:var(--neg)}
+
+.mast{background:var(--surface); border-bottom:1px solid var(--line)}
+.mast-in{max-width:920px; margin:0 auto; padding:34px 22px 26px}
+.eyebrow{font-family:"IBM Plex Mono",monospace; font-size:11.5px; letter-spacing:.06em; color:var(--muted)}
+h1{font-family:"Noto Serif KR",serif; font-size:clamp(30px,6.6vw,48px); line-height:1.18; margin:.3em 0 .15em; font-weight:700; letter-spacing:-.015em; text-wrap:balance}
+h1 .em{color:var(--accent)}
+.sub{color:var(--ink2); font-size:15.5px; max-width:64ch; margin:.4em 0 0}
+.tickerline{display:flex; flex-wrap:wrap; gap:6px 16px; align-items:baseline; margin-top:14px; font-family:"IBM Plex Mono",monospace; font-size:12.5px; color:var(--muted)}
+.tickerline b{color:var(--ink); font-weight:600}
+.stats{display:grid; grid-template-columns:repeat(auto-fit,minmax(138px,1fr)); gap:1px; background:var(--line); border:1px solid var(--line); margin-top:24px}
+.stat{background:var(--surface); padding:13px 14px 14px; min-width:0}
+.stat .k{font-family:"IBM Plex Mono",monospace; font-size:11px; letter-spacing:.02em; color:var(--muted)}
+.stat .v{font-family:"IBM Plex Mono",monospace; font-weight:600; font-size:clamp(19px,4.6vw,24px); line-height:1.25; margin-top:5px; overflow-wrap:anywhere}
+.stat .n{font-size:11.5px; color:var(--muted); margin-top:2px; line-height:1.4}
+.toc{display:flex; flex-wrap:wrap; gap:8px; margin:22px 0 0}
+.toc a{font-size:12.5px; text-decoration:none; color:var(--ink2); background:var(--surface); border:1px solid var(--line); padding:5px 11px; border-radius:999px}
+.toc a:hover{border-color:var(--accent); color:var(--accent)}
+
+section{margin-top:56px; scroll-margin-top:16px}
+.sec-h{display:flex; gap:14px; align-items:baseline; border-bottom:2px solid var(--ink); padding-bottom:9px; margin-bottom:20px}
+.sec-n{font-family:"IBM Plex Mono",monospace; font-size:12px; font-weight:600; color:var(--accent); letter-spacing:.06em; padding-top:4px}
+.sec-h h2{margin:0; font-family:"Noto Serif KR",serif; font-size:clamp(20px,4.2vw,26px); font-weight:700; letter-spacing:-.01em; text-wrap:balance; flex:1; min-width:0}
+h3{font-size:17px; font-weight:700; margin:32px 0 8px; letter-spacing:-.01em}
+h4{font-size:14.5px; font-weight:700; margin:20px 0 6px; color:var(--ink2)}
+
+.take{border-left:3px solid var(--accent); background:var(--surface2); padding:14px 16px; margin:18px 0; font-size:14.5px}
+.take .lbl{font-family:"IBM Plex Mono",monospace; font-size:11px; letter-spacing:.03em; color:var(--accent); display:block; margin-bottom:5px; font-weight:600}
+.take p:last-child{margin-bottom:0}
+.keypoints{display:grid; gap:1px; background:var(--line); border:1px solid var(--line); margin:22px 0}
+.kp{background:var(--surface); padding:15px 17px; display:grid; grid-template-columns:30px 1fr; gap:12px}
+.kp .num{font-family:"IBM Plex Mono",monospace; font-size:12px; color:var(--accent); font-weight:600; padding-top:3px}
+.kp .txt{min-width:0} .kp .t{font-weight:700; margin-bottom:2px} .kp .d{font-size:14px; color:var(--ink2)}
+.grid2{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:16px 0}
+.pane{background:var(--surface); border:1px solid var(--line); padding:14px 16px; min-width:0}
+.pane h4{margin-top:0}
+.pane.yes{border-top:3px solid var(--pos)} .pane.no{border-top:3px solid var(--neg)}
+.pane ul{margin-bottom:0; padding-left:18px} .pane li{font-size:14px; margin-bottom:6px}
+
+.vc{display:grid; grid-template-columns:repeat(6,1fr); gap:6px; margin:16px 0}
+.vc .c{background:var(--surface); border:1px solid var(--line); padding:10px 9px; font-size:12.5px; line-height:1.45; min-width:0}
+.vc .c b{display:block; font-size:13px; margin-bottom:3px}
+.vc .c.me{border:2px solid var(--accent); background:var(--accent-soft)}
+.vc .c .who{color:var(--muted); font-size:11.5px; margin-top:4px}
+
+.tbl-scroll{overflow-x:auto; margin:16px -22px 20px; padding:0 22px; -webkit-overflow-scrolling:touch}
+table{border-collapse:collapse; width:100%; min-width:560px; font-size:13.5px}
+caption{caption-side:top; text-align:left; font-family:"IBM Plex Mono",monospace; font-size:11.5px; letter-spacing:.02em; color:var(--muted); padding-bottom:8px}
+th,td{padding:8px 10px; border-bottom:1px solid var(--line); text-align:left; vertical-align:top}
+th.num,td.num{text-align:right; white-space:nowrap; font-family:"IBM Plex Mono",monospace; font-variant-numeric:tabular-nums}
+thead th{border-bottom:1.5px solid var(--line2); font-weight:600; color:var(--ink2); font-size:12.5px}
+tbody tr:hover{background:var(--surface2)}
+tfoot td{border-top:1.5px solid var(--line2); font-weight:600}
+td.hl{background:var(--accent-soft)}
+tr.sum td{font-weight:700; background:var(--surface2)}
+.tnote{font-size:12.5px; color:var(--muted); margin-top:-10px; margin-bottom:16px; line-height:1.55}
+.bar{display:inline-block; height:9px; background:var(--c1); vertical-align:middle; border-radius:2px; margin-right:6px}
+.bar.o{background:var(--c2)}
+
+.chart{background:var(--surface); border:1px solid var(--line); padding:14px 14px 10px; margin:16px 0 8px}
+.chart .ct{font-weight:700; font-size:14.5px; margin:0 0 2px}
+.chart .cs{font-size:12.5px; color:var(--muted); margin:0 0 8px}
+.chart svg{display:block; width:100%; height:auto; touch-action:pan-y}
+.chart text{font-family:"IBM Plex Mono",monospace; font-size:11px; fill:var(--ink2)}
+.chart text.lab{font-family:"Noto Sans KR",sans-serif; fill:var(--ink)}
+.chart text.mut{fill:var(--muted)}
+.chart .grid{stroke:var(--line); stroke-width:1}
+.chart .axis{stroke:var(--line2); stroke-width:1}
+.legend{display:flex; flex-wrap:wrap; gap:6px 16px; font-size:12px; color:var(--ink2); margin:6px 0 4px}
+.legend i{display:inline-block; width:12px; height:12px; border-radius:2px; vertical-align:-1px; margin-right:6px}
+.tip{position:fixed; z-index:50; pointer-events:none; background:var(--ink); color:var(--bg); font-size:12px; line-height:1.5; padding:7px 10px; border-radius:4px; max-width:min(260px,calc(100vw - 20px)); box-shadow:var(--shadow); display:none; font-family:"IBM Plex Mono",monospace}
+.tip b{font-weight:600}
+
+.risk{display:grid; gap:10px; margin:14px 0}
+.risk .r{display:grid; grid-template-columns:64px 1fr; gap:12px; background:var(--surface); border:1px solid var(--line); padding:12px 14px}
+.chip{font-family:"IBM Plex Mono",monospace; font-size:10.5px; letter-spacing:.08em; padding:3px 7px; border-radius:3px; display:inline-block; text-align:center; align-self:start; white-space:nowrap}
+.chip.h{background:var(--neg); color:#fff} .chip.m{background:var(--c2); color:#fff} .chip.l{background:var(--c4); color:#fff} .chip.u{background:var(--pos); color:#fff}
+.risk .t{font-weight:700} .risk .d{font-size:14px; color:var(--ink2)}
+
+.qs{display:grid; gap:12px; margin:16px 0}
+.q{background:var(--surface); border:1px solid var(--line); border-left:4px solid var(--accent); padding:13px 16px}
+.q .qh{display:flex; gap:10px; align-items:baseline}
+.q .qn{font-family:"IBM Plex Mono",monospace; font-size:12px; color:var(--accent); font-weight:600}
+.q .qt{font-weight:700; font-size:15px}
+.q .why{font-size:13.5px; color:var(--ink2); margin:6px 0 0}
+.q .why b{color:var(--ink)}
+.tl{list-style:none; padding:0; margin:14px 0}
+.tl li{display:grid; grid-template-columns:96px 1fr; gap:12px; padding:8px 0; border-bottom:1px solid var(--line); font-size:14px}
+.tl .d{font-family:"IBM Plex Mono",monospace; font-size:12px; color:var(--muted); padding-top:3px}
+.check li{margin-bottom:9px}
+.src{font-size:12.5px; color:var(--muted); line-height:1.6} .src li{margin-bottom:4px}
+.foot{margin-top:60px; padding-top:18px; border-top:1px solid var(--line); font-size:12.5px; color:var(--muted); line-height:1.6}
+
+@media (max-width:620px){
+  body{font-size:14.5px}
+  .wrap{padding:0 14px 70px} .mast-in{padding:26px 14px 20px}
+  table{min-width:0; font-size:12.5px} th,td{padding:7px 7px}
+  .tbl-scroll{margin:14px -14px 18px; padding:0 14px}
+  .grid2{grid-template-columns:1fr}
+  .vc{grid-template-columns:repeat(2,1fr)}
+  .risk .r{grid-template-columns:56px 1fr}
+  .kp{grid-template-columns:24px 1fr; gap:9px}
+  .chart{padding:12px 10px 8px}
+  .tl li{grid-template-columns:78px 1fr}
+  .bar{display:none}
+}
+@media (max-width:400px){
+  .wrap{padding:0 11px 60px} .mast-in{padding:22px 11px 18px}
+  .tbl-scroll{margin:14px -11px 18px; padding:0 11px}
+  .stats{grid-template-columns:repeat(2,1fr)}
+}
+@media (prefers-reduced-motion:reduce){ *{transition:none!important; animation:none!important} }
+</style>
+</head>
+<body>
+<div class="tip" id="tip"></div>
+<header class="mast"><div class="mast-in">
+  <div class="eyebrow">기업리포트 · 오이솔루션 138080 · 2026-09-18 · 기준가 9/17 종가</div>
+  <h1 class="serif">오이솔루션, <span class="em">레이저를 가진</span> 트랜시버 회사의 값</h1>
+  <p class="sub">2019년 5G 슈퍼사이클에 매출 2,103억·영업이익 583억을 찍고 5년 만에 매출이 1/6.6로 줄어든 회사가, 일본 FTTH 신규 고객과 자체 레이저칩으로 19개 분기 만에 손익분기점에 돌아왔다. 주가는 5월 고점에서 77% 빠졌다가 미국의 중국산 트랜시버 규제 보도 한 번에 두 배가 됐다. 시가총액 3,342억이 담고 있는 가정을 DART 원문과 증권사 리포트 67건으로 가른다. 확인되는 것과 아직 확인되지 않는 것을 따로 적었다.</p>
+  <div class="tickerline"><span>종가 <b>27,000원</b> (9/17)</span><span>시가총액 <b>3,342억</b></span><span>발행주식 <b>1,237.8만주</b></span><span>외국인 <b>3.06%</b></span><span>PBR <b>4.3배</b></span><span>순금융자산 <b>190억</b></span></div>
+  <div class="stats">
+    <div class="stat"><div class="k">52주 저점 대비</div><div class="v pos">+171%</div><div class="n">9,960원 (2025-10-02 장중)</div></div>
+    <div class="stat"><div class="k">52주 고점 대비</div><div class="v neg">-53.4%</div><div class="n">57,900원 (2026-05-07 장중)</div></div>
+    <div class="stat"><div class="k">2Q26 매출</div><div class="v">196.5억</div><div class="n">+23.7% YoY, 4년 만의 분기 최대</div></div>
+    <div class="stat"><div class="k">2Q26 영업이익</div><div class="v neg">-8.7억</div><div class="n">재고폐기 15억 제외 시 흑자. GPM 20.0%</div></div>
+    <div class="stat"><div class="k">수주잔고 (6/30)</div><div class="v">421억</div><div class="n">2025년 말 191억의 2.2배</div></div>
+    <div class="stat"><div class="k">목표주가 범위</div><div class="v">3.5~6만</div><div class="n">신영 35,000 / 하나 60,000. 2026E는 2개사 적자 추정</div></div>
+  </div>
+  <nav class="toc">
+    <a href="#s1">한 장 요약</a><a href="#s2">주가가 담은 것</a><a href="#s3">비즈니스 모델</a><a href="#s4">실적 10년</a><a href="#s5">성장 엔진</a><a href="#s6">경쟁사</a><a href="#s7">해자 검증</a><a href="#s8">주주·자본</a><a href="#s9">리스크</a><a href="#s10">증권사 추정</a><a href="#s11">확인할 것 10</a><a href="#s12">출처</a>
+  </nav>
+</div></header>
+
+<main class="wrap">
+
+<section id="s1">
+  <div class="sec-h"><span class="sec-n">01</span><h2>한 장 요약</h2></div>
+  <p class="lede">오이솔루션은 광주에서 <b>광트랜시버</b>(전기신호를 빛으로, 빛을 전기신호로 바꾸는 모듈)와 그 핵심 부품인 <b>레이저다이오드(LD) 칩</b>을 만드는 회사다. 2019년에는 삼성전자 5G 기지국용 물량으로 매출 2,103억·영업이익률 27.7%를 냈고, 그 뒤 5년간 매출이 320억까지 줄면서 영업손실이 누적 861억에 이르렀다. 2025년부터 일본 NTT향 FTTH 트랜시버가 들어오며 매출이 574억으로 돌아섰고, 2Q26에는 영업손실이 -8.7억까지 줄었다. 주가를 움직인 것은 이 실적이 아니라 <b>"미국 주파수 경매로 무선 사이클이 재개되고, 미국이 중국산 트랜시버를 막으면 한국 유일의 레이저 내재화 업체가 수혜"</b>라는 서사였다.</p>
+  <div class="keypoints">
+    <div class="kp"><span class="num">1</span><div class="txt"><div class="t">턴어라운드는 진짜지만 아직 손익분기점이다</div><div class="d">2Q26 매출 196.5억(+23.7% YoY), 매출총이익률 20.0%, 영업손실 -8.7억. 하나·신영·유안타 모두 재고자산 폐기손실 15억을 빼면 19개 분기 만의 사실상 흑자라고 썼다. 2024년 매출총이익률이 -15.2%였으니 원가 구조는 분명히 바뀌었다. 그러나 1H26 영업활동현금흐름은 -62억이고 매출채권이 6개월 새 79억에서 160억으로 두 배가 됐다. 이익보다 현금이 늦다.</div></div></div>
+    <div class="kp"><span class="num">2</span><div class="txt"><div class="t">회복의 엔진은 데이터센터가 아니라 일본 FTTH와 자체 레이저칩이다</div><div class="d">1H26 아시아 매출 188.7억은 전년 동기의 2.0배, 전체의 50%다. 일본 스미토모가 NTT향 FTTH 트랜시버 자체 생산을 접고 외주로 넘긴 물량을 오이솔루션이 받았고, 여기에 자체 LD칩을 넣어 마진을 냈다. 원재료 매입 중 외부 LD 비중은 2023년 44.3%에서 1H26 24.4%로 내려왔다. 데이터센터(Datacom) 매출 비중은 2025년 2%다.</div></div></div>
+    <div class="kp"><span class="num">3</span><div class="txt"><div class="t">물량이 아니라 판가가 돌아왔다: 2023년과 같은 27만개를 17% 비싸게 팔았다</div><div class="d">별도 기준 모듈 매출을 평균판가로 나누면 2023년 270,787개, 2025년 268,629개다. 물량은 같은데 평균판가가 162,832원에서 189,827원(+16.6%)으로 올라 매출이 441억에서 510억이 됐다. 1H26은 물량 +18.3%, 판가 +5.0%로 처음 둘이 같이 움직였다. 회사 캐파는 연 95만개, 가동률은 29.1%(2025)에서 36.7%(1H26)로 아직 3분의 1이다.</div></div></div>
+    <div class="kp"><span class="num">4</span><div class="txt"><div class="t">시장의 96%는 회사가 서 있지 않은 칸에 있다</div><div class="d">회사가 반기보고서에 인용한 2026년 세계 광트랜시버 시장은 42.7조원이고 그중 데이터센터가 31조, 텔레콤 7조, FTTH 1.2조, 무선 0.6조다. 오이솔루션의 주력인 무선과 FTTH를 합쳐도 시장의 4%이고, 회사 점유율은 0.18%다. 1.6T 트랜시버와 CPO용 외부광원(ELSFP)은 3Q26 샘플 단계이며 확정 고객·수주는 공시된 것이 없다. 텔레콤향 평균판가 19만원짜리 회사가 개당 400달러(800G)~800달러(1.6T) 시장에 들어가는 것이 서사의 후반부다.</div></div></div>
+    <div class="kp"><span class="num">5</span><div class="txt"><div class="t">주가는 무선 사이클 재개와 중국산 규제의 반사이익을 미리 샀다</div><div class="d">2027E 컨센서스 순이익 162억 기준 PER 20.6배, 하나증권 2028E 순이익 532억 기준 6.3배다. 2019년 순이익 461억이 재현되면 7.3배다. 즉 2019년이 돌아온다는 가정에서만 싸다. 미국 FCC의 중국산 트랜시버 규제는 8월 4일 로이터가 보도한 초안 단계이고, Cignal AI는 "중국 밖에 대체 캐파가 없다"며 전망치를 바꾸지 않았다. 하나증권조차 8월 리포트에 "내수 중심이어서 중국 업체 퇴출 수혜주로 분류하기엔 무리"라고 썼다.</div></div></div>
+    <div class="kp"><span class="num">6</span><div class="txt"><div class="t">최대주주는 지분의 99%를 담보로 잡혔고, 오르는 동안 팔았다</div><div class="d">최대주주 박찬 부회장 지분은 2025년 초 20.24%에서 16.56%로 줄었고, 보유 1,958,568주 중 1,943,822주(99.2%)가 대신증권 주식담보대출(86.6억, 이자 5.5%, 담보유지비율 180%)에 잡혀 있다. 반대매매 기준가는 약 8,000원으로 지금은 멀다. 박용관 대표는 5월 13일 고점권에서 5만주를 54,003원에 팔았다(27억). 2024년 발행한 CB 250억은 전부 전환돼 발행주식이 16.5% 늘었고, 회사가 되사온 71.6억어치는 재매각 시 57만주가 더 나온다.</div></div></div>
+  </div>
+  <div class="take"><span class="lbl">결론</span><p><b>실체는 "국내 무선 광트랜시버 1위 + 국내 유일 LD칩 내재화 + 일본 FTTH 신규 고객"이고, 이 셋으로 2026년 손익분기점까지는 왔다.</b> 증권사 2027E(매출 1,120~1,270억, 영업이익 100~220억)가 실현되면 지금 시가총액은 PER 20배 안팎으로 비싸지 않다. 그러나 그 추정의 대부분은 아직 오지 않은 미국·국내 주파수 경매 이후의 프론트홀 수요이고, 데이터센터 매출은 0에서 출발한다. 확인할 것은 세 가지다. (1) 3Q26에 실제 흑자가 찍히고 매출총이익률이 1Q26의 25%로 돌아오는가, (2) 수주잔고 421억의 고객·납기 구성에서 일본 FTTH가 얼마인가, (3) ELSFP 3Q26 샘플이 고객 인증을 통과하는가. 하방 앵커는 규제 기대가 꺼졌던 7월 30일 저점 13,300원이고, 상방 앵커는 하나증권 60,000원(2019년 재현 시나리오)이다. 본 리포트는 투자 권유가 아니다.</p></div>
+</section>
+
+<section id="s2">
+  <div class="sec-h"><span class="sec-n">02</span><h2>주가가 담고 있는 것</h2></div>
+  <p>연말 종가로 보면 2018년 13,295원이던 주가가 2019년 49,450원, 2020년 8월 장중 72,500원까지 갔다가 2024년 10,430원으로 돌아왔다. 2026년은 13,090원에서 출발해 5월 7일 장중 57,900원(4.4배)을 찍고 7월 30일 13,260원(고점 대비 -77%)까지 떨어진 뒤, 8월 5일 FCC 규제 보도로 상한가를 기록하고 9월 17일 27,000원이다. 9월 들어 하나증권 "쇼티지" 리포트(9/16)와 광통신주 동반 강세로 8월 말 대비 +16%다.</p>
+  <div class="chart" id="ch-px">
+    <p class="ct">주가(주봉 종가)와 주요 이벤트, 2018-01 ~ 2026-09-17</p>
+    <p class="cs">번호는 아래 표의 이벤트. 손을 대면 날짜와 종가가 뜬다. 2019년 12월 유·무상증자 반영된 수정주가.</p>
+    <svg></svg>
+  </div>
+  <div class="tbl-scroll"><table>
+    <caption>주가를 움직인 이벤트 (종가는 네이버 일별시세)</caption>
+    <thead><tr><th>#</th><th>날짜</th><th>사건</th><th class="num">종가</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>2019</td><td>국내 5G 투자로 무선향 매출 390억 → 1,772억. 연간 매출 2,103억, 영업이익 583억</td><td class="num">49,450 (연말)</td></tr>
+      <tr><td>2</td><td>2020-08-07</td><td>삼성전자 버라이즌 7.9조 계약(9/7 공시) 기대로 역대 고점. 장중 72,500원, 시총 7,277억</td><td class="num">68,500</td></tr>
+      <tr><td>3</td><td>2022-11</td><td>KT·LGU+ 28GHz 할당 취소. 4분기 연속 적자, 2022년 영업손실 -87억</td><td class="num">17,600 (연말)</td></tr>
+      <tr><td>4</td><td>2024-07-11</td><td>250억 사모 CB 발행(전환가 12,508원). 2024년 매출 320억·영업손실 -304억, 매출총이익 마이너스</td><td class="num">10,430 (연말)</td></tr>
+      <tr><td>5</td><td>2025-10-02</td><td>52주 저점. 장중 9,960원. 시총 1,100억대</td><td class="num">10,070</td></tr>
+      <tr><td>6</td><td>2026-03-12</td><td>AT&amp;T 5년 2,500억달러 CAPEX 발표(3/10) 뒤 하나증권 목표주가 50,000원, 3/26 60,000원 상향</td><td class="num">32,050</td></tr>
+      <tr><td>7</td><td>2026-05-07</td><td>AI EXPO에서 800G→1.6T→CPO 3년 로드맵 공개. 장중 57,900원 고점. 5/13 박용관 대표 5만주 54,003원 매도</td><td class="num">54,000</td></tr>
+      <tr><td>8</td><td>2026-06-11 ~ 07-30</td><td>SemiAnalysis "CPO 양산 2029년 이후" 보고서 이후 광통신주 동반 급락. 7/30 장중 13,260원</td><td class="num">13,300 (7/30)</td></tr>
+      <tr><td>9</td><td>2026-08-05</td><td>로이터 "FCC, 중국산 신형 광트랜시버 수입 금지 초안" 보도. 빛과전자와 함께 상한가</td><td class="num">25,150</td></tr>
+      <tr><td>10</td><td>2026-09-16</td><td>하나증권 "이미 쇼티지는 시작됐다"(TP 60,000 유지). InP 웨이퍼 가격 40~70% 상승 근거</td><td class="num">25,600</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>밸류에이션을 어느 해 숫자로 보느냐</h3>
+  <p>2025년까지 4년 연속 적자라 실적 PER은 없고, 목표주가는 하나증권이 타겟 PBR(3월 산정 12배), 신영증권이 2027년 EPS에 PER 36배(AAOI가 800G 대량 수주로 리레이팅됐을 때의 배수)를 쓴다. 따라서 <b>어느 해 이익을 분모에 놓느냐</b>가 투자 판단이다.</p>
+  <div class="tbl-scroll"><table>
+    <caption>시가총액 3,342억 · EV 3,152억(순금융자산 190억 차감) 기준 배수</caption>
+    <thead><tr><th>기준</th><th class="num">매출</th><th class="num">영업이익</th><th class="num">순이익</th><th class="num">PSR</th><th class="num">PER</th><th>출처</th></tr></thead>
+    <tbody>
+      <tr><td>2019 실적 (5G 피크)</td><td class="num">2,102.8억</td><td class="num">582.6억</td><td class="num">460.7억</td><td class="num">1.6배</td><td class="num">7.3배</td><td>DART. 당시 고점 시총 7,277억은 PER 15.8배</td></tr>
+      <tr><td>2025 실적</td><td class="num">573.8억</td><td class="num neg">-160.0억</td><td class="num neg">-270.4억</td><td class="num">5.8배</td><td class="num">적자</td><td>DART 사업보고서</td></tr>
+      <tr><td>최근 4분기 (3Q25~2Q26)</td><td class="num">651.1억</td><td class="num neg">-77.8억</td><td class="num neg">-171.7억</td><td class="num">5.1배</td><td class="num">적자</td><td>분기 합산. EPS -1,483원</td></tr>
+      <tr><td>2026E 컨센서스</td><td class="num">767억</td><td class="num">41억</td><td class="num">45억</td><td class="num">4.4배</td><td class="num">74배</td><td>FnGuide, 하나증권 8/20 인용</td></tr>
+      <tr><td>2026E 하나 (9/16)</td><td class="num">774억</td><td class="num">21억</td><td class="num">15억</td><td class="num">4.3배</td><td class="num">223배</td><td>3월 추정 1,209억/77억에서 두 번 하향</td></tr>
+      <tr><td>2026E 신영 / 대신</td><td class="num">781 / 828억</td><td class="num neg">-5 / -8억</td><td class="num neg">-13 / -52억</td><td class="num">4.3 / 4.0배</td><td class="num">적자</td><td>신영 8/28, 대신 3/3</td></tr>
+      <tr><td>2027E 컨센서스</td><td class="num">1,284억</td><td class="num">220억</td><td class="num">162억</td><td class="num">2.6배</td><td class="num">20.6배</td><td>FnGuide, 하나증권 8/20 인용</td></tr>
+      <tr><td>2027E 하나 / 신영 / 대신</td><td class="num">1,267 / 1,124 / 1,268억</td><td class="num">212 / 125 / 101억</td><td class="num">156 / 120 / 66억</td><td class="num">2.6 / 3.0 / 2.6배</td><td class="num">21.4 / 27.9 / 50.6배</td><td>하나 9/16, 신영 8/28, 대신 3/3</td></tr>
+      <tr class="sum"><td>2028E 하나 / 신영 / 대신</td><td class="num">2,431 / 1,404 / 1,469억</td><td class="num">695 / 261 / 162억</td><td class="num">532 / 245 / 135억</td><td class="num">1.4 / 2.4 / 2.3배</td><td class="num">6.3 / 13.6 / 24.8배</td><td>하나 2028E는 2019년 영업이익(583억)을 넘는 숫자</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">순금융자산 = 현금 156.0 + 당기손익공정가치 금융자산(유동) 30.0 + 기타유동금융자산 26.7 + 당기손익공정가치 금융자산(비유동, 수익증권) 263.2 − 단기차입금 279.0 − 리스부채 7.0 = 189.9억(2026-06-30 연결). 비유동 금융자산에는 CB 시설자금 미사용분 84억이 수익증권으로 들어 있다. 발행주식 12,377,758주(자기주식 547,464주 포함), PBR은 연결 자본총계 778.5억 기준 4.3배(네이버 표기 4.2배는 BPS 6,581원 기준). 2019년 고점 시총은 2020-08-07 종가 68,500원 × 당시 발행주식 10,624,095주.</p>
+  <div class="take"><span class="lbl">읽는 법</span><p>2027E PER 20배는 국내 통신장비주 안에서 흔한 숫자다. 문제는 2027E 영업이익 212억(하나)의 구성이다. 하나증권은 2026년 하반기 국내외 주파수 경매 이후 프론트홀 트랜시버 수요가 2019년을 넘는다고 보고, 2028E 영업이익을 695억으로 놓았다. 신영증권은 무선 없이 FTTH·장거리 전송 확대만으로 2027E 125억을 봤다. <b>둘의 차이 87억이 곧 "무선 사이클이 오느냐"의 값이다.</b> 여기에 데이터센터는 어느 증권사도 2027년 숫자에 유의미하게 넣지 않았다(신영은 "DC향 양산 매출 발생 시 기업가치 상승 트리거"로만 표현). 반대로 하락 시나리오의 앵커는 규제 기대가 없던 7월 30일 저점 13,300원(시총 1,646억, 2027E 컨센 PER 10배)이다.</p></div>
+</section>
+
+<section id="s3">
+  <div class="sec-h"><span class="sec-n">03</span><h2>비즈니스 모델: 밸류체인 어디에서 무엇을 파는가</h2></div>
+  <p>광트랜시버 밸류체인을 "InP 웨이퍼 → 레이저·검출기 칩 → 광소자 패키지(TOSA/ROSA) → 트랜시버 모듈 → 통신장비(기지국·라우터·스위치·OLT) → 통신사·데이터센터"로 나누면 오이솔루션은 <b>트랜시버 모듈 칸</b>에 서 있고, 2020년부터 <b>레이저칩 칸</b>을 내재화했다. 국내 트랜시버 업체 중 칩을 직접 만드는 곳은 여기뿐이다.</p>
+  <div class="vc">
+    <div class="c"><b>InP 웨이퍼</b>중국 점유율 50%+, 인듐 70%<div class="who">가격 +40~70%(2026)</div></div>
+    <div class="c me"><b>레이저칩(LD/EML)</b>10G·25G DML/EML 양산, 100G EML·CW 개발<div class="who">오이솔루션 소자부문 · Lumentum · Coherent · Sumitomo</div></div>
+    <div class="c"><b>패키지·기판</b>TO-CAN, 세라믹 기판<div class="who">RF머트리얼즈 등</div></div>
+    <div class="c me"><b>트랜시버 모듈</b>무선·FTTH·텔레콤·DC용<div class="who">오이솔루션 모듈부문 · InnoLight · Eoptolink · 빛과전자</div></div>
+    <div class="c"><b>통신장비</b>기지국·OLT·라우터<div class="who">삼성전자·노키아·에릭슨·시스코·시에나</div></div>
+    <div class="c"><b>망 운영자</b>통신사·MSO·하이퍼스케일러<div class="who">KT·SKT·LGU+·NTT·Verizon·AT&amp;T</div></div>
+  </div>
+
+  <div class="tbl-scroll"><table>
+    <caption>사업 부문과 매출 (연결, 억원, DART 주석 40·32)</caption>
+    <thead><tr><th>부문</th><th>파는 것</th><th class="num">2024 매출</th><th class="num">2025 매출</th><th class="num">1H26 매출</th><th class="num">2025 영업이익</th><th class="num">1H26 영업이익</th></tr></thead>
+    <tbody>
+      <tr><td><b>광통신 모듈</b></td><td>광트랜시버(BiDi·Duplex). 무선 프론트홀·백홀, FTTH OLT/ONU, 텔레콤 장거리(코히어런트 100G DCO), 데이터센터 100G, Smart SFP. 2025년 매출 비중 88.9%(별도)</td><td class="num">295.8</td><td class="num">537.4</td><td class="num">347.5</td><td class="num neg">-33.8</td><td class="num neg">-12.4</td></tr>
+      <tr><td><b>광통신 소자</b></td><td>LD 칩·TO·OSA. 자체 모듈에 넣는 내부거래 외에 중국 트랜시버 업체 등 외판. 2020년 3Q 양산, 월 180매 웨이퍼 캐파</td><td class="num">24.5</td><td class="num">36.4</td><td class="num">29.3</td><td class="num neg">-126.2</td><td class="num neg">-2.4</td></tr>
+      <tr class="sum"><td>합계</td><td></td><td class="num">320.3</td><td class="num">573.8</td><td class="num">376.8</td><td class="num neg">-160.0</td><td class="num neg">-14.8</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">소자부문 영업손실이 2025년 -126억에서 1H26 -2.4억으로 줄어든 것이 전사 턴어라운드의 절반이다. 원인은 둘이다. 2025년 4분기에 Chip 사업부 유·무형자산 24.6억을 손상 처리해 소자부문 감가상각비가 연 21.1억에서 반기 1.1억으로 줄었고, 자체 LD를 일본 FTTH 모듈에 넣기 시작하면서 칩 라인 가동이 매출로 이어졌다. 즉 <b>소자부문 영업손실이 1H25 -74.3억에서 1H26 -2.4억으로 72억 개선된 것 중 회계적 효과(감가상각 감소 약 10억)보다 실제 가동 효과가 크다.</b></p>
+
+  <h3>무엇을 어디에 파는가: 무선 90%에서 무선 44%로</h3>
+  <p>회사는 응용 시장별 매출을 공시하지 않는다. 증권사가 IR에서 받은 숫자를 이어 붙이면 2019~2020년 90%를 넘던 무선(기지국) 비중이 2025년 48%, 1Q26 44%로 내려왔고, 그 자리를 FTTH(일본 NTT)와 텔레콤(장거리 전송)이 채웠다.</p>
+  <div class="tbl-scroll"><table>
+    <caption>응용 시장별 매출 비중 (증권사 리포트 인용, 회사 IR 자료 기준)</caption>
+    <thead><tr><th>시장</th><th>제품·고객</th><th class="num">2020</th><th class="num">2023</th><th class="num">2024</th><th class="num">2025</th><th class="num">1Q26</th></tr></thead>
+    <tbody>
+      <tr><td><b>Wireless</b></td><td>5G 프론트홀·백홀 10G/25G. 삼성전자 네트워크(삼성 내 점유율 60%), 노키아, 에릭슨, 후지쯔, NEC</td><td class="num">69%</td><td class="num">81%</td><td class="num">62%</td><td class="num">48%</td><td class="num">44%</td></tr>
+      <tr><td><b>FTTH / MSO</b></td><td>10G EPON OLT(자체 LD), 10G C-band Tunable(세계 3번째). 일본 NTT, 국내 KT·LGU+, 미국 MSO</td><td class="num">26%</td><td class="num">9%</td><td class="num">12%</td><td class="num">23%</td><td class="num">28%</td></tr>
+      <tr><td><b>Telecom</b></td><td>장거리 전송 CWDM/DWDM, 100G 코히어런트 DCO(120km). 시스코, 시에나, 글로벌 광전송 장비사</td><td class="num">4%</td><td class="num">6%</td><td class="num">15%</td><td class="num">21%</td><td class="num">18%</td></tr>
+      <tr><td><b>Datacom</b></td><td>100G 양산, 200G·400G 샘플·퀄, 800G 라인업, 1.6T OSFP(OFC 2026 공개)</td><td class="num">-</td><td class="num">-</td><td class="num">3%</td><td class="num">2%</td><td class="num">-</td></tr>
+      <tr><td><b>Chip 외판·기타</b></td><td>LD 칩 중국향 등</td><td class="num">1%</td><td class="num">4%</td><td class="num">8%</td><td class="num">6%</td><td class="num">10%</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">2020 SK증권(2021-03-25), 2023 신한(2024-04-09), 2024 메리츠(2026-03-16), 2025 iM(2026-04-13), 1Q26 유진(2026-05-21, 유선 28%·텔레콤 DCI 18%·기타 10%). 리포트마다 분류가 조금씩 달라 합이 100%가 안 되는 해가 있다. 2019년 무선 매출은 1,772억이었고(유진 2020-02-03), 2025년 무선 매출은 메리츠 기준 263억이다. <b>무선이 2019년의 15%로 줄었는데 회사 전체는 27%까지 회복했다는 뜻이고, 그 차이가 유선 신규 고객이다.</b></p>
+
+  <h3>지역: 2026년 상반기는 일본이 절반</h3>
+  <div class="chart" id="ch-geo">
+    <p class="ct">지역별 반기 매출, 1H25 vs 1H26 (억원, 연결)</p>
+    <p class="cs">반기보고서 주석 32 지역별 정보. 막대에 손을 대면 증가율이 뜬다.</p>
+    <div class="legend"><span><i style="background:var(--c4)"></i>1H25</span><span><i style="background:var(--c1)"></i>1H26</span></div>
+    <svg></svg>
+  </div>
+  <div class="tbl-scroll"><table>
+    <thead><tr><th>지역</th><th class="num">2024</th><th class="num">2025</th><th class="num">1H25</th><th class="num">1H26</th><th class="num">YoY</th><th class="num">1H26 비중</th></tr></thead>
+    <tbody>
+      <tr><td>아시아 (일본 중심)</td><td class="num">95.4</td><td class="num">182.1</td><td class="num">92.3</td><td class="num">188.7</td><td class="num pos">+104.4%</td><td class="num">50.1%</td></tr>
+      <tr><td>국내</td><td class="num">138.2</td><td class="num">243.2</td><td class="num">125.8</td><td class="num">108.8</td><td class="num neg">-13.5%</td><td class="num">28.9%</td></tr>
+      <tr><td>미주</td><td class="num">59.4</td><td class="num">106.5</td><td class="num">64.6</td><td class="num">51.5</td><td class="num neg">-20.3%</td><td class="num">13.7%</td></tr>
+      <tr><td>유럽</td><td class="num">26.6</td><td class="num">41.8</td><td class="num">16.7</td><td class="num">27.7</td><td class="num pos">+66.1%</td><td class="num">7.3%</td></tr>
+      <tr class="sum"><td>합계</td><td class="num">320.3</td><td class="num">573.8</td><td class="num">299.4</td><td class="num">376.8</td><td class="num pos">+25.8%</td><td class="num">100%</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">일본 판매법인 OE Solutions Japan 경유 매출은 2024년 26.9억에서 2025년 120.5억으로 4.5배가 됐다(별도 주석 36). 한양증권(2025-12-11)은 스미토모가 NTT향 FTTH 트랜시버 내재 생산을 중단하고 외주로 넘기는 물량의 약 3분의 1만 반영된 상태에서 3Q25 누적 단일 품목 63억이라고 썼고, 대신증권은 2026년 아시아 매출 411억(+91%)을 추정했다. 1H26 188.7억은 그 경로 위에 있다. <b>반면 국내(-13.5%)와 미주(-20.3%)는 줄었다.</b> 국내 매출의 End User는 삼성전자를 거쳐 미·일 통신사이므로, 무선 사이클이 아직 오지 않았다는 뜻이다. 10% 이상 고객은 2025년 3곳(합계 52.3%)에서 1H26 4곳(65.0%)으로 집중이 심해졌고, 1H26 최대 고객(94.1억, 25.0%)은 2025년 3위 고객이었다. 고객명은 미기재이나 일본 FTTH 고객으로 추정된다.</p>
+
+  <h3>물량·판가 분해: 회복의 절반은 판가였다</h3>
+  <p>사업보고서는 별도 기준 모듈 매출과 평균판가(총매출액 ÷ 총매출수량)를 공시한다. 둘을 나누면 판매 수량이 나오고, 생산실적과 대조하면 맞는다.</p>
+  <div class="tbl-scroll"><table>
+    <thead><tr><th>기간</th><th class="num">모듈 매출 (별도)</th><th class="num">평균판가</th><th class="num">판매수량 (계산)</th><th class="num">생산실적</th><th class="num">물량 YoY</th><th class="num">판가 YoY</th><th class="num">매출 YoY</th></tr></thead>
+    <tbody>
+      <tr><td>2023</td><td class="num">440.9억</td><td class="num">162,832원</td><td class="num">270,787개</td><td class="num">237,465개</td><td class="num">-</td><td class="num">-</td><td class="num">-</td></tr>
+      <tr><td>2024</td><td class="num">290.2억</td><td class="num">177,561원</td><td class="num">163,454개</td><td class="num">158,294개</td><td class="num neg">-39.6%</td><td class="num pos">+9.0%</td><td class="num neg">-34.2%</td></tr>
+      <tr><td>2025</td><td class="num">509.9억</td><td class="num">189,827원</td><td class="num">268,629개</td><td class="num">277,138개</td><td class="num pos">+64.3%</td><td class="num pos">+6.9%</td><td class="num pos">+75.7%</td></tr>
+      <tr><td>1H25</td><td class="num">268.9억</td><td class="num">185,143원</td><td class="num">145,245개</td><td class="num">148,657개</td><td class="num">-</td><td class="num">-</td><td class="num">-</td></tr>
+      <tr class="sum"><td>1H26</td><td class="num">334.1억</td><td class="num">194,467원</td><td class="num">171,813개</td><td class="num">174,697개</td><td class="num pos">+18.3%</td><td class="num pos">+5.0%</td><td class="num pos">+24.2%</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">2023년과 2025년의 판매수량이 거의 같다(270,787 vs 268,629개). 2025년 매출 +75.7%는 2024년의 물량 급감(-39.6%)이 되돌아온 것이고, 2023년 대비로는 <b>물량 0%·판가 +16.6%</b>다. 판가 상승은 개별 제품 인상보다 저가 무선 10G 대신 FTTH OLT·코히어런트 100G 등 고단가 제품 비중이 늘어난 믹스 효과로 읽힌다(유진은 텔레콤향 평균판가를 18만원 수준으로 인용). 케이프증권은 2019~2020년 평균판가가 28만원에서 18만원으로 떨어졌다고 썼으니 아직 5G 피크 판가에는 못 미친다. 연간 캐파는 설비 38대 × 대당 95개 × 22일 × 12개월 = 953,040개이며 가동률은 2025년 29.1%, 1H26 36.7%다. <b>증설 없이 매출을 2.7배까지 늘릴 수 있는 캐파가 있다</b>는 뜻이고, 신영증권이 "중국산 규제 시 캐파 가치"를 말한 근거다. 다만 그 캐파는 무선·FTTH용 SFP 라인이지 800G OSFP 라인이 아니다.</p>
+
+  <h3>원가 구조: 레이저를 직접 만들면 원가의 30%가 바뀐다</h3>
+  <div class="tbl-scroll"><table>
+    <caption>원재료 매입 구성 (별도, 억원) 과 외부 LD 매입 단가</caption>
+    <thead><tr><th>품목</th><th class="num">2023</th><th class="num">2024</th><th class="num">2025</th><th class="num">1H25</th><th class="num">1H26</th><th>비고</th></tr></thead>
+    <tbody>
+      <tr><td><b>LD (레이저 칩)</b></td><td class="num">75.4 (44.3%)</td><td class="num">33.9 (26.5%)</td><td class="num">74.3 (31.0%)</td><td class="num">37.1 (31.0%)</td><td class="num">40.4 (24.4%)</td><td>외부 매입분만. 단가 27,408 → 14,731 → 18,317 → 17,295원</td></tr>
+      <tr><td>IC (DSP·드라이버)</td><td class="num">32.4 (19.1%)</td><td class="num">28.9 (22.6%)</td><td class="num">69.0 (28.8%)</td><td class="num">35.0 (29.2%)</td><td class="num">52.2 (31.5%)</td><td>브로드컴·마벨 등. 내재화 불가</td></tr>
+      <tr><td>PD (검출기)</td><td class="num">20.1</td><td class="num">12.6</td><td class="num">18.7</td><td class="num">9.3</td><td class="num">14.3</td><td></td></tr>
+      <tr><td>PCB·아이솔레이터·기구물·기타</td><td class="num">42.3</td><td class="num">52.3</td><td class="num">78.0</td><td class="num">38.2</td><td class="num">58.9</td><td>아이솔레이터 단가 3,524 → 4,969원(+41%)</td></tr>
+      <tr class="sum"><td>합계</td><td class="num">170.2</td><td class="num">127.6</td><td class="num">240.0</td><td class="num">119.6</td><td class="num">165.8</td><td>매입 ÷ 매출: 37% → 40% → 42% → 40% → 44%</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">하나증권은 "LD칩은 외부 매입 기준 원자재 매입액의 40~50%, 매출원가의 20~30%"(5/22), "1H26 LD 비중 24%는 10년 내 최저"(8/20)라고 썼다. 위 표의 2023년 44.3%가 그 상단이다. 다만 2024년 26.5%는 내재화가 아니라 무선 물량 급감으로 LD를 덜 산 결과이고, 2025년에 31%로 되올랐다가 1H26 24.4%로 내려간 것이 실제 내재화 효과다. 아이솔레이터 단가 +41%와 하나증권이 인용한 InP 웨이퍼 +40~70%는 "쇼티지" 논리의 근거이자, 칩을 사서 쓰는 경쟁사(빛과전자 등) 대비 오이솔루션의 상대 우위다. 반면 IC 비중이 19%에서 32%로 오른 것은 코히어런트·고속 제품이 늘수록 <b>DSP를 쥔 브로드컴·마벨에 마진을 떼어준다</b>는 구조를 보여준다.</p>
+</section>
+
+<section id="s4">
+  <div class="sec-h"><span class="sec-n">04</span><h2>실적 10년: 2019년의 유산과 4년의 적자</h2></div>
+  <p>2016~2018년 매출 770~815억에 영업이익률 0% 안팎이던 회사가 2019년 국내 5G 투자로 매출 2,103억·영업이익 583억을 한 해에 벌었다. 그 뒤 코로나로 해외 5G 투자가 밀리고 삼성전자의 글로벌 점유율이 내려가면서 2020년 1,032억, 2022년 770억, 2024년 320억까지 매출이 줄었다. 2019년에 확보한 자본(2019년 말 자본총계 1,393억)으로 레이저 공장을 짓고 4년 적자를 버텼고, 2025년 말 자본총계는 643억이다.</p>
+  <div class="chart" id="ch-ann">
+    <p class="ct">연간 매출·영업이익과 매출총이익률, 2016 ~ 2025 (억원, %)</p>
+    <p class="cs">막대는 매출, 주황 선은 영업이익(좌축), 점선은 매출총이익률(우축). 연결 기준.</p>
+    <div class="legend"><span><i style="background:var(--c1)"></i>매출</span><span><i style="background:var(--c2)"></i>영업이익</span><span><i style="background:var(--c3)"></i>매출총이익률</span></div>
+    <svg></svg>
+  </div>
+  <div class="tbl-scroll"><table>
+    <caption>연결 손익 (억원, DART fnlttSinglAcntAll)</caption>
+    <thead><tr><th>연도</th><th class="num">매출</th><th class="num">YoY</th><th class="num">GPM</th><th class="num">판관비</th><th class="num">R&amp;D</th><th class="num">영업이익</th><th class="num">OPM</th><th class="num">순이익</th><th class="num">영업CF</th><th class="num">자본총계</th></tr></thead>
+    <tbody id="ann-body"></tbody>
+  </table></div>
+  <p class="tnote">R&amp;D는 사업보고서 경상연구개발비(2023~2025만 원문 확인). 2019년 영업현금흐름 427억이 이 회사가 번 돈의 전부에 가깝고, 2022~2025년 4년간 영업현금흐름 합계는 -520억이다. 2025년 순손실 -270억 중 영업손실은 -160억이고 나머지 110억의 주된 항목은 CB 파생상품 평가손실 74억(주가 상승으로 전환권 가치가 커진 회계상 손실), Chip 사업부 손상 24.6억, 이자비용 31억이며 금융수익 59억이 일부 상쇄했다.</p>
+
+  <h3>분기: 2Q26은 1Q26보다 매출은 컸지만 마진은 낮았다</h3>
+  <div class="chart" id="ch-q">
+    <p class="ct">분기 매출과 매출총이익률·영업이익률, 1Q23 ~ 2Q26</p>
+    <p class="cs">막대 매출(좌축, 억원), 초록 점선 매출총이익률, 주황 선 영업이익률(우축, %). 4분기는 연간에서 3분기 누적을 뺀 값.</p>
+    <div class="legend"><span><i style="background:var(--c1)"></i>매출</span><span><i style="background:var(--c3)"></i>GPM</span><span><i style="background:var(--c2)"></i>OPM</span></div>
+    <svg></svg>
+  </div>
+  <div class="tbl-scroll"><table>
+    <caption>분기 손익 (억원)</caption>
+    <thead><tr><th>분기</th><th class="num">매출</th><th class="num">YoY</th><th class="num">매출총이익</th><th class="num">GPM</th><th class="num">판관비</th><th class="num">영업이익</th><th class="num">OPM</th><th class="num">순이익</th></tr></thead>
+    <tbody id="q-body"></tbody>
+  </table></div>
+  <p class="tnote">2Q26 매출총이익률 20.0%는 1Q26 25.0%보다 5%p 낮다. 하나·신영이 말한 재고자산 폐기손실 15억이 매출원가에 들어간 것으로 보이며, 이를 빼면 27.6%다(회사가 손익계산서에서 분리 공시한 것은 아니다). 2Q26 순손실 -24.2억은 남은 CB의 파생상품 평가손실 등 금융비용 31.9억이 원인이고, 1Q26 순이익 +15.7억은 파생상품 평가·처분이익 등 금융수익 116.9억이 금융비용 100.1억(콜옵션으로 CB를 되사며 생긴 사채상환손실 29.5억 포함)을 넘어서 만든 숫자다. <b>두 분기 순이익은 영업과 무관한 CB 회계가 만든 노이즈이고, 2Q26에 CB가 모두 사라졌으므로 3Q26부터는 영업이익과 순이익이 가까워진다.</b> 하나증권 3Q26 추정은 매출 198억, 영업이익 18억이다.</p>
+
+  <h3>비용 구조: 판관비 303억을 200억으로 줄여 놓았다</h3>
+  <div class="tbl-scroll"><table>
+    <thead><tr><th>항목 (연결, 억원)</th><th class="num">2023</th><th class="num">2024</th><th class="num">2025</th><th class="num">1H26</th><th class="num">1H26 연환산</th><th>비고</th></tr></thead>
+    <tbody>
+      <tr><td>매출</td><td class="num">460.0</td><td class="num">320.3</td><td class="num">573.8</td><td class="num">376.8</td><td class="num">753.6</td><td>단순 ×2</td></tr>
+      <tr><td>매출원가</td><td class="num">467.5</td><td class="num">368.8</td><td class="num">513.8</td><td class="num">292.5</td><td class="num">585.0</td><td>원가율 101.6% → 115.2% → 89.5% → 77.6%</td></tr>
+      <tr><td>판관비</td><td class="num">303.3</td><td class="num">255.0</td><td class="num">220.0</td><td class="num">99.1</td><td class="num">198.3</td><td>3년간 -35%</td></tr>
+      <tr><td>　그중 경상연구개발비</td><td class="num">187.0</td><td class="num">157.0</td><td class="num">123.0</td><td class="num">48.8</td><td class="num">97.6</td><td>매출 대비 40.6% → 49.0% → 21.4% → 13.0%</td></tr>
+      <tr><td>종업원 수 (기말)</td><td class="num">-</td><td class="num">-</td><td class="num">283명</td><td class="num">297명</td><td class="num"></td><td>2025 급여총액 137억, 1인 4,834만원</td></tr>
+      <tr><td>정부보조금 수령</td><td class="num">27.0</td><td class="num">26.9</td><td class="num">37.1</td><td class="num">0.2</td><td class="num"></td><td>25G 파장가변 레이저 과제 등</td></tr>
+      <tr class="sum"><td>손익분기 매출 (계산)</td><td class="num">-</td><td class="num">-</td><td class="num">약 2,100억</td><td class="num">약 890억</td><td class="num"></td><td>판관비 ÷ 매출총이익률</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">손익분기 매출 = 연환산 판관비 ÷ 매출총이익률. 2025년은 220 ÷ 10.5% = 2,095억이었으나 1H26은 198 ÷ 22.4% = 885억으로 내려왔다. 1H26 연환산 매출 754억과의 거리가 130억이고, 매출총이익률이 1Q26 수준(25%)이면 손익분기 매출은 793억이 된다. <b>하나증권 2026E 매출 774억·영업이익 21억은 정확히 이 산식 위에 있다.</b> R&amp;D 축소(187억 → 98억)는 하나증권이 "CPO향 고출력 LD 공개로 과제가 일단락됐다"고 설명했지만, 1.6T·ELSFP·100G EML을 동시에 개발하는 회사가 R&amp;D를 절반으로 줄인 것이 지속 가능한지는 확인이 필요하다.</p>
+
+  <h3>현금과 빚: 순금융자산 190억, 그러나 영업현금은 계속 나간다</h3>
+  <div class="tbl-scroll"><table>
+    <thead><tr><th>항목 (연결, 억원)</th><th class="num">2023말</th><th class="num">2024말</th><th class="num">2025말</th><th class="num">2026-06</th><th>비고</th></tr></thead>
+    <tbody>
+      <tr><td>현금 + 유동 금융자산</td><td class="num">-</td><td class="num">317.7</td><td class="num">305.4</td><td class="num">212.7</td><td>현금 156.0 + FVPL 30.0 + 기타 26.7</td></tr>
+      <tr><td>비유동 금융자산 (수익증권 등)</td><td class="num">-</td><td class="num">297.7</td><td class="num">238.1</td><td class="num">263.2</td><td>CB 시설자금 미사용 84억 포함</td></tr>
+      <tr><td>단기차입금</td><td class="num">340.0</td><td class="num">300.0</td><td class="num">279.0</td><td class="num">279.0</td><td>수출입은행 100억(3.6%) + 산업은행 179억(2.4~3.7%), 토지·건물 담보</td></tr>
+      <tr><td>전환사채 + 파생부채</td><td class="num">0</td><td class="num">247.4</td><td class="num">193.3</td><td class="num">0</td><td>2026-06 전량 전환·상환 완료</td></tr>
+      <tr><td>매출채권</td><td class="num">46.3</td><td class="num">67.2</td><td class="num">79.0</td><td class="num">160.1</td><td>6개월 새 2.0배. 매출 대비 회전일 50일 → 77일</td></tr>
+      <tr><td>재고자산</td><td class="num">279.1</td><td class="num">271.5</td><td class="num">264.2</td><td class="num">279.8</td><td>연매출의 절반. 2Q26 폐기 15억</td></tr>
+      <tr><td>영업활동현금흐름</td><td class="num neg">-73.6</td><td class="num neg">-248.7</td><td class="num neg">-118.3</td><td class="num neg">-61.7</td><td>1H25 -88.1</td></tr>
+      <tr><td>CAPEX (유형자산 취득)</td><td class="num">17.7</td><td class="num">24.5</td><td class="num">10.5</td><td class="num">2.9</td><td>레이저 증설 명목 CB 시설자금 84억 중 0.3억 집행</td></tr>
+      <tr class="sum"><td>부채비율</td><td class="num">36.4%</td><td class="num">84.4%</td><td class="num">86.1%</td><td class="num">52.6%</td><td>CB 전환으로 하락</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">회사의 유동성은 문제 없다. 그러나 매출채권 회전일이 77일로 늘어난 것과 영업현금흐름 적자가 4년 반째 이어지는 것은 "회계상 손익분기"와 "현금 손익분기"의 거리를 보여준다. 매출채권 증가분 81억은 일본 고객 결제 조건일 수도, 분기말 밀어내기일 수도 있어 3Q26 회수 여부를 봐야 한다. 신용등급(이크레더블)은 2022년 BBB에서 2025년 4월 B-("투기적")까지 내려왔다. CB 시설자금 84억을 2년간 쓰지 않은 것은 레이저 증설이 급하지 않다는 뜻이고, 회사가 "설비투자 계획 미기재"인 것과 맞는다.</p>
+</section>
+
+<section id="s5">
+  <div class="sec-h"><span class="sec-n">05</span><h2>성장 엔진 세 개와 각각의 시점</h2></div>
+  <p>주가에 들어 있는 성장 서사는 세 층이다. 지금 매출에 찍히는 것(일본 FTTH·장거리 전송), 증권사 추정에 들어 있는 것(무선 사이클 재개), 어느 추정에도 아직 없는 것(데이터센터 1.6T·CPO)이다. 수주잔고는 세 층 중 첫째만 담고 있다.</p>
+  <div class="tbl-scroll"><table>
+    <caption>수주 상황 (용역 제외, 억원, 사업·분기·반기보고서 II.4.다)</caption>
+    <thead><tr><th>기준일</th><th class="num">수주총액</th><th class="num">기납품</th><th class="num">수주잔고</th><th class="num">모듈</th><th class="num">소자</th><th>읽는 법</th></tr></thead>
+    <tbody>
+      <tr><td>2025-12-31</td><td class="num">759.9</td><td class="num">569.0</td><td class="num">190.9</td><td class="num">169.6</td><td class="num">21.3</td><td>연매출 574억의 4개월치</td></tr>
+      <tr><td>2026-03-31</td><td class="num">419.4</td><td class="num">179.2</td><td class="num">240.2</td><td class="num">223.8</td><td class="num">16.5</td><td>1분기 신규 수주 약 229억</td></tr>
+      <tr class="sum"><td>2026-06-30</td><td class="num">796.1</td><td class="num">374.7</td><td class="num">421.4</td><td class="num">400.7</td><td class="num">20.6</td><td>2분기 신규 수주 약 378억. 반기 매출의 1.1배</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">분기 신규 수주 = 기말 잔고 − 기초 잔고 + 당기 납품(매출). 2Q26 신규 수주 378억은 분기 매출 197억의 1.9배로, 하나증권이 "수주잔고 400억, 전반기 대비 2배"라고 쓴 근거다. 잔고 421억은 하반기 매출 추정(하나 397억)을 이미 넘는다. 다만 고객·납기 구성은 미기재이고, 아시아 매출 흐름으로 보아 대부분 일본 FTTH일 가능성이 높다.</p>
+
+  <h3>엔진 1 · 일본 FTTH와 장거리 전송: 이미 매출이다</h3>
+  <ul>
+    <li><b>NTT향 10G EPON OLT 트랜시버.</b> 스미토모의 내재 생산 중단·외주 이관 물량. 2025년 2분기 초도 → 1H26 양산은 초도 대비 2배 이상(메리츠). 자체 LD칩 적용으로 원가 개선. iM증권은 2026년 물량이 전년의 2배 이상, 하나증권은 "올해 매출의 20~30%가 일본 FTTH향"이라 했다.</li>
+    <li><b>미국 장거리 전송(80km 이상) 로우엔드 제품과 100G 코히어런트 DCO(120km).</b> 2025년부터 납품(사업보고서). 신영증권은 "글로벌 광전송 장비 기업향 장거리 트랜시버 매출 확대"를 두 번째 축으로 꼽았다. 텔레콤 비중 15% → 21%.</li>
+    <li><b>10G C-band 파장가변형(Tunable) 트랜시버.</b> 코히어런트·루멘텀에 이어 세계 3번째 독자 개발(2024-07). 2025년 초 미국 네트워크 장비사 신규 수주·납품(사업보고서 II.1). 2026년 리포트에서는 진행 상황 언급이 사라졌다.</li>
+  </ul>
+
+  <h3>엔진 2 · 무선 사이클 재개: 증권사 추정의 핵심, 아직 숫자에 없다</h3>
+  <ul>
+    <li><b>미국.</b> AWS-3 재경매(6월)·어퍼 C밴드 경매, AT&amp;T 5년간 2,500억달러 CAPEX(2026-03-10 발표, 직전 2년 대비 2배). 하나증권은 5G-SA·6G 전용 기지국이 LTE 대비 10~30% 수준만 깔려 있어 2019년보다 많은 프론트홀 트랜시버 수요가 온다고 본다. 2019년 무선 매출 1,772억의 재현이 2028E 영업이익 695억의 근거다.</li>
+    <li><b>국내.</b> 하나증권 9/16: 2027년 중 국내 주파수 경매 추진 가능성. 과기부 AI-RAN 선도사업(2개 연도) 이후 늦어도 2027년 말 대규모 수주 예상(8/20). 국내 무선향 광트랜시버 점유율 1위.</li>
+    <li><b>쇼티지 논리.</b> 중국산 소구경 InP 웨이퍼 +40~70%, LD칩·광모듈 수급 타이트. 글로벌 광업체가 서버용에 집중하면 기지국용 트랜시버는 공급 부족 → LD 내재화 업체가 가격 전가에 유리. 이 논리는 2Q26 매출총이익률 20%가 아직 뒷받침하지 않는다.</li>
+    <li><b>반증.</b> 1H26 국내 매출 -13.5%, 미주 -20.3%. 무선 사이클은 아직 회사 숫자에 없다. 2021~2022년에도 유진증권은 "하반기 글로벌 5G 투자 기대"를 6분기 연속 썼고 매출은 매 분기 컨센서스를 밑돌았다(2022년 1Q 컨센 221억 vs 실적 176억).</li>
+  </ul>
+
+  <h3>엔진 3 · 데이터센터 1.6T·CPO: 샘플 단계, 확정 고객 없음</h3>
+  <div class="tbl-scroll"><table>
+    <thead><tr><th>제품</th><th>상태 (2026-09 기준)</th><th>출처</th></tr></thead>
+    <tbody>
+      <tr><td>100G 데이터센터용</td><td>양산 단계. 2025-01 에치에프알·SK브로드밴드와 AI 기반 100G 검증 완료</td><td>한양 2025-12, 뉴스</td></tr>
+      <tr><td>200G·400G</td><td>글로벌 고객사 샘플링·퀄. 400G LR4 TOSA 개발 완료(사업보고서 R&amp;D 실적)</td><td>한양, 메리츠, DART</td></tr>
+      <tr><td>800G</td><td>"일부 샘플 대응"(메리츠). 회사는 "2026년 800G로 매출 기반 확보"(AI EXPO 5/8)라고 했으나 공시된 수주 없음</td><td>메리츠 3/16, 머니투데이 5/8</td></tr>
+      <tr><td>1.6T OSFP</td><td>OFC 2026(3/17~19) 공개. 인피니밴드 스위치·스마트NIC 호환성 내부 시험. "하반기 본격 투입" 목표</td><td>뉴스핌 3/13, 신영 8/28</td></tr>
+      <tr><td>ELSFP (CPO 외부광원)</td><td>O-band 20/23dBm 고출력. 3Q26부터 글로벌 고객사 샘플 공급 예정. 2027년 CPO 진입 목표</td><td>메리츠, 유안타 9/2, 신영</td></tr>
+      <tr><td>100G EML · 100mW CW 레이저</td><td>개발 추진(사업보고서 R&amp;D). 국내 최초 100G EML(회사 발표). 400mW급 ELSFP용 개발</td><td>DART, 머니투데이 5/8</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">데이터센터 서사의 핵심은 두 가지 비대칭이다. 첫째, 판가. 텔레콤향 평균판가 19만원 대 800G 약 400달러, 1.6T 700~800달러(유진 추정). 같은 캐파로 매출이 3~6배가 될 수 있다. 둘째, 광원. 엔비디아가 3월 2일 코히어런트·루멘텀에 각 20억달러를 넣어 InP 고출력 레이저 캐파를 선점했고, 중국 InnoLight·Eoptolink조차 DSP와 레이저는 미국 회사에 의존한다. 자체 레이저를 가진 트랜시버 업체는 드물다는 것이 유진·하나의 논리다. 반증도 두 가지다. 데이터센터 고객은 신뢰성·레퍼런스를 보고 대량 채택하는데 오이솔루션의 DC 양산 레퍼런스는 100G뿐이고(유진 5/21이 명시), 유진 6/11은 "CPO 외부광원은 샘플 단계라 CPO 양산 지연과 직접 관련은 제한적"이라며 오히려 노출이 작다고 썼다. <b>어느 증권사도 2027E에 데이터센터 매출을 유의미하게 넣지 않았다.</b></p>
+
+  <h3>미국의 중국산 트랜시버 규제: 기회의 크기와 실제 노출</h3>
+  <ul>
+    <li><b>내용.</b> 로이터(8/4): 트럼프 행정부·FCC가 중국산 "신형" 광트랜시버 수입 금지 초안 작성, 연내 발표 목표. Cignal AI: 대상은 400G 이상과 CPO용 ELSFP, 기존 인증 모델은 제외. 중국계가 데이터콤 광부품 매출의 약 60%, InnoLight 34%·Eoptolink·HG Genuine 합산 51%.</li>
+    <li><b>수혜자로 지목된 곳.</b> Lumentum, Broadcom, AAOI, Coherent, 위탁생산 Fabrinet·Sanmina·Jabil. 한국·대만·태국 업체는 언급 없음. Cignal AI는 "중국 밖 대체 캐파가 없어 실현 여부에 회의적"이라며 전망을 바꾸지 않았다.</li>
+    <li><b>오이솔루션 노출.</b> 미주 매출 1H26 51.5억(13.7%), 데이터콤 비중 2%. 규제가 실행돼도 수혜는 400G 이상 DC 제품이 미국 하이퍼스케일러 인증을 통과한 뒤의 일이다. 신영증권은 "국내에서 수혜 강도가 가장 클 것"이라 썼고 하나증권은 "내수 중심이라 수혜주 분류는 무리"라고 썼다. 8월 5일 상한가는 후자보다 전자를 샀다.</li>
+    <li><b>역풍.</b> InP 웨이퍼 중국 점유율 50% 이상, 인듐 70%. 중국이 원재료 수출을 조이면 레이저를 직접 만드는 회사가 더 아프다(신영).</li>
+  </ul>
+</section>
+
+<section id="s6">
+  <div class="sec-h"><span class="sec-n">06</span><h2>경쟁사 비교: 국내엔 상대가 없고, 세계엔 상대가 안 된다</h2></div>
+  <p>국내 상장사 중 광트랜시버를 만드는 곳은 오이솔루션·빛과전자·옵티코어 정도이고, 나머지는 광섬유(대한광통신), 패키지(RF머트리얼즈), 광계측(파이버프로), PON 반도체(자람테크놀로지), 무선장비(RFHIC·KMW·에치에프알·쏠리드) 등 <b>밸류체인 인접군</b>이다. 2025년 매출 기준 오이솔루션은 국내 광트랜시버 상장사 중 최대이지만 세계 시장 점유율은 0.18%다.</p>
+  <div class="tbl-scroll"><table>
+    <caption>국내 광통신·통신장비 인접군 (시총은 9/17 종가 기준, 실적은 DART 연결, 억원)</caption>
+    <thead><tr><th>회사</th><th>칸</th><th class="num">시총</th><th class="num">2025 매출</th><th class="num">2025 영업이익</th><th class="num">GPM</th><th class="num">1H26 매출</th><th class="num">1H26 영업이익</th><th class="num">PSR</th><th class="num">PBR</th></tr></thead>
+    <tbody id="peer-body"></tbody>
+  </table></div>
+  <p class="tnote">PSR = 시총 ÷ 2025 매출, PBR은 네이버 표기. 광통신 3사(오이솔루션·빛과전자·옵티코어)는 모두 2025년 영업적자이고 PSR 5.8~14.5배다. 같은 인접군에서 실제로 이익을 내는 RF머트리얼즈(PSR 12.7배, 1H26 영업이익 84.9억)와 파이버프로(PSR 9.9배)가 더 비싸다. 즉 <b>국내 광통신주 밸류에이션은 이익이 아니라 "AI 데이터센터 광 수요" 서사에 붙어 있고, 오이솔루션은 그 안에서 가장 낮은 편이다.</b> 대한광통신(PBR 25.6배)은 별도 서사(북미 광케이블)다.</p>
+
+  <h3>세계 시장: 모듈은 중국이, 마진은 칩이 가져간다</h3>
+  <div class="tbl-scroll"><table>
+    <caption>글로벌 광트랜시버·광원 업체 (2026-09 기준, 각사 실적 발표·시장 자료)</caption>
+    <thead><tr><th>회사</th><th>칸</th><th class="num">시가총액</th><th class="num">최근 매출</th><th class="num">성장률</th><th class="num">매출총이익률</th><th class="num">PER</th><th>비고</th></tr></thead>
+    <tbody>
+      <tr><td>InnoLight (中际旭创)</td><td>모듈, DC 점유율 27~34%</td><td class="num">1.09조 위안 (약 215조원)</td><td class="num">1H26 417.8억 위안</td><td class="num pos">+182%</td><td class="num">42%</td><td class="num">40배</td><td>1H26 순이익 136.5억 위안(+242%). 미국 매출 62%. 6/8 미 국방부 1260H 리스트</td></tr>
+      <tr><td>Eoptolink (新易盛)</td><td>모듈, DC 2위</td><td class="num">5,907억 위안 (약 117조원)</td><td class="num">1Q26 83.4억 위안</td><td class="num pos">+106%</td><td class="num">49%</td><td class="num">48배</td><td>수출 96%. 2025 매출 35억달러</td></tr>
+      <tr><td>Coherent</td><td>레이저·모듈</td><td class="num">553억달러</td><td class="num">FY4Q26 DC부문 16.2억달러</td><td class="num pos">+59%</td><td class="num">35%</td><td class="num">158~292배</td><td>엔비디아 20억달러 투자(3/2). YTD +53%</td></tr>
+      <tr><td>Lumentum</td><td>레이저(EML)·모듈</td><td class="num">약 800억달러</td><td class="num">FY4Q26 10.1억달러</td><td class="num pos">+109%</td><td class="num">50% (non-GAAP)</td><td class="num">128배</td><td>엔비디아 20억달러 투자. YTD +139%</td></tr>
+      <tr><td>Applied Optoelectronics</td><td>모듈(미국)</td><td class="num">83억달러</td><td class="num">2Q26 1.92억달러</td><td class="num pos">+86%</td><td class="num">-</td><td class="num">적자</td><td>800G 진입으로 리레이팅된 "신영의 비교 대상". YTD +203%</td></tr>
+      <tr class="sum"><td>오이솔루션</td><td>모듈 + LD칩</td><td class="num">3,342억원 (약 2.4억달러)</td><td class="num">1H26 376.8억원</td><td class="num pos">+26%</td><td class="num">22%</td><td class="num">적자</td><td>세계 점유율 0.18%(회사 인용, LightCounting)</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">InnoLight 1H26 매출 417.8억 위안은 약 8.2조원으로 오이솔루션 연매출의 140배다. 시장 규모는 LightCounting 기준 2025년 238억달러(이더넷 트랜시버 2024 +93%, 2025 +82%, 2026E +65%), 2026년 800G 4,900만개·1.6T 2,200만개 출하 전망이다. 회사가 반기보고서에 인용한 2026년 시장 42.7조원 중 데이터콤 31조(73%)이고, 오이솔루션 주력 시장인 무선 0.6조·FTTH 1.2조는 4%다.</p>
+
+  <div class="chart" id="ch-gpm">
+    <p class="ct">밸류체인 칸별 매출총이익률 (최근 회계연도 또는 분기, %)</p>
+    <p class="cs">막대에 손을 대면 기준 기간이 뜬다. 국내는 DART 2025 연결, 해외는 각사 공시·시장 자료.</p>
+    <svg></svg>
+  </div>
+  <p class="tnote">오이솔루션이 서 있는 "모듈" 칸은 국내에서는 마이너스(빛과전자 -22%, 옵티코어 3%)이고 중국에서는 42~49%다. 차이는 규모와 제품(800G 이상 DC용)이다. 오이솔루션의 1H26 22.4%는 국내 모듈 칸에서는 최상단이지만, 2019년 41.6%와 중국 업체 절반 수준이다. 사다리 맨 위 68%는 DSP를 파는 브로드컴이고, 레이저칩(루멘텀·코히어런트) 34~35%가 그 아래다. <b>오이솔루션이 레이저 내재화로 얻는 것은 "칩 칸의 마진을 안에 두는 것"이며, 그것이 2019년 GPM 41.6%를 2027년에 다시 만들 수 있느냐가 신영의 2027F GPM 34.3% 가정이다.</b></p>
+</section>
+
+<section id="s7">
+  <div class="sec-h"><span class="sec-n">07</span><h2>해자 검증: 찬성 근거와 반증을 나란히</h2></div>
+  <div class="grid2">
+    <div class="pane yes"><h4>해자가 있다는 근거</h4><ul>
+      <li><b>국내 유일 LD칩 내재화.</b> 2019년 유상증자 269억 중 180억으로 광주에 레이저 팹을 지었고 2020년 3Q 양산. 10G EML·25G DML 자체 칩을 FTTH·무선 모듈에 적용 중. 레이저 시장은 스미토모·미쓰비시·루멘텀·코히어런트·브로드컴 과점이라 국내 경쟁사는 살 수밖에 없다. 원가의 약 30%.</li>
+      <li><b>파장가변형 세계 3번째.</b> 10G C-band Tunable을 코히어런트·루멘텀 다음으로 독자 개발(자사 DBR + MZ 변조기 PIC, 특허 30여건). 100G DCO도 자사 기술.</li>
+      <li><b>인증 이력.</b> 삼성전자·노키아·에릭슨·시스코·시에나·NTT 등 장비사 승인은 국내 3~6개월, 해외 6~12개월 검증을 거친다(사업보고서). 한 번 들어가면 지속 구매. 삼성 내 무선 트랜시버 점유율 60%.</li>
+      <li><b>유휴 캐파.</b> 연 95만개 라인에 가동률 37%. 수요가 오면 증설 없이 대응. 2019년에 1년 만에 매출 2.6배를 소화한 이력.</li>
+      <li><b>DC용 고속 제품 국내 최선두.</b> 국내 경쟁사가 400G 상용화·800G 검증 단계일 때 1.6T 시스템 호환 시험, CPO용 400mW급 ELSFP 광원까지 자체(신영).</li>
+    </ul></div>
+    <div class="pane no"><h4>해자가 없다는 근거</h4><ul>
+      <li><b>고객 사이클에 완전 종속.</b> 2019년 2,103억 → 2024년 320억. 해자가 있는 회사는 매출이 6.6분의 1로 줄지 않는다. 사업보고서 스스로 "통신사 정책·주파수 경매·망 교체주기에 큰 영향"이라 쓴다. 판가도 고객이 정한다(연 1회 CR, 2019~20년 28만원 → 18만원).</li>
+      <li><b>세계 점유율 0.18%.</b> 2019년 Yole 조사에서 2%였던 점유율이 10분의 1이 됐다. 중국 2사가 DC 모듈의 절반을 쥐고 GPM 42~49%를 낸다. 규모의 경제에서 100배 차이.</li>
+      <li><b>DC 양산 레퍼런스 부재.</b> 100G 외 200G 이상은 전부 샘플·퀄. 하이퍼스케일러 직접 고객 없음. 하나증권조차 3월 12일에는 "800G·1.6T를 중점 개발하지 않은 무선 프론트홀 업체"라고 썼다.</li>
+      <li><b>고객 집중.</b> 1H26 상위 4개 고객 65%, 최대 고객 25%. 삼성전자 비중 50%(2023). 일본 FTTH도 사실상 단일 고객(NTT).</li>
+      <li><b>내재화의 한계.</b> IC(DSP·드라이버) 매입 비중 19% → 32%로 상승. 고속화할수록 브로드컴·마벨 의존이 커진다. 레이저칩도 100G EML은 아직 개발 중이며, 소자부문은 2025년 -126억 적자였다.</li>
+      <li><b>낮은 매출총이익률.</b> 1H26 22.4%는 5G 피크 41.6%의 절반. 해자가 있으면 물량이 3분의 1일 때도 마진이 유지된다. 2023~2024년은 GPM이 마이너스였다.</li>
+    </ul></div>
+  </div>
+  <div class="take"><span class="lbl">판정</span><p>해자는 "기술 해자"가 아니라 <b>"인증된 공급사 지위"</b>다. 장비사 승인을 받은 무선·FTTH 트랜시버 공급사로서 사이클이 오면 가장 먼저 물량을 받지만, 사이클이 가면 판가와 물량을 함께 잃는다. LD 내재화는 이 구조를 바꾸지 않고 사이클 안에서의 마진 진폭을 키운다(2019년 GPM 41.6%는 외부 LD로 냈다. 내재화 후 같은 사이클이면 더 높을 수 있다). 데이터센터 진입은 해자가 새로 생기는 일이 아니라, 아직 승인받지 못한 시장에 처음 도전하는 일이다.</p></div>
+</section>
+
+<section id="s8">
+  <div class="sec-h"><span class="sec-n">08</span><h2>주주와 자본: CB 250억이 남긴 것</h2></div>
+  <ul class="tl">
+    <li><span class="d">2024-07-11</span><span>1회차 사모 CB 250억 발행(표면 0%, 만기 1%, 전환가 12,508원, 리픽싱 하한 80%). 시설자금 84억(레이저 증설)·운영 166억. 주가 1만2천원대에서 발행주식의 19%에 해당하는 희석.</span></li>
+    <li><span class="d">2025-09-11</span><span>전환가 10,172원으로 하향(주가 하락 리픽싱). 전환 가능 주식 2,457,727주.</span></li>
+    <li><span class="d">2025-10 ~ 2026-06</span><span>주가 상승으로 사채권자가 1,753,663주 전환(권면의 71.4%). 4Q25 1,054,513주, 1Q26 591,011주, 2Q26 108,139주. 발행주식 10,624,095 → 12,377,758주(+16.5%).</span></li>
+    <li><span class="d">2026-02-09</span><span>회사 콜옵션(30% 한도)을 최대주주 박찬 1.5억·박환 1억·배주은 0.385억·박준태 0.115억·우리사주조합 0.387억 어치 지정. "안정적인 경영권 유지". 지정대가 1.66억, 전환 시 33,292주.</span></li>
+    <li><span class="d">2026-03-11</span><span>회사가 콜옵션으로 권면 71.6억을 74.0억에 만기 전 취득(자기사채). 사채상환손실 29.5억. 소각·재매각은 "이사회 결정 예정". 전환가 12,508원(4/13 상향) 기준 572,540주.</span></li>
+    <li><span class="d">2026-06-30</span><span>사채권자 보유 CB 잔액 0, 파생상품부채 0. 2025~1H26 누적 파생상품 순평가손실 약 126억(회계상). 부채비율 86% → 53%.</span></li>
+  </ul>
+
+  <h3>최대주주: 20.24% → 16.56%, 그중 99.2%가 담보</h3>
+  <div class="tbl-scroll"><table>
+    <thead><tr><th>주주</th><th>관계</th><th class="num">2025-01-01</th><th class="num">2025-12-31</th><th class="num">2026-09-02</th><th class="num">담보 제공</th><th class="num">대출</th></tr></thead>
+    <tbody>
+      <tr><td>박찬 (1949년생)</td><td>최대주주, 비상근 부회장</td><td class="num">2,150,701 (20.24%)</td><td class="num">1,996,822 (17.94%)</td><td class="num">1,958,568 (16.56%)</td><td class="num">1,943,822주 (99.2%)</td><td class="num">86.6억</td></tr>
+      <tr><td>박용관 (1949년생)</td><td>대표이사, 벨연구소 출신</td><td class="num">711,045 (6.69%)</td><td class="num">762,393 (6.85%)</td><td class="num">712,393 (6.02%)</td><td class="num">336,735주 (47%)</td><td class="num">15.0억</td></tr>
+      <tr><td>박환 (1951년생)</td><td>부사장(재무·기획), 친인척</td><td class="num">59,539</td><td class="num">62,113</td><td class="num">67,443 (0.57%)</td><td class="num">57,246주</td><td class="num">2.55억</td></tr>
+      <tr><td>배주은 · 박준태</td><td>배우자 · 아들(재무기획팀 차장)</td><td class="num">13,547</td><td class="num">8,610</td><td class="num">13,526</td><td class="num">-</td><td class="num">-</td></tr>
+      <tr class="sum"><td>합계</td><td></td><td class="num">27.62%</td><td class="num">25.42%</td><td class="num">23.26%</td><td class="num">2,337,803주 (19.76%)</td><td class="num">104.1억</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">담보는 전부 대신증권 일반담보대출, 이자 5.50%, 담보유지비율 180%, 3개월 단위 연장(현재 2026-08-21~11-20). 최초 계약은 2020~2021년(주가 5만원대)이고, 2023-05-24 발생한 담보계약을 2025-05-30에야 공시해 불성실공시 지정예고를 받았다(2025-07-08 지정유예로 미지정). 반대매매 기준가 = 대출 86.6억 × 1.8 ÷ 1,943,822주 = <b>약 8,020원</b>. 지금 주가의 30%라 당장의 위험은 아니지만, 2025년 4~9월 주가 9,000~10,000원 구간에서는 기준가에 근접했었다. 일가 합산 연 이자 약 5.7억을 배당 없는 회사의 대주주가 갚아야 하므로 주가가 오를 때 파는 유인이 구조적으로 있다.</p>
+
+  <h3>오르는 동안의 내부자 매매</h3>
+  <div class="tbl-scroll"><table>
+    <thead><tr><th>날짜</th><th>누가</th><th>무엇을</th><th class="num">주식수</th><th class="num">단가</th><th class="num">금액</th></tr></thead>
+    <tbody>
+      <tr><td>2024-12-26</td><td>박찬</td><td>장내 매도</td><td class="num">64,024</td><td class="num">-</td><td class="num">-</td></tr>
+      <tr><td>2025-02-02</td><td>박찬</td><td>장내 매도</td><td class="num">43,000</td><td class="num">-</td><td class="num">-</td></tr>
+      <tr><td>2025-12-19</td><td>박용관</td><td>장내 매도</td><td class="num">10,000</td><td class="num">약 15,000</td><td class="num">약 1.5억</td></tr>
+      <tr><td>2026-05-13</td><td>박용관 (대표이사)</td><td>장내 매도, 고점 4거래일 뒤</td><td class="num">50,000</td><td class="num">54,003</td><td class="num">27.0억</td></tr>
+      <tr><td>2026-08-31</td><td>박찬</td><td>장내 매도 (담보 일부 상환)</td><td class="num">10,000</td><td class="num">23,806</td><td class="num">2.4억</td></tr>
+      <tr><td>2026-03 (전환 시)</td><td>박찬·박환·배주은·박준태</td><td>CB 콜옵션 지정 → 전환</td><td class="num">+29,492</td><td class="num">10,172</td><td class="num">3.0억</td></tr>
+      <tr><td>2025-08-22</td><td>직원 30명</td><td>스톡옵션 부여 (2027-08부터 행사)</td><td class="num">59,000</td><td class="num">9,632</td><td class="num"></td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">출처: 임원·주요주주 특정증권 소유상황보고서, 대량보유상황보고서, 블로터(2025-02). 2024-12·2025-02 단가는 원문 미확인. 최대주주 일가는 주가 1만원에서 콜옵션으로 3만주를 받고, 5만원에서 대표이사가 5만주를 팔았다. 회사 자기주식 547,464주(4.42%) 중 438,464주는 "임직원 성과보상 목적 장기 활용", 소각 계획 없음. 2023년 주당 100원 배당 이후 무배당.</p>
+  <div class="take"><span class="lbl">읽는 법</span><p>CB 전환으로 재무는 깨끗해졌고(부채비율 53%, CB 0) 이것은 긍정적이다. 그러나 그 대가로 주주는 16.5% 희석을 치렀고, 회사가 되사온 자기사채 71.6억(57만주)이 "재매각" 결정을 기다리고 있으며, 최대주주 일가는 지분의 99%를 담보로 잡힌 채 지분율이 3년간 4%p 줄었다. <b>경영권 방어보다 대주주 유동성이 앞서는 구조</b>이며, 주가가 오를수록 매도·재매각 오버행이 커지는 방향이다. 감사인은 2026년 선일회계법인에서 삼정회계법인으로 바뀌었다(사유 미기재).</p></div>
+</section>
+
+<section id="s9">
+  <div class="sec-h"><span class="sec-n">09</span><h2>리스크</h2></div>
+  <div class="risk">
+    <div class="r"><span class="chip h">HIGH</span><div><div class="t">무선 사이클이 2027년에도 오지 않을 위험</div><div class="d">2027E 영업이익 212억(하나) 중 신영과의 차이 87억이 무선 몫이다. 2021~2022년 "하반기 글로벌 5G 투자"는 6분기 연속 미뤄졌다. 1H26 국내·미주 매출은 각각 -13.5%, -20.3%. 미국 경매·AT&amp;T CAPEX가 삼성전자 장비 수주 → 오이솔루션 트랜시버로 이어지는 데는 통상 2~4분기 시차가 있다.</div></div></div>
+    <div class="r"><span class="chip h">HIGH</span><div><div class="t">데이터센터·CPO 서사가 숫자가 되지 않을 위험</div><div class="d">1.6T·ELSFP는 샘플 단계, 확정 고객 0. DC 트랜시버는 신뢰성·레퍼런스로 대량 채택되며 오이솔루션의 레퍼런스는 100G뿐. 6~7월에 SemiAnalysis CPO 지연 보고서 하나로 주가가 -77% 갔던 것은 서사 의존도를 보여준다. 3Q26 ELSFP 샘플 결과가 부정적이면 같은 일이 반복된다.</div></div></div>
+    <div class="r"><span class="chip m">MID</span><div><div class="t">FCC 규제 기대의 소멸</div><div class="d">8월 5일 상한가의 근거는 초안 보도다. Cignal AI는 "실현에 회의적", 수혜자 명단에 한국 업체 없음. 규제가 좁게(신형 모델만) 나오거나 늦어지면 8월 이후 상승분(13,300 → 27,000원)의 근거가 약해진다. 반대로 중국의 InP·인듐 수출 통제는 레이저를 직접 만드는 회사에 원가 충격이다.</div></div></div>
+    <div class="r"><span class="chip m">MID</span><div><div class="t">고객 집중과 일본 단일 고객</div><div class="d">1H26 상위 4개 고객 65%, 아시아(일본) 50%. NTT FTTH 물량은 스미토모 이관분이라 이관이 끝나면 성장률이 꺾이고, NTT의 투자 사이클에 따라 변동한다. 국내는 삼성전자 비중 50%.</div></div></div>
+    <div class="r"><span class="chip m">MID</span><div><div class="t">현금 손익분기와 회계 손익분기의 거리</div><div class="d">영업현금흐름 2022~1H26 누적 -582억. 매출채권 회전일 50일 → 77일. 재고 280억(연매출의 절반, 2Q26 폐기 15억). 순금융자산 190억 중 263억이 비유동 수익증권이라 유동 현금은 213억 대 차입 279억이다. 3Q26에 매출채권이 안 돌면 운전자본 조달이 필요해진다.</div></div></div>
+    <div class="r"><span class="chip m">MID</span><div><div class="t">최대주주 담보·매도와 자기사채 오버행</div><div class="d">지분 99.2% 담보(반대매매 기준가 약 8,020원), 3년간 -4%p 매도, 대표이사 고점 매도 27억. 회사 보유 자기사채 71.6억은 재매각 시 572,540주(4.6%) 신규 공급. 우호 지분 23.3%에 자사주 4.4%로 경영권 방어는 가능하나 주주환원 여력은 없다.</div></div></div>
+    <div class="r"><span class="chip m">MID</span><div><div class="t">밸류에이션이 2028년 이익을 이미 반영</div><div class="d">2027E 컨센 PER 20.6배는 통신장비주 평균 수준이지만, 그 이익은 아직 매출에 없는 무선 수요를 전제한다. 실적이 하나증권 5월 추정(2026E OP 41억)에서 8월(21억)로 두 번 깎이는 동안 목표주가 60,000원은 유지됐다. 신영 35,000원은 지금 주가와 30% 거리.</div></div></div>
+    <div class="r"><span class="chip l">LOW</span><div><div class="t">환율·금리</div><div class="d">환율 10% 변동 시 세전손익 ±14.4억(USD 8.2, JPY 4.5, EUR 1.7). 일본 매출 확대로 엔화 노출 증가. 차입금은 전액 고정금리.</div></div></div>
+    <div class="r"><span class="chip l">LOW</span><div><div class="t">신용등급 B-와 감사인 교체</div><div class="d">이크레더블 기업신용등급 2022 BBB → 2023 BB+ → 2024 B+ → 2025 B-(투기적). 감사의견은 적정, 계속기업 불확실성 없음. 2026년 감사인 삼정으로 변경(사유 미기재). 3Q26 실적이 예상대로면 등급은 회복 방향.</div></div></div>
+  </div>
+</section>
+
+<section id="s10">
+  <div class="sec-h"><span class="sec-n">10</span><h2>증권사 추정치 비교</h2></div>
+  <p>2026년에 리포트를 낸 증권사는 7곳이고 투자의견·목표주가를 낸 곳은 하나(BUY 60,000)와 신영(매수 35,000) 둘이다. 나머지는 Not Rated다. 네이버 집계 목표주가 평균 47,500원은 이 둘의 평균이다. 하나증권 추정치가 3월 → 5월 → 8월 → 9월에 어떻게 바뀌었는지가 가장 중요한 정보다.</p>
+  <div class="tbl-scroll"><table>
+    <thead><tr><th>증권사 (일자)</th><th>의견 · TP</th><th class="num">2026E 매출</th><th class="num">2026E OP</th><th class="num">2027E 매출</th><th class="num">2027E OP</th><th class="num">2027E 순이익</th><th>근거·특이점</th></tr></thead>
+    <tbody>
+      <tr><td>하나 (3/26)</td><td>BUY 60,000 (타겟 PBR 12배)</td><td class="num">1,209억</td><td class="num">77억</td><td class="num">2,214억</td><td class="num">385억</td><td class="num">291억</td><td>AT&amp;T 2,500억달러, 2H26 역대 최고 OP 경신 가능</td></tr>
+      <tr><td>하나 (5/22)</td><td>BUY 60,000 유지</td><td class="num">767억</td><td class="num">41억</td><td class="num">1,284억</td><td class="num">220억</td><td class="num">162억</td><td>2026E 매출 -37% 하향. "무선통신장비주"</td></tr>
+      <tr><td>하나 (8/20)</td><td>BUY 60,000 유지</td><td class="num">774억</td><td class="num">21억</td><td class="num">1,267억</td><td class="num">212억</td><td class="num">156억</td><td>2028E 2,431억/695억. 3Q26 198억/18억</td></tr>
+      <tr><td>하나 (9/16)</td><td>BUY 60,000 유지</td><td class="num">774억</td><td class="num">21억</td><td class="num">1,267억</td><td class="num">212억</td><td class="num">-</td><td>"이미 쇼티지는 시작됐다". InP +40~70%</td></tr>
+      <tr><td>신영 (8/28)</td><td>매수 35,000 (PER 36배 × 2027F EPS 973)</td><td class="num">781억</td><td class="num neg">-5억</td><td class="num">1,124억</td><td class="num">125억</td><td class="num">120억</td><td>GPM 2026F 26.8% → 2027F 34.3%. 2028E 1,404/261</td></tr>
+      <tr><td>대신 (3/3)</td><td>N.R</td><td class="num">828억</td><td class="num neg">-8억</td><td class="num">1,268억</td><td class="num">101억</td><td class="num">66억</td><td>아시아 2026 411억(+91%). 2028E 1,469/162</td></tr>
+      <tr><td>iM (4/13)</td><td>NR</td><td class="num">835억</td><td class="num">65억</td><td class="num">-</td><td class="num">-</td><td class="num">-</td><td>2026E EPS 595, PER 69.7</td></tr>
+      <tr><td>메리츠 (3/16)</td><td>Not Rated</td><td class="num">816억</td><td class="num">61억</td><td class="num">-</td><td class="num">-</td><td class="num">-</td><td>NTT향 1H26 물량 2배 이상</td></tr>
+      <tr><td>유진 (5/21)</td><td>NR (관심종목)</td><td class="num">805억</td><td class="num">21억</td><td class="num">-</td><td class="num">-</td><td class="num">-</td><td>DC 양산 레퍼런스 부족 명시</td></tr>
+      <tr class="sum"><td>컨센서스 (FnGuide, 8월)</td><td>목표주가 평균 47,500</td><td class="num">767억</td><td class="num">41억</td><td class="num">1,284억</td><td class="num">220억</td><td class="num">162억</td><td>하나 8/20 리포트 인용</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">하나증권 2026E 영업이익은 6개월 동안 77억 → 41억 → 21억으로 깎였고 2027E도 385억 → 212억이다. 그동안 목표주가 60,000원은 그대로였다. 3월 리포트에는 "800G·1.6T를 중점 개발하지 않은 무선 업체"(3/12)와 "서버용 1.6T 개발 성공"(3/26)이 2주 간격으로 실렸다. 신영의 목표 PER 36배는 AAOI가 800G 대량 수주로 리레이팅됐던 시점의 배수를 빌린 것이라, <b>DC 매출이 없는 회사에 DC 회사의 배수를 적용한 셈</b>이다. 그럼에도 신영 35,000원은 2027F EPS 973원 기준이고, 하나 60,000원은 2028E EPS 4,301원 기준 14배에 해당한다.</p>
+</section>
+
+<section id="s11">
+  <div class="sec-h"><span class="sec-n">11</span><h2>투자 전 확인할 것 10가지</h2></div>
+  <div class="qs">
+    <div class="q"><div class="qh"><span class="qn">01</span><span class="qt">3Q26 영업이익이 실제 플러스인가, 매출총이익률이 25%로 돌아오는가</span></div><p class="why">하나 추정 3Q26 매출 198억·영업이익 18억. 2Q26 GPM 20%가 재고폐기 탓인지(제외 시 27.6%) 믹스 악화인지 3Q 숫자로 갈린다. 11월 중순 분기보고서.</p></div>
+    <div class="q"><div class="qh"><span class="qn">02</span><span class="qt">수주잔고 421억의 구성: 일본 FTTH가 얼마이고 납기가 언제인가</span></div><p class="why">잔고가 하반기 매출 추정을 넘는데, 대부분 일본이라면 2027년 성장은 NTT 이관 완료 시점에 꺾인다. IR에 직접 물을 항목.</p></div>
+    <div class="q"><div class="qh"><span class="qn">03</span><span class="qt">매출채권 160억이 3Q26에 회수되는가</span></div><p class="why">회전일 77일. 회수되면 영업현금흐름이 처음 플러스로 돌 수 있고, 안 되면 운전자본 조달 이슈.</p></div>
+    <div class="q"><div class="qh"><span class="qn">04</span><span class="qt">ELSFP 3Q26 샘플의 고객 인증 결과와 고객이 누구인가</span></div><p class="why">"해외 대형 고객과 협력"(사업보고서)이 하이퍼스케일러인지 스위치 벤더인지. 인증 통과 공시가 나오면 서사의 후반부가 시작되고, 없으면 CPO 지연 뉴스에 다시 -50% 노출.</p></div>
+    <div class="q"><div class="qh"><span class="qn">05</span><span class="qt">국내·미주 매출이 3Q26에 반등하는가</span></div><p class="why">1H26 국내 -13.5%, 미주 -20.3%. 무선 사이클 재개의 첫 증거는 삼성전자 경유 국내 매출 회복이다. 미국 AWS-3 경매 낙찰자의 장비 발주 시점 확인.</p></div>
+    <div class="q"><div class="qh"><span class="qn">06</span><span class="qt">FCC 규제의 실제 문안: 대상 속도·시행일·기존 인증 모델 처리</span></div><p class="why">"신형 모델만"이면 한국 업체 수혜는 미국 인증을 새로 받는 400G 이상 제품에 한정된다. 오이솔루션이 그 인증을 받고 있는지가 핵심.</p></div>
+    <div class="q"><div class="qh"><span class="qn">07</span><span class="qt">자기사채 71.6억(57만주)의 소각 여부</span></div><p class="why">소각이면 오버행 제거, 재매각이면 4.6% 신규 공급. 이사회 결정 공시를 기다릴 것.</p></div>
+    <div class="q"><div class="qh"><span class="qn">08</span><span class="qt">최대주주 담보대출 11월 20일 연장과 추가 매도 여부</span></div><p class="why">3개월마다 연장 공시. 상환 없이 연장이면 현상 유지, 장내 매도로 상환이면 수급 부담. 대량보유 보고서 지분율 추이(16.56%).</p></div>
+    <div class="q"><div class="qh"><span class="qn">09</span><span class="qt">LD칩 외판(중국 트랜시버 업체향)이 매출로 찍히는가</span></div><p class="why">소자부문 외부 매출 2025년 36억. "오딧 통과·납품 대기"(신한 2025-01)가 2년째다. 규제로 중국 업체가 미국 칩을 못 쓰게 되면 오히려 기회.</p></div>
+    <div class="q"><div class="qh"><span class="qn">10</span><span class="qt">R&amp;D 절반 감축(187억 → 연환산 98억)이 1.6T·100G EML 일정을 늦추지 않는가</span></div><p class="why">"과제 일단락"이 맞는지, 정부과제 종료로 보조금(2025년 37억)이 끊긴 것인지. 2026년 사업보고서 R&amp;D 실적 표와 대조.</p></div>
+  </div>
+  <div class="take"><span class="lbl">정리</span><p>1·2·3·5번은 11월 분기보고서와 IR로 확인되고, 4·6번은 뉴스로, 7·8번은 공시로 온다. <b>1~3번이 좋고 5번이 살아나면 하나증권 시나리오(2027E OP 212억)가 하한이 되고, 1번이 실패하면 신영 시나리오(2026E 적자 지속)와 7월 저점이 앵커가 된다.</b> 4·6번은 확인되면 리레이팅, 확인 안 돼도 지금 추정치에는 없는 항목이다.</p></div>
+</section>
+
+<section id="s12">
+  <div class="sec-h"><span class="sec-n">12</span><h2>데이터 출처와 계산 근거</h2></div>
+  <ul class="src">
+    <li><b>재무·사업 내용</b>: DART OpenAPI fnlttSinglAcntAll(연결, 2016~2026 분기·연간), 제23기 사업보고서(2026-03-19), 제24기 1분기·반기보고서(2026-05-15, 08-14) 원문(document.xml). 매출 구성·평균판가·생산능력·가동률·수주·R&amp;D·주주·CB·담보 항목은 원문 표를 그대로 옮겼다. 분기 4Q 값 = 연간 − 3Q 누적.</li>
+    <li><b>수시공시</b>: 최대주주변경수반 주식담보제공계약(2025-05-30 ~ 2026-08-31 정정), 대량보유상황보고서(2026-09-02), 전환사채 매수선택권 행사자 지정(2026-02-09), 만기전 사채취득(2026-03-11), 전환가액 조정(2025-09-11, 2026-04-13), 파생상품거래손실·손익구조변동(2026-02-06), 불성실공시 지정예고(2025-06-23)·미지정(2025-07-08), 주식매수선택권 부여(2025-08-22).</li>
+    <li><b>시세</b>: 네이버 일별시세(2018-01-02 ~ 2026-09-18), 통합시세 API(외국인 3.06%, 52주 고저, 컨센서스 목표가 47,500). 종가·시총은 9/17 기준(9/18 오전 27,650원). 2019년 12월 유·무상증자 수정주가.</li>
+    <li><b>증권사 리포트</b>: 텔레그램 아카이브 67건(2019-09 ~ 2026-09). 2026년 하나(1/14·3/12·3/26·5/22·8/20·9/16), 메리츠(3/16·3/25), iM(4/13), 유안타(4/3·9/2), 신영(8/28), 유진(5/21·6/11), 대신(3/3), 한양(2025-12-11), 한국IR협의회(2024-08-08), SK(2024-11-06), 신한(2024-04-09, 2025-01-24), 2019~2023 유진·신한·키움·케이프·SK·한화·하이. 9/16 하나 리포트는 아주경제 기사로 확인.</li>
+    <li><b>뉴스·시장</b>: 머니투데이(2026-05-08 AI EXPO 로드맵, 03-26 하나 TP), 뉴스핌(03-13 OFC), 아주경제(09-16), 이데일리(05-22, 08-05 상한가), 블로터(2025-02 지배구조), 경제타임스(InP 웨이퍼), 로이터·SDxCentral·Cignal AI·Counterpoint·TechTimes(FCC 규제, 2026-08), LightCounting(2026-03 시장 238억달러, 04 전망), The Standard·BigGo(InnoLight·Eoptolink 1H26), Yahoo Finance·24/7 Wall St(COHR·LITE·AAOI, 2026-07~09), stockanalysis·multiples.vc(중국 2사 시총·PER).</li>
+    <li><b>계산값(원문에 없는 것)</b>: PSR·EV·PER·PBR, 판매수량(= 별도 모듈 매출 ÷ 평균판가), 손익분기 매출(= 판관비 ÷ GPM), 매출채권 회전일(= 채권 ÷ 반기매출 × 182), 분기 신규 수주(= 잔고 증감 + 납품), 반대매매 기준가(= 대출 × 180% ÷ 담보주식수), 2Q26 재고폐기 제외 GPM(회사 미공시, 증권사 인용 15억 기준), 해외 업체 원화 환산(위안 197원, 달러 1,390원 개략). 경쟁사 시총은 네이버 현재가 기준 시총을 9/17 종가로 환산.</li>
+    <li><b>한계</b>: 응용시장별 매출·고객명·800G 이상 수주·캐파 증설 계획은 회사가 공시하지 않아 증권사 인용치로 대신했다. 2026-02·05월 담보계약 정정본 원문은 미확인. 하나증권 1/14 리포트는 아카이브에 없다.</li>
+  </ul>
+  <p class="foot">이 문서는 공개 자료를 정리한 개인 투자 참고용이며 특정 종목의 매수·매도를 권유하지 않는다. 수치는 2026-09-18 기준이고 이후 공시·시세로 달라질 수 있다. 오류를 발견하면 원문(DART 접수번호 20260319001159, 20260814002929)을 우선한다.</p>
+</section>
+
+</main>
+
+<script id="cd" type="application/json">{"annual": {"2016": {"rev": 797.2, "gp": 266.3, "sga": 219.1, "op": 47.2, "ni": 61.3, "assets": 899.3, "liab": 346.3, "equity": 552.9, "cash": 92.7, "cfo": -47.1, "capex": 69.6, "stdebt": 200.0, "cb": null, "inv": 176.6, "ar": 230.0, "finin": 3.5, "fincost": 4.3, "gpm": 33.4, "opm": 5.9}, "2017": {"rev": 765.9, "gp": 226.2, "sga": 245.4, "op": -19.2, "ni": -17.9, "assets": 960.6, "liab": 291.1, "equity": 669.5, "cash": 219.2, "cfo": 40.7, "capex": 41.8, "stdebt": 200.0, "cb": null, "inv": 188.4, "ar": 146.3, "finin": 1.3, "fincost": null, "gpm": 29.5, "opm": -2.5}, "2018": {"rev": 815.0, "gp": 274.0, "sga": 271.6, "op": 2.3, "ni": 25.8, "assets": 991.5, "liab": 311.1, "equity": 680.5, "cash": 110.7, "cfo": 11.4, "capex": 53.9, "stdebt": 194.0, "cb": null, "inv": 197.4, "ar": 189.7, "finin": 5.1, "fincost": null, "gpm": 33.6, "opm": 0.3}, "2019": {"rev": 2102.8, "gp": 874.5, "sga": 291.9, "op": 582.6, "ni": 460.7, "assets": 1843.7, "liab": 450.6, "equity": 1393.1, "cash": 442.6, "cfo": 427.3, "capex": 41.2, "stdebt": 270.0, "cb": null, "inv": 242.2, "ar": 331.4, "finin": 7.9, "fincost": null, "gpm": 41.6, "opm": 27.7}, "2020": {"rev": 1031.8, "gp": 404.9, "sga": 331.6, "op": 73.3, "ni": 123.5, "assets": 1951.8, "liab": 482.0, "equity": 1469.8, "cash": 400.7, "cfo": 258.4, "capex": 125.4, "stdebt": 360.0, "cb": null, "inv": 224.8, "ar": 148.5, "finin": 21.6, "fincost": null, "gpm": 39.2, "opm": 7.1}, "2021": {"rev": 986.8, "gp": 362.7, "sga": 346.1, "op": 16.5, "ni": 143.7, "assets": 2018.4, "liab": 425.4, "equity": 1593.0, "cash": 311.0, "cfo": 69.2, "capex": 95.8, "stdebt": 340.0, "cb": null, "inv": 333.3, "ar": 107.8, "finin": 89.1, "fincost": null, "gpm": 36.7, "opm": 1.7}, "2022": {"rev": 769.5, "gp": 241.4, "sga": 328.4, "op": -87.1, "ni": -59.8, "assets": 1879.2, "liab": 402.6, "equity": 1476.6, "cash": 232.9, "cfo": -79.8, "capex": 54.1, "stdebt": 340.0, "cb": null, "inv": 379.5, "ar": 109.4, "finin": 43.9, "fincost": null, "gpm": 31.4, "opm": -11.3}, "2023": {"rev": 460.0, "gp": -7.5, "sga": 303.3, "op": -310.8, "ni": -338.2, "assets": 1519.7, "liab": 405.5, "equity": 1114.2, "cash": 146.7, "cfo": -73.6, "capex": 17.7, "stdebt": 340.0, "cb": null, "inv": 279.1, "ar": 46.3, "finin": 63.9, "fincost": 25.5, "gpm": -1.6, "opm": -67.6}, "2024": {"rev": 320.3, "gp": -48.6, "sga": 255.0, "op": -303.6, "ni": -331.3, "assets": 1366.4, "liab": 625.4, "equity": 741.0, "cash": 51.6, "cfo": -248.7, "capex": 24.5, "stdebt": 300.0, "cb": 129.0, "inv": 271.5, "ar": 67.2, "finin": 63.1, "fincost": 70.1, "gpm": -15.2, "opm": -94.8}, "2025": {"rev": 573.8, "gp": 60.0, "sga": 220.0, "op": -160.0, "ni": -270.4, "assets": 1196.1, "liab": 553.4, "equity": 642.8, "cash": 153.1, "cfo": -118.3, "capex": 10.5, "stdebt": 279.0, "cb": 86.2, "inv": 264.2, "ar": 79.0, "finin": 59.0, "fincost": 142.8, "gpm": 10.5, "opm": -27.9}}, "quarterly": {"2018Q1": {"rev": 172.6, "gp": 40.3, "sga": 63.4, "op": -23.1, "ni": -20.0, "cash": 150.4, "stdebt": 200.0, "cb": null, "equity": 644.0, "inv": 193.3, "ar": 132.2, "finin": 1.0, "fincost": null, "gpm": 23.3, "opm": -13.4}, "2018Q2": {"rev": 186.5, "gp": 56.6, "sga": 58.5, "op": -1.9, "ni": 16.4, "cash": 173.0, "stdebt": 200.0, "cb": null, "equity": 661.0, "inv": 189.9, "ar": 118.8, "finin": 3.8, "fincost": null, "gpm": 30.3, "opm": -1.0}, "2018Q3": {"rev": 209.4, "gp": 83.8, "sga": 73.4, "op": 10.4, "ni": 10.7, "cash": 142.6, "stdebt": 194.0, "cb": null, "equity": 671.6, "inv": 197.2, "ar": 154.1, "finin": 1.1, "fincost": null, "gpm": 40.0, "opm": 5.0}, "2018Q4": {"rev": 246.6, "gp": 93.3, "sga": 76.3, "op": 16.9, "ni": 18.7, "finin": 0.9, "fincost": null, "cash": 110.7, "stdebt": 194.0, "cb": null, "equity": 680.5, "inv": 197.4, "ar": 189.7, "gpm": 37.8, "opm": 6.9}, "2019Q1": {"rev": 434.1, "gp": 167.2, "sga": 69.9, "op": 97.4, "ni": 96.4, "cash": 172.6, "stdebt": 194.0, "cb": null, "equity": 768.1, "inv": 240.0, "ar": 222.0, "finin": 1.3, "fincost": null, "gpm": 38.5, "opm": 22.4}, "2019Q2": {"rev": 560.4, "gp": 236.7, "sga": 71.4, "op": 165.3, "ni": 112.8, "cash": 192.0, "stdebt": 194.0, "cb": null, "equity": 882.0, "inv": 277.5, "ar": 317.7, "finin": 1.4, "fincost": null, "gpm": 42.2, "opm": 29.5}, "2019Q3": {"rev": 606.4, "gp": 270.8, "sga": 71.5, "op": 199.3, "ni": 156.2, "cash": 149.9, "stdebt": 190.0, "cb": null, "equity": 1041.0, "inv": 331.4, "ar": 276.1, "finin": 3.2, "fincost": null, "gpm": 44.7, "opm": 32.9}, "2019Q4": {"rev": 501.9, "gp": 199.8, "sga": 79.1, "op": 120.7, "ni": 95.2, "finin": 2.1, "fincost": null, "cash": 442.6, "stdebt": 270.0, "cb": null, "equity": 1393.1, "inv": 242.2, "ar": 331.4, "gpm": 39.8, "opm": 24.0}, "2020Q1": {"rev": 189.4, "gp": 65.0, "sga": 79.0, "op": -14.0, "ni": 1.7, "cash": 345.5, "stdebt": 270.0, "cb": null, "equity": 1354.1, "inv": 279.5, "ar": 174.6, "finin": 9.2, "fincost": null, "gpm": 34.3, "opm": -7.4}, "2020Q2": {"rev": 293.8, "gp": 126.4, "sga": 84.6, "op": 41.8, "ni": 37.9, "cash": 358.1, "stdebt": 370.0, "cb": null, "equity": 1391.7, "inv": 253.5, "ar": 278.5, "finin": 4.4, "fincost": null, "gpm": 43.0, "opm": 14.2}, "2020Q3": {"rev": 301.6, "gp": 133.5, "sga": 83.1, "op": 50.4, "ni": 45.1, "cash": 318.2, "stdebt": 360.0, "cb": null, "equity": 1436.4, "inv": 234.7, "ar": 195.6, "finin": 5.2, "fincost": null, "gpm": 44.3, "opm": 16.7}, "2020Q4": {"rev": 247.1, "gp": 80.0, "sga": 84.8, "op": -4.8, "ni": 38.7, "finin": 6.2, "fincost": null, "cash": 400.7, "stdebt": 360.0, "cb": null, "equity": 1469.8, "inv": 224.8, "ar": 148.5, "gpm": 32.4, "opm": -1.9}, "2021Q1": {"rev": 230.7, "gp": 83.5, "sga": 95.5, "op": -12.0, "ni": 25.7, "cash": 358.3, "stdebt": 360.0, "cb": null, "equity": 1464.3, "inv": 278.1, "ar": 144.5, "finin": 7.9, "fincost": null, "gpm": 36.2, "opm": -5.2}, "2021Q2": {"rev": 334.0, "gp": 140.2, "sga": 96.5, "op": 43.7, "ni": 60.9, "cash": 369.4, "stdebt": 360.0, "cb": null, "equity": 1525.3, "inv": 334.5, "ar": 105.4, "finin": 13.4, "fincost": null, "gpm": 42.0, "opm": 13.1}, "2021Q3": {"rev": 221.9, "gp": 88.5, "sga": 73.3, "op": 15.2, "ni": 24.8, "cash": 385.9, "stdebt": 340.0, "cb": null, "equity": 1551.5, "inv": 363.7, "ar": 77.9, "finin": 9.0, "fincost": null, "gpm": 39.9, "opm": 6.8}, "2021Q4": {"rev": 200.2, "gp": 50.5, "sga": 80.8, "op": -30.3, "ni": 32.3, "finin": 62.6, "fincost": null, "cash": 311.0, "stdebt": 340.0, "cb": null, "equity": 1593.0, "inv": 333.3, "ar": 107.8, "gpm": 25.2, "opm": -15.1}, "2022Q1": {"rev": 176.3, "gp": 58.2, "sga": 83.2, "op": -25.1, "ni": -10.9, "cash": 276.6, "stdebt": 340.0, "cb": null, "equity": 1550.6, "inv": 362.0, "ar": 79.8, "finin": 6.2, "fincost": null, "gpm": 33.0, "opm": -14.2}, "2022Q2": {"rev": 224.2, "gp": 76.5, "sga": 82.4, "op": -5.9, "ni": -5.1, "cash": 269.0, "stdebt": 340.0, "cb": null, "equity": 1516.5, "inv": 372.4, "ar": 111.2, "finin": 8.0, "fincost": null, "gpm": 34.1, "opm": -2.6}, "2022Q3": {"rev": 191.4, "gp": 69.3, "sga": 91.2, "op": -21.9, "ni": 7.6, "cash": 265.7, "stdebt": 340.0, "cb": null, "equity": 1527.3, "inv": 398.6, "ar": 109.4, "finin": 13.3, "fincost": null, "gpm": 36.2, "opm": -11.4}, "2022Q4": {"rev": 177.6, "gp": 37.4, "sga": 71.6, "op": -34.2, "ni": -51.3, "finin": 17.2, "fincost": null, "cash": 232.9, "stdebt": 340.0, "cb": null, "equity": 1476.6, "inv": 379.5, "ar": 109.4, "gpm": 21.1, "opm": -19.3}, "2023Q1": {"rev": 155.0, "gp": 20.7, "sga": 87.4, "op": -66.7, "ni": -52.2, "cash": 313.4, "stdebt": 340.0, "cb": null, "equity": 1407.5, "inv": 382.7, "ar": 64.7, "finin": 16.6, "fincost": null, "gpm": 13.4, "opm": -43.0}, "2023Q2": {"rev": 99.9, "gp": -6.8, "sga": 73.5, "op": -80.3, "ni": -94.5, "cash": 245.3, "stdebt": 340.0, "cb": null, "equity": 1313.3, "inv": 355.3, "ar": 79.1, "finin": 26.3, "fincost": null, "gpm": -6.8, "opm": -80.4}, "2023Q3": {"rev": 112.3, "gp": -12.3, "sga": 77.2, "op": -89.6, "ni": -81.9, "cash": 184.9, "stdebt": 340.0, "cb": null, "equity": 1231.8, "inv": 308.5, "ar": 70.9, "finin": 7.9, "fincost": 6.4, "gpm": -11.0, "opm": -79.8}, "2023Q4": {"rev": 92.8, "gp": -9.1, "sga": 65.2, "op": -74.3, "ni": -109.6, "finin": 15.5, "fincost": 9.2, "cash": 146.7, "stdebt": 340.0, "cb": null, "equity": 1114.2, "inv": 279.1, "ar": 46.3, "gpm": -9.8, "opm": -80.1}, "2024Q1": {"rev": 81.0, "gp": -2.6, "sga": 68.4, "op": -71.0, "ni": -59.0, "cash": 198.6, "stdebt": 340.0, "cb": null, "equity": 1045.0, "inv": 279.7, "ar": 59.8, "finin": 10.6, "fincost": 5.0, "gpm": -3.2, "opm": -87.7}, "2024Q2": {"rev": 74.9, "gp": -23.3, "sga": 61.1, "op": -84.4, "ni": -90.5, "cash": 137.1, "stdebt": 320.0, "cb": null, "equity": 937.3, "inv": 261.0, "ar": 52.9, "finin": 10.1, "fincost": 16.6, "gpm": -31.1, "opm": -112.7}, "2024Q3": {"rev": 73.2, "gp": -22.8, "sga": 68.2, "op": -91.0, "ni": -91.9, "cash": 74.6, "stdebt": 320.0, "cb": 124.1, "equity": 834.0, "inv": 251.2, "ar": 53.8, "finin": 6.2, "fincost": 8.5, "gpm": -31.1, "opm": -124.3}, "2024Q4": {"rev": 91.1, "gp": 0.1, "sga": 57.2, "op": -57.2, "ni": -89.9, "finin": 37.1, "fincost": 41.0, "cash": 51.6, "stdebt": 300.0, "cb": 129.0, "equity": 741.0, "inv": 271.5, "ar": 67.2, "gpm": 0.1, "opm": -62.8}, "2025Q1": {"rev": 140.7, "gp": 9.5, "sga": 66.3, "op": -56.9, "ni": -58.8, "cash": 152.5, "stdebt": 300.0, "cb": 134.5, "equity": 683.2, "inv": 270.4, "ar": 91.2, "finin": 7.1, "fincost": 9.4, "gpm": 6.8, "opm": -40.4}, "2025Q2": {"rev": 158.8, "gp": 15.2, "sga": 55.2, "op": -40.1, "ni": -48.4, "cash": 128.2, "stdebt": 299.0, "cb": 139.5, "equity": 634.6, "inv": 253.1, "ar": 102.8, "finin": 21.7, "fincost": 23.2, "gpm": 9.6, "opm": -25.3}, "2025Q3": {"rev": 130.7, "gp": 24.6, "sga": 53.8, "op": -29.2, "ni": -32.1, "cash": 140.2, "stdebt": 299.0, "cb": 145.1, "equity": 603.4, "inv": 275.9, "ar": 86.1, "finin": 5.3, "fincost": 8.6, "gpm": 18.8, "opm": -22.3}, "2025Q4": {"rev": 143.6, "gp": 10.8, "sga": 44.6, "op": -33.8, "ni": -131.1, "finin": 26.6, "fincost": 103.3, "cash": 153.1, "stdebt": 279.0, "cb": 86.2, "equity": 642.8, "inv": 264.2, "ar": 79.0, "gpm": 7.5, "opm": -23.5}, "2026Q1": {"rev": 180.3, "gp": 45.1, "sga": 51.2, "op": -6.1, "ni": 15.7, "cash": 174.0, "stdebt": 279.0, "cb": 6.9, "equity": 756.3, "inv": 267.9, "ar": 126.3, "finin": 116.9, "fincost": 100.1, "gpm": 25.0, "opm": -3.4}, "2026Q2": {"rev": 196.5, "gp": 39.2, "sga": 47.9, "op": -8.7, "ni": -24.2, "cash": 156.0, "stdebt": 279.0, "cb": 0.0, "equity": 778.5, "inv": 279.8, "ar": 160.1, "finin": 12.6, "fincost": 31.9, "gpm": 19.9, "opm": -4.4}}, "peers": [{"name": "대한광통신", "seg": "광섬유·케이블", "mcap": 25080, "rev25": 1394.5, "op25": -214.1, "gp25": 36.0, "rev26h": 833.0, "op26h": -30.0, "rev25h": 670.3, "op25h": -96.9, "pbr": "26.31배", "per": "N/A", "price": "16,130"}, {"name": "성호전자", "seg": "전원장치·광통신 자회사", "mcap": 16297, "rev25": 2315.8, "op25": 75.5, "gp25": 442.5, "rev26h": 1512.4, "op26h": 101.0, "rev25h": 1158.2, "op25h": 29.2, "pbr": "4.50배", "per": "5.11배", "price": "21,600"}, {"name": "RFHIC", "seg": "GaN RF 트랜지스터", "mcap": 14237, "rev25": 1858.0, "op25": 308.9, "gp25": 642.5, "rev26h": 945.7, "op26h": 189.2, "rev25h": 765.1, "op25h": 120.4, "pbr": "4.42배", "per": "49.80배", "price": "53,400"}, {"name": "RF머트리얼즈", "seg": "광모듈 패키지·기판", "mcap": 8158, "rev25": 640.8, "op25": 73.7, "gp25": 178.7, "rev26h": 450.8, "op26h": 84.9, "rev25h": 283.7, "op25h": 27.1, "pbr": "10.13배", "per": "70.30배", "price": "45,350"}, {"name": "케이엠더블유", "seg": "기지국 안테나·필터", "mcap": 7671, "rev25": 975.2, "op25": -237.7, "gp25": 130.0, "rev26h": 458.1, "op26h": -120.0, "rev25h": null, "op25h": null, "pbr": "5.47배", "per": "N/A", "price": "18,180"}, {"name": "쏠리드", "seg": "중계기·DAS", "mcap": 5674, "rev25": 2948.3, "op25": 332.8, "gp25": 1315.5, "rev26h": 1338.6, "op26h": 14.1, "rev25h": 1119.7, "op25h": 44.0, "pbr": "1.59배", "per": "11.10배", "price": "9,340"}, {"name": "빛과전자", "seg": "광트랜시버", "mcap": 4614, "rev25": 317.7, "op25": -165.3, "gp25": -70.0, "rev26h": 114.0, "op26h": -38.0, "rev25h": 164.4, "op25h": -59.5, "pbr": "4.73배", "per": "N/A", "price": "4,095"}, {"name": "파이버프로", "seg": "광계측·광부품", "mcap": 4314, "rev25": 434.7, "op25": 101.2, "gp25": 186.0, "rev26h": 276.2, "op26h": 74.5, "rev25h": 174.9, "op25h": 33.2, "pbr": "8.89배", "per": "33.21배", "price": "13,130"}, {"name": "오이솔루션", "seg": "광트랜시버 + LD칩", "mcap": 3342, "rev25": 573.8, "op25": -160.0, "gp25": 60.0, "rev26h": 376.8, "op26h": -14.8, "rev25h": 299.4, "op25h": -97.0, "pbr": "4.22배", "per": "N/A", "price": "27,000"}, {"name": "우리로", "seg": "광통신 부품·PON", "mcap": 3077, "rev25": 424.7, "op25": -6.8, "gp25": 80.0, "rev26h": 292.5, "op26h": 40.2, "rev25h": 189.6, "op25h": -12.9, "pbr": "8.55배", "per": "99.52배", "price": "7,020"}, {"name": "옵티코어", "seg": "광트랜시버(전송망)", "mcap": 2067, "rev25": 215.1, "op25": -59.3, "gp25": 6.5, "rev26h": 152.9, "op26h": -25.3, "rev25h": 51.9, "op25h": -36.8, "pbr": "18.74배", "per": "N/A", "price": "8,450"}, {"name": "에치에프알", "seg": "프론트홀 장비", "mcap": 1690, "rev25": 1419.8, "op25": -15.8, "gp25": 280.1, "rev26h": 402.2, "op26h": -132.0, "rev25h": 682.6, "op25h": 10.3, "pbr": "1.36배", "per": "N/A", "price": "12,700"}, {"name": "라이콤", "seg": "광증폭기·광섬유레이저", "mcap": 1497, "rev25": 176.9, "op25": 5.8, "gp25": 54.0, "rev26h": 72.3, "op26h": -7.5, "rev25h": 63.1, "op25h": -15.3, "pbr": "7.42배", "per": "170.33배", "price": "4,890"}, {"name": "자람테크놀로지", "seg": "PON 반도체", "mcap": 1076, "rev25": 106.4, "op25": -70.6, "gp25": 27.5, "rev26h": 112.8, "op26h": -18.6, "rev25h": 58.0, "op25h": -29.4, "pbr": "1.86배", "per": "N/A", "price": "15,590"}, {"name": "우리넷", "seg": "광전송장비·PON", "mcap": 1012, "rev25": 755.1, "op25": 19.5, "gp25": 213.3, "rev26h": 341.8, "op26h": -34.8, "rev25h": 402.5, "op25h": 17.9, "pbr": "1.08배", "per": "N/A", "price": "9,370"}, {"name": "코위버", "seg": "광전송장비", "mcap": 578, "rev25": 626.0, "op25": 3.1, "gp25": 189.0, "rev26h": 243.8, "op26h": -34.6, "rev25h": 229.9, "op25h": -25.3, "pbr": "0.36배", "per": "21.36배", "price": "5,900"}], "weekly": [["20180105", 10089, 154841], ["20180112", 9581, 382905], ["20180119", 9268, 148213], ["20180126", 9345, 100867], ["20180202", 9658, 166375], ["20180209", 9697, 162884], ["20180214", 9658, 128682], ["20180223", 9307, 195626], ["20180302", 8563, 75045], ["20180309", 8524, 95425], ["20180316", 8994, 283676], ["20180323", 8368, 86102], ["20180330", 8955, 474229], ["20180406", 8681, 55283], ["20180413", 8876, 79172], ["20180420", 9424, 439328], ["20180427", 8837, 54743], ["20180504", 8798, 78187], ["20180511", 8446, 75298], ["20180518", 8055, 38985], ["20180525", 8016, 29054], ["20180601", 8329, 60198], ["20180608", 8368, 47806], ["20180615", 8133, 45980], ["20180622", 7758, 20651], ["20180629", 7820, 22003], ["20180706", 7648, 36989], ["20180713", 7899, 32747], ["20180720", 8016, 31681], ["20180727", 8094, 30452], ["20180803", 8329, 13183], ["20180810", 8486, 63961], ["20180817", 8524, 27756], ["20180824", 8837, 110165], ["20180831", 10166, 131008], ["20180907", 11027, 411003], ["20180914", 11144, 173867], ["20180921", 11027, 132813], ["20180928", 11301, 119255], ["20181005", 10245, 50885], ["20181012", 9737, 75404], ["20181019", 9893, 62773], ["20181026", 9384, 56931], ["20181102", 10166, 157555], ["20181109", 10362, 77628], ["20181116", 10988, 168634], ["20181123", 12043, 301679], ["20181130", 12043, 216164], ["20181207", 11301, 145997], ["20181214", 11496, 94188], ["20181221", 11809, 422736], ["20181228", 13295, 475891], ["20190104", 13921, 283114], ["20190111", 15054, 451253], ["20190118", 14664, 165096], ["20190125", 15915, 123597], ["20190201", 14312, 98929], ["20190208", 14859, 92792], ["20190215", 16931, 265293], ["20190222", 16188, 191341], ["20190228", 15485, 208805], ["20190308", 16149, 225881], ["20190315", 16697, 207640], ["20190322", 20607, 328005], ["20190329", 19825, 225314], ["20190405", 20724, 1695132], ["20190412", 22327, 616605], ["20190419", 24517, 396254], ["20190426", 23618, 106047], ["20190503", 26981, 185652], ["20190510", 26668, 203863], ["20190517", 41605, 1183656], ["20190524", 45672, 628085], ["20190531", 43951, 511102], ["20190607", 46767, 761661], ["20190614", 43561, 233929], ["20190621", 43561, 655983], ["20190628", 41605, 217831], ["20190705", 43091, 236309], ["20190712", 53884, 954623], ["20190719", 52397, 270540], ["20190726", 52163, 484251], ["20190802", 50990, 292302], ["20190809", 54744, 627338], ["20190816", 44968, 842341], ["20190823", 44030, 594508], ["20190830", 46923, 2148497], ["20190906", 47001, 609964], ["20190911", 44030, 276751], ["20190920", 45203, 335796], ["20190927", 43404, 116261], ["20191004", 43248, 114049], ["20191011", 40041, 199169], ["20191018", 39259, 159434], ["20191025", 36404, 322962], ["20191101", 40120, 212289], ["20191108", 37578, 163133], ["20191115", 39979, 154334], ["20191122", 35297, 186935], ["20191129", 37258, 91782], ["20191206", 40819, 185866], ["20191213", 41299, 233816], ["20191220", 42980, 177115], ["20191227", 48650, 249047], ["20200103", 51300, 312510], ["20200110", 49600, 182500], ["20200117", 50100, 193806], ["20200123", 49650, 260072], ["20200131", 42550, 343848], ["20200207", 43250, 215264], ["20200214", 47950, 439971], ["20200221", 43600, 248896], ["20200228", 35700, 438733], ["20200306", 40100, 349235], ["20200313", 33400, 581835], ["20200320", 35750, 571273], ["20200327", 34900, 499586], ["20200403", 39400, 386834], ["20200410", 40000, 204612], ["20200417", 42300, 363280], ["20200424", 40450, 204872], ["20200429", 39400, 199033], ["20200508", 42050, 248085], ["20200515", 40100, 126467], ["20200522", 40650, 336837], ["20200529", 43050, 369726], ["20200605", 44800, 249830], ["20200612", 41150, 275558], ["20200619", 40850, 112111], ["20200626", 44350, 3800353], ["20200703", 45850, 266559], ["20200710", 49650, 540262], ["20200717", 61300, 762480], ["20200724", 60600, 475680], ["20200731", 59800, 281718], ["20200807", 68500, 2190844], ["20200814", 64600, 395103], ["20200821", 57200, 271818], ["20200828", 64200, 1031423], ["20200904", 67100, 674617], ["20200911", 65800, 195164], ["20200918", 63300, 144399], ["20200925", 53600, 201530], ["20200929", 56300, 176135], ["20201008", 57000, 93259], ["20201016", 51200, 169142], ["20201023", 45700, 241223], ["20201030", 43750, 144207], ["20201106", 50500, 197642], ["20201113", 50200, 148141], ["20201120", 51900, 219540], ["20201127", 52300, 133652], ["20201204", 54600, 282625], ["20201211", 55500, 82292], ["20201218", 55600, 83940], ["20201224", 53900, 117610], ["20201230", 55900, 125596], ["20210108", 57600, 458761], ["20210115", 55100, 119339], ["20210122", 54200, 96437], ["20210129", 50100, 153924], ["20210205", 50000, 66384], ["20210210", 47950, 83446], ["20210219", 53900, 118514], ["20210226", 45850, 208417], ["20210305", 45400, 119575], ["20210312", 45300, 66421], ["20210319", 46850, 52368], ["20210326", 47050, 42283], ["20210402", 47550, 68677], ["20210409", 45150, 57712], ["20210416", 46400, 95345], ["20210423", 45500, 41305], ["20210430", 43550, 54634], ["20210507", 41650, 42694], ["20210514", 40450, 61470], ["20210521", 39700, 58267], ["20210528", 40100, 79829], ["20210604", 45200, 122903], ["20210611", 45000, 59961], ["20210618", 48300, 309546], ["20210625", 45100, 55360], ["20210702", 43950, 55338], ["20210709", 42300, 103210], ["20210716", 42950, 53622], ["20210723", 43900, 163747], ["20210730", 41650, 46536], ["20210806", 42150, 30760], ["20210813", 39950, 105152], ["20210820", 36300, 91562], ["20210827", 38400, 36373], ["20210903", 39000, 23641], ["20210910", 38550, 32986], ["20210917", 37700, 30545], ["20210924", 37000, 38832], ["20211001", 34050, 71611], ["20211008", 33850, 40995], ["20211015", 33900, 31297], ["20211022", 34500, 30241], ["20211029", 33300, 54429], ["20211105", 33100, 28716], ["20211112", 32150, 35307], ["20211119", 32250, 163676], ["20211126", 32900, 152652], ["20211203", 31900, 56043], ["20211210", 34200, 89265], ["20211217", 33450, 31987], ["20211224", 33450, 19444], ["20211230", 35000, 53974], ["20220107", 33400, 17955], ["20220114", 31550, 36226], ["20220121", 30750, 30673], ["20220128", 28350, 80227], ["20220204", 28800, 29741], ["20220211", 27150, 60552], ["20220218", 28000, 23326], ["20220225", 27400, 27270], ["20220304", 28300, 27824], ["20220311", 28000, 16186], ["20220318", 28450, 26225], ["20220325", 27900, 28095], ["20220401", 29900, 48200], ["20220408", 29500, 24644], ["20220415", 28450, 16650], ["20220422", 28600, 34297], ["20220429", 28650, 27718], ["20220506", 29700, 118826], ["20220513", 30100, 91328], ["20220520", 28750, 29045], ["20220527", 27950, 28528], ["20220603", 28750, 43578], ["20220610", 29900, 158494], ["20220617", 26700, 38264], ["20220624", 22750, 37977], ["20220701", 22300, 24024], ["20220708", 22150, 23274], ["20220715", 21550, 16228], ["20220722", 23400, 29978], ["20220729", 23300, 17482], ["20220805", 24750, 40812], ["20220812", 23850, 19208], ["20220819", 23000, 7601], ["20220826", 22350, 9329], ["20220902", 23750, 74044], ["20220908", 23450, 18962], ["20220916", 21500, 25166], ["20220923", 20450, 53534], ["20220930", 16550, 38075], ["20221007", 17450, 14787], ["20221014", 16150, 27558], ["20221021", 16200, 7955], ["20221028", 15750, 10895], ["20221104", 15750, 29713], ["20221111", 16650, 46809], ["20221118", 17550, 16532], ["20221125", 17250, 7830], ["20221202", 17400, 57802], ["20221209", 19600, 548031], ["20221216", 20500, 183706], ["20221223", 18700, 56930], ["20221229", 17600, 53728], ["20230106", 17850, 36249], ["20230113", 18100, 40169], ["20230120", 18400, 39754], ["20230127", 19170, 79612], ["20230203", 19540, 54102], ["20230210", 18820, 55668], ["20230217", 18700, 21311], ["20230224", 18720, 29821], ["20230303", 19170, 38221], ["20230310", 19050, 60596], ["20230317", 17810, 34724], ["20230324", 18230, 46017], ["20230331", 20700, 114339], ["20230407", 19000, 43178], ["20230414", 18200, 36536], ["20230421", 17490, 24104], ["20230428", 16340, 23047], ["20230504", 16240, 16232], ["20230512", 16290, 16589], ["20230519", 15870, 31679], ["20230526", 15500, 15661], ["20230602", 16620, 146513], ["20230609", 16890, 62532], ["20230616", 16510, 29409], ["20230623", 15830, 21368], ["20230630", 15740, 31512], ["20230707", 14830, 46073], ["20230714", 14530, 23901], ["20230721", 13790, 47859], ["20230728", 12510, 22280], ["20230804", 13170, 48973], ["20230811", 13440, 11665], ["20230818", 12860, 13382], ["20230825", 13870, 18045], ["20230901", 14250, 19458], ["20230908", 13460, 20168], ["20230915", 16170, 1899966], ["20230922", 15240, 401050], ["20230927", 14190, 63358], ["20231006", 13400, 23044], ["20231013", 13260, 37816], ["20231020", 12460, 48703], ["20231027", 11900, 26788], ["20231103", 12240, 18076], ["20231110", 12050, 10506], ["20231117", 12370, 18112], ["20231124", 12530, 6797], ["20231201", 12190, 9235], ["20231208", 12290, 10608], ["20231215", 12800, 36262], ["20231222", 12820, 23241], ["20231228", 12850, 23136], ["20240105", 13010, 17058], ["20240112", 13710, 74327], ["20240119", 15250, 231790], ["20240126", 14550, 147761], ["20240202", 14300, 40842], ["20240208", 14250, 16965], ["20240216", 14180, 30191], ["20240223", 15540, 80525], ["20240229", 14300, 39365], ["20240308", 13490, 24177], ["20240315", 12830, 109401], ["20240322", 13820, 56898], ["20240329", 13390, 15770], ["20240405", 12740, 19117], ["20240412", 12200, 35577], ["20240419", 12650, 18779], ["20240426", 12440, 9238], ["20240503", 12850, 21771], ["20240510", 12410, 21896], ["20240517", 12310, 28861], ["20240524", 12280, 14047], ["20240531", 11690, 23108], ["20240607", 11560, 9646], ["20240614", 11000, 84397], ["20240621", 10580, 23385], ["20240628", 10550, 6260], ["20240705", 11760, 78291], ["20240712", 12240, 62875], ["20240719", 11650, 22429], ["20240726", 11030, 12897], ["20240802", 10830, 17565], ["20240809", 10700, 26530], ["20240816", 10800, 17101], ["20240823", 11510, 57073], ["20240830", 11190, 14259], ["20240906", 10710, 25178], ["20240913", 10810, 8904], ["20240920", 10810, 3379], ["20240927", 11040, 8215], ["20241004", 10600, 5410], ["20241011", 10460, 19965], ["20241018", 10250, 13244], ["20241025", 10000, 5482], ["20241101", 10020, 7253], ["20241108", 10820, 48624], ["20241115", 10590, 10965], ["20241122", 10220, 14744], ["20241129", 10070, 11157], ["20241206", 9720, 27586], ["20241213", 9900, 12664], ["20241220", 9790, 7989], ["20241227", 10320, 192792], ["20250103", 10560, 21192], ["20250110", 10280, 6374], ["20250117", 10850, 22026], ["20250124", 14000, 400148], ["20250131", 13970, 162786], ["20250207", 12610, 64897], ["20250214", 12750, 62416], ["20250221", 12280, 60448], ["20250228", 11300, 24714], ["20250307", 10450, 64489], ["20250314", 10160, 7617], ["20250321", 10060, 10297], ["20250328", 9290, 16478], ["20250404", 9000, 16491], ["20250411", 8410, 9713], ["20250418", 8720, 7732], ["20250425", 8950, 20142], ["20250502", 9350, 17815], ["20250509", 9610, 18943], ["20250516", 10090, 30374], ["20250523", 9200, 37045], ["20250530", 10890, 572156], ["20250605", 10190, 39975], ["20250613", 9940, 31292], ["20250620", 10400, 60717], ["20250627", 9980, 33380], ["20250704", 9950, 43362], ["20250711", 10050, 21182], ["20250718", 10000, 17752], ["20250725", 9770, 11021], ["20250801", 9830, 17592], ["20250808", 9720, 12668], ["20250814", 9730, 8733], ["20250822", 9270, 12468], ["20250829", 9400, 10491], ["20250905", 9820, 53386], ["20250912", 11090, 101893], ["20250919", 10890, 8874], ["20250926", 10110, 25231], ["20251002", 10070, 26027], ["20251010", 12150, 1856506], ["20251017", 12820, 284560], ["20251024", 12890, 99473], ["20251031", 14500, 195273], ["20251107", 12800, 90206], ["20251114", 11690, 248475], ["20251121", 11330, 56954], ["20251128", 12400, 68497], ["20251205", 12650, 56955], ["20251212", 14390, 230610], ["20251219", 13350, 57646], ["20251226", 13430, 207241], ["20260102", 15320, 488504], ["20260109", 15220, 105553], ["20260116", 14680, 152479], ["20260123", 16140, 190584], ["20260130", 16710, 325798], ["20260206", 16040, 229037], ["20260213", 16930, 180662], ["20260220", 18740, 412175], ["20260227", 19650, 257684], ["20260306", 22150, 556954], ["20260313", 35850, 2959949], ["20260320", 33900, 921628], ["20260327", 39750, 984788], ["20260403", 42150, 1906899], ["20260410", 41500, 1084087], ["20260417", 44600, 643755], ["20260424", 41900, 1253129], ["20260430", 38700, 699256], ["20260508", 53300, 1131765], ["20260515", 40950, 1168208], ["20260522", 40650, 899547], ["20260529", 34750, 496848], ["20260605", 34500, 473417], ["20260612", 32600, 500460], ["20260619", 27600, 387752], ["20260626", 24250, 274494], ["20260703", 23850, 153748], ["20260710", 22700, 219143], ["20260716", 19450, 87663], ["20260724", 18690, 87794], ["20260731", 15700, 236373], ["20260807", 26550, 1658625], ["20260814", 23600, 317534], ["20260821", 23400, 171832], ["20260828", 23400, 264371], ["20260904", 21300, 109070], ["20260911", 23500, 206485]]}</script>
+<script>
+(function(){
+const CD = JSON.parse(document.getElementById('cd').textContent);
+const tip = document.getElementById('tip');
+function showTip(html, x, y){
+  tip.innerHTML = html; tip.style.display='block';
+  const r = tip.getBoundingClientRect();
+  let L = x + 14, T = y + 14;
+  if (L + r.width > window.innerWidth - 8) L = x - r.width - 14;
+  if (L < 8) L = 8;
+  if (T + r.height > window.innerHeight - 8) T = y - r.height - 14;
+  if (T < 8) T = 8;
+  tip.style.left = L + 'px'; tip.style.top = T + 'px';
+}
+function hideTip(){ tip.style.display='none'; }
+window.addEventListener('scroll', hideTip, {passive:true});
+document.addEventListener('pointerdown', e => { if (!e.target.closest('.chart svg')) hideTip(); });
+const fmtN = v => v == null ? '-' : v.toLocaleString('ko-KR');
+const f1 = v => v == null ? '-' : (v>0?'+':'') + v.toFixed(1) + '%';
+const p1 = v => v == null ? '-' : v.toFixed(1) + '%';
+const d1 = v => v == null ? '-' : v.toFixed(1);
+function bindHits(svg, onHit){
+  let down = false;
+  const handler = e => { const t = e.target.closest('[data-hit]'); if (!t){ hideTip(); return; } onHit(t, e); };
+  svg.addEventListener('pointerdown', e => { down = true; handler(e); });
+  svg.addEventListener('pointermove', e => { if (e.pointerType === 'mouse' || down) handler(e); });
+  ['pointerup','pointercancel','pointerleave'].forEach(ev => svg.addEventListener(ev, () => { down=false; if (ev!=='pointerup') hideTip(); }));
+}
+function responsive(id, draw){
+  const box = document.getElementById(id); const svg = box.querySelector('svg');
+  let t;
+  const render = () => { const W = Math.max(280, Math.floor(box.clientWidth - (parseFloat(getComputedStyle(box).paddingLeft)*2))); const H = draw(svg, W); svg.setAttribute('viewBox', `0 0 ${W} ${H}`); svg.setAttribute('height', H); };
+  render();
+  new ResizeObserver(() => { clearTimeout(t); t = setTimeout(render, 120); }).observe(box);
+}
+const cls = v => v == null ? '' : (v > 0 ? 'pos' : (v < 0 ? 'neg' : ''));
+
+/* ---------- annual table ---------- */
+const A = CD.annual; const RD = {2023:187.0, 2024:157.0, 2025:123.0};
+const yrs = Object.keys(A).map(Number).sort();
+document.getElementById('ann-body').innerHTML = yrs.map((y,i) => {
+  const a = A[y]; const prev = i>0 ? A[yrs[i-1]] : null;
+  const yoy = prev ? (a.rev/prev.rev-1)*100 : null;
+  return `<tr${y===2025?' class="sum"':''}><td>${y}</td><td class="num">${fmtN(Math.round(a.rev))}</td><td class="num ${cls(yoy)}">${f1(yoy)}</td><td class="num ${cls(a.gpm)}">${p1(a.gpm)}</td><td class="num">${d1(a.sga)}</td><td class="num">${RD[y]==null?'-':RD[y].toFixed(1)}</td><td class="num ${cls(a.op)}">${d1(a.op)}</td><td class="num ${cls(a.opm)}">${p1(a.opm)}</td><td class="num ${cls(a.ni)}">${d1(a.ni)}</td><td class="num ${cls(a.cfo)}">${d1(a.cfo)}</td><td class="num">${fmtN(Math.round(a.equity))}</td></tr>`;
+}).join('');
+
+/* ---------- quarterly table ---------- */
+const Q = CD.quarterly; const qk = Object.keys(Q).filter(k => k >= '2023Q1').sort();
+document.getElementById('q-body').innerHTML = qk.map(k => {
+  const q = Q[k]; const py = Q[(+k.slice(0,4)-1) + k.slice(4)]; const yoy = py ? (q.rev/py.rev-1)*100 : null;
+  return `<tr${k==='2026Q2'?' class="sum"':''}><td>${k.replace('Q',' Q')}</td><td class="num">${d1(q.rev)}</td><td class="num ${cls(yoy)}">${f1(yoy)}</td><td class="num ${cls(q.gp)}">${d1(q.gp)}</td><td class="num ${cls(q.gpm)}">${p1(q.gpm)}</td><td class="num">${d1(q.sga)}</td><td class="num ${cls(q.op)}">${d1(q.op)}</td><td class="num ${cls(q.opm)}">${p1(q.opm)}</td><td class="num ${cls(q.ni)}">${d1(q.ni)}</td></tr>`;
+}).join('');
+
+/* ---------- peers table ---------- */
+const P = CD.peers;
+document.getElementById('peer-body').innerHTML = P.map(p => {
+  const opm = p.op25 != null && p.rev25 ? p.op25/p.rev25*100 : null; const gpm = p.gp25 != null && p.rev25 ? p.gp25/p.rev25*100 : null; const psr = p.mcap/p.rev25;
+  return `<tr${p.name==='오이솔루션'?' class="sum"':''}><td>${p.name}</td><td>${p.seg}</td><td class="num">${fmtN(p.mcap)}억</td><td class="num">${p.rev25.toFixed(0)}</td><td class="num ${cls(p.op25)}">${p.op25==null?'-':p.op25.toFixed(0)}</td><td class="num ${cls(gpm)}">${p1(gpm)}</td><td class="num">${p.rev26h==null?'-':p.rev26h.toFixed(0)}</td><td class="num ${cls(p.op26h)}">${p.op26h==null?'-':p.op26h.toFixed(0)}</td><td class="num">${psr.toFixed(1)}배</td><td class="num">${p.pbr||'-'}</td></tr>`;
+}).join('');
+
+/* ---------- Chart: price weekly ---------- */
+responsive('ch-px', (svg, W) => {
+  const narrow = W < 560;
+  const ML = narrow ? 36 : 48, MR = 10, MT = 26, MB = 28;
+  const Hh = narrow ? 250 : 330; const ph = Hh - MT - MB, pw = W - ML - MR;
+  const D = CD.weekly; const n = D.length;
+  const yMax = 75000, yMin = 0;
+  const x = i => ML + i/(n-1)*pw; const y = v => MT + (yMax - v)/(yMax - yMin)*ph;
+  let s = '';
+  [0,15000,30000,45000,60000,75000].forEach(v => { s += `<line class="${v===0?'axis':'grid'}" x1="${ML}" x2="${W-MR}" y1="${y(v)}" y2="${y(v)}"/><text x="${ML-4}" y="${y(v)+4}" text-anchor="end" class="mut" style="font-size:${narrow?9.5:11}px">${v/10000?v/10000+'만':'0'}</text>`; });
+  let lastY = '';
+  D.forEach((d,i) => { const yy = d[0].slice(0,4); if (yy !== lastY){ lastY = yy; s += `<line class="grid" x1="${x(i)}" x2="${x(i)}" y1="${MT}" y2="${MT+ph}"/><text x="${x(i)+3}" y="${Hh-8}" class="mut" style="font-size:${narrow?9:11}px">${narrow? "'"+yy.slice(2) : yy}</text>`; } });
+  const path = D.map((d,i) => (i?'L':'M') + x(i).toFixed(1) + ' ' + y(d[1]).toFixed(1)).join(' ');
+  s += `<path d="${path} L${x(n-1).toFixed(1)} ${y(0)} L${x(0)} ${y(0)} Z" fill="var(--c1-soft)"/>`;
+  s += `<path d="${path}" fill="none" stroke="var(--c1)" stroke-width="1.6"/>`;
+  const EV = [['20191227',1,-14],['20200807',2,-14],['20221125',3,-22],['20240712',4,-22],['20251002',5,-18],['20260313',6,-14],['20260508',7,-14],['20260731',8,-22],['20260805',9,-38],['20260918',10,-16]];
+  EV.forEach(([dt, num, up]) => { let idx = D.findIndex(d => d[0] >= dt); if (idx < 0) idx = n-1; const px = x(idx), py = y(D[idx][1]);
+    s += `<line x1="${px}" x2="${px}" y1="${py}" y2="${py+up+6}" stroke="var(--c2)" stroke-width="1"/><circle cx="${px}" cy="${py+up}" r="${narrow?7:8}" fill="var(--c2)"/><text x="${px}" y="${py+up+3.5}" text-anchor="middle" style="font-size:${narrow?8.5:10}px; fill:#fff; font-weight:600">${num}</text>`; });
+  D.forEach((d,i) => { s += `<rect data-hit="${i}" x="${x(i) - pw/(n-1)/2}" y="${MT}" width="${pw/(n-1)}" height="${ph}" fill="transparent"/>`; });
+  svg.innerHTML = s;
+  bindHits(svg, (t, e) => { const d = D[+t.dataset.hit]; showTip(`<b>${d[0].slice(0,4)}-${d[0].slice(4,6)}-${d[0].slice(6)}</b><br>종가 ${fmtN(d[1])}원`, e.clientX, e.clientY); });
+  return Hh;
+});
+
+/* ---------- Chart: geo bars ---------- */
+responsive('ch-geo', (svg, W) => {
+  const narrow = W < 560;
+  const G = {'1H25':{'아시아':92.3,'국내':125.8,'미주':64.6,'유럽':16.7},'1H26':{'아시아':188.7,'국내':108.8,'미주':51.5,'유럽':27.7},'2025':{'아시아':182.1,'국내':243.2,'미주':106.5,'유럽':41.8}};
+  const regs = ['아시아','국내','미주','유럽'];
+  const ML = narrow ? 44 : 60, MR = narrow ? 80 : 110, MT = 8, rowH = narrow ? 38 : 42;
+  const Hh = MT + regs.length*rowH + 8; const pw = W - ML - MR; const xMax = 200;
+  const x = v => ML + v/xMax*pw;
+  let s = '';
+  [0,50,100,150,200].forEach(v => s += `<line class="${v===0?'axis':'grid'}" x1="${x(v)}" x2="${x(v)}" y1="${MT}" y2="${Hh-8}"/>`);
+  regs.forEach((r,i) => { const y0 = MT + i*rowH; const a = G['1H25'][r], b = G['1H26'][r]; const bh = narrow ? 11 : 13;
+    s += `<text x="${ML-6}" y="${y0+rowH/2+4}" text-anchor="end" class="lab" style="font-size:${narrow?11:12}px">${r}</text>`;
+    s += `<rect x="${ML}" y="${y0+rowH/2-bh-1}" width="${x(a)-ML}" height="${bh}" fill="var(--c4)" rx="2"/>`;
+    s += `<rect x="${ML}" y="${y0+rowH/2+1}" width="${x(b)-ML}" height="${bh}" fill="var(--c1)" rx="2"/>`;
+    s += `<text x="${x(b)+5}" y="${y0+rowH/2+bh-1}" style="font-size:${narrow?10:11}px">${b.toFixed(1)} <tspan class="mut">(${f1((b/a-1)*100)})</tspan></text>`;
+    s += `<rect data-hit="${r}" x="${ML}" y="${y0}" width="${pw+MR}" height="${rowH}" fill="transparent"/>`; });
+  svg.innerHTML = s;
+  bindHits(svg, (t, e) => { const r = t.dataset.hit; showTip(`<b>${r}</b><br>1H25 ${G['1H25'][r]}억 → 1H26 ${G['1H26'][r]}억 (${f1((G['1H26'][r]/G['1H25'][r]-1)*100)})<br>2025 연간 ${G['2025'][r]}억`, e.clientX, e.clientY); });
+  return Hh;
+});
+
+/* ---------- Chart: annual bars + op line + gpm dashed ---------- */
+responsive('ch-ann', (svg, W) => {
+  const narrow = W < 560;
+  const keys = yrs;
+  const ML = narrow ? 40 : 50, MR = narrow ? 36 : 46, MT = 16, MB = 28;
+  const Hh = narrow ? 260 : 330; const ph = Hh - MT - MB, pw = W - ML - MR;
+  const yMax = 2400, yMin = -400; const y = v => MT + (yMax - v)/(yMax - yMin)*ph;
+  const gMax = 60, gMin = -20; const yg = v => MT + (gMax - v)/(gMax - gMin)*ph;
+  const gw = pw/keys.length; const bw = Math.min(narrow ? 16 : 28, gw*0.6);
+  let s = '';
+  [-400,0,400,800,1200,1600,2000,2400].forEach(v => s += `<line class="${v===0?'axis':'grid'}" x1="${ML}" x2="${W-MR}" y1="${y(v)}" y2="${y(v)}"/><text x="${ML-4}" y="${y(v)+4}" text-anchor="end" class="mut" style="font-size:${narrow?9:11}px">${v}</text>`);
+  [-20,0,20,40,60].forEach(v => s += `<text x="${W-MR+4}" y="${yg(v)+4}" class="mut" style="font-size:${narrow?9:11}px">${v}%</text>`);
+  keys.forEach((k,i) => { const a = A[k]; const xc = ML + i*gw + gw/2;
+    s += `<rect x="${xc-bw/2}" y="${y(a.rev)}" width="${bw}" height="${y(0)-y(a.rev)}" fill="var(--c1)" rx="1"/>`;
+    s += `<text x="${xc}" y="${Hh-10}" text-anchor="middle" class="mut" style="font-size:${narrow?9:11}px">${narrow? String(k).slice(2): k}</text>`;
+    s += `<rect data-hit="${k}" x="${ML+i*gw}" y="${MT}" width="${gw}" height="${ph}" fill="transparent"/>`; });
+  const pts = keys.map((k,i) => [ML + i*gw + gw/2, y(A[k].op), A[k].op]);
+  s += `<path d="${pts.map((p,i)=>(i?'L':'M')+p[0]+' '+p[1]).join(' ')}" fill="none" stroke="var(--c2)" stroke-width="2"/>`;
+  pts.forEach(p => s += `<circle cx="${p[0]}" cy="${p[1]}" r="3.5" fill="var(--c2)"/>`);
+  const gp = keys.map((k,i) => [ML + i*gw + gw/2, yg(A[k].gpm)]);
+  s += `<path d="${gp.map((p,i)=>(i?'L':'M')+p[0]+' '+p[1]).join(' ')}" fill="none" stroke="var(--c3)" stroke-width="1.8" stroke-dasharray="4 3"/>`;
+  gp.forEach(p => s += `<circle cx="${p[0]}" cy="${p[1]}" r="2.8" fill="var(--c3)"/>`);
+  svg.innerHTML = s;
+  bindHits(svg, (t, e) => { const k = t.dataset.hit; const a = A[k]; showTip(`<b>${k}</b><br>매출 ${fmtN(Math.round(a.rev))}억<br>영업이익 ${d1(a.op)}억 (OPM ${p1(a.opm)})<br>매출총이익률 ${p1(a.gpm)}`, e.clientX, e.clientY); });
+  return Hh;
+});
+
+/* ---------- Chart: quarterly rev bars + gpm/opm lines ---------- */
+responsive('ch-q', (svg, W) => {
+  const narrow = W < 560;
+  const ML = narrow ? 36 : 46, MR = narrow ? 40 : 50, MT = 16, MB = 30;
+  const Hh = narrow ? 260 : 330; const ph = Hh - MT - MB, pw = W - ML - MR;
+  const yMax = 250, yMin = 0; const y = v => MT + (yMax - v)/(yMax - yMin)*ph;
+  const oMax = 40, oMin = -130; const yo = v => MT + (oMax - v)/(oMax - oMin)*ph;
+  const gw = pw/qk.length; const bw = Math.min(narrow ? 12 : 22, gw*0.6);
+  let s = '';
+  [0,50,100,150,200,250].forEach(v => s += `<line class="${v===0?'axis':'grid'}" x1="${ML}" x2="${W-MR}" y1="${y(v)}" y2="${y(v)}"/><text x="${ML-4}" y="${y(v)+4}" text-anchor="end" class="mut" style="font-size:${narrow?9:11}px">${v}</text>`);
+  [-120,-80,-40,0,40].forEach(v => s += `<text x="${W-MR+4}" y="${yo(v)+4}" class="mut" style="font-size:${narrow?9:11}px">${v}%</text>`);
+  s += `<line x1="${ML}" x2="${W-MR}" y1="${yo(0)}" y2="${yo(0)}" stroke="var(--c2)" stroke-dasharray="3 3" stroke-width="1" opacity=".5"/>`;
+  qk.forEach((k,i) => { const q = Q[k]; const xc = ML + i*gw + gw/2;
+    s += `<rect x="${xc-bw/2}" y="${y(q.rev)}" width="${bw}" height="${y(0)-y(q.rev)}" fill="var(--c1)" rx="1"/>`;
+    if (k.endsWith('Q1')) s += `<text x="${xc}" y="${Hh-10}" text-anchor="middle" class="mut" style="font-size:${narrow?9:11}px">${k.slice(0,4)}</text>`;
+    s += `<rect data-hit="${k}" x="${ML+i*gw}" y="${MT}" width="${gw}" height="${ph}" fill="transparent"/>`; });
+  const pts = qk.map((k,i) => [ML + i*gw + gw/2, yo(Q[k].opm)]);
+  s += `<path d="${pts.map((p,i)=>(i?'L':'M')+p[0]+' '+p[1]).join(' ')}" fill="none" stroke="var(--c2)" stroke-width="2"/>`;
+  pts.forEach(p => s += `<circle cx="${p[0]}" cy="${p[1]}" r="3.5" fill="var(--c2)"/>`);
+  const gp = qk.map((k,i) => [ML + i*gw + gw/2, yo(Q[k].gpm)]);
+  s += `<path d="${gp.map((p,i)=>(i?'L':'M')+p[0]+' '+p[1]).join(' ')}" fill="none" stroke="var(--c3)" stroke-width="1.8" stroke-dasharray="4 3"/>`;
+  gp.forEach(p => s += `<circle cx="${p[0]}" cy="${p[1]}" r="2.8" fill="var(--c3)"/>`);
+  svg.innerHTML = s;
+  bindHits(svg, (t, e) => { const k = t.dataset.hit; const q = Q[k]; showTip(`<b>${k}</b><br>매출 ${d1(q.rev)}억<br>매출총이익 ${d1(q.gp)}억 (GPM ${p1(q.gpm)})<br>영업이익 ${d1(q.op)}억 (OPM ${p1(q.opm)})`, e.clientX, e.clientY); });
+  return Hh;
+});
+
+/* ---------- Chart: GPM ladder ---------- */
+responsive('ch-gpm', (svg, W) => {
+  const narrow = W < 560;
+  const R = [
+    ['DSP', 'Broadcom', 68, 'FY2025 GAAP, 전사'],
+    ['레이저·모듈', 'Lumentum', 50, 'FY4Q26 non-GAAP'],
+    ['모듈(중국)', 'Eoptolink', 49, '1Q26'],
+    ['모듈(중국)', 'InnoLight', 42, 'FY2025'],
+    ['레이저·모듈', 'Coherent', 35, 'FY2025'],
+    ['패키지·기판', 'RF머트리얼즈', 27.9, '2025 연결'],
+    ['모듈(한국)', '오이솔루션 1H26', 22.4, '2026 반기 연결'],
+    ['모듈(한국)', '오이솔루션 2025', 10.5, '2025 연결'],
+    ['모듈(한국)', '옵티코어', 3.0, '2025 연결'],
+    ['광섬유', '대한광통신', 2.6, '2025 연결'],
+    ['모듈(한국)', '빛과전자', -22.0, '2025 연결'],
+  ];
+  const ML = narrow ? 118 : 190, MR = narrow ? 40 : 56, MT = 6, rowH = narrow ? 26 : 28;
+  const Hh = MT + R.length*rowH + 10; const pw = W - ML - MR; const xMin = -30, xMax = 70;
+  const x = v => ML + (v - xMin)/(xMax - xMin)*pw;
+  let s = '';
+  [-20,0,20,40,60].forEach(v => s += `<line class="${v===0?'axis':'grid'}" x1="${x(v)}" x2="${x(v)}" y1="${MT}" y2="${Hh-10}"/><text x="${x(v)}" y="${Hh-1}" text-anchor="middle" class="mut" style="font-size:${narrow?9:10.5}px">${v}%</text>`);
+  R.forEach((r,i) => { const y0 = MT + i*rowH; const v = r[2]; const bh = narrow ? 12 : 14; const me = r[1].startsWith('오이');
+    s += `<text x="${ML-6}" y="${y0+rowH/2+4}" text-anchor="end" class="lab" style="font-size:${narrow?10:11.5}px; font-weight:${me?700:400}">${narrow? r[1] : r[0]+' · '+r[1]}</text>`;
+    s += `<rect x="${x(Math.min(0,v))}" y="${y0+rowH/2-bh/2}" width="${Math.abs(x(v)-x(0))}" height="${bh}" fill="${me?'var(--accent)':(v<0?'var(--neg)':'var(--c4)')}" rx="2"/>`;
+    s += `<text x="${v>=0? x(v)+5 : x(v)-5}" y="${y0+rowH/2+4}" text-anchor="${v>=0?'start':'end'}" style="font-size:${narrow?10:11}px">${v.toFixed(1)}%</text>`;
+    s += `<rect data-hit="${i}" x="0" y="${y0}" width="${W}" height="${rowH}" fill="transparent"/>`; });
+  svg.innerHTML = s;
+  bindHits(svg, (t, e) => { const r = R[+t.dataset.hit]; showTip(`<b>${r[1]}</b> (${r[0]})<br>매출총이익률 ${r[2].toFixed(1)}%<br>${r[3]}`, e.clientX, e.clientY); });
+  return Hh;
+});
+})();
+</script>
+</body>
+</html>

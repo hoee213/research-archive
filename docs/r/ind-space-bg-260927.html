@@ -1,0 +1,1183 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<title>우주 산업 구조 지도</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@600;700&family=Noto+Sans+KR:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+:root{
+  color-scheme:light;
+  --bg:#F3F4F7; --surface:#FFFFFF; --surface2:#F7F8FB; --surface3:#E9EBF2;
+  --ink:#15172B; --ink2:#454A61; --muted:#737A90;
+  --line:#D8DCE6; --line2:#BFC5D3;
+  --accent:#1F5F8B; --accent-soft:#E3EEF7;
+  --pos:#1B6E52; --neg:#B23A2C;
+  --c1:#1F5F8B; --c2:#E8792B; --c3:#1baf7a; --c4:#8B93A7; --c5:#7B4FB3;
+  --c1-soft:rgba(31,95,139,.12); --c2-soft:rgba(232,121,43,.14);
+  --shadow:0 1px 2px rgba(21,23,43,.06), 0 10px 28px rgba(21,23,43,.06);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#0F1118; --surface:#171A24; --surface2:#1D2130; --surface3:#252A3B;
+    --ink:#ECEEF5; --ink2:#B4BACB; --muted:#8D94A8;
+    --line:#2A2F40; --line2:#3B4155;
+    --accent:#7FB5E0; --accent-soft:#1E2E3E;
+    --pos:#4FB58C; --neg:#E07A5F;
+    --c1:#5B9BD5; --c2:#F08A3E; --c3:#2BC48E; --c4:#7C8499; --c5:#A283D6;
+    --c1-soft:rgba(91,155,213,.16); --c2-soft:rgba(240,138,62,.18);
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 28px rgba(0,0,0,.3);
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#0F1118; --surface:#171A24; --surface2:#1D2130; --surface3:#252A3B;
+  --ink:#ECEEF5; --ink2:#B4BACB; --muted:#8D94A8;
+  --line:#2A2F40; --line2:#3B4155;
+  --accent:#7FB5E0; --accent-soft:#1E2E3E;
+  --pos:#4FB58C; --neg:#E07A5F;
+  --c1:#5B9BD5; --c2:#F08A3E; --c3:#2BC48E; --c4:#7C8499; --c5:#A283D6;
+  --c1-soft:rgba(91,155,213,.16); --c2-soft:rgba(240,138,62,.18);
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 28px rgba(0,0,0,.3);
+}
+html{color-scheme:light dark}
+*{box-sizing:border-box}
+body{margin:0; background:var(--bg); color:var(--ink);
+  font-family:"Noto Sans KR","Malgun Gothic",system-ui,sans-serif; font-size:15.5px; line-height:1.75;
+  -webkit-text-size-adjust:100%}
+img{max-width:100%} [hidden]{display:none!important}
+.mono{font-family:"IBM Plex Mono","Consolas",ui-monospace,monospace; font-variant-numeric:tabular-nums}
+.serif{font-family:"Noto Serif KR","Noto Serif","Batang",serif}
+.wrap{max-width:920px; margin:0 auto; padding:0 22px 90px}
+a{color:var(--accent)}
+p{margin:0 0 14px} .lede{font-size:16.5px; color:var(--ink2)}
+ul,ol{margin:0 0 14px; padding-left:20px} li{margin-bottom:7px}
+strong,b{font-weight:700}
+.small{font-size:13px; color:var(--muted); line-height:1.6}
+.pos{color:var(--pos)} .neg{color:var(--neg)}
+
+.mast{background:var(--surface); border-bottom:1px solid var(--line)}
+.mast-in{max-width:920px; margin:0 auto; padding:34px 22px 26px}
+.eyebrow{font-family:"IBM Plex Mono",monospace; font-size:11.5px; letter-spacing:.06em; color:var(--muted)}
+h1{font-family:"Noto Serif KR",serif; font-size:clamp(30px,6.6vw,48px); line-height:1.18; margin:.3em 0 .15em; font-weight:700; letter-spacing:-.015em; text-wrap:balance}
+h1 .em{color:var(--accent)}
+.sub{color:var(--ink2); font-size:15.5px; max-width:64ch; margin:.4em 0 0}
+.tickerline{display:flex; flex-wrap:wrap; gap:6px 16px; align-items:baseline; margin-top:14px; font-family:"IBM Plex Mono",monospace; font-size:12.5px; color:var(--muted)}
+.tickerline b{color:var(--ink); font-weight:600}
+.stats{display:grid; grid-template-columns:repeat(auto-fit,minmax(138px,1fr)); gap:1px; background:var(--line); border:1px solid var(--line); margin-top:24px}
+.stat{background:var(--surface); padding:13px 14px 14px; min-width:0}
+.stat .k{font-family:"IBM Plex Mono",monospace; font-size:11px; letter-spacing:.02em; color:var(--muted)}
+.stat .v{font-family:"IBM Plex Mono",monospace; font-weight:600; font-size:clamp(19px,4.6vw,24px); line-height:1.25; margin-top:5px; overflow-wrap:anywhere}
+.stat .n{font-size:11.5px; color:var(--muted); margin-top:2px; line-height:1.4}
+.toc{display:flex; flex-wrap:wrap; gap:8px; margin:22px 0 0}
+.toc a{font-size:12.5px; text-decoration:none; color:var(--ink2); background:var(--surface); border:1px solid var(--line); padding:5px 11px; border-radius:999px}
+.toc a:hover{border-color:var(--accent); color:var(--accent)}
+
+section{margin-top:56px; scroll-margin-top:16px}
+.sec-h{display:flex; gap:14px; align-items:baseline; border-bottom:2px solid var(--ink); padding-bottom:9px; margin-bottom:20px}
+.sec-n{font-family:"IBM Plex Mono",monospace; font-size:12px; font-weight:600; color:var(--accent); letter-spacing:.06em; padding-top:4px}
+.sec-h h2{margin:0; font-family:"Noto Serif KR",serif; font-size:clamp(20px,4.2vw,26px); font-weight:700; letter-spacing:-.01em; text-wrap:balance; flex:1; min-width:0}
+h3{font-size:17px; font-weight:700; margin:32px 0 8px; letter-spacing:-.01em}
+h4{font-size:14.5px; font-weight:700; margin:20px 0 6px; color:var(--ink2)}
+
+.take{border-left:3px solid var(--accent); background:var(--surface2); padding:14px 16px; margin:18px 0; font-size:14.5px}
+.take .lbl{font-family:"IBM Plex Mono",monospace; font-size:11px; letter-spacing:.03em; color:var(--accent); display:block; margin-bottom:5px; font-weight:600}
+.take p:last-child{margin-bottom:0}
+.keypoints{display:grid; gap:1px; background:var(--line); border:1px solid var(--line); margin:22px 0}
+.kp{background:var(--surface); padding:15px 17px; display:grid; grid-template-columns:30px 1fr; gap:12px}
+.kp .num{font-family:"IBM Plex Mono",monospace; font-size:12px; color:var(--accent); font-weight:600; padding-top:3px}
+.kp .txt{min-width:0} .kp .t{font-weight:700; margin-bottom:2px} .kp .d{font-size:14px; color:var(--ink2)}
+.grid2{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:16px 0}
+.pane{background:var(--surface); border:1px solid var(--line); padding:14px 16px; min-width:0}
+.pane h4{margin-top:0}
+.pane.yes{border-top:3px solid var(--pos)} .pane.no{border-top:3px solid var(--neg)}
+.pane ul{margin-bottom:0; padding-left:18px} .pane li{font-size:14px; margin-bottom:6px}
+
+.vc{display:grid; grid-template-columns:repeat(6,1fr); gap:6px; margin:16px 0}
+.vc .c{background:var(--surface); border:1px solid var(--line); padding:10px 9px; font-size:12.5px; line-height:1.45; min-width:0}
+.vc .c b{display:block; font-size:13px; margin-bottom:3px}
+.vc .c.me{border:2px solid var(--accent); background:var(--accent-soft)}
+.vc .c .who{color:var(--muted); font-size:11.5px; margin-top:4px}
+
+.tbl-scroll{overflow-x:auto; margin:16px -22px 20px; padding:0 22px; -webkit-overflow-scrolling:touch}
+table{border-collapse:collapse; width:100%; min-width:560px; font-size:13.5px}
+caption{caption-side:top; text-align:left; font-family:"IBM Plex Mono",monospace; font-size:11.5px; letter-spacing:.02em; color:var(--muted); padding-bottom:8px}
+th,td{padding:8px 10px; border-bottom:1px solid var(--line); text-align:left; vertical-align:top}
+th.num,td.num{text-align:right; white-space:nowrap; font-family:"IBM Plex Mono",monospace; font-variant-numeric:tabular-nums}
+thead th{border-bottom:1.5px solid var(--line2); font-weight:600; color:var(--ink2); font-size:12.5px}
+tbody tr:hover{background:var(--surface2)}
+tfoot td{border-top:1.5px solid var(--line2); font-weight:600}
+td.hl{background:var(--accent-soft)}
+tr.sum td{font-weight:700; background:var(--surface2)}
+.tnote{font-size:12.5px; color:var(--muted); margin-top:-10px; margin-bottom:16px; line-height:1.55}
+.bar{display:inline-block; height:9px; background:var(--c1); vertical-align:middle; border-radius:2px; margin-right:6px}
+.bar.o{background:var(--c2)}
+
+.chart{background:var(--surface); border:1px solid var(--line); padding:14px 14px 10px; margin:16px 0 8px}
+.chart .ct{font-weight:700; font-size:14.5px; margin:0 0 2px}
+.chart .cs{font-size:12.5px; color:var(--muted); margin:0 0 8px}
+.chart svg{display:block; width:100%; height:auto; touch-action:pan-y}
+.chart text{font-family:"IBM Plex Mono",monospace; font-size:11px; fill:var(--ink2)}
+.chart text.lab{font-family:"Noto Sans KR",sans-serif; fill:var(--ink)}
+.chart text.mut{fill:var(--muted)}
+.chart .grid{stroke:var(--line); stroke-width:1}
+.chart .axis{stroke:var(--line2); stroke-width:1}
+.legend{display:flex; flex-wrap:wrap; gap:6px 16px; font-size:12px; color:var(--ink2); margin:6px 0 4px}
+.legend i{display:inline-block; width:12px; height:12px; border-radius:2px; vertical-align:-1px; margin-right:6px}
+.tip{position:fixed; z-index:50; pointer-events:none; background:var(--ink); color:var(--bg); font-size:12px; line-height:1.5; padding:7px 10px; border-radius:4px; max-width:min(260px,calc(100vw - 20px)); box-shadow:var(--shadow); display:none; font-family:"IBM Plex Mono",monospace}
+.tip b{font-weight:600}
+
+.risk{display:grid; gap:10px; margin:14px 0}
+.risk .r{display:grid; grid-template-columns:64px 1fr; gap:12px; background:var(--surface); border:1px solid var(--line); padding:12px 14px}
+.chip{font-family:"IBM Plex Mono",monospace; font-size:10.5px; letter-spacing:.08em; padding:3px 7px; border-radius:3px; display:inline-block; text-align:center; align-self:start; white-space:nowrap}
+.chip.h{background:var(--neg); color:#fff} .chip.m{background:var(--c2); color:#fff} .chip.l{background:var(--c4); color:#fff} .chip.u{background:var(--pos); color:#fff}
+.risk .t{font-weight:700} .risk .d{font-size:14px; color:var(--ink2)}
+
+.qs{display:grid; gap:12px; margin:16px 0}
+.q{background:var(--surface); border:1px solid var(--line); border-left:4px solid var(--accent); padding:13px 16px}
+.q .qh{display:flex; gap:10px; align-items:baseline}
+.q .qn{font-family:"IBM Plex Mono",monospace; font-size:12px; color:var(--accent); font-weight:600}
+.q .qt{font-weight:700; font-size:15px}
+.q .why{font-size:13.5px; color:var(--ink2); margin:6px 0 0}
+.q .why b{color:var(--ink)}
+.tl{list-style:none; padding:0; margin:14px 0}
+.tl li{display:grid; grid-template-columns:96px 1fr; gap:12px; padding:8px 0; border-bottom:1px solid var(--line); font-size:14px}
+.tl .d{font-family:"IBM Plex Mono",monospace; font-size:12px; color:var(--muted); padding-top:3px}
+.check li{margin-bottom:9px}
+.src{font-size:12.5px; color:var(--muted); line-height:1.6} .src li{margin-bottom:4px}
+.foot{margin-top:60px; padding-top:18px; border-top:1px solid var(--line); font-size:12.5px; color:var(--muted); line-height:1.6}
+
+@media (max-width:620px){
+  body{font-size:14.5px}
+  .wrap{padding:0 14px 70px} .mast-in{padding:26px 14px 20px}
+  table{min-width:0; font-size:12.5px} th,td{padding:7px 7px}
+  .tbl-scroll{margin:14px -14px 18px; padding:0 14px}
+  .grid2{grid-template-columns:1fr}
+  .vc{grid-template-columns:repeat(2,1fr)}
+  .risk .r{grid-template-columns:56px 1fr}
+  .kp{grid-template-columns:24px 1fr; gap:9px}
+  .chart{padding:12px 10px 8px}
+  .tl li{grid-template-columns:78px 1fr}
+  .bar{display:none}
+}
+@media (max-width:400px){
+  .wrap{padding:0 11px 60px} .mast-in{padding:22px 11px 18px}
+  .tbl-scroll{margin:14px -11px 18px; padding:0 11px}
+  .stats{grid-template-columns:repeat(2,1fr)}
+}
+@media (prefers-reduced-motion:reduce){ *{transition:none!important; animation:none!important} }
+
+.wrap{padding-left:max(22px,env(safe-area-inset-left)); padding-right:max(22px,env(safe-area-inset-right))}
+@media (max-width:620px){ .wrap{padding-left:16px; padding-right:16px} .mast-in{padding-left:16px; padding-right:16px} .tbl-scroll{margin-left:-16px; margin-right:-16px; padding:0 16px} }
+</style>
+</head>
+<body>
+<div class="tip" id="tip" role="status" aria-live="polite"></div>
+
+<header class="mast">
+  <div class="mast-in">
+    <div class="eyebrow">INDUSTRY BACKGROUND · 우주 · 작성 2026-09-27</div>
+    <h1>우주 산업을 바꾼 것은 로켓이 아니라 <span class="em">계약서와 발사 빈도</span>였다</h1>
+    <p class="sub">기업이 아니라 산업을 본다. 비용이 왜 내려갔는지, 돈이 어느 칸에 고이는지, 수요의 실체가 누구인지, 미국·중국·유럽·일본·인도·한국이 각각 어디에 서 있는지를 1차 자료와 증권사 인뎁스 리포트 11건으로 정리했다.</p>
+    <div class="tickerline">
+      <span>금액은 달러 기준, 한국은 원</span>
+      <span>1차 리포트(기업·밸류체인 편)의 후속</span>
+    </div>
+    <div class="stats">
+      <div class="stat"><div class="k">kg당 발사비</div><div class="v">61.7 → 2.7</div><div class="n">천 달러, 2018년 가치. 우주왕복선 → 팰컨9 (NASA)</div></div>
+      <div class="stat"><div class="k">같은 로켓, 다른 계약</div><div class="v">9배</div><div class="n">NASA 모형의 팰컨9 개발비. 전통 방식 $3,977M, 고정가 $443M</div></div>
+      <div class="stat"><div class="k">팰컨9 공시 가격</div><div class="v">$54M → $74M</div><div class="n">2012 → 2026년. 원가는 내렸고 가격은 올랐다</div></div>
+      <div class="stat"><div class="k">지구관측 수요</div><div class="v">75%</div><div class="n">정부 몫. 미국 50%, 동맹국 25%</div></div>
+      <div class="stat"><div class="k">중국 재사용</div><div class="v">회수 2, 재비행 0</div><div class="n">2026년 7~8월 첫 회수 성공</div></div>
+      <div class="stat"><div class="k">한국 우주항공청 예산</div><div class="v">+47.2%</div><div class="n">2027년 정부안 1조 6,491억 원</div></div>
+    </div>
+    <nav class="toc" aria-label="목차">
+      <a href="#s1">1 요약</a><a href="#s2">2 통념 바로잡기</a><a href="#s3">3 역사</a><a href="#s4">4 원가의 경제학</a>
+      <a href="#s5">5 밸류체인과 수익성</a><a href="#s6">6 수요의 실체</a><a href="#s7">7 국방</a><a href="#s8">8 미국</a>
+      <a href="#s9">9 중국</a><a href="#s10">10 유럽</a><a href="#s11">11 일본·인도·러시아·중동</a><a href="#s12">12 한국</a>
+      <a href="#s13">13 병목과 물리적 한계</a><a href="#s14">14 자본 사이클</a><a href="#s15">15 증권사 시각</a><a href="#s16">16 읽는 법</a><a href="#s17">17 출처</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+<section id="s1">
+  <div class="sec-h"><span class="sec-n">01</span><h2>요약</h2></div>
+  <p class="lede">우주 산업의 배경을 여덟 문장으로 줄이면 다음과 같다.</p>
+  <div class="keypoints">
+    <div class="kp"><div class="num">1</div><div class="txt"><div class="t">비용을 내린 것은 기술보다 제도다</div><div class="d">NASA 자체 모형에 팰컨9을 넣으면 전통적 비용가산 계약으로는 개발비 $3,977M, 고정가 계약으로는 $443M이 나온다. NASA 논문(2018)도 발사비 하락의 원인을 경쟁, 수직계열화, 고정가 계약으로 꼽았다.</div></div></div>
+    <div class="kp"><div class="num">2</div><div class="txt"><div class="t">재사용은 빈도가 받쳐줄 때만 돈이 된다</div><div class="d">우주왕복선도 재사용이었지만 회당 약 $1.5B이 들었다. 연 50회 계획에 실제는 4.5회였기 때문이다. 팰컨9은 2025년 165회를 쐈고 그중 122회가 자사 스타링크였다. 자기 수요가 빈도를 만들었다.</div></div></div>
+    <div class="kp"><div class="num">3</div><div class="txt"><div class="t">원가 하락과 가격 하락은 다르다</div><div class="d">팰컨9 공시 가격은 2012년 $54M에서 2026년 $74M으로 올랐다. 원가 절감분은 고객이 아니라 수직계열화한 사업자에게 남았다. 발사를 밖에서 사는 위성 사업자가 체감하는 비용 하락은 생각보다 작다.</div></div></div>
+    <div class="kp"><div class="num">4</div><div class="txt"><div class="t">이익은 서비스에 고이고, 발사와 제조는 원가 항목이다</div><div class="d">2025년 영업이익률은 스타링크 38.8%, 미국 방산 대형사 우주 부문 10~12%, 유럽 위성 제조 6%, 발사는 적자다. 발사만으로 돈을 버는 상장사는 없다.</div></div></div>
+    <div class="kp"><div class="num">5</div><div class="txt"><div class="t">민간이 주도한다지만 돈을 내는 쪽은 대부분 정부다</div><div class="d">대규모 민간 수요가 검증된 부문은 위성 광대역 하나다. 지구관측은 75%가 정부, 달 착륙은 사실상 전부 NASA 발주, 민간 우주인 임무의 고객도 각국 정부다.</div></div></div>
+    <div class="kp"><div class="num">6</div><div class="txt"><div class="t">추격자들은 계획이 크고 실적이 늦다</div><div class="d">중국은 연 140회 발사 목표에 9월 하순 70회, 재사용은 회수 2건에 재비행 0건이다. 유럽은 호핑 시험도 아직이다. 아마존·텔레샛·유럽 주권망은 모두 일정이 밀리고 비용이 늘었다.</div></div></div>
+    <div class="kp"><div class="num">7</div><div class="txt"><div class="t">병목은 로켓에서 부품과 시설로 옮겨갔다</div><div class="d">미 국방 위성망은 광통신 단말 단일 공급사 때문에 약 1년 늦어졌다. 발사장은 연료 트럭과 도로가 제약이고, 우주용 태양전지 원료인 갈륨은 중국이 쥐고 있다.</div></div></div>
+    <div class="kp"><div class="num">8</div><div class="txt"><div class="t">한국은 예산은 늘고, 발사는 남의 로켓에 의존한다</div><div class="d">우주항공청 예산은 2024년 7,598억 원에서 2027년 정부안 1조 6,491억 원으로 늘었다. 그러나 군 정찰위성 5기와 2026년 발사한 차세대중형위성 2기는 모두 팰컨9으로 올라갔다.</div></div></div>
+  </div>
+</section>
+
+<section id="s2">
+  <div class="sec-h"><span class="sec-n">02</span><h2>통념 바로잡기</h2></div>
+  <p>우주 산업에 대해 널리 쓰이는 문장 가운데 절반쯤은 단서가 필요하다. 본문에 앞서 기준을 맞춘다.</p>
+  <div class="tbl-scroll"><table>
+    <thead><tr><th>통념</th><th>확인된 사실</th><th>근거</th></tr></thead>
+    <tbody>
+      <tr><td>발사비가 내려 위성 사업자의 비용도 그만큼 내렸다</td><td class="hl">팰컨9 공시가는 2012년 $54M → 2026년 $74M. 실질 기준 하락 폭은 6% 미만</td><td>Rao, arXiv 2607.10385 (2026-07)</td></tr>
+      <tr><td>지상장비가 위성산업의 53%로 가장 큰 시장이다</td><td class="hl">그 76.6%는 GPS 수신기다. 게이트웨이 등 네트워크 장비는 11.4%, 약 $17.7B</td><td>BryceTech 2024년 기준, 대신증권 정리</td></tr>
+      <tr><td>세계 우주경제는 $600B을 넘는다</td><td class="hl">정의에 따라 $429B(SIA) ~ $686B(Space Foundation). 큰 쪽은 내비게이션 등 우주를 "활용"하는 매출을 포함한다</td><td>각 기관 2025년 기준</td></tr>
+      <tr><td>우주는 이제 민간 주도 산업이다</td><td class="hl">공급은 민간이 하지만 최종 수요자는 정부인 부문이 대부분이다. 미국 우주경제 통계에서 2023년 실질 성장 0.6% 중 연방 국방만 +12.7%</td><td>미 경제분석국(BEA) 2025-03</td></tr>
+      <tr><td>고정가 계약이면 다 잘된다</td><td class="hl">같은 계약에서 보잉 스타라이너는 유인 인증에 실패했고, 민간 달 착륙은 4회 중 완전 성공 1회</td><td>NASA, CLPS 실적</td></tr>
+      <tr><td>중국이 재사용 로켓에 성공했다</td><td class="hl">1단 회수 성공 2건. 회수한 기체를 다시 쏜 적은 없다. 스페이스X의 2015~2017년 단계에 해당</td><td>2026년 7~8월 발사 기록</td></tr>
+      <tr><td>인도는 우주 분야 외국인투자를 100% 허용했다</td><td class="hl">100%는 부품·시스템에 한정. 위성은 74%, 발사체는 49%까지 자동 승인</td><td>2024-04 FDI 개정</td></tr>
+      <tr><td>한국의 세계 점유율은 약 1%다</td><td class="hl">1%는 2020~21년 매출 기준. 2026년 7월 정부 전략은 우주와 항공을 합쳐 0.7%로 적었다</td><td>우주항공 산업육성 전략</td></tr>
+      <tr><td>달 경제와 우주정거장이 다음 시장이다</td><td class="hl">NASA 국장이 상업 우주정거장 수요를 공개적으로 의심했다. 2026년 달 착륙 시도는 9월 말까지 0건</td><td>Payload 2026-04</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="s3">
+  <div class="sec-h"><span class="sec-n">03</span><h2>역사: 세 번의 국면</h2></div>
+  <p>증권사마다 단계를 나누는 방식은 다르지만 전환점은 대체로 2010년 전후로 모인다. 팰컨9 첫 발사(2010년 6월)와 오바마 행정부의 국가 우주 정책(같은 해 10월)이 있던 해다.</p>
+  <div class="tbl-scroll"><table>
+    <thead><tr><th></th><th>국가 경쟁기<br><span class="small">1950~1990년대</span></th><th>국가 과점기<br><span class="small">2000~2010년대 초</span></th><th>민간 공급기<br><span class="small">2010년대 이후</span></th></tr></thead>
+    <tbody>
+      <tr><td><b>목적</b></td><td>체제 우위 입증. 수익이 아니라 "최초"</td><td>정부 임무 수행</td><td>상업 서비스와 정부 임무 병행</td></tr>
+      <tr><td><b>계약</b></td><td>비용가산. 비용이 늘수록 이익도 는다</td><td>비용가산, 보조금 의존</td><td>고정가, 서비스 구매. 정부는 첫 고객</td></tr>
+      <tr><td><b>제조</b></td><td>임무별 개별 설계, 1회용</td><td>기술은 진보, 발사는 과점</td><td>재사용, 양산, 상용 부품</td></tr>
+      <tr><td><b>kg당 발사비</b></td><td>$20,000~50,000</td><td>$10,000~20,000</td><td>팰컨9 약 $2,700</td></tr>
+      <tr><td><b>병목</b></td><td>예산</td><td>발사 공급, 수출통제</td><td>궤도·주파수 선점, 부품, 발사장</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">출처: 키움증권(2026-04-22) 정리를 바탕으로 재구성. 발사비 구간은 키움 서술.</p>
+
+  <h3>발사 횟수가 많았던 것은 지금이 처음이 아니다</h3>
+  <p>세계 궤도 발사는 1970년대에 1,233회, 1980년대에 1,194회였다. 2010년대의 888회보다 많았다. 냉전기에는 정부가 돈을 쏟아부어 많이 쐈다. 지금의 차이는 횟수가 아니라 <b>누가 돈을 내는가</b>와 <b>한 번에 몇 기를 올리는가</b>다. 발사 1회당 탑재체는 최근 평균 13.9기다.</p>
+  <p>NASA 지출은 1965년 연방 지출의 4.4%였고 지금은 0.3~0.4%다. 예산 비중이 10분의 1로 줄어든 상태에서 활동량이 늘어난 것이 이번 국면의 특징이다.</p>
+
+  <div class="chart" id="ch-cost">
+    <p class="ct">발사비는 60년 정체한 뒤 2010년에 한 자릿수 내려앉았다</p>
+    <p class="cs">발사체별 저궤도 kg당 비용(천 달러, 2018년 가치, 로그 눈금). 가로축은 첫 발사 연도</p>
+    <div class="legend"><span><i style="background:var(--c1)"></i>본문에서 다루는 기종</span><span><i style="background:var(--c4)"></i>그 밖의 기종</span></div>
+    <svg role="img" aria-label="발사체별 kg당 발사비용 산점도"></svg>
+  </div>
+  <p class="tnote">출처: Harry W. Jones, NASA Ames, ICES-2018-81 부록 표. 팰컨 수치는 공시 가격 ÷ 최대 탑재량이라 실제 단가는 이보다 높다. 소련 기종(프로톤, 소유즈)이 낮게 나오는 것은 보조금 영향일 수 있다고 논문이 적었다.</p>
+
+  <h3>계약 방식이 비용을 갈랐다</h3>
+  <p>NASA는 2011년에 자체 비용 추정 모형으로 팰컨9 개발비를 역산했다. 결과는 같은 로켓이 계약 방식에 따라 몇 배 차이 난다는 것이었다.</p>
+  <div class="tbl-scroll"><table>
+    <caption>NASA 모형(NAFCOM)으로 추정한 팰컨9 개발비 (2010 회계연도 가치)</caption>
+    <thead><tr><th>가정</th><th class="num">추정액($M)</th><th>비고</th></tr></thead>
+    <tbody>
+      <tr><td>비용가산, NASA 전통 방식</td><td class="num">3,977</td><td>초기 추정</td></tr>
+      <tr><td>비용가산, 상업적 입력값</td><td class="num">1,383</td><td>갱신 추정</td></tr>
+      <tr><td>고정가 (성과 달성 시 정액 지급)</td><td class="num hl">443</td><td>갱신 추정. 프로그램 지원비·예비비·수수료 제외</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">출처: NASA, Falcon 9 Launch Vehicle NAFCOM Cost Estimates(2011-08). 3,977 ÷ 443 = 약 9배. 갱신 추정끼리는 1,383 → 443으로 68% 절감. 두 값은 포함 범위가 다르다.</p>
+  <div class="tbl-scroll"><table>
+    <caption>같은 시기의 두 길</caption>
+    <thead><tr><th>사업</th><th>방식</th><th class="num">비용</th><th>결과</th></tr></thead>
+    <tbody>
+      <tr><td>상업 궤도수송(COTS)</td><td>고정가</td><td class="num">NASA 투자 약 $800M</td><td>중형 로켓 2종, 화물선 2종 확보</td></tr>
+      <tr><td>상업 승무원</td><td>고정가</td><td class="num">스페이스X $2.6B, 보잉 $4.2B</td><td>스페이스X는 운용 중. 보잉 스타라이너는 유인 인증 실패, 무인 화물로 전환</td></tr>
+      <tr><td>SLS 로켓</td><td>비용가산</td><td class="num">개발비 누계 $31.6B</td><td>아르테미스 발사 1회당 약 $4.1B</td></tr>
+      <tr><td>민간 달 착륙(CLPS)</td><td>고정가</td><td class="num">건당 약 $50~120M</td><td>4회 중 완전 성공 1, 부분 성공 1, 실패 2</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">출처: NASA, NASA 감찰관실(2021), 미 의회조사국. SLS와 COTS는 임무와 탑재 능력이 달라 금액을 직접 비교할 수는 없다.</p>
+  <p>고정가 계약은 비용 초과를 기업이 떠안는 구조다. 그래서 역량이 있는 기업에는 이익이, 없는 기업에는 손실이 된다. 제도가 비용을 내렸다는 말은 맞지만, 제도가 성공을 보장한다는 뜻은 아니다.</p>
+
+  <h3>우주왕복선의 재사용은 왜 실패했나</h3>
+  <div class="tbl-scroll"><table>
+    <thead><tr><th>항목</th><th class="num">계획</th><th class="num">실제</th></tr></thead>
+    <tbody>
+      <tr><td>연간 발사</td><td class="num">50회</td><td class="num">평균 4.5회</td></tr>
+      <tr><td>재정비 기간</td><td class="num">2주</td><td class="num">수개월 (최단 88일)</td></tr>
+      <tr><td>회당 비용 (2018년 가치)</td><td class="num">-</td><td class="num">$1,697M</td></tr>
+      <tr><td>kg당 비용 (2018년 가치)</td><td class="num">-</td><td class="num">$61,700</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">출처: 회당·kg당 비용은 Jones(NASA, 2018). 계획치와 재정비 기간은 위키백과 경유(Nature 2011 등 인용)라 재확인이 필요하다.</p>
+  <p>열차폐 타일 35,000장이 위치마다 개별 제작이었고, 상주 인력 1만 1천 명의 고정비가 연 4~5회 발사에 나뉘었다. 팰컨9은 재사용 대상이 단순한 1단이고, 무인이며, 자사 위성이 발사 빈도를 채운다. 비용을 내린 것은 재사용 자체가 아니라 <b>재사용, 높은 빈도, 낮은 정비비의 조합</b>이다.</p>
+</section>
+
+<section id="s4">
+  <div class="sec-h"><span class="sec-n">04</span><h2>원가의 경제학</h2></div>
+  <h3>재사용의 손익: 2회면 본전, 그리고 바닥이 있다</h3>
+  <p>머스크가 밝힌 팰컨9 원가 비중은 1단 60%, 2단 20%, 페어링 10%, 운용 10%다. 재사용하면 착륙용 연료 때문에 탑재량이 줄어든다(저궤도 22.8톤 → 17.5톤). 이 숫자로 간단한 모형을 만들면 다음과 같다.</p>
+  <div class="tbl-scroll"><table>
+    <caption>1단 재사용 횟수별 상대 비용 (소모형 = 100)</caption>
+    <thead><tr><th>1단 비행 횟수</th><th class="num">회당 비용</th><th class="num">kg당 단가</th></tr></thead>
+    <tbody>
+      <tr><td>소모형 (회수 없음)</td><td class="num">100</td><td class="num">100</td></tr>
+      <tr><td>1회</td><td class="num">106</td><td class="num">138</td></tr>
+      <tr><td>2회</td><td class="num">76</td><td class="num hl">99</td></tr>
+      <tr><td>3회</td><td class="num">66</td><td class="num">86</td></tr>
+      <tr><td>10회</td><td class="num">52</td><td class="num">68</td></tr>
+      <tr><td>30회</td><td class="num">48</td><td class="num">63</td></tr>
+      <tr class="sum"><td>무한히 재사용</td><td class="num">46</td><td class="num">60</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">계산 근거(예시 모형, 본 리포트 계산): 회당 비용 = 60 ÷ 횟수 + 정비·회수비 6 + 매번 버리는 부분 40. kg당 단가 = 회당 비용 ÷ 0.768(재사용 시 탑재량 비율 17.5 ÷ 22.8). 원가 비중은 머스크 발언(2018), 정비비는 "신규 제작비의 10% 미만" 발언을 10%로 가정.</p>
+  <p>두 가지가 읽힌다. 첫째, 2회 쓰면 소모형과 같아진다. 머스크의 "두 번이면 본전"과 일치한다. 둘째, <b>아무리 많이 써도 kg당 단가는 소모형의 60% 밑으로 내려가지 않는다</b>. 매번 버리는 2단과 페어링이 남기 때문이다. 2단까지 재사용하는 스타십이 필요한 이유이고, 씨티(2022)가 발사비 하락의 최대 동인으로 2단 재사용을 꼽은 근거다.</p>
+
+  <h3>원가는 내렸는데 가격은 올랐다</h3>
+  <div class="chart" id="ch-price">
+    <p class="ct">팰컨9 공시 가격은 14년 동안 37% 올랐다</p>
+    <p class="cs">팰컨9 표준 발사 공시 가격(백만 달러, 명목)</p>
+    <svg role="img" aria-label="팰컨9 공시 가격 추이 꺾은선 차트"></svg>
+  </div>
+  <p class="tnote">출처: Akhil Rao, Prices and Competition in Vertically Integrated Launch Markets, arXiv 2607.10385(2026-07). 구간 값은 해당 기간의 공시가.</p>
+  <p>이 논문의 계산으로는 NASA가 쓰는 표준 학습률(생산이 2배가 될 때 원가 15% 하락)을 적용하면 팰컨9 원가는 2012~2026년에 약 70% 내렸어야 한다. 실제 공시가는 물가를 감안해도 6% 미만 내렸다. 발사와 위성망을 함께 가진 사업자는 남는 발사 능력을 외부에 싸게 팔 이유가 없다. 자기 위성을 올리는 편이 더 이익이기 때문이다.</p>
+  <div class="take"><span class="lbl">함의</span><p>"발사비 하락"이라는 말은 두 가지를 섞어 쓴다. 스페이스X의 <b>내부 원가</b>는 크게 내렸다. 외부 고객이 내는 <b>가격</b>은 경쟁자가 나타날 때까지 내려갈 이유가 없다. 경쟁자인 뉴글렌과 벌컨이 2026년에 멈춰 선 지금은 더 그렇다. 위성을 밖에서 쏘아야 하는 사업자와 국가에는 발사비가 여전히 큰 부담이다.</p></div>
+
+  <h3>위성: 가볍게 만들던 시대에서 싸게 많이 만드는 시대로</h3>
+  <div class="tbl-scroll"><table>
+    <thead><tr><th>항목</th><th>과거 (정지궤도 중심)</th><th>현재 (저궤도 중심)</th></tr></thead>
+    <tbody>
+      <tr><td>생산 방식</td><td>주문 제작, 수작업</td><td>표준화, 양산</td></tr>
+      <tr><td>생산 규모</td><td>제조사당 연 10~20기</td><td>스타링크 하루 약 6기, 원웹 하루 2기</td></tr>
+      <tr><td>제작 단가</td><td>kg당 약 $120,000 (2000년경 상업위성)</td><td>스타링크 kg당 약 $1,000</td></tr>
+      <tr><td>설계 수명</td><td>약 15년</td><td>5~7년</td></tr>
+      <tr><td>부품</td><td>우주 전용 내방사선 부품</td><td>상용 부품과 중복 설계</td></tr>
+      <tr><td>추진제</td><td>제논 (kg당 약 €4,242)</td><td>아르곤 (kg당 약 €2.23)</td></tr>
+      <tr><td>위성 간 통신</td><td>마이크로파 4Mbps (이리듐)</td><td>레이저 100Gbps (스타링크)</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">출처: Jones(NASA, 2018), TechCrunch(2026-02), 대신증권(2026-03), 위키백과 경유 수치 포함. 제작 단가 두 값은 주문제작 정지궤도 위성과 양산 저궤도 위성이라 성격이 다르다.</p>
+  <p>발사비가 비쌀 때는 위성을 가볍게 만드는 데 돈을 썼다. NASA 논문은 높은 발사비가 위성 시스템 총비용의 절반가량을 유발했다는 추정을 인용한다. 발사비가 내리자 위성은 오히려 무거워지고 있다. 스타링크는 1세대 약 260kg에서 V2 미니 약 800kg으로 커졌다. 경량화보다 용량을 택한 것이다.</p>
+  <p>수명이 5~7년이라는 점은 양면이다. 위성망은 매년 15~20%를 교체해야 하므로 설비투자가 끝나지 않는다. 제조와 발사 쪽에는 반복 수요, 운영 쪽에는 영구적인 자본 부담이다.</p>
+
+  <h3>1990년대 저궤도 위성망은 왜 망했나</h3>
+  <div class="tbl-scroll"><table>
+    <thead><tr><th>사업</th><th class="num">투자</th><th>경과</th><th class="num">매각가</th></tr></thead>
+    <tbody>
+      <tr><td>이리듐</td><td class="num">약 $5B</td><td>1998-11 서비스 개시, 9개월 뒤 파산</td><td class="num">$25M</td></tr>
+      <tr><td>글로벌스타</td><td class="num">$4.3B</td><td>2000-02 개시, 2002-02 파산</td><td class="num">$43M</td></tr>
+      <tr><td>텔레데식</td><td class="num">계획 $9B</td><td>빌 게이츠 등 투자. 2002-10 위성 제작 중단</td><td class="num">-</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">출처: 위키백과 경유(각사 문서). 투자액과 매각가는 재확인이 필요한 수치다.</p>
+  <div class="tbl-scroll"><table>
+    <caption>그때와 지금</caption>
+    <thead><tr><th>요소</th><th>1990년대</th><th>2020년대</th></tr></thead>
+    <tbody>
+      <tr><td>발사비</td><td>kg당 $10,000~20,000</td><td>$1,400~2,700 (공시가 기준)</td></tr>
+      <tr><td>위성당 처리량</td><td>음성 1,100회선</td><td>96Gbps ~ 1Tbps</td></tr>
+      <tr><td>단말</td><td>$3,000 전용 전화기, 실내 수신 불가</td><td>$200~500 평판 안테나, 기존 스마트폰</td></tr>
+      <tr><td>수요</td><td>위성전화. 지상 이동통신의 대체재</td><td>광대역 데이터. 지상망의 보완재</td></tr>
+      <tr><td>자금</td><td>부채 중심</td><td>선도 기업은 지분과 자체 현금흐름</td></tr>
+      <tr><td>발사</td><td>외부 구매</td><td>선도 기업은 자사 발사</td></tr>
+    </tbody>
+  </table></div>
+  <p>당시 실패는 기술이 아니라 <b>자본 구조</b>의 실패였다. 위성망 전체를 다 깔아야 서비스가 되는데 매출이 나오기 전에 수십억 달러 부채의 이자가 돌아왔다. 부채가 소멸된 뒤 자산을 헐값에 산 새 주인은 이익을 냈다. 파산했던 이리듐과 글로벌스타는 2026년에 각각 약 $8B, $11.57B에 인수된다. 가치의 핵심은 위성이 아니라 주파수 권리다.</p>
+</section>
+
+<section id="s5">
+  <div class="sec-h"><span class="sec-n">05</span><h2>밸류체인과 수익성: 돈은 어느 칸에 고이나</h2></div>
+  <h3>구조</h3>
+  <div class="vc">
+    <div class="c"><b>소재·부품</b>특수합금, 태양전지, 반도체, 광통신 단말<div class="who">과점, 긴 납기</div></div>
+    <div class="c"><b>발사</b>발사체 제작, 발사 서비스<div class="who">$12.4B</div></div>
+    <div class="c"><b>위성 제조</b>본체, 탑재체<div class="who">$20.4B</div></div>
+    <div class="c"><b>지상 장비</b>항법 수신기, 단말, 게이트웨이<div class="who">$165.2B</div></div>
+    <div class="c me"><b>위성 서비스</b>방송, 광대역, 관측 데이터<div class="who">$105.0B</div></div>
+    <div class="c"><b>정부 예산 등</b>국방·민간 우주, 유인 비행<div class="who">약 $126B</div></div>
+  </div>
+  <p class="tnote">출처: SIA 29차 위성산업 현황 보고서(2026-05). 2025년 세계 우주경제 $429B, 그중 상업 위성산업 $303B. 정부 예산 등은 차액(429 - 303). "미드스트림"이라는 말은 증권사마다 뜻이 달라(제조·발사를 가리키기도, 지상국을 가리키기도 한다) 쓰지 않았다.</p>
+  <p>발사는 전체의 3%, 위성 제조는 5%다. 눈에 띄는 칸과 돈이 큰 칸이 다르다. 다만 가장 큰 지상 장비도 속을 보면 대부분 스마트폰과 내비게이션에 들어가는 항법 수신기다. 위성 통신망 투자와 직접 연결되는 네트워크 장비는 2024년 기준 약 $17.7B이다.</p>
+
+  <h3>자본이 향하는 곳과 매출이 나는 곳은 다르다</h3>
+  <p>매출의 약 90%는 지상 장비와 서비스에서 나온다. 반면 2025년 우주 스타트업 대형 투자는 발사체 26%, 위성 제조 24%로 절반이 업스트림에 들어갔다(Payload 집계, 하나증권 인용). 투자자는 눈에 보이는 하드웨어에 돈을 넣고, 매출은 눈에 덜 띄는 서비스에서 난다.</p>
+
+  <div class="chart" id="ch-margin">
+    <p class="ct">서비스는 남기고, 제조는 얇고, 발사는 적자다</p>
+    <p class="cs">2025년 영업이익률(%). 부문 또는 회사 기준</p>
+    <svg role="img" aria-label="밸류체인 단계별 영업이익률 가로 막대 차트"></svg>
+  </div>
+  <p class="tnote">출처: 스페이스X S-1, 록히드마틴·노스롭그러먼·L3해리스 2025년 4분기 실적자료(SEC), 에어버스 2025년 실적, 로켓랩(위키백과 경유). 에어버스는 조정 EBIT 기준이고 2024년에는 우주 충당금 €1.3B로 -€566M이었다.</p>
+
+  <div class="tbl-scroll"><table>
+    <caption>단계별 수익 구조</caption>
+    <thead><tr><th>단계</th><th>대표 이익률</th><th>설비투자 ÷ 매출</th><th>성장</th><th>주 고객</th></tr></thead>
+    <tbody>
+      <tr><td>저궤도 광대역 (스타링크)</td><td>EBITDA 63%, 영업이익 38.8%</td><td class="num">37%</td><td>+50~66%</td><td>소비자, 기업, 정부</td></tr>
+      <tr><td>전통 위성 서비스 (정지궤도)</td><td>EBITDA 33~57%. 영업이익은 얇거나 적자</td><td class="num">11~21%</td><td>0~5%</td><td>방송, 기업, 정부</td></tr>
+      <tr><td>방산 대형사 우주 부문</td><td>영업이익 10~12%</td><td class="num">2~4%</td><td>-8~+4%</td><td>미국 정부</td></tr>
+      <tr><td>상업 위성 제조 (유럽)</td><td>조정 EBIT -5~+6%</td><td class="num">-</td><td>-</td><td>위성 사업자, 정부</td></tr>
+      <tr><td>발사</td><td>영업적자</td><td class="num">매우 높음</td><td>+29~62%</td><td>자사 위성망, 정부</td></tr>
+    </tbody>
+  </table></div>
+  <ul>
+    <li><b>위성 서비스는 EBITDA와 영업이익의 차이가 크다.</b> 위성은 고정비 자산이라 감가상각과 이자가 무겁다. 이리듐은 EBITDA 마진 56.8%에 순이익 $114M, 유텔샛은 EBITDA 마진 51%에 순손실이다.</li>
+    <li><b>방산 대형사의 우주 부문 이익률은 10~12%에 모인다.</b> 정부 계약은 이익에 상한이 있고 자본 위험이 낮다. 록히드마틴 우주 부문 매출은 $13.0B, 노스롭그러먼은 $10.8B(-8%)이다.</li>
+    <li><b>유럽 위성 제조사 세 곳이 합치려는 것</b>은 혼자서는 어렵다는 신호다(10장).</li>
+    <li><b>발사 부문 적자는 차세대 기체 개발비 때문이다.</b> 스페이스X는 스타십에 연 $3B 이상을 쓴다. 팰컨9만의 수익성은 공시되지 않는다.</li>
+  </ul>
+
+  <h3>진입장벽</h3>
+  <div class="tbl-scroll"><table>
+    <thead><tr><th>단계</th><th>장벽</th></tr></thead>
+    <tbody>
+      <tr><td>발사체</td><td>막대한 초기 투자와 실패 위험. 비행 이력이 곧 신용이다. 장기적으로 2~3개 사업자로 수렴한다는 전망(신한)</td></tr>
+      <tr><td>발사장</td><td>입지가 제한적이다. 미국 민간 기업도 대부분 우주군·NASA 발사장을 빌려 쓴다</td></tr>
+      <tr><td>부품·소재</td><td>한번 인증받은 부품은 오래 살아남는다. 신규 부품 채택까지 12~18개월. 특수합금은 미국 4사와 러시아 1사 과점</td></tr>
+      <tr><td>위성 서비스</td><td>주파수와 국가별 통신 면허. 주파수는 돈을 주고도 산다(스페이스X의 에코스타 주파수 매입 $17B)</td></tr>
+      <tr><td>지상국</td><td>1곳 구축비 $1~5M, 세계망은 최소 10곳. 전용 지상국은 하루 60분만 쓰여 가동률이 약 4%다. 그래서 여러 위성이 함께 쓰는 공유형 서비스가 나왔다</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">출처: 신한투자증권(2026-01), 대신증권(2026-03), 유진투자증권(2026-08), 키움증권(2026-04).</p>
+</section>
+
+<section id="s6">
+  <div class="sec-h"><span class="sec-n">06</span><h2>수요의 실체: 누가 돈을 내는가</h2></div>
+  <p class="lede">우주 산업의 수요를 부문별로 나눠, 그 수요가 검증됐는지와 성장의 질이 어떤지를 본다.</p>
+  <div class="tbl-scroll"><table>
+    <thead><tr><th>부문</th><th>수요의 실체</th><th>성장의 질</th><th>판정</th></tr></thead>
+    <tbody>
+      <tr><td><b>위성 광대역</b></td><td>스타링크 가입자 1,200만. 미국 470만</td><td>가입자와 용량은 급증, 단가는 하락. 성장이 한 회사에 집중</td><td><span class="chip u">검증</span></td></tr>
+      <tr><td><b>항공·해상 통신</b></td><td>항공기 저궤도 비중 2024년 1% → 2025년 14%</td><td>점유율은 크게 바뀌지만 시장이 작다. 2035년 항공 $2.9B, 해상 $3.79B</td><td><span class="chip u">검증</span></td></tr>
+      <tr><td><b>휴대폰 직접 연결</b></td><td>매출보다 주파수 거래가 앞선다. 1년간 약 $36B</td><td>2030년 전망이 $2.6B~$12.0B로 4.5배 벌어진다</td><td><span class="chip m">미검증</span></td></tr>
+      <tr><td><b>주권 위성망</b></td><td>정부 예산으로 확정. 상업성과 무관</td><td>비용 증가와 일정 지연이 상수</td><td><span class="chip u">예산 확정</span></td></tr>
+      <tr><td><b>지구관측</b></td><td>미국 정부 50%, 동맹국 정부 25%, 민간 25%</td><td>정부 예산에 따라 출렁인다. 데이터 판매는 $0.77B로 작다</td><td><span class="chip m">정부 의존</span></td></tr>
+      <tr><td><b>달 수송</b></td><td>사실상 전부 NASA 발주</td><td>민간 착륙 6회 중 완전 성공 1회</td><td><span class="chip m">정부 의존</span></td></tr>
+      <tr><td><b>상업 우주정거장</b></td><td>최대 고객 NASA가 수요를 의심</td><td>민간 우주인 임무의 실제 고객은 각국 정부</td><td><span class="chip h">불확실</span></td></tr>
+      <tr><td><b>우주 관광</b></td><td>준궤도 상업비행 사업자 0곳</td><td>축소</td><td><span class="chip h">후퇴</span></td></tr>
+      <tr><td><b>궤도 서비스·제조</b></td><td>국방 수요 위주</td><td>향후 10년 누적 $3B(Novaspace)</td><td><span class="chip l">초기</span></td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">출처: SEC 공시, Novaspace(2026), Payload, SIA, Broadband Breakfast. 판정은 본 리포트의 분류.</p>
+
+  <h3>통신: 시장이 커지는 것이 아니라 주인이 바뀐다</h3>
+  <div class="tbl-scroll"><table>
+    <thead><tr><th>지표</th><th class="num">이전</th><th class="num">최근</th></tr></thead>
+    <tbody>
+      <tr><td>휴즈넷 가입자 (정지궤도)</td><td class="num">140만 (2022)</td><td class="num">62.2만 (2026-08)</td></tr>
+      <tr><td>스타링크 미국 가입자</td><td class="num">270만 (2025년 말)</td><td class="num">470만 (2026-08 말)</td></tr>
+      <tr><td>위성방송 매출 (2025)</td><td class="num">$72.4B</td><td class="num">$66.4B (-8.2%)</td></tr>
+      <tr><td>위성통신 매출 (2025)</td><td class="num">$25.9B</td><td class="num">$28.4B (+9.5%)</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">출처: 위키백과 경유(PCMag·Bloomberg Law 인용), Broadband Breakfast(2026-09-23), Space Foundation(2026-07).</p>
+  <ul>
+    <li><b>정지궤도 사업자는 합치거나 무너지고 있다.</b> SES는 인텔샛을 $3.1B에 인수했다(2025-07). 휴즈는 2026년 8월 2일 만기 부채 약 $1.5B을 갚지 못해 파산보호를 신청했다. SES는 순부채 €6.18B에 시가총액 €1.86B이다.</li>
+    <li><b>이번 국면의 파산은 신규 진입자가 아니라 기존 사업자에서 나온다.</b> 1990년대에는 새 사업자가 무너졌다. 지금 무너지는 쪽은 옛 기술을 가진 쪽이다.</li>
+    <li><b>보조금은 거의 받지 못했다.</b> 미국 농촌 광대역 보조금 $42.45B 가운데 위성 몫은 약 $1B, 2.4%다. 그 사이 스타링크는 보조금 없이 미국 가입자를 200만 늘렸다.</li>
+    <li><b>미연결 인구가 곧 수요는 아니다.</b> 세계 인터넷 이용률은 74%이고 저소득국은 23%다. 연결되지 않은 곳은 소득이 가장 낮은 곳이다. 스타링크 월 요금이 $99에서 $66으로 내려간 것과 같은 방향이다.</li>
+    <li><b>용량은 늘고 매출은 덜 는다.</b> 해상 통신은 2035년까지 용량이 5배 늘지만 매출은 1.7배다.</li>
+  </ul>
+
+  <h3>휴대폰 직접 연결: 위성보다 주파수가 먼저 거래된다</h3>
+  <p>방식은 둘이다. 통신사가 가진 이동통신 주파수를 위성이 빌려 쓰는 방식(스타링크와 T모바일, AST와 AT&amp;T)과, 위성 전용 주파수를 쓰는 방식(애플과 글로벌스타)이다. 최근에는 스페이스X, AST, 아마존이 모두 위성 전용 주파수를 사들이고 있다.</p>
+  <div class="tbl-scroll"><table>
+    <thead><tr><th>시점</th><th>거래</th><th class="num">규모</th></tr></thead>
+    <tbody>
+      <tr><td>2025-08</td><td>에코스타 → AT&amp;T (지상용 주파수)</td><td class="num">$23B</td></tr>
+      <tr><td>2025-09</td><td>에코스타 → 스페이스X</td><td class="num">약 $17B + $2.6B</td></tr>
+      <tr><td>2026-04</td><td>아마존 → 글로벌스타 인수</td><td class="num">$11.57B</td></tr>
+      <tr><td>2026-06</td><td>로켓랩 → 이리듐 인수</td><td class="num">약 $8.0B</td></tr>
+      <tr><td>2026-07</td><td>아마존, 직접 연결용 위성 5,105기 신청</td><td class="num">-</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">출처: Payload, Seraphim Space Index(2026년 2분기), 위키백과 경유. 표준은 3GPP Release 17(2022-06)이 첫 규범이다.</p>
+  <p>매출이 검증되기 전에 희소한 권리부터 값이 매겨지는 것은 2000년 유럽 3G 주파수 경매와 닮았다. 그때 영국과 독일의 낙찰가는 각각 £22.5B, £30B이었고 통신사들은 이후 큰 상각을 했다. 이 비교는 본 리포트의 해석이다.</p>
+
+  <h3>주권 위성망: 상업성이 아니라 안보가 수요를 만든다</h3>
+  <p>우크라이나에서 한 기업가의 판단이 통신 범위를 정한 일이 각국의 자체 망 수요를 만들었다. 공통점은 비용이 늘고 일정이 밀린다는 것이다.</p>
+  <div class="tbl-scroll"><table>
+    <thead><tr><th>주체</th><th>사업</th><th class="num">예산</th><th>일정</th></tr></thead>
+    <tbody>
+      <tr><td>EU</td><td>IRIS² 348기</td><td class="num">€10.55B → €15.6B</td><td>첫 발사 2029</td></tr>
+      <tr><td>독일</td><td>군 전용 저궤도망 100기 이상</td><td class="num">€8~10B (군사 우주 전체 €35B)</td><td>2029 궤도 목표</td></tr>
+      <tr><td>캐나다</td><td>텔레샛 군 통신 계약</td><td class="num">C$2.7B, 15년</td><td>상용 2028년 1분기</td></tr>
+      <tr><td>중국</td><td>궈왕 약 13,000기</td><td class="num">미공개</td><td>2029-09경 10% 배치 기한</td></tr>
+      <tr><td>러시아</td><td>라스베트 약 900기</td><td class="num">미공개</td><td>2027 부분 서비스</td></tr>
+      <tr><td>한국</td><td>저궤도 통신 시험위성 2기</td><td class="num">3,200억 원</td><td>2030. 상용망은 2035 목표</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>지구관측: 영상이 아니라 위성을 판다</h3>
+  <p>상업 영상 데이터 판매는 2025년 $0.77B(+6%)로 작다. 분석 등 부가서비스가 $3.6B(+20%)이다. 민간 수요는 기대만큼 크지 못했고, 상장 관측 기업의 성장은 정부 계약에서 나왔다. 최근 흐름은 데이터를 파는 데서 <b>위성 자체를 정부에 파는 쪽</b>으로 옮겨갔다. 핀란드 아이스아이는 독일군에 €1.7B, 폴란드·스웨덴·네덜란드에 전용 위성을 팔았다. Novaspace는 2035년까지 관측 위성 6,500기, 제조 매출 $155.9B을 전망한다.</p>
+  <p>정부가 최대 고객이면 예산이 곧 위험이다. 2025년 6월 관측 6개사 대표가 미국 정찰국의 상업 영상 구매 삭감에 반대하는 공동 서한을 냈다. 또 이란 전쟁 중 플래닛은 중동 영상 공개 지연을 96시간에서 2주로 늘렸다. 정부 고객과 민간 고객의 이해가 충돌할 때 어느 쪽이 우선인지를 보여준 사례다.</p>
+
+  <h3>달, 정거장, 관광: 전망과 실적의 거리</h3>
+  <ul>
+    <li><b>달.</b> 딜로이트는 2050년까지 누적 $343~566B의 달 경제를 전망하면서 "결코 필연이 아니다"라는 단서를 달았다. NASA 민간 달 수송 사업의 10년 한도는 $2.6B이다. 전망의 0.5%다.</li>
+    <li><b>정거장.</b> 국제우주정거장은 2030년 퇴역 예정이다. NASA는 2026년 3월 "상업 정거장 시장이 아직 없다"며 방침을 바꿨다가 업계 반발로 6월에 되돌렸다. 첫 민간 정거장 헤이븐-1은 2027년 1분기 이후로 밀렸다.</li>
+    <li><b>관광.</b> 블루오리진은 2026년 1월 준궤도 관광을 최소 2년 중단했다. 버진 갤럭틱은 2024년 중반 이후 비행이 없다.</li>
+    <li><b>차세대 기술.</b> NASA 분석으로 우주 태양광 발전 단가는 지상 재생에너지의 12~80배다. 핵열추진 시험은 2025년에 취소됐는데, 발사비가 내려 고효율 추진의 이점이 줄었다는 것이 사유였다. 발사비 하락이 일부 미래 기술의 경제성을 오히려 없앤다.</li>
+  </ul>
+</section>
+
+<section id="s7">
+  <div class="sec-h"><span class="sec-n">07</span><h2>국방: 가장 확실한 수요, 가장 느린 조달</h2></div>
+  <h3>구조가 바뀌었다</h3>
+  <p>군 위성은 "소수의 비싼 고궤도 위성"에서 "저궤도에 다수를 흩어 놓은 망"으로 바뀌고 있다. 극초음속 미사일은 정지궤도 경보 위성만으로 추적하기 어렵고, 흩어 놓은 망은 몇 기를 잃어도 버틴다. 과거에는 군 위성 1기를 기획하고 교체하는 데 10~15년이 걸렸다. 지금은 2년 단위로 새 묶음을 올리는 것이 목표다.</p>
+  <div class="tbl-scroll"><table>
+    <caption>미 우주개발청(SDA) 저궤도 위성망</caption>
+    <thead><tr><th>단계</th><th>계획</th><th>상태 (2026-09)</th></tr></thead>
+    <tbody>
+      <tr><td>0차 (시연)</td><td>27기</td><td>2023~2024년 발사 완료</td></tr>
+      <tr><td>1차 (초기 작전)</td><td>158기</td><td class="hl">63기 궤도. 9개월 발사 중단 뒤 2026-07 재개</td></tr>
+      <tr><td>2차 (전 지구)</td><td>전송 250기 이상, 추적 54기 이상</td><td>제작 중</td></tr>
+      <tr><td>3차</td><td>추적 72기, 약 $3.5B</td><td>2029년 이후 발사. 전송 계층은 취소</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">출처: DefenseScoop(2026-07-16), Breaking Defense(2026-09-16), 미 회계감사원 GAO-26-107085. 회계감사원은 2029 회계연도까지 약 $35B이 든다고 봤고 기술 성숙도가 과대평가됐다고 지적했다.</p>
+  <p>지연 원인은 발사체가 아니었다. 광통신 단말을 단일 공급사가 대는데 생산이 따라가지 못했고, 전기추진계 이상으로 일부 위성이 작전 궤도로 옮기지 못했다. 위성 간 통신망 구축은 약 1년 늦어졌다.</p>
+
+  <h3>예산과 조달</h3>
+  <ul>
+    <li><b>미 우주군 예산</b>은 확정 기준 FY2021 $15.4B에서 FY2026 $32B로 연평균 15.8% 늘었다. FY2027 요청은 $71.3B이지만 의회를 통과하지 않았다.</li>
+    <li><b>국가안보 발사</b>는 3개사에 나뉘었다. 2025~2029 회계연도 54회, 상한 $13.7B 가운데 스페이스X 28회, ULA 19회, 블루오리진 7회다. 직전 단계는 ULA 60%, 스페이스X 40%였다. 그러나 2026년에 ULA와 블루오리진 로켓이 모두 멈춰 실제 수행 능력은 다시 한 회사에 몰렸다.</li>
+    <li><b>골든돔</b>은 행정부 제시액 $185B, 의회예산국 추정 20년간 $1.2T이다. 발주 통로인 SHIELD 계약은 상한 $151B이지만 수상자가 2,440곳이다. 유안타증권은 10년에 나누면 대형 방산 5개사 수주잔고의 연 2% 안팎이라고 계산했다. 수상자 명단에 들었다고 매출이 보장되지는 않는다.</li>
+    <li><b>상업 우선 전략.</b> 우주군은 2024년 위성통신, 우주 감시, 발사를 상업 구매 우선 분야로 정했다. 미사일 경보와 전자전은 정부가 직접 한다. 업계가 꼽는 문제는 소규모 시범 계약에서 정식 사업으로 넘어가지 못하는 구간이다.</li>
+  </ul>
+
+  <h3>전쟁이 보여준 것</h3>
+  <div class="tbl-scroll"><table>
+    <thead><tr><th>사례</th><th>사실</th><th>이어진 정책</th></tr></thead>
+    <tbody>
+      <tr><td>우크라이나</td><td>스타링크 단말이 개전 2일 만에 도착, 2022년 말 22,000대. 크림 연안 서비스는 회사가 제공하지 않았다</td><td>유럽 주권 위성망, 미 국방부의 직접 계약</td></tr>
+      <tr><td>우크라이나</td><td>러시아군도 중개상을 통해 단말 수천 대 입수. 2026년 2월 인증 강화로 차단</td><td>상업 단말의 접근 통제</td></tr>
+      <tr><td>이란 (2026-02 개전)</td><td>미 합참의장: "선제 행동은 사이버사령부와 우주사령부였다"</td><td>FY2027 요청에서 미사일 경보·이동표적 식별이 최대 증액</td></tr>
+      <tr><td>위성 공격 능력</td><td>파괴 시험을 한 나라는 미·러·중·인도 4개국. 실전에서 쓰인 것은 전파 방해 같은 비파괴 수단뿐</td><td>전자전 대응, 항법 대체 수단</td></tr>
+      <tr><td>항법 교란</td><td>GPS 기만 영향 항공편이 2024년 상반기 하루 300편에서 1,500편으로</td><td>저궤도 항법 위성(Xona 258기 인가)</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">출처: Secure World Foundation 2026년 보고서, CSIS(2026-05), Payload(2026-03), OPSGROUP(2024-09). 우크라이나 관련 단말 수와 경과는 위키백과 경유.</p>
+  <div class="take"><span class="lbl">정리</span><p>국방은 우주 산업에서 가장 확실한 수요다. 예산이 있고, 전쟁이 필요성을 증명했다. 다만 조달은 느리고 공급망이 얇다. 예산 요청과 확정, 계약 상한과 실제 발주, 계획 기수와 궤도 기수를 구분해서 봐야 한다.</p></div>
+</section>
+
+<section id="s8">
+  <div class="sec-h"><span class="sec-n">08</span><h2>미국: 구매자가 된 정부</h2></div>
+  <div class="chart" id="ch-nation">
+    <p class="ct">미국은 7년 만에 발사를 6배로 늘렸고, 러시아는 제자리다</p>
+    <p class="cs">국가별 연간 궤도 발사 시도(회)</p>
+    <div class="legend"><span><i style="background:var(--c1)"></i>미국</span><span><i style="background:var(--c2)"></i>중국</span><span><i style="background:var(--c3)"></i>러시아</span></div>
+    <svg role="img" aria-label="미국, 중국, 러시아의 연간 궤도 발사 횟수 꺾은선 차트"></svg>
+  </div>
+  <p class="tnote">출처: Jonathan McDowell, Space Activities in 2025. 뉴질랜드에서 쏜 일렉트론(2025년 17회)은 미국에 포함하지 않은 집계다. 유럽은 2021년 15회 → 2023·2024년 각 3회 → 2025년 8회.</p>
+
+  <h3>NASA: 과학을 줄여 유인 탐사로</h3>
+  <div class="tbl-scroll"><table>
+    <caption>NASA 예산 ($M)</caption>
+    <thead><tr><th>계정</th><th class="num">FY2026 확정</th><th class="num">FY2027 요청</th><th class="num">증감</th></tr></thead>
+    <tbody>
+      <tr><td>과학</td><td class="num">7,250</td><td class="num">3,894</td><td class="num neg">-46%</td></tr>
+      <tr><td>탐사 (아르테미스 등)</td><td class="num">7,783</td><td class="num">8,514</td><td class="num pos">+9%</td></tr>
+      <tr><td>우주 운영 (정거장 등)</td><td class="num">4,175</td><td class="num">3,047</td><td class="num neg">-27%</td></tr>
+      <tr><td>우주 기술</td><td class="num">921</td><td class="num">624</td><td class="num neg">-32%</td></tr>
+      <tr class="sum"><td>합계</td><td class="num">24,438</td><td class="num">18,829</td><td class="num">-23%</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">출처: 미 의회조사국 R43419(2026-04-29). FY2026에는 이와 별도로 조정법 자금 약 $4B이 있다. 증감률은 본 리포트 계산.</p>
+  <p>행정부는 2년 연속 $18.8B을 요청했고 의회는 FY2026에 이를 거부하고 $24.4B을 확정했다. 행정부는 SLS 로켓 종료를 제안했고 의회는 자금을 댔다. NASA 공무원은 약 4,000명(23%) 줄었다(2차 집계 기준).</p>
+  <div class="tbl-scroll"><table>
+    <caption>아르테미스</caption>
+    <thead><tr><th>임무</th><th>상태</th></tr></thead>
+    <tbody>
+      <tr><td>II</td><td>2026-04-01 발사, 04-10 귀환. 유인 달 근접 비행 성공</td></tr>
+      <tr><td>III</td><td class="hl">달 착륙에서 지구 저궤도 도킹 시험으로 변경 (2027)</td></tr>
+      <tr><td>IV</td><td>첫 유인 달 착륙, 2028년 목표</td></tr>
+    </tbody>
+  </table></div>
+  <p>1~2월에 나온 증권사 리포트는 아르테미스 III를 유인 달 착륙으로 적었다. 2월 말 NASA가 계획을 바꾼 뒤의 리포트는 도킹 시험으로 적는다. 달 착륙선은 궤도에서 연료를 10~15회 받아야 하는데, 그 급유 시연 일정이 아직 없다.</p>
+
+  <h3>규제: 방향은 완화, 속도는 제각각</h3>
+  <ul>
+    <li><b>발사 면허.</b> 2025년 8월 행정명령이 면허 규정 개편과 환경심사 간소화를 지시했다. 현행 규정으로 나온 면허는 5년간 14건이다.</li>
+    <li><b>주파수 간섭 한도.</b> 저궤도 위성이 정지궤도 위성에 주는 간섭 한도를 풀어 달라는 요구가 있다. 미국이 국내 규칙을 바꿨다는 기록은 단일 출처라 확인이 필요하다. 국제 규칙을 정하는 세계전파통신회의는 2027년 10월 상하이에서 열린다.</li>
+    <li><b>수출통제.</b> 우주 분야 규정 개정안은 2024년 가을에 나온 뒤 멈춰 있다.</li>
+    <li><b>통계 공백.</b> 미 경제분석국은 우주경제 통계 작성을 중단했다. 마지막 수치는 2023년 부가가치 $142.5B(미국 GDP의 0.5%), 민간 고용 37.3만 명이다.</li>
+  </ul>
+  <h3>발사장이 좁다</h3>
+  <p>미국 두 주요 발사장의 발사는 2024년 144회에서 2025년 175회로 늘었다. 제약은 발사대가 아니라 부지, 도로, 연료 수송이다. 케이프 커내버럴은 부스터를 옮기는 도로가 하나뿐이고 연료 트럭이 하루 수백 대 필요하다. 공군장관은 대형 로켓용 신규 발사장이 필요하다고 말했다.</p>
+</section>
+
+<section id="s9">
+  <div class="sec-h"><span class="sec-n">09</span><h2>중국: 국가가 미는 추격, 계획과 실적의 간격</h2></div>
+  <h3>체제</h3>
+  <p>국영 두 집단(CASC, CASIC)이 로켓과 위성을 만들고, 발사장과 관제망은 군(2024년 4월 창설된 항공우주군)이 운영한다. 민간 로켓 회사도 군 발사장을 빌려 쓴다. 그래서 기업이 소유한 첫 발사장인 하이난 상업 발사장이 병목 해소 수단으로 등장했다. 누계 23회를 모두 성공했고 2026년에만 12회다.</p>
+  <ul class="tl">
+    <li><span class="d">2014-11</span><span>국무원 60호 문건. 민간 자본의 위성 개발·발사 참여 허용</span></li>
+    <li><span class="d">2020</span><span>위성 인터넷을 신형 인프라에 포함</span></li>
+    <li><span class="d">2024-03</span><span>정부업무보고에 상업우주 첫 등장. "신성장 엔진"</span></li>
+    <li><span class="d">2025-11</span><span>상업우주 행동계획(2025~2027). 국가 발전기금, 국가 시설 개방, 강제보험</span></li>
+    <li><span class="d">2025-12</span><span>상하이거래소, 적자 로켓 기업 상장 허용. 조건은 재사용 중대형 로켓의 궤도 진입</span></li>
+    <li><span class="d">2026-03</span><span>정부업무보고 "신흥 지주산업". 15차 5개년 계획에 "우주강국" 명시</span></li>
+  </ul>
+
+  <h3>계획과 실적</h3>
+  <div class="tbl-scroll"><table>
+    <thead><tr><th>항목</th><th>계획</th><th>실적 (2026-09)</th><th class="num">달성률</th></tr></thead>
+    <tbody>
+      <tr><td>2026년 궤도 발사</td><td>140회</td><td>70회 (9/24, 실패 4회)</td><td class="num">50%</td></tr>
+      <tr><td>궈왕 위성망 (2026년 목표)</td><td>310기</td><td>운용 213기</td><td class="num">69%</td></tr>
+      <tr><td>첸판 위성망 (2026년 목표)</td><td>324기</td><td>운용 256기</td><td class="num">79%</td></tr>
+      <tr><td>첸판 위성망 (원래 계획, 2025년 말)</td><td>648기</td><td>운용 256기</td><td class="num">40%</td></tr>
+      <tr><td>두 위성망 장기 계획</td><td>약 28,000기</td><td>운용 469기</td><td class="num">1.7%</td></tr>
+      <tr><td>재사용 1단 재비행</td><td>설계 20회</td><td>회수 2건, 재비행 0건</td><td class="num">-</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">출처: China in Space(2026-09-23, 09-24), SpaceSGP(2026-07), USCC 2025 연례보고서, 위키백과 경유. 달성률은 본 리포트 계산. 궤도 위성 수는 "발사 수, 추적 수, 운용 고도 도달 수"에 따라 출처마다 다르다.</p>
+  <ul>
+    <li><b>재사용은 회수 단계다.</b> 장정-10B가 7월 10일 해상 그물 회수에, 주췌-3가 8월 18일 착륙에 성공했다(직후 화재로 넘어짐). 회수한 기체를 다시 쏜 사례는 없다. 스페이스X는 첫 착륙(2015)에서 첫 재비행(2017)까지 15개월이 걸렸다.</li>
+    <li><b>궈왕의 기한.</b> 국제 규정상 2029년 9월경까지 약 1,300기가 필요하다. 월 30기꼴인데 실제는 월 6~9.5기다.</li>
+    <li><b>첸판은 매출이 없다.</b> 2026년 1분기 매출 0, 위성 22기 고장. 브라질에서 324기 승인을 받았다.</li>
+    <li><b>발사 가격.</b> 민간 로켓 주류는 kg당 5만~10만 위안이고 주췌-3의 목표는 2만 위안 이하다. 공시된 가격은 없고 호가와 목표가 섞여 있다.</li>
+  </ul>
+
+  <h3>자본: 절반 이상이 국가 돈</h3>
+  <div class="tbl-scroll"><table>
+    <thead><tr><th>지표</th><th>수치</th></tr></thead>
+    <tbody>
+      <tr><td>2025년 상업우주 조달액</td><td>186억 위안 (+32%)</td></tr>
+      <tr><td>2024년 벤처투자</td><td>중국 $2.7B, 미국 $2.6B. 처음으로 역전</td></tr>
+      <tr><td>국가 자본 비중</td><td>2018년 20% → 2024년 51~54%</td></tr>
+      <tr><td>상장</td><td>랜드스페이스(75억 위안), 중커위항(41.8억 위안) 모두 심사 질의 단계. 통과 기업 없음</td></tr>
+      <tr><td>랜드스페이스 재무</td><td>2025년 상반기 매출 3,643만 위안, 누적 결손 48.4억 위안</td></tr>
+      <tr><td>발사 서비스 매출 (2025)</td><td>64.4억 위안. "시장 규모 2.8조 위안"의 약 0.2%</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">출처: 신화사(2026-01-24), USCC 2025, 界面新闻, 东方财富. 시장 규모 2.8조 위안은 위성 활용 단말까지 포함한 넓은 정의이고 원출처 기관이 확인되지 않는다.</p>
+  <p>미 의회 자문기구(USCC)는 중국 상업우주를 "너무 많은 공급이 너무 적은 수요를 쫓는다"고 평가했다. 민간 로켓 7개사가 생산기지 51곳을 갖고 있고, 계획된 위성 공장 능력은 연 2,000기를 넘는데 실제 발사 위성은 연 수백 기다. 전기차와 태양광에서 본 구조다.</p>
+  <h3>미국이 보는 중국</h3>
+  <p>중국의 궤도 위성은 2024년 말 1,060기에서 2026년 6월 1,506기로 늘었고, 정찰 가능 위성은 510기 이상이다. 미 우주군 참모총장은 재사용 발사 투자를 중국이 미국을 따라잡을 수 있는 변곡점으로 꼽았다. 중국의 우주 예산은 공표되지 않으며 Space Foundation은 2025년 약 $19B으로 추정한다.</p>
+</section>
+
+<section id="s10">
+  <div class="sec-h"><span class="sec-n">10</span><h2>유럽: 주권을 되찾는 비용</h2></div>
+  <h3>발사 공백과 회복</h3>
+  <p>유럽은 2023~2024년에 사실상 자체 발사 수단이 없었다. 아리안 5는 퇴역했고, 아리안 6는 4년 늦었고, 베가-C는 실패했고, 러시아 소유즈는 전쟁으로 끊겼다. 발사 시도는 2021년 15회에서 2023·2024년 각 3회로 줄었다.</p>
+  <div class="tbl-scroll"><table>
+    <thead><tr><th>항목</th><th>수치</th></tr></thead>
+    <tbody>
+      <tr><td>아리안 6 누적</td><td>9회. 2025년 4회(계획 6회), 2026년 9월까지 4회(계획 8회)</td></tr>
+      <tr><td>운용 보조금</td><td>아리안 6 연 최대 €340M, 베가-C 연 €21M. 프랑스·독일·이탈리아만 부담</td></tr>
+      <tr><td>실제 계약가</td><td>아리안 62로 쏜 센티넬-1D €82.1M. 팰컨9으로 쏜 센티넬-6B 약 $94M</td></tr>
+      <tr><td>2026년 아리안 64 탑재체</td><td>세 번 모두 아마존 위성</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">출처: European Spaceflight, 위키백과 경유. 계약가가 비슷해 보이는 것은 보조금 반영 뒤 가격이다.</p>
+  <p>유럽우주국은 회원국 분담금에 비례해 그 나라 기업에 일감을 주는 원칙을 지켜왔다. 공급망이 여러 나라에 흩어져 비용이 오른다는 비판이 드라기 보고서에 실렸다. 민간 발사체 경진(European Launcher Challenge)이 이 원칙을 푸는 첫 시험이다.</p>
+  <div class="tbl-scroll"><table>
+    <caption>민간 발사체 경진 예비 선정 5개사</caption>
+    <thead><tr><th>기업</th><th>상태</th><th class="num">계약</th></tr></thead>
+    <tbody>
+      <tr><td>이자르 (독일)</td><td class="hl">2026-09-05 궤도 진입 성공. 1차는 실패</td><td class="num">€197.8M</td></tr>
+      <tr><td>RFA (독일)</td><td>미발사. 7월 말 기체 분리</td><td class="num">€186.9M</td></tr>
+      <tr><td>PLD 스페이스 (스페인)</td><td>2026년 말 첫 발사 목표</td><td class="num">€158.9M</td></tr>
+      <tr><td>마이아스페이스 (프랑스)</td><td>2027년 하반기로 연기</td><td class="num">미계약</td></tr>
+      <tr><td>오벡스 (영국)</td><td>2026-02 파산</td><td class="num">-</td></tr>
+    </tbody>
+  </table></div>
+  <p>재사용은 더 멀다. 시연기 테미스는 2026년 7월에 연료 주입 예행연습을 했고 호핑 비행은 아직이다. 중국이 궤도급 회수에 성공한 같은 시기다.</p>
+
+  <h3>위성 제조 통합과 주권 통신망</h3>
+  <ul>
+    <li><b>세 회사 합작.</b> 에어버스(35%), 레오나르도(32.5%), 탈레스(32.5%)가 위성 사업을 합친다. 매출 약 €6.5B, 25,000명. 정식 신고 전이며 EU 결정은 2027년 하반기 이후로 전망된다. 독일 OHB는 반대한다. 에어버스 방산우주 부문은 2024년 우주 사업에서 €1.3B 충당금을 쌓았다.</li>
+    <li><b>IRIS².</b> 사업비가 €10.55B에서 €15.6B로, 위성이 290기에서 348기로 늘었다. 2026년 9월 벨기에 에어로스페이스랩이 €2.4B, 탈레스 알레니아 스페이스가 €3B 이상을 수주했다.</li>
+    <li><b>EU 우주법.</b> 안전, 사이버보안, 환경을 다룬다. 의회 계류 중이고 적용 목표는 2030년이다. 미 국무부는 스타링크를 겨냥한 규제라며 반발했다.</li>
+  </ul>
+  <h3>국방 우주가 늘어난다</h3>
+  <div class="tbl-scroll"><table>
+    <thead><tr><th>국가</th><th>계획</th></tr></thead>
+    <tbody>
+      <tr><td>독일</td><td>2030년까지 €35B. 군 전용 저궤도 통신망 €8~10B, 아이스아이·라인메탈 레이더 정찰 €1.7B</td></tr>
+      <tr><td>프랑스</td><td>개정 군사계획법으로 국방 우주 €10.1B</td></tr>
+      <tr><td>영국</td><td>2030년까지 $4.3B. 유럽우주국 분담금은 줄였다</td></tr>
+      <tr><td>유럽우주국</td><td>2025년 각료이사회 3년 €22.1B(+32%). 독일 €5.0B로 최대</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="s11">
+  <div class="sec-h"><span class="sec-n">11</span><h2>일본, 인도, 러시아, 중동</h2></div>
+  <div class="tbl-scroll"><table>
+    <thead><tr><th></th><th>일본</th><th>인도</th><th>러시아</th><th>중동</th></tr></thead>
+    <tbody>
+      <tr><td><b>자금</b></td><td>우주전략기금 10년 1조 엔. 방위성 우주 예산 약 1,740억 엔</td><td>우주부 예산 약 $1.4B. 벤처펀드 1,000억 루피</td><td>국가 예산. 전시 긴축</td><td>국부펀드. UAE 우주기금 30억 디르함</td></tr>
+      <tr><td><b>발사</b></td><td>H3 9회 중 7회 성공. 민간 카이로스 3연속 실패</td><td>주력 PSLV 2회 연속 실패. 민간 비크람-1 첫 궤도 성공</td><td>연 17회로 정체. 세계 점유율 21.6% → 5.2%</td><td>자체 발사 능력 없음</td></tr>
+      <tr><td><b>정책</b></td><td>민간 육성, 항공자위대를 항공우주자위대로</td><td>2020년 개혁으로 민간 개방. 발사체 기술을 기업에 이전</td><td>정거장 계획을 ISS 모듈 재활용으로 축소</td><td>투자와 국제 협력</td></tr>
+      <tr><td><b>약점</b></td><td>소형 발사체 공백</td><td>독자 항법 위성 가용 3기(최소 4기 필요)</td><td>제재로 상업 계약 약 90% 상실</td><td>기술 자립도</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">출처: Space Foundation(2026-07), 일본 방위성 FY2026 예산, McDowell, 위키백과 경유. 러시아 점유율은 본 리포트 계산(2019년 22 ÷ 102, 2025년 17 ÷ 329).</p>
+  <div class="tbl-scroll"><table>
+    <caption>2025년 한 해 발사된 탑재체의 소유국</caption>
+    <thead><tr><th>소유국</th><th class="num">합계</th><th class="num">상업</th><th class="num">국방</th></tr></thead>
+    <tbody>
+      <tr><td>미국</td><td class="num">3,720</td><td class="num">3,529</td><td class="num">150</td></tr>
+      <tr><td>중국</td><td class="num">371</td><td class="num">164</td><td class="num">43</td></tr>
+      <tr><td>서유럽</td><td class="num">145</td><td class="num">97</td><td class="num">4</td></tr>
+      <tr><td>러시아</td><td class="num">87</td><td class="num">50</td><td class="num">18</td></tr>
+      <tr><td>일본</td><td class="num">35</td><td class="num">18</td><td class="num">0</td></tr>
+      <tr><td>한국</td><td class="num">24</td><td class="num">11</td><td class="num">2</td></tr>
+      <tr><td>인도</td><td class="num">12</td><td class="num">9</td><td class="num">1</td></tr>
+      <tr class="sum"><td>세계</td><td class="num">4,524</td><td class="num">3,952</td><td class="num">220</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">출처: McDowell, Space Activities in 2025 표 6. 미국이 82%, 상업이 87%. 운용 위성의 66%가 스타링크다.</p>
+  <p>숫자로 보면 우주는 아직 미국 한 나라, 그 안에서도 한 회사의 산업이다. 나머지 나라의 정책은 대부분 이 집중에 대한 대응이다. 유럽은 주권, 중국은 추격, 일본과 인도는 민간 육성, 중동은 투자로 답한다.</p>
+</section>
+
+<section id="s12">
+  <div class="sec-h"><span class="sec-n">12</span><h2>한국: 예산은 늘고, 발사는 남의 로켓으로</h2></div>
+  <h3>체제와 예산</h3>
+  <p>2024년 5월 우주항공청이 문을 열었다. 그전에는 과기정통부가 정책을, 항공우주연구원이 개발을, 국방과학연구소가 군 분야를 맡는 분산 구조였다. 국가우주위원회 위원장은 대통령으로 격상됐다.</p>
+  <div class="chart" id="ch-kbudget">
+    <p class="ct">우주항공청 예산은 3년 만에 2.2배가 된다</p>
+    <p class="cs">우주항공청 예산(억 원). 2027년은 정부안으로 국회 심의 전</p>
+    <svg role="img" aria-label="우주항공청 연도별 예산 막대 차트"></svg>
+  </div>
+  <p class="tnote">출처: 우주항공청 보도자료(2024-12, 2025-12, 2026-09-01). 2027년 정부안은 기본계획의 목표(1.5조 원)를 넘는다.</p>
+  <div class="tbl-scroll"><table>
+    <caption>2027년 정부안 중점 분야 (억 원)</caption>
+    <thead><tr><th>분야</th><th class="num">2026</th><th class="num">2027안</th><th class="num">증감</th></tr></thead>
+    <tbody>
+      <tr><td>우주 수송</td><td class="num">2,632</td><td class="num">5,629</td><td class="num pos">+113.8%</td></tr>
+      <tr><td>달 탐사</td><td class="num">998</td><td class="num">2,794</td><td class="num pos">+180.1%</td></tr>
+      <tr><td>위성</td><td class="num">2,362</td><td class="num">2,647</td><td class="num">+12.1%</td></tr>
+      <tr><td>민간 산업 생태계</td><td class="num">1,813</td><td class="num">1,845</td><td class="num">+1.8%</td></tr>
+    </tbody>
+  </table></div>
+  <p>늘어나는 돈은 발사체와 달 탐사에 몰린다. 신규 사업으로 누리호 후속 발사 지원 750억 원, 소형 달착륙선 1,063억 원이 들어갔다. 정부 문서 스스로 "최소 3배로 늘려야 세계 10위권"이라고 진단한다. 한국의 우주 예산은 GDP의 0.06%로 미국 0.31%, 일본 0.16%보다 낮다.</p>
+
+  <h3>산업 규모: 3.5조 원, 그중 3분의 2는 방송과 내비게이션</h3>
+  <div class="tbl-scroll"><table>
+    <caption>우주산업 실태조사 (2024년 기준, 기업 매출)</caption>
+    <thead><tr><th>분야</th><th class="num">매출(억 원)</th><th class="num">비중</th></tr></thead>
+    <tbody>
+      <tr><td>위성방송통신</td><td class="num">15,270</td><td class="num">43.1%</td></tr>
+      <tr><td>위성항법</td><td class="num">7,630</td><td class="num">21.5%</td></tr>
+      <tr><td>위성체 제작</td><td class="num">4,730</td><td class="num">13.3%</td></tr>
+      <tr><td>발사체 제작</td><td class="num">1,930</td><td class="num">5.5%</td></tr>
+      <tr><td>지상 장비</td><td class="num">2,470</td><td class="num">7.0%</td></tr>
+      <tr><td>그 밖</td><td class="num">3,380</td><td class="num">9.5%</td></tr>
+      <tr class="sum"><td>합계</td><td class="num">35,410</td><td class="num">100%</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">출처: 2025년 우주산업 및 항공제조산업 실태조사(우주항공청·한국우주기술진흥협회), KB증권 정리. 연구기관 예산과 대학 연구비를 더한 활동금액은 4조 3,568억 원, 인력은 11,147명.</p>
+  <ul>
+    <li><b>통계의 등락은 위성방송이 좌우했다.</b> 기업 매출은 2018년 3.29조 원에서 2021년 2.57조 원으로 줄었다가 회복했다. 줄어든 몫은 대부분 위성방송통신(2.49조 → 1.28조 원)이다. 같은 기간 위성·발사체 등 제작 부문은 3,910억 원에서 1조 1,570억 원으로 약 3배가 됐다.</li>
+    <li><b>정부 연구기관이 직접 쓰는 돈이 크다.</b> 위성체 제작은 기업 매출로는 4,730억 원, 활동금액으로는 7,856억 원이다. 차액 약 3,100억 원은 연구기관이 직접 집행한다.</li>
+    <li><b>세계 점유율.</b> 2026년 7월 정부 전략은 우주와 항공을 합쳐 0.7%(11.2조 원)이고 2035년 3%가 목표다.</li>
+  </ul>
+
+  <h3>자국 위성을 해외 로켓으로 쏜다</h3>
+  <div class="tbl-scroll"><table>
+    <thead><tr><th>위성</th><th>발사</th><th>발사체</th></tr></thead>
+    <tbody>
+      <tr><td>군 정찰위성 1~5호</td><td>2023-12 ~ 2025-11</td><td class="hl">전부 팰컨9</td></tr>
+      <tr><td>아리랑 7호</td><td>2025-12-02</td><td>베가-C (유럽)</td></tr>
+      <tr><td>차세대중형위성 2호</td><td>2026-05-03</td><td class="hl">팰컨9</td></tr>
+      <tr><td>차세대중형위성 4호</td><td>2026-07-07</td><td class="hl">팰컨9</td></tr>
+      <tr><td>천리안 3호 (예정)</td><td>2027 하반기</td><td>스페이스X</td></tr>
+      <tr><td>한국형 위성항법 1호 (예정)</td><td>2029-09</td><td>스페이스X</td></tr>
+      <tr><td>아리랑 6호</td><td class="hl">미발사. 5차례 연기</td><td>베가-C 예정</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">출처: 우주항공청 보도자료, 헬로디디, KB증권. 아리랑 6호는 2022년 러시아 로켓 발사 예정이었으나 전쟁으로 무산됐다.</p>
+  <p>이유는 셋이다. 누리호는 연 1회 수준이고, kg당 2.4만~5만 달러로 비싸며, 저궤도만 갈 수 있어 정지궤도와 항법 위성을 올리지 못한다. 유안타증권 계산으로 향후 10년 국내 위성 수요(약 329톤)를 누리호로 채우려면 200회 넘게 쏴야 한다.</p>
+
+  <h3>주요 사업과 지연</h3>
+  <div class="tbl-scroll"><table>
+    <thead><tr><th>사업</th><th class="num">총사업비</th><th>현재 일정</th><th>변경</th></tr></thead>
+    <tbody>
+      <tr><td>누리호 5차</td><td class="num">-</td><td>2026-10-07 예정</td><td>6월 → 3분기 → 10월</td></tr>
+      <tr><td>차세대발사체</td><td class="num">2조 2,921억 원</td><td>첫 발사 2031, 달 착륙선 2032</td><td>재사용으로 전환(2025-12), 사업비 +2,789억 원, 첫 발사 1년 후퇴</td></tr>
+      <tr><td>한국형 위성항법(KPS)</td><td class="num">3조 7,235억 원</td><td>1호기 2029-09</td><td>20개월 지연. 항법 탑재체 개발 난도</td></tr>
+      <tr><td>초소형위성체계</td><td class="num">1조 4,223억 원</td><td>검증위성 2026 후반기</td><td>사업자 선정 지연</td></tr>
+      <tr><td>저궤도 위성통신</td><td class="num">3,200억 원</td><td>2030 시험위성 2기</td><td>상용망은 2035 목표, 규모 미정</td></tr>
+      <tr><td>나로 민간 발사장</td><td class="num">-</td><td>1단계 2027년 3분기</td><td>-</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">출처: 우주항공청 보도자료. 증권사 리포트의 일정·금액 가운데 27건이 정부 원문과 달랐고, 본 표는 정부 원문 값을 썼다.</p>
+  <ul>
+    <li><b>누리호 기술이전.</b> 2025년 7월 항공우주연구원이 한화에어로스페이스에 기술을 넘겼다. 기술료 240억 원, 2032년까지, 비독점이다. 발사대와 엔진 시험설비 운용은 빠졌다.</li>
+    <li><b>발사 공백.</b> 누리호 사업은 6차(2027)로 끝나고 차세대발사체 첫 발사는 2031년이다. 300여 협력사의 생산라인을 유지할 일감이 비는 구간이다. 2027년 정부안의 후속 발사 지원 750억 원이 그 대응이다.</li>
+    <li><b>한국판 재사용.</b> 차세대발사체는 80톤급 메탄 엔진을 쓰는 재사용형으로 바뀌었다. 목표는 2035년 1단 재사용이다. 팰컨9의 첫 회수는 2015년이었다.</li>
+    <li><b>제도.</b> 2026년 8월 법 개정으로 반복 발사를 한 번에 허가받을 수 있게 됐다(2027년 2월 시행). 제2우주센터 입지는 2026년 10월에 정한다.</li>
+  </ul>
+
+  <h3>구조적 약점</h3>
+  <div class="tbl-scroll"><table>
+    <thead><tr><th>약점</th><th>내용</th></tr></thead>
+    <tbody>
+      <tr><td>정부 의존</td><td>첫 고객이 국가와 군이다. 공공 매출은 비용을 보전해 주는 방식이라 이익이 낮다</td></tr>
+      <tr><td>비행 이력</td><td>우주 부품은 궤도에서 작동한 이력이 있어야 채택된다. 이력이 없어 채택되지 못하고, 채택되지 못해 이력이 쌓이지 않는다. 정부가 검증 위성으로 풀려 한다</td></tr>
+      <tr><td>부품 수입</td><td>2023년 우주 분야 수입의 77.8%가 위성체 제작용이다</td></tr>
+      <tr><td>수출통제</td><td>미국산 부품이 든 위성을 한국 로켓으로 쏘려면 미국 허가가 필요하다. 초소형군집위성은 이를 피하려 통제 대상이 아닌 부품으로 설계했다</td></tr>
+      <tr><td>민간 발사체</td><td>이노스페이스는 2025년 12월 첫 상업발사에 실패했고 재발사 기록이 없다. 페리지는 2027년으로 연기</td></tr>
+      <tr><td>대기업 집중</td><td>발사체는 한화, 위성 본체는 KAI가 체계종합을 맡는다. 신한투자증권은 "방산 대기업만 죽음의 계곡을 견딘다"고 썼다</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="s13">
+  <div class="sec-h"><span class="sec-n">13</span><h2>병목과 물리적 한계</h2></div>
+  <h3>공급망: 로켓보다 부품이 막힌다</h3>
+  <div class="tbl-scroll"><table>
+    <thead><tr><th>품목</th><th>상황</th><th>영향</th></tr></thead>
+    <tbody>
+      <tr><td><b>광통신 단말</b></td><td>미 국방 위성망 1차분을 단일 공급사가 납품. 생산이 따라가지 못함</td><td>위성 간 통신망 약 1년 지연</td></tr>
+      <tr><td><b>고체로켓모터</b></td><td>미국 내 주 공급사 2곳. 원료인 과염소산암모늄은 공급원이 1곳</td><td>국방부가 공급사에 $1B 직접 투자. 벌컨 로켓 중단 원인도 고체 부스터</td></tr>
+      <tr><td><b>특수합금</b></td><td>미국 4사와 러시아 1사 과점. 러시아산 배제 뒤 티타늄 납기가 50~60주에서 100주 이상으로</td><td>가격 2~3배. 한국 소재 업체가 들어갈 틈</td></tr>
+      <tr><td><b>우주용 태양전지</b></td><td>고효율 갈륨비소 전지는 와트당 $200 이상. 실리콘은 약 $0.4</td><td>궤도 데이터센터 구상의 최대 제약 가운데 하나</td></tr>
+      <tr><td><b>갈륨</b></td><td>저순도 갈륨의 98%가 중국산. 2024년 12월 대미 수출 금지, 2025년 11월 1년 유예</td><td>미 국방 부품 11,000개 이상이 갈륨 필요</td></tr>
+      <tr><td><b>발사장</b></td><td>부지, 도로, 연료 수송, 인력</td><td>미국 2025년 계획 대비 실적 미달</td></tr>
+      <tr><td><b>시험 설비·인증</b></td><td>시험 용량 부족, 신규 공급사 인증 장벽</td><td>부품 조달 지연이 연 단위로</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">출처: Breaking Defense(2026-01, 2026-09), 유진투자증권(2026-08), Per Aspera(전문 블로그, 추정치 포함), Payload(2026-03), Air &amp; Space Forces Magazine.</p>
+  <p>병목이 있는 곳에 값이 매겨진다. 위성과 로켓을 직접 만드는 회사들이 내재화하지 못하는 품목, 공급사가 한두 곳뿐인 품목이 산업에서 가장 단단한 자리다. 다만 이 자리도 고객이 내재화를 시도하면 흔들린다. 로켓랩은 광통신 단말 회사를 인수했고 스페이스X는 태양전지 공장을 짓고 있다.</p>
+
+  <h3>궤도는 유한하다</h3>
+  <div class="tbl-scroll"><table>
+    <thead><tr><th>고도</th><th>잔해가 남는 기간</th><th>이 고도를 쓰는 위성망</th></tr></thead>
+    <tbody>
+      <tr><td>600km 미만</td><td>수년</td><td>스타링크, 아마존</td></tr>
+      <tr><td>약 800km</td><td>수백 년</td><td>이리듐(780km)</td></tr>
+      <tr><td>1,000km 초과</td><td>천 년 이상</td><td>원웹(1,200km), 첸판(약 1,070km), 궈왕 일부</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">출처: NASA 궤도잔해프로그램.</p>
+  <ul>
+    <li><b>회피 기동이 급증한다.</b> 스타링크의 충돌 회피 기동은 6개월 기준 2022년 6,873회에서 2024년 약 5만 회로 늘었고 최근에는 연 35만 회를 넘는다.</li>
+    <li><b>신규 발사가 없어도 잔해는 는다.</b> 유럽우주국 2026년 보고서의 결론이다. 파편이 부딪혀 새 파편을 만드는 속도가 자연 낙하보다 빠르다.</li>
+    <li><b>수용 한도.</b> 한 경제 모형은 연쇄 충돌을 막는 한계를 위성 72,000기로 봤다. 미국에 신청된 궤도 데이터센터 위성만 114만 기가 넘는다. MIT 연구는 온실가스로 대기 상층이 수축해 2100년까지 수용 능력이 50~66% 줄 것으로 본다.</li>
+    <li><b>치우는 것은 돈이 안 된다.</b> NASA 분석으로 대형 잔해 50개를 없앴을 때 첫해 편익은 약 $3.5M이다. 잔해 제거 임무 한 건의 계약액(€86M)보다 훨씬 작다. 실제로 잔해를 제거한 상업 임무는 아직 없다. 당분간 정부가 돈을 내는 시장이다.</li>
+    <li><b>선점 경쟁.</b> 국제 규정은 신청 후 7년 안에 첫 위성을 올리고, 그 뒤 2년·5년·7년 안에 10%·50%·100%를 채우게 한다. 먼저 신청하고 먼저 채운 쪽이 권리를 갖는다. 그래서 실제로 쏠 수 있는지와 무관하게 신청부터 한다.</li>
+  </ul>
+</section>
+
+<section id="s14">
+  <div class="sec-h"><span class="sec-n">14</span><h2>자본 사이클: 한 바퀴를 돌았다</h2></div>
+  <p class="lede">우주 투자는 2021년 정점, 2022~2023년 조정, 2025~2026년 사상 최대로 한 주기를 돌았다. 상장 주식은 그 뒤 이미 크게 내렸다.</p>
+  <div class="tbl-scroll"><table>
+    <caption>우주 벤처투자 (집계 기관마다 범위가 달라 한 시계열로 이으면 안 된다)</caption>
+    <thead><tr><th>기관</th><th>기간</th><th class="num">금액</th><th>비고</th></tr></thead>
+    <tbody>
+      <tr><td>Space Capital</td><td>2023년</td><td class="num">$17.9B</td><td>10년 내 최저</td></tr>
+      <tr><td>BryceTech</td><td>2024년</td><td class="num">$7.8B</td><td>스타트업 한정</td></tr>
+      <tr><td>BryceTech</td><td>2025년</td><td class="num">$10.9B</td><td>235건</td></tr>
+      <tr><td>Seraphim</td><td>2025년 2분기까지 12개월</td><td class="num">$9.7B</td><td>582건</td></tr>
+      <tr><td>Seraphim</td><td>2026년 2분기까지 12개월</td><td class="num hl">$23B</td><td>620건. 사상 최대</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">출처: Seraphim Space Index(2026년 2분기), BryceTech Start-Up Space, Payload. Seraphim은 우주 전문 투자사다.</p>
+  <p>금액은 2.4배가 됐는데 건수는 6.5% 늘었다. 늘어난 돈은 거의 전부 큰 라운드다. 2분기 상위 10건은 모두 $250M을 넘었고 우주 국방, 레이더 위성, 궤도 컴퓨팅에 몰렸다. 인수 건수는 1년 전의 약 4배다.</p>
+
+  <h3>2021년 상장 기업들의 5년</h3>
+  <div class="tbl-scroll"><table>
+    <caption>스팩(SPAC)으로 상장한 우주 기업. 상장가 $10 대비 (2026-09-25 종가, 주식병합 환산)</caption>
+    <thead><tr><th>기업</th><th>사업</th><th class="num">$10 대비</th><th>비고</th></tr></thead>
+    <tbody>
+      <tr><td>로켓랩</td><td>발사, 위성 제조</td><td class="num pos">+640%</td><td></td></tr>
+      <tr><td>AST 스페이스모바일</td><td>휴대폰 직접 연결</td><td class="num pos">+518%</td><td></td></tr>
+      <tr><td>플래닛 랩스</td><td>지구관측</td><td class="num pos">+74%</td><td></td></tr>
+      <tr><td>인튜이티브 머신스</td><td>달 착륙, 위성 제조</td><td class="num pos">+56%</td><td>2023년 상장</td></tr>
+      <tr><td>레드와이어</td><td>우주 인프라</td><td class="num pos">+16%</td><td></td></tr>
+      <tr><td>새틀로직</td><td>지구관측</td><td class="num neg">-38%</td><td></td></tr>
+      <tr><td>블랙스카이</td><td>위성 영상</td><td class="num neg">-71%</td><td>1:8 병합</td></tr>
+      <tr><td>스파이어</td><td>데이터 분석</td><td class="num neg">-85%</td><td>1:8 병합</td></tr>
+      <tr><td>버진 갤럭틱</td><td>우주 관광</td><td class="num neg">-98%</td><td>1:20 병합</td></tr>
+      <tr><td>모멘터스</td><td>궤도 수송</td><td class="num neg">-97.6% 이상</td><td>1:17.85 병합. 이전 병합 미확인</td></tr>
+      <tr><td>버진 오빗</td><td>소형 발사</td><td class="num">소멸</td><td>2023-04 파산. 자산 약 $36M에 매각</td></tr>
+      <tr><td>아스트라</td><td>소형 발사</td><td class="num">소멸</td><td>2024-07 비상장 전환</td></tr>
+      <tr><td>테란 오비탈</td><td>위성 제조</td><td class="num">소멸</td><td>2024년 록히드마틴에 피인수</td></tr>
+      <tr><td>새틱스파이</td><td>위성 칩</td><td class="num">소멸</td><td>2025-07 MDA에 피인수</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">출처: stockanalysis.com 시세, New Space Economy(2026-06), 위키백과 경유. 주식병합 환산은 본 리포트 계산. 병합 이력을 확인하지 못한 종목은 병합이 없는 것으로 봤다.</p>
+  <p>14곳 중 5곳이 상장가를 넘었고, 5곳이 밑돌고, 4곳이 사라졌다. 넘어선 5곳도 2022~2023년에는 대부분 상장가를 크게 밑돌았다. 살아남은 곳의 공통점은 비행 실적, 반복되는 정부 계약, 제품 다각화다. 실패한 곳은 제품이 개발 단계일 때 상장했다.</p>
+  <div class="tbl-scroll"><table>
+    <caption>2025~2026년 상장</caption>
+    <thead><tr><th>기업</th><th>상장</th><th class="num">공모가</th><th class="num">9/25 종가</th><th class="num">수익률</th></tr></thead>
+    <tbody>
+      <tr><td>카먼</td><td>2025-02</td><td class="num">$22.00</td><td class="num">$35.69</td><td class="num pos">+62.2%</td></tr>
+      <tr><td>보이저</td><td>2025-06</td><td class="num">$31.00</td><td class="num">$31.35</td><td class="num pos">+1.1%</td></tr>
+      <tr><td>파이어플라이</td><td>2025-08</td><td class="num">$45.00</td><td class="num">$24.36</td><td class="num neg">-45.9%</td></tr>
+      <tr><td>요크 스페이스</td><td>2026-01</td><td class="num">$34.00</td><td class="num">$9.57</td><td class="num neg">-71.9%</td></tr>
+      <tr><td>스페이스X</td><td>2026-06</td><td class="num">$135.00</td><td class="num">$148.68</td><td class="num pos">+10.1%</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">출처: stockanalysis.com. 요크는 가이던스 하향과 증권 집단소송이 겹쳤다.</p>
+
+  <h3>과거의 인프라 버블과 견주면</h3>
+  <p>아래 비교는 수집한 사실을 바탕으로 한 본 리포트의 정리다. 1990년대 위성 버블과 지금을 직접 비교한 외부 분석은 찾지 못했고, 증권사 인뎁스 11건 가운데 이 주제를 다룬 곳도 없었다.</p>
+  <div class="tbl-scroll"><table>
+    <thead><tr><th>사례</th><th>무슨 일이 있었나</th><th>그 뒤</th></tr></thead>
+    <tbody>
+      <tr><td>영국 철도 (1840년대)</td><td>1846년 한 해 263개 철도법 통과. 금리 인상으로 투자가 멈췄고 인가 노선의 3분의 1은 지어지지 않았다</td><td>대형 철도회사가 실패한 노선을 헐값에 사서 망을 넓혔다</td></tr>
+      <tr><td>통신 (1996~2001)</td><td>5년간 $500B 이상 투자, 대부분 부채. 용량 증설이 통신량 증가를 크게 앞섰다</td><td>채권 회수율 20% 남짓. 깔린 광케이블은 이후 인터넷이 썼다</td></tr>
+      <tr><td>저궤도 위성 (1998~2002)</td><td>이리듐 $5B, 글로벌스타 $4.3B 투자 뒤 파산</td><td>$25M, $43M에 매각. 새 주인은 흑자. 2026년 $8B, $11.57B에 인수</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">출처: 위키백과 경유(Railway Mania, Telecoms crash, 각사 문서).</p>
+  <div class="grid2">
+    <div class="pane no"><h4>닮은 점</h4><ul>
+      <li>비용 하락 기대가 여러 사업자의 동시 투자를 불렀다.</li>
+      <li>후발 주자와 부채에 의존한 사업자가 먼저 흔들린다.</li>
+      <li>무너진 자산을 싸게 산 쪽이 다음 주기의 승자가 됐다.</li>
+      <li>설비보다 노선·주파수 같은 희소한 권리가 오래 값을 지켰다.</li>
+      <li>매출 대비 주가가 수십 배에서 백 배에 이른다.</li>
+    </ul></div>
+    <div class="pane yes"><h4>다른 점</h4><ul>
+      <li>1위 사업자의 수요와 이익이 확인됐다. 스타링크는 가입자 1,200만, 2025년 영업이익 $4.4B이다.</li>
+      <li>선도 기업은 부채가 아니라 지분과 자체 현금으로 투자한다.</li>
+      <li>이번에 파산하는 쪽은 신규 진입자가 아니라 옛 기술을 가진 기존 사업자다.</li>
+      <li>정부 국방 예산이 수요의 바닥을 받친다.</li>
+    </ul></div>
+  </div>
+</section>
+
+<section id="s15">
+  <div class="sec-h"><span class="sec-n">15</span><h2>증권사들은 어디서 갈리나</h2></div>
+  <p>2026년에 나온 우주 인뎁스 리포트 11건을 산업 관점에서 다시 읽었다. 방향은 모두 낙관이다. 비중축소나 중립 의견은 없다. 그런데 순수 우주 종목에 목표주가를 낸 곳은 드물다. 방향은 낙관하되 가격 판단은 미룬 구조다.</p>
+  <div class="tbl-scroll"><table>
+    <thead><tr><th>쟁점</th><th>한쪽</th><th>다른 쪽</th></tr></thead>
+    <tbody>
+      <tr><td><b>가치는 어디로 가나</b></td><td>서비스와 데이터로 (대신 3월, SK, 신한)</td><td>발사 공급 부족이 핵심 (유안타) / 소재·부품이 먼저 (유진)</td></tr>
+      <tr><td><b>발사 가격</b></td><td>스타십으로 kg당 $20~200까지 급락 (키움, 유안타, 하나)</td><td>유지된다. 가격 인하 압력은 적다 (한화) / 2~3개 사업자가 가격을 통제 (신한)</td></tr>
+      <tr><td><b>정부 수요</b></td><td>골든돔은 경기와 무관한 확정 매출 (키움)</td><td>대형 방산주 잔고의 연 2% 안팎 (유안타) / 수상이 매출을 보장하지 않는다 (한화)</td></tr>
+      <tr><td><b>한국의 길</b></td><td>발사체와 정찰위성에 선택과 집중 (유안타)</td><td>"뉴스페이스 모델은 한국에 적용될 수 없다" (신한) / 여러 위성망에 공급하는 부품·장비 (대신 9월)</td></tr>
+      <tr><td><b>궤도 데이터센터</b></td><td>발사 수요의 근거 (유안타)</td><td>기업가치를 정당화하는 서사라는 시각 소개 (하나) / 스타십 가정에도 지상보다 비싸다 (유진)</td></tr>
+    </tbody>
+  </table></div>
+  <h3>리포트에 없는 것</h3>
+  <ul>
+    <li><b>과거 실패와의 대조.</b> 1990년대 이리듐 파산을 다룬 리포트는 11건 중 없다. "왜 이번에는 다른가"를 논증한 곳이 없다.</li>
+    <li><b>금리.</b> 금리와 우주주의 관계를 분석한 곳도 없다. 2021년 상장 기업 주가 급락의 원인으로 한 줄 언급될 뿐이다.</li>
+    <li><b>독립된 위험 점검.</b> 위험을 따로 다룬 장이 있는 리포트는 1건이고, 그 위험도 모두 "극복하면 해자"로 끝난다.</li>
+    <li><b>밸류에이션의 순환 참조.</b> 스타링크에 매출의 100배를 주는 근거는 AST의 91배이고, 로켓랩 배수의 근거는 스페이스X 상장 기대다. 그 배수가 과열인지 따진 곳은 없다.</li>
+  </ul>
+  <h3>시간이 지나며 바뀐 것</h3>
+  <p>같은 저자의 대신증권 리포트는 3월에 "추가 재평가 가능성이 높다"고 썼고 9월에는 "기대감이 선반영된 뒤 상당 부분 조정됐다"고 썼다. 제목도 "이벤트"에서 "숫자"로 바뀌었다. 상장 전에 증권사들이 가정한 스타링크 월 요금은 $100~120이었고 상장 서류에 나온 실제 값은 $66~99였다. 가입자는 전망보다 빨리 늘었다. 비상장 시기의 추정은 방향은 맞고 단가는 틀렸다.</p>
+</section>
+
+<section id="s16">
+  <div class="sec-h"><span class="sec-n">16</span><h2>이 산업을 읽는 법</h2></div>
+  <p>산업 구조에서 나오는 점검 항목이다. 특정 종목이 아니라 어떤 우주 기업이든 대 볼 수 있는 질문이다.</p>
+  <ol class="check">
+    <li><b>누가 돈을 내는가.</b> 고객이 소비자·기업인지 정부인지. 정부라면 예산이 요청 단계인지 확정인지, 계약 상한인지 실제 발주인지.</li>
+    <li><b>어느 칸에 있는가.</b> 서비스는 이익률이 높고 자본이 많이 든다. 제조는 이익이 얇다. 발사는 적자다. 같은 "우주 기업"이라도 칸에 따라 봐야 할 지표가 다르다.</li>
+    <li><b>고객이 그 칸을 직접 만들 수 있는가.</b> 선도 기업은 단말, 게이트웨이, 광통신, 태양전지까지 내재화한다. 남는 자리는 내재화하기 어려운 소재와, 내재화하지 않는 후발 사업자에게 파는 장비다.</li>
+    <li><b>비행 이력이 있는가.</b> 우주에서는 궤도에서 작동한 이력이 곧 신용이다. 개발 단계에서 상장한 기업들의 5년이 그 증거다.</li>
+    <li><b>발사를 누구에게 의존하는가.</b> 위성을 밖에서 쏘아야 하는 사업자는 가격과 일정을 통제하지 못한다. 2026년에는 대체 로켓 두 기종이 멈췄다.</li>
+    <li><b>자본 구조는 버틸 만한가.</b> 1990년대의 실패는 기술이 아니라 부채였다. 매출이 나오기 전에 이자가 돌아오는 구조인지 본다.</li>
+    <li><b>교체 주기를 비용으로 넣었는가.</b> 저궤도 위성은 5~7년마다 바꾼다. EBITDA만 보면 이 비용이 빠진다.</li>
+    <li><b>계획과 실적의 간격.</b> 이 산업에서 일정은 밀리는 것이 기본이다. 중국 위성망, 유럽 주권망, 아마존, 한국 항법 위성 모두 그랬다. 계획 기수가 아니라 궤도에 있는 기수를 센다.</li>
+  </ol>
+  <h3>지켜볼 일정</h3>
+  <ul class="tl">
+    <li><span class="d">2026-09-28</span><span>스타십 14차 비행. 첫 궤도 진입 시도</span></li>
+    <li><span class="d">2026-10-07</span><span>누리호 5차 발사</span></li>
+    <li><span class="d">2026-10</span><span>한국 제2우주센터 입지 결정, 선저우-24 발사</span></li>
+    <li><span class="d">2026년 말</span><span>뉴글렌 복귀, 뉴트론 첫 발사, 하이난 발사장 3·4호 가동, 미국 FY2027 세출법</span></li>
+    <li><span class="d">2027</span><span>아르테미스 III 도킹 시험, 헤이븐-1, 나로 민간 발사장 개방, 누리호 6차</span></li>
+    <li><span class="d">2027-10</span><span>세계전파통신회의(상하이). 저궤도 간섭 규칙과 휴대폰 직접 연결 주파수</span></li>
+    <li><span class="d">2028</span><span>아르테미스 IV 유인 달 착륙 목표, 텔레샛 서비스</span></li>
+    <li><span class="d">2029</span><span>궈왕 10% 배치 기한, IRIS² 첫 발사, 한국형 위성항법 1호기</span></li>
+    <li><span class="d">2030</span><span>국제우주정거장 퇴역, 중국 유인 달 착륙 목표</span></li>
+  </ul>
+</section>
+
+<section id="s17">
+  <div class="sec-h"><span class="sec-n">17</span><h2>출처와 한계</h2></div>
+  <h4>한계</h4>
+  <ul class="src">
+    <li>웹 조사 중 검색 한도가 일찍 소진돼, 상당 부분은 주소를 아는 페이지를 직접 여는 방식으로 수집했다. 그 결과 위키백과를 경유한 수치가 섞여 있다. 본문 표 아래에 "위키백과 경유"로 표시한 값은 재확인이 필요하다.</li>
+    <li>웹 요약 도구가 PDF 수치를 잘못 옮긴 사례가 2건 확인돼, NASA 논문 등 핵심 PDF 4건은 본문을 직접 추출해 읽었다.</li>
+    <li>증권사 리포트는 1차 자료가 아니다. 리포트 간, 리포트와 정부 원문 간 불일치가 많았고 본문에는 1차 자료 값을 우선 썼다.</li>
+    <li>확인하지 못한 것: 중국 우주 예산, 미국 주파수 간섭 규칙 표결, 일본 방위성 위성망 사업, 국가별 운용 위성 수, 한국 국방 우주예산 총액, 스타링크 국내 가입자.</li>
+    <li>재사용 손익 모형, 달성률, 과거 버블과의 비교는 본 리포트의 계산과 정리다.</li>
+  </ul>
+  <h4>1차 자료</h4>
+  <ul class="src">
+    <li>Harry W. Jones, The Recent Large Reduction in Space Launch Cost, NASA Ames, ICES-2018-81</li>
+    <li>NASA, Falcon 9 Launch Vehicle NAFCOM Cost Estimates (2011-08)</li>
+    <li>미 의회조사국 R43419, NASA Appropriations and Authorizations (2026-04-29)</li>
+    <li>미 회계감사원 GAO-26-107085 (2026-01)</li>
+    <li>미 경제분석국, U.S. Space Economy Satellite Account 2012~2023 (2025-03)</li>
+    <li>Aerospace Corp, FY2027 Budget Brief (2026-08-17)</li>
+    <li>Secure World Foundation, Global Counterspace Capabilities Report 2026</li>
+    <li>Akhil Rao, Prices and Competition in Vertically Integrated Launch Markets, arXiv 2607.10385</li>
+    <li>NASA, Space-Based Solar Power (2024-01) · Cost and Benefit Analysis of Orbital Debris Remediation (2023-03)</li>
+    <li>Jonathan McDowell, Space Activities in 2025</li>
+    <li>SIA 29차 위성산업 현황 보고서 · Space Foundation 2026-07 · Novaspace 2026년 보도자료</li>
+    <li>Seraphim Space Index 2026년 2분기 · BryceTech Start-Up Space</li>
+    <li>USCC 2025 연례보고서 7장 · 중국 국무원 국발〔2014〕60호 · 국가항천국 행동계획(2025-11) · 신화사</li>
+    <li>일본 방위성 FY2026 예산 개요 · 유럽의회 입법 현황 · 유럽우주국 각료이사회 결과</li>
+    <li>우주항공청 보도자료(2024-05 ~ 2026-09) · 제4차 우주개발진흥 기본계획 수정계획 · 우주항공 산업육성 전략 · 2025년 우주산업 실태조사</li>
+    <li>록히드마틴, 노스롭그러먼, L3해리스, 이리듐, 비아샛 실적자료(SEC) · 에어버스 2025년 실적</li>
+  </ul>
+  <h4>전문 매체</h4>
+  <ul class="src">
+    <li>Payload, European Spaceflight, SpacePolicyOnline, Breaking Defense, DefenseScoop, Air &amp; Space Forces Magazine, China in Space, Broadband Breakfast, 헬로디디</li>
+  </ul>
+  <h4>증권사 인뎁스 리포트 (T9 아카이브, 2026년)</h4>
+  <ul class="src">
+    <li>키움증권 「눈 앞으로 다가온 우주 시대」(04-22, 235쪽)</li>
+    <li>신한투자증권 「우주: 요람을 떠나 문명의 인프라로 확장」(01-26, 199쪽)</li>
+    <li>유안타증권 「방위산업: 우주는 우리 안에」(05-07, 161쪽)</li>
+    <li>하나증권 「별빛 아래의 전쟁」(02-23, 115쪽)</li>
+    <li>KB증권 「일론, 우주시대가 올까요?」(03-18, 112쪽)</li>
+    <li>대신증권 「우주, 이벤트와 기술혁신이 만드는 장기 성장 사이클」(03-24, 109쪽) · 「우주, 숫자는 지상에서 시작된다」(09-14, 95쪽)</li>
+    <li>유진투자증권 「Orbital AI Infrastructure」(08-05, 108쪽) · 「All About SpaceX」(01-22, 86쪽)</li>
+    <li>한화투자증권 「Would you Bet on 우주?」(04-14, 92쪽) · SK증권 「우주 경제 리프라이싱 시대」(02-09, 70쪽)</li>
+    <li>IBK투자증권 「방산 Depth」(09-11) 한국 우주 부분</li>
+  </ul>
+  <div class="foot">
+    이 문서는 공개 자료를 정리한 참고용 분석이며 특정 종목의 매수·매도를 권유하지 않는다. 수치와 일정은 작성일(2026-09-27) 기준이고 이후 바뀔 수 있다. 투자 판단과 그 결과는 투자자 본인에게 있다.
+  </div>
+</section>
+
+</main>
+<script type="application/json" id="cd">{"cost": [{"n": "뱅가드", "y": 1957, "v": 894.7, "hl": 1}, {"n": "델타 E", "y": 1960, "v": 167.8}, {"n": "스카우트", "y": 1961, "v": 111.8}, {"n": "타이탄 II", "y": 1962, "v": 31.0}, {"n": "아틀라스-센타우르", "y": 1964, "v": 28.0}, {"n": "프로톤", "y": 1965, "v": 4.1}, {"n": "소유즈", "y": 1966, "v": 7.6}, {"n": "새턴 V", "y": 1968, "v": 5.2, "hl": 1, "dy": 14}, {"n": "우주왕복선", "y": 1981, "v": 61.7, "hl": 1}, {"n": "아리안 44", "y": 1988, "v": 17.9}, {"n": "타이탄 IV", "y": 1989, "v": 24.7}, {"n": "델타 II", "y": 1989, "v": 15.3}, {"n": "페가수스 XL", "y": 1990, "v": 43.5}, {"n": "아틀라스 IIA", "y": 1991, "v": 19.8}, {"n": "H-2", "y": 1994, "v": 26.4}, {"n": "아리안 5G", "y": 1996, "v": 13.1}, {"n": "드네프르", "y": 1999, "v": 4.9}, {"n": "제니트 3SL", "y": 1999, "v": 7.6}, {"n": "팰컨9", "y": 2010, "v": 2.7, "hl": 1}, {"n": "베가", "y": 2012, "v": 10.0}, {"n": "팰컨 헤비", "y": 2018, "v": 1.4, "hl": 1, "dy": 12}], "price": [{"y": 2012, "v": 54, "l": "2012~13년"}, {"y": 2014, "v": 61.2, "l": "2014~16년"}, {"y": 2019, "v": 62, "l": "2019~21년"}, {"y": 2022, "v": 67, "l": "2022~23년"}, {"y": 2024, "v": 69.75, "l": "2024년"}, {"y": 2026, "v": 74, "l": "2026년"}], "margin": [{"n": "스타링크 (스페이스X 통신 부문)", "s": "스타링크", "v": 38.8, "t": "매출 $11.39B, 영업이익 $4.42B"}, {"n": "L3해리스 우주·항공 부문", "s": "L3해리스 우주", "v": 12.3, "t": "매출 $6.95B, 영업이익 $852M"}, {"n": "노스롭그러먼 우주 부문", "s": "노스롭 우주", "v": 11.0, "t": "매출 $10.77B, 영업이익 $1.18B"}, {"n": "록히드마틴 우주 부문", "s": "록히드 우주", "v": 10.3, "t": "매출 $13.03B, 영업이익 $1.35B"}, {"n": "에어버스 방산우주 부문", "s": "에어버스 방산우주", "v": 6.0, "t": "매출 €13.4B, 조정 EBIT €798M"}, {"n": "스페이스X 발사 부문", "s": "스페이스X 발사", "v": -16.1, "t": "매출 $4.09B, 영업손실 $657M. 스타십 개발비 포함"}, {"n": "로켓랩", "s": "로켓랩", "v": -38.0, "t": "매출 $602M, 영업손실 $229M. 뉴트론 개발비 포함"}], "nation": {"years": [2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025], "world": [114, 102, 114, 146, 186, 223, 263, 329], "series": [{"n": "미국", "v": [31, 21, 37, 45, 78, 109, 145, 181]}, {"n": "중국", "v": [39, 34, 39, 56, 64, 67, 68, 92]}, {"n": "러시아", "v": [17, 22, 12, 16, 21, 19, 17, 17]}]}, "kbudget": [{"y": 2024, "v": 7598}, {"y": 2025, "v": 9649}, {"y": 2026, "v": 11201}, {"y": 2027, "v": 16491, "e": 1}]}</script>
+<script>
+(function(){
+const CD = JSON.parse(document.getElementById('cd').textContent);
+const tip = document.getElementById('tip');
+function showTip(html, x, y){
+  tip.innerHTML = html; tip.style.display='block';
+  const r = tip.getBoundingClientRect();
+  let L = x + 14, T = y + 14;
+  if (L + r.width > window.innerWidth - 8) L = x - r.width - 14;
+  if (L < 8) L = 8;
+  if (T + r.height > window.innerHeight - 8) T = y - r.height - 14;
+  if (T < 8) T = 8;
+  tip.style.left = L + 'px'; tip.style.top = T + 'px';
+}
+function hideTip(){ tip.style.display='none'; }
+window.addEventListener('scroll', hideTip, {passive:true});
+document.addEventListener('pointerdown', e => { if (!e.target.closest('.chart svg')) hideTip(); });
+function bindHits(svg, onHit){
+  if (svg._bound) { svg._onHit = onHit; return; }
+  svg._bound = true; svg._onHit = onHit;
+  let down = false;
+  const handler = e => { const t = e.target.closest('[data-hit]'); if (!t){ hideTip(); return; } svg._onHit(t, e); };
+  svg.addEventListener('pointerdown', e => { down = true; handler(e); });
+  svg.addEventListener('pointermove', e => { if (e.pointerType === 'mouse' || down) handler(e); });
+  ['pointerup','pointercancel','pointerleave'].forEach(ev => svg.addEventListener(ev, () => { down=false; if (ev!=='pointerup') hideTip(); }));
+}
+function responsive(id, draw){
+  const box = document.getElementById(id); if (!box) return; const svg = box.querySelector('svg');
+  let t;
+  const render = () => { const W = Math.max(280, Math.floor(box.clientWidth - (parseFloat(getComputedStyle(box).paddingLeft)*2))); const H = draw(svg, W); svg.setAttribute('viewBox', `0 0 ${W} ${H}`); svg.setAttribute('height', H); };
+  render();
+  new ResizeObserver(() => { clearTimeout(t); t = setTimeout(render, 120); }).observe(box);
+}
+const won = v => v.toLocaleString('ko-KR');
+
+/* ---------- launch cost, log scatter ---------- */
+responsive('ch-cost', (svg, W) => {
+  const narrow = W < 560; const P = CD.cost;
+  const ML = narrow ? 34 : 44, MR = narrow ? 14 : 20, MT = 16, MB = 28;
+  const Hh = narrow ? 300 : 380; const ph = Hh - MT - MB, pw = W - ML - MR;
+  const x0 = 1955, x1 = 2022; const x = yr => ML + (yr - x0)/(x1 - x0)*pw;
+  const lmin = 0, lmax = 3; const y = v => MT + (lmax - Math.log10(v))/(lmax - lmin)*ph;
+  let s = '';
+  [1,10,100,1000].forEach(v => s += `<line class="${v===1?'axis':'grid'}" x1="${ML}" x2="${W-MR}" y1="${y(v)}" y2="${y(v)}"/><text x="${ML-4}" y="${y(v)+4}" text-anchor="end" class="mut" style="font-size:${narrow?9.5:11}px">${v}</text>`);
+  (narrow ? [1960,1980,2000,2020] : [1960,1970,1980,1990,2000,2010,2020]).forEach(v => s += `<line class="grid" x1="${x(v)}" x2="${x(v)}" y1="${MT}" y2="${MT+ph}"/><text x="${x(v)}" y="${Hh-9}" text-anchor="middle" class="mut" style="font-size:${narrow?9.5:11}px">${v}</text>`);
+  P.forEach((p,i) => { if (!p.hl) s += `<circle cx="${x(p.y)}" cy="${y(p.v)}" r="${narrow?4:4.5}" fill="var(--c4)" stroke="var(--surface)" stroke-width="2"/>`; });
+  P.forEach((p,i) => { if (p.hl){ const cx = x(p.y), cy = y(p.v);
+    s += `<circle cx="${cx}" cy="${cy}" r="${narrow?5.5:6}" fill="var(--c1)" stroke="var(--surface)" stroke-width="2"/>`;
+    const right = cx < W - (narrow ? 96 : 130); const dy = p.dy || 0;
+    s += `<text x="${right ? cx+9 : cx-9}" y="${cy+4+dy}" text-anchor="${right?'start':'end'}" class="lab" style="font-size:${narrow?10:11.5}px; font-weight:700">${p.n} ${p.v}</text>`; } });
+  P.forEach((p,i) => s += `<circle data-hit="${i}" cx="${x(p.y)}" cy="${y(p.v)}" r="16" fill="transparent"/>`);
+  svg.innerHTML = s;
+  bindHits(svg, (t, e) => { const p = P[+t.dataset.hit]; showTip(`<b>${p.n}</b><br>첫 발사 ${p.y}년<br>kg당 ${p.v.toFixed(1)}천 달러<br>(2018년 가치)`, e.clientX, e.clientY); });
+  return Hh;
+});
+
+/* ---------- Falcon 9 list price ---------- */
+responsive('ch-price', (svg, W) => {
+  const narrow = W < 560; const P = CD.price;
+  const ML = narrow ? 30 : 40, MR = narrow ? 30 : 44, MT = 24, MB = 28;
+  const Hh = narrow ? 230 : 290; const ph = Hh - MT - MB, pw = W - ML - MR;
+  const x0 = 2012, x1 = 2026; const x = yr => ML + (yr - x0)/(x1 - x0)*pw;
+  const yMax = 80; const y = v => MT + (yMax - v)/yMax*ph;
+  let s = '';
+  [0,20,40,60,80].forEach(v => s += `<line class="${v===0?'axis':'grid'}" x1="${ML}" x2="${W-MR}" y1="${y(v)}" y2="${y(v)}"/><text x="${ML-4}" y="${y(v)+4}" text-anchor="end" class="mut" style="font-size:${narrow?9.5:11}px">${v}</text>`);
+  [2012,2014,2016,2018,2020,2022,2024,2026].forEach((v,i) => { if (!narrow || i%2===0 || v===2026) s += `<text x="${x(v)}" y="${Hh-9}" text-anchor="middle" class="mut" style="font-size:${narrow?9.5:11}px">${v}</text>`; });
+  const d = P.map((p,i) => (i?'L':'M') + x(p.y).toFixed(1) + ' ' + y(p.v).toFixed(1)).join(' ');
+  s += `<path d="${d}" fill="none" stroke="var(--c1)" stroke-width="2"/>`;
+  P.forEach((p,i) => { const last = i === P.length-1, first = i === 0;
+    s += `<circle cx="${x(p.y)}" cy="${y(p.v)}" r="${last||first?5:4}" fill="var(--c1)" stroke="var(--surface)" stroke-width="2"/>`;
+    if (first || last || !narrow) s += `<text x="${x(p.y)}" y="${y(p.v)-10}" text-anchor="${last?'end':(first?'start':'middle')}" style="font-size:${narrow?10:11}px; font-weight:${first||last?700:400}">${p.v}</text>`;
+    s += `<circle data-hit="${i}" cx="${x(p.y)}" cy="${y(p.v)}" r="18" fill="transparent"/>`; });
+  svg.innerHTML = s;
+  bindHits(svg, (t, e) => { const i = +t.dataset.hit; const p = P[i]; showTip(`<b>${p.l}</b><br>공시 가격 $${p.v}M${i?`<br>2012년 대비 ${(p.v/P[0].v*100-100>0?'+':'')+(p.v/P[0].v*100-100).toFixed(0)}%`:''}`, e.clientX, e.clientY); });
+  return Hh;
+});
+
+/* ---------- operating margin, diverging bars ---------- */
+responsive('ch-margin', (svg, W) => {
+  const narrow = W < 560; const R = CD.margin;
+  const ML = narrow ? 112 : 190, MR = narrow ? 40 : 52, MT = 6, rowH = narrow ? 30 : 32;
+  const Hh = MT + R.length*rowH + 22; const pw = W - ML - MR;
+  const vMin = -40, vMax = 40; const x = v => ML + (v - vMin)/(vMax - vMin)*pw;
+  let s = '';
+  [-40,-20,0,20,40].forEach(v => s += `<line class="${v===0?'axis':'grid'}" x1="${x(v)}" x2="${x(v)}" y1="${MT}" y2="${Hh-22}"/><text x="${x(v)}" y="${Hh-7}" text-anchor="middle" class="mut" style="font-size:${narrow?9:10.5}px">${v}</text>`);
+  R.forEach((r,i) => { const y0 = MT + i*rowH; const bh = narrow ? 13 : 15; const pos = r.v >= 0;
+    const bx = pos ? x(0) : x(r.v), bw = Math.max(1, Math.abs(x(r.v) - x(0)));
+    s += `<text x="${ML-6}" y="${y0+rowH/2+4}" text-anchor="end" class="lab" style="font-size:${narrow?10.5:12}px">${narrow ? r.s : r.n}</text>`;
+    s += `<rect x="${bx}" y="${y0+rowH/2-bh/2}" width="${bw}" height="${bh}" fill="${pos?'var(--c1)':'var(--c2)'}" rx="2"/>`;
+    s += `<text x="${pos ? x(r.v)+5 : x(r.v)-5}" y="${y0+rowH/2+4}" text-anchor="${pos?'start':'end'}" style="font-size:${narrow?10:11}px">${(r.v>0?'+':'')+r.v.toFixed(1)}%</text>`;
+    s += `<rect data-hit="${i}" x="0" y="${y0}" width="${W}" height="${rowH}" fill="transparent"/>`; });
+  svg.innerHTML = s;
+  bindHits(svg, (t, e) => { const r = R[+t.dataset.hit]; showTip(`<b>${r.n}</b><br>영업이익률 ${(r.v>0?'+':'')+r.v.toFixed(1)}%<br>${r.t}`, e.clientX, e.clientY); });
+  return Hh;
+});
+
+/* ---------- launches by nation ---------- */
+responsive('ch-nation', (svg, W) => {
+  const narrow = W < 560; const N = CD.nation; const yrs = N.years;
+  const ML = narrow ? 30 : 40, MR = narrow ? 58 : 84, MT = 16, MB = 28;
+  const Hh = narrow ? 260 : 330; const ph = Hh - MT - MB, pw = W - ML - MR;
+  const x = i => ML + i/(yrs.length-1)*pw; const yMax = 200; const y = v => MT + (yMax - v)/yMax*ph;
+  const cols = ['var(--c1)','var(--c2)','var(--c3)'];
+  let s = '';
+  [0,50,100,150,200].forEach(v => s += `<line class="${v===0?'axis':'grid'}" x1="${ML}" x2="${W-MR}" y1="${y(v)}" y2="${y(v)}"/><text x="${ML-4}" y="${y(v)+4}" text-anchor="end" class="mut" style="font-size:${narrow?9.5:11}px">${v}</text>`);
+  yrs.forEach((v,i) => { if (!narrow || i%2===1) s += `<text x="${x(i)}" y="${Hh-9}" text-anchor="middle" class="mut" style="font-size:${narrow?9.5:11}px">${narrow? "'"+String(v).slice(2) : v}</text>`; });
+  N.series.forEach((se,k) => { const d = se.v.map((v,i) => (i?'L':'M') + x(i).toFixed(1) + ' ' + y(v).toFixed(1)).join(' ');
+    s += `<path d="${d}" fill="none" stroke="${cols[k]}" stroke-width="2"/>`;
+    const li = se.v.length-1; s += `<circle cx="${x(li)}" cy="${y(se.v[li])}" r="4.5" fill="${cols[k]}" stroke="var(--surface)" stroke-width="2"/>`;
+    s += `<text x="${x(li)+8}" y="${y(se.v[li])+4}" class="lab" style="font-size:${narrow?10.5:12}px">${se.n} ${se.v[li]}</text>`; });
+  const gw = pw/(yrs.length-1);
+  yrs.forEach((v,i) => s += `<rect data-hit="${i}" x="${x(i)-gw/2}" y="${MT}" width="${gw}" height="${ph+MB}" fill="transparent"/>`);
+  svg.innerHTML = s;
+  bindHits(svg, (t, e) => { const i = +t.dataset.hit; showTip(`<b>${yrs[i]}년</b><br>${N.series.map(se => `${se.n} ${se.v[i]}회`).join('<br>')}<br>세계 ${N.world[i]}회`, e.clientX, e.clientY); });
+  return Hh;
+});
+
+/* ---------- KASA budget ---------- */
+responsive('ch-kbudget', (svg, W) => {
+  const narrow = W < 560; const B = CD.kbudget;
+  const ML = narrow ? 40 : 52, MR = 8, MT = 24, MB = 28;
+  const Hh = narrow ? 240 : 300; const ph = Hh - MT - MB, pw = W - ML - MR;
+  const yMax = 20000; const y = v => MT + (yMax - v)/yMax*ph;
+  const gw = pw/B.length; const bw = Math.min(narrow ? 40 : 72, gw*0.62);
+  let s = '';
+  [0,5000,10000,15000,20000].forEach(v => s += `<line class="${v===0?'axis':'grid'}" x1="${ML}" x2="${W-MR}" y1="${y(v)}" y2="${y(v)}"/><text x="${ML-4}" y="${y(v)+4}" text-anchor="end" class="mut" style="font-size:${narrow?9.5:11}px">${v? (v/10000)+'조':'0'}</text>`);
+  B.forEach((b,i) => { const xc = ML + i*gw + gw/2;
+    s += `<rect x="${xc-bw/2}" y="${y(b.v)}" width="${bw}" height="${y(0)-y(b.v)}" fill="var(--c1)" opacity="${b.e?0.45:1}" rx="2"/>`;
+    s += `<text x="${xc}" y="${y(b.v)-6}" text-anchor="middle" style="font-size:${narrow?10:11.5}px; font-weight:${b.e?700:400}">${won(b.v)}</text>`;
+    s += `<text x="${xc}" y="${Hh-9}" text-anchor="middle" class="mut" style="font-size:${narrow?9.5:11}px">${b.y}${b.e?'안':''}</text>`;
+    s += `<rect data-hit="${i}" x="${ML+i*gw}" y="${MT}" width="${gw}" height="${ph+MB}" fill="transparent"/>`; });
+  svg.innerHTML = s;
+  bindHits(svg, (t, e) => { const i = +t.dataset.hit; const b = B[i]; const p = i ? B[i-1].v : null; showTip(`<b>${b.y}년${b.e?' (정부안)':''}</b><br>${won(b.v)}억 원${p?`<br>전년 대비 +${(b.v/p*100-100).toFixed(1)}%`:''}`, e.clientX, e.clientY); });
+  return Hh;
+});
+})();
+
+</script>
+</body>
+</html>

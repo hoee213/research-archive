@@ -1,0 +1,914 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>통신장비 2027 산업 심층분석</title>
+<style>
+:root{--navy:#0f1b2a;--navy2:#1C3D5A;--orange:#E5601F;--ink:#1d2733;--muted:#5f6b7a;--line:#e3e8ee;--bg:#f2f4f7}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Apple SD Gothic Neo","Malgun Gothic","맑은 고딕","Noto Sans KR","Noto Sans CJK KR",system-ui,-apple-system,sans-serif;font-size:15px;line-height:1.72;word-break:keep-all;overflow-wrap:break-word}
+.wrap{max-width:1080px;margin:0 auto;padding:24px 20px 60px}
+.cover{background:linear-gradient(135deg,#0f1b2a 0%,#1C3D5A 72%,#26557e 100%);color:#fff;border-radius:16px;padding:40px 40px 30px;margin-bottom:20px;position:relative;overflow:hidden}
+.cover:after{content:"";position:absolute;right:-70px;top:-70px;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,rgba(229,96,31,.38),rgba(229,96,31,0) 70%);pointer-events:none}
+.cover .ticker{font-size:12px;letter-spacing:.03em;color:#f6b793;font-weight:700;margin-bottom:12px;position:relative;z-index:1}
+.cover h1{font-size:34px;line-height:1.3;margin:0 0 12px;font-weight:800;position:relative;z-index:1}
+.cover .sub{font-size:15px;color:#d5e0ea;max-width:880px;position:relative;z-index:1}
+.metagrid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:24px;position:relative;z-index:1}
+.meta{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);border-radius:10px;padding:12px 14px}
+.meta .k{font-size:11.5px;color:#b9c8d6}
+.meta .v{font-size:19px;font-weight:800;color:#fff;margin:2px 0;line-height:1.35}
+.meta .n{font-size:11.5px;color:#d5e0ea;line-height:1.5}
+section{background:#fff;border:1px solid var(--line);border-radius:14px;padding:26px 30px;margin:18px 0}
+h2{font-size:22px;color:var(--navy);margin:0 0 14px;line-height:1.4}
+h2 .num{color:var(--orange);font-weight:800;margin-right:8px}
+h3{font-size:17px;color:var(--navy2);margin:24px 0 10px;border-left:4px solid var(--orange);padding-left:10px;line-height:1.45}
+h4{font-size:15px;color:var(--navy);margin:12px 0 6px}
+p{margin:8px 0}
+ul,ol{margin:6px 0 6px 20px;padding:0}
+li{margin:4px 0}
+b{color:#0f1b2a}
+.tldr{background:#fff8f3;border:1px solid #f3d3bf;border-left:5px solid var(--orange);border-radius:10px;padding:14px 18px}
+.tldr>b{font-size:15px;color:var(--orange)}
+.tldr ol{margin:6px 0 0 18px}
+.tldr li{margin:7px 0}
+.box{border-radius:10px;padding:14px 16px;margin:12px 0;border:1px solid var(--line);background:#f8fafc}
+.box.blue{background:#eef4fa;border-color:#c9dcee}
+.box.warn{background:#fff6e8;border-color:#f3d4a3}
+.box.bull{background:#edf8f0;border-color:#b9dec3}
+.box.bear{background:#fdeeee;border-color:#ebb9b9}
+.box .t{font-weight:800;color:var(--navy);margin-bottom:6px}
+.box ul{margin-top:4px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.grid2>*,.grid3>*{min-width:0}
+.card{border:1px solid var(--line);border-radius:10px;padding:14px 16px;background:#fff}
+.card h4{margin-top:0}
+.card .tag{display:inline-block;font-size:11px;padding:2px 8px;border-radius:999px;background:#eef2f6;color:#3a4b5c;margin-left:6px;font-weight:600;vertical-align:middle}
+.card ul{margin:4px 0 0 16px;font-size:13.8px}
+.diff{border:1px solid #c9dcee;border-top:4px solid var(--navy2);border-radius:10px;padding:14px 16px;background:#fbfdff}
+.diff h4{margin-top:0}
+blockquote.q{margin:14px 0;padding:14px 18px;background:#f8fafc;border-left:4px solid var(--navy2);border-radius:0 10px 10px 0}
+blockquote.q .en{font-style:italic;color:#2b3b4b}
+blockquote.q .kr{margin-top:4px;font-weight:600}
+blockquote.q .who{margin-top:6px;font-size:12.5px;color:var(--muted)}
+.imgfig{margin:14px 0;border:1px solid var(--line);border-radius:10px;padding:14px;background:#fff}
+.imgfig figcaption{font-size:12.5px;color:var(--muted);margin-top:8px;line-height:1.55}
+.imgfig svg text{font-family:inherit}
+.tn{font-variant-numeric:tabular-nums}
+.cv{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.mhint{display:none}
+.legend{font-size:12.5px;color:#3a4654;display:flex;flex-wrap:wrap;gap:6px 16px;margin:0 0 6px 4px}
+.legend .sw{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px;vertical-align:-1px}
+.badge{display:inline-block;background:var(--orange);color:#fff;font-weight:800;font-size:12px;padding:3px 9px;border-radius:6px;margin-right:8px;vertical-align:middle}
+.qs{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.q{border:1px solid var(--line);border-radius:10px;padding:12px 14px;background:#fff}
+.q .qt{font-weight:800;color:var(--navy);margin-bottom:4px}
+.q .qd{font-size:13.5px;color:#34434f}
+.verdict{background:linear-gradient(135deg,#0f1b2a,#1C3D5A);color:#fff;border-radius:12px;padding:22px 24px;margin-top:12px}
+.verdict h3{color:#f6b793;margin:0 0 8px;border:none;padding:0}
+.verdict .a{margin:12px 0;line-height:1.72;color:#e9eff5}
+.verdict .a b{color:#f6b793}
+table{width:100%;border-collapse:collapse;font-size:13.5px;margin:12px 0}
+th{background:var(--navy2);color:#fff;padding:9px 10px;text-align:left;font-weight:700;line-height:1.45}
+td{padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top;line-height:1.55}
+tr.self td{background:#fff3ea}
+.star{color:var(--orange);letter-spacing:1px;white-space:nowrap}
+.tw{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:12px 0}
+.tw table{margin:0}
+table.fin{font-size:12.8px;min-width:820px}
+table.fin th,table.fin td{text-align:right;white-space:nowrap;padding:7px 8px;font-variant-numeric:tabular-nums}
+table.fin th:first-child,table.fin td:first-child{text-align:left;position:sticky;left:0;background:#fff;z-index:1}
+table.fin th:first-child{background:var(--navy2)}
+table.fin td.h1,table.fin th.h1{background:#f3f6f9}
+table.fin th.h1{background:#2c4e6c}
+table.fin tr.key td{font-weight:700}
+.neg{color:#b32424}
+.na{color:#a3adb8}
+.kpi{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:10px 0}
+.kpi div{background:#f8fafc;border:1px solid var(--line);border-radius:8px;padding:10px 12px}
+.kpi b{display:block;font-size:19px;color:var(--navy);line-height:1.35}
+.kpi span{font-size:12px;color:var(--muted);line-height:1.45;display:block;margin-top:2px}
+.src{font-size:12.5px;color:var(--muted)}
+.src li{margin:3px 0}
+.disc{font-size:12px;color:#7d8996;margin-top:10px;line-height:1.6}
+.chain{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;position:relative}
+.tier{border:1px solid var(--line);border-radius:10px;padding:10px;background:#fafcfe;position:relative}
+.tier .th{font-weight:800;color:#fff;background:var(--navy2);border-radius:6px;padding:4px 8px;font-size:13px;margin-bottom:6px}
+.tier .r{font-size:12.8px;margin:6px 0;line-height:1.5}
+.tier .r b{color:var(--navy)}
+.tier:not(:last-child):after{content:"→";position:absolute;right:-10px;top:8px;color:var(--orange);font-weight:800;font-size:15px;background:#fff;line-height:1;padding:2px 0}
+.pill{display:inline-block;font-size:11px;padding:1px 7px;border-radius:999px;border:1px solid #cfd8e3;margin:1px 4px 1px 0;background:#fff;white-space:nowrap;font-weight:700}
+.pill.kr{border-color:#e5a98c;background:#fff4ee;color:#9c3f14}
+.small{font-size:12.5px;color:var(--muted)}
+.ok{color:#1f7a3a;font-weight:800;text-align:center}.half{color:#b36b00;font-weight:800;text-align:center}.no{color:#b32424;font-weight:800;text-align:center}
+.toc{display:flex;flex-wrap:wrap;gap:6px 8px;margin:4px 0 0}
+.toc a{font-size:12.5px;color:var(--navy2);text-decoration:none;border:1px solid var(--line);border-radius:999px;padding:3px 10px;background:#fff}
+.toc a:hover{border-color:var(--orange);color:var(--orange)}
+@media (max-width:760px){
+ .wrap{padding:12px 12px 40px}
+ .metagrid,.kpi,.chain{grid-template-columns:1fr 1fr}
+ .grid2,.grid3,.qs{grid-template-columns:1fr}
+ .cover{padding:28px 18px 22px}
+ .cover h1{font-size:25px}
+ section{padding:18px 16px}
+ h2{font-size:19px}
+ table{font-size:12.5px}
+ td,th{padding:7px 6px}
+ .tier:not(:last-child):after{display:none}
+ .tw>table:not(.fin){min-width:640px}
+ .cv.w svg{min-width:660px}
+ .cv.h svg{min-width:460px}
+ .imgfig{padding:10px}
+ .mhint{display:inline;color:var(--orange);font-weight:700}
+}
+@media print{body{background:#fff}section{break-inside:auto;border:none}.imgfig,.box,.verdict,tr{break-inside:avoid}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="cover">
+  <div class="ticker">KT · 산업 심층분석 · KOREA TELECOM EQUIPMENT / 국내 통신장비 · 에치에프알 · 오이솔루션 · 케이엠더블유 · 쏠리드 · RFHIC · 2026.10.11 · v2 2026.10.14 (iM증권 2026.7.21 반영) · Industry Deep Dive</div>
+  <h1>통신장비는 2027년 주도주가 될 수 있을까</h1>
+  <div class="sub">6G·주파수 경매·피지컬 AI. 세 키워드를 실제 표준·경매 일정과 국내외 통신사 CAPEX로 검증하고, 다섯 기업의 비즈니스 모델과 10년(2016~2025) 연간 재무제표로 사이클의 위치·영업레버리지·재무 체력을 측정한다. 2026년 상반기의 '기대 랠리'와 급락 이후, 2027년에 무엇이 확인돼야 진짜 주도주가 되는지를 체크리스트로 정리했다. <b style="color:#f6b793">v2(2026.10.14)</b>: iM증권 통신 In-Depth 'AIDC, 통신업 성장 신항로'(신희철, 2026.7.21)의 통신3사 CAPEX·주주환원·AIDC 전망, NTN(위성통신) 장비 밸류체인, 쏠리드 커버리지 내용을 §6에 반영하고 관련 장을 보강했다.</div>
+  <div class="metagrid">
+    <div class="meta"><div class="k">국내 통신3사 CAPEX</div><div class="v">9.6조 → 6.0조</div><div class="n">2019 대비 2025 -37% · 1H26도 약 -8% (SKT·KT 각 -15%)</div></div>
+    <div class="meta"><div class="k">글로벌 RAN 시장 (Omdia)</div><div class="v">~$35B 보합</div><div class="n">2022 $45B 피크 → 2024~26E 정체 · Dell'Oro 2025~30 연평균 +1%</div></div>
+    <div class="meta"><div class="k">미국 Upper C-band</div><div class="v">160MHz · 시한 2027.7.4</div><div class="n">2026.7 FCC 규칙 의결 · AWS-3 재경매는 $3.57B (2026.6)</div></div>
+    <div class="meta"><div class="k">5社 합산 영업이익 · 시가총액</div><div class="v">228억 · 3.5조</div><div class="n">2019 영업이익 2,127억 · 2026 고점 시총 합 ~7.5조 (비동시)</div></div>
+  </div>
+</div>
+
+<!-- 1 -->
+<section id="s1">
+  <h2><span class="num">1.</span>한눈에 보기</h2>
+  <div class="tldr"><b>TL;DR</b>
+    <ol>
+      <li><b>Base 시나리오에서 '업종 전체 주도주'는 아니다.</b> 2019년 5G 주도 공식 7개 조건(신규 주파수 → CAPEX 급증 → 대형 발주·공시 → 흑자전환 등) 가운데 2027년에 확실히 충족되는 것은 '정책 촉매' 하나다. 국내 3사 CAPEX(2025년 6.02조)와 글로벌 RAN(~$35B)이 모두 바닥이고, 미국 Upper C-band 경매의 장비 매출은 2028년 이후다.</li>
+      <li><b>세 키워드는 실적 시차가 다르다.</b> 주파수 경매는 2027년 주가·2028년 매출, 6G는 2029~30년(3GPP Rel-21 기능 동결 2028.12, 국내 6G 주파수 할당 2029년 전후), 피지컬 AI·AI-RAN은 돈이 GPU·소프트웨어로 간다(RU·필터·PA 물량 증가 근거 없음). 2027년의 '실물' 촉매는 경매뿐이다.</li>
+      <li><b>10년 재무: 증분이익률 40%대의 고정비 산업, 그리고 매번 바뀐 주인공.</b> 상승기 매출 증가분의 33~45%가 영업이익으로 남았다(2019 KMW +1,640억, 2022 HFR +684억). 그러나 파동마다 주인공이 바뀌었고(2019 한국 5G: KMW·오이솔루션 → 2022 미국 C-band: HFR → 2025 방산·인빌딩: RFHIC·쏠리드), 바닥을 지나며 재무 체력도 순현금(쏠리드·RFHIC)과 순차입·적자(KMW·HFR·오이솔루션)로 갈렸다.</li>
+      <li><b>2026년에 이미 '기대 사이클'을 한 번 치렀다.</b> 연초 대비 2.8~4.7배 급등(종목별 고점 합 ~7.5조) 후 5월~6월 초(미국 AWS-3 경매 개시 전후) 고점, 7월까지 60~77% 급락. 2027년 상반기 Upper C-band 경매와 국내 추가 주파수 정책은 두 번째 랠리의 재료지만, 이번엔 공급계약 공시와 분기 흑자가 확인돼야 지속된다. <b>실적형(RFHIC·쏠리드) 우선, 이벤트 레버리지(KMW·HFR)는 조건부, 오이솔루션은 광통신 트랙.</b></li>
+      <li><b>iM증권(2026.7.21) 반영 — 통신사의 돈은 네트워크가 아니라 주주환원·AIDC로 가고, 장비주의 다음 축은 NTN(위성통신)이다.</b> iM증권은 통신3사 유무선 CAPEX를 2026E -2.9%·2027E -4.4%(2년 연속 감소), 감가상각비 하락, 영업이익률 사이클 상단, 2026~27년 주주환원수익률 6~7%(KT·LGU+), AIDC 합산 2GW로 본다. 통신장비 Top Pick은 5社 밖의 인텔리안테크(위성 Gateway·FPA 안테나)이고, 5社 중 NTN 매출이 있는 곳은 아직 없다(쏠리드는 국책과제 단계). 쏠리드는 '미 FCC 경매 대표 수혜주'(NR, 12개월 선행 PER 17배)로 커버했지만, iM 스스로 Upper C-band 수혜 시점을 '2027년 이후'로 적어 KT의 시차 판단과 어긋나지 않는다. 상세 §6.</li>
+    </ol>
+  </div>
+
+  <h3>핵심 질문</h3>
+  <div class="qs">
+    <div class="q"><div class="qt"><span class="badge">Q1</span>2027년, 통신장비 '사이클'은 오는가?</div><div class="qd">주파수 경매 일정, 국내·미국 통신사 CAPEX, 글로벌 RAN 시장과 장비벤더 실적으로 검증 (§2·§3)</div></div>
+    <div class="q"><div class="qt"><span class="badge">Q2</span>6G·피지컬 AI는 실적 변수인가, 멀티플 변수인가?</div><div class="qd">3GPP·WRC 일정, 국내 6G 로드맵, AI-RAN의 '돈의 흐름'과 하드웨어 영향 (§4·§5)</div></div>
+    <div class="q"><div class="qt"><span class="badge">Q3</span>10년 재무로 본 5社의 사이클 위치와 레버리지는?</div><div class="qd">피크·바닥, 증분이익률, 손익분기 매출, 10년 누적 이익, 재무 체력과 희석 (§7·§8)</div></div>
+    <div class="q"><div class="qt"><span class="badge">Q4</span>주도주가 되려면 무엇이 확인돼야 하나?</div><div class="qd">2019년 주도 공식 대입, 시나리오, 체크리스트, 종목별 판단 (§9·§11·§12)</div></div>
+    <div class="q"><div class="qt"><span class="badge">Q5</span>통신사의 지갑은 어디로 가고, 위성통신(NTN)은 5社에 닿는가?</div><div class="qd">iM증권 통신 In-Depth(2026.7.21)의 CAPEX·주주환원·AIDC 전망과 NTN Gateway·FPA 밸류체인을 5社에 대입 (§6)</div></div>
+  </div>
+
+  <h3>다섯 종목은 한 업종이 아니다 — 세 갈래</h3>
+  <div class="grid3">
+    <div class="card"><h4>실적형 <span class="tag">RFHIC · 쏠리드</span></h4>
+      <ul>
+        <li>RFHIC: 매출의 절반 이상이 방산(2025 54%, 2026E 67%) — 2025 영업이익 309억, 1H26 189억(OPM 20%)</li>
+        <li>쏠리드: 2021년 이후 5년 연속 영업흑자, 2022~25년 영업이익 280~360억대 — PER ~11배(TTM), PBR 1.6배</li>
+        <li>공통: 손익분기 매출을 40~70% 웃도는 '이익 구간', 순현금</li>
+      </ul></div>
+    <div class="card"><h4>이벤트 레버리지형 <span class="tag">KMW · HFR</span></h4>
+      <ul>
+        <li>증분이익률 42~43%: 매출이 손익분기(KMW ~1,500~1,600억, HFR ~1,460억)를 넘으면 이익이 급증 — 2019 KMW 영업이익 1,378억, 2022 HFR 902억</li>
+        <li>현재: KMW 5년·HFR 3년 연속 영업적자, 1H26 각각 -120억·-132억, 둘 다 순차입</li>
+        <li>2027 핵심: 미국 경매·중국 RF 배제 → 벤더 발주 → 공급계약 공시</li>
+      </ul></div>
+    <div class="card"><h4>광통신 대리형 <span class="tag">오이솔루션</span></h4>
+      <ul>
+        <li>2026 YTD 약 +150%는 통신장비가 아니라 AI 데이터센터 광(1.6T OSFP·ELSFP·100G EML 칩) 기대</li>
+        <li>무선 비중 2019년 88% → 2025년 3분기 누적 46% — 유선(FTTH·NTT)·데이터컴으로 이동 중</li>
+        <li>1H26 영업손실 -15억으로 손익분기 근접 — 데이터센터 고객 수주 공시 전까지 '공시 확인 트레이딩'</li>
+      </ul></div>
+  </div>
+  <div class="toc">
+    <a href="#s2">2. 사이클 구조</a><a href="#s3">3. 주파수 경매</a><a href="#s4">4. 6G</a><a href="#s5">5. 피지컬 AI·AI-RAN</a><a href="#s6">6. iM증권 반영: 통신사 CAPEX·AIDC·NTN</a><a href="#s7">7. 기업별 BM·10년 재무</a><a href="#s8">8. 사이클 비교</a><a href="#s9">9. 주도주 조건</a><a href="#s10">10. 리스크</a><a href="#s11">11. 투자의견</a><a href="#s12">12. 결론</a>
+  </div>
+</section>
+
+<!-- 2 -->
+<section id="s2">
+  <h2><span class="num">2.</span>통신장비 사이클의 구조 — 돈이 흐르는 순서와 시차</h2>
+  <p>통신장비 부품주의 매출은 '주파수 → 통신사 CAPEX → 장비벤더 발주 → 부품·서브시스템'의 순서로 내려온다. 다섯 기업은 이 사슬의 맨 끝에 있고, 그래서 사이클의 진폭이 가장 크다.</p>
+
+  <h3>2-1. 가치사슬과 5社의 위치</h3>
+  <div class="chain">
+    <div class="tier"><div class="th">① 정부 · 주파수</div>
+      <div class="r"><b>한국</b> 과기정통부: 3G·LTE 370MHz 재할당(2026), 추가 5G(3.7GHz대) 검토</div>
+      <div class="r"><b>미국</b> FCC: AWS-3 재경매(2026.6), Upper C-band 160MHz(2027 상반기)</div>
+      <div class="r"><b>국제</b> 3GPP Rel-21(6G 표준) · WRC-27(6G 후보대역)</div></div>
+    <div class="tier"><div class="th">② 통신사 CAPEX</div>
+      <div class="r"><b>한국</b> SKT(+SKB)·KT·LGU+ — 2025 6.02조</div>
+      <div class="r"><b>미국</b> Verizon·AT&amp;T·T-Mobile — 2024 ~$46B</div>
+      <div class="r"><b>기타</b> 라쿠텐·KDDI·NTT, 유럽·인도 사업자</div></div>
+    <div class="tier"><div class="th">③ 장비벤더 (RAN)</div>
+      <div class="r"><b>삼성전자 네트워크</b> — 국내·Verizon (1Q26 매출 ~0.6조, -25%)</div>
+      <div class="r"><b>에릭슨</b> — AT&amp;T Open RAN·600MHz</div>
+      <div class="r"><b>노키아</b> — 엔비디아 AI-RAN · <b>후지쯔/1Finity·NEC</b></div></div>
+    <div class="tier"><div class="th">④ 부품·서브시스템 (5社)</div>
+      <div class="r"><span class="pill kr">KMW</span>RF 필터·mMIMO 안테나·RU</div>
+      <div class="r"><span class="pill kr">RFHIC</span>GaN 트랜지스터·PA</div>
+      <div class="r"><span class="pill kr">HFR</span>프론트홀·인빌딩 중계기·RU</div>
+      <div class="r"><span class="pill kr">오이솔루션</span>광트랜시버·레이저칩</div>
+      <div class="r"><span class="pill kr">쏠리드</span>DAS(인빌딩)·광전송·O-RAN RU</div></div>
+  </div>
+  <p class="small">쏠리드의 인빌딩 DAS는 북미·유럽에서 통신사가 아닌 건물주·뉴트럴호스트·공공기관이 주로 발주한다 — 이 점이 쏠리드의 사이클을 다른 4社와 다르게 만든다.</p>
+
+  <div class="tw"><table>
+    <tr><th style="width:12%">기업</th><th>핵심 제품</th><th>경유 벤더 / 주요 고객</th><th style="width:12%">통신 CAPEX 민감도</th><th>비통신 출구</th></tr>
+    <tr><td><b>케이엠더블유</b></td><td>RF 필터·듀플렉서, mMIMO 안테나, RRH/RU, 스몰셀</td><td>삼성전자(→Verizon·AT&amp;T), 과거 라쿠텐·후지쯔·KDDI·ZTE·노키아</td><td class="star">★★★★★</td><td>LED 조명(2Q26 매출의 24%)</td></tr>
+    <tr><td><b>에치에프알</b></td><td>WDM·eCPRI 프론트홀, 인빌딩 중계기, RU, 10G PON·Wi-Fi</td><td>후지쯔(→AT&amp;T·Verizon), SKT·KT·SKB, NESIC(일본), 노키아(SKT AI-RAN)</td><td class="star">★★★★★</td><td>유선 접속장비, 이음5G 사설망</td></tr>
+    <tr><td><b>오이솔루션</b></td><td>광트랜시버(SFP28·튜너블·스마트SFP), 레이저칩(DML·EML)</td><td>삼성·노키아·에릭슨·후지쯔, KT·KDDI, NTT(FTTH)</td><td class="star">★★★☆☆</td><td>FTTH·MSO, 데이터센터 광(100G~1.6T, ELSFP)</td></tr>
+    <tr><td><b>쏠리드</b></td><td>DAS·리피터, 광전송(WDM), O-RAN RU</td><td>북미·유럽 뉴트럴호스트(BAI 등)·빌딩주·SI, 국내·일본 통신사, 삼성 경유 RU</td><td class="star">★★★☆☆</td><td>공공안전·지하철·데이터센터, 방산(쏠리드윈텍)·항공부품</td></tr>
+    <tr><td><b>RFHIC</b></td><td>GaN-on-SiC 트랜지스터·MMIC·전력증폭기</td><td>삼성(통신), 에릭슨(2027 선정 대기) / LIG넥스원·RTX(레이시온·콜린스)·SAAB(방산)</td><td class="star">★★☆☆☆</td><td>방산 레이더(2026E 매출 67%), RF에너지, RF머트리얼즈(광 패키지)</td></tr>
+  </table></div>
+  <p class="small">민감도 ★는 KT 판단(매출 중 통신사 무선 CAPEX에 연동되는 비중 기준).</p>
+
+  <h3>2-2. 시차의 법칙 — 경매가 매출이 되기까지</h3>
+  <div class="grid2">
+    <div class="box blue"><div class="t">경험칙 (한국 5G·미국 C-band 사례)</div>
+      <ul>
+        <li>경매 → 상용화: <b>9~12개월</b></li>
+        <li>경매 → 통신사 CAPEX 피크: <b>12~20개월</b></li>
+        <li>장비·부품 매출은 CAPEX와 동행(0~2분기 시차)</li>
+        <li>주가는 경매~상용화 구간에서 선반영하고, 증가율이 꺾이는 시점에 고점</li>
+      </ul></div>
+    <div class="box"><div class="t">두 번의 실제 사례</div>
+      <ul>
+        <li><b>한국 5G</b>: 2018.6 경매(3.5GHz 280MHz + 28GHz 2,400MHz, 3조6,183억) → 2019.4.3 상용화 → 2019 CAPEX 9.6조 피크(KT +65%, LGU+ +87%) → KMW·오이솔루션 2019 매출 피크. KMW 주가는 상용화 5개월 뒤인 2019.9.24 77,700원으로 1차 고점, 해외 5G로 2020.9.8 89,500원 사상 최고</li>
+        <li><b>미국 C-band</b>: 2021.2 Auction 107 종료($81.2B) + 2022.1 Auction 110(3.45GHz, $22.5B) → 2022.1 C-band 상용화 → 2022 미국 3사 CAPEX $56.7B 피크 → HFR 2022 매출 3,663억·영업이익 902억(사상 최대)</li>
+      </ul></div>
+  </div>
+  <div class="grid2">
+    <figure class="imgfig"><div class="legend"><span class="lg"><i class="sw" style="background:#52514e"></i>국내 통신3사 CAPEX</span><span class="lg"><i class="sw" style="background:#eb6834"></i>오이솔루션 매출</span><span class="lg"><i class="sw" style="background:#1baf7a"></i>케이엠더블유 매출</span></div><div class="cv h"><svg viewBox="0 0 480 300" width="100%" role="img" aria-label="국내 통신3사 CAPEX와 KMW·오이솔루션 매출 지수(2019=100)" xmlns="http://www.w3.org/2000/svg" style="display:block;max-width:100%;height:auto"><line x1="40" x2="362" y1="270.0" y2="270.0" stroke="#c3c2b7" stroke-width="1"/><text x="34" y="273.5" text-anchor="end" font-size="11" fill="#898781" class="tn">0</text><line x1="40" x2="362" y1="228.0" y2="228.0" stroke="#e9ecef" stroke-width="1"/><text x="34" y="231.5" text-anchor="end" font-size="11" fill="#898781" class="tn">20</text><line x1="40" x2="362" y1="186.0" y2="186.0" stroke="#e9ecef" stroke-width="1"/><text x="34" y="189.5" text-anchor="end" font-size="11" fill="#898781" class="tn">40</text><line x1="40" x2="362" y1="144.0" y2="144.0" stroke="#e9ecef" stroke-width="1"/><text x="34" y="147.5" text-anchor="end" font-size="11" fill="#898781" class="tn">60</text><line x1="40" x2="362" y1="102.0" y2="102.0" stroke="#e9ecef" stroke-width="1"/><text x="34" y="105.5" text-anchor="end" font-size="11" fill="#898781" class="tn">80</text><line x1="40" x2="362" y1="60.0" y2="60.0" stroke="#e9ecef" stroke-width="1"/><text x="34" y="63.5" text-anchor="end" font-size="11" fill="#898781" class="tn">100</text><line x1="40" x2="362" y1="18.0" y2="18.0" stroke="#e9ecef" stroke-width="1"/><text x="34" y="21.5" text-anchor="end" font-size="11" fill="#898781" class="tn">120</text><line x1="40" x2="362" y1="60.0" y2="60.0" stroke="#c3c2b7" stroke-width="1"/><text x="40.0" y="292.0" text-anchor="middle" font-size="11" fill="#52514e">2019</text><text x="93.7" y="292.0" text-anchor="middle" font-size="11" fill="#52514e">2020</text><text x="147.3" y="292.0" text-anchor="middle" font-size="11" fill="#52514e">2021</text><text x="201.0" y="292.0" text-anchor="middle" font-size="11" fill="#52514e">2022</text><text x="254.7" y="292.0" text-anchor="middle" font-size="11" fill="#52514e">2023</text><text x="308.3" y="292.0" text-anchor="middle" font-size="11" fill="#52514e">2024</text><text x="362.0" y="292.0" text-anchor="middle" font-size="11" fill="#52514e">2025</text><path d="M40.0,60.0 L93.7,88.9 L147.3,90.6 L201.0,91.9 L254.7,102.2 L308.3,125.4 L362.0,138.3" fill="none" stroke="#52514e" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><circle cx="40.0" cy="60.0" r="4" fill="#52514e" stroke="#ffffff" stroke-width="2"><title>2019 · 통신3사 CAPEX: 지수 100 (9.60조원)</title></circle><circle cx="93.7" cy="88.9" r="4" fill="#52514e" stroke="#ffffff" stroke-width="2"><title>2020 · 통신3사 CAPEX: 지수 86 (8.28조원)</title></circle><circle cx="147.3" cy="90.6" r="4" fill="#52514e" stroke="#ffffff" stroke-width="2"><title>2021 · 통신3사 CAPEX: 지수 85 (8.20조원)</title></circle><circle cx="201.0" cy="91.9" r="4" fill="#52514e" stroke="#ffffff" stroke-width="2"><title>2022 · 통신3사 CAPEX: 지수 85 (8.14조원)</title></circle><circle cx="254.7" cy="102.2" r="4" fill="#52514e" stroke="#ffffff" stroke-width="2"><title>2023 · 통신3사 CAPEX: 지수 80 (7.67조원)</title></circle><circle cx="308.3" cy="125.4" r="4" fill="#52514e" stroke="#ffffff" stroke-width="2"><title>2024 · 통신3사 CAPEX: 지수 69 (6.61조원)</title></circle><circle cx="362.0" cy="138.3" r="4" fill="#52514e" stroke="#ffffff" stroke-width="2"><title>2025 · 통신3사 CAPEX: 지수 63 (6.02조원)</title></circle><text x="376.0" y="142.3" font-size="11.5" fill="#1d2733"><tspan font-weight="700" class="tn">63</tspan> <tspan fill="#52514e">통신3사 CAPEX</tspan></text><path d="M40.0,60.0 L93.7,166.9 L147.3,171.4 L201.0,193.1 L254.7,224.1 L308.3,238.0 L362.0,212.7" fill="none" stroke="#eb6834" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><circle cx="40.0" cy="60.0" r="4" fill="#eb6834" stroke="#ffffff" stroke-width="2"><title>2019 · 오이솔루션: 지수 100 (매출 2,103억)</title></circle><circle cx="93.7" cy="166.9" r="4" fill="#eb6834" stroke="#ffffff" stroke-width="2"><title>2020 · 오이솔루션: 지수 49 (매출 1,032억)</title></circle><circle cx="147.3" cy="171.4" r="4" fill="#eb6834" stroke="#ffffff" stroke-width="2"><title>2021 · 오이솔루션: 지수 47 (매출 987억)</title></circle><circle cx="201.0" cy="193.1" r="4" fill="#eb6834" stroke="#ffffff" stroke-width="2"><title>2022 · 오이솔루션: 지수 37 (매출 770억)</title></circle><circle cx="254.7" cy="224.1" r="4" fill="#eb6834" stroke="#ffffff" stroke-width="2"><title>2023 · 오이솔루션: 지수 22 (매출 460억)</title></circle><circle cx="308.3" cy="238.0" r="4" fill="#eb6834" stroke="#ffffff" stroke-width="2"><title>2024 · 오이솔루션: 지수 15 (매출 320억)</title></circle><circle cx="362.0" cy="212.7" r="4" fill="#eb6834" stroke="#ffffff" stroke-width="2"><title>2025 · 오이솔루션: 지수 27 (매출 574억)</title></circle><text x="376.0" y="216.7" font-size="11.5" fill="#1d2733"><tspan font-weight="700" class="tn">27</tspan> <tspan fill="#52514e">오이솔루션</tspan></text><path d="M40.0,60.0 L93.7,165.9 L147.3,206.9 L201.0,214.8 L254.7,239.2 L308.3,243.1 L362.0,240.0" fill="none" stroke="#1baf7a" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><circle cx="40.0" cy="60.0" r="4" fill="#1baf7a" stroke="#ffffff" stroke-width="2"><title>2019 · 케이엠더블유: 지수 100 (매출 6,829억)</title></circle><circle cx="93.7" cy="165.9" r="4" fill="#1baf7a" stroke="#ffffff" stroke-width="2"><title>2020 · 케이엠더블유: 지수 50 (매출 3,385억)</title></circle><circle cx="147.3" cy="206.9" r="4" fill="#1baf7a" stroke="#ffffff" stroke-width="2"><title>2021 · 케이엠더블유: 지수 30 (매출 2,052억)</title></circle><circle cx="201.0" cy="214.8" r="4" fill="#1baf7a" stroke="#ffffff" stroke-width="2"><title>2022 · 케이엠더블유: 지수 26 (매출 1,795억)</title></circle><circle cx="254.7" cy="239.2" r="4" fill="#1baf7a" stroke="#ffffff" stroke-width="2"><title>2023 · 케이엠더블유: 지수 15 (매출 1,001억)</title></circle><circle cx="308.3" cy="243.1" r="4" fill="#1baf7a" stroke="#ffffff" stroke-width="2"><title>2024 · 케이엠더블유: 지수 13 (매출 874억)</title></circle><circle cx="362.0" cy="240.0" r="4" fill="#1baf7a" stroke="#ffffff" stroke-width="2"><title>2025 · 케이엠더블유: 지수 14 (매출 975억)</title></circle><text x="376.0" y="244.0" font-size="11.5" fill="#1d2733"><tspan font-weight="700" class="tn">14</tspan> <tspan fill="#52514e">케이엠더블유</tspan></text></svg></div><figcaption><span class="mhint">↔ 차트를 좌우로 밀어 전체 보기 · </span>Fig.1 국내 통신3사 CAPEX vs KMW·오이솔루션 매출 (2019=100). CAPEX는 SKT(SKB 포함)·KT·LGU+ 합산 언론 집계(2023년은 출처별 6.9~7.7조로 편차, 7.67조 사용). 자료: 비즈워치·뉴시스·토요경제, 각사 재무, KT 정리</figcaption></figure>
+    <figure class="imgfig"><div class="legend"><span class="lg"><i class="sw" style="background:#52514e"></i>미국 3사 CAPEX</span><span class="lg"><i class="sw" style="background:#2a78d6"></i>에치에프알 매출</span></div><div class="cv h"><svg viewBox="0 0 480 300" width="100%" role="img" aria-label="미국 3사 CAPEX와 에치에프알 매출 지수(2019=100)" xmlns="http://www.w3.org/2000/svg" style="display:block;max-width:100%;height:auto"><line x1="40" x2="362" y1="270.0" y2="270.0" stroke="#e9ecef" stroke-width="1"/><text x="34" y="273.5" text-anchor="end" font-size="11" fill="#898781" class="tn">50</text><line x1="40" x2="362" y1="207.0" y2="207.0" stroke="#e9ecef" stroke-width="1"/><text x="34" y="210.5" text-anchor="end" font-size="11" fill="#898781" class="tn">100</text><line x1="40" x2="362" y1="144.0" y2="144.0" stroke="#e9ecef" stroke-width="1"/><text x="34" y="147.5" text-anchor="end" font-size="11" fill="#898781" class="tn">150</text><line x1="40" x2="362" y1="81.0" y2="81.0" stroke="#e9ecef" stroke-width="1"/><text x="34" y="84.5" text-anchor="end" font-size="11" fill="#898781" class="tn">200</text><line x1="40" x2="362" y1="18.0" y2="18.0" stroke="#e9ecef" stroke-width="1"/><text x="34" y="21.5" text-anchor="end" font-size="11" fill="#898781" class="tn">250</text><line x1="40" x2="362" y1="207.0" y2="207.0" stroke="#c3c2b7" stroke-width="1"/><text x="40.0" y="292.0" text-anchor="middle" font-size="11" fill="#52514e">2016</text><text x="80.2" y="292.0" text-anchor="middle" font-size="11" fill="#52514e">2017</text><text x="120.5" y="292.0" text-anchor="middle" font-size="11" fill="#52514e">2018</text><text x="160.8" y="292.0" text-anchor="middle" font-size="11" fill="#52514e">2019</text><text x="201.0" y="292.0" text-anchor="middle" font-size="11" fill="#52514e">2020</text><text x="241.2" y="292.0" text-anchor="middle" font-size="11" fill="#52514e">2021</text><text x="281.5" y="292.0" text-anchor="middle" font-size="11" fill="#52514e">2022</text><text x="321.8" y="292.0" text-anchor="middle" font-size="11" fill="#52514e">2023</text><text x="362.0" y="292.0" text-anchor="middle" font-size="11" fill="#52514e">2024</text><path d="M40.0,208.7 L80.2,206.7 L120.5,208.1 L160.8,207.0 L201.0,202.1 L241.2,192.1 L281.5,170.3 L321.8,199.5 L362.0,200.4" fill="none" stroke="#52514e" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><circle cx="40.0" cy="208.7" r="4" fill="#52514e" stroke="#ffffff" stroke-width="2"><title>2016 · 미국 3사 CAPEX: 지수 99 ($43.3B)</title></circle><circle cx="80.2" cy="206.7" r="4" fill="#52514e" stroke="#ffffff" stroke-width="2"><title>2017 · 미국 3사 CAPEX: 지수 100 ($44.0B)</title></circle><circle cx="120.5" cy="208.1" r="4" fill="#52514e" stroke="#ffffff" stroke-width="2"><title>2018 · 미국 3사 CAPEX: 지수 99 ($43.5B)</title></circle><circle cx="160.8" cy="207.0" r="4" fill="#52514e" stroke="#ffffff" stroke-width="2"><title>2019 · 미국 3사 CAPEX: 지수 100 ($43.9B)</title></circle><circle cx="201.0" cy="202.1" r="4" fill="#52514e" stroke="#ffffff" stroke-width="2"><title>2020 · 미국 3사 CAPEX: 지수 104 ($45.6B)</title></circle><circle cx="241.2" cy="192.1" r="4" fill="#52514e" stroke="#ffffff" stroke-width="2"><title>2021 · 미국 3사 CAPEX: 지수 112 ($49.1B)</title></circle><circle cx="281.5" cy="170.3" r="4" fill="#52514e" stroke="#ffffff" stroke-width="2"><title>2022 · 미국 3사 CAPEX: 지수 129 ($56.7B)</title></circle><circle cx="321.8" cy="199.5" r="4" fill="#52514e" stroke="#ffffff" stroke-width="2"><title>2023 · 미국 3사 CAPEX: 지수 106 ($46.5B)</title></circle><circle cx="362.0" cy="200.4" r="4" fill="#52514e" stroke="#ffffff" stroke-width="2"><title>2024 · 미국 3사 CAPEX: 지수 105 ($46.2B)</title></circle><text x="376.0" y="204.4" font-size="11.5" fill="#1d2733"><tspan font-weight="700" class="tn">105</tspan> <tspan fill="#52514e">미국 3사 CAPEX</tspan></text><path d="M40.0,242.7 L80.2,227.8 L120.5,224.4 L160.8,207.0 L201.0,258.9 L241.2,167.0 L281.5,38.5 L321.8,201.0 L362.0,206.7" fill="none" stroke="#2a78d6" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><circle cx="40.0" cy="242.7" r="4" fill="#2a78d6" stroke="#ffffff" stroke-width="2"><title>2016 · 에치에프알: 지수 72 (매출 1,123억)</title></circle><circle cx="80.2" cy="227.8" r="4" fill="#2a78d6" stroke="#ffffff" stroke-width="2"><title>2017 · 에치에프알: 지수 83 (매출 1,308억)</title></circle><circle cx="120.5" cy="224.4" r="4" fill="#2a78d6" stroke="#ffffff" stroke-width="2"><title>2018 · 에치에프알: 지수 86 (매출 1,350억)</title></circle><circle cx="160.8" cy="207.0" r="4" fill="#2a78d6" stroke="#ffffff" stroke-width="2"><title>2019 · 에치에프알: 지수 100 (매출 1,567억)</title></circle><circle cx="201.0" cy="258.9" r="4" fill="#2a78d6" stroke="#ffffff" stroke-width="2"><title>2020 · 에치에프알: 지수 59 (매출 921억)</title></circle><circle cx="241.2" cy="167.0" r="4" fill="#2a78d6" stroke="#ffffff" stroke-width="2"><title>2021 · 에치에프알: 지수 132 (매출 2,064억)</title></circle><circle cx="281.5" cy="38.5" r="4" fill="#2a78d6" stroke="#ffffff" stroke-width="2"><title>2022 · 에치에프알: 지수 234 (매출 3,663억)</title></circle><circle cx="321.8" cy="201.0" r="4" fill="#2a78d6" stroke="#ffffff" stroke-width="2"><title>2023 · 에치에프알: 지수 105 (매출 1,642억)</title></circle><circle cx="362.0" cy="206.7" r="4" fill="#2a78d6" stroke="#ffffff" stroke-width="2"><title>2024 · 에치에프알: 지수 100 (매출 1,571억)</title></circle><line x1="368.0" y1="206.7" x2="374.0" y2="215.4" stroke="#c3c2b7" stroke-width="1"/><text x="376.0" y="219.4" font-size="11.5" fill="#1d2733"><tspan font-weight="700" class="tn">100</tspan> <tspan fill="#52514e">에치에프알</tspan></text></svg></div><figcaption><span class="mhint">↔ 차트를 좌우로 밀어 전체 보기 · </span>Fig.2 미국 3사 CAPEX vs 에치에프알 매출 (2019=100). CAPEX는 Verizon·AT&amp;T·T-Mobile 연간 공시치 합산(일부 연도 10-K 원문 미대조). 자료: 각사 공시·macrotrends, HFR 재무, KT 정리</figcaption></figure>
+  </div>
+  <div class="box warn"><div class="t">증폭 계수 — 부품주는 CAPEX 변화의 3~5배로 움직인다</div>
+    <ul>
+      <li>국내 3사 CAPEX가 2019→2025년 37% 줄어드는 동안 KMW 매출은 86%, 오이솔루션은 73% 줄었다(두 회사 합산 -83%).</li>
+      <li>미국 3사 CAPEX가 2021→2022년 15.5% 늘 때 HFR 매출은 77.5% 늘었고, 2022→2023년 18.0% 줄 때 HFR은 55.2% 줄었다.</li>
+      <li>이 증폭이 통신장비주가 '주도주'가 될 수 있는 이유이자, 바닥에서 몇 년씩 적자가 이어지는 이유다. 따라서 2027년 판단의 출발점은 'CAPEX가 늘어나는가'다.</li>
+    </ul></div>
+</section>
+
+<!-- 3 -->
+<section id="s3">
+  <h2><span class="num">3.</span>키워드 ① 주파수 경매 — 2027년의 유일한 '실물' 촉매</h2>
+  <p>세 키워드 중 통신사의 지갑을 직접 여는 것은 주파수뿐이다. 문제는 '언제'다.</p>
+
+  <h3>3-1. 한국 — 재할당 조건은 확정, 추가 경매는 '기대'</h3>
+  <div class="tw"><table>
+    <tr><th style="width:18%">항목</th><th>내용</th><th style="width:14%">상태</th></tr>
+    <tr><td>3G·LTE 재할당</td><td>2026년 만료 370MHz. 대가 약 3.1조(기준가 약 3.6조 대비 -14.8%). <b>5G SA 서비스 제공 의무</b>. 실내 5G 기지국 1만국 이상 구축 시 약 3.0조, 2031년 말까지 2만국 이상 시 약 2.9조로 인하. 3G·4G 대역의 5G 이상 기술 사용 허용 (2025.12.10 확정)</td><td>확정</td></tr>
+    <tr><td>5G SA 전국 상용화</td><td>통신3사 2026년 12월 목표. 품질평가의 축이 업링크·지연·슬라이싱으로 이동</td><td>진행 중</td></tr>
+    <tr><td>민관협의체</td><td>2026.8.27 과기정통부·통신3사 'AI 시대 네트워크 투자' 협의체 출범. 의제: 5G SA·AI-RAN·6G·해저케이블·위성·AIDC·광. 연내 차세대망 투자·규제개선 종합대책(조기 실증 예산·세제·3G 단계적 전환)</td><td>2026 말 발표 예정</td></tr>
+    <tr class="self"><td>추가 5G 주파수 (3.7GHz대)</td><td>스펙트럼 플랜(2024~27)에서 100MHz 이상 광대역 경매 검토. 업계 추정 최저가 100MHz당 약 1조, 통신사 수요는 미온적. 정부는 '수요 확인 시 공급계획' 입장(2025.12). 하나증권은 '2026 말 정책 → 2027 경매'를 전망</td><td>미확정 (공고 없음)</td></tr>
+    <tr><td>통신3사 CAPEX</td><td>2019 9.6조 → 2025 6.02조(-37%). 1H26 합산 약 2.14조로 전년 대비 약 -8%(SKT·SKB -15.8%, KT -15.1%, LGU+ +9.4% — 파주 AIDC 영향)</td><td>감소 지속</td></tr>
+    <tr><td>통신3사 CAPEX 전망 (iM증권)</td><td>유무선 CAPEX YoY 2025 -11.0% → <b>2026E -2.9% → 2027E -4.4%</b>(3사 합산 추정, 2026.7.21). 5G 초기 투자 상각이 끝나며 감가상각비도 2027년까지 하락 → 영업이익률은 사이클 상단 → 늘어난 현금흐름은 주주환원과 AIDC로(§6-1). LGU+ 2026 CAPEX 1.4조(-5.8%)</td><td>2027년까지 감소 전망</td></tr>
+  </table></div>
+  <div class="box"><div class="t">KT 해석</div>
+    <ul>
+      <li>'5G SA 의무화 원년'에도 무선 CAPEX는 줄고 있다. SA 전환은 코어·소프트웨어 중심 투자라 RAN 하드웨어 물량을 크게 늘리지 않는다.</li>
+      <li>재할당의 실내 기지국 인센티브(1만~2만국)는 인빌딩 장비(쏠리드 DAS·nGENESIS, HFR 인빌딩 중계기·RU)에 직접 연결되는 유일한 '확정' 수요다. 다만 2031년까지 나뉘어 집행되는 분산 수요다.</li>
+      <li>3.7GHz 추가 경매가 확정되면 mMIMO 안테나·필터(KMW), GaN PA(RFHIC), 프론트홀(HFR·오이솔루션)의 신규 대역 장비 수요가 생긴다. 시차 법칙상 매출은 2028년부터다.</li>
+      <li>iM증권 전망대로면 2027년에도 국내 CAPEX는 줄어든다(2년 연속 감소). 체크리스트 #2(2027 가이던스 +10%)는 이 전망이 뒤집혀야 통과한다 — 현재로서는 Base(횡보)보다 약한 숫자다.</li>
+    </ul></div>
+
+  <h3>3-2. 미국 — 경매 파이프라인은 복원, 장비 매출은 2028년</h3>
+  <div class="tw"><table>
+    <tr><th style="width:18%">항목</th><th>내용</th><th style="width:14%">상태</th></tr>
+    <tr><td>OBBBA</td><td>2025.7.4 시행. FCC 경매 권한 2034년까지 복원, 800MHz 파이프라인. Upper C-band 100MHz 이상을 2027.7.4까지 경매해야 함</td><td>확정</td></tr>
+    <tr><td>AWS-3 재경매 (Auction 113)</td><td>2026.6.2~6.23, 72라운드. 총액 <b>$3.573B</b>, 면허 200개 전량, 낙찰자 7곳. FCC는 '기대 이상'(EchoStar 위약 기준선 $2.9B 상회)이라 평가했지만 2021년 C-band($81.2B)의 4% 규모</td><td>완료</td></tr>
+    <tr class="self"><td>Upper C-band</td><td>2026.7 FCC 규칙 의결: 3.98~4.14GHz <b>160MHz</b>, 면허 3,248개 → 기존 C-band와 합쳐 3.7~4.14GHz 440MHz '슈퍼밴드'. Carr 의장은 '12개월 내 경매 완료'를 언급. 하나증권은 2027.4 경매를 가정</td><td>경매 2027 상반기 (예상)</td></tr>
+    <tr><td>AT&amp;T × EchoStar</td><td>3.45GHz·600MHz 주파수 $23B 인수 완료(2026.7.28). 600MHz 라디오는 에릭슨 선정. AT&amp;T 자본투자 2026~28년 연 $23~24B</td><td>구축 진행</td></tr>
+    <tr><td>통신사 CAPEX</td><td>Verizon 2026 $16.0~16.5B(2025 $17.0B에서 감소), T-Mobile ~$10B. 미국 3사 합산은 C-band 구축기인 2022년 $56.7B 피크 → 2023~24년 ~$46B</td><td>보합~감소</td></tr>
+  </table></div>
+  <div class="grid2">
+    <div class="box bull"><div class="t">강세 논리 — 하나증권 '2027 쇼티지'</div>
+      <ul>
+        <li>미국의 중국산 RF 장비·부품 규제와 벤더 통합으로 2027~29년 RF 공급 부족 → 한국 RF 위탁생산 업체 수혜</li>
+        <li>Upper C-band 경매 후 2Q27부터 미국 5G CAPEX 급증 가정</li>
+        <li>'3년 내 도달 가능한 피크 영업이익'으로 시가총액을 매기는 업종 — KMW 피크 영업이익 약 3,000억, RFHIC 약 1,500억이면 2년 내 각 10조 가능</li>
+      </ul>
+      <p class="small">자료: 하나증권 김홍식(2026.9.3·9.10·9.15). 중국산 부품 규제의 범위·시점은 본 리포트에서 독립 확인하지 못했다.</p></div>
+    <div class="box bear"><div class="t">KT 판단 — 경매는 2027, 매출은 2028</div>
+      <ul>
+        <li>Upper C-band는 위성사업자 대역 이전과 면허 발급 이후 구축이 본격화된다. 2027년은 '경매 결과(낙찰 총액·낙찰자)'로 주가가 먼저 움직이는 구간이다.</li>
+        <li>시차 법칙(경매 → CAPEX 피크 12~20개월)을 적용하면 2027년 상반기 경매의 CAPEX 피크는 2028~29년이다.</li>
+        <li>2027년의 실제 하드웨어 수요는 AT&amp;T의 EchoStar 대역 통합 정도인데, 600MHz 라디오는 에릭슨이 가져갔다. 한국 부품사 몫은 에릭슨 공급망 진입 여부(RFHIC 2027 선정 대기)에 달렸다.</li>
+      </ul></div>
+  </div>
+  <blockquote class="q"><div class="en">"America's leadership in wireless is back."</div><div class="kr">"무선 분야에서 미국의 리더십이 돌아왔다."</div><div class="who">— Brendan Carr, FCC 의장, 2026.7 (Upper C-band 경매 규칙 의결)</div></blockquote>
+
+  <h3>3-3. 경매 이벤트 → 장비 매출 연결 시점</h3>
+  <div class="tw"><table>
+    <tr><th>이벤트</th><th style="width:20%">일정</th><th>장비 수요 성격</th><th style="width:15%">매출 반영 (KT 추정)</th><th>직접 수혜</th></tr>
+    <tr><td>국내 재할당 조건 (SA·실내 기지국)</td><td>2026~2031</td><td>인빌딩 DAS·중계기, SA 코어</td><td>2026H2~ 분산</td><td>쏠리드, HFR</td></tr>
+    <tr><td>국내 5G SA 전국 상용화</td><td>2026.12</td><td>코어·소프트웨어 중심</td><td>제한적</td><td>—</td></tr>
+    <tr class="self"><td>국내 추가 5G (3.7GHz대)</td><td>정책 2026 말(예상) → 경매 2027(미확정)</td><td>mMIMO 안테나·필터·GaN PA·프론트홀</td><td>2028~</td><td>KMW, RFHIC, HFR, 오이솔루션</td></tr>
+    <tr><td>미국 AWS-3</td><td>2026.6 완료</td><td>기존 대역 확장(소규모)</td><td>2027 소규모</td><td>제한적</td></tr>
+    <tr><td>미국 AT&amp;T EchoStar 대역</td><td>2026H2~</td><td>3.45GHz·600MHz RU</td><td>2026H2~2027</td><td>에릭슨 공급망(RFHIC 선정 대기), 삼성 경유분</td></tr>
+    <tr class="self"><td>미국 Upper C-band</td><td>경매 2027 상반기 (시한 7.4)</td><td>광대역 mMIMO RU·필터·PA·프론트홀, 인빌딩 업그레이드</td><td>2028~</td><td>KMW, RFHIC, HFR, 쏠리드</td></tr>
+  </table></div>
+</section>
+
+<!-- 4 -->
+<section id="s4">
+  <h2><span class="num">4.</span>키워드 ② 6G — 2027년은 'pre-6G'다</h2>
+  <p>6G는 2027년에도 뉴스의 단골이겠지만, 장비 발주의 근거가 되는 표준과 주파수는 2028~29년에 완성된다.</p>
+
+  <h3>4-1. 6G 일정표</h3>
+  <div class="tw"><table>
+    <tr><th style="width:16%">시점</th><th>이벤트</th><th style="width:16%">투자 함의</th></tr>
+    <tr><td>2026.6</td><td>3GPP Rel-21 일정 승인(TSG#112), 6G 시나리오·요구사항(TR 38.914) 완료, 6G 스터디 14건 진행</td><td>R&amp;D</td></tr>
+    <tr><td>2027.3</td><td>Rel-21 Stage-1 동결(패키지 승인)</td><td>헤드라인</td></tr>
+    <tr class="self"><td>2027.10.18~11.12</td><td>WRC-27 — 의제 1.7: 4.4~4.8 / 7.125~8.4 / 14.8~15.35GHz 6G 후보대역 결정</td><td>테마 촉매</td></tr>
+    <tr><td>2028</td><td>국내 6G 시범서비스·AI-RAN 지능형 기지국 시범구축 목표 · Rel-21 Stage-2 동결(6월)</td><td>시범망 소규모</td></tr>
+    <tr class="self"><td>2028.12 / 2029.3</td><td>Stage-3 기능 동결 / ASN.1 동결 — 첫 6G 표준 완성</td><td>상용 장비 개발</td></tr>
+    <tr><td>2029 전후</td><td>국내 6G 주파수 할당(과기정통부 예상)</td><td>CAPEX 개시 조건</td></tr>
+    <tr><td>2030</td><td>국내 6G 상용화 목표(잠정)·AI-RAN 전국 확산. Dell'Oro: 6G CAPEX 2030년 전후 시작, 2029~34년 RAN CAPEX의 55~60%가 6G</td><td>6G 매출 사이클</td></tr>
+  </table></div>
+  <p class="small">국내 6G 상용화 목표는 K-Network 2030(2023.2)에서 2028년으로 2년 앞당겨졌다가, 2025.6 국정기획위 보고에서 '2030년(잠정)·2028년 시범서비스'로 사실상 되돌아갔다. 2025.12 Hyper-AI 네트워크 전략은 '최초 상용화'에 집착하지 않겠다고 밝혔다.</p>
+
+  <h3>4-2. FR3(7GHz) — 6G가 장비 콘텐츠를 늘리는 방식</h3>
+  <div class="grid2">
+    <div class="diff"><h4>사이트당 콘텐츠 확대 (5G Americas)</h4>
+      <ul>
+        <li>3.5GHz mMIMO(약 75×40cm): 192소자·64TRX → 7GHz 같은 크기: 384소자·128TRX, 최대 768소자·768TRX</li>
+        <li>채널 400MHz, 사업자당 400~500MHz 필요</li>
+        <li>옥외 반경은 3.5GHz의 약 80%, 건물 투과손실 25dB(3.5GHz 20dB)</li>
+        <li>KT 해석: TRX가 2~6배 → 사이트당 GaN PA·필터·안테나 소자·프론트홀 대역폭이 늘고, 투과손실 증가는 인빌딩 수요를 키운다. 장기적으로 5社 모두에 '콘텐츠' 호재다.</li>
+      </ul></div>
+    <div class="box warn"><div class="t">반론과 한계</div>
+      <ul>
+        <li>Mobile Experts: 6G 기지국 판매 대수는 4G·5G의 절반 수준(기존 매크로 사이트 재활용)</li>
+        <li>Dell'Oro: RAN 시장은 향후 10년 정체 — 6G는 '성장'보다 '세대 교체'</li>
+        <li>미국 7GHz는 연방 기관 사용 대역이라 5~7년 내 완전 이전이 어렵다는 평가</li>
+        <li>무엇보다 시점: 콘텐츠 확대가 매출이 되는 것은 2029~31년</li>
+      </ul></div>
+  </div>
+
+  <h3>4-3. 5社의 6G 연결고리 — 증거와 서사</h3>
+  <div class="tw"><table>
+    <tr><th style="width:13%">기업</th><th>구체적 증거</th><th>서사(내러티브)</th><th style="width:14%">판정</th></tr>
+    <tr><td>쏠리드</td><td>6G AI-native 무선 국책과제(86.5억, 33개월, 2026.4), 6G 저궤도 위성단말 국책사업 주관(2025.5), KEIT 위성칩 과제(2026.6, KT·한화시스템), MWC 2026 6G NTN 시연</td><td>5G·6G 시대 인빌딩 수요 확대</td><td>R&amp;D 최다, 매출 없음</td></tr>
+    <tr><td>에치에프알</td><td>ETRI 'AI-RAN 글로벌 선도 프로젝트' 참여(2026.5)</td><td>AI-RAN이 5G SA·6G 망 구축의 트리거(하나증권)</td><td>R&amp;D</td></tr>
+    <tr><td>RFHIC</td><td>FR3·6G 제품·수주 확인 안 됨</td><td>GaN의 고주파·고출력 특성상 6G PA의 자연스러운 후보</td><td>서사</td></tr>
+    <tr><td>케이엠더블유</td><td>확인된 6G 증거 없음</td><td>6G mMIMO 안테나·필터 콘텐츠 확대</td><td>서사</td></tr>
+    <tr><td>오이솔루션</td><td>IR 로드맵상 '5G/6G 무선' 표기 수준</td><td>6G 프론트홀 대역폭 증가</td><td>서사</td></tr>
+  </table></div>
+  <blockquote class="q"><div class="en">"6G is being built from the ground up with AI at its core."</div><div class="kr">"6G는 처음부터 AI를 중심에 두고 만들어지고 있다."</div><div class="who">— Ronnie Vasishta, NVIDIA 텔레콤 담당 SVP, 2025.10.28 (AI-native 6G 스택 발표)</div></blockquote>
+  <blockquote class="q"><div class="kr">"2029년 전후로 6G 주파수 할당이 이뤄질 것."</div><div class="who">— 과기정통부 관계자, 2025.12.19 (Hyper-AI 네트워크 전략 설명회)</div></blockquote>
+  <div class="box blue"><div class="t">결론 — 6G는 2027년의 '멀티플 변수'</div>
+    <p>2027년의 6G 이벤트(3월 Stage-1 동결, 10~11월 WRC-27)는 테마 랠리를 만들 수 있다. 그러나 표준 완성(2029.3)과 주파수 할당(2029년 전후) 전에는 상용 장비 발주가 없다. 6G를 이유로 2027년 실적 추정치를 올릴 근거는 없다. iM증권(2026.7)도 6G 상용화를 2029~30년(3GPP 2028말~29초 ITU 제출 → 2030 IMT-2030 사양 완성)으로 보며, ITU가 정의한 6G의 핵심을 '초연결(NTN·위성으로 커버리지 확장)'과 '보편적 지능(AI-native 네트워크)'으로 요약한다 — 6G 서사의 무게중심은 지상 RAN 하드웨어보다 위성·AI 쪽이다(§6-2).</p></div>
+</section>
+
+<!-- 5 -->
+<section id="s5">
+  <h2><span class="num">5.</span>키워드 ③ 피지컬 AI·AI-RAN — 네트워크의 '질'은 바뀌지만, 돈은 어디로 가나</h2>
+  <p>피지컬 AI(로봇·자율주행·드론·스마트팩토리)는 '네트워크가 다시 병목이 된다'는 서사의 중심이다. 여기서는 그 서사가 장비 부품사의 매출로 이어지는지를 본다.</p>
+
+  <h3>5-1. 피지컬 AI가 네트워크에 요구하는 것 — 확인된 데이터</h3>
+  <div class="kpi">
+    <div><b>43 / 55</b><span>업링크 증가율이 다운링크를 앞선 사업자 수 (Ericsson Mobility Report, 2026.6)</span></div>
+    <div><b>3배+</b><span>AI 트래픽 시나리오의 2031년 업링크 (2025년 대비)</span></div>
+    <div><b>70 : 30</b><span>로봇 트래픽의 업링크 : 다운링크 비율 (에릭슨 예시)</span></div>
+    <div><b>172억</b><span>국내 Hyper-AI 네트워크 실증 예산 (2026.7 착수)</span></div>
+  </div>
+  <ul>
+    <li><b>국내 실증</b>: 5G SA + AI-RAN을 제조·조선 로봇에 적용한다(휴머노이드는 2027년 이후). SKT 컨소시엄은 인천 SK 정유시설(삼성 장비, 순찰로봇), <b>판교(에치에프알 장비, 자율 운송 — 시험 중)</b>, KG모빌리티 평택(에릭슨, 2차년도부터)에서 진행하고 노키아도 참여한다. KT는 HD현대삼호·삼성·연세대와 조선소 용접·도장 로봇을 실증한다.</li>
+    <li><b>정책</b>: Hyper-AI 네트워크 전략(2025.12.19) — 2026년 예산 약 2,900억, AI-RAN은 5G SA 위에서 먼저 실증. 2025.6 국정기획위 보고 — 2030년까지 재정 1조6,317억, 2026년 5G SA·네트워크 투자 세액공제, 2028년 AI-RAN 지능형 기지국 시범구축, 2030년 전국 확산. K-휴머노이드 연합 200여 개사. 이음5G(사설 5G) 목표는 2030년 1,000개소.</li>
+    <li><b>글로벌</b>: 5G SA 상용 사업자 90곳 이상, 네트워크 슬라이싱 기반 상품 84개(2025.11 65개), 1Q26 모바일 트래픽 +22% YoY.</li>
+  </ul>
+
+  <h3>5-2. AI-RAN 현황 — 상용 출시는 시작, 대량 배치는 2028년</h3>
+  <div class="tw"><table>
+    <tr><th style="width:17%">진영</th><th>2026년 현황</th><th style="width:22%">아키텍처</th></tr>
+    <tr><td><b>노키아 × 엔비디아</b></td><td>엔비디아 $1B 지분투자(2025.10.28). 2026.7 '업계 최초 상용 AI-RAN 플랫폼' 출시 — 파일럿 2026 말, 상용 공급 2027. T-Mobile US: 2026 필드트라이얼 → 2027 상용 시작 → 2028 대량 배치(일정이 확정된 유일한 사업자)</td><td>GPU(엔비디아 Aerial) — AirScale용 GPU 카드·독립 GPU 노드·범용 서버</td></tr>
+    <tr><td><b>에릭슨</b></td><td>AI-in-RAN 소프트웨어 2026.6 상용 공급(GPU 없이 스펙트럼 효율 ~10%, 다운링크 처리량 ~20% 개선 주장). SKT와 AI-RAN MoU(2026.3)</td><td>자체 실리콘(라디오 내 ASIC 가속기)·CPU</td></tr>
+    <tr><td><b>삼성전자</b></td><td>2026.1 Intel Xeon 6 단일 서버로 vRAN 상용 통화(미국 Tier-1 사업자)</td><td>CPU 우선, GPU는 보조</td></tr>
+    <tr><td><b>소프트뱅크·연합</b></td><td>AITRAS(GH200) 자사망 적용 계획. MWC 2026에서 엔비디아 주도 AI-native 6G 연합 출범(DT·T-Mobile·소프트뱅크·SKT·시스코)</td><td>GPU</td></tr>
+  </table></div>
+
+  <h3>5-3. 돈은 어디로 가나 — AI-RAN의 하드웨어 영향</h3>
+  <div class="tw"><table>
+    <tr><th style="width:17%">구간</th><th>AI-RAN이 바꾸는 것</th><th style="width:22%">5社 함의 (KT 판단)</th></tr>
+    <tr class="self"><td>베이스밴드·컴퓨트</td><td>GPU·CPU·가속기 신규 탑재 — 변화가 집중되는 곳. 노키아 GPU 카드는 기존 190W 전력 한도 안에 들어가 케이블·랙 교체가 필요 없다</td><td>직접 노출 없음</td></tr>
+    <tr class="self"><td>소프트웨어</td><td>AI 스케줄러·모델, 구독형 과금(노키아)</td><td>직접 노출 없음</td></tr>
+    <tr><td>RU·필터·안테나·PA</td><td>수량이 늘어난다는 근거 없음. 에릭슨은 라디오 안에 ASIC(디지털 실리콘)을 추가. 스펙트럼 효율 개선이 실현되면 신규 사이트 수요를 대체할 수도</td><td>KMW·RFHIC 중립~약간 부정</td></tr>
+    <tr><td>프론트홀·광</td><td>기지국 내 GPU(D-RAN)면 변화 없음. GPU를 모으는 C-RAN·범용 서버 구조가 확산되면 프론트홀 광링크·트랜시버가 늘 수 있다(정량 자료 없음)</td><td>HFR·오이솔루션 조건부 +</td></tr>
+    <tr><td>인빌딩·사설망</td><td>업링크·저지연 요구 → 실내 고밀도화, 공장·물류 사설 5G</td><td>쏠리드·HFR +</td></tr>
+  </table></div>
+  <p>Dell'Oro는 2026~30년 AI-RAN 누적 매출을 약 $35B로 보면서도 <b>AI-RAN이 RAN 시장 전체를 키우지는 않는다</b>(기존 예산의 재배분)고 본다. Omdia 기준 RAN 시장은 2022년 $45.2B → 2023년 $40.2B → 2024~25년 약 $35B로 줄었고, 2026년도 '대체로 보합'이다.</p>
+  <blockquote class="q"><div class="en">"Transform the world's telecom networks into AI infrastructure everywhere."</div><div class="kr">"전 세계 통신망을 어디에나 있는 AI 인프라로 바꾸겠다."</div><div class="who">— Jensen Huang, NVIDIA CEO, 2026.3.1 (MWC 2026 AI-native 6G 연합 발표)</div></blockquote>
+  <blockquote class="q"><div class="en">"GPUs are one option for 6G and AI RAN, not the only one."</div><div class="kr">"GPU는 6G·AI-RAN의 여러 선택지 중 하나일 뿐이다."</div><div class="who">— 에릭슨 대변인, 2026.8.25</div></blockquote>
+  <blockquote class="q"><div class="en">"Still expect the market to be mostly flat in 2026."</div><div class="kr">"2026년 시장은 여전히 대체로 보합으로 본다."</div><div class="who">— Stefan Pongratz, Dell'Oro Group, 2026.2.17 (RAN 시장 전망)</div></blockquote>
+
+  <h3>5-4. 회의론과 글로벌 장비주의 '진짜' 동력</h3>
+  <div class="grid2">
+    <div class="box bear"><div class="t">회의론</div>
+      <ul>
+        <li>노키아의 수치(스펙트럼 효율 2027 +50%, 2028 +100% 이상)는 로드맵 목표이고, 근거가 사실상 T-Mobile 한 곳(Futurum)</li>
+        <li>GPU 비용은 구독료에 흡수될 뿐 사라지지 않는다. 기지국 전력 예산에 비해 GPU 전력이 과하다(인텔)</li>
+        <li>AI-RAN은 주로 운영비 절감용이라 CAPEX 효과는 느리다(IEEE ComSoc techblog)</li>
+        <li>피지컬 AI: 스마트폰 데이터의 최대 80%가 Wi-Fi로 전송되고, 트래픽 증가와 통신사 매출 사이에 상관관계가 없다(Light Reading)</li>
+      </ul></div>
+    <div class="box blue"><div class="t">글로벌 장비주 랠리는 RAN이 아니라 'AI 데이터센터 네트워킹'</div>
+      <ul>
+        <li>노키아 2Q26: Network Infrastructure +12%(광 +20%, IP +16%, AI·클라우드 고객 +105%) vs Mobile Infrastructure +7%(라이선스 포함)</li>
+        <li>에릭슨 2Q26: 매출 SEK 52.7B, 오가닉 -1%, Networks -4%(전년 특허 일회성 영향)</li>
+        <li>에릭슨·노키아 주가는 저점 대비 약 +120%·+290%(신한, 2026.5) — AI 네트워크 기대의 선반영</li>
+        <li>한국 5社 중 이 축에 닿는 곳은 오이솔루션(데이터센터 광)과 RFHIC(자회사 RF머트리얼즈의 루멘텀 패키지)뿐</li>
+      </ul></div>
+  </div>
+  <div class="box blue"><div class="t">결론 — 피지컬 AI는 '질'의 변화, 2027년 실적 고리는 가늘다</div>
+    <p>피지컬 AI는 업링크·지연·실내라는 네트워크 품질 요구를 바꾸며 5G SA와 인빌딩에 유리하다. 그러나 AI-RAN 지출은 컴퓨트와 소프트웨어로 간다. 2027년 5社 실적에 직접 닿는 고리는 에치에프알(국가 AI-RAN 실증 장비 공급)과 쏠리드(실내 고밀도화) 정도이며, 나머지는 서사다.</p></div>
+</section>
+
+<!-- 6 (iM증권 반영) -->
+<section id="s6">
+  <h2><span class="num">6.</span>키워드 ④ 통신사의 지갑과 NTN — iM증권 'AIDC, 통신업 성장 신항로'(2026.7.21) 반영</h2>
+  <p>iM증권 통신 In-Depth(신희철, 2026.7.21, 통신업 OVERWEIGHT 커버리지 개시)는 통신 3사와 인텔리안테크·쏠리드를 다룬다. 통신장비 5社 관점에서 중요한 것은 세 가지다. <b>① 통신사의 유무선 CAPEX는 2027년까지 줄고, 늘어난 현금은 주주환원과 AIDC로 간다.</b> <b>② 통신장비의 신성장 축으로 NTN(Non-Terrestrial Network, 위성통신)을 제시하며 장비 Top Pick은 5社 밖의 인텔리안테크다.</b> <b>③ 쏠리드를 '미 FCC 주파수 경매 대표 수혜주'로 커버(NR)했다.</b> 리포트 작성 시점(7/20 종가)은 2026년 급락 직후이며, 본 리포트(10/8 종가)보다 두 달 반 앞선다.</p>
+
+  <h3>6-1. 통신사의 돈은 어디로 — CAPEX 회수기, 현금은 주주환원·AIDC로</h3>
+  <div class="tw"><table>
+    <tr><th style="width:15%">항목</th><th>iM증권 전망 (2026.7.21)</th><th style="width:34%">5社 함의 (KT 판단)</th></tr>
+    <tr class="self"><td>유무선 CAPEX</td><td>통신3사 합산 YoY 2024 -15.4% → 2025 -11.0% → <b>2026E -2.9% → 2027E -4.4%</b>. 5G 성숙기 진입으로 '27년까지 하락 안정화. LGU+ 2026 CAPEX 1.4조(-5.8%)</td><td>무선 장비 수요의 바닥 확인은 2028년 이후로 밀린다. §3-1의 KT 판단(1H26 -8%, 회복 근거 약함)과 같은 방향이며, 체크리스트 #2(2027 +10%)와는 반대 방향</td></tr>
+    <tr><td>감가상각비</td><td>5G 초기 투자 상각 마무리로 '27년까지 하락. SKT 별도 26E 2.48조(-5.5%)·27E 2.25조(-9.4%), KT 별도 26E 3.0조(-4.9%)·27E 2.9조(-3.2%), LGU+ 연결 26E 2.1조(-4.2%)·27E 2.0조(-5.8%)</td><td>통신사는 '투자를 안 하는 것이 이익'인 구간 — 신규 RAN 투자 유인이 약하다. 재할당 조건(실내 기지국)처럼 의무가 붙은 투자만 집행될 가능성</td></tr>
+    <tr><td>영업이익률</td><td>비용 효율화(상각·마케팅·인건비)로 과거 사이클 상단 회복. 2026E 영업이익 SKT 1조8,254억(+70%, OPM 10.3%)·KT 1조9,970억(-19%, 7.3%)·LGU+ 1조1,136억(+25%, 7.2%). 2027E OPM SKT 약 12%, KT·LGU+ 8.0%</td><td>통신사 이익 개선의 원천이 '비용 절감'이라는 점이 핵심 — 장비사 매출(통신사 비용)과 이해가 상충한다</td></tr>
+    <tr><td>주주환원</td><td>2026E→27E 주주환원수익률 KT 6.3→6.8%(4년간 자사주 1조), LGU+ 5.9→6.5%, SKT 4.0→4.4%(1.7조 비과세 배당 재원). 12개월 선행 P/E SKT 13.7배·KT 8.7배·LGU+ 7.8배</td><td>FCF의 1순위 용처는 주주환원이다. 장비 투자 확대는 그 다음</td></tr>
+    <tr><td>AIDC</td><td>SKT 울산 AIDC 2029년 100MW → 장기 1GW+(1GW 기준 DC Colocation 매출 약 4.5조, 2025 매출의 25%), KT 총 1GW 목표, LGU+ 파주 2027년 50MW → 200MW → 2030년 400MW. 3사 합산 2GW, AIDC 기반 B2B 연 +20%. SKB AIDC 매출 2026E 4,350억(+23%)</td><td>통신사 CAPEX의 행선지는 '네트워크 → 데이터센터'다. 5社 중 이 흐름에 닿는 곳은 오이솔루션(데이터센터 광), 쏠리드(하이퍼스케일 데이터센터 DAS, 2026.5), RFHIC(RF머트리얼즈의 루멘텀 패키지) — 모두 간접·초기</td></tr>
+  </table></div>
+  <div class="box"><div class="t">KT 해석 — 숫자의 정의가 다르지만 방향은 같다</div>
+    <ul>
+      <li>iM증권의 CAPEX는 '유무선 CAPEX 3사 합산 추정'(별도·연결 혼재 가능)이라 본 리포트의 언론 집계치(2025년 6.02조, §2·§3)와 절대값·증감률이 다르다(예: iM 2025 -11.0% vs KT 집계 -9%). 그러나 2026~27년 2년 연속 감소라는 방향은 같다.</li>
+      <li>통신사 리포트의 투자 포인트가 '비용 절감 → 이익률 상단 → 주주환원·AIDC'라는 사실 자체가 장비주에는 역풍이다. 통신사가 좋은 이유와 장비사가 좋은 이유가 2027년에는 겹치지 않는다.</li>
+      <li>따라서 2027년 장비 수요의 근거는 §3의 '의무·정책' 투자(5G SA, 실내 기지국, 미국 경매)로 더 좁혀진다. iM 전망은 Base(국내 CAPEX 횡보)보다 약하고 Bear(지연)에 가깝다.</li>
+    </ul></div>
+
+  <h3>6-2. NTN 위성통신 — iM증권이 꼽은 '통신장비의 신성장 축'</h3>
+  <p>iM증권은 NTN 시장이 상용화 초기라 최종 서비스를 파는 통신 3사보다 인프라 구축 단계에서 CAPEX 수혜를 받는 장비 업종이 먼저 실적을 낸다고 본다. 신호는 <b>사용자 단말 → 저궤도(LEO) 위성 → 지상국 Gateway → 통신사 백홀 → 인터넷</b>으로 흐르고, 국내 장비사가 들어갈 수 있는 시장은 ①지상국 Gateway 안테나와 ②End-user용 단말·안테나(FPA, 전자식 평판 안테나)다. Starlink는 발사체·위성·Gateway·단말을 수직계열화해 진입이 막혀 있으므로, TAM은 <b>非Starlink 진영(Eutelsat OneWeb·Amazon Leo·AST SpaceMobile·Telesat Lightspeed)의 상용화 속도</b>에 달렸다.</p>
+  <div class="tw"><table>
+    <tr><th style="width:18%">항목</th><th>iM증권 추정</th><th style="width:30%">비고</th></tr>
+    <tr><td>非Starlink Gateway 시장</td><td>2025년 약 4,660억 → 2030년 약 1.5조(약 4배). 非Starlink 사업자 Gateway 사이트 2030년 합산 약 500개(Starlink 약 400개), 추가 안테나 수요 약 3,000개(Company A 1,500·AST 720)</td><td>Gateway 안테나 단가는 본문에서 20만달러와 20~40만달러가 혼재 — ASP 가정이 시장 규모를 좌우</td></tr>
+    <tr><td>LEO FPA(평판 안테나) 시장</td><td>2025년 약 1조 → 2030년 2.2조(Fortune Business Insights, CAGR 17%) ~ 4.3조(Global Market Insights, CAGR 31~32%). FPA ASP 5,000~7,500달러</td><td>非Starlink 중 FPA 양산은 2025년 현재 OneWeb이 유일</td></tr>
+    <tr><td>非Starlink 상용화 시점</td><td>Amazon Leo 2026 상용화·FPA 양산 2026~27, Telesat Lightspeed 2027 서비스, AST SpaceMobile D2D 단계적 상용화·FPA 2026~27, Blue Origin/TeraWave 2028~29</td><td>'2027년 전후'가 Gateway·FPA 수요가 서는 시점 — 지상 RAN의 2027년(경매)과 같은 해</td></tr>
+    <tr><td>Starlink 현황</td><td>2025년 발사 165회(전 세계 325회의 51%), Falcon 9 kg당 약 2,500달러(Starship 100~150달러 목표). SpaceX 2025 매출 150~160억달러·EBITDA 약 80억달러, Starlink가 매출의 50% 이상. D2C(Direct-to-Cell) 위성 650기+, 이용자 1,200만</td><td>D2C는 파트너 통신사의 LTE 주파수(1.6~2.7GHz)를 빌려 쓰는 '커버리지 보완' 구조(FCC SCS 제도, 2024) — 통신사 대체가 아니다</td></tr>
+  </table></div>
+
+  <h4>5社 + 인텔리안테크의 NTN 노출 — 증거와 서사</h4>
+  <div class="tw"><table>
+    <tr><th style="width:15%">기업</th><th>구체적 증거 (iM증권·본 리포트)</th><th style="width:16%">판정</th></tr>
+    <tr class="self"><td>인텔리안테크 (189300)<br><span class="small">5社 밖 · iM 장비 Top Pick</span></td><td>OneWeb향 FPA 양산(4Q23~), Company A향 Gateway 안테나 공급(2024~)·캘리포니아 신공장 2H26 가동(연 약 300억 CAPA, 일부 PO 확보), AST·Telesat·SES 개발 수주(2024 SES 123억·Telesat 290억, 2025 AST 잔고 약 280억). 2026E 매출 3,672억(+15%)·영업이익 300억(OPM 8.2%), 2027E 4,369억·455억(10.4%), 2028E 영업이익 930억. FPA 매출 2025 840억 → 2030 2,660억, Gateway 2025 1,110억 → 2030 2,400~2,580억. Buy·TP 89,000(12개월 선행 순이익 325억 × 30배, 7/20 종가 58,000)</td><td><b>매출 있음 — 업종 벤치마크</b></td></tr>
+    <tr><td>쏠리드</td><td>6G 저궤도 위성단말 국책사업 주관(2025.5), KEIT 위성칩 과제(2026.6, KT·한화시스템), MWC 2026 6G NTN 시연(§4-3)</td><td>R&amp;D — 매출 없음</td></tr>
+    <tr><td>에치에프알</td><td>이음5G·위성 결합 NTN 제품 my5GBox(§7-1 BM)</td><td>제품 — 매출 미확인</td></tr>
+    <tr><td>RFHIC</td><td>GaN PA는 위성 Gateway·단말의 고출력 증폭기 후보라는 서사. 위성향 수주 확인 안 됨</td><td>서사</td></tr>
+    <tr><td>케이엠더블유 · 오이솔루션</td><td>확인된 NTN 증거 없음</td><td>없음</td></tr>
+  </table></div>
+  <div class="box blue"><div class="t">KT 해석 — NTN은 5社의 2027년 실적 변수가 아니다</div>
+    <ul>
+      <li>iM증권 스스로 NTN 수혜를 Gateway·FPA, 즉 인텔리안테크로 특정했다. 5社 중 NTN 매출이 있는 곳은 없고, 가장 가까운 쏠리드도 국책과제 단계다. 통신장비 업종 전체가 'NTN 테마'로 묶여 오르는 구간이 오면, 5社는 실체 없는 동반 상승이다.</li>
+      <li>ITU가 6G(IMT-2030)의 핵심으로 '초연결(NTN)'과 '보편적 지능(AI-native)'을 들었다는 점에서, §4의 6G 서사는 지상 mMIMO·필터·PA 콘텐츠보다 위성·AI 쪽으로 기울어 있다. KMW·RFHIC의 '6G 콘텐츠 확대' 서사는 한 번 더 할인해야 한다.</li>
+      <li>추적할 것은 두 가지다. 쏠리드 위성단말 과제의 2027~28년 양산 전환 여부, 그리고 인텔리안테크의 Gateway(2027E 1,620억, +32%)·FPA 분기 매출 — 후자는 'NTN 인프라 CAPEX가 실제로 서는가'를 보여주는 업종 벤치마크다(체크리스트 #9).</li>
+      <li>iM 리포트 내 수치 혼재에 주의: 인텔리안테크 2026E 매출이 산업분석(3,872억)과 기업분석(3,672억)에서 다르고, FPA 2026E도 1,280억과 1,420억이 병기된다. 본 리포트는 기업분석 페이지 수치를 썼다.</li>
+    </ul></div>
+
+  <h3>6-3. iM증권의 쏠리드 — '미 FCC 주파수 경매 대표 수혜주'(NR)</h3>
+  <div class="grid2">
+    <div class="box bull"><div class="t">iM증권 논리 (2026.7.21, 7/20 종가 9,440원)</div>
+      <ul>
+        <li><b>실적</b>: 2026E 매출 3,353억(+13.7%: 미국向 중계기 수출 증가 + 쏠리드윈텍 국방 매출), 2027E 3,599억(+7.3%). 영업이익 추정치는 제시하지 않음(NR)</li>
+        <li><b>DAS 시장</b>: 2025년 113억달러 → 2030년 267억달러(CAGR 18.6%). 실내 트래픽 60% 이상, 고주파로 갈수록 투과성 저하 → 중계기 수요 확대. 글로벌 점유율 2024년(Mobile Experts) Amphenol 23%·JMA 18%·쏠리드 15%(3위)·Comba 10%</li>
+        <li><b>수익 구조</b>: DAS 매출 비중 약 72~73%, 수출 약 70%. Neutral Host向 DAS OPM 약 20% vs MNO向 약 5% — 통신사 CAPEX 의존도가 낮아 국내 타 장비사 대비 이익 안정성 우위(2021~1Q26 OPM 비교: 쏠리드 > KMW·이노와이어리스·에이스테크)</li>
+        <li><b>촉매</b>: 2026.6 Auction 113 → '투자 강도 중간 이하, 커버리지 보강 DAS 수요', 2027 Upper C-band → '투자 강도 높음, 대규모 기지국·RU·DAS·스몰셀 — 2027년 이후 본격 수혜'. 2026 북중미 월드컵 스타디움·공항 인빌딩. O-RAN 매출 비중 4.4%(2025)로 레퍼런스 확보(AT&amp;T 2024.11 '인프라 70% O-RAN 전환', O-RAN 시장 2025 34억달러 → 2035 571억달러)</li>
+        <li><b>밸류</b>: 12개월 선행 P/E 17배(역사적 상단). Peer Amphenol 28.3배를 점유율 격차로 30% 할인한 19.8배를 적용해도 상승 여력</li>
+      </ul></div>
+    <div class="box bear"><div class="t">KT 대조 — 같은 결론, 다른 이름표</div>
+      <ul>
+        <li>iM은 제목에 '경매 수혜주'를 걸었지만, 표에서는 Upper C-band 수혜를 <b>'2027년 이후'</b>로 적었다. 2027년 매출 근거는 경매가 아니라 DAS 시장 성장·Neutral Host·월드컵 인빌딩이다 — KT의 '통신사 CAPEX에서 한 발 떨어진 실적형(방어)' 분류와 같은 그림이다.</li>
+        <li>숫자 검증: iM 2026E 매출 3,353억 vs FnGuide 컨센서스 3,109억(2026.6) vs 1H26 1,338억. iM 숫자가 맞으려면 2H26 매출 약 2,000억이 필요하다(2H25 약 1,820억). 4분기 집중 구조상 4Q26 실적이 분기점이다.</li>
+        <li>점유율 표기 혼재: iM 본문 15%(2024), 밸류 근거 18%, 본 리포트의 2022년 자료(CommScope 21%·JMA 16%·쏠리드 14%)와 집계가 다르다. Amphenol 수치는 CommScope의 무선(OWN·DAS) 사업 인수 이후 집계로 보인다. 순위 3위는 일관된다.</li>
+        <li>주가는 7/20 9,440원 → 10/8 9,760원으로 제자리다. iM이 '상단'이라 한 선행 PER 17배는 KT의 TTM PER ~11배와 기준이 다르다(TTM에는 1Q26 영업외이익이 들어간다). 선행 기준으로는 싸지 않다는 점을 함께 봐야 한다.</li>
+      </ul></div>
+  </div>
+  <blockquote class="q"><div class="kr">"NTN 위성통신 시장은 상용화 초기 단계로, 최종 소비자향 서비스를 제공하는 통신 3사보다 인프라 구축 과정에서 Capex 수혜를 받는 통신장비 업종이 선호될 것으로 전망한다."</div><div class="who">— 신희철, iM증권 리서치본부, 2026.7.21 ('AIDC, 통신업 성장 신항로' Summary)</div></blockquote>
+  <div class="box blue"><div class="t">결론 — iM 리포트가 본 리포트에 더하는 것</div>
+    <p>통신사 쪽에서 본 2027년은 '투자 회수기'다. CAPEX는 2년 더 줄고, 현금은 주주환원과 AIDC로 간다(Q1의 답을 강화). 장비주의 새 성장축으로 제시된 NTN은 실체가 있지만 수혜 기업이 5社 밖에 있다(Q2·Q5). 쏠리드에 대한 iM의 긍정 논리는 '경매'보다 'DAS 시장과 Neutral Host'에 있어 KT의 실적형 분류와 충돌하지 않는다(Q4). 종합하면 iM 리포트는 Base 시나리오의 전제를 강화하고, Bull 시나리오의 국내 CAPEX 전제를 약화시킨다.</p></div>
+</section>
+
+<!-- 7 -->
+<section id="s7">
+  <h2><span class="num">7.</span>기업별 비즈니스 모델과 10년 재무</h2>
+  <p class="small">재무는 K-IFRS 연결 기준(억원). DART 원문 대신 valueline·etfshopping(DART 기반)·StockAnalysis·Stockopedia와 증권사 리포트·IR 자료를 교차검증했다. 순이익은 지배주주 기준(표 주석 예외). 손익분기 매출은 KT 추정(상승기 증분이익률 약 40% 가정, 2025년 비용 구조 기준). 주가·시가총액은 2026.10.8 종가. 각 표가 차트의 수치 보기를 겸한다.</p>
+
+  <!-- 7-1 HFR -->
+  <h3>7-1. 에치에프알 (230240) — 미국 프론트홀 레버리지, 재무가 발목</h3>
+  <div class="kpi">
+    <div><b>13,250원</b><span>시가총액 1,763억 · 52주 38,050 / 11,400</span></div>
+    <div><b>PBR ~1.1배</b><span>5社 중 최저 · 2026 고점 대비 -65%</span></div>
+    <div><b>-132억</b><span>1H26 영업이익 (매출 403억, -41% YoY)</span></div>
+    <div><b>순차입 ~428억</b><span>1H26 현금성 258억 vs 차입금 686억</span></div>
+  </div>
+  <div class="grid2">
+    <div><h4>비즈니스 모델</h4>
+      <ul>
+        <li><b>무선(Mobile Access)</b>: WDM·eCPRI 프론트홀(flexiHaul), 인빌딩 중계기, RU, AI-RAN 소프트웨어 / <b>유선(Broadband)</b>: 10G PON OLT·ONT, Wi-Fi AP / <b>이음5G</b>(my5G, 자회사 에치에프알모바일), 위성 NTN(my5GBox)</li>
+        <li><b>고객</b>: 국내 SKT·KT·SKB·LGU+ / 미국 Verizon(2016 flexiHaul 선정)·AT&amp;T(후지쯔 경유) — 2021.11 후지쯔 미국법인과 1,585억 공급계약(2020 매출의 172%) / 일본 NTT도코모·NEC·NESIC(지분 4.5%)</li>
+        <li><b>매출 구조</b>: 2021년 프론트홀 61.6%, 2022년 무선 약 73%·해외 약 71% → 2023년 이후 미국 무선 공백으로 유선 비중 상승</li>
+        <li><b>원가</b>: 메모리·FPGA가 BOM의 30% 이상(추정). 매출총이익률 2022 32.7% → 2024 6.7% → 2025 19.7%. 판관비 연 약 296억 고정</li>
+        <li><b>연혁·지배구조</b>: 2000년 SKT 사내벤처·KAIST 출신 창업, 2018.11 하나금융7호스팩 합병 상장. 정종민 대표 29.92%(특관 포함 30.66%). 2023년 엘텍네트웍스(→에이치원래디오)·DSN인베스트먼트(→케이알벤처스) 인수 후 2026.6 케이알벤처스를 약 100억에 매각(취득가 160억)</li>
+      </ul></div>
+    <div class="diff"><h4>해자와 한계</h4>
+      <ul>
+        <li><b>해자</b>: 미국 Tier-1(Verizon·AT&amp;T) 프론트홀 레퍼런스를 가진 드문 국내 업체. 2022년 C-band 사이클에서 매출 3,663억·영업이익 902억(OPM 24.6%)으로 실력을 검증했다.</li>
+        <li><b>AI-RAN 실물 고리</b>: SKT Hyper-AI 네트워크 실증의 판교 구간에 에치에프알 장비가 들어가 시험 중 — 5社 중 유일한 국가 AI-RAN·피지컬 AI 실증 장비 공급</li>
+        <li><b>한계</b>: 미국 채널이 후지쯔(1Finity) 한 곳이고, AT&amp;T 일정은 에릭슨 개발 일정에 종속된다(2023~25년 부진의 원인으로 노키아→에릭슨 전환과 개발 지연이 지목됨).</li>
+      </ul></div>
+  </div>
+  <figure class="imgfig"><div class="cv w"><svg viewBox="0 0 760 346" width="100%" role="img" aria-label="에치에프알 매출액·영업이익 2016~2025" xmlns="http://www.w3.org/2000/svg" style="display:block;max-width:100%;height:auto"><text x="56" y="16" font-size="12.5" font-weight="700" fill="#1d2733">매출액 (억원)</text><line x1="56" x2="746" y1="184.0" y2="184.0" stroke="#c3c2b7" stroke-width="1"/><text x="50" y="187.5" text-anchor="end" font-size="11" fill="#898781" class="tn">0</text><line x1="56" x2="746" y1="132.7" y2="132.7" stroke="#e9ecef" stroke-width="1"/><text x="50" y="136.2" text-anchor="end" font-size="11" fill="#898781" class="tn">2,000</text><line x1="56" x2="746" y1="81.3" y2="81.3" stroke="#e9ecef" stroke-width="1"/><text x="50" y="84.8" text-anchor="end" font-size="11" fill="#898781" class="tn">4,000</text><line x1="56" x2="746" y1="30.0" y2="30.0" stroke="#e9ecef" stroke-width="1"/><text x="50" y="33.5" text-anchor="end" font-size="11" fill="#898781" class="tn">6,000</text><path d="M78.5,184.0L78.5,159.2Q78.5,155.2 82.5,155.2L98.5,155.2Q102.5,155.2 102.5,159.2L102.5,184.0Z" fill="#2a78d6"><title>2016 매출액: 1,123 억원</title></path><path d="M147.5,184.0L147.5,154.4Q147.5,150.4 151.5,150.4L167.5,150.4Q171.5,150.4 171.5,154.4L171.5,184.0Z" fill="#2a78d6"><title>2017 매출액: 1,308 억원</title></path><path d="M216.5,184.0L216.5,153.3Q216.5,149.3 220.5,149.3L236.5,149.3Q240.5,149.3 240.5,153.3L240.5,184.0Z" fill="#2a78d6"><title>2018 매출액: 1,350 억원</title></path><path d="M285.5,184.0L285.5,147.8Q285.5,143.8 289.5,143.8L305.5,143.8Q309.5,143.8 309.5,147.8L309.5,184.0Z" fill="#2a78d6"><title>2019 매출액: 1,567 억원</title></path><path d="M354.5,184.0L354.5,164.4Q354.5,160.4 358.5,160.4L374.5,160.4Q378.5,160.4 378.5,164.4L378.5,184.0Z" fill="#2a78d6"><title>2020 매출액: 921 억원</title></path><path d="M423.5,184.0L423.5,135.0Q423.5,131.0 427.5,131.0L443.5,131.0Q447.5,131.0 447.5,135.0L447.5,184.0Z" fill="#2a78d6"><title>2021 매출액: 2,064 억원</title></path><path d="M492.5,184.0L492.5,94.0Q492.5,90.0 496.5,90.0L512.5,90.0Q516.5,90.0 516.5,94.0L516.5,184.0Z" fill="#2a78d6"><title>2022 매출액: 3,663 억원</title></path><text x="504.5" y="85.0" text-anchor="middle" font-size="11" font-weight="700" fill="#1d2733" class="tn">3,663</text><path d="M561.5,184.0L561.5,145.9Q561.5,141.9 565.5,141.9L581.5,141.9Q585.5,141.9 585.5,145.9L585.5,184.0Z" fill="#2a78d6"><title>2023 매출액: 1,642 억원</title></path><path d="M630.5,184.0L630.5,147.7Q630.5,143.7 634.5,143.7L650.5,143.7Q654.5,143.7 654.5,147.7L654.5,184.0Z" fill="#2a78d6"><title>2024 매출액: 1,571 억원</title></path><path d="M699.5,184.0L699.5,151.6Q699.5,147.6 703.5,147.6L719.5,147.6Q723.5,147.6 723.5,151.6L723.5,184.0Z" fill="#2a78d6"><title>2025 매출액: 1,420 억원</title></path><text x="711.5" y="142.6" text-anchor="middle" font-size="11" font-weight="700" fill="#1d2733" class="tn">1,420</text><text x="56" y="210" font-size="12.5" font-weight="700" fill="#1d2733">영업이익 (억원)</text><line x1="56" x2="746" y1="320.0" y2="320.0" stroke="#e9ecef" stroke-width="1"/><text x="50" y="323.5" text-anchor="end" font-size="11" fill="#898781" class="tn">-500</text><line x1="56" x2="746" y1="295.0" y2="295.0" stroke="#c3c2b7" stroke-width="1"/><text x="50" y="298.5" text-anchor="end" font-size="11" fill="#898781" class="tn">0</text><line x1="56" x2="746" y1="270.0" y2="270.0" stroke="#e9ecef" stroke-width="1"/><text x="50" y="273.5" text-anchor="end" font-size="11" fill="#898781" class="tn">500</text><line x1="56" x2="746" y1="245.0" y2="245.0" stroke="#e9ecef" stroke-width="1"/><text x="50" y="248.5" text-anchor="end" font-size="11" fill="#898781" class="tn">1,000</text><line x1="56" x2="746" y1="220.0" y2="220.0" stroke="#e9ecef" stroke-width="1"/><text x="50" y="223.5" text-anchor="end" font-size="11" fill="#898781" class="tn">1,500</text><path d="M78.5,295.0L78.5,293.2Q78.5,291.4 80.3,291.4L100.7,291.4Q102.5,291.4 102.5,293.2L102.5,295.0Z" fill="#2a78d6"><title>2016 영업이익: 73 억원</title></path><text x="90.5" y="338.0" text-anchor="middle" font-size="11" fill="#52514e">2016</text><path d="M147.5,295.0L147.5,294.3Q147.5,293.6 148.2,293.6L170.8,293.6Q171.5,293.6 171.5,294.3L171.5,295.0Z" fill="#2a78d6"><title>2017 영업이익: 28 억원</title></path><text x="159.5" y="338.0" text-anchor="middle" font-size="11" fill="#52514e">2017</text><path d="M216.5,295.0L216.5,294.3Q216.5,293.6 217.2,293.6L239.8,293.6Q240.5,293.6 240.5,294.3L240.5,295.0Z" fill="#2a78d6"><title>2018 영업이익: 29 억원</title></path><text x="228.5" y="338.0" text-anchor="middle" font-size="11" fill="#52514e">2018</text><path d="M285.5,295.0L285.5,294.4Q285.5,293.9 286.1,293.9L308.9,293.9Q309.5,293.9 309.5,294.4L309.5,295.0Z" fill="#2a78d6"><title>2019 영업이익: 22 억원</title></path><text x="297.5" y="338.0" text-anchor="middle" font-size="11" fill="#52514e">2019</text><path d="M354.5,295.0L354.5,303.9Q354.5,307.9 358.5,307.9L374.5,307.9Q378.5,307.9 378.5,303.9L378.5,295.0Z" fill="#e34948"><title>2020 영업이익: -259 억원</title></path><text x="366.5" y="320.9" text-anchor="middle" font-size="11" font-weight="700" fill="#1d2733" class="tn">-259</text><text x="366.5" y="338.0" text-anchor="middle" font-size="11" fill="#52514e">2020</text><path d="M423.5,295.0L423.5,288.1Q423.5,284.1 427.5,284.1L443.5,284.1Q447.5,284.1 447.5,288.1L447.5,295.0Z" fill="#2a78d6"><title>2021 영업이익: 218 억원</title></path><text x="435.5" y="338.0" text-anchor="middle" font-size="11" fill="#52514e">2021</text><path d="M492.5,295.0L492.5,253.9Q492.5,249.9 496.5,249.9L512.5,249.9Q516.5,249.9 516.5,253.9L516.5,295.0Z" fill="#2a78d6"><title>2022 영업이익: 902 억원</title></path><text x="504.5" y="244.9" text-anchor="middle" font-size="11" font-weight="700" fill="#1d2733" class="tn">902</text><text x="504.5" y="338.0" text-anchor="middle" font-size="11" fill="#52514e">2022</text><path d="M561.5,295.0L561.5,297.1Q561.5,299.2 563.6,299.2L583.4,299.2Q585.5,299.2 585.5,297.1L585.5,295.0Z" fill="#e34948"><title>2023 영업이익: -84 억원</title></path><text x="573.5" y="338.0" text-anchor="middle" font-size="11" fill="#52514e">2023</text><path d="M630.5,295.0L630.5,301.1Q630.5,305.1 634.5,305.1L650.5,305.1Q654.5,305.1 654.5,301.1L654.5,295.0Z" fill="#e34948"><title>2024 영업이익: -202 억원</title></path><text x="642.5" y="338.0" text-anchor="middle" font-size="11" fill="#52514e">2024</text><path d="M699.5,295.0L699.5,295.4Q699.5,295.8 699.9,295.8L723.1,295.8Q723.5,295.8 723.5,295.4L723.5,295.0Z" fill="#e34948"><title>2025 영업이익: -16 억원</title></path><text x="711.5" y="308.8" text-anchor="middle" font-size="11" font-weight="700" fill="#1d2733" class="tn">-16</text><text x="711.5" y="338.0" text-anchor="middle" font-size="11" fill="#52514e">2025</text><line x1="56" x2="746" y1="295.0" y2="295.0" stroke="#c3c2b7" stroke-width="1"/></svg></div><figcaption><span class="mhint">↔ 차트를 좌우로 밀어 전체 보기 · </span>Fig.3 에치에프알 매출액·영업이익 (2016~2025, 억원). 2016~17년은 스팩 합병 전 영업법인 연결 실적</figcaption></figure>
+  <div class="tw"><table class="fin"><tr><th>억원</th><th>2016</th><th>2017</th><th>2018</th><th>2019</th><th>2020</th><th>2021</th><th>2022</th><th>2023</th><th>2024</th><th>2025</th><th class="h1">1H26</th></tr><tr class="key"><td>매출액</td><td>1,123</td><td>1,308</td><td>1,350</td><td>1,567</td><td>921</td><td>2,064</td><td>3,663</td><td>1,642</td><td>1,571</td><td>1,420</td><td class="h1">403</td></tr><tr class="key"><td>영업이익</td><td>73</td><td>28</td><td>29</td><td>22</td><td class="neg">-259</td><td>218</td><td>902</td><td class="neg">-84</td><td class="neg">-202</td><td class="neg">-16</td><td class="h1 neg">-132</td></tr><tr><td>영업이익률</td><td>6.5%</td><td>2.1%</td><td>2.1%</td><td>1.4%</td><td class="neg">-28.1%</td><td>10.6%</td><td>24.6%</td><td class="neg">-5.1%</td><td class="neg">-12.9%</td><td class="neg">-1.1%</td><td class="h1 neg">-32.8%</td></tr><tr><td>순이익</td><td>77</td><td>32</td><td>4</td><td>10</td><td class="neg">-278</td><td>186</td><td>683</td><td>18</td><td class="neg">-186</td><td class="neg">-3</td><td class="h1 neg">-126</td></tr><tr><td>자본총계</td><td>487</td><td>539</td><td>799</td><td>820</td><td>741</td><td>926</td><td>1,778</td><td>1,768</td><td>1,588</td><td>1,586</td><td class="h1">1,500</td></tr><tr><td>현금성자산</td><td class="na">n/a</td><td>94</td><td>221</td><td>350</td><td>404</td><td>647</td><td>1,585</td><td>691</td><td>444</td><td>515</td><td class="h1">258</td></tr><tr><td>총차입금</td><td class="na">n/a</td><td>193</td><td>144</td><td>290</td><td>443</td><td>642</td><td>540</td><td>471</td><td>560</td><td>718</td><td class="h1">686</td></tr><tr><td>영업활동CF</td><td class="na">n/a</td><td class="neg">-18</td><td class="neg">-33</td><td>130</td><td>111</td><td>0</td><td>1,095</td><td class="neg">-346</td><td class="neg">-59</td><td>96</td><td class="h1 na">n/a</td></tr></table></div><p class="small">에치에프알 10년 연간 재무(K-IFRS 연결). 2016년 순이익은 당기순이익, 1H26 순이익은 분기 당기순이익 합. 현금성자산은 2017~21년 현금+단기금융자산(증권사 표), 2020년 현금만. 2024년 영업이익은 DART 기준 -202억(S&amp;P 기준 -170억). 2026년 케이알벤처스 매각으로 중단영업 분류 발생.</p>
+  <div class="grid2">
+    <div class="box"><div class="t">사이클 해석</div>
+      <ul>
+        <li>2016~19년 국내 LTE·초기 5G: 매출 1,100~1,600억, OPM 1~7%</li>
+        <li>2020년 국내 5G 둔화·미국 공백: 영업손실 -259억(OPM -28%)</li>
+        <li>2021~22년 미국 C-band: 매출이 +1,143억, +1,599억 늘며 증분이익률 42~43% → 2022 영업이익 902억</li>
+        <li>2023~25년 미국 투자 소화기: 3년 연속 영업적자. 1H26은 매출 403억(-41%)·영업이익 -132억으로 바닥 미확인</li>
+        <li>손익분기 매출 약 1,460억(KT 추정) — 2025년 매출 1,420억은 거의 손익분기, 1H26 연환산 806억은 크게 미달</li>
+      </ul></div>
+    <div class="box warn"><div class="t">재무 체력과 2027 변수</div>
+      <ul>
+        <li>현금성자산 2025말 515억 → 1H26 258억(6개월 -257억), 차입금 686억. 2023~26년 증자·CB 없이 차입·자산매각으로 조달 → 회복 지연 시 희석 위험(2022 NESIC 3자배정 선례)</li>
+        <li>하나증권(2026.6.11, TP 50,000): 2027E 매출 3,373억·영업이익 754억. KT 모형(증분이익률 40%)으로도 약 765억이다. 현 시총은 이 추정치의 2.3배에 불과 — 시장은 회복 확률을 크게 할인하고 있다.</li>
+        <li>2027 확인 포인트: AT&amp;T·에릭슨향 프론트홀 수주, SKT AI-RAN 상용 발주, 유동성 해소</li>
+      </ul></div>
+  </div>
+  <blockquote class="q"><div class="kr">"국내 시장 규모만으로는 투자비를 모두 회수하기 어려워 해외 진출은 필연적인 선택이었습니다."</div><div class="who">— 정해관 에치에프알 모바일사업부문장, 2025.11.6 (매일신문 인터뷰)</div></blockquote>
+
+  <!-- 7-2 OE -->
+  <h3>7-2. 오이솔루션 (138080) — '통신장비'에서 '광통신'으로 갈아타는 중</h3>
+  <div class="kpi">
+    <div><b>30,750원</b><span>시가총액 3,806억 · 52주 57,900 / 10,870</span></div>
+    <div><b>YTD 약 +150%</b><span>5社 중 최고 (2025말 종가는 시총 역산 추정)</span></div>
+    <div><b>-15억</b><span>1H26 영업이익 (매출 377억, +26% YoY)</span></div>
+    <div><b>PBR ~4.9배</b><span>2022~24년 1.2~1.5배에서 리레이팅</span></div>
+  </div>
+  <div class="grid2">
+    <div><h4>비즈니스 모델</h4>
+      <ul>
+        <li><b>광트랜시버</b>: 무선 프론트홀(SFP28·튜너블·스마트SFP), 유선 FTTH·MSO(10G EPON), 텔레콤·데이터컴 / <b>레이저칩</b>: DML·EML·PIC(50G급), 2026년 '국내 최초' 100G EML 칩 공개</li>
+        <li><b>데이터센터</b>: 100G 양산, 200G·400G 퀄, 800G 일부 샘플, 1.6T OSFP 내부 InfiniBand 호환 테스트 통과, ELSFP(CPO용 외부광원) 3Q26 샘플 예상(메리츠)</li>
+        <li><b>매출 구조</b>: 무선 2019 87.5% → 2024 62% → 2025년 3분기 누적 46%. 2025년 회복은 유선(FTTH·MSO +288%)·텔레콤/데이터컴(+134%)이 주도했고 무선은 +32%. 2024년 데이터컴은 3%에 불과</li>
+        <li><b>고객</b>: 삼성·노키아·에릭슨·후지쯔 / 스마트SFP Ciena·Cisco·Juniper / KT(10G 단독)·KDDI(10G EPON 주력) / NTT FTTH — 스미토모 자체생산 중단 물량 이관(1H25 초도, 1H26 2배 이상 예상)</li>
+        <li><b>생산·원가</b>: 광주 본사에서 에피→팹→칩→TO/OSA→모듈 일관생산. 레이저칩은 트랜시버 원가의 약 30%. 매출총이익률 2019 41.6% → 2024 -15.3%</li>
+        <li><b>연혁·지배구조</b>: 2003년 벨연구소·삼성 출신 창업, 2014.2 코스닥 상장. 박찬 17.94%(특관 25.42%, 2025말). 주식수 2019년 1,062만주 → 2026.10 약 1,238만주(+16.6%, CB 전환)</li>
+      </ul></div>
+    <div class="diff"><h4>해자와 한계</h4>
+      <ul>
+        <li><b>해자</b>: 국내에서 드문 InP 레이저칩~모듈 수직계열화. 칩 내재화는 원가·공급 안정과 데이터센터 고속 제품(100G EML) 개발의 기반이다.</li>
+        <li><b>한계</b>: 하이퍼스케일러·모듈 고객이 공개되지 않았고, 규모(2025 매출 574억)가 글로벌 경쟁사 대비 미미하다. 2026년 랠리는 수주 공시가 아니라 제품 발표(OFC 2026·AI EXPO)에 반응했다.</li>
+        <li><b>통신과의 관계</b>: 6G·경매 연결은 2019년의 역사적 민감도뿐 — 2027 변수는 통신 CAPEX보다 데이터센터 퀄·수주다.</li>
+      </ul></div>
+  </div>
+  <figure class="imgfig"><div class="cv w"><svg viewBox="0 0 760 346" width="100%" role="img" aria-label="오이솔루션 매출액·영업이익 2016~2025" xmlns="http://www.w3.org/2000/svg" style="display:block;max-width:100%;height:auto"><text x="56" y="16" font-size="12.5" font-weight="700" fill="#1d2733">매출액 (억원)</text><line x1="56" x2="746" y1="184.0" y2="184.0" stroke="#c3c2b7" stroke-width="1"/><text x="50" y="187.5" text-anchor="end" font-size="11" fill="#898781" class="tn">0</text><line x1="56" x2="746" y1="132.7" y2="132.7" stroke="#e9ecef" stroke-width="1"/><text x="50" y="136.2" text-anchor="end" font-size="11" fill="#898781" class="tn">1,000</text><line x1="56" x2="746" y1="81.3" y2="81.3" stroke="#e9ecef" stroke-width="1"/><text x="50" y="84.8" text-anchor="end" font-size="11" fill="#898781" class="tn">2,000</text><line x1="56" x2="746" y1="30.0" y2="30.0" stroke="#e9ecef" stroke-width="1"/><text x="50" y="33.5" text-anchor="end" font-size="11" fill="#898781" class="tn">3,000</text><path d="M78.5,184.0L78.5,147.1Q78.5,143.1 82.5,143.1L98.5,143.1Q102.5,143.1 102.5,147.1L102.5,184.0Z" fill="#eb6834"><title>2016 매출액: 797 억원</title></path><path d="M147.5,184.0L147.5,148.7Q147.5,144.7 151.5,144.7L167.5,144.7Q171.5,144.7 171.5,148.7L171.5,184.0Z" fill="#eb6834"><title>2017 매출액: 766 억원</title></path><path d="M216.5,184.0L216.5,146.2Q216.5,142.2 220.5,142.2L236.5,142.2Q240.5,142.2 240.5,146.2L240.5,184.0Z" fill="#eb6834"><title>2018 매출액: 815 억원</title></path><path d="M285.5,184.0L285.5,80.0Q285.5,76.0 289.5,76.0L305.5,76.0Q309.5,76.0 309.5,80.0L309.5,184.0Z" fill="#eb6834"><title>2019 매출액: 2,103 억원</title></path><text x="297.5" y="71.0" text-anchor="middle" font-size="11" font-weight="700" fill="#1d2733" class="tn">2,103</text><path d="M354.5,184.0L354.5,135.0Q354.5,131.0 358.5,131.0L374.5,131.0Q378.5,131.0 378.5,135.0L378.5,184.0Z" fill="#eb6834"><title>2020 매출액: 1,032 억원</title></path><path d="M423.5,184.0L423.5,137.3Q423.5,133.3 427.5,133.3L443.5,133.3Q447.5,133.3 447.5,137.3L447.5,184.0Z" fill="#eb6834"><title>2021 매출액: 987 억원</title></path><path d="M492.5,184.0L492.5,148.5Q492.5,144.5 496.5,144.5L512.5,144.5Q516.5,144.5 516.5,148.5L516.5,184.0Z" fill="#eb6834"><title>2022 매출액: 770 억원</title></path><path d="M561.5,184.0L561.5,164.4Q561.5,160.4 565.5,160.4L581.5,160.4Q585.5,160.4 585.5,164.4L585.5,184.0Z" fill="#eb6834"><title>2023 매출액: 460 억원</title></path><path d="M630.5,184.0L630.5,171.6Q630.5,167.6 634.5,167.6L650.5,167.6Q654.5,167.6 654.5,171.6L654.5,184.0Z" fill="#eb6834"><title>2024 매출액: 320 억원</title></path><path d="M699.5,184.0L699.5,158.5Q699.5,154.5 703.5,154.5L719.5,154.5Q723.5,154.5 723.5,158.5L723.5,184.0Z" fill="#eb6834"><title>2025 매출액: 574 억원</title></path><text x="711.5" y="149.5" text-anchor="middle" font-size="11" font-weight="700" fill="#1d2733" class="tn">574</text><text x="56" y="210" font-size="12.5" font-weight="700" fill="#1d2733">영업이익 (억원)</text><line x1="56" x2="746" y1="320.0" y2="320.0" stroke="#e9ecef" stroke-width="1"/><text x="50" y="323.5" text-anchor="end" font-size="11" fill="#898781" class="tn">-500</text><line x1="56" x2="746" y1="286.7" y2="286.7" stroke="#c3c2b7" stroke-width="1"/><text x="50" y="290.2" text-anchor="end" font-size="11" fill="#898781" class="tn">0</text><line x1="56" x2="746" y1="253.3" y2="253.3" stroke="#e9ecef" stroke-width="1"/><text x="50" y="256.8" text-anchor="end" font-size="11" fill="#898781" class="tn">500</text><line x1="56" x2="746" y1="220.0" y2="220.0" stroke="#e9ecef" stroke-width="1"/><text x="50" y="223.5" text-anchor="end" font-size="11" fill="#898781" class="tn">1,000</text><path d="M78.5,286.7L78.5,285.1Q78.5,283.5 80.1,283.5L100.9,283.5Q102.5,283.5 102.5,285.1L102.5,286.7Z" fill="#2a78d6"><title>2016 영업이익: 47 억원</title></path><text x="90.5" y="338.0" text-anchor="middle" font-size="11" fill="#52514e">2016</text><path d="M147.5,286.7L147.5,287.3Q147.5,287.9 148.1,287.9L170.9,287.9Q171.5,287.9 171.5,287.3L171.5,286.7Z" fill="#e34948"><title>2017 영업이익: -19 억원</title></path><text x="159.5" y="338.0" text-anchor="middle" font-size="11" fill="#52514e">2017</text><path d="M216.5,286.7h24.0" fill="#2a78d6"><title>2018 영업이익: 2 억원</title></path><text x="228.5" y="338.0" text-anchor="middle" font-size="11" fill="#52514e">2018</text><path d="M285.5,286.7L285.5,251.8Q285.5,247.8 289.5,247.8L305.5,247.8Q309.5,247.8 309.5,251.8L309.5,286.7Z" fill="#2a78d6"><title>2019 영업이익: 583 억원</title></path><text x="297.5" y="242.8" text-anchor="middle" font-size="11" font-weight="700" fill="#1d2733" class="tn">583</text><text x="297.5" y="338.0" text-anchor="middle" font-size="11" fill="#52514e">2019</text><path d="M354.5,286.7L354.5,284.2Q354.5,281.8 356.9,281.8L376.1,281.8Q378.5,281.8 378.5,284.2L378.5,286.7Z" fill="#2a78d6"><title>2020 영업이익: 73 억원</title></path><text x="366.5" y="338.0" text-anchor="middle" font-size="11" fill="#52514e">2020</text><path d="M423.5,286.7L423.5,286.1Q423.5,285.5 424.1,285.5L446.9,285.5Q447.5,285.5 447.5,286.1L447.5,286.7Z" fill="#2a78d6"><title>2021 영업이익: 17 억원</title></path><text x="435.5" y="338.0" text-anchor="middle" font-size="11" fill="#52514e">2021</text><path d="M492.5,286.7L492.5,289.6Q492.5,292.5 495.4,292.5L513.6,292.5Q516.5,292.5 516.5,289.6L516.5,286.7Z" fill="#e34948"><title>2022 영업이익: -87 억원</title></path><text x="504.5" y="338.0" text-anchor="middle" font-size="11" fill="#52514e">2022</text><path d="M561.5,286.7L561.5,303.4Q561.5,307.4 565.5,307.4L581.5,307.4Q585.5,307.4 585.5,303.4L585.5,286.7Z" fill="#e34948"><title>2023 영업이익: -311 억원</title></path><text x="573.5" y="320.4" text-anchor="middle" font-size="11" font-weight="700" fill="#1d2733" class="tn">-311</text><text x="573.5" y="338.0" text-anchor="middle" font-size="11" fill="#52514e">2023</text><path d="M630.5,286.7L630.5,302.9Q630.5,306.9 634.5,306.9L650.5,306.9Q654.5,306.9 654.5,302.9L654.5,286.7Z" fill="#e34948"><title>2024 영업이익: -304 억원</title></path><text x="642.5" y="338.0" text-anchor="middle" font-size="11" fill="#52514e">2024</text><path d="M699.5,286.7L699.5,293.3Q699.5,297.3 703.5,297.3L719.5,297.3Q723.5,297.3 723.5,293.3L723.5,286.7Z" fill="#e34948"><title>2025 영업이익: -160 억원</title></path><text x="711.5" y="310.3" text-anchor="middle" font-size="11" font-weight="700" fill="#1d2733" class="tn">-160</text><text x="711.5" y="338.0" text-anchor="middle" font-size="11" fill="#52514e">2025</text><line x1="56" x2="746" y1="286.7" y2="286.7" stroke="#c3c2b7" stroke-width="1"/></svg></div><figcaption><span class="mhint">↔ 차트를 좌우로 밀어 전체 보기 · </span>Fig.4 오이솔루션 매출액·영업이익 (2016~2025, 억원)</figcaption></figure>
+  <div class="tw"><table class="fin"><tr><th>억원</th><th>2016</th><th>2017</th><th>2018</th><th>2019</th><th>2020</th><th>2021</th><th>2022</th><th>2023</th><th>2024</th><th>2025</th><th class="h1">1H26</th></tr><tr class="key"><td>매출액</td><td>797</td><td>766</td><td>815</td><td>2,103</td><td>1,032</td><td>987</td><td>770</td><td>460</td><td>320</td><td>574</td><td class="h1">377</td></tr><tr class="key"><td>영업이익</td><td>47</td><td class="neg">-19</td><td>2</td><td>583</td><td>73</td><td>17</td><td class="neg">-87</td><td class="neg">-311</td><td class="neg">-304</td><td class="neg">-160</td><td class="h1 neg">-15</td></tr><tr><td>영업이익률</td><td>5.9%</td><td class="neg">-2.5%</td><td>0.2%</td><td>27.7%</td><td>7.1%</td><td>1.7%</td><td class="neg">-11.3%</td><td class="neg">-67.6%</td><td class="neg">-95.0%</td><td class="neg">-27.9%</td><td class="h1 neg">-4.0%</td></tr><tr><td>순이익</td><td>61</td><td class="neg">-18</td><td>26</td><td>461</td><td>124</td><td>144</td><td class="neg">-60</td><td class="neg">-338</td><td class="neg">-331</td><td class="neg">-270</td><td class="h1 neg">-8</td></tr><tr><td>자본총계</td><td>553</td><td>669</td><td>680</td><td>1,393</td><td>1,470</td><td>1,593</td><td>1,477</td><td>1,114</td><td>741</td><td>643</td><td class="h1">779</td></tr><tr><td>현금성자산</td><td>93</td><td>219</td><td>111</td><td>443</td><td>401</td><td>311</td><td>234</td><td>174</td><td>77</td><td>195</td><td class="h1">174</td></tr><tr><td>총차입금</td><td>200</td><td>200</td><td>194</td><td>270</td><td>360</td><td>340</td><td>340</td><td>340</td><td>429</td><td>365</td><td class="h1">279</td></tr><tr><td>영업활동CF</td><td class="na">n/a</td><td class="na">n/a</td><td class="na">n/a</td><td>427</td><td>258</td><td>69</td><td class="neg">-80</td><td class="neg">-74</td><td class="neg">-249</td><td class="neg">-118</td><td class="h1 na">n/a</td></tr></table></div><p class="small">오이솔루션 10년 연간 재무(K-IFRS 연결). 현금성자산은 2016~21년 현금및현금성자산만, 2022년부터 단기금융자산 포함. 순이익은 2019년 지배, 그 외 연결 당기순이익(2020~25년 지배=연결). 2016~18년 영업CF n/a.</p>
+  <div class="grid2">
+    <div class="box"><div class="t">사이클 해석</div>
+      <ul>
+        <li>2019년 국내 5G 집중(국내 매출 83%): 매출 2.6배(815→2,103억), 증분이익률 45% → 영업이익 583억(OPM 27.7%)</li>
+        <li>2020년 매출 -51%, 2022~25년 4년 연속 영업적자(2024년 OPM -95%)</li>
+        <li>2025년 유선 회복으로 매출 +79%, 1H26 영업손실 -15억으로 손익분기 근접 — 손익분기 매출 약 830~970억(KT 추정)</li>
+        <li>10년 누적 영업이익 -159억</li>
+      </ul></div>
+    <div class="box warn"><div class="t">재무 체력과 2027 변수</div>
+      <ul>
+        <li>1H26 현금+단기금융 174억 vs 단기차입 279억(순차입 ~105억). CB는 소멸</li>
+        <li>메리츠(2026.3.16, NR): 2026E 매출 816억·영업이익 61억 → 2H26 영업이익 +76억이 필요. 하나증권 TP 60,000(2026.3.26)</li>
+        <li>광통신 산업리포트(2026.10)의 결론과 동일하게 '공시 확인 트레이딩' — 데이터센터 고객 수주 공시가 나오는 순간 재평가</li>
+      </ul></div>
+  </div>
+  <blockquote class="q"><div class="kr">"AI 인프라 확대에 따라 고속 광통신 기술이 기업 성장의 핵심 요소로 떠오르고 있다."</div><div class="who">— 오이솔루션 관계자, 2026.5.6 (AI EXPO KOREA 2026)</div></blockquote>
+
+  <!-- 7-3 KMW -->
+  <h3>7-3. 케이엠더블유 (032500) — 가장 큰 레버리지, 가장 긴 적자</h3>
+  <div class="kpi">
+    <div><b>19,800원</b><span>시가총액 ~8,350억 · 2026 고점 40,000 (6.4)</span></div>
+    <div><b>YTD +37.5%</b><span>사상 최고 89,500원(2020.9.8)의 22%</span></div>
+    <div><b>-120억</b><span>1H26 영업이익 (매출 458억, -11% YoY) · 순손실 -200억</span></div>
+    <div><b>PBR ~5.6배</b><span>1H26 자본 1,498억 기준 · 순차입 ~154억</span></div>
+  </div>
+  <div class="grid2">
+    <div><h4>비즈니스 모델</h4>
+      <ul>
+        <li><b>제품</b>: RF 필터·듀플렉서·결합기, 기지국 안테나(mMIMO), RRH/RU, 스몰셀 + LED 조명(2Q26 매출의 24%). 2021년 제품 비중: 필터 등 54.0%, 시스템 30.8%, 안테나 8.1%, LED 7.1%</li>
+        <li><b>고객</b>: 2021년 라쿠텐 25.4%·후지쯔 20.2%·삼성 14.2%·KDDI 8.3%·ZTE 5.9%(리포트 추출, 고객명-비중 매칭 일부 불확실). 2025~26년은 삼성(→Verizon·AT&amp;T) 중심, 에릭슨은 후보(미확정)</li>
+        <li><b>생산·원가</b>: 한국·베트남 각 약 50%(2020). 매출총이익률 2021 24% → 2023 7% → 2025 13%. 2024년 대규모 인력 구조조정</li>
+        <li><b>연혁</b>: 1991년 김덕용 창업, 2000.9 코스닥. 2014~18년 적자(2015 부채비율 437%, 2016년 은행이 '좀비기업'으로 분류) → 2019년 5G로 사상 최대 → 2021~25년 5년 연속 적자</li>
+        <li><b>지배구조</b>: 김덕용 28.78%(2024.1 주식담보대출 상환을 위해 90만주 시간외 매각 후). 주식수 2019~24년 3,982만주 → 1H26 4,219만주(+6%, CB 전환)</li>
+      </ul></div>
+    <div class="diff"><h4>해자와 한계</h4>
+      <ul>
+        <li><b>해자</b>: 필터·안테나·RU를 함께 설계·생산하는 국내 최대 RF 서브시스템 업체. 2019년 매출 6,829억·영업이익 1,378억은 '캐파와 고객 인증'의 증거다.</li>
+        <li><b>강세 논리의 중심</b>: 미국의 중국산 RF 배제 + Upper C-band → 2027~29 RF 쇼티지(하나증권)</li>
+        <li><b>한계</b>: 삼성 의존(삼성 네트워크 1Q26 -25%), 중국 업체와의 원가 경쟁, 5년 적자로 인력·R&amp;D 축소. 2023~26년 대형 공급계약 공시는 확인되지 않았다.</li>
+      </ul></div>
+  </div>
+  <figure class="imgfig"><div class="cv w"><svg viewBox="0 0 760 346" width="100%" role="img" aria-label="케이엠더블유 매출액·영업이익 2016~2025" xmlns="http://www.w3.org/2000/svg" style="display:block;max-width:100%;height:auto"><text x="56" y="16" font-size="12.5" font-weight="700" fill="#1d2733">매출액 (억원)</text><line x1="56" x2="746" y1="184.0" y2="184.0" stroke="#c3c2b7" stroke-width="1"/><text x="50" y="187.5" text-anchor="end" font-size="11" fill="#898781" class="tn">0</text><line x1="56" x2="746" y1="145.5" y2="145.5" stroke="#e9ecef" stroke-width="1"/><text x="50" y="149.0" text-anchor="end" font-size="11" fill="#898781" class="tn">2,000</text><line x1="56" x2="746" y1="107.0" y2="107.0" stroke="#e9ecef" stroke-width="1"/><text x="50" y="110.5" text-anchor="end" font-size="11" fill="#898781" class="tn">4,000</text><line x1="56" x2="746" y1="68.5" y2="68.5" stroke="#e9ecef" stroke-width="1"/><text x="50" y="72.0" text-anchor="end" font-size="11" fill="#898781" class="tn">6,000</text><line x1="56" x2="746" y1="30.0" y2="30.0" stroke="#e9ecef" stroke-width="1"/><text x="50" y="33.5" text-anchor="end" font-size="11" fill="#898781" class="tn">8,000</text><path d="M78.5,184.0L78.5,147.5Q78.5,143.5 82.5,143.5L98.5,143.5Q102.5,143.5 102.5,147.5L102.5,184.0Z" fill="#1baf7a"><title>2016 매출액: 2,105 억원</title></path><path d="M147.5,184.0L147.5,148.8Q147.5,144.8 151.5,144.8L167.5,144.8Q171.5,144.8 171.5,148.8L171.5,184.0Z" fill="#1baf7a"><title>2017 매출액: 2,037 억원</title></path><path d="M216.5,184.0L216.5,131.0Q216.5,127.0 220.5,127.0L236.5,127.0Q240.5,127.0 240.5,131.0L240.5,184.0Z" fill="#1baf7a"><title>2018 매출액: 2,963 억원</title></path><path d="M285.5,184.0L285.5,56.5Q285.5,52.5 289.5,52.5L305.5,52.5Q309.5,52.5 309.5,56.5L309.5,184.0Z" fill="#1baf7a"><title>2019 매출액: 6,829 억원</title></path><text x="297.5" y="47.5" text-anchor="middle" font-size="11" font-weight="700" fill="#1d2733" class="tn">6,829</text><path d="M354.5,184.0L354.5,122.8Q354.5,118.8 358.5,118.8L374.5,118.8Q378.5,118.8 378.5,122.8L378.5,184.0Z" fill="#1baf7a"><title>2020 매출액: 3,385 억원</title></path><path d="M423.5,184.0L423.5,148.5Q423.5,144.5 427.5,144.5L443.5,144.5Q447.5,144.5 447.5,148.5L447.5,184.0Z" fill="#1baf7a"><title>2021 매출액: 2,052 억원</title></path><path d="M492.5,184.0L492.5,153.4Q492.5,149.4 496.5,149.4L512.5,149.4Q516.5,149.4 516.5,153.4L516.5,184.0Z" fill="#1baf7a"><title>2022 매출액: 1,795 억원</title></path><path d="M561.5,184.0L561.5,168.7Q561.5,164.7 565.5,164.7L581.5,164.7Q585.5,164.7 585.5,168.7L585.5,184.0Z" fill="#1baf7a"><title>2023 매출액: 1,001 억원</title></path><path d="M630.5,184.0L630.5,171.2Q630.5,167.2 634.5,167.2L650.5,167.2Q654.5,167.2 654.5,171.2L654.5,184.0Z" fill="#1baf7a"><title>2024 매출액: 874 억원</title></path><path d="M699.5,184.0L699.5,169.2Q699.5,165.2 703.5,165.2L719.5,165.2Q723.5,165.2 723.5,169.2L723.5,184.0Z" fill="#1baf7a"><title>2025 매출액: 975 억원</title></path><text x="711.5" y="160.2" text-anchor="middle" font-size="11" font-weight="700" fill="#1d2733" class="tn">975</text><text x="56" y="210" font-size="12.5" font-weight="700" fill="#1d2733">영업이익 (억원)</text><line x1="56" x2="746" y1="320.0" y2="320.0" stroke="#e9ecef" stroke-width="1"/><text x="50" y="323.5" text-anchor="end" font-size="11" fill="#898781" class="tn">-1,000</text><line x1="56" x2="746" y1="286.7" y2="286.7" stroke="#c3c2b7" stroke-width="1"/><text x="50" y="290.2" text-anchor="end" font-size="11" fill="#898781" class="tn">0</text><line x1="56" x2="746" y1="253.3" y2="253.3" stroke="#e9ecef" stroke-width="1"/><text x="50" y="256.8" text-anchor="end" font-size="11" fill="#898781" class="tn">1,000</text><line x1="56" x2="746" y1="220.0" y2="220.0" stroke="#e9ecef" stroke-width="1"/><text x="50" y="223.5" text-anchor="end" font-size="11" fill="#898781" class="tn">2,000</text><path d="M78.5,286.7L78.5,289.1Q78.5,291.5 80.9,291.5L100.1,291.5Q102.5,291.5 102.5,289.1L102.5,286.7Z" fill="#e34948"><title>2016 영업이익: -145 억원</title></path><text x="90.5" y="338.0" text-anchor="middle" font-size="11" fill="#52514e">2016</text><path d="M147.5,286.7L147.5,287.2Q147.5,287.7 148.0,287.7L171.0,287.7Q171.5,287.7 171.5,287.2L171.5,286.7Z" fill="#e34948"><title>2017 영업이익: -30 억원</title></path><text x="159.5" y="338.0" text-anchor="middle" font-size="11" fill="#52514e">2017</text><path d="M216.5,286.7L216.5,291.4Q216.5,295.4 220.5,295.4L236.5,295.4Q240.5,295.4 240.5,291.4L240.5,286.7Z" fill="#e34948"><title>2018 영업이익: -262 억원</title></path><text x="228.5" y="338.0" text-anchor="middle" font-size="11" fill="#52514e">2018</text><path d="M285.5,286.7L285.5,244.7Q285.5,240.7 289.5,240.7L305.5,240.7Q309.5,240.7 309.5,244.7L309.5,286.7Z" fill="#2a78d6"><title>2019 영업이익: 1,378 억원</title></path><text x="297.5" y="235.7" text-anchor="middle" font-size="11" font-weight="700" fill="#1d2733" class="tn">1,378</text><text x="297.5" y="338.0" text-anchor="middle" font-size="11" fill="#52514e">2019</text><path d="M354.5,286.7L354.5,279.8Q354.5,275.8 358.5,275.8L374.5,275.8Q378.5,275.8 378.5,279.8L378.5,286.7Z" fill="#2a78d6"><title>2020 영업이익: 327 억원</title></path><text x="366.5" y="338.0" text-anchor="middle" font-size="11" fill="#52514e">2020</text><path d="M423.5,286.7L423.5,292.0Q423.5,296.0 427.5,296.0L443.5,296.0Q447.5,296.0 447.5,292.0L447.5,286.7Z" fill="#e34948"><title>2021 영업이익: -279 억원</title></path><text x="435.5" y="338.0" text-anchor="middle" font-size="11" fill="#52514e">2021</text><path d="M492.5,286.7L492.5,297.7Q492.5,301.7 496.5,301.7L512.5,301.7Q516.5,301.7 516.5,297.7L516.5,286.7Z" fill="#e34948"><title>2022 영업이익: -450 억원</title></path><text x="504.5" y="338.0" text-anchor="middle" font-size="11" fill="#52514e">2022</text><path d="M561.5,286.7L561.5,303.6Q561.5,307.6 565.5,307.6L581.5,307.6Q585.5,307.6 585.5,303.6L585.5,286.7Z" fill="#e34948"><title>2023 영업이익: -629 억원</title></path><text x="573.5" y="320.6" text-anchor="middle" font-size="11" font-weight="700" fill="#1d2733" class="tn">-629</text><text x="573.5" y="338.0" text-anchor="middle" font-size="11" fill="#52514e">2023</text><path d="M630.5,286.7L630.5,297.8Q630.5,301.8 634.5,301.8L650.5,301.8Q654.5,301.8 654.5,297.8L654.5,286.7Z" fill="#e34948"><title>2024 영업이익: -455 억원</title></path><text x="642.5" y="338.0" text-anchor="middle" font-size="11" fill="#52514e">2024</text><path d="M699.5,286.7L699.5,290.6Q699.5,294.6 703.5,294.6L719.5,294.6Q723.5,294.6 723.5,290.6L723.5,286.7Z" fill="#e34948"><title>2025 영업이익: -238 억원</title></path><text x="711.5" y="307.6" text-anchor="middle" font-size="11" font-weight="700" fill="#1d2733" class="tn">-238</text><text x="711.5" y="338.0" text-anchor="middle" font-size="11" fill="#52514e">2025</text><line x1="56" x2="746" y1="286.7" y2="286.7" stroke="#c3c2b7" stroke-width="1"/></svg></div><figcaption><span class="mhint">↔ 차트를 좌우로 밀어 전체 보기 · </span>Fig.5 케이엠더블유 매출액·영업이익 (2016~2025, 억원). 2019년은 2020년 사업보고서 재작성치</figcaption></figure>
+  <div class="tw"><table class="fin"><tr><th>억원</th><th>2016</th><th>2017</th><th>2018</th><th>2019</th><th>2020</th><th>2021</th><th>2022</th><th>2023</th><th>2024</th><th>2025</th><th class="h1">1H26</th></tr><tr class="key"><td>매출액</td><td>2,105</td><td>2,037</td><td>2,963</td><td>6,829</td><td>3,385</td><td>2,052</td><td>1,795</td><td>1,001</td><td>874</td><td>975</td><td class="h1">458</td></tr><tr class="key"><td>영업이익</td><td class="neg">-145</td><td class="neg">-30</td><td class="neg">-262</td><td>1,378</td><td>327</td><td class="neg">-279</td><td class="neg">-450</td><td class="neg">-629</td><td class="neg">-455</td><td class="neg">-238</td><td class="h1 neg">-120</td></tr><tr><td>영업이익률</td><td class="neg">-6.9%</td><td class="neg">-1.5%</td><td class="neg">-8.8%</td><td>20.2%</td><td>9.7%</td><td class="neg">-13.6%</td><td class="neg">-25.1%</td><td class="neg">-62.8%</td><td class="neg">-52.1%</td><td class="neg">-24.4%</td><td class="h1 neg">-26.2%</td></tr><tr><td>순이익</td><td>37</td><td class="neg">-87</td><td class="neg">-313</td><td>1,037</td><td>266</td><td class="neg">-37</td><td class="neg">-267</td><td class="neg">-653</td><td class="neg">-386</td><td class="neg">-270</td><td class="h1 neg">-200</td></tr><tr><td>자본총계</td><td>456</td><td>513</td><td>862</td><td>2,178</td><td>2,460</td><td>2,505</td><td>2,403</td><td>1,749</td><td>1,437</td><td>1,314</td><td class="h1">1,498</td></tr><tr><td>현금성자산</td><td class="na">n/a</td><td>225</td><td>541</td><td>500</td><td>1,302</td><td>1,524</td><td>1,075</td><td>777</td><td>614</td><td>420</td><td class="h1">424</td></tr><tr><td>총차입금</td><td class="na">n/a</td><td>741</td><td>919</td><td>989</td><td>749</td><td>602</td><td>502</td><td>541</td><td>767</td><td>724</td><td class="h1">578</td></tr><tr><td>영업활동CF</td><td class="na">n/a</td><td class="neg">-79</td><td class="neg">-374</td><td class="neg">-36</td><td>1,201</td><td>476</td><td class="neg">-69</td><td class="neg">-334</td><td class="neg">-270</td><td class="neg">-170</td><td class="h1 na">n/a</td></tr></table></div><p class="small">케이엠더블유 10년 연간 재무(K-IFRS 연결). 2016년 자본은 roic.ai, 2017년 현금은 현금만. 2017~21년 차입금은 증권사 표 금융부채(리스 포함 여부 불명), 2022년부터 차입금·사채 합(리스 제외). 1H26 순손실 -200억은 영업외손실 포함.</p>
+  <div class="grid2">
+    <div class="box"><div class="t">사이클 해석</div>
+      <ul>
+        <li>4G: 2013년 매출 3,179억·영업이익 435억 피크 → 2014~18년 적자</li>
+        <li>5G: 2018→19년 매출 +3,866억(2.3배), 증분이익률 42% → 영업이익 1,378억(OPM 20.2%). 2020년 3,385억·327억</li>
+        <li>2021~25년 누적 영업손실 -2,051억 → 10년 누적 영업이익 -783억, 10년 중 8년 적자 — 피크 2년이 나머지 8년을 메우지 못했다</li>
+        <li>손익분기 매출 약 1,500~1,600억(KT 추정) — 2025년 975억은 그 60% 수준</li>
+      </ul></div>
+    <div class="box warn"><div class="t">재무 체력과 2027 변수</div>
+      <ul>
+        <li>1H26 현금 424억 vs 단기차입 518억(총차입 578억), 영업CF는 2022년 이후 4년 연속 적자. 2024~26년 CB(자기전환사채 매도·전환청구) → 추가 자금조달 가능성</li>
+        <li>하나증권(TP 70,000): 2026E 매출 1,023억·영업이익 -213억 → 2027E 3,676억·1,005억 → 2028E 5,522억·1,897억. 2027E는 2025년 매출의 3.8배 — 2018→19년 2.3배 선례가 있지만 당시는 국내·일본·미국 5G 동시 개시였다.</li>
+        <li>KT 모형(증분이익률 40%): 매출 3,676억이면 영업이익 약 840억. 현 시총은 하나 2027E 영업이익의 8.3배 — 실현되면 싸고, 1년 늦어지면 적자 1년이 더해진다.</li>
+      </ul></div>
+  </div>
+  <blockquote class="q"><div class="kr">"…전 세계 각지로 5G 이동통신 투자가 확대되고 있다."</div><div class="who">— 김덕용 케이엠더블유 회장, 2020.2.18 (2019년 사상 최대 실적 발표 당시, 이데일리)</div></blockquote>
+
+  <!-- 7-4 SOLID -->
+  <h3>7-4. 쏠리드 (050890) — 통신사 CAPEX에서 한 발 떨어진 인빌딩 실적주</h3>
+  <div class="kpi">
+    <div><b>9,760원</b><span>시가총액 ~5,930억 · 52주 20,900 / 6,090</span></div>
+    <div><b>PER ~11배</b><span>TTM(1Q26 영업외이익 포함) · PBR 1.6배 · DPS 50원</span></div>
+    <div><b>+14억</b><span>1H26 영업이익 (매출 1,338억, +19% YoY) — 4분기 집중형</span></div>
+    <div><b>순현금 ~97억</b><span>1Q26 현금성 1,364억 vs 차입금 1,267억</span></div>
+  </div>
+  <div class="grid2">
+    <div><h4>비즈니스 모델</h4>
+      <ul>
+        <li><b>제품</b>: DAS(인빌딩·리피터)가 매출의 80% 이상(3Q24 누적 DAS·ICS/RF 87%), 광전송(WDM) 2%, O-RAN 3%. 부문 기준 2Q26 통신장비 93%·방산 7%(쏠리드윈텍)</li>
+        <li><b>지역</b>: 수출 84%, 미국 34%(최근). 3Q24 누적 북미 27·유럽 27·일본 22·국내 23(%)</li>
+        <li><b>고객</b>: 국내 3사, 일본 3사·Sharing Design, 미·유럽 뉴트럴호스트(BAI — 뉴욕·런던 지하철 20년 파트너)·빌딩주·공공시설·SI, AT&amp;T·Verizon·T-Mobile 커버리지, DT. 삼성 경유 O-RAN RU(미국)</li>
+        <li><b>점유율</b>: 글로벌 DAS 2022년 CommScope 21%, JMA 16%, 쏠리드 14%, Corning 7% → 2024년(Mobile Experts, iM증권 인용) Amphenol 23%·JMA 18%·쏠리드 15%·Comba 10% — 3위 유지</li>
+        <li><b>수익성</b>: 매출총이익률 2021 32.3% → 2025 44.6%</li>
+        <li><b>연혁·지배구조</b>: 1998년 설립. 2015.10 팬택 인수(약 460억)·2016년 1,000억 이상 투입 → 2017.5 휴대폰 사업 중단(팬택 중단영업손실 2016 -805억·2017 -388억). 2021.6 유상증자 439억, 2026.1 다윈프릭션(항공부품) 50.001% 인수(100억). 정준 회장 8.32%(특관 10.47%, 2025.5)</li>
+      </ul></div>
+    <div class="diff"><h4>해자와 한계</h4>
+      <ul>
+        <li><b>해자</b>: 글로벌 DAS 3위 + 북미·유럽 지하철·공공안전처럼 규제·인증 기반의 인빌딩 레퍼런스. 발주처가 통신사만이 아니어서(건물·공공·데이터센터) 사이클이 완충된다.</li>
+        <li><b>정책 고리</b>: 국내 재할당 조건(실내 5G 기지국 1만~2만국)의 가장 직접적인 수혜 후보. 미국 NTIA O-RAN 지원 397억(2024.12), 하이퍼스케일 데이터센터 DAS 공급(2026.5)</li>
+        <li><b>한계</b>: 이익의 4분기 집중(2025년 영업이익 333억 중 261억이 4Q), 방산 자회사 변동성, 낮은 대주주 지분, 테마 랠리에서의 낮은 탄력</li>
+      </ul></div>
+  </div>
+  <figure class="imgfig"><div class="cv w"><svg viewBox="0 0 760 346" width="100%" role="img" aria-label="쏠리드 매출액·영업이익 2016~2025" xmlns="http://www.w3.org/2000/svg" style="display:block;max-width:100%;height:auto"><text x="56" y="16" font-size="12.5" font-weight="700" fill="#1d2733">매출액 (억원)</text><line x1="56" x2="746" y1="184.0" y2="184.0" stroke="#c3c2b7" stroke-width="1"/><text x="50" y="187.5" text-anchor="end" font-size="11" fill="#898781" class="tn">0</text><line x1="56" x2="746" y1="145.5" y2="145.5" stroke="#e9ecef" stroke-width="1"/><text x="50" y="149.0" text-anchor="end" font-size="11" fill="#898781" class="tn">1,000</text><line x1="56" x2="746" y1="107.0" y2="107.0" stroke="#e9ecef" stroke-width="1"/><text x="50" y="110.5" text-anchor="end" font-size="11" fill="#898781" class="tn">2,000</text><line x1="56" x2="746" y1="68.5" y2="68.5" stroke="#e9ecef" stroke-width="1"/><text x="50" y="72.0" text-anchor="end" font-size="11" fill="#898781" class="tn">3,000</text><line x1="56" x2="746" y1="30.0" y2="30.0" stroke="#e9ecef" stroke-width="1"/><text x="50" y="33.5" text-anchor="end" font-size="11" fill="#898781" class="tn">4,000</text><path d="M78.5,184.0L78.5,95.7Q78.5,91.7 82.5,91.7L98.5,91.7Q102.5,91.7 102.5,95.7L102.5,184.0Z" fill="#eda100"><title>2016 매출액: 2,398 억원</title></path><path d="M147.5,184.0L147.5,90.3Q147.5,86.3 151.5,86.3L167.5,86.3Q171.5,86.3 171.5,90.3L171.5,184.0Z" fill="#eda100"><title>2017 매출액: 2,537 억원</title></path><path d="M216.5,184.0L216.5,102.3Q216.5,98.3 220.5,98.3L236.5,98.3Q240.5,98.3 240.5,102.3L240.5,184.0Z" fill="#eda100"><title>2018 매출액: 2,226 억원</title></path><path d="M285.5,184.0L285.5,99.7Q285.5,95.7 289.5,95.7L305.5,95.7Q309.5,95.7 309.5,99.7L309.5,184.0Z" fill="#eda100"><title>2019 매출액: 2,293 억원</title></path><path d="M354.5,184.0L354.5,122.1Q354.5,118.1 358.5,118.1L374.5,118.1Q378.5,118.1 378.5,122.1L378.5,184.0Z" fill="#eda100"><title>2020 매출액: 1,711 억원</title></path><path d="M423.5,184.0L423.5,106.3Q423.5,102.3 427.5,102.3L443.5,102.3Q447.5,102.3 447.5,106.3L447.5,184.0Z" fill="#eda100"><title>2021 매출액: 2,123 억원</title></path><path d="M492.5,184.0L492.5,80.3Q492.5,76.3 496.5,76.3L512.5,76.3Q516.5,76.3 516.5,80.3L516.5,184.0Z" fill="#eda100"><title>2022 매출액: 2,798 억원</title></path><path d="M561.5,184.0L561.5,64.3Q561.5,60.3 565.5,60.3L581.5,60.3Q585.5,60.3 585.5,64.3L585.5,184.0Z" fill="#eda100"><title>2023 매출액: 3,214 억원</title></path><path d="M630.5,184.0L630.5,60.5Q630.5,56.5 634.5,56.5L650.5,56.5Q654.5,56.5 654.5,60.5L654.5,184.0Z" fill="#eda100"><title>2024 매출액: 3,311 억원</title></path><text x="642.5" y="51.5" text-anchor="middle" font-size="11" font-weight="700" fill="#1d2733" class="tn">3,311</text><path d="M699.5,184.0L699.5,74.5Q699.5,70.5 703.5,70.5L719.5,70.5Q723.5,70.5 723.5,74.5L723.5,184.0Z" fill="#eda100"><title>2025 매출액: 2,948 억원</title></path><text x="711.5" y="65.5" text-anchor="middle" font-size="11" font-weight="700" fill="#1d2733" class="tn">2,948</text><text x="56" y="210" font-size="12.5" font-weight="700" fill="#1d2733">영업이익 (억원)</text><line x1="56" x2="746" y1="320.0" y2="320.0" stroke="#e9ecef" stroke-width="1"/><text x="50" y="323.5" text-anchor="end" font-size="11" fill="#898781" class="tn">-200</text><line x1="56" x2="746" y1="295.0" y2="295.0" stroke="#c3c2b7" stroke-width="1"/><text x="50" y="298.5" text-anchor="end" font-size="11" fill="#898781" class="tn">0</text><line x1="56" x2="746" y1="270.0" y2="270.0" stroke="#e9ecef" stroke-width="1"/><text x="50" y="273.5" text-anchor="end" font-size="11" fill="#898781" class="tn">200</text><line x1="56" x2="746" y1="245.0" y2="245.0" stroke="#e9ecef" stroke-width="1"/><text x="50" y="248.5" text-anchor="end" font-size="11" fill="#898781" class="tn">400</text><line x1="56" x2="746" y1="220.0" y2="220.0" stroke="#e9ecef" stroke-width="1"/><text x="50" y="223.5" text-anchor="end" font-size="11" fill="#898781" class="tn">600</text><path d="M78.5,295.0L78.5,285.1Q78.5,281.1 82.5,281.1L98.5,281.1Q102.5,281.1 102.5,285.1L102.5,295.0Z" fill="#2a78d6"><title>2016 영업이익: 111 억원</title></path><text x="90.5" y="338.0" text-anchor="middle" font-size="11" fill="#52514e">2016</text><path d="M147.5,295.0L147.5,272.9Q147.5,268.9 151.5,268.9L167.5,268.9Q171.5,268.9 171.5,272.9L171.5,295.0Z" fill="#2a78d6"><title>2017 영업이익: 209 억원</title></path><text x="159.5" y="338.0" text-anchor="middle" font-size="11" fill="#52514e">2017</text><path d="M216.5,295.0L216.5,294.3Q216.5,293.6 217.2,293.6L239.8,293.6Q240.5,293.6 240.5,294.3L240.5,295.0Z" fill="#2a78d6"><title>2018 영업이익: 11 억원</title></path><text x="228.5" y="338.0" text-anchor="middle" font-size="11" fill="#52514e">2018</text><path d="M285.5,295.0L285.5,297.2Q285.5,299.4 287.7,299.4L307.3,299.4Q309.5,299.4 309.5,297.2L309.5,295.0Z" fill="#e34948"><title>2019 영업이익: -35 억원</title></path><text x="297.5" y="338.0" text-anchor="middle" font-size="11" fill="#52514e">2019</text><path d="M354.5,295.0L354.5,310.6Q354.5,314.6 358.5,314.6L374.5,314.6Q378.5,314.6 378.5,310.6L378.5,295.0Z" fill="#e34948"><title>2020 영업이익: -157 억원</title></path><text x="366.5" y="327.6" text-anchor="middle" font-size="11" font-weight="700" fill="#1d2733" class="tn">-157</text><text x="366.5" y="338.0" text-anchor="middle" font-size="11" fill="#52514e">2020</text><path d="M423.5,295.0L423.5,291.2Q423.5,287.4 427.3,287.4L443.7,287.4Q447.5,287.4 447.5,291.2L447.5,295.0Z" fill="#2a78d6"><title>2021 영업이익: 61 억원</title></path><text x="435.5" y="338.0" text-anchor="middle" font-size="11" fill="#52514e">2021</text><path d="M492.5,295.0L492.5,263.2Q492.5,259.2 496.5,259.2L512.5,259.2Q516.5,259.2 516.5,263.2L516.5,295.0Z" fill="#2a78d6"><title>2022 영업이익: 286 억원</title></path><text x="504.5" y="338.0" text-anchor="middle" font-size="11" fill="#52514e">2022</text><path d="M561.5,295.0L561.5,253.6Q561.5,249.6 565.5,249.6L581.5,249.6Q585.5,249.6 585.5,253.6L585.5,295.0Z" fill="#2a78d6"><title>2023 영업이익: 363 억원</title></path><text x="573.5" y="244.6" text-anchor="middle" font-size="11" font-weight="700" fill="#1d2733" class="tn">363</text><text x="573.5" y="338.0" text-anchor="middle" font-size="11" fill="#52514e">2023</text><path d="M630.5,295.0L630.5,255.1Q630.5,251.1 634.5,251.1L650.5,251.1Q654.5,251.1 654.5,255.1L654.5,295.0Z" fill="#2a78d6"><title>2024 영업이익: 351 억원</title></path><text x="642.5" y="338.0" text-anchor="middle" font-size="11" fill="#52514e">2024</text><path d="M699.5,295.0L699.5,257.4Q699.5,253.4 703.5,253.4L719.5,253.4Q723.5,253.4 723.5,257.4L723.5,295.0Z" fill="#2a78d6"><title>2025 영업이익: 333 억원</title></path><text x="711.5" y="248.4" text-anchor="middle" font-size="11" font-weight="700" fill="#1d2733" class="tn">333</text><text x="711.5" y="338.0" text-anchor="middle" font-size="11" fill="#52514e">2025</text><line x1="56" x2="746" y1="295.0" y2="295.0" stroke="#c3c2b7" stroke-width="1"/></svg></div><figcaption><span class="mhint">↔ 차트를 좌우로 밀어 전체 보기 · </span>Fig.6 쏠리드 매출액·영업이익 (2016~2025, 억원). 2016~17년은 팬택을 중단영업으로 분리한 계속영업 기준 재작성치</figcaption></figure>
+  <div class="tw"><table class="fin"><tr><th>억원</th><th>2016</th><th>2017</th><th>2018</th><th>2019</th><th>2020</th><th>2021</th><th>2022</th><th>2023</th><th>2024</th><th>2025</th><th class="h1">1H26</th></tr><tr class="key"><td>매출액</td><td>2,398</td><td>2,537</td><td>2,226</td><td>2,293</td><td>1,711</td><td>2,123</td><td>2,798</td><td>3,214</td><td>3,311</td><td>2,948</td><td class="h1">1,338</td></tr><tr class="key"><td>영업이익</td><td>111</td><td>209</td><td>11</td><td class="neg">-35</td><td class="neg">-157</td><td>61</td><td>286</td><td>363</td><td>351</td><td>333</td><td class="h1">14</td></tr><tr><td>영업이익률</td><td>4.6%</td><td>8.2%</td><td>0.5%</td><td class="neg">-1.5%</td><td class="neg">-9.2%</td><td>2.9%</td><td>10.2%</td><td>11.3%</td><td>10.6%</td><td>11.3%</td><td class="h1">1.0%</td></tr><tr><td>순이익</td><td class="neg">-688</td><td class="neg">-220</td><td>91</td><td>57</td><td class="neg">-115</td><td>239</td><td>298</td><td>409</td><td>461</td><td>364</td><td class="h1">220</td></tr><tr><td>자본총계</td><td>773</td><td>796</td><td>1,103</td><td>1,236</td><td>1,118</td><td>1,955</td><td>2,289</td><td>2,730</td><td>3,228</td><td>3,533</td><td class="h1">3,750</td></tr><tr><td>현금성자산</td><td>285</td><td>447</td><td>307</td><td>556</td><td>589</td><td>557</td><td>755</td><td>861</td><td>1,273</td><td>1,183</td><td class="h1">1,364</td></tr><tr><td>총차입금</td><td>1,248</td><td>872</td><td>698</td><td>712</td><td>838</td><td>766</td><td>906</td><td>1,043</td><td>974</td><td>990</td><td class="h1">1,267</td></tr><tr><td>영업활동CF</td><td class="neg">-406</td><td>194</td><td class="neg">-108</td><td>202</td><td class="neg">-58</td><td class="neg">-340</td><td>151</td><td>548</td><td>569</td><td class="na">n/a</td><td class="h1 na">n/a</td></tr></table></div><p class="small">쏠리드 10년 연간 재무(K-IFRS 연결). 2016~17년은 팬택 중단영업 분리 재작성치로 순이익에 중단영업손실(2016 -805억, 2017 -388억) 포함. 1H26 열의 자본·현금·차입금은 1Q26 기준. 2016~20년 현금·차입금은 증권사 표 기준(정의 차이 가능). 2025년 영업CF n/a.</p>
+  <div class="grid2">
+    <div class="box"><div class="t">사이클 해석</div>
+      <ul>
+        <li>2016~17년 팬택 후유증: 영업이익은 흑자(111억·209억)였지만 중단영업 손실로 순손실 -688억·-220억</li>
+        <li>2019~20년 국내 인빌딩 지연: 영업적자(-35억·-157억)</li>
+        <li>2021~25년 해외 DAS 확대: 5년 연속 흑자, 2023년 영업이익 363억. 2025년 매출이 11% 줄었는데도 영업이익 333억 유지(매출총이익률 44.6%) — 5社 중 하락기 이익 방어력이 가장 강하다(2024→25년 감익 18억).</li>
+        <li>10년 누적 영업이익 1,533억으로 5社 중 최대. 2025년 매출은 손익분기(약 1,900~2,100억, KT 추정)의 1.4~1.5배</li>
+      </ul></div>
+    <div class="box warn"><div class="t">재무 체력과 2027 변수</div>
+      <ul>
+        <li>1H26 영업이익 14억(방산 자회사 손실) vs 2026E 컨센서스 352억 → 4분기 의존도가 높다. 1Q26 순이익 222억은 영업외이익에 기댔다.</li>
+        <li>1Q26 차입금 1,267억(2025말 990억)으로 증가</li>
+        <li>컨센서스(FnGuide, 2026.6): 2026E 매출 3,109억·영업이익 352억, 2027E 3,798억·454억 → 현 시총은 2027E 영업이익의 13배. 하나 TP 30,000·한국투자 25,000·미래에셋 27,000</li>
+        <li>iM증권(2026.7.21, NR): 2026E 매출 3,353억(+13.7%)·2027E 3,599억, 12개월 선행 PER 17배 — DAS 시장 CAGR 18.6%·Neutral Host 수익성이 논리의 중심, Upper C-band 수혜는 2027년 이후로 적시(상세 §6-3)</li>
+        <li>2027 확인 포인트: 미국 신규 대역 인빌딩 업그레이드 수주, 국내 실내 기지국 발주, 데이터센터 DAS, 위성단말 과제의 양산 전환(§6-2)</li>
+      </ul></div>
+  </div>
+
+  <!-- 7-5 RFHIC -->
+  <h3>7-5. RFHIC (218410) — '통신장비주'라는 이름의 GaN 방산·RF 회사</h3>
+  <div class="kpi">
+    <div><b>58,500원</b><span>시가총액 ~1.55조 · 52주 126,900 / 25,600</span></div>
+    <div><b>YTD +79%</b><span>2026 고점은 2019~20 사이클 고점의 2.6배 (사상 최고)</span></div>
+    <div><b>+189억</b><span>1H26 영업이익 (매출 946억, +24% YoY, OPM 20%)</span></div>
+    <div><b>PER ~30배</b><span>2026F(신한) · PBR ~4.2배 · 순현금</span></div>
+  </div>
+  <div class="grid2">
+    <div><h4>비즈니스 모델</h4>
+      <ul>
+        <li><b>제품</b>: GaN-on-SiC 트랜지스터·MMIC·전력증폭기(2025: GaN PA 71.7%, 트랜지스터 23.7%)</li>
+        <li><b>최종시장</b>(KB): 2024 통신 34.5%·국내방산 41.1%·해외방산 19.4% → 2025 통신 41.7%(776억)·국내방산 30.1%·해외방산 24.2% → 2026E 통신 29.6%·방산 67%</li>
+        <li><b>고객</b>: 통신 삼성(에릭슨 벤더 선정은 2027로 지연, 노키아·화웨이 벤더 등록) / 방산 LIG넥스원·레이시온·콜린스(RTX)·SAAB(미국 벤더 경유)</li>
+        <li><b>수주잔고</b>(방산 레이더 GaN PA): 335억(2023) → 521억(2024) → 1,376억(3Q25) → 1,075억(2026.3). 2026년 레이시온 506억(미국 항공관제 레이더 현대화 $12.5B·612기 연계), 콜린스 221억(2025 매출의 11.9%), LIG넥스원 192억 수주</li>
+        <li><b>원가</b>: 매출총이익률 34.6%(2025), 웨이퍼·패키지 매입이 매출의 34%. GaN-on-SiC 웨이퍼는 미국 Wolfspeed 의존(RF머트리얼즈 2023 IR 기준)</li>
+        <li><b>자회사</b>: RF머트리얼즈(루멘텀 펌프레이저 패키지, 2Q26 OPM 27.1%, KB는 CPO 매출 4Q26 개시 전망), RF시스템즈, RFHIC Europe(2025.8)</li>
+        <li><b>연혁·지배구조</b>: 1999년 조덕수 창업, 2017.9 NH스팩8호 합병 상장. 2018년 화웨이가 매출의 48.6% → 2020년 미국 제재로 화웨이 매출 급감·영업적자. 조덕수 15.41%·조삼열 11.13%(특관 33.59%), 국민연금 6.11%. DPS 100원(2024) → 400원(2025), 별도 순이익의 30% 이상 배당(2025~27)</li>
+      </ul></div>
+    <div class="diff"><h4>해자와 한계</h4>
+      <ul>
+        <li><b>해자</b>: 트랜지스터부터 PA까지 GaN RF를 자체 설계하고, 통신과 방산 양쪽에서 검증된 드문 비(非)미국 GaN 업체 — 미국 방산 프라임(RTX) 직납 레퍼런스</li>
+        <li><b>실적 가시성</b>: 통신 회복(에릭슨 선정·경매)은 '옵션', 방산은 '수주잔고' — 5社 중 2027년 실적 가시성이 가장 높다.</li>
+        <li><b>한계</b>: 방산 납기 변동(2Q26 레이시온 선적이 6월→7월로 밀리며 컨센서스 미달), 미국 웨이퍼 단일 의존, 높은 멀티플. 회사 스스로 '통신장비사업 자체라고 볼 수 없다'고 말한다.</li>
+      </ul></div>
+  </div>
+  <figure class="imgfig"><div class="cv w"><svg viewBox="0 0 760 346" width="100%" role="img" aria-label="RFHIC 매출액·영업이익 2016~2025" xmlns="http://www.w3.org/2000/svg" style="display:block;max-width:100%;height:auto"><text x="56" y="16" font-size="12.5" font-weight="700" fill="#1d2733">매출액 (억원)</text><line x1="56" x2="746" y1="184.0" y2="184.0" stroke="#c3c2b7" stroke-width="1"/><text x="50" y="187.5" text-anchor="end" font-size="11" fill="#898781" class="tn">0</text><line x1="56" x2="746" y1="132.7" y2="132.7" stroke="#e9ecef" stroke-width="1"/><text x="50" y="136.2" text-anchor="end" font-size="11" fill="#898781" class="tn">1,000</text><line x1="56" x2="746" y1="81.3" y2="81.3" stroke="#e9ecef" stroke-width="1"/><text x="50" y="84.8" text-anchor="end" font-size="11" fill="#898781" class="tn">2,000</text><line x1="56" x2="746" y1="30.0" y2="30.0" stroke="#e9ecef" stroke-width="1"/><text x="50" y="33.5" text-anchor="end" font-size="11" fill="#898781" class="tn">3,000</text><path d="M78.5,184.0L78.5,156.6Q78.5,152.6 82.5,152.6L98.5,152.6Q102.5,152.6 102.5,156.6L102.5,184.0Z" fill="#e87ba4"><title>2016 매출액: 612 억원</title></path><path d="M147.5,184.0L147.5,156.1Q147.5,152.1 151.5,152.1L167.5,152.1Q171.5,152.1 171.5,156.1L171.5,184.0Z" fill="#e87ba4"><title>2017 매출액: 621 억원</title></path><path d="M216.5,184.0L216.5,132.5Q216.5,128.5 220.5,128.5L236.5,128.5Q240.5,128.5 240.5,132.5L240.5,184.0Z" fill="#e87ba4"><title>2018 매출액: 1,081 억원</title></path><path d="M285.5,184.0L285.5,132.7Q285.5,128.7 289.5,128.7L305.5,128.7Q309.5,128.7 309.5,132.7L309.5,184.0Z" fill="#e87ba4"><title>2019 매출액: 1,078 억원</title></path><path d="M354.5,184.0L354.5,151.8Q354.5,147.8 358.5,147.8L374.5,147.8Q378.5,147.8 378.5,151.8L378.5,184.0Z" fill="#e87ba4"><title>2020 매출액: 705 억원</title></path><path d="M423.5,184.0L423.5,135.8Q423.5,131.8 427.5,131.8L443.5,131.8Q447.5,131.8 447.5,135.8L447.5,184.0Z" fill="#e87ba4"><title>2021 매출액: 1,016 억원</title></path><path d="M492.5,184.0L492.5,132.6Q492.5,128.6 496.5,128.6L512.5,128.6Q516.5,128.6 516.5,132.6L516.5,184.0Z" fill="#e87ba4"><title>2022 매출액: 1,080 억원</title></path><path d="M561.5,184.0L561.5,130.8Q561.5,126.8 565.5,126.8L581.5,126.8Q585.5,126.8 585.5,130.8L585.5,184.0Z" fill="#e87ba4"><title>2023 매출액: 1,114 억원</title></path><path d="M630.5,184.0L630.5,129.0Q630.5,125.0 634.5,125.0L650.5,125.0Q654.5,125.0 654.5,129.0L654.5,184.0Z" fill="#e87ba4"><title>2024 매출액: 1,149 억원</title></path><path d="M699.5,184.0L699.5,92.6Q699.5,88.6 703.5,88.6L719.5,88.6Q723.5,88.6 723.5,92.6L723.5,184.0Z" fill="#e87ba4"><title>2025 매출액: 1,858 억원</title></path><text x="711.5" y="83.6" text-anchor="middle" font-size="11" font-weight="700" fill="#1d2733" class="tn">1,858</text><text x="56" y="210" font-size="12.5" font-weight="700" fill="#1d2733">영업이익 (억원)</text><line x1="56" x2="746" y1="320.0" y2="320.0" stroke="#e9ecef" stroke-width="1"/><text x="50" y="323.5" text-anchor="end" font-size="11" fill="#898781" class="tn">-100</text><line x1="56" x2="746" y1="300.0" y2="300.0" stroke="#c3c2b7" stroke-width="1"/><text x="50" y="303.5" text-anchor="end" font-size="11" fill="#898781" class="tn">0</text><line x1="56" x2="746" y1="280.0" y2="280.0" stroke="#e9ecef" stroke-width="1"/><text x="50" y="283.5" text-anchor="end" font-size="11" fill="#898781" class="tn">100</text><line x1="56" x2="746" y1="260.0" y2="260.0" stroke="#e9ecef" stroke-width="1"/><text x="50" y="263.5" text-anchor="end" font-size="11" fill="#898781" class="tn">200</text><line x1="56" x2="746" y1="240.0" y2="240.0" stroke="#e9ecef" stroke-width="1"/><text x="50" y="243.5" text-anchor="end" font-size="11" fill="#898781" class="tn">300</text><line x1="56" x2="746" y1="220.0" y2="220.0" stroke="#e9ecef" stroke-width="1"/><text x="50" y="223.5" text-anchor="end" font-size="11" fill="#898781" class="tn">400</text><path d="M78.5,300.0L78.5,293.0Q78.5,289.0 82.5,289.0L98.5,289.0Q102.5,289.0 102.5,293.0L102.5,300.0Z" fill="#2a78d6"><title>2016 영업이익: 55 억원</title></path><text x="90.5" y="338.0" text-anchor="middle" font-size="11" fill="#52514e">2016</text><path d="M147.5,300.0L147.5,287.8Q147.5,283.8 151.5,283.8L167.5,283.8Q171.5,283.8 171.5,287.8L171.5,300.0Z" fill="#2a78d6"><title>2017 영업이익: 81 억원</title></path><text x="159.5" y="338.0" text-anchor="middle" font-size="11" fill="#52514e">2017</text><path d="M216.5,300.0L216.5,250.6Q216.5,246.6 220.5,246.6L236.5,246.6Q240.5,246.6 240.5,250.6L240.5,300.0Z" fill="#2a78d6"><title>2018 영업이익: 267 억원</title></path><text x="228.5" y="338.0" text-anchor="middle" font-size="11" fill="#52514e">2018</text><path d="M285.5,300.0L285.5,268.2Q285.5,264.2 289.5,264.2L305.5,264.2Q309.5,264.2 309.5,268.2L309.5,300.0Z" fill="#2a78d6"><title>2019 영업이익: 179 억원</title></path><text x="297.5" y="338.0" text-anchor="middle" font-size="11" fill="#52514e">2019</text><path d="M354.5,300.0L354.5,303.0Q354.5,306.0 357.5,306.0L375.5,306.0Q378.5,306.0 378.5,303.0L378.5,300.0Z" fill="#e34948"><title>2020 영업이익: -30 억원</title></path><text x="366.5" y="319.0" text-anchor="middle" font-size="11" font-weight="700" fill="#1d2733" class="tn">-30</text><text x="366.5" y="338.0" text-anchor="middle" font-size="11" fill="#52514e">2020</text><path d="M423.5,300.0L423.5,295.2Q423.5,291.2 427.5,291.2L443.5,291.2Q447.5,291.2 447.5,295.2L447.5,300.0Z" fill="#2a78d6"><title>2021 영업이익: 44 억원</title></path><text x="435.5" y="338.0" text-anchor="middle" font-size="11" fill="#52514e">2021</text><path d="M492.5,300.0L492.5,299.2Q492.5,298.4 493.3,298.4L515.7,298.4Q516.5,298.4 516.5,299.2L516.5,300.0Z" fill="#2a78d6"><title>2022 영업이익: 8 억원</title></path><text x="504.5" y="338.0" text-anchor="middle" font-size="11" fill="#52514e">2022</text><path d="M561.5,300.0L561.5,299.7Q561.5,299.4 561.8,299.4L585.2,299.4Q585.5,299.4 585.5,299.7L585.5,300.0Z" fill="#2a78d6"><title>2023 영업이익: 3 억원</title></path><text x="573.5" y="338.0" text-anchor="middle" font-size="11" fill="#52514e">2023</text><path d="M630.5,300.0L630.5,298.5Q630.5,297.0 632.0,297.0L653.0,297.0Q654.5,297.0 654.5,298.5L654.5,300.0Z" fill="#2a78d6"><title>2024 영업이익: 15 억원</title></path><text x="642.5" y="338.0" text-anchor="middle" font-size="11" fill="#52514e">2024</text><path d="M699.5,300.0L699.5,242.2Q699.5,238.2 703.5,238.2L719.5,238.2Q723.5,238.2 723.5,242.2L723.5,300.0Z" fill="#2a78d6"><title>2025 영업이익: 309 억원</title></path><text x="711.5" y="233.2" text-anchor="middle" font-size="11" font-weight="700" fill="#1d2733" class="tn">309</text><text x="711.5" y="338.0" text-anchor="middle" font-size="11" fill="#52514e">2025</text><line x1="56" x2="746" y1="300.0" y2="300.0" stroke="#c3c2b7" stroke-width="1"/></svg></div><figcaption><span class="mhint">↔ 차트를 좌우로 밀어 전체 보기 · </span>Fig.7 RFHIC 매출액·영업이익 (2016~2025, 억원). 2016~17년은 스팩 합병 전 수치(단일 출처)</figcaption></figure>
+  <div class="tw"><table class="fin"><tr><th>억원</th><th>2016</th><th>2017</th><th>2018</th><th>2019</th><th>2020</th><th>2021</th><th>2022</th><th>2023</th><th>2024</th><th>2025</th><th class="h1">1H26</th></tr><tr class="key"><td>매출액</td><td>612</td><td>621</td><td>1,081</td><td>1,078</td><td>705</td><td>1,016</td><td>1,080</td><td>1,114</td><td>1,149</td><td>1,858</td><td class="h1">946</td></tr><tr class="key"><td>영업이익</td><td>55</td><td>81</td><td>267</td><td>179</td><td class="neg">-30</td><td>44</td><td>8</td><td>3</td><td>15</td><td>309</td><td class="h1">189</td></tr><tr><td>영업이익률</td><td>9.0%</td><td>13.0%</td><td>24.7%</td><td>16.6%</td><td class="neg">-4.3%</td><td>4.3%</td><td>0.7%</td><td>0.3%</td><td>1.3%</td><td>16.6%</td><td class="h1">20.0%</td></tr><tr><td>순이익</td><td>56</td><td>61</td><td>241</td><td>200</td><td>20</td><td>60</td><td>28</td><td>174</td><td>257</td><td>287</td><td class="h1">155</td></tr><tr><td>자본총계</td><td>1,038</td><td>1,274</td><td>1,637</td><td>2,156</td><td>2,171</td><td>3,083</td><td>3,078</td><td>3,283</td><td>3,580</td><td>3,965</td><td class="h1">4,518</td></tr><tr><td>현금성자산</td><td>293</td><td>355</td><td>806</td><td>1,095</td><td>272</td><td>1,035</td><td>1,262</td><td>809</td><td>1,108</td><td>1,099</td><td class="h1">1,708</td></tr><tr><td>총차입금</td><td>153</td><td>182</td><td>329</td><td>130</td><td>684</td><td>928</td><td>1,144</td><td>1,029</td><td>567</td><td>612</td><td class="h1">277</td></tr><tr><td>영업활동CF</td><td>152</td><td>52</td><td>481</td><td>271</td><td class="neg">-242</td><td>221</td><td>40</td><td>160</td><td>324</td><td>295</td><td class="h1 na">n/a</td></tr></table></div><p class="small">RFHIC 10년 연간 재무(K-IFRS 연결). 2016~17년은 스팩 합병 전 수치(단일 출처). 1H26 현금성자산은 FVPL 포함 광의 금융자산(협의 현금성 304억). 순이익은 지배주주 기준(2024년 지배 257억이 연결 197억보다 큰 것은 비지배 손실 영향).</p>
+  <div class="grid2">
+    <div class="box"><div class="t">사이클 해석</div>
+      <ul>
+        <li>2018년 화웨이 5G 조기 투자: 매출 1,081억·영업이익 267억(OPM 24.7%)</li>
+        <li>2020년 미국 제재 쇼크: 화웨이 매출 1H19 376억 → 1H20 135억(-64%), 영업적자 -30억</li>
+        <li>2021~24년: 매출 1,016~1,149억에서 영업이익 3~44억 — 이 구간이 손익분기(KT 추정 약 1,100억)임을 실적이 증명한다.</li>
+        <li>2025년 방산 램프: 매출 +709억, 증분이익률 41.5% → 영업이익 309억. 1H26 189억(OPM 20.0%)</li>
+      </ul></div>
+    <div class="box blue"><div class="t">재무 체력과 2027 변수</div>
+      <ul>
+        <li>1H26 광의 금융자산 1,708억 vs 차입금 277억 — 순현금. 2025.10 발행한 EB(310억, 자사주 교환대상)는 교환 완료로 추정</li>
+        <li>컨센서스(KB 인용, 2026.4): 2026E 매출 2,660억·영업이익 520억, 2027E 3,260억·730억. 신한(2026.7.28) TP 81,000(123,000에서 하향, 목표 멀티플 50배→32배), KB 120,000, 하나 150,000</li>
+        <li>현 시총은 2027E 영업이익의 약 21배 — 5社 중 가장 '실적을 사는' 가격. 신한이 Top Pick으로 꼽은 이유: AI·경매 스토리가 사라져도 실적이 주가를 받친다.</li>
+      </ul></div>
+  </div>
+  <blockquote class="q"><div class="kr">"당사의 사업이 통신장비사업 자체라고 볼 수는 없다."</div><div class="who">— RFHIC 관계자, 2025.11.4 (파이낸스스코프)</div></blockquote>
+</section>
+
+<!-- 8 -->
+<section id="s8">
+  <h2><span class="num">8.</span>10년 사이클 비교 — 다섯 기업을 한 장에</h2>
+  <figure class="imgfig"><div class="legend"><span class="lg"><i class="sw" style="background:#2a78d6"></i>에치에프알</span><span class="lg"><i class="sw" style="background:#eb6834"></i>오이솔루션</span><span class="lg"><i class="sw" style="background:#1baf7a"></i>케이엠더블유</span><span class="lg"><i class="sw" style="background:#eda100"></i>쏠리드</span><span class="lg"><i class="sw" style="background:#e87ba4"></i>RFHIC</span></div><div class="cv w"><svg viewBox="0 0 760 320" width="100%" role="img" aria-label="5개사 합산 매출액 2016~2025" xmlns="http://www.w3.org/2000/svg" style="display:block;max-width:100%;height:auto"><line x1="56" x2="746" y1="290.0" y2="290.0" stroke="#c3c2b7" stroke-width="1"/><text x="50" y="293.5" text-anchor="end" font-size="11" fill="#898781" class="tn">0</text><line x1="56" x2="746" y1="200.7" y2="200.7" stroke="#e9ecef" stroke-width="1"/><text x="50" y="204.2" text-anchor="end" font-size="11" fill="#898781" class="tn">5,000</text><line x1="56" x2="746" y1="111.3" y2="111.3" stroke="#e9ecef" stroke-width="1"/><text x="50" y="114.8" text-anchor="end" font-size="11" fill="#898781" class="tn">10,000</text><line x1="56" x2="746" y1="22.0" y2="22.0" stroke="#e9ecef" stroke-width="1"/><text x="50" y="25.5" text-anchor="end" font-size="11" fill="#898781" class="tn">15,000</text><path d="M78.5,290.0L78.5,269.9L102.5,269.9L102.5,290.0Z" fill="#2a78d6"><title>2016 · 에치에프알: 1,123 억원</title></path><path d="M78.5,267.9L78.5,255.7L102.5,255.7L102.5,267.9Z" fill="#eb6834"><title>2016 · 오이솔루션: 797 억원</title></path><path d="M78.5,253.7L78.5,218.1L102.5,218.1L102.5,253.7Z" fill="#1baf7a"><title>2016 · 케이엠더블유: 2,105 억원</title></path><path d="M78.5,216.1L78.5,175.2L102.5,175.2L102.5,216.1Z" fill="#eda100"><title>2016 · 쏠리드: 2,398 억원</title></path><path d="M78.5,173.2L78.5,168.3Q78.5,164.3 82.5,164.3L98.5,164.3Q102.5,164.3 102.5,168.3L102.5,173.2Z" fill="#e87ba4"><title>2016 · RFHIC: 612 억원</title></path><text x="90.5" y="158.3" text-anchor="middle" font-size="11.5" font-weight="700" fill="#1d2733" class="tn">7,035</text><text x="90.5" y="308.0" text-anchor="middle" font-size="11" fill="#52514e">2016</text><path d="M147.5,290.0L147.5,266.6L171.5,266.6L171.5,290.0Z" fill="#2a78d6"><title>2017 · 에치에프알: 1,308 억원</title></path><path d="M147.5,264.6L147.5,252.9L171.5,252.9L171.5,264.6Z" fill="#eb6834"><title>2017 · 오이솔루션: 766 억원</title></path><path d="M147.5,250.9L147.5,216.6L171.5,216.6L171.5,250.9Z" fill="#1baf7a"><title>2017 · 케이엠더블유: 2,037 억원</title></path><path d="M147.5,214.6L147.5,171.2L171.5,171.2L171.5,214.6Z" fill="#eda100"><title>2017 · 쏠리드: 2,537 억원</title></path><path d="M147.5,169.2L147.5,164.1Q147.5,160.1 151.5,160.1L167.5,160.1Q171.5,160.1 171.5,164.1L171.5,169.2Z" fill="#e87ba4"><title>2017 · RFHIC: 621 억원</title></path><text x="159.5" y="308.0" text-anchor="middle" font-size="11" fill="#52514e">2017</text><path d="M216.5,290.0L216.5,265.9L240.5,265.9L240.5,290.0Z" fill="#2a78d6"><title>2018 · 에치에프알: 1,350 억원</title></path><path d="M216.5,263.9L216.5,251.3L240.5,251.3L240.5,263.9Z" fill="#eb6834"><title>2018 · 오이솔루션: 815 억원</title></path><path d="M216.5,249.3L216.5,198.4L240.5,198.4L240.5,249.3Z" fill="#1baf7a"><title>2018 · 케이엠더블유: 2,963 억원</title></path><path d="M216.5,196.4L216.5,158.6L240.5,158.6L240.5,196.4Z" fill="#eda100"><title>2018 · 쏠리드: 2,226 억원</title></path><path d="M216.5,156.6L216.5,143.3Q216.5,139.3 220.5,139.3L236.5,139.3Q240.5,139.3 240.5,143.3L240.5,156.6Z" fill="#e87ba4"><title>2018 · RFHIC: 1,081 억원</title></path><text x="228.5" y="308.0" text-anchor="middle" font-size="11" fill="#52514e">2018</text><path d="M285.5,290.0L285.5,262.0L309.5,262.0L309.5,290.0Z" fill="#2a78d6"><title>2019 · 에치에프알: 1,567 억원</title></path><path d="M285.5,260.0L285.5,224.4L309.5,224.4L309.5,260.0Z" fill="#eb6834"><title>2019 · 오이솔루션: 2,103 억원</title></path><path d="M285.5,222.4L285.5,102.4L309.5,102.4L309.5,222.4Z" fill="#1baf7a"><title>2019 · 케이엠더블유: 6,829 억원</title></path><path d="M285.5,100.4L285.5,61.4L309.5,61.4L309.5,100.4Z" fill="#eda100"><title>2019 · 쏠리드: 2,293 억원</title></path><path d="M285.5,59.4L285.5,46.2Q285.5,42.2 289.5,42.2L305.5,42.2Q309.5,42.2 309.5,46.2L309.5,59.4Z" fill="#e87ba4"><title>2019 · RFHIC: 1,078 억원</title></path><text x="297.5" y="36.2" text-anchor="middle" font-size="11.5" font-weight="700" fill="#1d2733" class="tn">13,870</text><text x="297.5" y="308.0" text-anchor="middle" font-size="11" fill="#52514e">2019</text><path d="M354.5,290.0L354.5,273.5L378.5,273.5L378.5,290.0Z" fill="#2a78d6"><title>2020 · 에치에프알: 921 억원</title></path><path d="M354.5,271.5L354.5,255.1L378.5,255.1L378.5,271.5Z" fill="#eb6834"><title>2020 · 오이솔루션: 1,032 억원</title></path><path d="M354.5,253.1L354.5,194.6L378.5,194.6L378.5,253.1Z" fill="#1baf7a"><title>2020 · 케이엠더블유: 3,385 억원</title></path><path d="M354.5,192.6L354.5,164.1L378.5,164.1L378.5,192.6Z" fill="#eda100"><title>2020 · 쏠리드: 1,711 억원</title></path><path d="M354.5,162.1L354.5,155.5Q354.5,151.5 358.5,151.5L374.5,151.5Q378.5,151.5 378.5,155.5L378.5,162.1Z" fill="#e87ba4"><title>2020 · RFHIC: 705 억원</title></path><text x="366.5" y="308.0" text-anchor="middle" font-size="11" fill="#52514e">2020</text><path d="M423.5,290.0L423.5,253.1L447.5,253.1L447.5,290.0Z" fill="#2a78d6"><title>2021 · 에치에프알: 2,064 억원</title></path><path d="M423.5,251.1L423.5,235.5L447.5,235.5L447.5,251.1Z" fill="#eb6834"><title>2021 · 오이솔루션: 987 억원</title></path><path d="M423.5,233.5L423.5,198.8L447.5,198.8L447.5,233.5Z" fill="#1baf7a"><title>2021 · 케이엠더블유: 2,052 억원</title></path><path d="M423.5,196.8L423.5,160.9L447.5,160.9L447.5,196.8Z" fill="#eda100"><title>2021 · 쏠리드: 2,123 억원</title></path><path d="M423.5,158.9L423.5,146.7Q423.5,142.7 427.5,142.7L443.5,142.7Q447.5,142.7 447.5,146.7L447.5,158.9Z" fill="#e87ba4"><title>2021 · RFHIC: 1,016 억원</title></path><text x="435.5" y="308.0" text-anchor="middle" font-size="11" fill="#52514e">2021</text><path d="M492.5,290.0L492.5,224.6L516.5,224.6L516.5,290.0Z" fill="#2a78d6"><title>2022 · 에치에프알: 3,663 억원</title></path><path d="M492.5,222.6L492.5,210.8L516.5,210.8L516.5,222.6Z" fill="#eb6834"><title>2022 · 오이솔루션: 770 억원</title></path><path d="M492.5,208.8L492.5,178.7L516.5,178.7L516.5,208.8Z" fill="#1baf7a"><title>2022 · 케이엠더블유: 1,795 억원</title></path><path d="M492.5,176.7L492.5,128.7L516.5,128.7L516.5,176.7Z" fill="#eda100"><title>2022 · 쏠리드: 2,798 억원</title></path><path d="M492.5,126.7L492.5,113.4Q492.5,109.4 496.5,109.4L512.5,109.4Q516.5,109.4 516.5,113.4L516.5,126.7Z" fill="#e87ba4"><title>2022 · RFHIC: 1,080 억원</title></path><text x="504.5" y="103.4" text-anchor="middle" font-size="11.5" font-weight="700" fill="#1d2733" class="tn">10,106</text><text x="504.5" y="308.0" text-anchor="middle" font-size="11" fill="#52514e">2022</text><path d="M561.5,290.0L561.5,260.7L585.5,260.7L585.5,290.0Z" fill="#2a78d6"><title>2023 · 에치에프알: 1,642 억원</title></path><path d="M561.5,258.7L561.5,252.4L585.5,252.4L585.5,258.7Z" fill="#eb6834"><title>2023 · 오이솔루션: 460 억원</title></path><path d="M561.5,250.4L561.5,234.6L585.5,234.6L585.5,250.4Z" fill="#1baf7a"><title>2023 · 케이엠더블유: 1,001 억원</title></path><path d="M561.5,232.6L561.5,177.1L585.5,177.1L585.5,232.6Z" fill="#eda100"><title>2023 · 쏠리드: 3,214 억원</title></path><path d="M561.5,175.1L561.5,161.2Q561.5,157.2 565.5,157.2L581.5,157.2Q585.5,157.2 585.5,161.2L585.5,175.1Z" fill="#e87ba4"><title>2023 · RFHIC: 1,114 억원</title></path><text x="573.5" y="308.0" text-anchor="middle" font-size="11" fill="#52514e">2023</text><path d="M630.5,290.0L630.5,261.9L654.5,261.9L654.5,290.0Z" fill="#2a78d6"><title>2024 · 에치에프알: 1,571 억원</title></path><path d="M630.5,259.9L630.5,256.2L654.5,256.2L654.5,259.9Z" fill="#eb6834"><title>2024 · 오이솔루션: 320 억원</title></path><path d="M630.5,254.2L630.5,240.6L654.5,240.6L654.5,254.2Z" fill="#1baf7a"><title>2024 · 케이엠더블유: 874 억원</title></path><path d="M630.5,238.6L630.5,181.4L654.5,181.4L654.5,238.6Z" fill="#eda100"><title>2024 · 쏠리드: 3,311 억원</title></path><path d="M630.5,179.4L630.5,164.9Q630.5,160.9 634.5,160.9L650.5,160.9Q654.5,160.9 654.5,164.9L654.5,179.4Z" fill="#e87ba4"><title>2024 · RFHIC: 1,149 억원</title></path><text x="642.5" y="308.0" text-anchor="middle" font-size="11" fill="#52514e">2024</text><path d="M699.5,290.0L699.5,264.6L723.5,264.6L723.5,290.0Z" fill="#2a78d6"><title>2025 · 에치에프알: 1,420 억원</title></path><path d="M699.5,262.6L699.5,254.4L723.5,254.4L723.5,262.6Z" fill="#eb6834"><title>2025 · 오이솔루션: 574 억원</title></path><path d="M699.5,252.4L699.5,237.0L723.5,237.0L723.5,252.4Z" fill="#1baf7a"><title>2025 · 케이엠더블유: 975 억원</title></path><path d="M699.5,235.0L699.5,184.3L723.5,184.3L723.5,235.0Z" fill="#eda100"><title>2025 · 쏠리드: 2,948 억원</title></path><path d="M699.5,182.3L699.5,155.1Q699.5,151.1 703.5,151.1L719.5,151.1Q723.5,151.1 723.5,155.1L723.5,182.3Z" fill="#e87ba4"><title>2025 · RFHIC: 1,858 억원</title></path><text x="711.5" y="145.1" text-anchor="middle" font-size="11.5" font-weight="700" fill="#1d2733" class="tn">7,775</text><text x="711.5" y="308.0" text-anchor="middle" font-size="11" fill="#52514e">2025</text></svg></div><figcaption><span class="mhint">↔ 차트를 좌우로 밀어 전체 보기 · </span>Fig.8 5社 합산 매출액 (2016~2025, 억원, 기업별 누적). 상단 숫자는 파동별 합산 매출</figcaption></figure>
+  <figure class="imgfig"><div class="cv w"><svg viewBox="0 0 760 170" width="100%" role="img" aria-label="5개사 영업이익 2016~2025 (공통 축)" xmlns="http://www.w3.org/2000/svg" style="display:block;max-width:100%;height:auto"><text x="35" y="151.5" text-anchor="end" font-size="10" fill="#898781" class="tn">-1,000</text><text x="35" y="112.2" text-anchor="end" font-size="10" fill="#898781" class="tn">0</text><text x="35" y="72.8" text-anchor="end" font-size="10" fill="#898781" class="tn">1,000</text><text x="35" y="33.5" text-anchor="end" font-size="10" fill="#898781" class="tn">2,000</text><rect x="38.0" y="6" width="10" height="10" rx="2" fill="#2a78d6"/><text x="52.0" y="15" font-size="12" font-weight="700" fill="#1d2733">에치에프알</text><line x1="40.0" x2="174.8" y1="148.0" y2="148.0" stroke="#e9ecef"/><line x1="40.0" x2="174.8" y1="108.7" y2="108.7" stroke="#c3c2b7"/><line x1="40.0" x2="174.8" y1="69.3" y2="69.3" stroke="#e9ecef"/><line x1="40.0" x2="174.8" y1="30.0" y2="30.0" stroke="#e9ecef"/><path d="M42.6,108.7L42.6,107.2Q42.6,105.8 44.0,105.8L49.5,105.8Q50.9,105.8 50.9,107.2L50.9,108.7Z" fill="#2a78d6"><title>에치에프알 2016: 영업이익 73 억원</title></path><path d="M56.0,108.7L56.0,108.1Q56.0,107.6 56.6,107.6L63.8,107.6Q64.4,107.6 64.4,108.1L64.4,108.7Z" fill="#2a78d6"><title>에치에프알 2017: 영업이익 28 억원</title></path><path d="M69.5,108.7L69.5,108.1Q69.5,107.5 70.1,107.5L77.3,107.5Q77.9,107.5 77.9,108.1L77.9,108.7Z" fill="#2a78d6"><title>에치에프알 2018: 영업이익 29 억원</title></path><path d="M83.0,108.7L83.0,108.2Q83.0,107.8 83.4,107.8L90.9,107.8Q91.4,107.8 91.4,108.2L91.4,108.7Z" fill="#2a78d6"><title>에치에프알 2019: 영업이익 22 억원</title></path><path d="M96.5,108.7L96.5,115.9Q96.5,118.9 99.5,118.9L101.8,118.9Q104.8,118.9 104.8,115.9L104.8,108.7Z" fill="#e34948"><title>에치에프알 2020: 영업이익 -259 억원</title></path><path d="M110.0,108.7L110.0,103.1Q110.0,100.1 113.0,100.1L115.3,100.1Q118.3,100.1 118.3,103.1L118.3,108.7Z" fill="#2a78d6"><title>에치에프알 2021: 영업이익 218 억원</title></path><path d="M123.4,108.7L123.4,76.2Q123.4,73.2 126.4,73.2L128.8,73.2Q131.8,73.2 131.8,76.2L131.8,108.7Z" fill="#2a78d6"><title>에치에프알 2022: 영업이익 902 억원</title></path><path d="M136.9,108.7L136.9,110.3Q136.9,112.0 138.6,112.0L143.6,112.0Q145.3,112.0 145.3,110.3L145.3,108.7Z" fill="#e34948"><title>에치에프알 2023: 영업이익 -84 억원</title></path><path d="M150.4,108.7L150.4,113.6Q150.4,116.6 153.4,116.6L155.8,116.6Q158.8,116.6 158.8,113.6L158.8,108.7Z" fill="#e34948"><title>에치에프알 2024: 영업이익 -202 억원</title></path><path d="M163.9,108.7L163.9,109.0Q163.9,109.3 164.2,109.3L171.9,109.3Q172.2,109.3 172.2,109.0L172.2,108.7Z" fill="#e34948"><title>에치에프알 2025: 영업이익 -16 억원</title></path><text x="127.6" y="69.2" text-anchor="middle" font-size="10" font-weight="700" fill="#1d2733" class="tn">902</text><text x="100.7" y="130.9" text-anchor="middle" font-size="10" font-weight="700" fill="#1d2733" class="tn">-259</text><text x="40.0" y="164" font-size="10" fill="#52514e">2016</text><text x="174.8" y="164" text-anchor="end" font-size="10" fill="#52514e">2025</text><rect x="182.8" y="6" width="10" height="10" rx="2" fill="#eb6834"/><text x="196.8" y="15" font-size="12" font-weight="700" fill="#1d2733">오이솔루션</text><line x1="184.8" x2="319.6" y1="148.0" y2="148.0" stroke="#e9ecef"/><line x1="184.8" x2="319.6" y1="108.7" y2="108.7" stroke="#c3c2b7"/><line x1="184.8" x2="319.6" y1="69.3" y2="69.3" stroke="#e9ecef"/><line x1="184.8" x2="319.6" y1="30.0" y2="30.0" stroke="#e9ecef"/><path d="M187.4,108.7L187.4,107.7Q187.4,106.8 188.3,106.8L194.8,106.8Q195.7,106.8 195.7,107.7L195.7,108.7Z" fill="#2a78d6"><title>오이솔루션 2016: 영업이익 47 억원</title></path><path d="M200.8,108.7L200.8,109.0Q200.8,109.4 201.2,109.4L208.8,109.4Q209.2,109.4 209.2,109.0L209.2,108.7Z" fill="#e34948"><title>오이솔루션 2017: 영업이익 -19 억원</title></path><path d="M214.3,108.7h8.4" fill="#2a78d6"><title>오이솔루션 2018: 영업이익 2 억원</title></path><path d="M227.8,108.7L227.8,88.7Q227.8,85.7 230.8,85.7L233.2,85.7Q236.2,85.7 236.2,88.7L236.2,108.7Z" fill="#2a78d6"><title>오이솔루션 2019: 영업이익 583 억원</title></path><path d="M241.3,108.7L241.3,107.2Q241.3,105.8 242.7,105.8L248.2,105.8Q249.6,105.8 249.6,107.2L249.6,108.7Z" fill="#2a78d6"><title>오이솔루션 2020: 영업이익 73 억원</title></path><path d="M254.8,108.7L254.8,108.3Q254.8,108.0 255.1,108.0L262.8,108.0Q263.1,108.0 263.1,108.3L263.1,108.7Z" fill="#2a78d6"><title>오이솔루션 2021: 영업이익 17 억원</title></path><path d="M268.2,108.7L268.2,110.4Q268.2,112.1 270.0,112.1L274.9,112.1Q276.6,112.1 276.6,110.4L276.6,108.7Z" fill="#e34948"><title>오이솔루션 2022: 영업이익 -87 억원</title></path><path d="M281.7,108.7L281.7,117.9Q281.7,120.9 284.7,120.9L287.1,120.9Q290.1,120.9 290.1,117.9L290.1,108.7Z" fill="#e34948"><title>오이솔루션 2023: 영업이익 -311 억원</title></path><path d="M295.2,108.7L295.2,117.6Q295.2,120.6 298.2,120.6L300.6,120.6Q303.6,120.6 303.6,117.6L303.6,108.7Z" fill="#e34948"><title>오이솔루션 2024: 영업이익 -304 억원</title></path><path d="M308.7,108.7L308.7,112.0Q308.7,115.0 311.7,115.0L314.0,115.0Q317.0,115.0 317.0,112.0L317.0,108.7Z" fill="#e34948"><title>오이솔루션 2025: 영업이익 -160 억원</title></path><text x="232.0" y="81.7" text-anchor="middle" font-size="10" font-weight="700" fill="#1d2733" class="tn">583</text><text x="285.9" y="132.9" text-anchor="middle" font-size="10" font-weight="700" fill="#1d2733" class="tn">-311</text><text x="184.8" y="164" font-size="10" fill="#52514e">2016</text><text x="319.6" y="164" text-anchor="end" font-size="10" fill="#52514e">2025</text><rect x="327.6" y="6" width="10" height="10" rx="2" fill="#1baf7a"/><text x="341.6" y="15" font-size="12" font-weight="700" fill="#1d2733">케이엠더블유</text><line x1="329.6" x2="464.4" y1="148.0" y2="148.0" stroke="#e9ecef"/><line x1="329.6" x2="464.4" y1="108.7" y2="108.7" stroke="#c3c2b7"/><line x1="329.6" x2="464.4" y1="69.3" y2="69.3" stroke="#e9ecef"/><line x1="329.6" x2="464.4" y1="30.0" y2="30.0" stroke="#e9ecef"/><path d="M332.2,108.7L332.2,111.5Q332.2,114.4 335.0,114.4L337.7,114.4Q340.5,114.4 340.5,111.5L340.5,108.7Z" fill="#e34948"><title>케이엠더블유 2016: 영업이익 -145 억원</title></path><path d="M345.6,108.7L345.6,109.3Q345.6,109.8 346.2,109.8L353.4,109.8Q354.0,109.8 354.0,109.3L354.0,108.7Z" fill="#e34948"><title>케이엠더블유 2017: 영업이익 -30 억원</title></path><path d="M359.1,108.7L359.1,116.0Q359.1,119.0 362.1,119.0L364.5,119.0Q367.5,119.0 367.5,116.0L367.5,108.7Z" fill="#e34948"><title>케이엠더블유 2018: 영업이익 -262 억원</title></path><path d="M372.6,108.7L372.6,57.5Q372.6,54.5 375.6,54.5L378.0,54.5Q381.0,54.5 381.0,57.5L381.0,108.7Z" fill="#2a78d6"><title>케이엠더블유 2019: 영업이익 1,378 억원</title></path><path d="M386.1,108.7L386.1,98.8Q386.1,95.8 389.1,95.8L391.4,95.8Q394.4,95.8 394.4,98.8L394.4,108.7Z" fill="#2a78d6"><title>케이엠더블유 2020: 영업이익 327 억원</title></path><path d="M399.6,108.7L399.6,116.6Q399.6,119.6 402.6,119.6L404.9,119.6Q407.9,119.6 407.9,116.6L407.9,108.7Z" fill="#e34948"><title>케이엠더블유 2021: 영업이익 -279 억원</title></path><path d="M413.0,108.7L413.0,123.4Q413.0,126.4 416.0,126.4L418.4,126.4Q421.4,126.4 421.4,123.4L421.4,108.7Z" fill="#e34948"><title>케이엠더블유 2022: 영업이익 -450 억원</title></path><path d="M426.5,108.7L426.5,130.4Q426.5,133.4 429.5,133.4L431.9,133.4Q434.9,133.4 434.9,130.4L434.9,108.7Z" fill="#e34948"><title>케이엠더블유 2023: 영업이익 -629 억원</title></path><path d="M440.0,108.7L440.0,123.6Q440.0,126.6 443.0,126.6L445.4,126.6Q448.4,126.6 448.4,123.6L448.4,108.7Z" fill="#e34948"><title>케이엠더블유 2024: 영업이익 -455 억원</title></path><path d="M453.5,108.7L453.5,115.0Q453.5,118.0 456.5,118.0L458.8,118.0Q461.8,118.0 461.8,115.0L461.8,108.7Z" fill="#e34948"><title>케이엠더블유 2025: 영업이익 -238 억원</title></path><text x="376.8" y="50.5" text-anchor="middle" font-size="10" font-weight="700" fill="#1d2733" class="tn">1,378</text><text x="430.7" y="145.4" text-anchor="middle" font-size="10" font-weight="700" fill="#1d2733" class="tn">-629</text><text x="329.6" y="164" font-size="10" fill="#52514e">2016</text><text x="464.4" y="164" text-anchor="end" font-size="10" fill="#52514e">2025</text><rect x="472.4" y="6" width="10" height="10" rx="2" fill="#eda100"/><text x="486.4" y="15" font-size="12" font-weight="700" fill="#1d2733">쏠리드</text><line x1="474.4" x2="609.2" y1="148.0" y2="148.0" stroke="#e9ecef"/><line x1="474.4" x2="609.2" y1="108.7" y2="108.7" stroke="#c3c2b7"/><line x1="474.4" x2="609.2" y1="69.3" y2="69.3" stroke="#e9ecef"/><line x1="474.4" x2="609.2" y1="30.0" y2="30.0" stroke="#e9ecef"/><path d="M477.0,108.7L477.0,106.5Q477.0,104.3 479.1,104.3L483.1,104.3Q485.3,104.3 485.3,106.5L485.3,108.7Z" fill="#2a78d6"><title>쏠리드 2016: 영업이익 111 억원</title></path><path d="M490.4,108.7L490.4,103.4Q490.4,100.4 493.4,100.4L495.8,100.4Q498.8,100.4 498.8,103.4L498.8,108.7Z" fill="#2a78d6"><title>쏠리드 2017: 영업이익 209 억원</title></path><path d="M503.9,108.7h8.4" fill="#2a78d6"><title>쏠리드 2018: 영업이익 11 억원</title></path><path d="M517.4,108.7L517.4,109.4Q517.4,110.0 518.1,110.0L525.1,110.0Q525.8,110.0 525.8,109.4L525.8,108.7Z" fill="#e34948"><title>쏠리드 2019: 영업이익 -35 억원</title></path><path d="M530.9,108.7L530.9,111.8Q530.9,114.8 533.9,114.8L536.2,114.8Q539.2,114.8 539.2,111.8L539.2,108.7Z" fill="#e34948"><title>쏠리드 2020: 영업이익 -157 억원</title></path><path d="M544.4,108.7L544.4,107.5Q544.4,106.3 545.6,106.3L551.5,106.3Q552.7,106.3 552.7,107.5L552.7,108.7Z" fill="#2a78d6"><title>쏠리드 2021: 영업이익 61 억원</title></path><path d="M557.8,108.7L557.8,100.4Q557.8,97.4 560.8,97.4L563.2,97.4Q566.2,97.4 566.2,100.4L566.2,108.7Z" fill="#2a78d6"><title>쏠리드 2022: 영업이익 286 억원</title></path><path d="M571.3,108.7L571.3,97.4Q571.3,94.4 574.3,94.4L576.7,94.4Q579.7,94.4 579.7,97.4L579.7,108.7Z" fill="#2a78d6"><title>쏠리드 2023: 영업이익 363 억원</title></path><path d="M584.8,108.7L584.8,97.9Q584.8,94.9 587.8,94.9L590.2,94.9Q593.2,94.9 593.2,97.9L593.2,108.7Z" fill="#2a78d6"><title>쏠리드 2024: 영업이익 351 억원</title></path><path d="M598.3,108.7L598.3,98.6Q598.3,95.6 601.3,95.6L603.6,95.6Q606.6,95.6 606.6,98.6L606.6,108.7Z" fill="#2a78d6"><title>쏠리드 2025: 영업이익 333 억원</title></path><text x="575.5" y="90.4" text-anchor="middle" font-size="10" font-weight="700" fill="#1d2733" class="tn">363</text><text x="535.1" y="126.8" text-anchor="middle" font-size="10" font-weight="700" fill="#1d2733" class="tn">-157</text><text x="474.4" y="164" font-size="10" fill="#52514e">2016</text><text x="609.2" y="164" text-anchor="end" font-size="10" fill="#52514e">2025</text><rect x="617.2" y="6" width="10" height="10" rx="2" fill="#e87ba4"/><text x="631.2" y="15" font-size="12" font-weight="700" fill="#1d2733">RFHIC</text><line x1="619.2" x2="754.0" y1="148.0" y2="148.0" stroke="#e9ecef"/><line x1="619.2" x2="754.0" y1="108.7" y2="108.7" stroke="#c3c2b7"/><line x1="619.2" x2="754.0" y1="69.3" y2="69.3" stroke="#e9ecef"/><line x1="619.2" x2="754.0" y1="30.0" y2="30.0" stroke="#e9ecef"/><path d="M621.8,108.7L621.8,107.6Q621.8,106.5 622.8,106.5L629.0,106.5Q630.1,106.5 630.1,107.6L630.1,108.7Z" fill="#2a78d6"><title>RFHIC 2016: 영업이익 55 억원</title></path><path d="M635.2,108.7L635.2,107.1Q635.2,105.5 636.8,105.5L642.0,105.5Q643.6,105.5 643.6,107.1L643.6,108.7Z" fill="#2a78d6"><title>RFHIC 2017: 영업이익 81 억원</title></path><path d="M648.7,108.7L648.7,101.2Q648.7,98.2 651.7,98.2L654.1,98.2Q657.1,98.2 657.1,101.2L657.1,108.7Z" fill="#2a78d6"><title>RFHIC 2018: 영업이익 267 억원</title></path><path d="M662.2,108.7L662.2,104.6Q662.2,101.6 665.2,101.6L667.6,101.6Q670.6,101.6 670.6,104.6L670.6,108.7Z" fill="#2a78d6"><title>RFHIC 2019: 영업이익 179 억원</title></path><path d="M675.7,108.7L675.7,109.3Q675.7,109.8 676.3,109.8L683.4,109.8Q684.0,109.8 684.0,109.3L684.0,108.7Z" fill="#e34948"><title>RFHIC 2020: 영업이익 -30 억원</title></path><path d="M689.2,108.7L689.2,107.8Q689.2,106.9 690.0,106.9L696.7,106.9Q697.5,106.9 697.5,107.8L697.5,108.7Z" fill="#2a78d6"><title>RFHIC 2021: 영업이익 44 억원</title></path><path d="M702.6,108.7h8.4" fill="#2a78d6"><title>RFHIC 2022: 영업이익 8 억원</title></path><path d="M716.1,108.7h8.4" fill="#2a78d6"><title>RFHIC 2023: 영업이익 3 억원</title></path><path d="M729.6,108.7L729.6,108.4Q729.6,108.1 729.9,108.1L737.7,108.1Q738.0,108.1 738.0,108.4L738.0,108.7Z" fill="#2a78d6"><title>RFHIC 2024: 영업이익 15 억원</title></path><path d="M743.1,108.7L743.1,99.5Q743.1,96.5 746.1,96.5L748.4,96.5Q751.4,96.5 751.4,99.5L751.4,108.7Z" fill="#2a78d6"><title>RFHIC 2025: 영업이익 309 억원</title></path><text x="747.3" y="92.5" text-anchor="middle" font-size="10" font-weight="700" fill="#1d2733" class="tn">309</text><text x="679.9" y="121.8" text-anchor="middle" font-size="10" font-weight="700" fill="#1d2733" class="tn">-30</text><text x="619.2" y="164" font-size="10" fill="#52514e">2016</text><text x="754.0" y="164" text-anchor="end" font-size="10" fill="#52514e">2025</text></svg></div><figcaption><span class="mhint">↔ 차트를 좌우로 밀어 전체 보기 · </span>Fig.9 기업별 영업이익 (2016~2025, 억원, 공통 축). 파랑 = 흑자, 빨강 = 적자, 숫자는 10년 최고·최저</figcaption></figure>
+  <div class="tw"><table class="fin"><tr><th>억원</th><th>에치에프알</th><th>오이솔루션</th><th>케이엠더블유</th><th>쏠리드</th><th>RFHIC</th><th>합산 매출</th><th>합산 영업이익</th><th>합산 OPM</th></tr><tr><td>2016</td><td>1,123</td><td>797</td><td>2,105</td><td>2,398</td><td>612</td><td>7,035</td><td>141</td><td>2.0%</td></tr><tr><td>2017</td><td>1,308</td><td>766</td><td>2,037</td><td>2,537</td><td>621</td><td>7,269</td><td>269</td><td>3.7%</td></tr><tr><td>2018</td><td>1,350</td><td>815</td><td>2,963</td><td>2,226</td><td>1,081</td><td>8,435</td><td>47</td><td>0.6%</td></tr><tr class="key"><td>2019</td><td>1,567</td><td>2,103</td><td>6,829</td><td>2,293</td><td>1,078</td><td>13,870</td><td>2,127</td><td>15.3%</td></tr><tr><td>2020</td><td>921</td><td>1,032</td><td>3,385</td><td>1,711</td><td>705</td><td>7,754</td><td class="neg">-46</td><td class="neg">-0.6%</td></tr><tr><td>2021</td><td>2,064</td><td>987</td><td>2,052</td><td>2,123</td><td>1,016</td><td>8,242</td><td>61</td><td>0.7%</td></tr><tr class="key"><td>2022</td><td>3,663</td><td>770</td><td>1,795</td><td>2,798</td><td>1,080</td><td>10,106</td><td>659</td><td>6.5%</td></tr><tr><td>2023</td><td>1,642</td><td>460</td><td>1,001</td><td>3,214</td><td>1,114</td><td>7,431</td><td class="neg">-658</td><td class="neg">-8.9%</td></tr><tr><td>2024</td><td>1,571</td><td>320</td><td>874</td><td>3,311</td><td>1,149</td><td>7,225</td><td class="neg">-595</td><td class="neg">-8.2%</td></tr><tr class="key"><td>2025</td><td>1,420</td><td>574</td><td>975</td><td>2,948</td><td>1,858</td><td>7,775</td><td>228</td><td>2.9%</td></tr></table></div><p class="small">Fig.8·9의 수치 보기. 굵은 행은 세 번의 파동(2019 한국 5G, 2022 미국 C-band, 2025 방산·인빌딩).</p>
+
+  <h3>8-1. 사이클 지표 비교</h3>
+  <div class="tw"><table><tr><th>지표 (억원)</th><th>에치에프알</th><th>오이솔루션</th><th>케이엠더블유</th><th>쏠리드</th><th>RFHIC</th></tr><tr><td><b>매출 피크 (연도)</b></td><td>3,663 (2022)</td><td>2,103 (2019)</td><td>6,829 (2019)</td><td>3,311 (2024)</td><td>1,858 (2025)</td></tr><tr><td><b>10년 매출 저점 (연도)</b></td><td>921 (2020)</td><td>320 (2024)</td><td>874 (2024)</td><td>1,711 (2020)</td><td>612 (2016)</td></tr><tr><td><b>최고 영업이익률</b></td><td>24.6% (2022)</td><td>27.7% (2019)</td><td>20.2% (2019)</td><td>11.3% (2025)</td><td>24.7% (2018)</td></tr><tr><td><b>최저 영업이익률</b></td><td>-28.1% (2020)</td><td>-95.0% (2024)</td><td>-62.8% (2023)</td><td>-9.2% (2020)</td><td>-4.3% (2020)</td></tr><tr><td><b>상승기 증분이익률</b></td><td>43% (21→22)</td><td>45% (18→19)</td><td>42% (18→19)</td><td>33% (21→22)</td><td>42% (24→25)</td></tr><tr><td><b>하락기 감익률</b></td><td>49% (22→23)</td><td>48% (19→20)</td><td>31% (19→20)<br>46% (20→21)</td><td>21% (19→20)</td><td>56% (19→20)</td></tr><tr><td><b>영업적자 연수 (10년)</b></td><td>4년</td><td>5년</td><td>8년</td><td>2년</td><td>1년</td></tr><tr class="self"><td><b>10년 누적 영업이익</b></td><td>+711</td><td>-159</td><td>-783</td><td>+1,533</td><td>+931</td></tr><tr><td><b>손익분기 매출 (KT 추정)</b></td><td>~1,460</td><td>~830~970</td><td>~1,500~1,600</td><td>~1,900~2,100</td><td>~1,100</td></tr><tr class="self"><td><b>2025 매출 ÷ 손익분기</b></td><td>~1.0배</td><td>0.6~0.7배</td><td>~0.6배</td><td>1.4~1.5배</td><td>~1.7배</td></tr><tr class="self"><td><b>순현금 (최근)</b></td><td><span class="neg">-428</span> (1H26)</td><td><span class="neg">-105</span> (1H26)</td><td><span class="neg">-154</span> (1H26)</td><td><span class="">+97</span> (1Q26)</td><td><span class="">+1,431</span> (1H26, 광의)</td></tr><tr><td><b>자본총계 2021 → 최근</b></td><td>926 → 1,500</td><td>1,593 → 779</td><td>2,505 → 1,498</td><td>1,955 → 3,750</td><td>3,083 → 4,518</td></tr><tr><td><b>희석 이력</b></td><td>2022 NESIC 3자배정 167억</td><td>CB 전환, 주식수 +16.6% (2019→26.10)</td><td>CB 전환, 주식수 +6% (2019→1H26)</td><td>2021 유상증자 439억, 이후 자사주 소각</td><td>2021 유상증자 827억, 2025 EB 310억</td></tr><tr><td><b>2026 고점 대비 주가</b></td><td>-65.2%</td><td>-46.9%</td><td>-50.5%</td><td>-53.3%</td><td>-53.9%</td></tr></table></div><p class="small">증분이익률 = Δ영업이익 ÷ Δ매출. 손익분기 매출 = 2025년(또는 1H26 연환산) 매출 + |영업손실| ÷ 0.40(쏠리드는 자체 증분이익률 0.33도 병기) — 비용 구조가 유지된다는 가정의 단순 모형(KT 추정). 쏠리드는 4분기 집중으로 연간 기준만 사용.</p>
+
+  <h3>8-2. 10년 재무가 말하는 네 가지</h3>
+  <div class="grid2">
+    <div class="box"><div class="t">① 증분이익률 40%대의 법칙</div><p>5社 모두 상승기 증분이익률이 33~45%였고(KMW 42%, 오이솔루션 45%, HFR 43%, RFHIC 42%, 쏠리드 33%), 하락기 감익률도 비슷했다(HFR 2022→23년 49%, 오이솔루션 2019→20년 48%). 손익분기를 넘는 순간 이익이 폭발하고 밑돌면 적자가 급증한다 — 이것이 주가 변동성의 근원이다.</p></div>
+    <div class="box"><div class="t">② 세 번의 파동, 매번 다른 주인공</div><p>2019년(한국 5G)은 KMW·오이솔루션이 5社 영업이익의 92%를 냈다. 2022년(미국 C-band)은 HFR 902억이 홀로 합산 659억을 떠받쳤다. 2025년(방산·인빌딩)은 RFHIC·쏠리드 642억이 나머지 3社의 -414억을 메웠다. 다섯 기업이 함께 오른 '업종 사이클'은 국내 신규 주파수와 해외 5G 개시가 겹친 2019년 한 번뿐이다.</p></div>
+    <div class="box"><div class="t">③ 재무 체력의 분화</div><p>쏠리드(순현금 ~97억)·RFHIC(순현금, 광의 금융자산 1,708억)는 회복을 기다릴 체력이 있다. KMW(현금 424억 vs 단기차입 518억)·HFR(순차입 ~428억, 반기 현금 -257억)·오이솔루션(순차입 ~105억)은 회복이 늦어지면 자금조달이 먼저 온다. KMW 자본은 2021년 2,505억 → 2025년 1,314억으로 절반이 됐다.</p></div>
+    <div class="box"><div class="t">④ 기대가 실적을 앞섰다</div><p>합산 시가총액은 2025말 2.16조 → 2026 고점 약 7.5조(종목별 고점 합, 비동시) → 10/8 3.5조. 2026 고점은 2020년말(약 5.8조, 2019년 영업이익 2,127억 '이후')보다 높았는데, 직전 연도 합산 영업이익은 228억으로 2019년의 9분의 1이었다. 2020년 고점은 실적 '후'에, 2026년 고점은 실적 '전'에 만들어졌다.</p></div>
+  </div>
+  <figure class="imgfig"><div class="legend"><span class="lg"><i class="sw" style="background:#2a78d6"></i>에치에프알</span><span class="lg"><i class="sw" style="background:#eb6834"></i>오이솔루션</span><span class="lg"><i class="sw" style="background:#1baf7a"></i>케이엠더블유</span><span class="lg"><i class="sw" style="background:#eda100"></i>쏠리드</span><span class="lg"><i class="sw" style="background:#e87ba4"></i>RFHIC</span></div><div class="cv w"><svg viewBox="0 0 760 342" width="100%" role="img" aria-label="5개사 시가총액 합계" xmlns="http://www.w3.org/2000/svg" style="display:block;max-width:100%;height:auto"><line x1="82" x2="746" y1="290.0" y2="290.0" stroke="#c3c2b7" stroke-width="1"/><text x="76" y="293.5" text-anchor="end" font-size="11" fill="#898781" class="tn">0</text><line x1="82" x2="746" y1="236.4" y2="236.4" stroke="#e9ecef" stroke-width="1"/><text x="76" y="239.9" text-anchor="end" font-size="11" fill="#898781" class="tn">2조</text><line x1="82" x2="746" y1="182.8" y2="182.8" stroke="#e9ecef" stroke-width="1"/><text x="76" y="186.3" text-anchor="end" font-size="11" fill="#898781" class="tn">4조</text><line x1="82" x2="746" y1="129.2" y2="129.2" stroke="#e9ecef" stroke-width="1"/><text x="76" y="132.7" text-anchor="end" font-size="11" fill="#898781" class="tn">6조</text><line x1="82" x2="746" y1="75.6" y2="75.6" stroke="#e9ecef" stroke-width="1"/><text x="76" y="79.1" text-anchor="end" font-size="11" fill="#898781" class="tn">8조</text><line x1="82" x2="746" y1="22.0" y2="22.0" stroke="#e9ecef" stroke-width="1"/><text x="76" y="25.5" text-anchor="end" font-size="11" fill="#898781" class="tn">10조</text><path d="M106.9,290.0L106.9,280.5L130.9,280.5L130.9,290.0Z" fill="#2a78d6"><title>2019E · 에치에프알: 3,530 억원</title></path><path d="M106.9,278.5L106.9,266.7L130.9,266.7L130.9,278.5Z" fill="#eb6834"><title>2019E · 오이솔루션: 5,150 억원</title></path><path d="M106.9,264.7L106.9,212.2L130.9,212.2L130.9,264.7Z" fill="#1baf7a"><title>2019E · 케이엠더블유: 20,360 억원</title></path><path d="M106.9,210.2L106.9,205.2L130.9,205.2L130.9,210.2Z" fill="#eda100"><title>2019E · 쏠리드: 2,620 억원</title></path><path d="M106.9,203.2L106.9,186.2Q106.9,182.2 110.9,182.2L126.9,182.2Q130.9,182.2 130.9,186.2L130.9,203.2Z" fill="#e87ba4"><title>2019E · RFHIC: 8,550 억원</title></path><text x="118.9" y="176.2" text-anchor="middle" font-size="11.5" font-weight="700" fill="#1d2733" class="tn">4.0조</text><text x="118.9" y="308.0" text-anchor="middle" font-size="11" fill="#52514e">2019E</text><path d="M180.7,290.0L180.7,279.1L204.7,279.1L204.7,290.0Z" fill="#2a78d6"><title>2020E · 에치에프알: 4,080 억원</title></path><path d="M180.7,277.1L180.7,263.3L204.7,263.3L204.7,277.1Z" fill="#eb6834"><title>2020E · 오이솔루션: 5,880 억원</title></path><path d="M180.7,261.3L180.7,177.2L204.7,177.2L204.7,261.3Z" fill="#1baf7a"><title>2020E · 케이엠더블유: 32,130 억원</title></path><path d="M180.7,175.2L180.7,161.5L204.7,161.5L204.7,175.2Z" fill="#eda100"><title>2020E · 쏠리드: 5,850 억원</title></path><path d="M180.7,159.5L180.7,137.6Q180.7,133.6 184.7,133.6L200.7,133.6Q204.7,133.6 204.7,137.6L204.7,159.5Z" fill="#e87ba4"><title>2020E · RFHIC: 10,400 억원</title></path><text x="192.7" y="127.6" text-anchor="middle" font-size="11.5" font-weight="700" fill="#1d2733" class="tn">5.8조</text><text x="192.7" y="308.0" text-anchor="middle" font-size="11" fill="#52514e">2020E</text><path d="M254.4,290.0L254.4,278.5L278.4,278.5L278.4,290.0Z" fill="#2a78d6"><title>2021 · 에치에프알: 4,276 억원</title></path><path d="M254.4,276.5L254.4,268.6L278.4,268.6L278.4,276.5Z" fill="#eb6834"><title>2021 · 오이솔루션: 3,715 억원</title></path><path d="M254.4,266.6L254.4,224.6L278.4,224.6L278.4,266.6Z" fill="#1baf7a"><title>2021 · 케이엠더블유: 16,400 억원</title></path><path d="M254.4,222.6L254.4,213.9L278.4,213.9L278.4,222.6Z" fill="#eda100"><title>2021 · 쏠리드: 3,998 억원</title></path><path d="M254.4,211.9L254.4,192.7Q254.4,188.7 258.4,188.7L274.4,188.7Q278.4,188.7 278.4,192.7L278.4,211.9Z" fill="#e87ba4"><title>2021 · RFHIC: 9,411 억원</title></path><text x="266.4" y="182.7" text-anchor="middle" font-size="11.5" font-weight="700" fill="#1d2733" class="tn">3.8조</text><text x="266.4" y="308.0" text-anchor="middle" font-size="11" fill="#52514e">2021</text><path d="M328.2,290.0L328.2,276.6L352.2,276.6L352.2,290.0Z" fill="#2a78d6"><title>2022 · 에치에프알: 4,990 억원</title></path><path d="M328.2,274.6L328.2,271.7L352.2,271.7L352.2,274.6Z" fill="#eb6834"><title>2022 · 오이솔루션: 1,850 억원</title></path><path d="M328.2,269.7L328.2,243.3L352.2,243.3L352.2,269.7Z" fill="#1baf7a"><title>2022 · 케이엠더블유: 10,600 억원</title></path><path d="M328.2,241.3L328.2,233.8L352.2,233.8L352.2,241.3Z" fill="#eda100"><title>2022 · 쏠리드: 3,530 억원</title></path><path d="M328.2,231.8L328.2,222.1Q328.2,218.1 332.2,218.1L348.2,218.1Q352.2,218.1 352.2,222.1L352.2,231.8Z" fill="#e87ba4"><title>2022 · RFHIC: 5,846 억원</title></path><text x="340.2" y="212.1" text-anchor="middle" font-size="11.5" font-weight="700" fill="#1d2733" class="tn">2.7조</text><text x="340.2" y="308.0" text-anchor="middle" font-size="11" fill="#52514e">2022</text><path d="M402.0,290.0L402.0,283.9L426.0,283.9L426.0,290.0Z" fill="#2a78d6"><title>2023 · 에치에프알: 2,282 억원</title></path><path d="M402.0,281.9L402.0,280.3L426.0,280.3L426.0,281.9Z" fill="#eb6834"><title>2023 · 오이솔루션: 1,351 억원</title></path><path d="M402.0,278.3L402.0,267.0L426.0,267.0L426.0,278.3Z" fill="#1baf7a"><title>2023 · 케이엠더블유: 4,934 억원</title></path><path d="M402.0,265.0L402.0,257.2L426.0,257.2L426.0,265.0Z" fill="#eda100"><title>2023 · 쏠리드: 3,688 억원</title></path><path d="M402.0,255.2L402.0,248.6Q402.0,244.6 406.0,244.6L422.0,244.6Q426.0,244.6 426.0,248.6L426.0,255.2Z" fill="#e87ba4"><title>2023 · RFHIC: 4,680 억원</title></path><text x="414.0" y="238.6" text-anchor="middle" font-size="11.5" font-weight="700" fill="#1d2733" class="tn">1.7조</text><text x="414.0" y="308.0" text-anchor="middle" font-size="11" fill="#52514e">2023</text><path d="M475.8,290.0L475.8,283.8L499.8,283.8L499.8,290.0Z" fill="#2a78d6"><title>2024 · 에치에프알: 2,328 억원</title></path><path d="M475.8,281.8L475.8,280.9L499.8,280.9L499.8,281.8Z" fill="#eb6834"><title>2024 · 오이솔루션: 1,053 억원</title></path><path d="M475.8,278.9L475.8,271.6L499.8,271.6L499.8,278.9Z" fill="#1baf7a"><title>2024 · 케이엠더블유: 3,496 억원</title></path><path d="M475.8,269.6L475.8,260.8L499.8,260.8L499.8,269.6Z" fill="#eda100"><title>2024 · 쏠리드: 4,024 억원</title></path><path d="M475.8,258.8L475.8,255.3Q475.8,251.8 479.3,251.8L496.3,251.8Q499.8,251.8 499.8,255.3L499.8,258.8Z" fill="#e87ba4"><title>2024 · RFHIC: 3,340 억원</title></path><text x="487.8" y="245.8" text-anchor="middle" font-size="11.5" font-weight="700" fill="#1d2733" class="tn">1.4조</text><text x="487.8" y="308.0" text-anchor="middle" font-size="11" fill="#52514e">2024</text><path d="M549.6,290.0L549.6,286.0L573.6,286.0L573.6,290.0Z" fill="#2a78d6"><title>2025 · 에치에프알: 1,501 억원</title></path><path d="M549.6,284.0L549.6,282.1L573.6,282.1L573.6,284.0Z" fill="#eb6834"><title>2025 · 오이솔루션: 1,457 억원</title></path><path d="M549.6,280.1L549.6,266.3L573.6,266.3L573.6,280.1Z" fill="#1baf7a"><title>2025 · 케이엠더블유: 5,894 억원</title></path><path d="M549.6,264.3L549.6,254.4L573.6,254.4L573.6,264.3Z" fill="#eda100"><title>2025 · 쏠리드: 4,443 억원</title></path><path d="M549.6,252.4L549.6,236.2Q549.6,232.2 553.6,232.2L569.6,232.2Q573.6,232.2 573.6,236.2L573.6,252.4Z" fill="#e87ba4"><title>2025 · RFHIC: 8,278 억원</title></path><text x="561.6" y="226.2" text-anchor="middle" font-size="11.5" font-weight="700" fill="#1d2733" class="tn">2.2조</text><text x="561.6" y="308.0" text-anchor="middle" font-size="11" fill="#52514e">2025</text><path d="M623.3,290.0L623.3,276.4L647.3,276.4L647.3,290.0Z" fill="#2a78d6"><title>26 고점* · 에치에프알: 5,064 억원</title></path><path d="M623.3,274.4L623.3,257.2L647.3,257.2L647.3,274.4Z" fill="#eb6834"><title>26 고점* · 오이솔루션: 7,168 억원</title></path><path d="M623.3,255.2L623.3,212.0L647.3,212.0L647.3,255.2Z" fill="#1baf7a"><title>26 고점* · 케이엠더블유: 16,876 억원</title></path><path d="M623.3,210.0L623.3,178.0L647.3,178.0L647.3,210.0Z" fill="#eda100"><title>26 고점* · 쏠리드: 12,699 억원</title></path><path d="M623.3,176.0L623.3,91.8Q623.3,87.8 627.3,87.8L643.3,87.8Q647.3,87.8 647.3,91.8L647.3,176.0Z" fill="#e87ba4"><title>26 고점* · RFHIC: 33,628 억원</title></path><text x="635.3" y="81.8" text-anchor="middle" font-size="11.5" font-weight="700" fill="#1d2733" class="tn">7.5조</text><text x="635.3" y="308.0" text-anchor="middle" font-size="11" fill="#52514e">26 고점*</text><path d="M697.1,290.0L697.1,285.3L721.1,285.3L721.1,290.0Z" fill="#2a78d6"><title>26.10.8 · 에치에프알: 1,763 억원</title></path><path d="M697.1,283.3L697.1,275.1L721.1,275.1L721.1,283.3Z" fill="#eb6834"><title>26.10.8 · 오이솔루션: 3,806 억원</title></path><path d="M697.1,273.1L697.1,252.7L721.1,252.7L721.1,273.1Z" fill="#1baf7a"><title>26.10.8 · 케이엠더블유: 8,350 억원</title></path><path d="M697.1,250.7L697.1,236.8L721.1,236.8L721.1,250.7Z" fill="#eda100"><title>26.10.8 · 쏠리드: 5,930 억원</title></path><path d="M697.1,234.8L697.1,199.3Q697.1,195.3 701.1,195.3L717.1,195.3Q721.1,195.3 721.1,199.3L721.1,234.8Z" fill="#e87ba4"><title>26.10.8 · RFHIC: 15,500 억원</title></path><text x="709.1" y="189.3" text-anchor="middle" font-size="11.5" font-weight="700" fill="#1d2733" class="tn">3.5조</text><text x="709.1" y="308.0" text-anchor="middle" font-size="11" fill="#52514e">26.10.8</text><text x="76" y="336.0" text-anchor="end" font-size="10.5" fill="#898781">합산 영업이익</text><text x="118.9" y="336.0" text-anchor="middle" font-size="11" fill="#1d2733" class="tn">2,127</text><text x="192.7" y="336.0" text-anchor="middle" font-size="11" fill="#1d2733" class="tn">-46</text><text x="266.4" y="336.0" text-anchor="middle" font-size="11" fill="#1d2733" class="tn">61</text><text x="340.2" y="336.0" text-anchor="middle" font-size="11" fill="#1d2733" class="tn">659</text><text x="414.0" y="336.0" text-anchor="middle" font-size="11" fill="#1d2733" class="tn">-658</text><text x="487.8" y="336.0" text-anchor="middle" font-size="11" fill="#1d2733" class="tn">-595</text><text x="561.6" y="336.0" text-anchor="middle" font-size="11" fill="#1d2733" class="tn">228</text><text x="635.3" y="336.0" text-anchor="middle" font-size="11" fill="#1d2733" class="tn">—</text><text x="709.1" y="336.0" text-anchor="middle" font-size="11" fill="#1d2733" class="tn">1H -64</text><line x1="82" x2="746" y1="321.0" y2="321.0" stroke="#e9ecef"/></svg></div><figcaption><span class="mhint">↔ 차트를 좌우로 밀어 전체 보기 · </span>Fig.10 5社 시가총액 합계 (억원, 기업별 누적)와 합산 영업이익(억원, 하단 행). 2019~20년말은 KT 추정(주가×주식수·PBR 역산), 2021~25년말은 StockAnalysis, 2026 고점은 종목별 고점의 합(비동시)</figcaption></figure>
+
+  <h3>8-3. 2019년 랠리 vs 2026년 랠리</h3>
+  <div class="tw"><table>
+    <tr><th>종목</th><th>2019년 상승률 (연초~12.4)</th><th>2019~20 사이클 고점</th><th>2026 고점</th><th>10/8 종가</th><th>2026 고점 대비</th><th>2026 YTD</th></tr>
+    <tr><td>케이엠더블유</td><td>+111%</td><td>89,500 (2020.9.8, 시총 ~3.6조)</td><td>40,000 (6.4)</td><td>19,800</td><td>-50.5%</td><td>+37.5%</td></tr>
+    <tr><td>RFHIC</td><td>+23%</td><td>~48,300 (2021.1, 수정주가)</td><td>126,900 (5월)</td><td>58,500</td><td>-53.9%</td><td>+79.2%</td></tr>
+    <tr><td>쏠리드</td><td>+48%</td><td>~13,700 (2020.9, 수정주가)</td><td>20,900 (5월)</td><td>9,760</td><td>-53.3%</td><td>+32.4%</td></tr>
+    <tr><td>에치에프알</td><td>+109%</td><td>n/a</td><td>38,050 (52주 고가)</td><td>13,250</td><td>-65.2%</td><td>약 +15% (추정)</td></tr>
+    <tr><td>오이솔루션</td><td>+190%</td><td>n/a</td><td>57,900 (52주 고가, 장중)</td><td>30,750</td><td>-46.9%</td><td>약 +150% (추정)</td></tr>
+  </table></div>
+  <div class="box warn"><div class="t">읽는 법</div>
+    <ul>
+      <li>2019년 상승률 순위(오이솔루션·KMW·HFR > 쏠리드 > RFHIC)는 국내 5G 매출 민감도 순서와 같았다 — 실적이 주가를 설명했다.</li>
+      <li>2026년 상승률 순위(오이솔루션 > RFHIC > KMW > 쏠리드 > HFR)는 'AI 광통신·방산' 노출 순서에 가깝다 — 통신장비 사이클이 아니라 다른 스토리가 주가를 끌었다.</li>
+      <li>RFHIC와 쏠리드는 2026년에 2019~20 고점을 넘어섰고(각 2.6배·1.5배), KMW는 사상 최고가의 45%에서 멈췄다 — 시장은 '통신 순수주'보다 '비통신 엔진'을 먼저 샀다.</li>
+    </ul></div>
+</section>
+
+<!-- 9 -->
+<section id="s9">
+  <h2><span class="num">9.</span>주도주 조건 검증 — 2019년 공식을 2027년에 대입</h2>
+  <p>2019년 통신장비주가 시장을 주도할 때 충족됐던 일곱 가지 조건을 2027년 전망과 나란히 놓았다.</p>
+  <div class="tw"><table>
+    <tr><th style="width:4%">#</th><th style="width:17%">조건</th><th>2019년</th><th>2027년 (2026.10 기준 전망)</th><th style="width:7%">판정</th></tr>
+    <tr><td>1</td><td>신규 주파수 → CAPEX 급증</td><td>2018.6 경매 → 2019 CAPEX 9.6조, KT +65%·LGU+ +87%</td><td>미국 Upper C-band 경매 2027 상반기 → CAPEX는 2028. 국내 3.7GHz 미확정, 1H26 국내 CAPEX 약 -8%. iM증권은 유무선 CAPEX 2026E -2.9%·2027E -4.4% 전망</td><td class="half">△</td></tr>
+    <tr><td>2</td><td>장비벤더 대형 발주·공급계약 공시</td><td>삼성 mMIMO 국내·미국·일본 동시 발주, KMW 사상 최대 수주</td><td>2023~26년 KMW·HFR·오이솔루션 대형 공급계약 공시 확인 안 됨. 삼성 네트워크 1Q26 -25%, 2026 감소 전망</td><td class="no">×</td></tr>
+    <tr><td>3</td><td>흑자전환·실적 서프라이즈</td><td>KMW 영업이익 -262억 → 1,378억</td><td>RFHIC·쏠리드 흑자 / KMW·HFR·오이솔루션 1H26 적자 지속</td><td class="half">△</td></tr>
+    <tr><td>4</td><td>글로벌 업황 동조</td><td>글로벌 5G 개시, RAN 2017→21년 +40% 이상</td><td>RAN ~$35B 보합(Dell'Oro 2025~30 연 +1%). 글로벌 장비주 랠리는 AI 광·IP가 주도</td><td class="no">×</td></tr>
+    <tr><td>5</td><td>정책 촉매</td><td>세계 최초 5G 상용화 경쟁</td><td>5G SA 의무·AI-RAN·6G 전략·민관협의체, 미국 OBBBA·중국 장비 배제</td><td class="ok">○</td></tr>
+    <tr><td>6</td><td>구조적 콘텐츠 증가</td><td>mMIMO로 사이트당 필터·안테나·RU 급증</td><td>6G FR3 콘텐츠 증가는 2030년, AI-RAN 가치는 컴퓨트·SW로, 중국 배제는 '점유율 이동'. NTN(Gateway·FPA) 콘텐츠는 5社 밖(인텔리안테크)</td><td class="half">△</td></tr>
+    <tr><td>7</td><td>밸류에이션 여지</td><td>2018년말 KMW 시총 약 4,150억(추정) = 2019년 영업이익의 3배</td><td>시총/2027E 영업이익: HFR 2.3배·KMW 8.3배·쏠리드 13배·RFHIC 21배 — 추정치의 신뢰가 관건. PBR KMW 5.6배·오이솔루션 4.9배</td><td class="half">△</td></tr>
+  </table></div>
+  <div class="box blue"><div class="t">판정: ○ 1 · △ 4 · × 2</div>
+    <p>2027년의 '업종 주도'는 ②(발주·공시)와 ④(글로벌 RAN)가 ×에서 바뀌어야 성립한다. 특히 ②는 분기마다 확인할 수 있는 가장 빠른 신호다 — 2019년(KMW)과 2021년(HFR, 후지쯔 1,585억) 사이클 모두 대형 공급계약이 실적 폭발에 선행했다.</p></div>
+</section>
+
+<!-- 10 -->
+<section id="s10">
+  <h2><span class="num">10.</span>리스크 — 강도별 정리</h2>
+  <div class="tw"><table>
+    <tr><th style="width:17%">리스크</th><th>내용</th><th style="width:17%">영향 종목</th><th style="width:12%">강도</th></tr>
+    <tr><td>경매→매출 시차</td><td>미국 Upper C-band 경매(2027 상반기) 후 위성 대역 이전·면허 발급 → 구축은 2028. 기대가 실적보다 1년 이상 앞서고, 공백기 동안 적자 기업은 현금을 태운다</td><td>KMW·HFR·RFHIC(통신)</td><td class="star">★★★★★</td></tr>
+    <tr><td>국내 추가 주파수 지연</td><td>통신사 수요 미온(100MHz 최저가 약 1조 추정), 정부는 '수요 확인 시 공급' 입장. 1H26 CAPEX 감소 지속</td><td>KMW·HFR·RFHIC·오이솔루션</td><td class="star">★★★★☆</td></tr>
+    <tr><td>통신사 투자 우선순위 이동</td><td>통신 3사의 현금 용처 1순위는 주주환원(2026~27E 환원수익률 KT 6.3~6.8%·LGU+ 5.9~6.5%)과 AIDC(합산 2GW)다. 네트워크는 '투자를 안 하는 것이 이익'인 회수기 — iM증권은 유무선 CAPEX를 2027년까지 감소로 전망(§6-1)</td><td>KMW·HFR·RFHIC(통신)·오이솔루션(무선)</td><td class="star">★★★★☆</td></tr>
+    <tr><td>재무·희석</td><td>KMW 현금 424억 vs 단기차입 518억·영업CF 4년 적자, HFR 순차입 ~428억·반기 현금 -257억. 2026년 KMW·오이솔루션 CB 전환</td><td>KMW·HFR·오이솔루션</td><td class="star">★★★★☆</td></tr>
+    <tr><td>삼성 네트워크 부진</td><td>1Q26 매출 약 0.6조(-25%), 2026 연간 감소 전망, 2026년 미국 신규 수주 미확인</td><td>KMW·RFHIC·쏠리드(RU)</td><td class="star">★★★★☆</td></tr>
+    <tr><td>밸류에이션·수급</td><td>2026년 2.8~4.7배 급등 → 60~77% 급락을 겪은 매물대. PBR KMW 5.6배·오이솔루션 4.9배·RFHIC 4.2배. 투자경고 지정 반복</td><td>전 종목</td><td class="star">★★★★☆</td></tr>
+    <tr><td>AI-RAN 가치 귀속</td><td>지출이 GPU·소프트웨어로 이동, RU·필터·PA 물량 증가 근거 없음. 스펙트럼 효율 개선은 사이트 수요를 대체할 수도</td><td>KMW·RFHIC</td><td class="star">★★★☆☆</td></tr>
+    <tr><td>6G 일정</td><td>Rel-21 기능 동결 2028.12, 국내 상용화 목표 2028→2030 후퇴 이력. 테마가 식으면 멀티플 하락</td><td>전 종목</td><td class="star">★★★☆☆</td></tr>
+    <tr><td>방산 납기 변동</td><td>2Q26 레이시온 선적 지연으로 컨센서스 미달 — 분기 실적 변동성</td><td>RFHIC</td><td class="star">★★☆☆☆</td></tr>
+    <tr><td>공급망·통상</td><td>GaN-on-SiC 웨이퍼 미국 단일 의존(RFHIC), 미국 관세(쏠리드). 중국 RF 규제는 시점 불확실(양방향)</td><td>RFHIC·쏠리드·KMW</td><td class="star">★★☆☆☆</td></tr>
+    <tr><td>환율</td><td>원화 강세 시 수출 비중 높은 종목 이익 감소(RFHIC: 원화 1% 변동당 EPS 0.8%, KB)</td><td>RFHIC·쏠리드</td><td class="star">★★☆☆☆</td></tr>
+  </table></div>
+  <p class="small">★ 강도는 KT 판단(발생 가능성 × 주가 영향).</p>
+</section>
+
+<!-- 11 -->
+<section id="s11">
+  <h2><span class="num">11.</span>투자의견 — 시나리오, 종목별 판단, 체크리스트</h2>
+  <h3>11-1. 2027 시나리오 (KT 주관 가중치)</h3>
+  <div class="tw"><table>
+    <tr><th style="width:10%">시나리오</th><th style="width:8%">가중치</th><th>전제</th><th>업종 2027</th><th>종목 함의</th></tr>
+    <tr><td><b>Bull</b></td><td>25%</td><td>국내 3.7GHz 경매 2027 상반기 확정 + 5G SA·실내 투자 패키지, 미국 Upper C-band 대형 낙찰·조기 구축, 중국 RF 배제로 벤더 발주가 한국 RF로 → 2H27 공급계약 공시</td><td>2019형 랠리 재현 — 합산 영업이익 흑자 대폭 확대, 2026 고점 재도전</td><td>KMW·HFR 탄력 최대(증분이익률 40%), RFHIC는 통신 회복 가산</td></tr>
+    <tr class="self"><td><b>Base</b></td><td>50%</td><td>경매는 일정대로, 장비 매출은 2028. 국내 CAPEX는 6조 안팎에서 횡보(KT 가정)</td><td>'경매 기대 랠리 → 실적 확인 실패' 반복. 업종 주도주가 아닌 순환매</td><td>RFHIC·쏠리드가 실적으로 하방 방어, KMW·HFR은 이벤트 트레이딩</td></tr>
+    <tr><td><b>Bear</b></td><td>25%</td><td>국내 추가 경매 지연, 미국 경매 지연·흥행 부진, 삼성 네트워크 역성장 지속</td><td>2026.7 저점 재시험</td><td>KMW·HFR 자금조달·희석 현실화</td></tr>
+  </table></div>
+
+  <h3>11-2. 종목별 판단 (KT 관점 — 매수·매도 권유 아님)</h3>
+  <div class="tw"><table>
+    <tr><th style="width:11%">종목</th><th style="width:10%">유형</th><th>2027 핵심 변수</th><th>실적 근거</th><th>밸류 (10/8)</th><th style="width:22%">KT 판단</th></tr>
+    <tr class="self"><td><b>RFHIC</b></td><td>실적형</td><td>방산 수주잔고·레이시온 ATC, 에릭슨 선정(2027), RF머트리얼즈 CPO</td><td>2026E 영업이익 520~563억, 1H26 189억</td><td>시총 ~1.55조, 2027E 영업이익의 ~21배</td><td>'주도' 조건에 가장 근접. 단 정체성은 통신장비가 아닌 GaN 방산·RF</td></tr>
+    <tr class="self"><td><b>쏠리드</b></td><td>실적형(방어)</td><td>실내 5G 기지국 인센티브, 미국 신규 대역 인빌딩, 데이터센터 DAS</td><td>5년 연속 흑자, 2026E 영업이익 352억(컨센)</td><td>PER ~11배(TTM)·iM 12개월 선행 17배, PBR 1.6배, 2027E의 ~13배</td><td>가장 싼 실적주(TTM 기준). 테마 탄력은 낮음 — 4Q26 실적 확인. iM 2026E 매출 3,353억은 2H26 약 2,000억을 요구</td></tr>
+    <tr><td><b>케이엠더블유</b></td><td>이벤트 레버리지</td><td>미국 Upper C-band·중국 RF 배제, 삼성·에릭슨 발주</td><td>5년 연속 적자, 1H26 -120억</td><td>PBR 5.6배, 하나 2027E의 ~8배</td><td>공급계약 공시 전까지는 '옵션'. 탄력과 희석 리스크 모두 최대</td></tr>
+    <tr><td><b>에치에프알</b></td><td>이벤트 레버리지</td><td>AT&amp;T·에릭슨 프론트홀, SKT AI-RAN 상용 발주</td><td>3년 연속 적자, 1H26 -132억</td><td>PBR 1.1배, 하나 2027E의 ~2.3배</td><td>가장 싸지만 유동성 리스크 — 수주 또는 자금 해소 확인 후</td></tr>
+    <tr><td><b>오이솔루션</b></td><td>광통신 대리</td><td>데이터센터 800G·1.6T·ELSFP 퀄·수주</td><td>4년 연속 적자, 1H26 -15억(손익분기 근접)</td><td>PBR ~4.9배</td><td>통신 사이클과 별도 트랙 — '공시 확인 트레이딩' 유지</td></tr>
+  </table></div>
+
+  <h3>11-3. Bull vs Bear</h3>
+  <div class="grid2">
+    <div class="box bull"><div class="t">Bull — "2027~28 RF 쇼티지"</div>
+      <ul>
+        <li>미국 Upper C-band 160MHz + AT&amp;T EchoStar 대역 + 800MHz 파이프라인 → 2027~28 미국 RAN 투자 재개</li>
+        <li>중국산 RF 장비·부품 규제와 벤더 통합 → 한국 RF 위탁생산 쇼티지(하나증권)</li>
+        <li>국내 2027 추가 5G 경매 + 5G SA·AI-RAN 실증 + 2028 6G 시범 → 3년짜리 정책 모멘텀</li>
+        <li>증분이익률 40%: KMW 매출 3,676억이면 영업이익 약 840억(KT 모형) — 현 시총은 그 10배 수준</li>
+        <li>2019년에도 주가는 매출 피크보다 먼저, 경매~상용화 구간에서 올랐다</li>
+        <li>NTN: 非Starlink 위성사업자 상용화가 2027년 전후에 몰려 Gateway·FPA 수요가 선다(iM증권) — 업종 테마로 번지면 5社도 동반 상승(단, 실체는 인텔리안테크)</li>
+      </ul></div>
+    <div class="box bear"><div class="t">Bear — "2026년이 기대의 고점이었다"</div>
+      <ul>
+        <li>국내 CAPEX 6.02조 바닥에서 1H26에도 감소, 삼성 네트워크 -25%</li>
+        <li>글로벌 RAN ~$35B 보합, AI-RAN 지출은 GPU·SW로</li>
+        <li>미국 장비 매출은 2028 — 2027년 실적 공백 동안 KMW·HFR은 현금 소진·희석</li>
+        <li>2026년에 이미 기대 사이클 한 바퀴(2.8~4.7배 급등 → 60~77% 급락) — 매물대 부담</li>
+        <li>6G는 2030, 피지컬 AI는 Wi-Fi·온디바이스와 경쟁</li>
+        <li>통신사 현금은 주주환원·AIDC로 — 유무선 CAPEX 2026E -2.9%·2027E -4.4%, 감가상각비 하락이 이익률을 올리는 구조(iM증권)</li>
+      </ul></div>
+  </div>
+
+  <h3>11-4. 주도주 확인 체크리스트 — 분기별</h3>
+  <div class="tw"><table>
+    <tr><th style="width:4%">#</th><th style="width:22%">조건</th><th>확인 시점·방법</th><th style="width:30%">임계값 (KT)</th></tr>
+    <tr><td>1</td><td>국내 추가 5G 주파수 공급계획</td><td>2026.12 차세대망 종합대책, 과기정통부 공고</td><td>3.7GHz 100MHz 이상 경매 일정·최저가 공고</td></tr>
+    <tr><td>2</td><td>통신3사 2027 CAPEX 가이던스</td><td>2027.2 4Q26 실적발표</td><td>합산 6.0조 → +10% 이상(6.6조+)</td></tr>
+    <tr><td>3</td><td>미국 Upper C-band 경매</td><td>FCC 경매 공고 → 경매(2027 상반기, 시한 7.4)</td><td>낙찰 총액·낙찰자(Verizon·AT&amp;T), 구축 개시 일정</td></tr>
+    <tr><td>4</td><td>삼성 네트워크 반등</td><td>삼성전자 분기 실적(3Q26: 10월 말)</td><td>분기 매출 1조원 회복(1Q26 약 0.6조), 미국 신규 수주</td></tr>
+    <tr class="self"><td>5</td><td>공급계약 공시</td><td>DART 수시공시</td><td>KMW·HFR 매출액 10% 이상 단일판매·공급계약 — 2019·2021 사이클의 진짜 신호</td></tr>
+    <tr><td>6</td><td>분기 영업흑자</td><td>분기 실적</td><td>KMW·HFR 흑자전환을 증자 없이 달성</td></tr>
+    <tr><td>7</td><td>AI-RAN 상용 발주</td><td>T-Mobile 상용 개시(2027), SKT·KT 상용 장비 발주</td><td>국내 RU·프론트홀(HFR) 포함 여부</td></tr>
+    <tr><td>8</td><td>에릭슨 벤더 선정</td><td>2027 (RFHIC 코멘트)</td><td>RFHIC 통신 GaN 신규 고객 확정</td></tr>
+    <tr><td>9</td><td>NTN 매출 전환 (iM 반영)</td><td>쏠리드 위성단말 과제 양산·공급계약 공시, 인텔리안테크 분기 실적(Gateway 캘리포니아 공장·FPA)</td><td>쏠리드 위성 관련 매출 발생 / 인텔리안테크 Gateway 2027E 1,620억(+32%) 궤도 — 업종 벤치마크</td></tr>
+  </table></div>
+</section>
+
+<!-- 12 -->
+<section id="s12">
+  <h2><span class="num">12.</span>결론 — 핵심 질문에 대한 답</h2>
+  <div class="verdict">
+    <h3>Verdict</h3>
+    <div class="a"><b>Q1. 2027년, 통신장비 사이클은 오는가?</b><br>2027년은 '경매의 해'이고 CAPEX는 2028년의 일이다. 국내 3사 CAPEX 6.02조(2019 대비 -37%)와 1H26 추가 감소, 글로벌 RAN ~$35B 보합, 삼성 네트워크 -25%는 2027년 장비 매출 사이클의 근거가 약하다는 뜻이다. 미국 Upper C-band(시한 2027.7.4)와 국내 추가 주파수(정책 2026 말 예상)는 주가를 먼저 움직일 촉매지만, 경매 → CAPEX 피크 12~20개월의 시차상 매출은 2028년부터다. 통신사 쪽에서 본 그림도 같다 — iM증권(2026.7)은 유무선 CAPEX를 2026E -2.9%·2027E -4.4%로 2년 더 줄여 잡고, 늘어난 현금은 주주환원과 AIDC로 보낸다.</div>
+    <div class="a"><b>Q2. 6G·피지컬 AI는 실적 변수인가?</b><br>둘 다 2027년에는 멀티플 변수다. 6G 표준 완성은 2029.3, 국내 6G 주파수 할당은 2029년 전후, 상용화는 2030년이다. 피지컬 AI는 업링크·지연·실내라는 네트워크의 '질'을 바꾸지만 AI-RAN 지출은 GPU와 소프트웨어로 간다 — RU·필터·PA 물량 증가의 근거는 없다. 2027년 실적에 닿는 고리는 에치에프알(국가 AI-RAN 실증 장비)과 쏠리드(실내 고밀도화) 정도다.</div>
+    <div class="a"><b>Q3. 10년 재무가 말하는 사이클 위치는?</b><br>증분이익률 40%대의 고정비 산업이며, 사이클의 주인공은 매번 바뀌었다(2019 KMW·오이솔루션 → 2022 HFR → 2025 RFHIC·쏠리드). 손익분기 대비 2025년 매출은 RFHIC 1.7배·쏠리드 1.4~1.5배(이익 구간), HFR 1.0배, KMW 0.6배·오이솔루션 0.6~0.7배(적자 구간)다. 10년 누적 영업이익은 쏠리드 +1,533억, RFHIC +931억, HFR +711억, 오이솔루션 -159억, KMW -783억이다.</div>
+    <div class="a"><b>Q4. 주도주가 되려면?</b><br>2019년 주도 공식 7개 중 ○1·△4·×2 — Base(50%)에서 '업종 주도'는 아니다. Bull(25%)의 열쇠는 2H27 공급계약 공시다. 실적이 받치는 RFHIC(통신장비라기보다 GaN 방산·RF)와 쏠리드가 우선이고, KMW·HFR은 공시와 분기 흑자가 확인될 때까지 이벤트 트레이딩, 오이솔루션은 광통신 트랙으로 본다. 2026년 상반기에 '기대 사이클'이 한 번 지나간 만큼, 2027년의 두 번째 랠리는 숫자로만 지속된다.</div>
+    <div class="a"><b>Q5. 통신사의 지갑과 NTN은 5社에 닿는가?</b><br>닿지 않는다. 통신사의 2027년은 '투자 회수기'로, 이익률은 비용 절감으로 사이클 상단까지 오르고 현금은 주주환원(6~7%)과 AIDC(합산 2GW)로 간다 — 장비사 매출과 이해가 상충한다. iM증권이 장비주의 신성장 축으로 제시한 NTN(위성 Gateway·FPA, 非Starlink 상용화 2027 전후)은 실체가 있지만 수혜 기업은 5社 밖의 인텔리안테크이고, 5社 중 매출이 있는 곳은 없다(쏠리드 국책과제, HFR 제품 수준). NTN 테마가 업종으로 번지면 5社의 상승은 실체 없는 동반 상승이다. 쏠리드에 대한 iM의 긍정 논리(DAS 시장 CAGR 18.6%, Neutral Host 수익성, 선행 PER 17배)는 '경매'가 아니라 '실적형'의 논리이며, KT 분류와 충돌하지 않는다.</div>
+  </div>
+  <div class="box"><div class="t">다음 액션 (KT 후속 작업 제안)</div>
+    <ul>
+      <li>에릭슨 3Q26(10월 중순)·삼성전자 3Q26(10월 말) 네트워크 실적과 북미 코멘트 → 체크리스트 #4 판정</li>
+      <li>2026.12 정부 차세대망 종합대책·3.7GHz 공급계획 발표 시 국내 경매 시나리오 업데이트</li>
+      <li>FCC Upper C-band 경매 공고(일정·최저가) → 미국 노출 종목(KMW·HFR·RFHIC) 매출 시점 재추정</li>
+      <li>2027.2 통신3사 CAPEX 가이던스 → 체크리스트 #2 판정(iM 전망 2027E -4.4%가 기준선)</li>
+      <li>인텔리안테크 3Q26·4Q26 실적(Gateway 캘리포니아 공장 가동률·FPA 매출)으로 NTN 인프라 CAPEX의 실체를 점검 → 체크리스트 #9. 쏠리드 위성단말 과제 진행 상황 확인</li>
+      <li>DART 원문 대조: KMW·HFR 공급계약·자금조달 공시, 2016~20년 재무(본 리포트는 DART 직접 접근 불가로 집계 사이트·증권사 자료 기반)</li>
+    </ul></div>
+</section>
+
+<!-- Footer -->
+<section id="footer">
+  <h2><span class="num">※</span>소싱 및 고지</h2>
+  <div class="grid2">
+    <div><h4>확정 (공시·실적·공식 발표·시세)</h4>
+      <ul class="src">
+        <li>5社 연간·분기 재무: valueline·etfshopping(DART 기반)·StockAnalysis(S&amp;P)·Stockopedia(LSEG)·roic.ai·butler 교차검증, 각사 IR 자료(HFR 2018·2021·2023, 오이솔루션 2018·2020·2023, RF머트리얼즈 2023), RFHIC 2025 사업보고서</li>
+        <li>시세·시가총액: 2026.10.8 종가(etfshopping·아시아경제·StockHub·Wisesheets), 연말 시가총액 2021~25(StockAnalysis), 수정주가(Yahoo Finance)</li>
+        <li>공시 보도: HFR-후지쯔 1,585억(2021.11), 케이알벤처스 매각(2026.6), RFHIC-콜린스 221억(2026.6), 쏠리드 다윈프릭션 인수(2025.10)</li>
+        <li>한국 정책: 3G·LTE 재할당 최종안(2025.12.10), Hyper-AI 네트워크 전략(2025.12.19), 국정기획위 보고(2025.6.18), 민관협의체(2026.8.27), Hyper-AI 실증(Korea Times·SDxCentral, 2026.7)</li>
+        <li>미국: FCC Auction 107·110·113(AWS-3), Upper C-band 규칙(2026.7), OBBBA(2025.7.4), AT&amp;T EchoStar 인수 완료(2026.7.28), Verizon·AT&amp;T 2026 가이던스</li>
+        <li>표준: 3GPP Rel-21 일정(2026.6.10 TSG#112), WRC-27 의제 1.7</li>
+        <li>글로벌 벤더: 에릭슨 2Q26(2026.7.14), 노키아 2Q26(2026.7.23)·AI-RAN 플랫폼 출시(2026.7), 엔비디아-노키아 $1B·AI-native 6G 스택(2025.10.28), Ericsson Mobility Report(2026.6.16)</li>
+      </ul></div>
+    <div><h4>추정 (리서치·언론·KT 추정)</h4>
+      <ul class="src">
+        <li>iM증권 신희철 통신 In-Depth 'AIDC, 통신업 성장 신항로'(2026.7.21, 151p): 통신3사 CAPEX·감가상각비·OPM·주주환원 전망, AIDC 로드맵, NTN Gateway·FPA TAM과 밸류체인, 인텔리안테크(Buy, TP 89,000)·쏠리드(NR) 추정 — §6에 반영. 리포트 내 수치 혼재(인텔리안테크 2026E 매출·FPA, 쏠리드 점유율, Gateway ASP)는 본문에 표기</li>
+        <li>증권사 추정·목표가: 하나증권 김홍식(통신 2027 2026.9.3, 쇼티지 2026.9.10·9.15, 각 종목), 신한 김아람(2026.5.22)·RFHIC(2026.7.28), KB(RFHIC 2026.4.28), 메리츠(오이솔루션 2026.3.16), FnGuide 컨센서스(쏠리드, 2026.6 인용)</li>
+        <li>통신3사 CAPEX 합산(비즈워치·뉴시스·토요경제·디지털투데이 집계; 2023년 출처별 6.9~7.7조), 미국 3사 CAPEX(공시치 집계, 일부 연도 10-K 원문 미대조)</li>
+        <li>RAN 시장 규모(Omdia·Dell'Oro), 6G CAPEX 시점(Dell'Oro), FR3 콘텐츠(5G Americas), 6G 기지국 수량(Mobile Experts), 삼성 네트워크 분기 매출(Light Reading 역산)</li>
+        <li>2018~20년말 시가총액(주가×주식수·PBR 역산), 2025말 HFR·오이솔루션 종가(시총÷주식수), 2019년 상승률(이투데이)</li>
+        <li>손익분기 매출(증분이익률 40% 가정), 시나리오 가중치, 민감도·리스크 ★, 경매→매출 시점, 종목 판단 — KT 주관</li>
+        <li>중국산 RF 부품 규제에 따른 '2027 쇼티지'는 하나증권 논리이며, 규제 범위·시점을 독립 확인하지 못했다</li>
+      </ul></div>
+  </div>
+  <div class="disc">데이터 주의: HFR 2016~17년은 스팩 합병(2018.11) 전 영업법인, RFHIC 2016~17년은 스팩 합병(2017.9) 전 수치(단일 출처). 쏠리드 2016~17년은 팬택을 중단영업으로 분리한 계속영업 기준 재작성치. KMW 2019년은 2020년 사업보고서 재작성치. 현금성자산·차입금 정의는 출처별로 다를 수 있다(리스부채 제외 원칙). 2026.10.8 종가는 출처 간 소폭 차이가 있어(시간외 반영 여부) KRX 종가 확인을 권한다.</div>
+  <div class="disc">본 자료는 KT의 산업 리서치 목적 문서로 특정 종목의 매수·매도를 권유하지 않습니다. 투자 판단의 책임은 투자자 본인에게 있습니다. · KT · 2026.10.11 · v2 2026.10.14(iM증권 2026.7.21 리포트 반영)</div>
+</section>
+
+</div>
+</body>
+</html>

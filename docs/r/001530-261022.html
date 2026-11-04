@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<title>DI동일 알루미늄박 리포트</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;700&family=IBM+Plex+Mono:wght@400;600&family=Gothic+A1:wght@800;900&display=swap">
+<style>
+html{color-scheme:light dark}body{margin:0}img{max-width:100%}[hidden]{display:none!important}
+/* 레이아웃: 압연 코일처럼 좁은 본문 단 하나, 수치는 표·차트가 폭을 넓게 쓴다 */
+:root{
+  --bg:#eef1f3; --paper:#f8fafb; --fg:#1b2329; --muted:#5b6871; --line:#cfd7dc;
+  --di:#0f5e7a; --sa:#b8741a; --neg:#b3362e; --pos:#2a7a4b; --tint:#e3eaee;
+  --f-display:"Gothic A1","IBM Plex Sans KR","Malgun Gothic",sans-serif;
+  --f-body:"IBM Plex Sans KR","Malgun Gothic","Apple SD Gothic Neo",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#12171b; --paper:#182026; --fg:#e3e9ed; --muted:#93a2ac; --line:#2c3942;
+  --di:#5cb7d6; --sa:#e3a54b; --neg:#ef7a70; --pos:#6cc995; --tint:#1f2a31; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#12171b; --paper:#182026; --fg:#e3e9ed; --muted:#93a2ac; --line:#2c3942;
+  --di:#5cb7d6; --sa:#e3a54b; --neg:#ef7a70; --pos:#6cc995; --tint:#1f2a31; color-scheme:dark}
+body{background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:15.5px;line-height:1.72;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:900px;margin:0 auto;padding-block:36px 72px}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;line-height:1.3;margin:0}
+h1{font-size:clamp(26px,5.2vw,40px);font-weight:900;letter-spacing:-.01em}
+h2{font-size:clamp(20px,3.6vw,25px);font-weight:800;margin-top:52px;padding-top:18px;border-top:2px solid var(--fg)}
+h3{font-size:17px;font-weight:800;margin-top:26px}
+p{margin:12px 0;max-width:68ch}
+.eyebrow{font-family:var(--f-mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.lede{font-size:17px;max-width:66ch}
+.di{color:var(--di);font-weight:700}.sa{color:var(--sa);font-weight:700}
+.neg{color:var(--neg)}.pos{color:var(--pos)}
+.mono,td.n,th.n{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+.meta{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:13px;color:var(--muted);margin-top:12px}
+.tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);margin:26px 0 8px}
+.tile{background:var(--paper);padding:14px 14px 12px;min-width:0}
+.tile .k{font-size:12px;color:var(--muted)}
+.tile .v{font-family:var(--f-mono);font-size:clamp(19px,4.6vw,27px);font-weight:600;overflow-wrap:anywhere;line-height:1.25;margin-top:4px}
+.tile .s{font-size:12px;color:var(--muted);margin-top:2px}
+.verdict{background:var(--paper);border:1px solid var(--line);border-left:5px solid var(--di);padding:16px 18px;margin:24px 0}
+.verdict p{margin:6px 0}
+.tbl-scroll{overflow-x:auto;margin:14px 0;-webkit-overflow-scrolling:touch}
+table{border-collapse:collapse;width:100%;font-size:13.5px;background:var(--paper)}
+th,td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{font-size:12px;color:var(--muted);font-weight:500;background:var(--tint);white-space:nowrap}
+td.n,th.n{text-align:right;white-space:nowrap}
+tr.hl td{background:var(--tint)}
+.cap{font-size:12px;color:var(--muted);margin-top:6px;max-width:none}
+.reasons{counter-reset:r;display:grid;gap:14px;margin:18px 0;padding:0;list-style:none}
+.reasons li{display:grid;grid-template-columns:44px minmax(0,1fr);gap:10px;background:var(--paper);border:1px solid var(--line);padding:14px 16px 12px 10px}
+.reasons li::before{counter-increment:r;content:counter(r);font-family:var(--f-display);font-weight:900;font-size:28px;color:var(--di);text-align:center;line-height:1.1}
+.reasons h3{margin:0;font-size:16.5px}
+.reasons p{margin:6px 0}
+.wt{display:inline-block;font-family:var(--f-mono);font-size:11px;padding:1px 7px;border:1px solid currentColor;margin-left:6px;vertical-align:2px}
+.chart{background:var(--paper);border:1px solid var(--line);padding:12px 10px 8px;margin:16px 0;position:relative}
+.chart svg{display:block;width:100%;height:auto;touch-action:pan-y}
+.legend{display:flex;flex-wrap:wrap;gap:4px 16px;font-size:12.5px;color:var(--muted);padding:0 4px 6px}
+.sw{display:inline-block;width:12px;height:3px;vertical-align:middle;margin-right:5px}
+.tip{position:fixed;z-index:20;pointer-events:none;background:var(--fg);color:var(--bg);font-size:12px;line-height:1.5;padding:7px 9px;max-width:min(260px,calc(100vw - 20px));font-family:var(--f-body)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.two>div{background:var(--paper);border:1px solid var(--line);padding:12px 16px;min-width:0}
+.two h3{margin-top:4px}
+.two ul{margin:8px 0;padding-left:18px}.two li{margin:6px 0}
+.chain{display:flex;flex-wrap:wrap;gap:6px;align-items:stretch;margin:16px 0}
+.chain div{flex:1 1 120px;background:var(--paper);border:1px solid var(--line);padding:10px;font-size:13px;min-width:0}
+.chain div b{display:block;font-size:12px;color:var(--muted);font-weight:500}
+.chain div.me{border:2px solid var(--di)}
+.sev{font-family:var(--f-mono);font-size:11px;padding:1px 6px;color:var(--paper);white-space:nowrap}
+.sev.h{background:var(--neg)}.sev.m{background:var(--sa)}.sev.l{background:var(--muted)}
+.check{list-style:none;padding:0}.check li{padding:6px 0 6px 28px;position:relative;border-bottom:1px dashed var(--line)}
+.check li::before{content:"";position:absolute;left:4px;top:11px;width:12px;height:12px;border:1.5px solid var(--muted)}
+.src{font-size:12.5px;color:var(--muted)}
+.src a{color:var(--di)}
+a{color:var(--di)}
+a:focus-visible{outline:2px solid var(--di);outline-offset:2px}
+@media (max-width:620px){
+  body{font-size:15px;padding-left:max(14px,env(safe-area-inset-left,0px));padding-right:max(14px,env(safe-area-inset-right,0px))}
+  .tiles{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .two{grid-template-columns:1fr}
+  table{font-size:12.5px;min-width:0}
+  th,td{padding:7px}
+  .tbl-scroll{margin-left:-14px;margin-right:-14px}
+  .reasons li{grid-template-columns:32px minmax(0,1fr)}
+  .reasons li::before{font-size:22px}
+}
+@media (max-width:400px){
+  body{padding-left:max(11px,env(safe-area-inset-left,0px));padding-right:max(11px,env(safe-area-inset-right,0px))}
+  .tbl-scroll{margin-left:-11px;margin-right:-11px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="eyebrow">기업 리포트 · 001530 KOSPI · 2026-10-22</div>
+<h1>DI동일: 알루미늄박은 삼아만큼 크다. 주가는 그만큼 가지 않았다</h1>
+<p class="lede">2026년 ESS 쇼티지 랠리에서 <span class="sa">삼아알미늄</span>은 연초 대비 <b>+254%</b>, <span class="di">DI동일</span>은 <b>+49%</b>에 그쳤다. 두 회사의 2차전지 양극박 사업 규모는 비슷하다. 차이를 만든 것은 사업의 크기가 아니라 주식의 성격이다.</p>
+<div class="meta"><span>기준가 2026-10-21 KRX 종가</span><span>재무: DART 연결 (2026 반기까지)</span><span>단위: 억원</span></div>
+
+<div class="tiles">
+  <div class="tile"><div class="k">DI동일 시가총액</div><div class="v">5,800</div><div class="s">28,000원 · PBR 1.10배</div></div>
+  <div class="tile"><div class="k">삼아알미늄 시가총액</div><div class="v">12,280</div><div class="s">81,200원 · PBR 5.54배</div></div>
+  <div class="tile"><div class="k">2025 알루미늄박 매출</div><div class="v"><span class="di">2,262</span> / <span class="sa">2,115</span></div><div class="s">DI 알루미늄 부문 / 삼아 압연+가공</div></div>
+  <div class="tile"><div class="k">2026 연초 대비 주가</div><div class="v"><span class="di">+49%</span> / <span class="sa">+254%</span></div><div class="s">01-02 → 10-21</div></div>
+</div>
+
+<div class="verdict">
+<p><b>핵심 결론.</b> DI동일 알루미늄 부문은 매출로 삼아와 같은 체급이고(2025년 2,262억 vs 2,115억), 판가가 더 높으며(수출 kg당 11,600원 vs 9,544원), 2025년 연간으로 흑자였다(4분기는 -15억). 그런데도 시장은 이 사업에 거의 값을 매기지 않는다. 투자부동산 공정가치와 관계기업 지분을 빼면 시장이 DI동일 영업 전체에 주는 기업가치는 약 5,700억이고, 삼아는 알루미늄박 한 사업에 1조 4,400억을 준다.</p>
+<p>주가가 못 간 이유는 크게 다섯 가지다. ① 알루미늄이 매출의 43%뿐인 <b>복합기업</b>이라 ESS 테마 자금이 "유일한 순수 상장주" 삼아로 갔다. ② 2024~25년 <b>시세조종 사건</b>으로 주가가 부풀었다가 꺼졌고 수사가 진행 중이다. ③ LFP용 <b>카본코팅 설비</b>가 삼아보다 1년 이상 늦다. ④ 알루미늄 부문 <b>이익률이 2022년 10.5%에서 2%대로</b> 내려와 턴어라운드 서사가 없다. ⑤ 일평균 거래대금 9억, 외국인 4.6%로 <b>유동성</b>이 랠리를 담을 그릇이 못 된다.</p>
+<p>반대로 보면 이 다섯 가지가 풀릴 때 갭이 좁혀질 여지가 있다. 촉매는 2027년 청주 압연 6~8호기(생산 약 +60%)와 카본코팅 공장 준공, 수사 종결이다. 다만 섬유를 떼어내는 지배구조 변화가 없다면 할인은 구조적으로 남는다.</p>
+</div>
+
+<h2>1. 주가가 갈라진 경로</h2>
+<p>2024년 1월 2일을 100으로 놓았다. 두 종목은 거의 거울처럼 움직였다. DI동일이 2024~25년 오르는 동안 삼아는 전기차 둔화로 -86%까지 빠졌고, 2025년 하반기부터 반대가 됐다.</p>
+<div class="chart" id="c-px">
+  <div class="legend"><span><i class="sw" style="background:var(--di)"></i>DI동일</span><span><i class="sw" style="background:var(--sa)"></i>삼아알미늄</span><span>지수 2024-01-02 = 100, 수정주가(다음금융), 주간</span></div>
+  <svg aria-label="DI동일과 삼아알미늄 주가 지수 비교"></svg>
+</div>
+<div class="tbl-scroll"><table>
+<thead><tr><th>시작일 → 2026-10-21</th><th class="n">DI동일</th><th class="n">삼아알미늄</th><th>그 시점의 의미</th></tr></thead>
+<tbody>
+<tr><td>2025-06-30</td><td class="n neg">-24.0%</td><td class="n pos">+361.1%</td><td>삼아 바닥 17,610원, DI는 조작 구간 고점권 36,858원</td></tr>
+<tr><td>2025-09-25</td><td class="n pos">+41.0%</td><td class="n pos">+269.9%</td><td>주가조작 발표 이틀 뒤, DI 19,858원</td></tr>
+<tr class="hl"><td>2026-01-02</td><td class="n pos">+48.9%</td><td class="n pos">+253.8%</td><td>올해 수익률</td></tr>
+<tr><td>2026-03-30</td><td class="n pos">+33.3%</td><td class="n pos">+162.4%</td><td>삼아 3/31 +29.9% 급등 직전</td></tr>
+<tr><td>2026-10-01</td><td class="n pos">+8.9%</td><td class="n pos">+35.1%</td><td>10월 ESS·AIDC 랠리</td></tr>
+</tbody></table></div>
+<p class="cap">2026년 일간 수익률 기준 두 종목의 상관계수는 0.53, 삼아 대비 DI의 베타는 0.27이다. 삼아가 10% 오를 때 DI는 평균 2.7% 따라갔다. 연율 변동성은 DI 60%, 삼아 121%.</p>
+
+<h2>2. 못 간 이유 다섯 가지</h2>
+<p>무게는 주가 갭에 대한 기여도를 정성적으로 매긴 것이다. 앞의 두 가지가 갭의 대부분을 설명한다.</p>
+<ol class="reasons">
+<li><div><h3>순수주가 아니다: ESS 자금이 들어올 문이 좁다 <span class="wt neg">무게 상</span></h3>
+<p>2026년 반기 연결 매출 3,500억 중 알루미늄은 1,521억(43%), 섬유가 1,663억(47%)이다. 섬유 매출의 79%는 원사·직물을 사다 파는 <b>상품 유통</b>이라 이익이 거의 없고, 플랜트·가구·화장품 부문은 반기에 합계 -24.6억 적자였다.</p>
+<p>테마 매수는 "알루미늄박 쇼티지"에 가장 직접 노출된 종목을 고른다. 신한투자증권은 10월 코멘트에서 삼아를 "국내 알박 3사(삼아·롯데·DI동일) 중 유일한 순수 상장주"로 짚었다. 롯데알미늄은 비상장이고, DI동일은 섬유 회사로 분류된다. 섬유 동종사인 경방·일신방직의 PBR이 0.25배라는 점이 DI의 멀티플을 끌어내린다.</p></div></li>
+<li><div><h3>시세조종 사건: 부풀었다 꺼진 가격과 남은 낙인 <span class="wt neg">무게 상</span></h3>
+<p>금융당국 합동대응단은 2025-09-23 DI동일을 대상으로 한 1년 9개월(2024년 1월~) 시세조종을 발표했다. 동원 자금 1,000억원 이상, 시세차익 약 230억원으로 보도됐다. 주가는 이틀간 -29.9%, -16.3%로 41% 빠졌다. 2024~25년 DI 주가가 2만원대에서 4만 7,810원(2025-01-13 수정종가)까지 간 구간은 실적이 아니라 이 세력과 경영권 분쟁 기대가 만든 가격이었다.</p>
+<p>2026년 3월 증선위가 재력가 11명과 법인 4곳을 고발했고, 5월 28일 서울남부지검이 DI동일 본사와 NH투자증권을 압수수색했다. 회사 임원 한 명이 직무정지됐다. 회사는 피해자라는 입장이지만 수사 결론 전까지 기관이 담기 어려운 종목이다. 앞서 2024-11에는 회계처리기준 위반으로 검찰 고발과 거래정지(11/20~12/11)가 있었고, 2025-04 무혐의(증거불충분)로 끝났다.</p></div></li>
+<li><div><h3>카본코팅이 늦다: LFP ESS의 핵심 공정 <span class="wt sa">무게 중</span></h3>
+<p>신규 ESS의 약 90%가 LFP 배터리이고, LFP 양극박은 전도도를 높이려 표면에 카본을 코팅한다. 삼아는 연말 완공 예정인 평택 코팅설비로 중국 외주를 대체하고 FEOC 규제에 대응한다는 평가를 받는다. DI동일은 2026-02-11에 1,108억(자기자본의 19.6%) 투자를 공시했고, 청주 공장은 2026년 말 착공, <b>2027년 하반기 준공</b> 목표다. 2030년 2만 500톤, 매출 약 2,500억 계획이다.</p></div></li>
+<li><div><h3>이익 모멘텀이 없다: 매출은 늘고 이익률은 내려왔다 <span class="wt sa">무게 중</span></h3>
+<p>DI 알루미늄 부문 영업이익률은 2022년 10.5% → 2023년 7.2% → 2024년 4.3% → 2025년 2.1%다. 2026년 상반기 매출은 +24.5%(1,222억 → 1,521억) 늘었지만 영업이익은 58.5억에서 34.5억으로 줄었다. 분기로는 -15.3억(4Q25) → 7.0억 → 27.6억으로 회복 중이지만 진폭이 작다.</p>
+<p>삼아는 같은 기간 -74.9억 → -43.9억 → <b>+17.4억</b>으로 적자에서 흑자로 넘어갔다. 2분기 매출은 969억으로 전분기보다 44% 늘었다. 시장은 이익의 수준보다 방향과 기울기에 값을 줬다.</p></div></li>
+<li><div><h3>유동성과 주주 구성: 랠리를 담을 그릇 <span class="wt">무게 하</span></h3>
+<p>최근 60거래일 평균 거래대금은 DI 8.8억, 삼아 128.8억이다. 외국인 지분율은 4.6% 대 36.9%다. DI는 정헌재단과 특수관계인이 25.4%, 소액주주연대가 한때 18%를 모았다. 삼아는 LG에너지솔루션과 도요타통상이 지분은 20% 미만이지만 이사회 의석을 가진 전략적 주주이고, LG엔솔과 6,951억 규모 장기공급계약(2023~2030)이 있다. DI는 주요 고객을 공시하지 않는다.</p></div></li>
+</ol>
+
+<h2>3. 비즈니스 모델</h2>
+<h3>밸류체인에서의 위치</h3>
+<div class="chain">
+  <div><b>원료</b>LME 알루미늄 지금</div>
+  <div><b>스트립 압연</b>노벨리스코리아 · 조일알미늄</div>
+  <div class="me"><b>박(Foil) 압연 ← DI동일 · 삼아 · 롯데</b>6~20㎛ 양극박 · 포장박 · 공조박</div>
+  <div><b>카본 코팅</b>삼아 평택(연말) · DI 청주(27H2)</div>
+  <div><b>셀</b>LG엔솔 · 삼성SDI · SK온</div>
+  <div><b>수요</b>ESS(LFP) · EV</div>
+</div>
+<p>박 압연업체는 알루미늄 스트립을 사서 얇게 펴 판다. 판가는 LME 가격에 가공비를 얹는 구조라, 매출은 알루미늄 시세를 따라 움직이고 이익은 가공비와 가동률에서 나온다. DI의 2026 반기 LME 평균은 톤당 3,576달러로 2025년보다 36% 올랐고, 알루미늄박 수출 판가도 kg당 9,200원에서 11,600원으로 26% 올랐다. 매출 증가의 대부분이 원료가 전가라는 뜻이다.</p>
+
+<h3>DI동일 부문별 구성 (2026 반기)</h3>
+<div class="tbl-scroll"><table>
+<thead><tr><th>부문</th><th>주요 회사</th><th class="n">매출</th><th class="n">비중</th><th class="n">영업이익</th><th class="n">OPM</th></tr></thead>
+<tbody>
+<tr><td>섬유소재</td><td>DI동일, 인니·베트남·이집트 법인</td><td class="n">1,663.1</td><td class="n">47.0%</td><td class="n">27.6</td><td class="n">1.7%</td></tr>
+<tr class="hl"><td>알루미늄</td><td>DI동일(구 동일알루미늄 흡수합병), 디아이시스템, 인도법인</td><td class="n">1,520.5</td><td class="n">42.8%</td><td class="n">34.5</td><td class="n">2.3%</td></tr>
+<tr><td>플랜트·환경</td><td>동일씨앤이, 플라즈마텍</td><td class="n">155.2</td><td class="n">4.4%</td><td class="n neg">-11.2</td><td class="n neg">-7.2%</td></tr>
+<tr><td>가구도소매</td><td>디아이비즈</td><td class="n">115.8</td><td class="n">3.3%</td><td class="n neg">-4.9</td><td class="n neg">-4.2%</td></tr>
+<tr><td>화장품</td><td>DMP(프랑스)</td><td class="n">45.6</td><td class="n">1.3%</td><td class="n neg">-8.5</td><td class="n neg">-18.6%</td></tr>
+<tr><td colspan="2"><b>연결</b> (내부거래·조정 포함)</td><td class="n"><b>3,500.2</b></td><td class="n">100%</td><td class="n"><b>40.2</b></td><td class="n">1.1%</td></tr>
+</tbody></table></div>
+<p class="cap">매출은 외부고객 기준(부문간 제거 후). 비중은 사업보고서의 부문 매출 비중. OPM은 해당 부문 영업이익 ÷ 외부매출로 계산. 출처: 2026 반기보고서 주석 33.</p>
+
+<h3>알루미늄 사업 시계열</h3>
+<div class="chart" id="c-alu">
+  <div class="legend"><span><i class="sw" style="background:var(--di);height:9px"></i>DI 알루미늄 부문 매출</span><span><i class="sw" style="background:var(--di)"></i>DI 부문 OPM</span><span><i class="sw" style="background:var(--sa)"></i>삼아 연결 OPM</span></div>
+  <svg aria-label="DI동일 알루미늄 부문 매출과 영업이익률, 삼아알미늄 영업이익률"></svg>
+</div>
+<div class="tbl-scroll"><table>
+<thead><tr><th>연도</th><th class="n">DI 알루 매출</th><th class="n">DI 알루 영업익</th><th class="n">OPM</th><th class="n">삼아 매출</th><th class="n">삼아 영업익</th><th class="n">OPM</th></tr></thead>
+<tbody>
+<tr><td>2021</td><td class="n">2,842.9</td><td class="n">261.2</td><td class="n">9.2%</td><td class="n">2,529.7</td><td class="n">154.5</td><td class="n">6.1%</td></tr>
+<tr><td>2022*</td><td class="n">2,987.8</td><td class="n">313.3</td><td class="n">10.5%</td><td class="n">3,120.6</td><td class="n">225.7</td><td class="n">7.2%</td></tr>
+<tr><td>2023</td><td class="n">2,329.7</td><td class="n">168.8</td><td class="n">7.2%</td><td class="n">2,680.2</td><td class="n">37.7</td><td class="n">1.4%</td></tr>
+<tr><td>2024</td><td class="n">2,311.0</td><td class="n">100.5</td><td class="n">4.3%</td><td class="n">2,517.3</td><td class="n neg">-95.9</td><td class="n neg">-3.8%</td></tr>
+<tr><td>2025</td><td class="n">2,261.8</td><td class="n">46.7</td><td class="n">2.1%</td><td class="n">2,714.6</td><td class="n neg">-176.5</td><td class="n neg">-6.5%</td></tr>
+<tr class="hl"><td>TTM(2Q26)</td><td class="n">2,560.8</td><td class="n">22.7</td><td class="n">0.9%</td><td class="n">3,023.1</td><td class="n neg">-145.2</td><td class="n neg">-4.8%</td></tr>
+</tbody></table></div>
+<p class="cap">*2022년 DI 알루미늄 매출은 2023 사업보고서의 재작성 수치(최초 공시 3,825.7억). 삼아는 연결 전체(전자부품 유통 포함, 2026 반기 매출의 19%). TTM = 2025 연간 + 2026 반기 − 2025 반기.</p>
+
+<h3>분기 흐름: 둘 다 회복 중, 기울기는 삼아가 가파르다</h3>
+<div class="tbl-scroll"><table>
+<thead><tr><th>분기</th><th class="n">DI 알루 매출</th><th class="n">DI 알루 영업익</th><th class="n">삼아 매출</th><th class="n">삼아 영업익</th></tr></thead>
+<tbody>
+<tr><td>3Q25</td><td class="n">585.8</td><td class="n">3.5</td><td class="n">667.0</td><td class="n neg">-43.9</td></tr>
+<tr><td>4Q25</td><td class="n">454.5</td><td class="n neg">-15.3</td><td class="n">712.5</td><td class="n neg">-74.9</td></tr>
+<tr><td>1Q26</td><td class="n">721.5</td><td class="n">7.0</td><td class="n">674.3</td><td class="n neg">-43.9</td></tr>
+<tr class="hl"><td>2Q26</td><td class="n">799.0</td><td class="n">27.6</td><td class="n">969.2</td><td class="n pos">17.4</td></tr>
+</tbody></table></div>
+<p class="cap">DI 분기값은 분기·반기보고서 누적 부문정보의 차감. 4Q25 = 연간 − 3분기 누적.</p>
+
+<h3>물량·판가 비교 (2026 반기)</h3>
+<div class="tbl-scroll"><table>
+<thead><tr><th>항목</th><th class="n">DI동일</th><th class="n">삼아알미늄</th><th>메모</th></tr></thead>
+<tbody>
+<tr><td>알루미늄박 매출</td><td class="n">1,257.8</td><td class="n">1,022.3</td><td>DI 박 제품, 삼아 압연부문</td></tr>
+<tr><td>박 판가 내수 (원/kg)</td><td class="n">10,200</td><td class="n">8,369</td><td>DI +22%</td></tr>
+<tr><td>박 판가 수출 (원/kg)</td><td class="n">11,600</td><td class="n">9,544</td><td>DI +22%</td></tr>
+<tr><td>추정 출하량 (톤)</td><td class="n">≈11,200</td><td class="n">11,534</td><td>DI는 매출 ÷ 수출75%·내수25% 가중 판가로 추정, 삼아는 생산실적</td></tr>
+<tr><td>가동률</td><td class="n">73.9%</td><td class="n">70.2%</td><td>DI 천안, 삼아 압연</td></tr>
+<tr><td>수출 비중</td><td class="n">75%</td><td class="n">77%</td><td>DI 박 매출 기준, 삼아 압연 기준</td></tr>
+</tbody></table></div>
+<p>물량은 거의 같고 DI의 판가가 20%가량 높다. 제품 믹스(공조용 박, 포장재) 차이가 섞여 있어 그대로 품질 프리미엄으로 읽기는 어렵다. 그래도 "DI가 작아서 못 갔다"는 설명은 성립하지 않는다.</p>
+
+<h2>4. 경쟁 구도와 밸류에이션</h2>
+<div class="tbl-scroll"><table>
+<thead><tr><th>회사</th><th>성격</th><th class="n">시총</th><th class="n">매출(TTM/25A)</th><th class="n">영업익</th><th class="n">OPM</th><th class="n">PBR</th><th class="n">PER</th><th class="n">EV/매출</th></tr></thead>
+<tbody>
+<tr class="hl"><td class="di">DI동일</td><td>섬유+알루박 복합</td><td class="n">5,800</td><td class="n">6,335</td><td class="n">6.0</td><td class="n">0.1%</td><td class="n">1.10</td><td class="n">91.1</td><td class="n">1.52</td></tr>
+<tr class="hl"><td class="sa">삼아알미늄</td><td>알루박 순수</td><td class="n">12,280</td><td class="n">3,023</td><td class="n neg">-145.2</td><td class="n neg">-4.8%</td><td class="n">5.54</td><td class="n">적자</td><td class="n">4.76</td></tr>
+<tr><td>롯데알미늄</td><td>알루박 1위, 비상장</td><td class="n">-</td><td class="n">7,284*</td><td class="n">-</td><td class="n">-</td><td class="n">-</td><td class="n">-</td><td class="n">-</td></tr>
+<tr><td>조일알미늄</td><td>스트립(DI 원료 공급사)</td><td class="n">1,299</td><td class="n">4,867</td><td class="n">138.0</td><td class="n">2.8%</td><td class="n">0.57</td><td class="n">7.2</td><td class="n">-</td></tr>
+<tr><td>솔루스첨단소재</td><td>동박(음극 집전체)</td><td class="n">5,954</td><td class="n">6,161</td><td class="n">-</td><td class="n">-</td><td class="n">1.03</td><td class="n">18.8</td><td class="n">-</td></tr>
+<tr><td>일신방직</td><td>섬유 동종</td><td class="n">2,526</td><td class="n">5,172</td><td class="n">124.1</td><td class="n">2.4%</td><td class="n">0.25</td><td class="n">5.4</td><td class="n">-</td></tr>
+<tr><td>경방</td><td>섬유 동종</td><td class="n">2,152</td><td class="n">4,125</td><td class="n">-</td><td class="n">-</td><td class="n">0.25</td><td class="n">4.1</td><td class="n">-</td></tr>
+</tbody></table></div>
+<p class="cap">DI·삼아: 2026-10-21 종가, TTM 재무, PER은 지배주주순이익 기준(DI TTM 63.7억, 삼아 -224.0억). EV = 시총 + 순차입금 + 비지배지분(DI 순차입금 3,803.7억 = 금융부채 4,339.5 − 현금·단기금융 535.8 / 삼아 2,105.3억). 나머지 5사: 2025 연간 DART, 시총·PBR·PER은 10-22 네이버(장중). *롯데알미늄은 DI 사업보고서 기재 2025 알루미늄박 매출. 직접 경쟁사는 삼아·롯데 둘뿐이고, 나머지는 밸류체인 인접군과 섬유 동종사다.</p>
+
+<h3>시장은 DI 알루미늄에 얼마를 주고 있나</h3>
+<div class="tbl-scroll"><table>
+<thead><tr><th>항목</th><th class="n">금액</th><th>근거</th></tr></thead>
+<tbody>
+<tr><td>DI동일 EV</td><td class="n">9,625</td><td>시총 5,800 + 순차입금 3,804 + 비지배 21</td></tr>
+<tr><td>(−) 투자부동산 공정가치</td><td class="n">3,331</td><td>2025말 주석 공시(토지는 개별공시지가 기준, 장부 2,887)</td></tr>
+<tr><td>(−) 관계기업 지분</td><td class="n">549</td><td>2026 반기 장부가</td></tr>
+<tr class="hl"><td>= 영업 자산 전체에 매긴 가치</td><td class="n">5,745</td><td>섬유+알루미늄+기타</td></tr>
+<tr><td>섬유·기타를 0으로 볼 때 알루미늄 EV/매출</td><td class="n">2.24배</td><td>5,745 ÷ 알루 TTM 매출 2,561</td></tr>
+<tr><td>섬유·기타를 1,500억으로 볼 때</td><td class="n">1.66배</td><td>4,245 ÷ 2,561</td></tr>
+<tr><td>참고: 삼아 EV/매출을 DI 알루미늄에 적용</td><td class="n">12,190</td><td>4.76배 × 2,561, DI 전체 EV보다 큼</td></tr>
+</tbody></table></div>
+<p>삼아의 4.76배는 적자 기업에 테마가 얹힌 값이라 적정가로 쓰기는 어렵다. 이 표가 보여주는 것은 방향이다. 섬유를 공짜로 쳐도 DI 알루미늄은 삼아의 절반 이하 멀티플에 있다. 순차입금에는 섬유 부문 무역금융이 섞여 있어 알루미늄 몫만 떼면 할인 폭은 조금 더 크다.</p>
+
+<h2>5. 해자 검증</h2>
+<div class="two">
+<div><h3 class="pos">찬성 근거</h3><ul>
+<li>국내 양극박 공급은 사실상 3사 과점. 회사는 양극박 점유율 약 40%를 주장(더벨 인용, 외부 검증 없음).</li>
+<li>2011년부터 2차전지용 박 판매, 독일 Achenbach 압연기 기반 고속 라인. 압연은 두께 균일성 노하우와 대규모 설비가 필요해 신규 진입이 느리다.</li>
+<li>판가가 삼아보다 20% 높고, 업황 바닥인 2024~25년에도 흑자 유지.</li>
+<li>청주 압연 6·7·8호기(2023년 투자협약 2,200억) 2027년 양산 시 생산 약 +60%. 회사 제시 알루미늄 매출 2026년 2,600억대 → 2027년 3,500억대 → 2028년 4,800억대.</li>
+</ul></div>
+<div><h3 class="neg">반증</h3><ul>
+<li>OPM이 4년 연속 하락(10.5% → 2.1%). 원료가 전가 구조라 가공비 협상력이 약하다는 신호.</li>
+<li>원료 스트립을 노벨리스·조일 두 곳에서 산다(국내 독과점). 원가 쪽 협상력도 제한적.</li>
+<li>LFP용 카본코팅은 아직 없음. ESS 수요의 90%가 LFP라 2027년 하반기까지는 고부가 물량 경쟁에서 뒤처진다.</li>
+<li>중국 박 업체(딩성 등)가 세계 생산능력의 큰 몫을 차지. 해자는 FEOC 규제에 기댄 지역적 해자에 가깝다.</li>
+<li>R&D 비용이 매출의 0.16%(연 4억 수준). 기술 해자를 주장하기엔 투자가 얇다.</li>
+</ul></div>
+</div>
+<p><b>판정:</b> 미국향 비중국 공급망 안에서의 지역 과점은 실재한다. 다만 가격 결정력의 증거(이익률)가 반대 방향을 가리키고 있어 "넓은 해자"로 보기는 어렵다. 해자의 유무보다 설비 증설이 끝나는 2027년의 가동률이 더 중요한 변수다.</p>
+
+<h2>6. 재무와 자산</h2>
+<div class="tbl-scroll"><table>
+<thead><tr><th>연결</th><th class="n">2022</th><th class="n">2023</th><th class="n">2024</th><th class="n">2025</th><th class="n">1H26</th></tr></thead>
+<tbody>
+<tr><td>매출</td><td class="n">9,137.2</td><td class="n">6,828.7</td><td class="n">6,517.3</td><td class="n">6,013.5</td><td class="n">3,500.2</td></tr>
+<tr><td>영업이익</td><td class="n">447.5</td><td class="n">63.0</td><td class="n">78.1</td><td class="n neg">-15.4</td><td class="n">40.2</td></tr>
+<tr><td>지배주주순이익</td><td class="n">-</td><td class="n">-</td><td class="n">16.0</td><td class="n neg">-97.3</td><td class="n">89.4</td></tr>
+<tr><td>자본총계</td><td class="n">6,192.0</td><td class="n">6,055.3</td><td class="n">5,643.3</td><td class="n">5,204.8</td><td class="n">5,283.3</td></tr>
+<tr><td>설비투자(유형자산 취득)</td><td class="n">-</td><td class="n">-</td><td class="n">-</td><td class="n">634.9</td><td class="n">524.3</td></tr>
+</tbody></table></div>
+<p class="cap">2022 매출은 최초 공시 기준(이후 재작성). 2022~23 지배주주순이익은 DART 표준계정 미제공으로 공란. 자본 감소는 2024년 대규모 자사주 소각과 2025년 적자 영향.</p>
+<p>설비투자가 연 600억대로 늘면서 2026 반기 영업활동현금흐름은 -38억이고 금융부채는 4,340억이다. 청주 압연 공장과 카본코팅 공장(1,108억)이 겹치는 2027년까지는 차입이 더 늘 가능성이 높다. 버팀목은 부동산이다. 강남 테헤란로 본사 토지(장부 1,842억, 공시지가 2,576억)와 투자부동산(공정가치 3,331억)을 합치면 시가총액에 근접한다.</p>
+
+<h2>7. 리스크</h2>
+<div class="tbl-scroll"><table>
+<thead><tr><th>심각도</th><th>리스크</th><th>내용</th></tr></thead>
+<tbody>
+<tr><td><span class="sev h">높음</span></td><td>시세조종 수사</td><td>남부지검 수사 중, 회사 임원 직무정지. 기소 범위가 회사로 번지면 2024년처럼 거래정지·실질심사 가능성.</td></tr>
+<tr><td><span class="sev h">높음</span></td><td>증설기 재무 부담</td><td>금융부채 4,340억, 영업현금흐름 마이너스. 증설이 늦어지면 이자비용이 이익을 잠식.</td></tr>
+<tr><td><span class="sev m">중간</span></td><td>카본코팅 지연</td><td>2027 하반기 준공 목표. 그 사이 삼아·중국 업체가 LFP 고객 인증을 선점.</td></tr>
+<tr><td><span class="sev m">중간</span></td><td>섬유 부문</td><td>상품 유통 중심, 내수 의류 축소. 환율·원사가 급변 시 적자 전환(2025년 -9.7억).</td></tr>
+<tr><td><span class="sev m">중간</span></td><td>지배구조 갈등</td><td>2025-08 임시주총에서 소액주주연대 대표가 상임감사로 선임됐으나 이후 시세조종 연루 의혹 보도. 이사회 내 갈등 재연 가능.</td></tr>
+<tr><td><span class="sev l">낮음</span></td><td>LME·환율</td><td>원료가 전가 구조라 이익 영향은 시차 효과 정도. 수출 75%로 원화 강세 시 매출 감소.</td></tr>
+</tbody></table></div>
+<p class="cap">삼아 쪽 변수도 있다. 최대주주 도요알미늄(24.29%)이 11/4~12/3 75만주(4.96%, 9/30 종가 기준 458억)를 시간외 매도할 계획을 10-01 공시했다. 삼아가 꺾이면 동종 비교 갭은 반대 방향으로 좁혀질 수 있다.</p>
+
+<h2>8. 투자 전 확인할 것</h2>
+<ul class="check">
+<li>남부지검 시세조종 사건 기소 여부와 회사·임원 포함 범위</li>
+<li>3분기 보고서(11월 중순): 알루미늄 부문 영업이익이 2Q 27.6억에서 이어 올라가는지, ESS향 매출 비중 언급</li>
+<li>청주 압연 6~8호기 시운전 일정, 2027년 양산 확정 여부</li>
+<li>카본코팅 공장 착공(2026년 말 예정)과 고객 인증 대상 셀 업체</li>
+<li>LG엔솔·삼성SDI·SK온 중 실제 고객과 장기계약 공시 여부</li>
+<li>섬유 부문 분할·매각 같은 사업 재편 검토 여부 (현재 공시된 계획 없음)</li>
+<li>도요알미늄의 삼아 지분 매도 집행 결과와 그 뒤 삼아 주가</li>
+</ul>
+
+<h2>자료와 방법</h2>
+<p class="src">DART 공시 원문: DI동일 반기보고서(2026.06) 20260814003957, 사업보고서 2022~2025, 신규시설투자 20260211800520, 회계처리기준 위반 조치 20241120800559·결과 20250424800873, 임시주총 결과 20250829800822, 대량보유보고 20260915000365 / 삼아알미늄 반기보고서 20260814003238, 단일판매·공급계약 20230130800073, 거래계획보고서 20261001000370. 주가는 다음금융 수정주가(KRX 종가). 네이버 시세는 NXT 체결이 섞일 수 있어 기준가로 쓰지 않았다.</p>
+<p class="src">기사: <a href="https://news.tf.co.kr/read/economy/2248243.htm">더팩트(2025-09-28)</a>, <a href="https://www.sidae.com/article/2025092508082842054">시대일보(2025-09-25)</a>, <a href="https://www.dailian.co.kr/news/view/1649734/">데일리안 압수수색</a>, <a href="https://m.thebell.co.kr/m/newsview.asp?newskey=202602182318171440109372">더벨 Company Watch(2026-02)</a>, <a href="https://www.snmnews.com/news/articleView.html?idxno=574836">철강금속신문</a>, <a href="https://www.ajunews.com/view/20261016135223756">아주경제 삼아 특징주(2026-10-16)</a>, <a href="https://www.etoday.co.kr/news/view/2621660">이투데이 ESS주</a>.</p>
+<p class="src">본 자료는 공시와 보도를 정리한 참고 자료이며 투자권유가 아니다. 추정치(출하량, 영업자산 가치)는 계산 근거를 표에 적었다.</p>
+
+</div>
+<div class="tip" id="tip" hidden></div>
+<script>
+const PX=[["240102",100.0,100.0,25977,102900],["240109",102.6,99.2,26661,102100],["240116",91.9,96.6,23881,99400],["240123",88.9,89.9,23106,92500],["240130",96.8,85.7,25157,88200],["240206",100.7,79.8,26159,82100],["240215",103.9,90.9,26980,93500],["240222",111.8,103.5,29031,106500],["240229",100.0,96.1,25977,98900],["240308",99.8,89.9,25932,92500],["240315",95.8,88.5,24883,91100],["240322",94.2,89.6,24473,92200],["240329",96.1,80.2,24975,82500],["240405",96.1,78.7,24975,81000],["240415",94.7,75.0,24610,77200],["240422",94.0,74.0,24428,76100],["240429",88.8,76.1,23060,78300],["240508",91.2,76.6,23698,78800],["240516",85.8,76.2,22286,78400],["240523",85.4,67.2,22195,69100],["240530",86.8,79.7,22559,82000],["240607",89.5,85.7,23243,88200],["240614",87.4,83.5,22696,85900],["240621",89.6,77.6,23288,79800],["240628",100.7,70.6,26159,72600],["240705",94.0,71.5,24428,73600],["240712",98.2,67.8,25521,69800],["240719",98.8,64.0,25658,65900],["240726",102.1,53.1,26524,54600],["240802",104.7,48.0,27208,49350],["240809",106.0,44.8,27527,46100],["240819",105.8,44.6,27481,45850],["240826",104.4,44.9,27117,46250],["240902",108.8,48.2,28256,49600],["240909",111.6,40.5,28985,41650],["240919",117.5,45.5,30535,46800],["240926",127.4,51.1,33087,52600],["241007",133.7,53.2,34727,54700],["241015",138.2,50.5,35912,52000],["241022",131.4,47.8,34135,49200],["241029",131.1,50.5,34044,52000],["241105",137.2,48.8,35639,50200],["241112",143.7,41.6,37325,42800],["241119",148.6,37.7,38601,38750],["241126",149.1,39.1,38738,40200],["241203",149.1,41.0,38738,42200],["241210",149.1,36.5,38738,37550],["241217",178.2,37.2,46303,38300],["241224",178.9,34.0,46485,35000],["250103",180.6,35.4,46906,36450],["250110",180.0,35.7,46763,36750],["250117",183.1,35.3,47573,36350],["250124",183.3,32.9,47620,33900],["250206",178.4,30.9,46334,31800],["250213",174.5,30.5,45334,31350],["250220",166.6,32.0,43287,32950],["250227",171.4,32.2,44525,33150],["250307",167.7,26.9,43572,27700],["250314",167.9,28.7,43620,29550],["250321",165.2,27.8,42906,28600],["250328",176.7,25.5,45906,26250],["250404",164.4,24.0,42715,24700],["250411",157.1,22.7,40811,23350],["250418",161.1,23.3,41858,23950],["250425",160.8,24.6,41763,25300],["250507",148.9,22.7,38668,23400],["250514",132.9,22.3,34525,22900],["250521",135.1,19.5,35096,20100],["250528",123.2,19.3,32001,19880],["250605",127.4,19.1,33096,19630],["250613",138.2,18.3,35906,18850],["250620",143.0,17.7,37144,18190],["250627",145.0,17.2,37668,17690],["250704",150.0,18.0,38953,18520],["250711",155.6,17.7,40430,18200],["250718",157.1,18.3,40811,18870],["250725",156.0,22.1,40525,22750],["250801",154.7,24.0,40191,24700],["250808",158.9,25.0,41287,25700],["250818",150.7,25.2,39144,25900],["250825",152.3,22.9,39572,23550],["250901",146.8,21.3,38144,21900],["250908",128.1,22.0,33287,22600],["250915",136.4,22.1,35429,22750],["250922",134.4,21.8,34906,22450],["250929",76.4,20.3,19858,20850],["251013",68.9,19.9,17905,20500],["251020",71.9,24.5,18667,25250],["251027",72.4,25.8,18810,26500],["251103",64.7,23.8,16819,24450],["251110",65.4,22.6,16981,23250],["251117",60.9,24.4,15829,25150],["251124",64.1,21.3,16638,21950],["251201",73.7,23.9,19143,24550],["251208",74.1,24.8,19239,25550],["251215",75.5,26.5,19620,27300],["251222",76.3,24.6,19810,25350],["251230",75.6,23.1,19650,23800],["260108",74.6,22.3,19370,22900],["260115",76.7,23.2,19930,23900],["260122",76.9,25.2,19980,25900],["260129",77.2,30.2,20050,31100],["260205",80.6,28.0,20950,28850],["260212",90.7,28.8,23550,29650],["260224",91.8,31.8,23850,32750],["260304",77.8,24.0,20200,24700],["260311",86.8,28.8,22550,29650],["260318",88.0,32.4,22850,33300],["260325",82.2,29.1,21350,29950],["260401",82.8,33.4,21500,34400],["260408",84.7,41.0,22000,42200],["260415",87.2,50.9,22650,52400],["260422",117.4,69.3,30500,71300],["260429",122.0,70.6,31700,72600],["260508",105.7,70.8,27450,72900],["260515",108.7,81.9,28250,84300],["260522",109.3,93.7,28400,96400],["260601",93.9,73.4,24400,75500],["260609",85.8,59.9,22300,61600],["260616",89.5,52.9,23250,54400],["260623",84.1,42.7,21850,43900],["260630",86.0,40.6,22350,41750],["260707",89.5,35.5,23250,36500],["260714",92.2,32.8,23950,33750],["260722",89.3,30.8,23200,31700],["260729",88.0,26.2,22850,27000],["260805",93.7,38.3,24350,39450],["260812",94.7,50.6,24600,52100],["260820",93.4,53.3,24250,54800],["260827",97.6,62.6,25350,64400],["260903",103.4,67.2,26850,69200],["260910",103.6,61.5,26900,63300],["260917",104.7,59.2,27200,60900],["260928",100.3,56.8,26050,58400],["261006",99.7,67.7,25900,69700],["261014",104.7,70.4,27200,72400],["261021",107.8,78.9,28000,81200]];
+const ALU=[["2021",2842.9,9.2,6.1],["2022",2987.8,10.5,7.2],["2023",2329.7,7.2,1.4],["2024",2311.0,4.3,-3.8],["2025",2261.8,2.1,-6.5],["TTM",2560.8,0.9,-4.8]];
+const EV=[["241120","거래정지"],["250113","DI 고점"],["250630","삼아 저점"],["250923","조작 발표"],["260331","삼아 +30%"],["261016","ESS 랠리"]];
+const css=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const NS="http://www.w3.org/2000/svg";
+function el(t,a,p){const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);if(p)p.appendChild(e);return e}
+const tip=document.getElementById("tip");
+function showTip(x,y,h){tip.innerHTML=h;tip.hidden=false;const r=tip.getBoundingClientRect();let L=x+14,T=y+14;if(L+r.width>innerWidth-10)L=x-r.width-14;if(L<10)L=10;if(T+r.height>innerHeight-10)T=y-r.height-14;if(T<10)T=10;tip.style.left=L+"px";tip.style.top=T+"px"}
+function hideTip(){tip.hidden=true}
+addEventListener("scroll",hideTip,{passive:true});
+document.addEventListener("pointerdown",e=>{if(!e.target.closest(".chart"))hideTip()});
+function bindHover(svg,hit,onMove){let down=false;
+  hit.addEventListener("pointerdown",e=>{down=true;onMove(e)});
+  hit.addEventListener("pointermove",e=>{if(e.pointerType==="mouse"||down)onMove(e)});
+  ["pointerup","pointercancel","pointerleave"].forEach(t=>hit.addEventListener(t,e=>{down=false;if(e.type!=="pointerup"||e.pointerType!=="mouse")hideTip();if(e.type==="pointerleave")cur&&cur.setAttribute("opacity",0)}));
+  let cur=null;return c=>cur=c}
+function fmtD(s){return "20"+s.slice(0,2)+"-"+s.slice(2,4)+"-"+s.slice(4)}
+
+function drawPx(svg,W){
+  svg.innerHTML="";const small=W<560;const H=small?260:340,m={l:small?34:44,r:12,t:16,b:28};
+  svg.setAttribute("viewBox",`0 0 ${W} ${H}`);
+  const fg=css("--fg"),mu=css("--muted"),ln=css("--line"),cd=css("--di"),cs=css("--sa");
+  const n=PX.length,ymax=200,ymin=0,iw=W-m.l-m.r,ih=H-m.t-m.b;
+  const X=i=>m.l+i/(n-1)*iw,Y=v=>m.t+(1-(v-ymin)/(ymax-ymin))*ih;
+  for(let v=0;v<=200;v+=50){el("line",{x1:m.l,x2:W-m.r,y1:Y(v),y2:Y(v),stroke:ln,"stroke-width":v===100?1.2:.6,"stroke-dasharray":v===100?"":"2 3"},svg);
+    const t=el("text",{x:m.l-6,y:Y(v)+4,"text-anchor":"end","font-size":small?10:11,fill:mu},svg);t.textContent=v}
+  const yrs={};PX.forEach((p,i)=>{const y=p[0].slice(0,2);if(!(y in yrs))yrs[y]=i});
+  for(const y in yrs){const t=el("text",{x:X(yrs[y]),y:H-8,"font-size":small?10:11,fill:mu},svg);t.textContent="20"+y;
+    el("line",{x1:X(yrs[y]),x2:X(yrs[y]),y1:m.t,y2:H-m.b,stroke:ln,"stroke-width":.6},svg)}
+  EV.forEach(([d,lab],k)=>{let i=PX.findIndex(p=>p[0]>=d);if(i<0)return;const x=X(i);
+    el("line",{x1:x,x2:x,y1:m.t,y2:H-m.b,stroke:mu,"stroke-width":.8,"stroke-dasharray":"1 3"},svg);
+    if(!small||k%2===0){const t=el("text",{x:x+3,y:m.t+10+(k%2)*13,"font-size":10,fill:mu},svg);t.textContent=lab}});
+  [[1,cd],[2,cs]].forEach(([j,c])=>{el("path",{d:PX.map((p,i)=>(i?"L":"M")+X(i).toFixed(1)+" "+Y(Math.min(p[j],ymax)).toFixed(1)).join(""),fill:"none",stroke:c,"stroke-width":2,"stroke-linejoin":"round"},svg);
+    const l=PX[n-1];el("circle",{cx:X(n-1),cy:Y(l[j]),r:3.5,fill:c},svg)});
+  const cur=el("line",{x1:0,x2:0,y1:m.t,y2:H-m.b,stroke:fg,"stroke-width":1,opacity:0},svg);
+  const hit=el("rect",{x:m.l,y:m.t,width:iw,height:ih,fill:"transparent",style:"touch-action:pan-y"},svg);
+  bindHover(svg,hit,e=>{const r=svg.getBoundingClientRect();const sx=(e.clientX-r.left)*W/r.width;let i=Math.round((sx-m.l)/iw*(n-1));i=Math.max(0,Math.min(n-1,i));const p=PX[i];
+    cur.setAttribute("x1",X(i));cur.setAttribute("x2",X(i));cur.setAttribute("opacity",.5);
+    showTip(e.clientX,e.clientY,`<b>${fmtD(p[0])}</b><br>DI동일 ${p[3].toLocaleString()}원 (지수 ${p[1]})<br>삼아알미늄 ${p[4].toLocaleString()}원 (지수 ${p[2]})`)})(cur);
+  return H}
+
+function drawAlu(svg,W){
+  svg.innerHTML="";const small=W<560;const H=small?240:290,m={l:small?38:48,r:small?34:42,t:14,b:28};
+  svg.setAttribute("viewBox",`0 0 ${W} ${H}`);
+  const mu=css("--muted"),ln=css("--line"),cd=css("--di"),cs=css("--sa"),tint=css("--tint");
+  const n=ALU.length,iw=W-m.l-m.r,ih=H-m.t-m.b,bw=iw/n;
+  const Yb=v=>m.t+(1-v/3500)*ih, Yp=v=>m.t+(1-(v+10)/22)*ih;
+  for(let v=0;v<=3500;v+=1000){el("line",{x1:m.l,x2:W-m.r,y1:Yb(v),y2:Yb(v),stroke:ln,"stroke-width":.6},svg);
+    const t=el("text",{x:m.l-6,y:Yb(v)+4,"text-anchor":"end","font-size":10,fill:mu},svg);t.textContent=v.toLocaleString()}
+  for(let v=-10;v<=12;v+=5){if(v>12)break;const t=el("text",{x:W-m.r+5,y:Yp(v)+4,"font-size":10,fill:mu},svg);t.textContent=v+"%"}
+  el("line",{x1:m.l,x2:W-m.r,y1:Yp(0),y2:Yp(0),stroke:mu,"stroke-width":.8,"stroke-dasharray":"3 3"},svg);
+  const cx=i=>m.l+bw*(i+.5);
+  ALU.forEach((a,i)=>{el("rect",{x:cx(i)-bw*.3,y:Yb(a[1]),width:bw*.6,height:Yb(0)-Yb(a[1]),fill:cd,opacity:.22},svg);
+    const t=el("text",{x:cx(i),y:H-8,"text-anchor":"middle","font-size":small?10:11,fill:mu},svg);t.textContent=a[0]});
+  [[2,cd],[3,cs]].forEach(([j,c])=>{el("path",{d:ALU.map((a,i)=>(i?"L":"M")+cx(i).toFixed(1)+" "+Yp(a[j]).toFixed(1)).join(""),fill:"none",stroke:c,"stroke-width":2},svg);
+    ALU.forEach((a,i)=>el("circle",{cx:cx(i),cy:Yp(a[j]),r:3.5,fill:c},svg))});
+  const hit=el("rect",{x:m.l,y:m.t,width:iw,height:ih,fill:"transparent",style:"touch-action:pan-y"},svg);
+  const cur=el("rect",{x:0,y:m.t,width:bw,height:ih,fill:tint,opacity:0},svg);svg.insertBefore(cur,svg.firstChild);
+  bindHover(svg,hit,e=>{const r=svg.getBoundingClientRect();const sx=(e.clientX-r.left)*W/r.width;let i=Math.floor((sx-m.l)/bw);i=Math.max(0,Math.min(n-1,i));const a=ALU[i];
+    cur.setAttribute("x",m.l+bw*i);cur.setAttribute("opacity",1);
+    showTip(e.clientX,e.clientY,`<b>${a[0]}</b><br>DI 알루 매출 ${a[1].toLocaleString()}억<br>DI 알루 OPM ${a[2]}%<br>삼아 연결 OPM ${a[3]}%`)})(cur);
+  return H}
+
+const charts=[["c-px",drawPx],["c-alu",drawAlu]];
+function render(){charts.forEach(([id,f])=>{const box=document.getElementById(id),svg=box.querySelector("svg");f(svg,Math.max(280,Math.round(box.clientWidth-20)))})}
+render();let to;addEventListener("resize",()=>{clearTimeout(to);to=setTimeout(render,150)});
+if(window.matchMedia)matchMedia("(prefers-color-scheme: dark)").addEventListener?.("change",render);
+new MutationObserver(render).observe(document.documentElement,{attributes:true,attributeFilter:["data-theme"]});
+</script>
+</body>
+</html>

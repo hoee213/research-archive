@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<title>스피어 기업리포트</title>
+<meta name="description" content="스피어(347700) 심층 리포트: SpaceX 특수합금 SCM 매출·마진·CB·니켈 제련소 10% 인수금융 검증. 2026-10-12">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@600;700&family=Noto+Sans+KR:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+:root{
+  color-scheme:light;
+  --bg:#F3F4F7; --surface:#FFFFFF; --surface2:#F7F8FB; --surface3:#E9EBF2;
+  --ink:#15172B; --ink2:#454A61; --muted:#737A90;
+  --line:#D8DCE6; --line2:#BFC5D3;
+  --accent:#1F5F8B; --accent-soft:#E3EEF7;
+  --pos:#1B6E52; --neg:#B23A2C;
+  --c1:#1F5F8B; --c2:#E8792B; --c3:#1baf7a; --c4:#8B93A7; --c5:#7B4FB3;
+  --c1-soft:rgba(31,95,139,.12); --c2-soft:rgba(232,121,43,.14);
+  --shadow:0 1px 2px rgba(21,23,43,.06), 0 10px 28px rgba(21,23,43,.06);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#0F1118; --surface:#171A24; --surface2:#1D2130; --surface3:#252A3B;
+    --ink:#ECEEF5; --ink2:#B4BACB; --muted:#8D94A8;
+    --line:#2A2F40; --line2:#3B4155;
+    --accent:#7FB5E0; --accent-soft:#1E2E3E;
+    --pos:#4FB58C; --neg:#E07A5F;
+    --c1:#5B9BD5; --c2:#F08A3E; --c3:#2BC48E; --c4:#7C8499; --c5:#A283D6;
+    --c1-soft:rgba(91,155,213,.16); --c2-soft:rgba(240,138,62,.18);
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 28px rgba(0,0,0,.3);
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#0F1118; --surface:#171A24; --surface2:#1D2130; --surface3:#252A3B;
+  --ink:#ECEEF5; --ink2:#B4BACB; --muted:#8D94A8;
+  --line:#2A2F40; --line2:#3B4155;
+  --accent:#7FB5E0; --accent-soft:#1E2E3E;
+  --pos:#4FB58C; --neg:#E07A5F;
+  --c1:#5B9BD5; --c2:#F08A3E; --c3:#2BC48E; --c4:#7C8499; --c5:#A283D6;
+  --c1-soft:rgba(91,155,213,.16); --c2-soft:rgba(240,138,62,.18);
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 28px rgba(0,0,0,.3);
+}
+html{color-scheme:light dark}
+*{box-sizing:border-box}
+body{margin:0; background:var(--bg); color:var(--ink);
+  font-family:"Noto Sans KR","Malgun Gothic",system-ui,sans-serif; font-size:15.5px; line-height:1.75;
+  -webkit-text-size-adjust:100%}
+img{max-width:100%} [hidden]{display:none!important}
+.mono{font-family:"IBM Plex Mono","Consolas",ui-monospace,monospace; font-variant-numeric:tabular-nums}
+.serif{font-family:"Noto Serif KR","Noto Serif","Batang",serif}
+.wrap{max-width:920px; margin:0 auto; padding:0 22px 90px}
+a{color:var(--accent)}
+p{margin:0 0 14px} .lede{font-size:16.5px; color:var(--ink2)}
+ul,ol{margin:0 0 14px; padding-left:20px} li{margin-bottom:7px}
+strong,b{font-weight:700}
+.small{font-size:13px; color:var(--muted); line-height:1.6}
+.pos{color:var(--pos)} .neg{color:var(--neg)}
+
+.mast{background:var(--surface); border-bottom:1px solid var(--line)}
+.mast-in{max-width:920px; margin:0 auto; padding:34px 22px 26px}
+.eyebrow{font-family:"IBM Plex Mono",monospace; font-size:11.5px; letter-spacing:.06em; color:var(--muted)}
+h1{font-family:"Noto Serif KR",serif; font-size:clamp(30px,6.6vw,48px); line-height:1.18; margin:.3em 0 .15em; font-weight:700; letter-spacing:-.015em; text-wrap:balance}
+h1 .em{color:var(--accent)}
+.sub{color:var(--ink2); font-size:15.5px; max-width:64ch; margin:.4em 0 0}
+.tickerline{display:flex; flex-wrap:wrap; gap:6px 16px; align-items:baseline; margin-top:14px; font-family:"IBM Plex Mono",monospace; font-size:12.5px; color:var(--muted)}
+.tickerline b{color:var(--ink); font-weight:600}
+.stats{display:grid; grid-template-columns:repeat(auto-fit,minmax(138px,1fr)); gap:1px; background:var(--line); border:1px solid var(--line); margin-top:24px}
+.stat{background:var(--surface); padding:13px 14px 14px; min-width:0}
+.stat .k{font-family:"IBM Plex Mono",monospace; font-size:11px; letter-spacing:.02em; color:var(--muted)}
+.stat .v{font-family:"IBM Plex Mono",monospace; font-weight:600; font-size:clamp(19px,4.6vw,24px); line-height:1.25; margin-top:5px; overflow-wrap:anywhere}
+.stat .n{font-size:11.5px; color:var(--muted); margin-top:2px; line-height:1.4}
+.toc{display:flex; flex-wrap:wrap; gap:8px; margin:22px 0 0}
+.toc a{font-size:12.5px; text-decoration:none; color:var(--ink2); background:var(--surface); border:1px solid var(--line); padding:5px 11px; border-radius:999px}
+.toc a:hover{border-color:var(--accent); color:var(--accent)}
+
+section{margin-top:56px; scroll-margin-top:16px}
+.sec-h{display:flex; gap:14px; align-items:baseline; border-bottom:2px solid var(--ink); padding-bottom:9px; margin-bottom:20px}
+.sec-n{font-family:"IBM Plex Mono",monospace; font-size:12px; font-weight:600; color:var(--accent); letter-spacing:.06em; padding-top:4px}
+.sec-h h2{margin:0; font-family:"Noto Serif KR",serif; font-size:clamp(20px,4.2vw,26px); font-weight:700; letter-spacing:-.01em; text-wrap:balance; flex:1; min-width:0}
+h3{font-size:17px; font-weight:700; margin:32px 0 8px; letter-spacing:-.01em}
+h4{font-size:14.5px; font-weight:700; margin:20px 0 6px; color:var(--ink2)}
+
+.take{border-left:3px solid var(--accent); background:var(--surface2); padding:14px 16px; margin:18px 0; font-size:14.5px}
+.take .lbl{font-family:"IBM Plex Mono",monospace; font-size:11px; letter-spacing:.03em; color:var(--accent); display:block; margin-bottom:5px; font-weight:600}
+.take p:last-child{margin-bottom:0}
+.keypoints{display:grid; gap:1px; background:var(--line); border:1px solid var(--line); margin:22px 0}
+.kp{background:var(--surface); padding:15px 17px; display:grid; grid-template-columns:30px 1fr; gap:12px}
+.kp .num{font-family:"IBM Plex Mono",monospace; font-size:12px; color:var(--accent); font-weight:600; padding-top:3px}
+.kp .txt{min-width:0} .kp .t{font-weight:700; margin-bottom:2px} .kp .d{font-size:14px; color:var(--ink2)}
+.grid2{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:16px 0}
+.pane{background:var(--surface); border:1px solid var(--line); padding:14px 16px; min-width:0}
+.pane h4{margin-top:0}
+.pane.yes{border-top:3px solid var(--pos)} .pane.no{border-top:3px solid var(--neg)}
+.pane ul{margin-bottom:0; padding-left:18px} .pane li{font-size:14px; margin-bottom:6px}
+
+.vc{display:grid; grid-template-columns:repeat(6,1fr); gap:6px; margin:16px 0}
+.vc .c{background:var(--surface); border:1px solid var(--line); padding:10px 9px; font-size:12.5px; line-height:1.45; min-width:0}
+.vc .c b{display:block; font-size:13px; margin-bottom:3px}
+.vc .c.me{border:2px solid var(--accent); background:var(--accent-soft)}
+.vc .c .who{color:var(--muted); font-size:11.5px; margin-top:4px}
+
+.tbl-scroll{overflow-x:auto; margin:16px -22px 20px; padding:0 22px; -webkit-overflow-scrolling:touch}
+table{border-collapse:collapse; width:100%; min-width:700px; font-size:13.5px}
+caption{caption-side:top; text-align:left; font-family:"IBM Plex Mono",monospace; font-size:11.5px; letter-spacing:.02em; color:var(--muted); padding-bottom:8px}
+th,td{padding:8px 10px; border-bottom:1px solid var(--line); text-align:left; vertical-align:top}
+thead th{white-space:nowrap} tbody td:first-child{white-space:nowrap; font-weight:500} tbody td:first-child b{white-space:normal} td:not(.num):last-child{min-width:220px}
+th.num,td.num{text-align:right; white-space:nowrap; font-family:"IBM Plex Mono",monospace; font-variant-numeric:tabular-nums}
+thead th{border-bottom:1.5px solid var(--line2); font-weight:600; color:var(--ink2); font-size:12.5px}
+tbody tr:hover{background:var(--surface2)}
+tfoot td{border-top:1.5px solid var(--line2); font-weight:600}
+td.hl{background:var(--accent-soft)}
+tr.sum td{font-weight:700; background:var(--surface2)}
+table.peers td,table.peers th{white-space:nowrap}
+.tnote{font-size:12.5px; color:var(--muted); margin-top:-10px; margin-bottom:16px; line-height:1.55}
+.bar{display:inline-block; height:9px; background:var(--c1); vertical-align:middle; border-radius:2px; margin-right:6px}
+.bar.o{background:var(--c2)}
+
+.chart{background:var(--surface); border:1px solid var(--line); padding:14px 14px 10px; margin:16px 0 8px}
+.chart .ct{font-weight:700; font-size:14.5px; margin:0 0 2px}
+.chart .cs{font-size:12.5px; color:var(--muted); margin:0 0 8px}
+.chart svg{display:block; width:100%; height:auto; touch-action:pan-y}
+.chart text{font-family:"IBM Plex Mono",monospace; font-size:11px; fill:var(--ink2)}
+.chart text.lab{font-family:"Noto Sans KR",sans-serif; fill:var(--ink)}
+.chart text.mut{fill:var(--muted)}
+.chart .grid{stroke:var(--line); stroke-width:1}
+.chart .axis{stroke:var(--line2); stroke-width:1}
+.legend{display:flex; flex-wrap:wrap; gap:6px 16px; font-size:12px; color:var(--ink2); margin:6px 0 4px}
+.legend i{display:inline-block; width:12px; height:12px; border-radius:2px; vertical-align:-1px; margin-right:6px}
+.tip{position:fixed; z-index:50; pointer-events:none; background:var(--ink); color:var(--bg); font-size:12px; line-height:1.5; padding:7px 10px; border-radius:4px; max-width:min(260px,calc(100vw - 20px)); box-shadow:var(--shadow); display:none; font-family:"IBM Plex Mono",monospace}
+.tip b{font-weight:600}
+
+.risk{display:grid; gap:10px; margin:14px 0}
+.risk .r{display:grid; grid-template-columns:64px 1fr; gap:12px; background:var(--surface); border:1px solid var(--line); padding:12px 14px}
+.chip{font-family:"IBM Plex Mono",monospace; font-size:10.5px; letter-spacing:.08em; padding:3px 7px; border-radius:3px; display:inline-block; text-align:center; align-self:start; white-space:nowrap}
+.chip.h{background:var(--neg); color:#fff} .chip.m{background:var(--c2); color:#fff} .chip.l{background:var(--c4); color:#fff} .chip.u{background:var(--pos); color:#fff}
+.risk .t{font-weight:700} .risk .d{font-size:14px; color:var(--ink2)}
+
+.qs{display:grid; gap:12px; margin:16px 0}
+.q{background:var(--surface); border:1px solid var(--line); border-left:4px solid var(--accent); padding:13px 16px}
+.q .qh{display:flex; gap:10px; align-items:baseline}
+.q .qn{font-family:"IBM Plex Mono",monospace; font-size:12px; color:var(--accent); font-weight:600}
+.q .qt{font-weight:700; font-size:15px}
+.q .why{font-size:13.5px; color:var(--ink2); margin:6px 0 0}
+.q .why b{color:var(--ink)}
+.tl{list-style:none; padding:0; margin:14px 0}
+.tl li{display:grid; grid-template-columns:96px 1fr; gap:12px; padding:8px 0; border-bottom:1px solid var(--line); font-size:14px}
+.tl .d{font-family:"IBM Plex Mono",monospace; font-size:12px; color:var(--muted); padding-top:3px}
+.check li{margin-bottom:9px}
+.src{font-size:12.5px; color:var(--muted); line-height:1.6} .src li{margin-bottom:4px}
+.foot{margin-top:60px; padding-top:18px; border-top:1px solid var(--line); font-size:12.5px; color:var(--muted); line-height:1.6}
+
+@media (max-width:620px){
+  body{font-size:14.5px}
+  .wrap{padding:0 14px 70px} .mast-in{padding:26px 14px 20px}
+  table{min-width:720px; font-size:12.5px} th,td{padding:7px 7px}
+  .tbl-scroll{margin:14px -14px 18px; padding:0 14px}
+  .grid2{grid-template-columns:1fr}
+  .vc{grid-template-columns:repeat(2,1fr)}
+  .risk .r{grid-template-columns:56px 1fr}
+  .kp{grid-template-columns:24px 1fr; gap:9px}
+  .chart{padding:12px 10px 8px}
+  .tl li{grid-template-columns:78px 1fr}
+  .bar{display:none}
+}
+@media (max-width:400px){
+  .wrap{padding:0 11px 60px} .mast-in{padding:22px 11px 18px}
+  .tbl-scroll{margin:14px -11px 18px; padding:0 11px}
+  .stats{grid-template-columns:repeat(2,1fr)}
+}
+@media (prefers-reduced-motion:reduce){ *{transition:none!important; animation:none!important} }
+</style>
+</head>
+<body>
+<div class="tip" id="tip"></div>
+<header class="mast"><div class="mast-in">
+  <div class="eyebrow">기업리포트 · 스피어 347700 · 2026-10-12 · 기준가 10/8 KRX 종가</div>
+  <h1 class="serif">스피어, <span class="em">SpaceX에 니켈합금을 사다 파는 유통사다. 매출은 3년 만에 10배가 됐지만 이익률은 유통업 수준으로 내려왔고, 시가총액 1.3조는 최근 1년 영업이익의 258배다</span></h1>
+  <p class="sub">옛 라이프시맨틱스(디지털 헬스케어)가 2025년 3월 스피어코리아를 역합병해 만들어진 회사다. 해외 특수합금 제조사(밀)에서 니켈계 초내열합금을 조달해 외주 가공·검사 후 SpaceX에 납품하며, 2026년 상반기 매출 1,221억의 86%가 이 한 고객에서 나왔다. 2025년 12월에는 인도네시아 니켈 제련소 지분 10%를 3,441억(2.4억달러)에 샀는데 그중 86%가 금리 12.75%짜리 인수금융이다. 순이익은 전환사채 파생상품 평가로 1분기 +398억, 2분기 −243억을 오갔다. DART 정기보고서 8년치와 수시공시 508건(공급계약 143건 전수), 전용 증권사 리포트 23건, 다른 회사·산업 리포트 183건, 웹 자료 약 300건을 대조해 확인된 것과 회사 주장만 있는 것을 나눴다.</p>
+  <div class="tickerline"><span>종가 <b>25,200원</b> (10/8)</span><span>시가총액 <b>1조 2,991억</b></span><span>발행주식 <b>5,155만주</b></span><span>순차입금 <b>약 2,941억</b> (6월말, CB 권면 기준)</span><span>PBR <b>7.9배</b></span><span>외국인 <b>7.1%</b></span></div>
+  <div class="stats">
+    <div class="stat"><div class="k">52주 고점 대비</div><div class="v neg">-52.5%</div><div class="n">종가 고점 53,100원(3/12). 장중 고점 57,300원(3/17) 대비 -56.0%. 저점 7,320원(12/4) 대비 +244%</div></div>
+    <div class="stat"><div class="k">최근 4분기 영업이익</div><div class="v">50.3억</div><div class="n">매출 1,770.6억(이익률 2.8%). 시총/영업이익 258배, 시총/매출 7.3배</div></div>
+    <div class="stat"><div class="k">1H26 매출총이익률</div><div class="v neg">12.5%</div><div class="n">2024년 33.8% → 2025년 17.6% → 2Q26 11.0%. 미국 금속 유통사 수준(13~29%)</div></div>
+    <div class="stat"><div class="k">SpaceX 10년 계약</div><div class="v">772억</div><div class="n">확정분은 2026년 1년치(5,548만달러)뿐. "1.5조"는 수요예측. 정기보고서 주요계약란은 "없음"</div></div>
+    <div class="stat"><div class="k">인수금융 연 이자</div><div class="v neg">약 390억</div><div class="n">2.1억달러, 12.75%, 2030년 2월 만기. 2026년 상반기 이자비용 185억 vs 영업이익 24억</div></div>
+    <div class="stat"><div class="k">미상환 CB·희석</div><div class="v">625억</div><div class="n">5회 250억(14,213원)·6회 375억(44,929원) → 259만주 5.0%. 최대주주가 콜옵션 174억 보유</div></div>
+  </div>
+  <nav class="toc">
+    <a href="#s1">01 요약</a><a href="#s2">02 바로잡을 숫자</a><a href="#s3">03 주가</a><a href="#s4">04 비즈니스 모델</a><a href="#s5">05 실적</a><a href="#s6">06 수주 원장</a><a href="#s7">07 상반기 해부</a><a href="#s8">08 니켈 제련소</a><a href="#s9">09 전방 산업</a><a href="#s10">10 경쟁사</a><a href="#s11">11 증권사 시각</a><a href="#s12">12 해자 검증</a><a href="#s13">13 지배구조·CB·수급</a><a href="#s14">14 밸류에이션</a><a href="#s15">15 리스크</a><a href="#s16">16 확인할 것</a><a href="#s17">17 출처</a>
+  </nav>
+</div></header>
+
+<main class="wrap">
+
+<section id="s1">
+  <div class="sec-h"><span class="sec-n">01</span><h2>한 장 요약</h2></div>
+  <p class="lede">스피어는 로켓 엔진용 니켈 초내열합금을 만들지 않는다. 미국·유럽 제조사에서 사서, 국내 협력사(에이치브이엠 등)와 해외 벤더에 가공을 맡기고, 품질 서류와 납기를 관리해 SpaceX에 넘긴다. 회사 스스로 "자산 경량 SCM"이라 부르고, 품질인증도 유통업자용 AS9120B다. 이 사업이 2024년 854억에서 2026년 연 2,900억(컨센서스)으로 커지는 동안 이익은 그만큼 늘지 않았다. 이 리포트의 결론은 세 줄이다.</p>
+  <div class="keypoints">
+    <div class="kp"><div class="num">1</div><div class="txt"><div class="t">매출은 진짜 늘었다. 이익률은 매출이 늘수록 내려갔다.</div><div class="d">스피어코리아 시절인 2024년 매출총이익률 33.8%, 영업이익률 17.8%였다. 2025년 17.6%·9.5%, 2026년 상반기 12.5%·1.9%다. 2분기에는 매출 771억(전년 대비 4.1배)에 영업이익 17억이었다. 회사와 메리츠는 "마진 낮은 원소재 매출 비중 증가"를 이유로 든다. 2026년 공시 수주 12건 중 '원소재(니켈·하프늄 등)' 계약이 3건 681억(10월 177억 포함)이다. 즉 성장의 상당 부분이 가공품이 아니라 원자재 유통이다. 최근 4분기 영업이익 50억은 미국 금속 서비스센터(영업이익률 2~8%)와 같은 범위에 있다.</div></div></div>
+    <div class="kp"><div class="num">2</div><div class="txt"><div class="t">회사의 손익은 이제 영업이 아니라 금융이 결정한다.</div><div class="d">2026년 상반기 영업이익 23.8억 옆에 금융수익 716.5억과 금융비용 503.9억이 있다. 4회 CB 콜옵션 평가이익 611.7억(1분기)이 순이익을 +398억으로 밀어 올렸고, 자기CB 매각 처분손실 248억과 인수금융 이자 113억이 2분기를 −243억으로 끌어내렸다. 파생상품을 걷어낸 세전이익은 2025년 6.5억, 1분기 −25.9억이다. 앞으로는 니켈 제련소 인수금융 2.1억달러의 이자가 연 390억 안팎으로 고정비처럼 깔린다. 영업이익과 니켈 지분법이익을 합쳐 연 400억을 넘기지 못하면 순손실 구조다.</div></div></div>
+    <div class="kp"><div class="num">3</div><div class="txt"><div class="t">주가 25,200원은 2027년 컨센서스 영업이익의 24배, 그 컨센서스는 전부 '아직 안 일어난 일'로 만들어졌다.</div><div class="d">2027년 영업이익 533억(컨센서스)·505억(메리츠)은 ① Starship 신형 발사체 양산으로 가공 매출이 늘고 ② 니켈 제련소 오프테이크 매출 약 2,000억이 더해지고 ③ 이익률이 11%로 되돌아온다는 가정 위에 있다. 2026년 Starship은 10월 12일까지 3회 날았고, 제련소는 8월 11일 첫 니켈 캐소드를 뽑았으며, 이익률은 2%다. 반대로 확정된 것은 2027년 1월부터 전환 가능한 CB 259만주(5.0%), 2030년 2월 만기 인수금융 2.1억달러, 매출의 86%가 걸린 단일 고객이다. 2024년 자본 162억짜리 회사가 2년 만에 자산 5,859억·부채 4,223억이 됐다.</div></div></div>
+  </div>
+  <div class="take"><span class="lbl">먼저 알아둘 것</span><p>이 회사의 2024년 실적은 보고서마다 다르다. FY2025 사업보고서의 '전기'는 <b>스피어코리아</b>(매출 854억·영업이익 152억, 역취득 회계)이고, FY2024 사업보고서와 2026년 1월 잠정실적 공시의 '직전연도'는 <b>라이프시맨틱스</b>(매출 25.6억·영업손실 64억)다. 기사에 나오는 "매출 +3,639%"는 후자, 증권사 표의 "+12%"는 전자다. 그리고 "SpaceX 5대 Tier-1 공급사·아시아 유일", "리드타임 80주→4주", "LME 대비 50% 원가로 니켈 조달"은 전부 회사 자료가 출처이고 제3자 확인은 호주 Nickel Industries의 공시 문구 "key accredited supplier to SpaceX" 하나뿐이다.</p></div>
+</section>
+
+<section id="s2">
+  <div class="sec-h"><span class="sec-n">02</span><h2>분석에 앞서 바로잡을 숫자 열두 개</h2></div>
+  <p>시세 사이트·증권사 리포트·기사에 떠다니는 숫자 중 공시 원문과 다르거나 기준이 섞인 것을 먼저 정리한다. 본문은 전부 바로잡은 쪽을 쓴다.</p>
+  <div class="tbl-scroll"><table>
+    <caption>항목 · 떠도는 숫자 · 공시 기준 · 근거</caption>
+    <thead><tr><th>#</th><th>항목</th><th>떠도는 숫자</th><th>공시 원문 기준</th><th>왜 다른가</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>SpaceX "1.5조 수주"</td><td>"10년 1.5조원 장기공급계약 체결"</td><td>계약기간 총 <b>수요예측</b> 10.54억달러(약 1.47조). 법적 확정분은 2026년 5,548만달러(772억)뿐. 2026년 반기보고서 '경영상 주요계약'란은 <b>"해당사항 없음"</b></td><td>2025-07-31 공시 원문: "매년 실제 매출은 특수합금 시세와 상대방 수요에 따라 변동". 이후 모든 개별 PO 공시에 "상대방이 변경·취소할 수 있음" 문구</td></tr>
+      <tr><td>2</td><td>2024년 실적</td><td>매출 25.6억·영업손실 64억(네이버·SK) / 854억·152억(메리츠·유안타)</td><td>둘 다 맞다. 전자는 라이프시맨틱스 법인, 후자는 스피어코리아(회계상 취득자). 2025년 성장률은 전자 기준 +3,639%, 후자 기준 +12%</td><td>2025-03-01 합병을 역취득으로 처리해 FY2025 보고서의 비교치가 스피어코리아 숫자로 바뀜</td></tr>
+      <tr><td>3</td><td>분기 순이익</td><td>1Q26 +398억 "어닝 서프라이즈", 2Q26 −243억 "어닝 쇼크"</td><td>둘 다 CB 파생상품. 1Q 콜옵션 평가이익 611.7억, 2Q 자기CB 처분손실 248억. <b>파생 제외 세전이익 FY25 6.5억, 1Q26 −25.9억</b></td><td>연결주석 18(8). 영업이익은 1Q 7.1억, 2Q 16.7억</td></tr>
+      <tr><td>4</td><td>"SpaceX 5대 Tier-1, 아시아 유일"</td><td>증권사 7곳 전부 반복</td><td>출처 전부 "자료: Sphere". SpaceX는 공급사 등급을 공개하지 않음. 회사 인증은 <b>AS9120B(항공우주 유통업자 규격)</b>. 제3자 확인은 NIC 공시의 "key accredited supplier" 문구 하나</td><td>나머지 4곳 후보(ATI·Carpenter·PCC·Haynes)는 모두 용해·압연 설비를 가진 제조사</td></tr>
+      <tr><td>5</td><td>수주 공시 합계</td><td>"2025년 이후 공시 수주 1.5조 이상"(단순 합산)</td><td>공시 143건 중 정정 92건은 같은 계약의 재공시. 신규 37건 <b>4,486억</b>(2025년 25건 2,214억 + 2026년 1~10월 12건 2,272억), 해지 1건 20억</td><td>정정 83회(계약당 평균 2.2회). 원화는 최초 공시일 환율로 고정돼 같은 달러라도 최대 13% 차이</td></tr>
+      <tr><td>6</td><td>니켈 "LME 대비 50% 원가, 연 150억 절감"</td><td>SK·신한 리포트</td><td>인니 HPAL 제련 현금원가 2025년 평균 9,800달러/t(LME의 65%), 캐소드 환산 13,500~14,500달러(80~95%). 7,200t × 50% 할인이면 850억이어야 하는데 150억 → 회사 설명이 내부에서도 안 맞음</td><td>오프테이크 수량·가격 산식은 공시에 없음("장기 구매권 보유"만)</td></tr>
+      <tr><td>7</td><td>제련소 지분 10% 인수 자금</td><td>"자기자본으로 2.4억달러 투자"</td><td>2.4억달러 중 자기자금 3,315만달러(13.8%, 자기주식 343.6억 + 5회 CB 250억), 나머지 2억 685만달러는 <b>GLAS 인수금융 2.1억달러(12.75%, 2030-02 만기)</b>. 이후 운전자본·수수료로 4,170만달러 추가 출자</td><td>SNC 주식 100% 담보, 모회사 무조건 보증. 디폴트 시 NIC가 지분을 되가져가는 콜옵션</td></tr>
+      <tr><td>8</td><td>PER</td><td>네이버 N/A, 유안타 2026E 185배, 컨센서스 170배, 메리츠 표지 3,193배</td><td>전부 파생손익이 든 순이익 기준이라 무의미. 쓸 수 있는 배수는 <b>시총/영업이익</b>(최근 4분기 258배, 2026E 90배, 2027E 24배)과 PSR 7.3배</td><td>2026E 순이익 컨센서스 526억(8월)에는 1분기 파생이익 418억이 그대로 들어 있음</td></tr>
+      <tr><td>9</td><td>최대주주 지분 급감</td><td>52.19%(2025-03) → 27.14%(2026-06) "대량 매도?"</td><td>최광수 본인 주식 13,991,769주는 <b>한 주도 안 팔았다</b>. 52.19%에는 의결권 없는 자기주식 9.86%가 들어 있었고, 이후 CB 전환 1,231만주로 희석. 대신 CB 콜옵션 174억(74만주)을 대가 1~2%에 취득</td><td>2026년 매도는 혈족 최성운 41만주 176억(3/20, 보호예수 해제일), 임원 4인 4.6만주</td></tr>
+      <tr><td>10</td><td>2025년 영업이익·순이익</td><td>84.0억·12.2억(1/27 잠정 공시)</td><td>확정 <b>90.5억·1.7억</b>(3/18 사업보고서). 라이프슈티컬 중단영업 −42.6억과 파생 평가가 결산 중 바뀜</td><td>이 회사는 잠정→확정 괴리가 매년 반복(2024년 매출 79.7억 → 25.6억)</td></tr>
+      <tr><td>11</td><td>2025년 매출</td><td>440억(유진 8/4 표), 800억(별도), 956억(연결)</td><td>연결 <b>956.4억</b>. 별도 800.0억은 자회사 더스페셜메탈스 156억 제외. 유진 표의 440억은 어느 기준으로도 재현되지 않음</td><td>리포트 간 2배 차이. 10월 메리츠 섹터 리포트의 "2025년 우주 매출 800억"은 별도 기준</td></tr>
+      <tr><td>12</td><td>제련소 능력·일정</td><td>7.2만t(NIC·SK) vs 6.7만t(IR덱·유안타), "2025년 4분기 생산"</td><td>NIC 공시 기준 명판 72,000t. 첫 MHP 2026-07, 첫 니켈 캐소드 2026-08-11, 풀가동은 10월~연말(용수 확보 조건). 2024년 자료의 "2025년 4분기"에서 약 10개월 지연</td><td>스피어 몫 7,200t 중 특수합금에 필요한 니켈은 약 1,000t. 나머지는 니켈 트레이딩</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">그 밖에 네이버 시가총액 1조 2,243억은 발행주식수가 갱신되지 않은 값으로 보인다(51,551,362주 × 25,200원 = 1조 2,991억). 네이버 일별시세의 10/8 종가 25,400원은 KRX 종가(25,200원, 와이즈리포트·네이버 종합)와 다르며 대체거래소 혼입으로 보여 본문 기준가는 25,200원을 쓴다. 메리츠 8/18 표지의 "순이익 −230억"과 반기보고서 −242.9억의 차이는 중단영업 −12.9억이다.</p>
+</section>
+
+<section id="s3">
+  <div class="sec-h"><span class="sec-n">03</span><h2>주가: 1년 만에 7배, 넉 달 만에 4분의 1</h2></div>
+  <div class="chart" id="ch-px"><p class="ct">일별 종가와 사건</p><p class="cs">2023-01-02 ~ 2026-10-08. 회색 선은 코스닥 지수를 시작일 종가에 맞춘 것. 번호는 아래 표. 점을 누르면 그날 종가가 뜬다. 2026-01-06은 투자위험종목 지정으로 하루 거래정지.</p><svg></svg>
+    <div class="legend"><span><i style="background:var(--c1)"></i>스피어 종가</span><span><i style="background:var(--c4)"></i>코스닥(기준화)</span><span><i style="background:var(--c2)"></i>사건</span></div></div>
+  <ul class="tl">
+    <li><span class="d">① 23-12-14</span><span>라이프시맨틱스 주주배정 유상증자 납입. 예정가 3,680원이 확정 2,005원(−45%)으로, 200억 계획이 109억으로</span></li>
+    <li><span class="d">② 24-07-22</span><span>송승재 → 스피어코리아 경영권 이전 계약(구주 3,530원·3자배정 1,716원). 당일 +29%(2,440원)</span></li>
+    <li><span class="d">③ 24-12-11</span><span>스피어코리아 흡수합병 결정(1 : 164.6, 600억 평가). 4,145원</span></li>
+    <li><span class="d">④ 25-03-04</span><span>합병 완료, 최대주주 최광수 52.19%. 3/25 상호 스피어코퍼레이션</span></li>
+    <li><span class="d">⑤ 25-08-01</span><span>SpaceX 10년 장기계약 공시(7/31 장 마감 후). 상한가 14,170원(거래량 5.8만주)</span></li>
+    <li><span class="d">⑥ 25-12-04</span><span>종가 저점 7,320원(12/5 장중 7,050원). 3회 CB 전환주 796만주 출회 구간</span></li>
+    <li><span class="d">⑦ 26-01-02</span><span>12/31 니켈 제련소 10% 인수 공시 후 첫 거래일 +30%(19,090원). 1/6 투자위험종목 지정·거래정지</span></li>
+    <li><span class="d">⑧ 26-02-19</span><span>431억 수주(납기 2개월) 공시, 거래정지 후 44,100원. 2/9 투자주의(15일 +119%)</span></li>
+    <li><span class="d">⑨ 26-03-12</span><span>종가 고점 53,100원(3/17 장중 57,300원). 3/20 최성운 41만주 매도</span></li>
+    <li><span class="d">⑩ 26-04-30</span><span>6회 CB 375억(전환가 44,929원, 0%) 납입. 종가 42,200원</span></li>
+    <li><span class="d">⑪ 26-06-12</span><span>SpaceX 나스닥 상장일. 장중 45,300원 → 종가 36,700원. 6/2 1,000억 CB 추가발행 철회</span></li>
+    <li><span class="d">⑫ 26-07-30</span><span>종가 저점 12,950원(고점 대비 −75.6%). 7/31 +18.9%</span></li>
+    <li><span class="d">⑬ 26-08-18</span><span>2분기 실적(영업이익 17억·순손실 243억) 다음 날 25,750원</span></li>
+    <li><span class="d">⑭ 26-10-06</span><span>10월 수주 3건 608억, 교보 목표주가 40,000원. 27,050원(+8.9%). 10/8 25,200원</span></li>
+  </ul>
+  <div class="tbl-scroll"><table>
+    <caption>연도별 수익률 (종가 기준, 네이버 일별시세)</caption>
+    <thead><tr><th>연도</th><th class="num">전년 말 종가</th><th class="num">연말 종가</th><th class="num">수익률</th><th class="num">연중 고점</th><th class="num">연중 저점</th><th>비고</th></tr></thead>
+    <tbody>
+      <tr><td>2023</td><td class="num">3,800*</td><td class="num">2,265</td><td class="num neg">-40.4%</td><td class="num">6,430</td><td class="num">2,265</td><td>*1/2 종가. 디지털치료제 실패, 주주배정 증자 할인</td></tr>
+      <tr><td>2024</td><td class="num">2,265</td><td class="num">3,955</td><td class="num pos">+74.6%</td><td class="num">5,380</td><td class="num">1,627</td><td>6/24 저점 → 7월 경영권 이전 → 12월 합병 결정</td></tr>
+      <tr><td>2025</td><td class="num">3,955</td><td class="num">14,690</td><td class="num pos">+271.4%</td><td class="num">14,690</td><td class="num">4,185</td><td>8/1 SpaceX 계약 상한가, 12월 초 7,320원까지 밀린 뒤 제련소 공시로 연말 급등</td></tr>
+      <tr><td>2026 (~10/8)</td><td class="num">14,690</td><td class="num">25,200</td><td class="num pos">+71.5%</td><td class="num">53,100</td><td class="num">12,950</td><td>고점(3/12) 대비 −75.6%(7/30) 후 2배. 하루 ±10% 이상 변동 30일</td></tr>
+    </tbody>
+  </table></div>
+  <p>2025년 12월 4일 7,320원에서 2026년 3월 12일 53,100원까지 석 달 반 동안 7.3배가 됐다. 그 구간에 거래소는 투자위험(1/6)·투자경고(1/22)·투자주의(2/9)를 차례로 지정했고, 1월 일평균 거래량은 407만주였다. 반대로 5월 26일 46,750원에서 7월 30일 12,950원까지는 두 달 만에 −72%다. SpaceX 상장(6/12) 당일 장중 고점에서 종가까지 −19%, 1,000억 CB 모집 실패(6/2), 2분기 실적 우려가 겹쳤다. 하루 10% 넘게 움직인 날이 2026년에만 30일이다. 10월 들어 수주 공시 3건과 교보 목표주가로 2만원대 중반을 회복했고, 10월 8일 공매도 비중 8.3%·대차잔고 625억(약 248만주)은 9월 중순(2.9%·473억)에서 급증한 수치다.</p>
+</section>
+
+<section id="s4">
+  <div class="sec-h"><span class="sec-n">04</span><h2>비즈니스 모델: 밀에서 사서, 외주로 가공하고, SpaceX에 판다</h2></div>
+  <p>로켓 엔진의 연소실·인젝터·터보펌프·매니폴드와 지상설비 배관에는 인코넬 718 같은 니켈계 초내열합금이 쓰인다(기체 본체는 스테인리스). 이 합금은 진공유도용해(VIM)·진공아크재용해(VAR) 설비를 가진 소수 제조사(미국 ATI·Carpenter·PCC가 환봉 시장의 약 90%)가 만들고, 납기는 20~40주다. 스피어는 이 제조사와 국내외 가공 벤더(용해·압연·단조·절단·검사) 사이에서 사양 정의, 벤더 선정, 발주, 일정, 품질 서류, 재고, 물류를 묶어 SpaceX에 "4~12주"에 납품한다고 설명한다. 회사 표현은 "Supply Integrator", 인증은 유통업자용 AS9120B, 생산설비는 "일반적인 제조업 설비 없음"(반기보고서)이다.</p>
+  <div class="vc">
+    <div class="c"><b>니켈 원료</b>인니 ENC 제련소(HPAL, 니켈 캐소드)·LME<div class="who">2025-12 지분 10% 인수, 오프테이크 7,200t(+옵션 7,200t)</div></div>
+    <div class="c"><b>합금 제조사(밀)</b>ATI·Carpenter·PCC/Special Metals·Haynes·VDM 등 "16개 벤더"<div class="who">VIM 풀가동, 납기 20~40주, 환봉 90% 과점</div></div>
+    <div class="c me"><b>SCM·유통</b>스피어(서울)·더스페셜메탈스(국내 물류·원소재)<div class="who">사양·벤더·납기·품질서류·재고. 직원 37명</div></div>
+    <div class="c"><b>가공 협력사</b>에이치브이엠(진공용해·단조, 서산)·국내외 가공 벤더<div class="who">HVM SpaceX향 매출 2025년 395억 → 1H26 346억</div></div>
+    <div class="c"><b>고객</b>SpaceX(A사, 1H26 매출의 85.7%) + Sphere Power(美, 최광수 회사) 14억<div class="who">PO 단위 발주, 상대방 변경·취소 가능</div></div>
+    <div class="c"><b>최종 수요</b>Raptor 엔진(스택당 39기)·지상설비·Falcon 9<div class="who">2026년 Starship 비행 3회(~10/12)</div></div>
+  </div>
+  <h3>무엇을 팔아 얼마를 버는가</h3>
+  <div class="tbl-scroll"><table>
+    <caption>매출 구성 (억원). 반기보고서 II-4(별도)·연결주석 24</caption>
+    <thead><tr><th>구분</th><th class="num">2024<br>(스피어코리아)</th><th class="num">2025</th><th class="num">1H26</th><th>내용</th></tr></thead>
+    <tbody>
+      <tr><td>우주항공 특수합금 등 공급(별도)</td><td class="num">854.3</td><td class="num">792.1</td><td class="num">1,064.0</td><td>품목 "Ni, ALLOY 등". 매출유형 전부 <b>상품매출</b>(제품매출 아님), 수익인식 "한 시점(인도)", B2B 99.9%</td></tr>
+      <tr><td>헬스케어(플랫폼·건기식·디바이스)</td><td class="num">-</td><td class="num">7.9</td><td class="num">0.9</td><td>라이프레코드·닥터콜·숨튼. 사실상 소멸. 라이프슈티컬(원료의약품)은 중단영업</td></tr>
+      <tr><td>더스페셜메탈스(연결 가산)</td><td class="num">-</td><td class="num">156.4</td><td class="num">156.3</td><td>국내 금속 도소매·원소재 수입판매. 1Q26 128억 → 2Q26 28억</td></tr>
+      <tr class="sum"><td>연결 매출</td><td class="num">854.3</td><td class="num">956.4</td><td class="num">1,221.3</td><td>해외 비중 2024 91.0% → 2025 77.5% → 1H26 87.0%(2Q 96.3%)</td></tr>
+      <tr><td>A사(SpaceX) 매출</td><td class="num">735.8 (86.1%)</td><td class="num">698.1 (73.0%)</td><td class="num">1,047.0 (85.7%)</td><td>2025-07-31 장기계약 공시에서만 실명. 사업보고서 주석은 "국내 주요 우주항공 기업 A사"로 표기(오기로 보임)</td></tr>
+      <tr><td>매출총이익 / 이익률</td><td class="num">288.8 / 33.8%</td><td class="num">168.5 / 17.6%</td><td class="num">152.1 / 12.5%</td><td>2Q26 11.0%. 2024년 판관비 137억 중 지급수수료 132억이 2025년 28억으로 줄면서 원가율이 올라감(원가로 옮겨갔는지 단가가 바뀌었는지 설명 없음)</td></tr>
+      <tr><td>판관비 / 영업이익</td><td class="num">137.0 / 151.8</td><td class="num">78.0 / 90.5</td><td class="num">128.3 / 23.8</td><td>1H26 판관비에 비현금 주식보상·외주용역 51.8억(자기주식 18만주 지급). 현금 판관비 약 76억</td></tr>
+    </tbody>
+  </table></div>
+  <div class="chart" id="ch-gpm"><p class="ct">매출총이익률 비교 (%)</p><p class="cs">스피어 3개 연도와 금속 유통·서비스센터·제조사. 유통사는 각사 10-K(2025), 에이치브이엠은 DART 2026년 반기. 막대를 누르면 근거가 뜬다.</p><svg></svg></div>
+  <p>2024년 33.8%는 "가공 매출 중심에 커미션을 판관비로 낸" 구조이고, 2026년 12.5%는 "원소재 상품 매출이 섞인" 구조다. 미국 대형 금속 서비스센터(가공 부가가치 포함)가 17~29%, 국내 스테인리스 유통 티플랙스가 영업이익률 2.5%다. 스피어의 현재 마진은 그 사이에 있고, 진공용해 제조사인 에이치브이엠(20.8%)보다 낮다. 매출총이익 152억에서 판관비 128억을 빼면 영업이익 24억이 남는다. 매출이 연 2,900억(2026년 컨센서스)이 돼도 이익률 12%면 매출총이익은 350억이고, 상반기 판관비 추세(128억, 비현금 제외 76억)를 연 200억으로 보면 영업이익은 150억 안팎이다. 2027년 컨센서스 영업이익 533억은 매출 4,520억에 이익률 11.8%를 전제하는데, 이는 2025년(9.5%)보다 높고 2026년(4.9%)의 2.4배다.</p>
+  <h3>단가·원가·운전자본</h3>
+  <ul>
+    <li><b>원재료 매입 1H26 1,103억</b>(Ni·ALLOY·하프늄), 비용 성격별 상품매입 1,296억·재고 증가 −227억·외주용역 36억·외주가공 17억·인건비 45억. 매입처는 미공시. 특수관계자 Sphere Power Inc.(최광수 CEO, 미국)에서 2024년 28.8억·2025년 19.6억을 사고, 같은 회사에 41.5억·43.1억·14.0억(1H26)을 팔았다.</li>
+    <li><b>재고 332억</b>(2025년 말 105억 → 6개월 새 3.2배, 서산 창고), 선급금 125억, 매출채권 207억(전액 6개월 이내, 달러 161억). 계약 조건은 "송장 후 60일"인데 2026년 정정 공시 24건의 사유가 "납품 완료 후 대금 입금 대기"로 바뀌었다. 영업현금흐름은 2024년 +43억, 2025년 −147억, 1H26 −218억(2Q +102억).</li>
+    <li><b>리드타임 주장</b>: 반기보고서 "80주→4주(95% 단축)", 신한 "44주→60일", 대신 "20~40주→4~12주", 유안타 "40주→12주". 네 숫자가 다 다르다. 물리적으로 용해·압연·검사에 수개월이 걸리므로 단축의 실체는 <b>재고를 미리 사두고 잘라 납품</b>하는 것, 즉 재고 금융이다. 재고 3.2배 증가가 그 증거다.</li>
+    <li><b>협력사 의존</b>: 2025년 3분기 적자(−9.9억)의 회사 설명은 "국내 핵심 제조협력사 신공장 가동 지연". 같은 시기 에이치브이엠 서산 2공장 가동이 밀렸고, 에이치브이엠은 리포트에서 "국내 유통사를 통해 SpaceX에 납품"한다고 적는다. HVM의 SpaceX향 매출(2025년 395억, 2026년 상반기 346억)이 스피어 매출에 통과 매출로 들어 있을 가능성이 크다.</li>
+  </ul>
+  <div class="take"><span class="lbl">정리</span><p>밸류체인에서 스피어의 칸은 "밀과 로켓 회사 사이의 승인 디스트리뷰터·공급망 통합자"다. 가치는 벤더 네트워크, 품질 서류, 납기 관리, 그리고 재고를 먼저 사둘 자본에서 나온다. 2026년부터는 여기에 "니켈 캐소드를 사서 파는 원자재 트레이딩"이 더해졌다. 두 사업 모두 매출은 크고 마진은 얇다. 회사가 쓰는 "Tier-1"은 직납 여부를 뜻하지 제조 능력을 뜻하지 않는다.</p></div>
+</section>
+
+<section id="s5">
+  <div class="sec-h"><span class="sec-n">05</span><h2>실적: 3년 만에 매출 10배, 영업이익률은 28%에서 2%로</h2></div>
+  <div class="chart" id="ch-ann"><p class="ct">연간 매출과 영업이익 (억원)</p><p class="cs">2023·2024년은 스피어코리아(FY2025 보고서 비교치, 2023년은 10~12월 3개월), 2025년 연결, 2026·2027년은 컨센서스(9/30). 라이프시맨틱스 법인의 2020~2024년 매출 27~46억·영업손실 37~96억은 그래프에서 뺐다.</p><svg></svg>
+    <div class="legend"><span><i style="background:var(--c1)"></i>매출</span><span><i style="background:var(--c2)"></i>영업이익(우축)</span></div></div>
+  <div class="tbl-scroll"><table>
+    <caption>연간 손익 (억원). 2023~2024 스피어코리아, 2025 연결. 역취득 회계로 라이프시맨틱스 숫자는 2025년 3월부터만 포함</caption>
+    <thead><tr><th>항목</th><th class="num">2023 (3개월)</th><th class="num">2024</th><th class="num">2025</th><th class="num">1H25</th><th class="num">1H26</th></tr></thead>
+    <tbody>
+      <tr><td>매출</td><td class="num">120.8</td><td class="num">854.3</td><td class="num">956.4</td><td class="num">407.1</td><td class="num">1,221.3</td></tr>
+      <tr><td>매출총이익 (이익률)</td><td class="num">-</td><td class="num">288.8 (33.8%)</td><td class="num">168.5 (17.6%)</td><td class="num">103.5 (25.4%)</td><td class="num">152.1 (12.5%)</td></tr>
+      <tr><td>판관비</td><td class="num">-</td><td class="num">137.0</td><td class="num">78.0</td><td class="num">39.5</td><td class="num">128.3</td></tr>
+      <tr><td>영업이익 (이익률)</td><td class="num">12.2 (10.1%)</td><td class="num">151.8 (17.8%)</td><td class="num">90.5 (9.5%)</td><td class="num">64.0 (15.7%)</td><td class="num">23.8 (1.9%)</td></tr>
+      <tr><td>금융수익 / 금융비용</td><td class="num">-</td><td class="num">19.8 / 45.6</td><td class="num">189.6 / 215.3</td><td class="num">315.4 / 74.4</td><td class="num">716.5 / 503.9</td></tr>
+      <tr><td>세전이익</td><td class="num">-</td><td class="num">108.7</td><td class="num">48.8</td><td class="num">305.4</td><td class="num">229.8</td></tr>
+      <tr><td>중단영업(라이프슈티컬)</td><td class="num">-</td><td class="num">-</td><td class="num">-42.6</td><td class="num">-28.4</td><td class="num">-32.3</td></tr>
+      <tr class="sum"><td>순이익</td><td class="num">9.3</td><td class="num">86.1</td><td class="num">1.7</td><td class="num">243.5</td><td class="num">154.9</td></tr>
+      <tr><td>파생상품 제외 세전이익</td><td class="num">-</td><td class="num">-</td><td class="num">6.5</td><td class="num">-</td><td class="num">약 -135</td></tr>
+      <tr><td>영업현금흐름</td><td class="num">-</td><td class="num">43.3</td><td class="num">-146.7</td><td class="num">-110.4</td><td class="num">-217.8</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">2024년 순이익은 K-GAAP 120.2억이 K-IFRS 전환으로 86.1억이 됐다(FY2025 주석 39). 1H26 "파생상품 제외 세전이익"은 세전 229.8억에서 파생·Day1 순이익 365.2억을 뺀 필자 계산. 합병 외부평가(동현회계법인)의 스피어코리아 추정은 2025년 매출 913억·영업이익 154억, 2026년 1,057억·176억이었다. 2025년 실적은 별도 800억·83억으로 매출 −12%·영업이익 −46%, 2026년은 상반기에 매출 추정을 넘겼지만 영업이익은 추정의 2.8%다.</p>
+  <div class="chart" id="ch-q"><p class="ct">분기 매출과 이익률</p><p class="cs">막대 = 매출(억원, 2024년은 스피어코리아 분기보고서 비교치), 실선 = 영업이익률, 점선 = 매출총이익률(2024년 1·2·4분기는 원가·판관비 미구분). 막대를 누르면 순이익과 비고가 뜬다.</p><svg></svg>
+    <div class="legend"><span><i style="background:var(--c1)"></i>매출</span><span><i style="background:var(--c2)"></i>영업이익률</span><span><i style="background:var(--c3)"></i>매출총이익률</span></div></div>
+  <p>분기 매출은 2024년 200억대에서 2026년 2분기 771억으로 커졌지만 영업이익은 2024년 1분기 58억(이익률 28.1%)이 최대였고 2026년 2분기는 17억(2.2%)이다. 매출총이익률은 2025년 1분기 24.6% → 3분기 5.1%(협력사 지연) → 4분기 15.9% → 2026년 1분기 14.9% → 2분기 11.0%로, 매출이 가장 큰 분기가 이익률이 가장 낮다. 1H26 매출총이익 152억은 1H25(104억)보다 48억 늘었는데 판관비가 89억 늘어(40 → 128억) 영업이익이 40억 줄었다. 판관비 증가분의 절반은 주식보상(상여 32억, 외주용역 36억에 포함된 임원 영입 자기주식)이고, 나머지는 지급수수료 17억(1분기 제련소 자문수수료 추정)과 인건비다. 2025년 4분기 순손실 −209억, 2026년 1분기 +398억, 2분기 −243억은 모두 CB 파생상품이며 7장에서 분해한다.</p>
+  <div class="tbl-scroll"><table>
+    <caption>재무상태 (연결, 억원)</caption>
+    <thead><tr><th>항목</th><th class="num">2024-12</th><th class="num">2025-12</th><th class="num">2026-03</th><th class="num">2026-06</th><th>비고</th></tr></thead>
+    <tbody>
+      <tr><td>현금 + MMF</td><td class="num">15.1</td><td class="num">66.2</td><td class="num">306.7</td><td class="num">866.6</td><td>6회 CB 미사용 127.5억 MMF 포함</td></tr>
+      <tr><td>매출채권</td><td class="num">200.7</td><td class="num">220.5</td><td class="num">417.2</td><td class="num">207.1</td><td>전액 6개월 이내, 달러 채권 161억</td></tr>
+      <tr><td>재고자산</td><td class="num">14.6</td><td class="num">104.8</td><td class="num">264.4</td><td class="num">331.9</td><td>6개월 새 3.2배, 서산 창고. 평가충당금 0</td></tr>
+      <tr><td>선급금</td><td class="num">1.2</td><td class="num">67.9</td><td class="num">62.1</td><td class="num">125.0</td><td>셋을 합친 운전자본 664억 = 상반기 매출의 54%</td></tr>
+      <tr><td>EII(제련소) 지분·대여금</td><td class="num">-</td><td class="num">-</td><td class="num">3,839.0</td><td class="num">3,746.0</td><td>1Q는 FVPL 3,644.4 + 이연거래일자산 194.6, 2Q는 관계기업 1,393.5 + 장기대여금 2,352.5로 재분류. 총자산의 64%</td></tr>
+      <tr><td>자산총계</td><td class="num">380.8</td><td class="num">953.6</td><td class="num">5,112.3</td><td class="num">5,858.6</td><td></td></tr>
+      <tr><td>차입금</td><td class="num">-</td><td class="num">10.0</td><td class="num">3,262.0</td><td class="num">3,182.7</td><td>GLAS 2.1억달러(12.75%) + 신한 130억(부동산 담보)</td></tr>
+      <tr><td>전환사채·파생상품부채</td><td class="num">18.9</td><td class="num">146.4</td><td class="num">559.3</td><td class="num">694.8</td><td>권면 625억. 파생부채 479억은 전환가 대비 주가 상승분</td></tr>
+      <tr><td>부채총계</td><td class="num">218.9</td><td class="num">317.2</td><td class="num">4,088.5</td><td class="num">4,223.4</td><td></td></tr>
+      <tr class="sum"><td>자본총계 (부채비율)</td><td class="num">161.9 (135%)</td><td class="num">636.3 (50%)</td><td class="num">1,023.8 (399%)</td><td class="num">1,635.2 (258%)</td><td>자기주식처분이익 369억·전환권대가·CB 전환으로 증가. 역취득 자본조정 −697억</td></tr>
+    </tbody>
+  </table></div>
+  <p>6월 말 자본 1,635억 중 2026년 상반기에만 자기주식 처분이익 369억, 4회 CB 전환 자본 72억 등이 더해졌다. 자산 5,859억의 64%가 제련소 관련(지분 1,394억 + 주주대여금 2,353억)이고, 그 자산을 사느라 생긴 차입금이 3,183억이다. 상반기 이자 지급은 115억, 이자비용은 185억이다. 회사가 자기 사업에서 번 현금은 2024년 이후 누적 −321억(영업현금흐름)이다.</p>
+</section>
+
+
+<section id="s6">
+  <div class="sec-h"><span class="sec-n">06</span><h2>수주 원장: 공시 143건을 37건으로 줄이면 보이는 것</h2></div>
+  <p>합병 후 2025년 4월부터 2026년 10월 7일까지 '단일판매·공급계약' 공시가 143건이다. 원본 50건, 정정 92건, 해지 1건. 정정을 같은 계약으로 묶으면 2025년 이후 신규 계약은 37건이고, 37건 전부 "미국 글로벌 우주항공 발사업체"(SpaceX) 상대다. 아래는 정정을 전부 반영한 최종 금액이다. 원화는 각 공시의 최초 환율로 고정돼 있어 달러를 함께 적는다.</p>
+  <div class="chart" id="ch-ord"><p class="ct">분기별 신규 수주 (억원, 정정 반영 최종치)</p><p class="cs">원공시 분기 기준. 2025년 3분기에는 SpaceX 장기계약의 2026년 확정분 772억이 들어 있다. 막대를 누르면 구성이 뜬다.</p><svg></svg></div>
+  <div class="tbl-scroll"><table>
+    <caption>수주 집계와 큰 계약 (억원 / USD). 정정 반영, 해지 제외</caption>
+    <thead><tr><th>구분</th><th class="num">건수</th><th class="num">금액</th><th>내용</th></tr></thead>
+    <tbody>
+      <tr><td>2025년 신규</td><td class="num">25</td><td class="num">2,214.1 (US$156.5M)</td><td>SpaceX 2026년 확정분 772.0억 제외 시 1,442.1억(US$101.0M). 최초 공시 합 1,867억 → 정정 증액 +18.6%</td></tr>
+      <tr><td>2026년 1~10월 신규</td><td class="num">12</td><td class="num">2,271.7 (US$157.0M)</td><td>이미 2025년 전체 초과. 단 <b>6건 1,359억이 "조건부"</b>(상대방 일방 변경·취소 가능). 7~8월 신규 0건, 정정만 15건</td></tr>
+      <tr><td>종료일 미도래(10/12)</td><td class="num">21</td><td class="num">3,635.0 (US$254.2M)</td><td>2026년 하반기 종료 17건 2,475억, 2027년 7건 1,394억, 2028년 이후 0건. 납품 진행률 공시된 건은 5건뿐</td></tr>
+      <tr><td>최대 계약 ①</td><td class="num">1</td><td class="num">772.0 (US$55.5M)</td><td>2025-07-31 SpaceX 장기계약의 2026년 확정분(기간 2026-01-01~12-31). 유일하게 상대방 실명 공시, 정정 0회</td></tr>
+      <tr><td>최대 계약 ②</td><td class="num">1</td><td class="num">490.5 (US$35.0M)</td><td>2025-09-29 공시 250억 → 2026-02-19 "확정→조건부" 전환(FY25 보고서는 "전부·일부 취소 가능" 경고) → 5/26 종료 8개월 연장 → 8/3 <b>1.96배 증액</b>, 납기 2027-02-05</td></tr>
+      <tr><td>최대 계약 ③</td><td class="num">1</td><td class="num">431.9 (US$29.9M)</td><td>2026-02-19 공시, 계약기간 2/14~6/12(4개월). 납품 100%·대금 77% → 입금 완료. 2Q26 매출 급증의 주역</td></tr>
+      <tr><td>원소재 계약</td><td class="num">3</td><td class="num">680.7 (US$46.4M)</td><td>3/25 280.8억·6/15 222.6억·10/6 177.3억. 품목 "특수합금 원소재"(니켈 캐소드 등으로 추정). 마진이 낮은 쪽</td></tr>
+      <tr><td>정정 통계</td><td class="num">83회</td><td class="num">-</td><td>37건 중 정정 0회 12건, 3회 이상 19건(최다 7회). <b>종료일 연장 24건(65%)</b>, 증액 16건, 감액 5건(최대 −15.3%), 해지 1건 20.2억(2025-12-31 발주 취소)</td></tr>
+    </tbody>
+  </table></div>
+  <div class="chart" id="ch-bk"><p class="ct">수주잔고 (USD 백만, 반기·분기보고서 수주상황 표)</p><p class="cs">합병 후 공시한 PO만 집계한 표. 기납품은 6/30 이후 납품을 반영하지 않는다. 막대를 누르면 수주총액·기납품이 뜬다.</p><svg></svg></div>
+  <p>6월 말 수주표는 수주총액 2억 480만달러, 기납품 8,905만달러, 잔고 1억 1,573만달러다. 2분기에 기납품이 5,040만달러 늘었고 같은 분기 해외매출이 742억이니 공시 PO 납품이 분기 매출의 95%를 설명한다. 잔고 중 2026년 안에 납기가 오는 것은 약 5,500만달러(약 800억), 2027년 1~2월 납기가 약 5,800만달러다. 여기에 10월 공시 3건 4,474만달러를 더하면 2027년 상반기까지 보이는 매출은 약 2,250억(1억 6,040만달러)이다. 2026년 하반기 컨센서스 매출(2,944억 − 1,221억 = 1,723억)을 채우려면 공시 PO 외에 더스페셜메탈스 국내 매출과 4분기 니켈 원소재 매출이 필요하다.</p>
+  <h3>"10년 1.5조 계약"의 정체</h3>
+  <div class="grid2">
+    <div class="pane yes"><h4>공시가 말하는 것</h4><ul>
+      <li>2025-07-31 "투자판단 관련 주요경영사항": 상대방 <b>Space Exploration Technologies Corp.</b>, 기간 2025-07-31~2035-12-31(상대방 요청 시 최대 3년 연장), 품목 니켈·초합금 등 특수합금.</li>
+      <li>초기연도(2026) 수요예측 1억 1,096만달러(1,544억), 계약기간 총 수요예측 9억 9,866만달러 → 당일 정정 <b>10억 5,414만달러</b>(약 1.47조, 환율 1,391원).</li>
+      <li>같은 날 단일판매 공시: 2026년 확정분 5,548만달러(772억). 이것이 법적으로 묶인 유일한 숫자다.</li>
+      <li>2026년 상반기 A사 매출 1,047억(약 7,300만달러)은 이미 2026년 확정분을 넘었고, 초기연도 예측 1억 1,096만달러의 66%다. 즉 2026년에는 예측치가 실제로 채워지고 있다.</li>
+    </ul></div>
+    <div class="pane no"><h4>공시가 말하지 않는 것, 또는 반대로 말하는 것</h4><ul>
+      <li>공시 원문: "매년 실제 매출은 특수합금 시세와 상대방 수요에 따라 변동". 최소구매(take-or-pay) 조항은 없다. 신한의 "연 최소보장 1억달러"는 공시와 맞지 않고, iM의 "수요예측치"가 맞다.</li>
+      <li>2026년 반기보고서 II-6 '경영상의 주요계약': <b>"비경상적인 주요 계약은 존재하지 않습니다."</b> 1.5조는 우발채무 주석과 공시 진행사항란에만 '수요예측'으로 적혀 있다.</li>
+      <li>2026-02-19 이후 신규 PO 6건은 모두 "상대방이 계약의 일부 또는 전부를 변경·취소할 수 있음"이 붙은 조건부 계약이다. 2025-09-29 건은 사후에 확정에서 조건부로 바뀌었다.</li>
+      <li>물량 정합성: 연 1억달러는 인코넬 718 환봉 가격(45~110달러/kg)으로 1,700~2,000t이다. SpaceX의 초내열합금 총수요 2차 추정(2028년 900~1,100t/년)의 약 2배에 해당한다. 10년 총액은 상한에 가깝고, 2026년 실제 확정분 5,548만달러가 바닥이다.</li>
+    </ul></div>
+  </div>
+  <div class="take"><span class="lbl">정리</span><p>수주는 가짜가 아니다. 공시 PO가 분기 매출의 95%를 설명하고 2026년 10개월 수주가 2025년 전체를 넘었다. 문제는 성격이다. 계약기간 2~12개월의 반복 발주이고, 2026년 신규의 60%가 조건부이며, 연장·감액·취소가 일상이다. 수주잔고 3,635억은 "2027년 2월까지 납품할 물량"이지 "10년치"가 아니다. 그리고 그 물량의 마진이 2%다.</p></div>
+</section>
+
+<section id="s7">
+  <div class="sec-h"><span class="sec-n">07</span><h2>2026년 상반기 해부: 영업이익 24억이 순이익 155억이 된 경로</h2></div>
+  <div class="chart" id="ch-bridge"><p class="ct">영업이익 → 순이익 브리지 (1H26 연결, 억원)</p><p class="cs">반기보고서 연결주석 28·32. 파생상품 항목은 전환사채 콜옵션·풋옵션·자기CB 매각의 공정가치 손익이며 현금이 오간 것은 자기CB 매각대금 990.9억(재무활동)뿐이다.</p><svg></svg></div>
+  <div class="tbl-scroll"><table>
+    <caption>분기별 금융손익 분해 (연결, 억원)</caption>
+    <thead><tr><th>항목</th><th class="num">4Q25</th><th class="num">1Q26</th><th class="num">2Q26</th><th>무슨 일이었나</th></tr></thead>
+    <tbody>
+      <tr><td>영업이익</td><td class="num">36.4</td><td class="num">7.1</td><td class="num">16.7</td><td>4Q25가 2025년 중 가장 좋았다</td></tr>
+      <tr><td>파생상품 평가손익</td><td class="num neg">-174.3</td><td class="num pos">+611.7</td><td class="num pos">+178.4*</td><td>4회 CB(전환가 3,448원) 콜옵션 자산: 2025-12-31 255억 → 3월 콜 행사 시점 865억. 주가가 14,690원 → 47,257원(3월 평균)으로 3.2배</td></tr>
+      <tr><td>파생상품 처분손익</td><td class="num neg">-101.6</td><td class="num neg">-160.7</td><td class="num neg">-246.7</td><td>콜 행사로 취득한 자기CB 75억을 3/25·4/21·5/19 각 25억씩 291·295·313억에 매각. 장부가(콜옵션 자산)를 지우며 처분손실</td></tr>
+      <tr><td>이자비용</td><td class="num">(아래 포함)</td><td class="num neg">-61.9</td><td class="num neg">-123.3</td><td>GLAS 2.1억달러 12.75%(2/13 실행) 52.2 → 113.4억, CB 이자 9.7 → 9.9억</td></tr>
+      <tr><td>외환·기타 금융·잡손익</td><td class="num pos">+24.3</td><td class="num pos">+22.3</td><td class="num neg">-12.4</td><td>달러 매출채권·차입금 환산, 사채상환손실, Day1 손실. 4Q25는 이자 포함 순액</td></tr>
+      <tr><td>법인세</td><td class="num pos">+29.2</td><td class="num neg">-1.2</td><td class="num neg">-41.4</td><td>2Q에 연간 유효세율 18.5%를 일괄 적용</td></tr>
+      <tr><td>중단영업·지분법</td><td class="num neg">-22.8</td><td class="num neg">-19.4</td><td class="num neg">-14.1</td><td>라이프슈티컬(매각예정 3년째), 포에스2호 지분법</td></tr>
+      <tr class="sum"><td>순이익</td><td class="num neg">-208.7</td><td class="num pos">+397.9</td><td class="num neg">-242.9</td><td>세 분기 합계 −53.7억</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">*2Q26 평가손익 +178.4억은 1분기에 처분손실로 분류됐던 금액 일부가 반기에서 평가손실로 재분류된 효과를 포함한다(1Q 보고서와 반기보고서의 분류가 다르다). 반기 누적으로 보면 평가이익 42.8억·처분이익 613.3억·평가손실 25.1억·처분손실 248.7억·Day1 손실 17.4억, 순 +365.2억. 4Q25는 FY25에서 9M25를 뺀 역산.</p>
+  <h3>왜 이런 구조가 됐나</h3>
+  <ul>
+    <li><b>CB 콜옵션을 회사가 들고 있다.</b> 3회(1,910원)·4회(3,448원) CB를 발행하며 회사(또는 지정인)가 권면의 50%를 되살 수 있는 콜옵션을 붙였다. 주가가 전환가의 10배가 되자 이 옵션은 수백억짜리 자산이 됐고, 회사는 옵션을 행사해 CB를 액면에 되산 뒤 시장에 12배 가격으로 팔았다. 4회차 75억은 899억에, 3회차 10억은 92억에 팔렸다. 회계상으로는 옵션을 먼저 평가이익으로 잡고(1Q +612억) 팔 때 장부가를 지우며 처분손실(−249억)이 나는 순서라, 분기 순이익이 한 번 크게 올랐다가 내려온다. 현금은 990.9억이 들어왔고 이 돈이 제련소와 운전자본에 쓰였다.</li>
+    <li><b>5·6회 CB는 반대로 풋옵션 부채가 커진다.</b> 전환가 14,213원·44,929원 CB 625억의 전환권·풋옵션을 파생상품부채 479억으로 잡고 있다. 주가가 오르면 부채가 커져 평가손실, 내리면 평가이익이다. 즉 <b>주가가 떨어지는 분기에 순이익이 좋아 보이는</b> 역설이 2026년 하반기부터 작동한다.</li>
+    <li><b>이자는 이제 고정비다.</b> 2.1억달러 × 12.75% = 연 2,680만달러, 원화로 375~390억이다(차입금 계약상 현금흐름 4,360억 − 장부 3,183억 = 4년간 1,177억). 상반기 이자비용 185억 중 165.7억이 이 차입이고, 그마저 2월 13일부터 4.5개월치다. 2026년 하반기부터는 분기 95~100억이 빠진다.</li>
+    <li><b>법인세는 영업이익과 무관하게 나온다.</b> 파생상품 손익은 세무상 손금·익금이 아닌 항목이 많아, 영업적자여도 세금이 나올 수 있다(2Q 41.4억).</li>
+  </ul>
+  <div class="take"><span class="lbl">정리</span><p>이 회사의 순이익은 "주가 × 전환사채"의 함수다. 2025년 4분기부터 세 분기 순이익 합계가 −54억이고 영업이익 합계가 60억이다. 봐야 할 숫자는 영업이익, 영업현금흐름(1H26 −218억), 그리고 파생을 뺀 세전이익(1H26 약 −135억)이다. 2027년 이후 순이익이 플러스가 되려면 영업이익 + 제련소 지분법이익이 이자 390억과 라이프슈티컬 손실 60억을 넘어야 한다.</p></div>
+</section>
+
+<section id="s8">
+  <div class="sec-h"><span class="sec-n">08</span><h2>니켈 제련소 10%: 3,441억짜리 자산, 86%는 빌린 돈</h2></div>
+  <p>2025년 12월 31일 싱가포르 자회사 SNC(Sphere Nickel Cobalt)가 호주 상장사 Nickel Industries(NIC)로부터 Excelsior International Investment(EII) 지분 10%(2,000주 중 200주)와 NIC가 EII에 빌려준 주주대여금 채권의 10%를 2억 4,000만달러에 샀다. EII는 Excelsior Nickel을 거쳐 인도네시아 모로왈리 산업단지(IMIP)의 HPAL 제련소 운영사 PT Fajar Metal Industry(ENC 프로젝트)를 100% 가진다. 주주는 NIC 46%, Decent Resource(칭산그룹) 44%, 스피어 10%. 명판 생산능력은 니켈 72,000t/년, 총 건설비 상한 23억달러, 2026년 7월 첫 MHP, 8월 11일 첫 니켈 캐소드, 풀가동은 10월~연말(용수 확보 조건)이다.</p>
+  <div class="chart" id="ch-snc"><p class="ct">2.4억달러는 어디서 왔나 (억원)</p><p class="cs">공시 환율 기준. 추가 출자 615억은 지분 대금이 아니라 2026년 4~8월 운전자본·보증수수료·이자 명목으로 SNC에 넣은 돈. 막대를 누르면 조건이 뜬다.</p><svg></svg></div>
+  <div class="tbl-scroll"><table>
+    <caption>거래 구조 (반기보고서 주석 6·9·17·36, 수시공시 2025-12-31~2026-08-10)</caption>
+    <thead><tr><th>항목</th><th>내용</th></tr></thead>
+    <tbody>
+      <tr><td>대금 2.4억달러</td><td>계약금 100만 + 중도금 3,215만(1/14~30, 자기주식 343.6억 + 5회 CB 250억) + 잔금 2억 685만(2/13, 인수금융). 자기자금 비중 <b>13.8%</b></td></tr>
+      <tr><td>인수금융</td><td>GLAS Trust (Singapore) 대리, <b>2.1억달러, 12.75%, 3개월 후급, 만기 2030-02-13</b>. 1분기 보고서는 3.78%(오기) → 정정 11.75% → 반기 12.75%. 담보 SNC 주식 100%, 모회사 "취소불가·무조건 보증". 디폴트 시 GLAS는 채권을 NIC에 되팔고(풋) NIC는 SNC·EII 지분 콜옵션 행사 → 지분이 NIC로 돌아감</td></tr>
+      <tr><td>NIC 신용보강 대가</td><td>풋옵션 수수료 546만 9,034달러(80.1억)를 모회사가 보증했다가 6월 조기 지급. NIC 입장에서는 당초 2.53억달러 추가 납입 예정이 4,600만달러로 줄어 현금 2.07억달러를 아꼈다. 즉 스피어 자금이 칭산 측 매각대금이자 NIC 부담 경감 자금</td></tr>
+      <tr><td>장부 처리</td><td>1분기: FVPL 금융자산 3,644억 + 이연거래일자산 195억. 반기: <b>관계기업투자 1,393.5억 + 장기대여금 2,352.5억</b>으로 재분류(유의적 영향력 근거 "이사선임권"). EII 반기 요약재무 자산 2조 9,849억·부채 2조 9,954억·<b>자본 −104.6억</b>·반기순이익 24.3억</td></tr>
+      <tr><td>SNC 출자 누계</td><td>자본금 7,777만달러(2026-08, 1,141억). 2.4억달러 외 4,170만달러가 4~8월에 더 들어감: PT FMI 운전자본 대여 244.9억, 보증수수료, 이자. SNC 반기 순손실 −157.2억(이자비용)</td></tr>
+      <tr><td>오프테이크·배당</td><td>"PT FMI 생산 니켈 등에 대한 장기 구매권 보유" 외에 수량·가격·기간 미공시. IR덱: 지분 비례 10%(약 7,200t) + 옵션 10%. 더스페셜메탈스가 신한은행 2,000만달러 수입신용장(모회사 2,400만달러 보증)으로 결제 예정. 배당은 인수금융 상환이 우선이라 현금 유입은 2029년 말 이후(유안타 전언)</td></tr>
+      <tr><td>풋옵션(SNC 보유)</td><td>제련소 운영·건설 상황에 따라 2027-07-31부터 칭산 측 모회사를 상대로 행사 가능한 풋옵션을 NIC로부터 승계. 세부는 비밀유지</td></tr>
+    </tbody>
+  </table></div>
+  <h3>얼마를 벌 수 있나: 세 가지 경로와 민감도</h3>
+  <div class="tbl-scroll"><table>
+    <caption>경로별 기대치 (연간, 억원). 증권사 숫자는 전부 회사 설명의 재인용이며, 필자 계산은 가정을 적었다</caption>
+    <thead><tr><th>경로</th><th>증권사·회사</th><th>필자 계산</th><th>걸림돌</th></tr></thead>
+    <tbody>
+      <tr><td>① 지분법이익 (10%)</td><td>신한 700~1,000억, 유안타 "EBITDA 7억달러 × 10%", 메리츠 4Q26부터 반영</td><td>7,200t × (LME − 원가 13,000달러) × 1,400원: LME 15,000달러 202억 / 17,000달러 403억 / 19,000달러 605억 / 21,000달러 806억. 단, 이는 EBITDA 몫의 상한이고 EII는 자본 −105억에 차입 3조로 지어져 이자·감가상각 후 순이익은 그보다 훨씬 작다</td><td>LME 10월 초 17,290달러. 인니 HPAL 캐소드 총원가 13,500~14,500달러(코발트 크레딧 전 기준). 2025년 업계 20%가 적자였던 가격대. 용수·황산·로열티</td></tr>
+      <tr><td>② 오프테이크 매출 (트레이딩)</td><td>메리츠 "2027년부터 약 2,000억", 신한 2,000억</td><td>7,200t × 17,000달러 × 1,400원 = 1,714억. 마진은 유통 수준(IR덱 "밀 벤더에 5~10% 마진")이면 85~170억. 특수합금에 필요한 니켈은 연 1,000t 안팎이라 85%는 외부 판매</td><td>Class 1 캐소드 LME 브랜드 등록 전에는 할인 거래. 운전자본 2,000만달러 L/C. 니켈 가격 하락 시 재고평가손</td></tr>
+      <tr><td>③ 원가 절감</td><td>SK·신한 "LME 대비 50%, 연 150억"</td><td>7,200t × 17,000달러 × 50% = 857억이어야 150억이 아니다. 인코넬 718 가격에서 니켈 금속 원가는 약 20%라, 니켈을 반값에 사도 합금 원가는 10% 안팎 내려간다. 그리고 스피어는 용해를 하지 않으므로 밀이 그 니켈을 받아줘야 한다</td><td>10% 소수주주가 시장가의 절반에 받으면 90% 주주(칭산·NIC)가 손해 보는 구조. 공시된 가격 산식 없음</td></tr>
+      <tr class="sum"><td>이자 (차감)</td><td>-</td><td><b>연 375~390억</b>(2.1억달러 × 12.75%). 2027~2029년 3년간 약 1,150억</td><td>배당·오프테이크 현금이 이자보다 먼저 들어와야 함</td></tr>
+    </tbody>
+  </table></div>
+  <p>정리하면, 풀가동과 LME 17,000달러에서 지분법이익 상한 약 400억에 트레이딩 마진 100~170억을 더해야 이자 390억을 겨우 넘는다. LME가 15,000달러면 지분법 200억으로 이자의 절반이다. 2024년 스피어코리아 자본 162억짜리 회사가 2년 뒤 3,441억짜리 소수지분을 86% 차입으로 산 것이고, 제련소 자체도 자본 −105억에 3조원 부채로 지어졌다. 레버리지 위에 레버리지다. 회사가 "원재료 확보"라고 부르는 이 투자는 손익 구조로 보면 <b>니켈 가격에 대한 7,200t 롱 포지션 + 12.75% 차입</b>이다.</p>
+  <div class="take"><span class="lbl">확인된 진행</span><p>NIC 공시 기준 2026-07 첫 MHP, 08-11 첫 니켈 캐소드 생산, 8월 말 코발트 황산염 예정. 한국투자증권은 10월 산업사업허가(IUI) 취득 후 10~11월 오프테이크 개시를 전한다. 2024년 자료의 "2025년 4분기 생산 개시"에서 약 10개월 늦었다. 스피어 반기보고서는 "2026년 10월 설계 생산능력 도달 목표"라고 적었다. 11월 16일 3분기 보고서에서 EII 지분법 손익과 더스페셜메탈스 니켈 매입이 처음 숫자로 나온다.</p></div>
+</section>
+
+<section id="s9">
+  <div class="sec-h"><span class="sec-n">09</span><h2>전방 산업: 발사 횟수가 아니라 엔진 대수가 수요다</h2></div>
+  <div class="tbl-scroll"><table>
+    <caption>SpaceX 2024~2026 (출처: Space.com, KeepTrack, NIC·FAA·S-1 공개자료, 2차 추정은 표시)</caption>
+    <thead><tr><th>항목</th><th class="num">2024</th><th class="num">2025</th><th class="num">2026 (~10/12)</th><th>비고</th></tr></thead>
+    <tbody>
+      <tr><td>Falcon 9 궤도 발사</td><td class="num">134</td><td class="num">165</td><td class="num">약 120 (8/22 100회)</td><td>연 160회 페이스. 재사용이라 발사 횟수만큼 소재가 들어가지 않음</td></tr>
+      <tr><td>Starship 시험비행</td><td class="num">4</td><td class="num">5</td><td class="num">3 (5/22·7/24·10/1)</td><td>15차 10/19 예정. 상단 Raptor 조기 정지가 매 비행 반복. NASA는 2026-02 Artemis III를 달 착륙에서 지구궤도 임무로 변경</td></tr>
+      <tr><td>Raptor 엔진</td><td colspan="3" class="num">누적 600기 이상(2026-04), Raptor 3 추력 280tf·1,525kg·350bar</td><td>스택당 39기(33+6). 주당 생산량 공식치 없음</td></tr>
+      <tr><td>Starship 생산 목표</td><td colspan="3" class="num">Starfactory "능력" 14일/스택(연 26), 2026년 근접 목표 연 10세트, Giga Bay 2026년 말 완공</td><td>"연 1,000기" 비전과 실적 사이 100배 격차</td></tr>
+      <tr><td>재무(S-1)</td><td class="num">-</td><td class="num">매출 187억달러, 순손실 49억달러</td><td class="num">6/12 나스닥 상장, 시총 약 1.96조달러</td><td>Starlink 114억·발사 40억·AI 32억달러. S-1에 금속 공급사 언급 없음</td></tr>
+    </tbody>
+  </table></div>
+  <h3>소재 수요의 산수</h3>
+  <ul>
+    <li><b>초내열합금이 쓰이는 곳</b>: Raptor 엔진(인코넬 718 적층제조, 산소 리치 터보펌프는 SpaceX 자체 합금 SX500)과 지상설비 배관. Starship 기체는 30X 스테인리스다. 그래서 수요 변수는 "Starship 기수"가 아니라 "Raptor 대수 + 지상설비"이고, 재사용 성공은 수요를 줄인다.</li>
+    <li><b>엔진 1기당 0.8~1t</b>(2차 추정, fundaai 2026-07), 투입 소재(buy-to-fly) 기준 1.5~3t. 연 200기면 300~500t, 1,000기면 1,500~2,500t. 인코넬 718 환봉 45~110달러/kg이면 연 200기는 1,500만~3,000만달러어치, 1,000기는 7,500만~1.5억달러어치다. 스피어 계약 연 1억달러는 <b>"Raptor 연 700~1,000기 양산 + 점유율 100%"에 가까운 숫자</b>다.</li>
+    <li><b>증권사 논리의 출발점</b>인 "Starship 니켈 47t vs Falcon 9 1t"(메리츠)은 건조중량 기준이다. 47t × 연 1,000대 = 4.7만t은 미국 전체 니켈기 초내열합금 판매량(약 6.4만t)의 73%, 우주용 수요 추정(2026년 2,944t)의 16배라 양립할 수 없다.</li>
+    <li><b>공급 쪽 병목</b>: 밀의 VIM 용해로가 풀가동이다. ATI 2027년 하반기 +9,000t, Carpenter 2028년 +9,000t, 영국 SMP 2028년. 밀 생산능력이 병목이면 제조사가 아닌 SCM 업체가 배정 물량을 받는 것이 더 어려워질 수도, 반대로 밀이 상대하지 않는 소량·다품종을 처리해주는 가치가 커질 수도 있다.</li>
+    <li><b>인소싱과 직납 경로</b>: SpaceX는 자체 합금(SX300·SX500)을 쓰고 텍사스 Bastrop에 2.8억달러 정밀주조 파운드리를 짓는다(가스터빈 블레이드·Raptor 터보펌프 겸용으로 해석). 세아베스틸지주의 텍사스 특수합금 공장(SST, 6,000t)이 2026년 하반기 가동되고 SpaceX 직공급을 추진한다. 한국에서 SpaceX 소재 납품이 제3자 리포트로 확인된 제조사는 에이치브이엠이고, 하나증권은 HVM을 "공식 특수소재 공급업체"로 쓴다.</li>
+    <li><b>니켈</b>: LME 연평균 2024년 16,814달러 → 2025년 15,162달러 → 2026-01-29 18,950달러 고점 → 10월 초 17,290달러. 인니 2026년 채굴 쿼터(RKAB) 250~270Mt로 2025년(375~379Mt) 대비 약 30% 축소. 기관별 2026년 수급은 32kt 부족(INSG)부터 200~280kt 잉여(ING·SMM)까지 갈린다.</li>
+  </ul>
+  <div class="take"><span class="lbl">정리</span><p>전방이 커지는 것은 사실이고 SpaceX 상장으로 자본도 생겼다. 그러나 스피어에 중요한 것은 "SpaceX가 얼마나 크냐"가 아니라 "Raptor를 몇 기 만들고, 그 합금을 누구한테서 사느냐"다. 2026년 Starship 3회 비행과 연 10세트 생산 목표는 2027년 매출 4,500억의 전제인 "신형 발사체 양산"과 거리가 있다. 그 공백을 메우는 것이 니켈 원소재 2,000억이고, 그건 로켓 사업이 아니다.</p></div>
+</section>
+
+<section id="s10">
+  <div class="sec-h"><span class="sec-n">10</span><h2>경쟁사·인접군 비교</h2></div>
+  <p>스피어와 같은 사업(SpaceX향 특수합금 SCM)을 하는 상장사는 국내에 없다. 아래는 세 범주의 인접군이다. ① 같은 고객·같은 소재의 제조사(에이치브이엠), ② 코스닥 우주 밸류체인(켄코아·알멕·인텔리안·쎄트렉아이·루미르·제노코·AP위성·비츠로테크·하이즈항공), ③ 대형 방산·우주(한화에어로·KAI·한화시스템)와 금속 유통(티플랙스). 최근 4분기는 FY2025 + 1H26 − 1H25, 시총은 10/8 종가 기준이다.</p>
+  <div class="tbl-scroll"><table class="peers">
+    <caption>인접군 비교 (억원, DART 연결 기준·와이즈리포트 10/8). PSR·시총/OP는 최근 4분기, 영업·매출총이익률과 성장률은 1H26</caption>
+    <thead><tr><th>회사</th><th>사업</th><th class="num">시총</th><th class="num">매출(4Q)</th><th class="num">영업이익(4Q)</th><th class="num">1H26 매출 YoY</th><th class="num">OPM</th><th class="num">GPM</th><th class="num">PSR</th><th class="num">시총/OP</th><th class="num">PBR</th></tr></thead>
+    <tbody>
+      <tr class="sum"><td><b>스피어</b></td><td>특수합금 SCM·유통(SpaceX)</td><td class="num">12,991</td><td class="num">1,770.6</td><td class="num">50.3</td><td class="num">+200.0%</td><td class="num">1.9%</td><td class="num">12.5%</td><td class="num">7.34</td><td class="num">258.5</td><td class="num">16.98</td></tr>
+      <tr><td>에이치브이엠</td><td>초내열합금 진공용해 제조(SpaceX)</td><td class="num">9,310</td><td class="num">892.5</td><td class="num">73.7</td><td class="num">+76.5%</td><td class="num">12.3%</td><td class="num">20.8%</td><td class="num">10.43</td><td class="num">126.3</td><td class="num">9.80</td></tr>
+      <tr><td>켄코아에어로스페이스</td><td>항공우주 부품·원소재</td><td class="num">1,579</td><td class="num">956.2</td><td class="num neg">-61.3</td><td class="num">+50.0%</td><td class="num">2.4%</td><td class="num">-</td><td class="num">1.65</td><td class="num">-</td><td class="num">0.94</td></tr>
+      <tr><td>알멕</td><td>알루미늄 압출(우주·EV)</td><td class="num">3,662</td><td class="num">1,946.2</td><td class="num">70.9</td><td class="num">+6.9%</td><td class="num">5.1%</td><td class="num">15.3%</td><td class="num">1.88</td><td class="num">51.6</td><td class="num">2.43</td></tr>
+      <tr><td>인텔리안테크</td><td>위성통신 안테나</td><td class="num">6,765</td><td class="num">3,635.1</td><td class="num">299.6</td><td class="num">+37.2%</td><td class="num">4.8%</td><td class="num">44.0%</td><td class="num">1.86</td><td class="num">22.6</td><td class="num">2.41</td></tr>
+      <tr><td>쎄트렉아이</td><td>위성 제조</td><td class="num">7,513</td><td class="num">2,107.2</td><td class="num">57.7</td><td class="num">+4.5%</td><td class="num neg">-0.7%</td><td class="num">14.5%</td><td class="num">3.57</td><td class="num">130.1</td><td class="num">3.02</td></tr>
+      <tr><td>루미르</td><td>SAR 위성</td><td class="num">1,133</td><td class="num">132.8</td><td class="num neg">-14.0</td><td class="num">+79.1%</td><td class="num neg">-21.3%</td><td class="num">19.6%</td><td class="num">8.53</td><td class="num">-</td><td class="num">1.85</td></tr>
+      <tr><td>제노코</td><td>위성 부품·통신</td><td class="num">1,246</td><td class="num">575.5</td><td class="num neg">-17.4</td><td class="num neg">-8.5%</td><td class="num neg">-8.6%</td><td class="num">2.7%</td><td class="num">2.16</td><td class="num">-</td><td class="num">2.18</td></tr>
+      <tr><td>AP위성</td><td>위성 단말·본체</td><td class="num">1,210</td><td class="num">320.6</td><td class="num neg">-65.1</td><td class="num neg">-59.3%</td><td class="num neg">-45.0%</td><td class="num neg">-7.1%</td><td class="num">3.77</td><td class="num">-</td><td class="num">1.10</td></tr>
+      <tr><td>한화에어로스페이스</td><td>발사체·엔진·방산</td><td class="num">459,430</td><td class="num">299,516.1</td><td class="num">36,684.3</td><td class="num">+27.5%</td><td class="num">13.3%</td><td class="num">21.8%</td><td class="num">1.53</td><td class="num">12.5</td><td class="num">4.73</td></tr>
+      <tr><td>한국항공우주</td><td>항공기·위성</td><td class="num">118,335</td><td class="num">44,293.7</td><td class="num">2,527.5</td><td class="num">+48.0%</td><td class="num">5.1%</td><td class="num">11.6%</td><td class="num">2.67</td><td class="num">46.8</td><td class="num">6.47</td></tr>
+      <tr><td>한화시스템</td><td>방산 전자·위성</td><td class="num">144,712</td><td class="num">41,305.1</td><td class="num">1,662.2</td><td class="num">+32.0%</td><td class="num">7.2%</td><td class="num">15.2%</td><td class="num">3.50</td><td class="num">87.1</td><td class="num">2.95</td></tr>
+      <tr><td>비츠로테크</td><td>발사체 부품·전력기기</td><td class="num">2,754</td><td class="num">4,588.7</td><td class="num">586.9</td><td class="num">+13.1%</td><td class="num">11.0%</td><td class="num">26.0%</td><td class="num">0.60</td><td class="num">4.7</td><td class="num">1.06</td></tr>
+      <tr><td>티플랙스</td><td>스테인리스 봉강 유통</td><td class="num">621</td><td class="num">2,403.8</td><td class="num">73.5</td><td class="num">+29.9%</td><td class="num">3.3%</td><td class="num">8.6%</td><td class="num">0.26</td><td class="num">8.5</td><td class="num">0.37</td></tr>
+      <tr><td>하이즈항공</td><td>항공 구조물</td><td class="num">383</td><td class="num">938.2</td><td class="num">56.6</td><td class="num">+25.3%</td><td class="num">7.6%</td><td class="num">16.9%</td><td class="num">0.41</td><td class="num">6.8</td><td class="num">0.93</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">스피어 1H26 매출 YoY +200%는 1H25 407억 대비. 루미르·AP위성·제노코·켄코아는 적자라 시총/OP 없음. 이노스페이스는 2025년 결산 손익이 왜곡돼 제외. 한화에어로스페이스·한화시스템·KAI는 규모가 달라 참고용. PBR은 와이즈리포트 전일 기준.</p>
+  <div class="chart" id="ch-pop"><p class="ct">시가총액 ÷ 최근 4분기 영업이익 (배)</p><p class="cs">흑자 기업만. 스피어는 258배로 축을 넘어 잘라 그렸다. 막대를 누르면 시총·매출·영업이익이 뜬다.</p><svg></svg></div>
+  <h3>에이치브이엠과 나란히 놓으면</h3>
+  <div class="tbl-scroll"><table>
+    <caption>제조사 vs SCM (억원). HVM은 DART·메리츠 10/6·IBK 9/11, 스피어는 DART·컨센서스 9/30</caption>
+    <thead><tr><th>항목</th><th class="num">에이치브이엠</th><th class="num">스피어</th><th>해석</th></tr></thead>
+    <tbody>
+      <tr><td>사업</td><td>진공용해(VIM·VAR) 초내열합금 제조, 서산 2공장 캐파 약 3,000억</td><td>밀·가공사에서 조달해 납품하는 SCM, 생산설비 없음</td><td>HVM은 "국내 유통사를 통해 SpaceX에 납품"(IBK·LS·신한). 그 유통사가 스피어로 추정</td></tr>
+      <tr><td>SpaceX향 매출</td><td class="num">2025년 395억, 1H26 346억(1Q 149·2Q 197), 2026E 772억</td><td class="num">2025년 698억, 1H26 1,047억</td><td>HVM 매출이 스피어 매출에 통과 매출로 들어갈 가능성. 두 회사 합산은 중복</td></tr>
+      <tr><td>1H26 매출 / 영업이익</td><td class="num">524.2 / 64.3 (12.3%)</td><td class="num">1,221.3 / 23.8 (1.9%)</td><td>매출총이익률 20.8% vs 12.5%. 최근 4분기 매출 892.5 / 1,770.6억</td></tr>
+      <tr><td>2026E 매출 / 영업이익</td><td class="num">1,139 / 159 (14.0%, 메리츠)</td><td class="num">2,944 / 144 (4.9%, 컨센)</td><td>매출 2.6배인데 영업이익은 비슷하다. 사업모델 차이가 여기서 드러난다</td></tr>
+      <tr><td>시총 / 시총÷OP(4Q)</td><td class="num">9,310 / 126배</td><td class="num">12,991 / 258배</td><td>둘 다 비싸다. 다만 HVM은 설비·인증·수주잔고(2Q26 631억)가 자기 것</td></tr>
+      <tr><td>수주잔고</td><td class="num">2Q26 631억(우주 500억)</td><td class="num">2Q26 US$115.7M(약 1,650억)</td><td>스피어 잔고가 HVM의 2.6배인데 그 안에 HVM 제품이 들어 있을 수 있음</td></tr>
+    </tbody>
+  </table></div>
+  <p>메리츠 10/6 섹터 리포트는 알멕·에이치브이엠을 최선호주로 올리고 스피어는 커버리지 밖에 두었다. 대신(9/14)·신한(9/29) 섹터 노트도 스피어를 최선호주에서 뺐다. 2026년 2~5월 시총 2조원 구간에서 Top pick으로 올렸던 신한은 같은 보고서 컴플라이언스란에 "스피어 주권 모집주선·인수 업무를 수행 중"이라고 적었다. 6월 설정된 SOL 우주항공밸류체인 ETF에 13.5%(2위) 비중으로 편입된 것이 2026년 수급의 한 축이다.</p>
+</section>
+
+<section id="s11">
+  <div class="sec-h"><span class="sec-n">11</span><h2>증권사 시각: 목표주가 2곳, 나머지 8곳은 Not Rated</h2></div>
+  <div class="tbl-scroll"><table>
+    <caption>스피어 전용 리포트 (2025-04 ~ 2026-10). 추정치는 억원</caption>
+    <thead><tr><th>날짜</th><th>증권사</th><th>의견·목표가</th><th class="num">2026E 매출/OP/순이익</th><th class="num">2027E</th><th>핵심 문장</th></tr></thead>
+    <tbody>
+      <tr><td>25-04-29</td><td>메리츠 정지수</td><td>NR</td><td class="num">-</td><td class="num">-</td><td>첫 커버. "5대 Tier 1" 표현 최초. 2025E 매출 1,076억</td></tr>
+      <tr><td>25-10-13</td><td>상상인 김진범</td><td>NR(섹터)</td><td class="num">-</td><td class="num">-</td><td>장기계약 조건을 가장 정확히 기술(10.5억달러 = 초기연도 예측 1.1억 + 2026 확정 5,548만)</td></tr>
+      <tr><td>25-12-01</td><td>메리츠</td><td>NR</td><td class="num">1,949 / 약 236 / -</td><td class="num">-</td><td>"합병 후 누적 수주 950억"</td></tr>
+      <tr><td>26-01-26</td><td>신한 허성규</td><td>NR, 우주 Top pick</td><td class="num">-</td><td class="num">-</td><td>"연 최소보장 1억달러", "제련소 현금 900억". 모집주선·인수 업무 수행 공시</td></tr>
+      <tr><td>26-01-27</td><td>메리츠</td><td>NR</td><td class="num">1,923 / 218 / -</td><td class="num">-</td><td>4Q25 순손실 −234억을 CB 파생으로 설명</td></tr>
+      <tr><td>26-02-09</td><td>SK 허선재</td><td>NR</td><td class="num">-</td><td class="num">-</td><td>"LME 대비 50%, 연 150억 절감"</td></tr>
+      <tr><td>26-03-16</td><td>iM 이상헌</td><td>NR</td><td class="num">1,853 / 222 / 207</td><td class="num">-</td><td>2026E PER 119배(당시 주가 52,400원)</td></tr>
+      <tr><td>26-03-23</td><td>대신 김아영</td><td>NR</td><td class="num">가이던스 1,500~2,000</td><td class="num">-</td><td>수주공시 20건 표. "밸류에이션 부담 존재"(유일)</td></tr>
+      <tr><td>26-05-04</td><td>유안타 백종민</td><td>NR</td><td class="num">2,864 / 264 / 110*</td><td class="num">4,298 / 449 / 302*</td><td>"현재 물량 대부분은 양산 전 납기능력 평가용 최소 규모"(사측), 배당은 2029년 말부터. *컨센서스 표</td></tr>
+      <tr><td>26-05-18</td><td>한국투자 홍예림</td><td><b>매수 70,000</b></td><td class="num">2,917 / - / -</td><td class="num">4,487 / - / -</td><td>안전재고 합의, 테스트 발주 → 양산 발주 전환</td></tr>
+      <tr><td>26-05-18</td><td>메리츠</td><td>NR</td><td class="num">2,368 / 217 / 590</td><td class="num">2,964 / 487 / -</td><td>순이익에 1Q 파생이익 반영. 컨센 2,357 / 241 / 159</td></tr>
+      <tr><td>26-08-18</td><td>메리츠</td><td>NR</td><td class="num">2,971 / 154 / −101</td><td class="num">4,553 / 505 / 478</td><td>원가율 89%, 금융비용 연말까지. 2027E에 니켈 매출 2,000억 포함. 컨센 2,400 / 175 / 526</td></tr>
+      <tr><td>26-09-18</td><td>한국투자</td><td><b>매수 50,000</b></td><td class="num">-</td><td class="num">-</td><td>5월 7만원에서 하향. 10~11월 오프테이크 개시</td></tr>
+      <tr><td>26-10-06</td><td>교보 권오휘</td><td><b>매수 40,000</b>, 우주 Top pick</td><td class="num">-</td><td class="num">-</td><td>SpaceX 특수합금 공급 점유율 "2% 수준"</td></tr>
+      <tr><td>26-09-30</td><td>컨센서스</td><td>-</td><td class="num">2,944 / 144 / -</td><td class="num">4,520 / 533 / -</td><td>PER 2026E 170.7배(순이익 기준 무의미)</td></tr>
+    </tbody>
+  </table></div>
+  <div class="chart" id="ch-est"><p class="ct">2026년 영업이익 추정의 변화 (억원)</p><p class="cs">같은 해 추정이 8개월 사이 218억에서 144억으로 내려왔다. 반면 2026E 매출 추정은 1,923억 → 2,944억으로 올라갔다. 막대를 누르면 근거가 뜬다.</p><svg></svg></div>
+  <p>추정치의 방향이 명확하다. <b>매출은 올리고 이익은 깎는다.</b> 메리츠는 2026E 매출을 1,923억에서 2,971억으로 54% 올리는 동안 영업이익을 218억에서 154억으로 29% 내렸고, 2026E 순이익은 +590억(5월)에서 −101억(8월)으로 뒤집었다. 2027E는 매출 2,964억 → 4,553억(+54%)인데 영업이익은 487억 → 505억으로 거의 그대로다. 2027E 영업이익률 가정이 16.4%에서 11.1%로 내려온 것이다. 한국투자 목표주가는 넉 달 만에 7만원에서 5만원으로 내려왔고, 2026년 2~5월 시총 2조원 구간에 나온 리포트 4건(SK·iM·대신·유안타)은 모두 Not Rated였다.</p>
+  <h3>증권사가 다루지 않은 것</h3>
+  <ul>
+    <li>단일 고객 86%와 계약의 법적 성격(조건부·수요예측). 신한의 "최소보장"과 iM의 "수요예측"이 정반대인데 공시 원문을 인용한 곳이 없다.</li>
+    <li>CB 조건·잔여 물량·콜옵션 행사 주체. 주식수가 16개월간 3,850만 → 5,155만주로 늘고 분기 순이익이 ±200~400억씩 움직였는데 표로 정리한 리포트가 없다.</li>
+    <li>인수금융 2.1억달러의 금리(12.75%)·만기·담보·연 이자 390억. 유안타만 "배당으로 상환, 2029년 말"을 언급.</li>
+    <li>마진의 구조적 하락. 영업이익률 17.8%(2024) → 9.5% → 4.9%(2026E)를 "일회성"이 아닌 유통업 수렴으로 본 리포트가 없다. 2027E 11.1% 반등 근거는 "신형 발사체 상용화 시 가공 매출 확대" 한 줄.</li>
+    <li>에이치브이엠과의 중복 계상, 니켈 가격·인니 정책 민감도, 10% 소수지분의 배당·오프테이크 권리, 경영진 이력.</li>
+  </ul>
+</section>
+
+
+<section id="s12">
+  <div class="sec-h"><span class="sec-n">12</span><h2>해자 검증: 찬성 근거와 반증</h2></div>
+  <p>증권사 리포트는 "SpaceX 5대 Tier-1·아시아 유일", "16개 벤더 네트워크", "리드타임 80주→4주", "10년 장기계약", "니켈 원재료 내재화"를 해자로 든다. 공시와 제3자 자료로 양쪽을 나란히 놓는다.</p>
+  <div class="grid2">
+    <div class="pane yes"><h4>해자가 있다는 근거</h4><ul>
+      <li><b>SpaceX와 실제로 거래한다.</b> 2025-07-31 장기계약 공시에 상대방 실명이 있고, FY2025 핵심감사사항이 "해외매출의 발생사실"이었으며 감사인이 해외 거래처를 현장방문했다. 호주 상장사 NIC는 ASX 공시에서 스피어를 "key accredited supplier to SpaceX"로 적었다. 2분기 공시 PO 납품(5,040만달러)이 해외매출(742억)의 95%를 설명한다.</li>
+      <li><b>발주가 반복되고 커진다.</b> 2025년 4월 14.6억짜리 첫 PO에서 2026년 2월 431억, 10월 242억까지. 2026년 10개월 수주가 2025년 전체를 넘었다. 9/27 PO는 취소 경고 후 오히려 2배로 늘었다. 회사가 유안타에 "현재 물량은 양산 전 납기능력 평가용"이라 했다면, 양산 전환 시 물량이 더 늘 수 있다.</li>
+      <li><b>사람을 샀다.</b> 전 SpaceX 공급망 선임매니저(Ermatinger, 자기주식 10만주), 전 PCC·Special Metals 기술부사장(Patel), 전 Midalloy 사장(Garcia). 우주항공 직원 14명의 반기 평균급여 9,790만원(연 2억). 소량·다품종·서류 집약적인 조달을 대신 해주는 사업은 사람과 관계가 자산이다.</li>
+      <li><b>밀이 상대하지 않는 틈.</b> VIM 용해로가 풀가동이고 밀은 10~12년 장기계약 고객을 우선한다. 로켓 회사의 수십 종 소량 발주를 받아 밀 배정·가공·검사·서류를 묶어주는 중간자는 공급 부족기에 가치가 커진다. 리드타임 숫자가 제각각이어도 "밀 직납보다 빠르다"는 방향은 일관된다.</li>
+      <li><b>원료 상류 확보.</b> 제련소 10%와 오프테이크는, 니켈 가격이 오를 때 밀이 선호하는 공급자가 될 수 있는 카드다. 산업부 공급망안정화 선도사업자 선정(2025년 하반기)이 정책 뒷받침이다.</li>
+      <li><b>SpaceX 상장과 Starship.</b> 고객이 2026년 6월 1.96조달러로 상장해 자본 제약이 사라졌고, FAA는 Starbase 연 25회·KSC 연 44회 발사를 심사 중이다. 엔진 생산이 늘면 합금 수요는 비례한다.</li>
+    </ul></div>
+    <div class="pane no"><h4>반증</h4><ul>
+      <li><b>회사가 만드는 것이 없다.</b> 생산설비 "없음", 매출 전부 상품매출, 인증 AS9120B(유통업자). "Tier-1"은 직납을 뜻할 뿐이다. 합금의 품질·납기 실체는 밀과 에이치브이엠 같은 제조사에 있고, 하나증권은 HVM을 "SpaceX 공식 특수소재 공급업체"로 쓴다. 고객이 밀·제조사와 직거래하거나(세아 텍사스 공장이 그 경로), SpaceX 구매팀이 창구를 바꾸면 중간자의 자리는 사라진다.</li>
+      <li><b>이익률이 해자가 없다고 말한다.</b> 2024년 33.8% → 2026년 2분기 11.0%. 해자가 있는 공급자는 매출이 4배로 늘 때 마진을 지킨다. 회사와 메리츠의 설명("원소재 비중")은 그 자체로 "가공품만으로는 매출이 이만큼 늘지 않는다"는 뜻이다. 유통 마진으로 수렴하는 중이다.</li>
+      <li><b>계약이 회사를 묶지 않는다.</b> 10년 계약은 수요예측이고, PO는 상대방이 취소할 수 있으며, 반기보고서는 주요계약 "없음"이다. 취소 1건(20억)·감액 5건이 이미 있었다. 2026년 신규 수주 12건 중 6건이 조건부다.</li>
+      <li><b>리드타임 단축의 실체는 재고다.</b> 80주→4주(회사), 44주→60일(신한), 40주→12주(유안타). 용해·압연·검사 기간은 줄일 수 없으므로 미리 사둔 재고를 자르는 것이고, 재고는 6개월 새 3.2배(332억), 영업현금흐름은 2년 연속 적자다. 이 모델의 경쟁력은 자본력이고, 자본은 CB와 12.75% 차입으로 조달됐다.</li>
+      <li><b>전부 회사 말이다.</b> "5대 Tier-1·아시아 유일", 벤더코드 시점(2022년 vs 2023년), 벤더 수(16개), 리드타임, 제련소 능력(7.2만t vs 6.7만t), 투자금(2.4억 vs 2.5억달러), 배당 900억, LME 대비 50%: 증권사 7곳의 출처가 모두 "자료: Sphere"이고 숫자가 서로 다르다. SpaceX 공개 자료에 스피어는 없고, 미국 통관 기록(Panjiva)은 18년간 61건·품목 강관·환봉이라 연 5,500만달러 공급과 규모가 맞지 않는다(DDP·포워더 명의 가능성은 있다).</li>
+      <li><b>원료 내재화는 로켓과 무관하다.</b> 특수합금 연 1억달러에 필요한 니켈은 약 1,000t인데 오프테이크는 7,200t이다. 85%는 니켈 트레이딩이고, 니켈 금속은 인코넬 가격의 20%라 원가 효과는 10% 안팎이다. 그리고 용해를 안 하는 회사의 니켈을 밀이 받아줄지는 별개 문제다.</li>
+      <li><b>경영진 이력.</b> 최광수 대표(1969)는 호텔경영·태양광·캐피탈 출신으로 금속·우주 경력이 없고, 2022~2024년 코스닥 스피어파워 공동대표 시절 철강 신사업 공표 후 "진행 확인 불가"(뉴스토마토) 전력이 있다. 라이프시맨틱스 인수 구조(당일 설립 조합·1인 법인 CB 인수인)와 CB 콜옵션 저가 취득은 사업보다 자본시장에 능한 경영이라는 인상을 준다. 등기임원은 3명, 사외이사는 2026년 4~5월 두 명이 사임하고 한 명은 취임 18일 만에 사임했다.</li>
+    </ul></div>
+  </div>
+  <div class="take"><span class="lbl">판정</span><p>해자는 "제조 기술"이 아니라 <b>SpaceX 구매팀과의 관계 + 밀 배정을 받아낼 네트워크 + 재고를 먼저 살 자본</b>이다. 셋 다 실재하지만 셋 다 남이 가져갈 수 있고(직거래·세아·HVM), 셋 다 비용이 든다(이익률 2%, 이자 390억). 공급 부족기에 가장 크고 공급이 풀리면(ATI 2027년 하반기, Carpenter 2028년) 줄어드는 종류의 해자다. 2027년 영업이익률 11%가 실현되면 이 판정은 틀린 것이고, 그 증거는 2027년 1분기 보고서(2027년 5월)에서 처음 나온다.</p></div>
+</section>
+
+<section id="s13">
+  <div class="sec-h"><span class="sec-n">13</span><h2>지배구조·전환사채·수급</h2></div>
+  <div class="tbl-scroll"><table>
+    <caption>주주 구성 (2026-06-30 반기보고서 + 2026-05-11 대량보유 보고)</caption>
+    <thead><tr><th>주주</th><th class="num">주식수</th><th class="num">지분</th><th>비고</th></tr></thead>
+    <tbody>
+      <tr><td>최광수 (대표이사, 1969년생)</td><td class="num">13,991,769</td><td class="num">27.14%</td><td>2025-03 합병신주(3,645원). 매매·담보 없음. CB 콜옵션 5회 74억(520,650주)·6회 100억(222,573주) 보유 → 행사 시 약 28%</td></tr>
+      <tr><td>최성운 (혈족)</td><td class="num">411,523</td><td class="num">0.80%</td><td>2026-03-20 보호예수 해제일에 411,522주 @42,736원(175.9억) 장내매도</td></tr>
+      <tr><td>최병철·윤상현 (사내이사)</td><td class="num">20,000</td><td class="num">0.04%</td><td>2월 상여 각 2만주 중 1만주씩 4.3만원대 매도, 9월 각 240~250주 매수</td></tr>
+      <tr><td>자기주식</td><td class="num">1,857,893</td><td class="num">3.60%</td><td>합병 취득 3,795,359주 → 2026-01 NIC 처분권 행사 1,757,466주(343.6억) → 2월 임직원·영입 보상 18만주. 80만주는 5회 CB 담보. 적격합병 요건으로 180.8만주 2027-12까지 보유 의무</td></tr>
+      <tr><td>소액주주</td><td class="num">20,929,666</td><td class="num">40.59%</td><td>170,372명</td></tr>
+      <tr><td>외국인</td><td class="num">-</td><td class="num">7.05%</td><td>10/8 네이버. 4월 말 4.4%, 3월 8.9%</td></tr>
+      <tr><td>CB 투자자 (잠재)</td><td class="num">2,593,603</td><td class="num">5.03%</td><td>5회 상상인 계열(250억, 2027-01-30~) + 6회 MVP PEF 250억·증권사 신탁(375억, 2027-04-30~). 리픽싱 하한 시 5.88%</td></tr>
+    </tbody>
+  </table></div>
+  <div class="chart" id="ch-sh"><p class="ct">발행주식수의 경로 (만주)</p><p class="cs">2021년 상장 978만주에서 5,155만주로 5.3배. 유상증자 6회·합병신주·CB 전환 4회차. 막대를 누르면 발행가가 뜬다.</p><svg></svg></div>
+  <h3>전환사채: 1,910원짜리가 어떻게 900억이 됐나</h3>
+  <div class="tbl-scroll"><table>
+    <caption>전환사채 회차별 (주요사항보고서·반기보고서 주석 18)</caption>
+    <thead><tr><th>회차</th><th>발행</th><th class="num">금액</th><th class="num">전환가</th><th>인수인 → 실제 보유</th><th>경로와 결과</th></tr></thead>
+    <tbody>
+      <tr><td>3회</td><td>2024-11-28</td><td class="num">152억</td><td class="num">1,910</td><td>플리트파트너스(2024년 설립 1인 법인) → 당일 상상인저축은행 120억 외</td><td>2025-12 전액 전환 796만주. 상상인 284만주를 평균 14,018원에 매도(약 398억, 투자 60억). 회사 콜옵션 76억 중 66억은 위드윈77호에 양도(대가 7.3억) → 행사 후 조합원 현물배분. 회사 보유 10억은 NH에 31.1억·60.7억에 매각</td></tr>
+      <tr><td>4회</td><td>2025-03-07</td><td class="num">150억</td><td class="num">3,448 (리픽싱 없음)</td><td>위드윈78호 → 해산 분배 → 빌랑스19호 70억 외</td><td>2026-03~05 전액 전환 435만주. 회사 콜옵션 75억 행사(77.6억) → Brookdale에 3회 분할 매각 <b>899억</b>. 매수자는 매각 직후 전환</td></tr>
+      <tr><td>5회</td><td>2026-01-30</td><td class="num">250억</td><td class="num">14,213 (하한 11,371)</td><td>㈜백루타(자본금 2,800만원) → 당일 상상인 계열 4사 외</td><td>용도 "타법인증권 취득"(SNC 출자). 자기주식 80만주 담보. 콜옵션 125억 중 <b>최광수 74억</b>·크리스티아너티 34억·위드윈92호 17억(대가 2%). 전환 2027-01-30~, 풋 2027-01-30~</td></tr>
+      <tr><td>6회</td><td>2026-04-30</td><td class="num">375억</td><td class="num">44,929 (리픽싱 없음)</td><td>MVP혁신성장PEF 250억, 히스토리투자자문 40억, 한투·KB·삼성·NH 신탁 85억</td><td>0% 쿠폰. 콜옵션 150억 중 <b>최광수 100억</b>·제이스투자일임 50억(대가 1%). 전환가가 현 주가의 1.8배라 전환 유인 없음, 2028-04-30부터 풋(조기상환) 가능. 6/2 같은 조건 1,000억 추가 발행은 모집 실패로 철회</td></tr>
+    </tbody>
+  </table></div>
+  <ul>
+    <li><b>조달 누계(2021~2026.10)</b>: 유상증자 364억(IPO 125 포함) + CB 발행 1,072억 + 자기CB 재매각 1,086억 + 자기주식 처분 344억 = 약 2,866억. 이 중 2026년 들어온 현금만 자기CB 991억 + 자기주식 344억 + CB 625억 = 1,960억이고, 거의 전부가 제련소(SNC 출자 1,141억)와 운전자본으로 나갔다.</li>
+    <li><b>투자자 사슬</b>: 2024년 경영권 이전 자금(럭키W조합·지오에너지링크·플리트파트너스)은 공유오피스 주소의 신설 법인·조합이었고(뉴스토마토), 3회·5회 CB의 실제 인수인은 상상인저축은행 계열이다. 상상인은 3회차로 약 340억을 벌고 5회차를 다시 샀다. 3회차 콜옵션 지정 대가 7.3억을 받은 위드윈 계열은 4회차 인수인이자 럭키W조합 운용사다.</li>
+    <li><b>최대주주의 이익 경로</b>: 본인 주식은 안 팔았고, 대신 CB 콜옵션 174억을 1~2% 대가(2.5억)로 가져갔다. 5회차(14,213원)는 현 주가에서 행사 시 약 57억 평가이익. 이사회 표결에서 본인은 제척됐지만, 이사회는 사내이사 3명과 사외이사 1명이다. 이사 보수한도는 2024년 20억 → 2026년 100억으로 올랐고, 1H26 등기이사 3인 보수 23.4억(주식보상 15.4억)은 같은 기간 영업이익(23.8억)과 같다.</li>
+    <li><b>2026년 내부자·관계자 매도 합계</b>: 최성운 176억 + 임원 상여분 20억 + 상상인 CB 전환주 398억 + 회사 자기주식 344억 = 약 938억. 매수는 9월 임원 2인 490주(0.1억).</li>
+    <li><b>수급</b>: 1월 투자위험(15일 +136%)·2월 투자주의(상위 20계좌 34%) 지정은 개인 단기자금이 주도했다는 뜻이다. SOL 우주항공밸류체인 ETF(6/16 설정) 13.5% 편입, 3월 외국인 8.9% → 4월 4.4% → 10월 7.1%. 공매도 비중 9/18 2.9% → 10/8 8.3%, 대차잔고 473억 → 625억.</li>
+  </ul>
+  <h3>라이프시맨틱스는 어떻게 껍데기가 됐나</h3>
+  <p>2012년 설립, 2021년 3월 사업모델 특례상장 4호(공모가 12,500원, 125억). 상장 당시 2023년 매출 285억·영업이익 83억을 제시했으나 실제 2023년 매출 16억(별도)·영업손실 88억이었다. 디지털치료제 숨튼은 2023년 확증임상에서 1차 유효성을 입증하지 못했고, 비대면진료는 시범사업으로 축소됐다. 결손금은 2018년 102억에서 2024년 604억으로 늘었고, 기술특례 매출 30억 요건 유예가 2025년 말 끝나는데 별도 매출이 3년 연속 미달이었다. 2024년 7월 송승재 창업자가 구주 316만주를 3,530원(112억)에 팔고, 스피어코리아가 1,716원 3자배정으로 들어와, 12월 스피어코리아를 600억(자본 36억, 수익가치 978억)으로 평가해 흡수합병했다. 합병 외부평가의 2025년 추정 영업이익 154억은 실적 83억(별도)으로 끝났다.</p>
+</section>
+
+<section id="s14">
+  <div class="sec-h"><span class="sec-n">14</span><h2>밸류에이션: 무엇을 1.3조에 사는가</h2></div>
+  <div class="tbl-scroll"><table>
+    <caption>시가총액 1조 2,991억 (25,200원 × 51,551,362주) 기준 배수. 억원</caption>
+    <thead><tr><th>기준</th><th class="num">매출</th><th class="num">영업이익</th><th class="num">순이익</th><th class="num">시총/OP</th><th class="num">PSR</th><th>출처·계산</th></tr></thead>
+    <tbody>
+      <tr><td>2025년 실적 (연결)</td><td class="num">956.4</td><td class="num">90.5</td><td class="num">1.7</td><td class="num">143.5</td><td class="num">13.6</td><td>사업보고서. PER 7,641배(무의미)</td></tr>
+      <tr class="sum"><td>최근 4분기 (3Q25~2Q26)</td><td class="num">1,770.6</td><td class="num">50.3</td><td class="num">-86.8</td><td class="num">258.3</td><td class="num">7.3</td><td>필자 합산</td></tr>
+      <tr><td>2026E 컨센서스 (9/30)</td><td class="num">2,944</td><td class="num">144</td><td class="num">-</td><td class="num">90.2</td><td class="num">4.4</td><td>메리츠 8/18: 2,971 / 154 / −101</td></tr>
+      <tr><td>2027E 컨센서스 (9/30)</td><td class="num">4,520</td><td class="num">533</td><td class="num">-</td><td class="num">24.4</td><td class="num">2.9</td><td>메리츠 4,553 / 505 / 478 → PER 27.2배</td></tr>
+      <tr><td>2027E 유안타 표 (5/4)</td><td class="num">4,298</td><td class="num">449</td><td class="num">302</td><td class="num">28.9</td><td class="num">3.0</td><td>PER 43.0배(현 주가), 2028E 5,263 / 616 / 536 → PER 24.2배</td></tr>
+      <tr><td>장부 기준</td><td class="num">자본 1,635</td><td class="num">순차입 2,941</td><td class="num">-</td><td class="num">PBR 7.9</td><td class="num">-</td><td>순차입 = 차입금 3,183 + CB 권면 625 − 현금·MMF 867. EV 약 1조 5,900억</td></tr>
+    </tbody>
+  </table></div>
+  <h3>시총을 쪼개 보면</h3>
+  <p>1조 2,991억 안에는 두 개의 사업이 들어 있다. 첫째, 본업(특수합금 SCM)은 최근 4분기 영업이익 50억이다. 둘째, 제련소 10%는 장부가 3,746억(지분 1,394 + 대여금 2,353)에 차입 3,053억이 붙어 있어 순자산으로는 약 700억이고, 연간 지분법 상한이 LME 17,000달러에서 400억 정도다. 전환사채 625억은 권면으로 빼야 한다. 거칠게 말해 <b>본업에 약 1조 2,000억</b>을 매기고 있다. 본업 영업이익이 2027년 컨센서스처럼 533억이 되면 22배, 2026년처럼 144억이면 83배다.</p>
+  <div class="tbl-scroll"><table>
+    <caption>2027년 시나리오 (필자 가정, 억원). 이자 385억 = 2.1억달러 × 12.75%, 환율 1,400원. 중단영업·법인세는 단순화</caption>
+    <thead><tr><th>항목</th><th class="num">약세</th><th class="num">기본</th><th class="num">강세</th><th>가정</th></tr></thead>
+    <tbody>
+      <tr><td>특수합금 매출</td><td class="num">2,000</td><td class="num">2,800</td><td class="num">4,500</td><td>약세: 2026년 수준 정체. 기본: 2H26 가시 매출 연환산 + 성장. 강세: 컨센서스(니켈 제외)</td></tr>
+      <tr><td>매출총이익률</td><td class="num">11%</td><td class="num">13%</td><td class="num">16%</td><td>2Q26 11.0% / 2025년 17.6% 사이</td></tr>
+      <tr><td>판관비</td><td class="num">220</td><td class="num">220</td><td class="num">250</td><td>1H26 128억(비현금 52억 포함) 연환산에서 주식보상 축소</td></tr>
+      <tr><td>니켈 트레이딩 이익</td><td class="num">0</td><td class="num">80</td><td class="num">170</td><td>7,200t × 17,000달러 = 1,714억 매출에 0 / 5% / 10% 마진</td></tr>
+      <tr class="sum"><td>영업이익</td><td class="num">0</td><td class="num">224</td><td class="num">640</td><td></td></tr>
+      <tr><td>제련소 지분법</td><td class="num">100</td><td class="num">300</td><td class="num">550</td><td>LME 15,000 / 17,000 / 19,000달러, 가동률·이자·감가 반영해 EBITDA 몫의 50~90%</td></tr>
+      <tr><td>이자 등 금융비용</td><td class="num">-420</td><td class="num">-400</td><td class="num">-400</td><td>GLAS 385 + CB·기타</td></tr>
+      <tr class="sum"><td>세전이익 (파생 제외)</td><td class="num">-320</td><td class="num">124</td><td class="num">790</td><td></td></tr>
+      <tr><td>순이익 (세율 20%, 중단영업 −40)</td><td class="num">-360</td><td class="num">60</td><td class="num">590</td><td></td></tr>
+      <tr><td>PER (현 시총)</td><td class="num">-</td><td class="num">217배</td><td class="num">22배</td><td>강세 시나리오가 메리츠 2027E 순이익 478억(PER 27배)과 비슷</td></tr>
+    </tbody>
+  </table></div>
+  <p>강세 시나리오는 ① Starship 양산으로 가공 매출이 2026년의 2배가 되고 ② 이익률이 2025년 수준으로 돌아오며 ③ 제련소가 풀가동에 LME 19,000달러인 세 가지가 동시에 맞아야 한다. 그때 PER 22배는 메리츠가 인용한 글로벌 우주기업 2026E PER 25배와 비슷하다. 기본 시나리오에서는 이자가 영업이익과 지분법을 거의 다 가져가 순이익이 수십억이다. 약세에서는 순손실이다. 즉 현재 주가는 <b>강세 시나리오를 상당 부분 선반영</b>한 값이고, 2027년 1분기 보고서(2027년 5월) 전까지는 그 시나리오를 검증할 숫자가 없다. 참고로 2026년 3월 시총 2.5조는 같은 강세 시나리오의 PER 42배였고, 7월 저점 6,700억은 11배였다.</p>
+  <div class="take"><span class="lbl">정리</span><p>이 주식의 가격은 "SpaceX 공급사"라는 이름값과 "니켈 제련소 배당 900억"이라는 회사 설명이 만든다. 공시 숫자로 재구성하면 본업은 유통 마진이고 제련소는 12.75% 차입으로 산 니켈 롱 포지션이다. 투자한다면 사는 것은 2027~2028년 Starship 양산과 니켈 가격이지, 2026년 실적이 아니다. 그리고 그 사이에 2027년 1월부터 CB 176만주가, 2028년 4월부터 6회차 풋옵션 375억이 기다린다.</p></div>
+</section>
+
+<section id="s15">
+  <div class="sec-h"><span class="sec-n">15</span><h2>리스크</h2></div>
+  <div class="risk">
+    <div class="r"><span class="chip h">높음</span><div><div class="t">단일 고객 86%, 계약은 조건부</div><div class="d">SpaceX가 밀·제조사와 직거래하거나 구매 창구를 바꾸면 매출의 대부분이 사라진다. 모든 PO에 "변경·취소 가능" 문구, 10년 계약은 수요예측. SpaceX는 자체 합금(SX500)·자체 주조(Bastrop 2.8억달러)로 수직계열화 중이고 S-1은 조달금 용도를 원가 절감으로 적었다.</div></div></div>
+    <div class="r"><span class="chip h">높음</span><div><div class="t">이자 390억의 고정비화와 차환</div><div class="d">2.1억달러 12.75% 인수금융(2030-02 만기)에 CB 625억. 최근 4분기 영업이익 50억. 제련소 배당은 대출 상환이 우선이라 2029년 말까지 현금이 안 온다(유안타 전언). 디폴트 시 SNC 지분은 NIC로 돌아가는 구조. 자기CB 매각 같은 일회성 현금(2026년 991억)이 반복될 수 없다.</div></div></div>
+    <div class="r"><span class="chip h">높음</span><div><div class="t">마진이 유통업으로 수렴</div><div class="d">매출총이익률 33.8% → 11.0%. 원소재 매출이 늘수록 이익률은 내려간다. 2027년 컨센서스 영업이익 533억은 이익률 11.8% 복귀를 전제. 미국 서비스센터 영업이익률 2~8%, 티플랙스 2.5%.</div></div></div>
+    <div class="r"><span class="chip h">높음</span><div><div class="t">니켈 가격·인니 정책·램프업</div><div class="d">제련소 지분이익은 LME − 원가 스프레드에 전부 의존. LME 15,000달러면 지분법 200억으로 이자의 절반. 인니 RKAB 30% 감축, 로열티 인상, 황산·용수 제약, 칭산 계열 지배 아래 10% 소수주주. EII 자본 −105억, NIC 신용등급 B+. 생산 개시가 이미 10개월 밀렸다.</div></div></div>
+    <div class="r"><span class="chip m">중간</span><div><div class="t">Starship 일정</div><div class="d">2026년 비행 3회, 상단 엔진 조기정지 반복, NASA Artemis III 달 착륙 2028년 이후로. Starfactory 근접 목표 연 10세트. 2027년 가공 매출 2배의 전제가 "신형 발사체 양산"이다.</div></div></div>
+    <div class="r"><span class="chip m">중간</span><div><div class="t">희석과 오버행</div><div class="d">CB 259만주(5.0%, 2027-01·04부터), 최대주주 콜옵션 74만주, RSU 재원 자기주식 181만주(2027-12 이후), 대차잔고 248만주. 2025년 12월 3회 CB 전환주 796만주 출회 때 주가가 7,320원까지 밀렸던 전례.</div></div></div>
+    <div class="r"><span class="chip m">중간</span><div><div class="t">순이익의 회계적 변동</div><div class="d">5·6회 CB 파생부채 479억이 주가와 반대로 움직인다. 주가 상승 분기에 수백억 평가손실, 하락 분기에 평가이익. 법인세는 파생과 무관하게 발생. 잠정→확정 괴리가 매년 반복(2024년 매출 79.7 → 25.6억).</div></div></div>
+    <div class="r"><span class="chip m">중간</span><div><div class="t">협력사·에이치브이엠 의존</div><div class="d">3Q25 적자의 원인이 "국내 핵심 제조협력사 신공장 가동 지연". HVM이 2026년 8월 항공우주 OEM 원자재 Tier-1 승인을 받았고 하나증권은 HVM을 "공식 공급업체"로 쓴다. 제조사가 직납으로 가면 유통 마진이 사라진다.</div></div></div>
+    <div class="r"><span class="chip m">중간</span><div><div class="t">지배구조·경영진</div><div class="d">금속·우주 경력 없는 대표, 스피어파워 신사업 공약 미이행 전력, 사외이사 1명(2명 사임·1명 18일 만에 사임), 보수한도 100억, CB 콜옵션 174억 최대주주 양도, 특수관계 Sphere Power 거래, 前임원 단기매매차익 8.96억 미환수 소송.</div></div></div>
+    <div class="r"><span class="chip m">중간</span><div><div class="t">운전자본·회수</div><div class="d">재고 332억·선급 125억·채권 207억. 2026년 정정 공시 사유가 "납품 완료 후 대금 입금 대기"로 바뀜(대금 61~84% 상태로 반복 연장). 영업현금흐름 2025년 −147억, 1H26 −218억.</div></div></div>
+    <div class="r"><span class="chip l">낮음</span><div><div class="t">관세·수출통제</div><div class="d">니켈합금(HTS 75류) 한국산 기본세율 FTA 0%이나 2026년 232조 파생품 재편·122조 일괄관세·핵심광물 232조 후속으로 실효세율 불확실. 한국 전략물자 허가·미국 EAR 재수출.</div></div></div>
+    <div class="r"><span class="chip l">낮음</span><div><div class="t">헬스케어 잔존 사업</div><div class="d">라이프슈티컬(원료의약품) 매각예정 3년째, 중단영업 손실 연 40~60억. 손상 미인식(DCF 평가 유지).</div></div></div>
+    <div class="r"><span class="chip u">참고</span><div><div class="t">상방 변수</div><div class="d">Starship 15차(10/19) 이후 상업 발사 전환과 Raptor 양산, 10~11월 제련소 오프테이크 개시와 4분기 지분법이익 첫 인식, 2026년 4분기 SpaceX 2027년 확정 물량 공시, 공급망안정화 선도사업자 정책자금, SDC 물류센터 가동, 니켈 가격 상승(LME 19,000달러 이상), 메리츠 지적대로 11~2월 우주주 계절성.</div></div></div>
+  </div>
+</section>
+
+<section id="s16">
+  <div class="sec-h"><span class="sec-n">16</span><h2>투자 전 확인할 것</h2></div>
+  <p>순서는 시점 순이다. 앞의 다섯 개는 11월 16일 3분기 보고서에서 확인된다.</p>
+  <div class="qs">
+    <div class="q"><div class="qh"><span class="qn">01</span><span class="qt">3분기 매출총이익률이 11%에서 반등했는가</span></div><p class="why">2Q26 11.0%. 메리츠 2026E 12.1%·2027E 14.1% 가정. 원소재 매출(3/25 281억·6/15 223억 납기 10~11월)이 3분기에 몰리면 더 내려갈 수 있다. <b>10% 아래면 유통업 수렴이 확정</b>이고 2027년 11% 복귀 논리가 무너진다.</p></div>
+    <div class="q"><div class="qh"><span class="qn">02</span><span class="qt">3분기 이자비용과 파생 제외 세전이익</span></div><p class="why">GLAS 이자 분기 95~100억이 처음 온전히 반영되는 분기. 영업이익 − 이자가 플러스인지. 주가가 2분기 말 23,350원에서 3분기 말 21,950원으로 내렸으니 5·6회 CB 파생부채 평가이익이 순이익을 꾸밀 수 있다. 주석 18(8)의 "파생 관련 손익 제외 세전이익"을 볼 것.</p></div>
+    <div class="q"><div class="qh"><span class="qn">03</span><span class="qt">EII 지분법 손익과 더스페셜메탈스의 니켈 매입이 숫자로 나왔는가</span></div><p class="why">첫 캐소드 8/11. 3분기 보고서 관계기업 주석에 EII 당기손익, 더스페셜메탈스 매입처·재고·L/C 사용액. 오프테이크 가격 산식(LME 연동률)이 처음 드러날 수 있다. 지분법이 손실이면 "배당 900억" 서사는 끝.</p></div>
+    <div class="q"><div class="qh"><span class="qn">04</span><span class="qt">수주잔고 USD 115.7M의 소화와 신규 PO의 성격</span></div><p class="why">9월 말 수주표에서 기납품 증가분이 3분기 해외매출과 맞는지(2Q는 95%). 7~8월 신규 0건의 이유. 10월 3건 608억 중 조건부 242억의 후속 정정. "입금 대기" 연장이 줄었는지.</p></div>
+    <div class="q"><div class="qh"><span class="qn">05</span><span class="qt">영업현금흐름이 플러스로 돌아섰는가</span></div><p class="why">2Q26 +102억이 합병 후 첫 유의미한 유입. 재고 332억·선급 125억이 줄고 채권이 회수되는지. 이자 지급 현금(1H 115억)과 비교.</p></div>
+    <div class="q"><div class="qh"><span class="qn">06</span><span class="qt">SpaceX 2027년 확정 물량 공시 (연말)</span></div><p class="why">2025-07-31처럼 다음 해 확정분을 공시하는지, 금액이 2026년 5,548만달러보다 큰지. 초기연도 예측 1.1억달러 대비 실제 2026년 A사 매출(상반기 7,300만달러)의 달성률. 확정분이 안 나오면 장기계약은 프레임 합의에 불과.</p></div>
+    <div class="q"><div class="qh"><span class="qn">07</span><span class="qt">Starship 15차(10/19)와 Raptor 생산 속도</span></div><p class="why">상단 엔진 조기정지가 해결됐는지, 상단 캐치 성공 여부. SpaceX 분기 공시(상장사)에서 Starship 생산·엔진 대수 언급. 2027년 매출 4,500억의 전제.</p></div>
+    <div class="q"><div class="qh"><span class="qn">08</span><span class="qt">2027년 1월 30일 5회 CB 전환·풋 개시</span></div><p class="why">전환가 14,213원(하한 11,371원). 주가가 전환가 위면 176만주(3.4%) 출회, 아래면 풋옵션으로 250억 현금 상환. 둘 다 회사에 부담. 최대주주 콜옵션 74억 행사 여부.</p></div>
+    <div class="q"><div class="qh"><span class="qn">09</span><span class="qt">제련소 배당 정책과 인수금융 상환 스케줄</span></div><p class="why">NIC 2026년 연간보고서(2027년 2월)의 ENC 배당·현금흐름, EII 주주 간 배당 결정 구조. GLAS 대출의 분할상환 일정(계약상 1년 내 564억 현금흐름)과 코버넌트. 2029년 말까지 현금 0이라면 이자 1,150억을 본업이 내야 한다.</p></div>
+    <div class="q"><div class="qh"><span class="qn">10</span><span class="qt">에이치브이엠 직납 전환 여부</span></div><p class="why">HVM 2026년 8월 항공우주 OEM 원자재 Tier-1 승인. HVM 3분기 보고서의 주요 고객 표기가 "유통사"에서 "SpaceX"로 바뀌는지, HVM SpaceX향 매출(1H26 346억)과 스피어 매출원가의 대응.</p></div>
+    <div class="q"><div class="qh"><span class="qn">11</span><span class="qt">2027년 3월 주주총회: 이사회·보수·RSU</span></div><p class="why">사외이사 충원 여부, 보수한도 100억의 실집행, 자기주식 181만주 RSU 부여 대상과 조건, 정관의 CB 한도 1조.</p></div>
+    <div class="q"><div class="qh"><span class="qn">12</span><span class="qt">2027년 1분기 보고서(2027년 5월): 이익률 11%의 첫 증거</span></div><p class="why">2027년 컨센서스(매출 4,520억·영업이익 533억)가 맞으려면 분기 영업이익 100억 이상이 나와야 한다. 2026년 분기 최고는 16.7억. 이 보고서 전까지는 강세 시나리오를 검증할 숫자가 없다.</p></div>
+  </div>
+</section>
+
+<section id="s17">
+  <div class="sec-h"><span class="sec-n">17</span><h2>출처와 방법</h2></div>
+  <ul class="src">
+    <li><b>DART</b>: 사업보고서 FY2018~FY2025, 반기보고서 2020~2026, 분기보고서(2026년 1분기 기재정정본 포함), 감사보고서. 수시공시 508건 중 단일판매·공급계약 143건 전수(정정 92건 체인 복원), 전환사채 발행·조정·전환·취득·매도 40건, 유상증자 15건, 타법인출자·종속회사 유상증자 31건, 합병·최대주주변경·대량보유·임원소유 80건, 장기공급계약·채무보증·담보 공시. 재무는 OpenDART `fnlttSinglAcntAll` 2020~2026 전 분기 연결·별도.</li>
+    <li><b>시세</b>: 네이버 일별시세(2023-01-02~2026-10-08, 코스닥 지수 포함), 네이버·와이즈리포트 기업현황(10/8). 기준가는 10/8 KRX 종가 25,200원(네이버 일별시세의 25,400원은 대체거래소 혼입으로 보여 제외). 10/9 휴장, 10/12 장중 23,750원(13:30).</li>
+    <li><b>증권사 리포트</b>: 스피어 전용 23건(메리츠 7·SK·iM·대신·유안타·신한·상상인·유진·한국IR협의회·YIG 등, 2025-04 ~ 2026-08)과 라이프시맨틱스 시절 8건, 스피어가 언급된 타사·전략·산업 리포트 105건, 2025년 6월 이후 우주·초내열합금·에이치브이엠·방산 산업 리포트 78건. 한국투자·교보 목표주가는 기사로 확인(원문 미입수). 리포트 간 숫자 불일치는 2·11장에 적었다.</li>
+    <li><b>웹</b>: 회사 IR덱(2026-08-26, 44쪽), 홈페이지, KIND, Nickel Industries ASX 공시(2026-01-30·07-29·08-11·08-26), SpaceX S-1 보도, FAA 환경평가, Argus·Benchmark·CRU·Fastmarkets 니켈 자료, Reliance·Ryerson·Russel·Carpenter 10-K, Panjiva, 뉴스토마토·머니투데이·더벨·딜사이트·뉴스웰·fnnews 등 기사. 약 300건.</li>
+    <li><b>필자 계산(공시에 없는 값)</b>: 최근 4분기 합산, 4Q25 역산, 파생 제외 세전이익, 수주 체인 집계와 USD 환산, 수주잔고 납기 분포, 연 이자 추정, 니켈 지분법 민감도, 소재 물량 환산(인코넬 가격·니켈 함량), 2027년 시나리오, 시총 분해. 각 표 아래 산식을 적었다. 검증 스크립트로 본문 수치 120여 개를 원자료와 대조했다.</li>
+    <li><b>확인하지 못한 것</b>: SpaceX 측의 공급사 확인, 오프테이크 가격 산식과 수량, 인수금융 분할상환·코버넌트, 매입처 실명과 비중, 2Q26 원소재 매출 금액(회사 미분해), 5회 CB 인수인 백루타·비에이에프의 실체, 7/30 급락의 직접 원인, HTCA 1·2 LLC(미국, 62억) 사업 내용, 2027년 이후 SpaceX 확정 물량.</li>
+  </ul>
+  <div class="foot">이 문서는 공개 자료를 바탕으로 한 개인 분석 기록이며 투자 권유가 아니다. 모든 수치는 2026-10-12 기준이고 이후 공시로 달라질 수 있다. 추정치는 해당 증권사 리포트의 것이며 필자 계산은 그렇게 표시했다.</div>
+</section>
+</main>
+<script type="application/json" id="cd">{"px":25200,"shares":51551362,"daily":[["20230102",3800],["20230103",3742],["20230104",3814],["20230105",3809],["20230106",3881],["20230109",4261],["20230110",4261],["20230111",4324],["20230112",4306],["20230113",4319],["20230116",4426],["20230117",4422],["20230118",4453],["20230119",4444],["20230120",4543],["20230125",4596],["20230126",4918],["20230127",4883],["20230130",4766],["20230131",5455],["20230201",5544],["20230202",5661],["20230203",5652],["20230206",5240],["20230207",5267],["20230208",5312],["20230209",5357],["20230210",5035],["20230213",5160],["20230214",5070],["20230215",5061],["20230216",4999],["20230217",4748],["20230220",4981],["20230221",4757],["20230222",4856],["20230223",4963],["20230224",6135],["20230227",5634],["20230228",6430],["20230302",6367],["20230303",6036],["20230306",5983],["20230307",5956],["20230308",5813],["20230309",5607],["20230310",5455],["20230313",5526],["20230314",5106],["20230315",5205],["20230316",5276],["20230317",5500],["20230320",5544],["20230321",5410],["20230322",5240],["20230323",5052],["20230324",5249],["20230327",5213],["20230328",5169],["20230329",5142],["20230330",5079],["20230331",4918],["20230403",4918],["20230404",5133],["20230405",5276],["20230406",5026],["20230407",4954],["20230410",4731],["20230411",4775],["20230412",4847],["20230413",5061],["20230414",5079],["20230417",5044],["20230418",4892],["20230419",4811],["20230420",4587],["20230421",4525],["20230424",4426],["20230425",4400],["20230426",4292],["20230427",4265],["20230428",4176],["20230502",4194],["20230503",4104],["20230504",4346],["20230508",4409],["20230509",4248],["20230510",4248],["20230511",4333],["20230512",4252],["20230515",4279],["20230516",4154],["20230517",4409],["20230518",4409],["20230519",4422],["20230522",4422],["20230523",4552],["20230524",4578],["20230525",4368],["20230526",4368],["20230530",4525],["20230531",4489],["20230601",4534],["20230602",4534],["20230605",4440],["20230607",4793],["20230608",4659],["20230609",4892],["20230612",4784],["20230613",4686],["20230614",4632],["20230615",4641],["20230616",4587],["20230619",4471],["20230620",4668],["20230621",4525],["20230622",4507],["20230623",4668],["20230626",4981],["20230627",4578],["20230628",4820],["20230629",4431],["20230630",4310],["20230703",4265],["20230704",4283],["20230705",4297],["20230706",4149],["20230707",4042],["20230710",4087],["20230711",4096],["20230712",4033],["20230713",4042],["20230714",4069],["20230717",3975],["20230718",3926],["20230719",4440],["20230720",4972],["20230721",5151],["20230724",4909],["20230725",4431],["20230726",4046],["20230727",4113],["20230728",4158],["20230731",4194],["20230801",4449],["20230802",4516],["20230803",4382],["20230804",4301],["20230807",4203],["20230808",4087],["20230809",4310],["20230810",4328],["20230811",4382],["20230814",4288],["20230816",4082],["20230817",4181],["20230818",4055],["20230821",4185],["20230822",4176],["20230823",4221],["20230824",4368],["20230825",4292],["20230828",4239],["20230829",4292],["20230830",4677],["20230831",4194],["20230901",4104],["20230904",4230],["20230905",4239],["20230906",5133],["20230907",4963],["20230908",4999],["20230911",5142],["20230912",3626],["20230913",3546],["20230914",3693],["20230915",3944],["20230918",4154],["20230919",4158],["20230920",3859],["20230921",3912],["20230922",3890],["20230925",3707],["20230926",3662],["20230927",3814],["20231004",3577],["20231005",3595],["20231006",3532],["20231010",3353],["20231011",3353],["20231012",3541],["20231013",3376],["20231016",3183],["20231017",3241],["20231018",3255],["20231019",3040],["20231020",2933],["20231023",2942],["20231024",2991],["20231025",2978],["20231026",2879],["20231027",2928],["20231030",3058],["20231031",2920],["20231101",2880],["20231102",3030],["20231103",3120],["20231106",3095],["20231107",3065],["20231108",3050],["20231109",3020],["20231110",2960],["20231113",2970],["20231114",2975],["20231115",3070],["20231116",3015],["20231117",2910],["20231120",2885],["20231121",2760],["20231122",2690],["20231123",2685],["20231124",2680],["20231127",2690],["20231128",2680],["20231129",2720],["20231130",2695],["20231201",2670],["20231204",2620],["20231205",2560],["20231206",2595],["20231207",2570],["20231208",2485],["20231211",2540],["20231212",2520],["20231213",2500],["20231214",2535],["20231215",2495],["20231218",2540],["20231219",2515],["20231220",2705],["20231221",2725],["20231222",2705],["20231226",3345],["20231227",2345],["20231228",2265],["20240102",2275],["20240103",2215],["20240104",2105],["20240105",2115],["20240108",2115],["20240109",2160],["20240110",2085],["20240111",2135],["20240112",2100],["20240115",2060],["20240116",2000],["20240117",1950],["20240118",1939],["20240119",1954],["20240122",2075],["20240123",2170],["20240124",2130],["20240125",2075],["20240126",2050],["20240129",2135],["20240130",2115],["20240131",2030],["20240201",2045],["20240202",2035],["20240205",1969],["20240206",1950],["20240207",1922],["20240208",1909],["20240213",1958],["20240214",1934],["20240215",2510],["20240216",2635],["20240219",2555],["20240220",2440],["20240221",2295],["20240222",2245],["20240223",2600],["20240226",2560],["20240227",2485],["20240228",2400],["20240229",2345],["20240304",2345],["20240305",2365],["20240306",2355],["20240307",2130],["20240308",2110],["20240311",2105],["20240312",2155],["20240313",2145],["20240314",2140],["20240315",2120],["20240318",2055],["20240319",1992],["20240320",1981],["20240321",2180],["20240322",2170],["20240325",2140],["20240326",2075],["20240327",2010],["20240328",2000],["20240329",2055],["20240401",2125],["20240402",2105],["20240403",2045],["20240404",2015],["20240405",2025],["20240408",1958],["20240409",1952],["20240411",1929],["20240412",1935],["20240415",1874],["20240416",1910],["20240417",1942],["20240418",2030],["20240419",1963],["20240422",1964],["20240423",1940],["20240424",1938],["20240425",1901],["20240426",1897],["20240429",1938],["20240430",1964],["20240502",1906],["20240503",1897],["20240507",1900],["20240508",1906],["20240509",1881],["20240510",1920],["20240513",1914],["20240514",1967],["20240516",2005],["20240517",1985],["20240520",1936],["20240521",1898],["20240522",1846],["20240523",1862],["20240524",1842],["20240527",1821],["20240528",1873],["20240529",1837],["20240530",1790],["20240531",1769],["20240603",1770],["20240604",1781],["20240605",1776],["20240607",1785],["20240610",1783],["20240611",1799],["20240612",1833],["20240613",1838],["20240614",1820],["20240617",1782],["20240618",1766],["20240619",1732],["20240620",1714],["20240621",1645],["20240624",1627],["20240625",2115],["20240626",2065],["20240627",1909],["20240628",1850],["20240701",1876],["20240702",1742],["20240703",1719],["20240704",1720],["20240705",1814],["20240708",1810],["20240709",1755],["20240710",1717],["20240711",1738],["20240712",1780],["20240715",1746],["20240716",1718],["20240717",1710],["20240718",1798],["20240719",1880],["20240722",2440],["20240723",2480],["20240724",2690],["20240725",2740],["20240726",2790],["20240729",2715],["20240730",2610],["20240731",2720],["20240801",2735],["20240802",2990],["20240805",2445],["20240806",2655],["20240807",2845],["20240808",2885],["20240809",3440],["20240812",3500],["20240813",3195],["20240814",3125],["20240816",3225],["20240819",3580],["20240820",3785],["20240821",3750],["20240822",3600],["20240823",3600],["20240826",3155],["20240827",3075],["20240828",3200],["20240829",3050],["20240830",3230],["20240902",3315],["20240903",3205],["20240904",3285],["20240905",3155],["20240906",3055],["20240909",2705],["20240910",2775],["20240911",2670],["20240912",2795],["20240913",2785],["20240919",2765],["20240920",2740],["20240923",2700],["20240924",2870],["20240925",2810],["20240926",2860],["20240927",2915],["20240930",2885],["20241002",2755],["20241004",2745],["20241007",2665],["20241008",2730],["20241010",3200],["20241011",3240],["20241014",3975],["20241015",4190],["20241016",4170],["20241017",4010],["20241018",3670],["20241021",3660],["20241022",3560],["20241023",3620],["20241024",3610],["20241025",3550],["20241028",3520],["20241029",3555],["20241030",3355],["20241031",3345],["20241101",3435],["20241104",3275],["20241105",3440],["20241106",3750],["20241107",4025],["20241108",4340],["20241111",4375],["20241112",3300],["20241113",2920],["20241114",3015],["20241115",2975],["20241118",3340],["20241119",2900],["20241120",2925],["20241121",2810],["20241122",3060],["20241125",3150],["20241126",3100],["20241127",3520],["20241128",3435],["20241129",3415],["20241202",3300],["20241203",3510],["20241204",3695],["20241205",3915],["20241206",3890],["20241209",3580],["20241210",3760],["20241211",4145],["20241212",5380],["20241213",5310],["20241216",4890],["20241217",4865],["20241218",5000],["20241219",4920],["20241220",4485],["20241223",4700],["20241224",4630],["20241226",4625],["20241227",4460],["20241230",3955],["20250102",4470],["20250103",4580],["20250106",4730],["20250107",4730],["20250108",4615],["20250109",4755],["20250110",4600],["20250113",4465],["20250114",4220],["20250115",4435],["20250116",4350],["20250117",4430],["20250120",4185],["20250121",4375],["20250122",5000],["20250123",4950],["20250124",5020],["20250131",4760],["20250203",4665],["20250204",5440],["20250205",5650],["20250206",5860],["20250207",5710],["20250210",5500],["20250211",5970],["20250212",6740],["20250213",8050],["20250214",7880],["20250217",7700],["20250218",7900],["20250219",8080],["20250220",7970],["20250221",7500],["20250224",7400],["20250225",8040],["20250226",7830],["20250227",8100],["20250228",7640],["20250304",7550],["20250305",8000],["20250306",7800],["20250307",7860],["20250310",7480],["20250311",7300],["20250312",7340],["20250313",7310],["20250314",7830],["20250317",7820],["20250318",8200],["20250319",7850],["20250320",7550],["20250321",7550],["20250324",7230],["20250325",7450],["20250326",7900],["20250327",7870],["20250328",7710],["20250331",7370],["20250401",7500],["20250402",7130],["20250403",7100],["20250404",6900],["20250407",6020],["20250408",6160],["20250409",6340],["20250410",7340],["20250411",7800],["20250414",7730],["20250415",7760],["20250416",7560],["20250417",8360],["20250418",8180],["20250421",8500],["20250422",8690],["20250423",9120],["20250424",9340],["20250425",9600],["20250428",9850],["20250429",9780],["20250430",9800],["20250502",9540],["20250507",9750],["20250508",9200],["20250509",9220],["20250512",9200],["20250513",9500],["20250514",10550],["20250515",10390],["20250516",11000],["20250519",10310],["20250520",10400],["20250521",10250],["20250522",9990],["20250523",10150],["20250526",10490],["20250527",9540],["20250528",9540],["20250529",9270],["20250530",9460],["20250602",9220],["20250604",9500],["20250605",9210],["20250609",8790],["20250610",9490],["20250611",9470],["20250612",9510],["20250613",9600],["20250616",9940],["20250617",10310],["20250618",9650],["20250619",9710],["20250620",10660],["20250623",10510],["20250624",10520],["20250625",10480],["20250626",10500],["20250627",11140],["20250630",10660],["20250701",10180],["20250702",10170],["20250703",10030],["20250704",9740],["20250707",9940],["20250708",10100],["20250709",10360],["20250710",10200],["20250711",10330],["20250714",10780],["20250715",12030],["20250716",11570],["20250717",11550],["20250718",11570],["20250721",11160],["20250722",10850],["20250723",10850],["20250724",10500],["20250725",10290],["20250728",10700],["20250729",10610],["20250730",10000],["20250731",10900],["20250801",14170],["20250804",14170],["20250805",13610],["20250806",13100],["20250807",12220],["20250808",12330],["20250811",12580],["20250812",12060],["20250813",12260],["20250814",12600],["20250818",12120],["20250819",11270],["20250820",10760],["20250821",10770],["20250822",11480],["20250825",11560],["20250826",11630],["20250827",12720],["20250828",11590],["20250829",11660],["20250901",10880],["20250902",11150],["20250903",10920],["20250904",10900],["20250905",10680],["20250908",10370],["20250909",10160],["20250910",10600],["20250911",10710],["20250912",11030],["20250915",11590],["20250916",11570],["20250917",11720],["20250918",11670],["20250919",11230],["20250922",10590],["20250923",10540],["20250924",10370],["20250925",10040],["20250926",9790],["20250929",10090],["20250930",10420],["20251001",10150],["20251002",10430],["20251010",10440],["20251013",11190],["20251014",10800],["20251015",11030],["20251016",10250],["20251017",9750],["20251020",9900],["20251021",9650],["20251022",9590],["20251023",9350],["20251024",8870],["20251027",8720],["20251028",8510],["20251029",8040],["20251030",8170],["20251031",8240],["20251103",8730],["20251104",9010],["20251105",8370],["20251106",8750],["20251107",8200],["20251110",7720],["20251111",7400],["20251112",8140],["20251113",7890],["20251114",7850],["20251117",8950],["20251118",9070],["20251119",9130],["20251120",9230],["20251121",8720],["20251124",8550],["20251125",8560],["20251126",8650],["20251127",8800],["20251128",8800],["20251201",8300],["20251202",8210],["20251203",7860],["20251204",7320],["20251205",7380],["20251208",8660],["20251209",8450],["20251210",8100],["20251211",9480],["20251212",11360],["20251215",12040],["20251216",12530],["20251217",12100],["20251218",12550],["20251219",12960],["20251222",14010],["20251223",13000],["20251224",13300],["20251226",13010],["20251229",13680],["20251230",14690],["20260102",19090],["20260105",19100],["20260106",19100],["20260107",18000],["20260108",18000],["20260109",18750],["20260112",19250],["20260113",17690],["20260114",17250],["20260115",17220],["20260116",17080],["20260119",18380],["20260120",19740],["20260121",18970],["20260122",19250],["20260123",21550],["20260126",22550],["20260127",23100],["20260128",22450],["20260129",25800],["20260130",27200],["20260202",27200],["20260203",28550],["20260204",28550],["20260205",28750],["20260206",37350],["20260209",37150],["20260210",37900],["20260211",37900],["20260212",38500],["20260213",44600],["20260219",44100],["20260220",45650],["20260223",45600],["20260224",42800],["20260225",43050],["20260226",42300],["20260227",42900],["20260303",42950],["20260304",35300],["20260305",45850],["20260306",46300],["20260309",47900],["20260310",51100],["20260311",50900],["20260312",53100],["20260313",52400],["20260316",52800],["20260317",50400],["20260318",48750],["20260319",45850],["20260320",44750],["20260323",42050],["20260324",43000],["20260325",46150],["20260326",50100],["20260327",50900],["20260330",48650],["20260331",43200],["20260401",49200],["20260402",46200],["20260403",45500],["20260406",43300],["20260407",40500],["20260408",45500],["20260409",41800],["20260410",39450],["20260413",40600],["20260414",47200],["20260415",45600],["20260416",46150],["20260417",46050],["20260420",44000],["20260421",44250],["20260422",44500],["20260423",42300],["20260424",42600],["20260427",41550],["20260428",39700],["20260429",40600],["20260430",42200],["20260504",41450],["20260506",42300],["20260507",40550],["20260508",41650],["20260511",46950],["20260512",43150],["20260513",42500],["20260514",43500],["20260515",42000],["20260518",48150],["20260519",46900],["20260520",40050],["20260521",42650],["20260522",42800],["20260526",46750],["20260527",44150],["20260528",41950],["20260529",38950],["20260601",33450],["20260602",32500],["20260604",33950],["20260605",30700],["20260608",29150],["20260609",28100],["20260610",29650],["20260611",38500],["20260612",36700],["20260615",35200],["20260616",32900],["20260617",30000],["20260618",27150],["20260619",25250],["20260622",22150],["20260623",19870],["20260624",21400],["20260625",18960],["20260626",17300],["20260629",20350],["20260630",23350],["20260701",28050],["20260702",24400],["20260703",24900],["20260706",24500],["20260707",20500],["20260708",18750],["20260709",18590],["20260710",21800],["20260713",19890],["20260714",20000],["20260715",20500],["20260716",18890],["20260720",17930],["20260721",17640],["20260722",17300],["20260723",18950],["20260724",17090],["20260727",16960],["20260728",14810],["20260729",13370],["20260730",12950],["20260731",15400],["20260803",15990],["20260804",19690],["20260805",19250],["20260806",20050],["20260807",23050],["20260810",25100],["20260811",25350],["20260812",26600],["20260813",25950],["20260814",26450],["20260818",25750],["20260819",25100],["20260820",25750],["20260821",23450],["20260824",23050],["20260825",23550],["20260826",23000],["20260827",23150],["20260828",22250],["20260831",21000],["20260901",20100],["20260902",19310],["20260903",18580],["20260904",19520],["20260907",19060],["20260908",20200],["20260909",20900],["20260910",20450],["20260911",20050],["20260914",19400],["20260915",20150],["20260916",20350],["20260917",24100],["20260918",24450],["20260921",23450],["20260922",22600],["20260923",23450],["20260928",22300],["20260929",21350],["20260930",21950],["20261001",22950],["20261002",24700],["20261006",27050],["20261007",25350],["20261008",25400]],"kq":[3800,3819,3869,3848,3899,3968,3939,4017,4022,4028,4057,4016,4028,4034,4063,4144,4182,4195,4180,4190,4250,4327,4339,4308,4373,4414,4440,4371,4372,4412,4332,4441,4389,4464,4490,4406,4432,4408,4416,4480,4455,4541,4621,4616,4606,4579,4463,4464,4290,4421,4425,4512,4540,4541,4603,4596,4664,4684,4717,4776,4813,4796,4838,4851,4937,4898,4980,5024,5087,5040,5060,5115,5147,5144,5145,5012,4917,4840,4746,4699,4811,4769,4842,4771,4782,4766,4730,4695,4666,4654,4609,4622,4721,4730,4763,4822,4862,4841,4797,4772,4819,4849,4888,4912,4925,4984,4958,5001,5012,5075,4934,4969,5025,5029,5016,4955,4959,4951,4977,4947,4906,4877,4913,5032,5036,5043,4926,4908,4869,4973,4979,5054,5072,5083,5173,5227,5272,5289,5262,5319,5097,5001,5171,5297,5317,5148,5208,5197,5083,5050,5144,5157,5162,5103,4970,5014,4965,5029,5055,4996,5103,5089,5146,5185,5228,5254,5205,5201,5215,5195,5129,5173,5164,5082,4995,5090,5088,5044,5002,4995,4870,4852,4749,4685,4759,4569,4533,4620,4499,4624,4728,4656,4587,4642,4577,4437,4353,4322,4441,4362,4209,4236,4284,4166,4183,4373,4426,4750,4665,4589,4543,4467,4382,4494,4580,4590,4522,4601,4623,4610,4618,4612,4585,4620,4654,4706,4681,4689,4603,4638,4602,4699,4727,4751,4693,4757,4744,4815,4857,4884,4863,4836,4801,4865,4904,4974,4932,4902,4970,4976,5006,4954,4994,4912,4865,4837,4714,4755,4769,4752,4754,4732,4661,4738,4635,4634,4523,4520,4611,4572,4567,4595,4678,4783,4829,4862,4853,4858,4902,4890,4924,4915,4909,4831,4886,4883,4940,4903,4927,4886,4941,4957,5035,5036,5022,4982,5062,5047,5045,5117,5116,5170,5184,5157,5150,5124,5163,5045,4980,4996,4936,4870,4863,4856,4869,4824,4713,4714,4842,4764,4786,4784,4879,4829,4849,4922,4917,4909,4898,4930,4937,4924,4890,4835,4879,4925,4839,4794,4790,4786,4791,4750,4799,4816,4745,4708,4753,4780,4787,4814,4902,4893,4914,4927,4931,4879,4861,4861,4873,4853,4825,4762,4765,4765,4746,4756,4794,4696,4731,4758,4796,4863,4869,4858,4824,4812,4826,4751,4694,4654,4690,4583,4596,4608,4512,4513,4572,4549,4545,4604,4410,3912,4147,4236,4217,4326,4373,4328,4396,4450,4400,4456,4413,4377,4376,4339,4329,4315,4278,4344,4353,4303,4141,4104,3999,4043,3996,4015,4137,4149,4185,4235,4273,4342,4297,4409,4383,4323,4313,4352,4420,4404,4388,4363,4359,4379,4334,4329,4262,4300,4178,4217,4157,4116,4190,4211,4177,4205,4126,4267,4254,4206,4151,4207,4124,4021,3903,3857,3879,3902,3883,3865,3852,3831,3943,3922,3916,3929,3838,3825,3909,3832,3797,3742,3548,3744,3825,3867,3926,3953,3930,3947,3873,3782,3844,3849,3823,3769,3838,3886,3994,4063,4065,4072,4094,4062,4008,4063,4027,4098,4101,4118,4109,4144,4097,4124,4121,3983,4074,4137,4189,4204,4242,4242,4217,4240,4280,4349,4378,4404,4348,4384,4376,4354,4365,4362,4210,4176,4227,4159,4118,4107,4083,4128,4090,4155,4207,4219,4178,4104,4071,4076,4025,4054,4004,3926,3808,3913,3875,3868,3890,3686,3726,3641,3858,3936,4012,4029,3956,4028,4062,4049,4052,4109,4109,4129,4071,4111,4059,4085,4090,4129,4089,4105,4142,4182,4149,4103,4039,4049,4095,4061,4052,4104,4115,4124,4167,4156,4189,4245,4279,4325,4364,4450,4467,4351,4398,4389,4412,4428,4479,4441,4532,4517,4459,4423,4422,4435,4426,4489,4390,4405,4438,4473,4514,4530,4524,4600,4596,4630,4644,4650,4601,4604,4583,4566,4552,4552,4548,4557,4373,4437,4519,4547,4560,4580,4594,4568,4607,4613,4516,4459,4400,4398,4428,4516,4537,4537,4518,4510,4442,4493,4509,4558,4592,4632,4668,4714,4724,4794,4825,4820,4785,4850,4884,4948,4936,4872,4824,4726,4791,4765,4784,4834,4864,4869,4799,4893,4897,4864,4956,4937,4975,4935,4997,5108,5112,5102,5041,5095,5175,5243,5104,5083,4962,5027,5004,5130,5197,5081,5108,4972,4931,5047,4889,4846,4844,4965,4980,5165,5220,5254,5274,5262,5233,5250,5270,5291,5289,5304,5313,5184,5156,5101,5179,5258,5204,5179,5204,5277,5237,5351,5418,5410,5361,5342,5364,5375,5370,5332,5383,5402,5480,5525,5383,5491,5625,6023,6126,6414,6589,6505,6215,6476,6504,6272,6116,6381,6311,6309,6372,6259,6568,6530,6519,6593,6594,6724,6750,6438,5537,6318,6534,6238,6438,6433,6499,6524,6441,6434,6589,6471,6573,6207,6346,6562,6432,6460,6265,5955,6316,5978,6020,5927,5867,6167,6089,6189,6224,6349,6521,6581,6621,6648,6672,6684,6645,6812,6939,6879,6905,6747,6868,6848,6786,6834,6832,6673,6660,6740,6394,6288,6136,5976,6259,6571,6635,6412,6249,6082,5942,5806,5940,5673,5157,5477,5385,5642,5823,5851,5765,5840,5664,5470,5480,5045,5146,5024,4818,5209,5185,5259,4905,4914,4793,4704,4442,4493,4739,4523,4436,4694,4481,4242,4263,4250,4472,4234,4328,3994,3750,3649,4073,4173,4418,4525,4537,4520,4835,4854,4860,4874,4893,4721,4666,4759,4538,4603,4681,4679,4740,4744,4721,4647,4550,4472,4604,4653,4594,4699,4736,4644,4566,4597,4618,4653,4681,4732,4722,4779,4791,4809,4843,5061,5055,5206,5084,5049],"kqraw":[671.5,675.0,683.7,679.9,688.9,701.2,696.0,709.8,710.8,711.8,716.9,709.7,711.8,712.9,718.0,732.4,738.9,741.2,738.6,740.5,751.0,764.6,766.8,761.3,772.8,780.0,784.6,772.4,772.5,779.6,765.5,784.7,775.6,788.9,793.4,778.5,783.3,778.9,780.3,791.6,787.2,802.4,816.5,815.8,814.0,809.2,788.6,788.9,758.0,781.2,782.0,797.4,802.2,802.5,813.4,812.2,824.1,827.7,833.5,843.9,850.5,847.5,855.0,857.2,872.4,865.6,880.1,887.8,898.9,890.6,894.2,903.8,909.5,909.0,909.2,885.7,868.8,855.2,838.7,830.4,850.2,842.8,855.6,843.2,845.1,842.3,835.9,829.7,824.5,822.4,814.5,816.8,834.2,835.9,841.7,852.0,859.2,855.5,847.7,843.2,851.5,856.9,863.8,868.1,870.3,880.7,876.1,883.7,885.8,896.8,871.8,878.0,888.0,888.6,886.4,875.7,876.4,874.8,879.5,874.1,867.0,861.8,868.2,889.3,890.0,891.2,870.5,867.3,860.4,878.7,879.9,893.1,896.3,898.3,914.1,923.7,931.6,934.6,929.9,940.0,900.6,883.8,913.7,936.0,939.7,909.8,920.3,918.4,898.2,892.3,909.0,911.3,912.2,901.7,878.3,886.0,877.3,888.7,893.3,882.9,901.7,899.4,909.4,916.2,923.8,928.4,919.7,919.2,921.5,918.0,906.4,914.2,912.5,898.0,882.7,899.5,899.0,891.3,883.9,882.7,860.7,857.4,839.2,827.8,841.0,807.4,801.0,816.4,795.0,817.1,835.5,822.8,810.5,820.4,808.9,784.0,769.2,763.7,784.9,770.8,743.9,748.5,757.1,736.1,739.2,772.8,782.0,839.5,824.4,811.0,802.9,789.3,774.4,794.2,809.4,811.1,799.1,813.1,817.0,814.6,816.0,815.0,810.2,816.4,822.4,831.7,827.2,828.5,813.4,819.5,813.2,830.4,835.2,839.5,829.3,840.6,838.3,851.0,858.3,863.0,859.4,854.6,848.3,859.8,866.6,878.9,871.6,866.2,878.3,879.3,884.6,875.5,882.5,868.1,859.7,854.8,833.0,840.3,842.7,839.7,840.1,836.2,823.7,837.2,819.1,818.9,799.2,798.7,814.8,808.0,807.0,811.9,826.6,845.1,853.3,859.2,857.6,858.5,866.2,864.1,870.1,868.6,867.4,853.8,863.4,863.0,873.0,866.4,870.7,863.4,873.2,875.9,889.7,889.9,887.5,880.5,894.5,891.9,891.5,904.3,904.0,913.7,916.1,911.2,910.0,905.5,912.5,891.6,880.0,882.9,872.3,860.6,859.3,858.1,860.5,852.4,832.8,833.0,855.6,841.9,845.8,845.4,862.2,853.3,856.8,869.7,868.9,867.5,865.6,871.3,872.4,870.1,864.2,854.4,862.1,870.4,855.1,847.1,846.5,845.7,846.6,839.4,848.0,851.0,838.5,832.0,840.0,844.7,845.8,850.8,866.2,864.7,868.4,870.7,871.3,862.2,859.0,859.0,861.2,857.5,852.7,841.5,842.0,842.1,838.6,840.4,847.1,829.9,836.1,840.8,847.5,859.3,860.4,858.5,852.4,850.4,852.9,839.6,829.4,822.5,828.7,810.0,812.1,814.2,797.3,797.6,808.0,803.8,803.1,813.5,779.3,691.3,732.9,748.5,745.3,764.4,772.7,764.9,776.8,786.3,777.5,787.4,779.9,773.5,773.3,766.8,765.0,762.5,756.0,767.7,769.2,760.4,731.8,725.3,706.6,714.5,706.2,709.4,731.0,733.2,739.5,748.3,755.1,767.4,759.3,779.2,774.5,763.9,762.1,769.0,781.0,778.2,775.5,771.0,770.3,773.8,765.8,765.1,753.2,760.0,738.3,745.2,734.6,727.4,740.5,744.2,738.2,743.1,729.0,754.1,751.8,743.3,733.5,743.4,728.8,710.5,689.6,681.6,685.4,689.5,686.1,682.9,680.7,677.0,696.8,693.1,692.0,694.4,678.2,675.8,690.8,677.1,670.9,661.3,627.0,661.6,675.9,683.4,693.7,698.5,694.5,697.6,684.4,668.3,679.2,680.1,675.6,666.0,678.2,686.6,705.8,718.0,718.3,719.6,723.5,717.9,708.2,718.0,711.6,724.2,724.7,727.7,726.1,732.3,724.0,728.7,728.3,703.8,719.9,731.0,740.3,742.9,749.7,749.6,745.2,749.3,756.3,768.5,773.6,778.3,768.3,774.6,773.3,769.4,771.4,770.9,744.0,737.9,747.0,734.9,727.7,725.8,721.5,729.5,722.8,734.3,743.5,745.5,738.4,725.1,719.4,720.2,711.3,716.5,707.5,693.8,672.9,691.5,684.9,683.5,687.4,651.3,658.5,643.4,681.8,695.6,709.0,711.9,699.1,711.8,717.8,715.5,716.1,726.1,726.1,729.7,719.4,726.5,717.2,721.9,722.8,729.6,722.5,725.4,731.9,739.0,733.2,725.1,713.8,715.5,723.6,717.7,716.0,725.3,727.1,728.8,736.3,734.4,740.3,750.2,756.2,764.2,771.2,786.3,789.5,768.9,777.3,775.6,779.7,782.5,791.5,784.8,800.9,798.2,788.0,781.6,781.5,783.7,782.2,793.3,775.8,778.5,784.2,790.4,797.7,800.5,799.4,812.9,812.2,818.3,820.7,821.7,813.0,813.6,809.9,807.0,804.4,804.5,803.7,805.2,772.8,784.1,798.6,803.5,805.8,809.3,811.9,807.2,814.1,815.3,798.0,788.0,777.6,777.2,782.5,798.0,801.7,801.7,798.4,796.9,785.0,794.0,796.8,805.4,811.4,818.6,824.8,833.0,834.8,847.1,852.7,851.8,845.5,857.1,863.1,874.4,872.2,860.9,852.5,835.2,846.7,842.0,845.3,854.2,859.5,860.5,848.0,864.7,865.4,859.5,875.8,872.5,879.1,872.0,883.1,902.7,903.3,901.6,890.9,900.4,914.5,926.6,901.9,898.2,876.8,888.4,884.3,906.5,918.4,897.9,902.7,878.7,871.3,891.9,864.0,856.4,856.0,877.3,880.1,912.7,922.4,928.4,932.0,929.8,924.7,927.8,931.4,935.0,934.6,937.3,938.8,916.1,911.1,901.3,915.3,929.1,919.6,915.2,919.7,932.6,925.5,945.6,957.5,956.0,947.4,944.1,947.9,949.8,949.0,942.2,951.2,954.6,968.4,976.4,951.3,970.4,993.9,1064.4,1082.6,1133.5,1164.4,1149.4,1098.4,1144.3,1149.4,1108.4,1080.8,1127.5,1115.2,1114.9,1126.0,1106.1,1160.7,1154.0,1152.0,1165.0,1165.2,1188.2,1192.8,1137.7,978.4,1116.4,1154.7,1102.3,1137.7,1136.8,1148.4,1153.0,1138.3,1136.9,1164.4,1143.5,1161.5,1096.9,1121.4,1159.5,1136.6,1141.5,1107.0,1052.4,1116.2,1056.3,1063.8,1047.4,1036.7,1089.8,1076.0,1093.6,1099.8,1121.9,1152.4,1163.0,1170.0,1174.8,1179.0,1181.1,1174.3,1203.8,1226.2,1215.6,1220.3,1192.3,1213.7,1210.2,1199.2,1207.7,1207.3,1179.3,1176.9,1191.1,1129.8,1111.1,1084.4,1056.1,1106.0,1161.1,1172.5,1133.1,1104.4,1074.8,1050.0,1026.0,1049.7,1002.4,911.4,967.8,951.6,996.9,1029.0,1034.0,1018.7,1032.0,1000.9,966.6,968.4,891.5,909.3,887.8,851.4,920.6,916.2,929.4,866.7,868.4,847.1,831.2,785.0,794.0,837.4,799.4,784.0,829.4,791.8,749.6,753.3,751.1,790.3,748.2,764.9,705.9,662.7,644.8,719.8,737.4,780.7,799.6,801.7,798.8,854.5,857.8,858.9,861.4,864.6,834.2,824.5,840.9,801.9,813.3,827.1,826.9,837.6,838.4,834.3,821.2,804.0,790.2,813.5,822.2,811.9,830.4,836.9,820.6,806.8,812.4,816.0,822.2,827.1,836.3,834.4,844.5,846.6,849.8,855.9,894.3,893.3,919.9,898.4,892.3],"events":[["20231214",1,-30],["20240722",2,-32],["20241211",3,-34],["20250304",4,-34],["20250801",5,-36],["20251205",6,34],["20260102",7,-38],["20260219",8,-36],["20260312",9,-30],["20260430",10,34],["20260612",11,-36],["20260730",12,34],["20260818",13,-34],["20261006",14,-36]],"annual":[{"y":2023,"rev":120.8,"op":12.2,"ni":9.3,"n":"스피어코리아 영업 첫해(10~12월 3개월), K-GAAP"},{"y":2024,"rev":854.3,"op":151.8,"ni":86.1,"n":"스피어코리아 단독(FY2025 보고서 비교치, K-IFRS). 같은 해 라이프시맨틱스는 매출 25.6억·영업손실 63.7억"},{"y":2025,"rev":956.4,"op":90.5,"ni":1.7,"n":"합병 첫해 연결. 별도 800.0억·83.2억. 파생상품 제외 세전이익 6.5억"},{"y":2026,"rev":2944,"op":144,"e":1,"n":"컨센서스(9/30). 메리츠 8/18은 2,971억·154억·순이익 −101억"},{"y":2027,"rev":4520,"op":533,"e":1,"n":"컨센서스(9/30). 메리츠 4,553억·505억·순이익 478억(니켈 원소재 매출 약 2,000억 포함)"}],"quarterly":[{"q":"2024Q1","rev":206.4,"op":58.1,"opm":28.1,"gpm":null,"ni":56.9,"n":"스피어코리아. 영업비용 148.4억(원가·판관비 미구분)"},{"q":"2024Q2","rev":242.0,"op":34.2,"opm":14.1,"gpm":null,"ni":24.8},{"q":"2024Q3","rev":196.0,"op":29.2,"opm":14.9,"gpm":20.7,"ni":19.6},{"q":"2024Q4","rev":209.9,"op":30.3,"opm":14.4,"gpm":null,"ni":-15.2},{"q":"2025Q1","rev":218.5,"op":43.1,"opm":19.7,"gpm":null,"ni":31.6,"n":"합병 첫 분기. 매출총이익률 24.6%"},{"q":"2025Q2","rev":188.6,"op":20.9,"opm":11.1,"gpm":26.4,"ni":211.9,"n":"순이익에 4회 CB 콜옵션 평가이익 300억"},{"q":"2025Q3","rev":211.0,"op":-9.9,"opm":-4.7,"gpm":5.1,"ni":-33.1,"n":"협력사 신공장 가동 지연(회사 설명). 매출총이익률 5.1%"},{"q":"2025Q4","rev":338.3,"op":36.4,"opm":10.8,"gpm":15.9,"ni":-208.7,"n":"파생 평가이익 174억 환입 + 콜옵션 처분손실 102억"},{"q":"2026Q1","rev":450.7,"op":7.1,"opm":1.6,"gpm":14.9,"ni":397.9,"n":"콜옵션 평가이익 611.7억. 파생 제외 세전 −25.9억"},{"q":"2026Q2","rev":770.6,"op":16.7,"opm":2.2,"gpm":11.0,"ni":-242.9,"n":"원소재 비중 확대로 원가율 89.0%. 자기CB 처분손실 248억·인수금융 이자 113억"}],"orders":[["2025Q2",487.7,34.2,"4/24 192억(첫 대형) 포함 12건"],["2025Q3",1275.6,91.5,"SpaceX 2026년 확정분 772억 + 9/29 490억(2배 증액 후)"],["2025Q4",450.8,30.8,"12월 소액 8건"],["2026Q1",756.1,51.7,"2/19 432억(조건부, 2개월 납기)·3/25 원소재 281억"],["2026Q2",791.8,52.1,"6월 3건 653억(원소재 223억 포함)"],["2026Q3",115.8,8.5,"7~8월 신규 0건, 정정만 15건"],["2026Q4(~10/12)",608.0,44.7,"10/6~7 3건: 특수합금 188·원소재 177·조건부 242"]],"backlog":[["2025-06",30.3,0.0,30.3],["2025-09",49.1,5.5,43.5],["2025-12",82.8,25.2,57.6],["2026-03",134.0,38.7,95.8],["2026-06",204.8,89.1,115.7]],"bridge":[["영업이익",23.8,"1Q 7.1 + 2Q 16.7. 매출 1,221억의 1.9%","영업이익",1],["파생상품 평가·처분 순이익",365.2,"4회 CB 콜옵션 평가이익 611.7(1Q) − 자기CB 매각 처분손실 248.7 − Day1 손실 17.4 등","파생",0],["환차익·이자수익 등",35.5,"외환차익 35.4 + 환산 19.8 + 이자 4.3 − 외환차손 19.3 − 환산손 4.7","환·이자",0],["이자비용",-185.3,"GLAS 인수금융 165.7(12.75%) + CB 19.6","이자",0],["기타·지분법",-9.4,"잡손실 5.3, 지분법 −1.2, 사채상환손실 2.7, FVPL 등","기타",0],["세전이익",229.8,"파생 제외 시 약 -135억","세전",1],["법인세",-42.6,"2Q에 연간 유효세율 18.5% 일괄 반영","법인세",0],["중단영업(라이프슈티컬)",-32.3,"매각예정 3년째, 건기식·원료의약품","중단",0],["순이익",154.9,"1Q +397.9, 2Q −242.9. 희석 EPS −594원","순이익",1]],"snc":[["인수금융 GLAS US$210M",3061.2,"2026-02-13 실행, 만기 2030-02-13, 12.75%, SNC 주식 100% 담보",1],["자기주식 1,757,466주 처분",343.6,"2026-01-12~29 평균 19,552원(NIC 처분권)",0],["5회 CB 250억",250.0,"2026-01-30, 전환가 14,213원, 용도 '타법인증권 취득'",0],["추가 출자(운전자본·수수료·이자)",615.4,"2026-04~08 4회 USD 41.7M: PT FMI 대여 245억, NIC 보증료 80억 등",0]],"est":[["메리츠 1/27",218,"4Q25 리뷰. 매출 1,923억",0],["iM 3/16",222,"매출 1,853억, 순이익 207억",0],["메리츠 5/18",217,"매출 2,368억",0],["컨센서스 5/18",241,"FnGuide",1],["그로쓰리서치 7/23",175,"매출 2,400억",0],["메리츠 8/18",154,"매출 2,971억, 순이익 −101억",0],["컨센서스 8/18",175,"FnGuide, 매출 2,400억",1],["컨센서스 9/30",144,"매출 2,944억, 2027E 533억",1]],"gpm":[["스피어 2024 (스피어코리아)",33.8,"매출 854억. 가공 매출 중심, 지급수수료 132억이 판관비",1],["스피어 2025",17.6,"매출 956억",1],["스피어 1H26",12.5,"매출 1,221억. 2Q 11.0%",1],["Reliance (美 서비스센터)",28.7,"2025년, 가공 부가가치 포함",0],["Russel Metals (加)",21.8,"2025년",0],["에이치브이엠 1H26 (제조)",20.8,"진공용해 제조사, 1H26 매출 893억",0],["Olympic Steel 특수금속",17.8,"2Q25",0],["Ryerson (美)",17.1,"2025년",0],["Worthington Steel",12.6,"FY2025",0]],"sh":[["2021-03 상장",977.7,"공모가 12,500원",0],["2023-12 주주배정 유증",1566.5,"발행가 2,005원(예정가 대비 −45%)",0],["2024-12 3자배정 4건 후",2204.0,"1,716~2,595원, 스피어코리아 16.4% 진입",0],["2025-03 합병",3850.1,"합병신주 1,646만주(3,645원)",0],["2025-12 3회 CB 전환",4666.3,"전환가 1,910원, 796만주",0],["2026-06 4회 CB 전환",5155.1,"전환가 3,448원, 435만주",1],["잠재: 5·6회 CB 전환 시",5414.5,"14,213원 176만주 + 44,929원 83만주",0]],"pop":[["스피어",258.5,"시총 12,991억 · 최근 4분기 매출 1,770.6억 · 영업이익 50.3억","스피어",1],["쎄트렉아이",130.1,"시총 7,513억 · 최근 4분기 매출 2,107.2억 · 영업이익 57.7억","쎄트렉아이",0],["에이치브이엠",126.3,"시총 9,310억 · 최근 4분기 매출 892.5억 · 영업이익 73.7억","에이치브이엠",0],["한화시스템",87.1,"시총 144,712억 · 최근 4분기 매출 41,305.1억 · 영업이익 1,662.2억","한화시스템",0],["알멕",51.6,"시총 3,662억 · 최근 4분기 매출 1,946.2억 · 영업이익 70.9억","알멕",0],["한국항공우주",46.8,"시총 118,335억 · 최근 4분기 매출 44,293.7억 · 영업이익 2,527.5억","KAI",0],["인텔리안테크",22.6,"시총 6,765억 · 최근 4분기 매출 3,635.1억 · 영업이익 299.6억","인텔리안",0],["한화에어로스페이스",12.5,"시총 459,430억 · 최근 4분기 매출 299,516.1억 · 영업이익 36,684.3억","한화에어로",0],["티플랙스",8.5,"시총 621억 · 최근 4분기 매출 2,403.8억 · 영업이익 73.5억","티플랙스",0],["하이즈항공",6.8,"시총 383억 · 최근 4분기 매출 938.2억 · 영업이익 56.6억","하이즈항공",0],["비츠로테크",4.7,"시총 2,754억 · 최근 4분기 매출 4,588.7억 · 영업이익 586.9억","비츠로테크",0]]}</script>
+<script>
+(function(){
+const CD = JSON.parse(document.getElementById('cd').textContent);
+const tip = document.getElementById('tip');
+function showTip(html, x, y){
+  tip.innerHTML = html; tip.style.display='block';
+  const r = tip.getBoundingClientRect();
+  let L = x + 14, T = y + 14;
+  if (L + r.width > window.innerWidth - 8) L = x - r.width - 14;
+  if (L < 8) L = 8;
+  if (T + r.height > window.innerHeight - 8) T = y - r.height - 14;
+  if (T < 8) T = 8;
+  tip.style.left = L + 'px'; tip.style.top = T + 'px';
+}
+function hideTip(){ tip.style.display='none'; }
+window.addEventListener('scroll', hideTip, {passive:true});
+document.addEventListener('pointerdown', e => { if (!e.target.closest('.chart svg')) hideTip(); });
+const fmtN = v => v == null ? '-' : v.toLocaleString('ko-KR');
+const d1 = v => v == null ? '-' : v.toFixed(1);
+const f1 = v => v.toLocaleString('ko-KR', {minimumFractionDigits:1, maximumFractionDigits:1});
+const sg = v => (v > 0 ? '+' : '') + v.toFixed(1);
+function bindHits(svg, onHit){
+  if (svg._bound) { svg._onHit = onHit; return; }
+  svg._bound = true; svg._onHit = onHit;
+  let down = false;
+  const handler = e => { const t = e.target.closest('[data-hit]'); if (!t){ hideTip(); return; } svg._onHit(t, e); };
+  svg.addEventListener('pointerdown', e => { down = true; handler(e); });
+  svg.addEventListener('pointermove', e => { if (e.pointerType === 'mouse' || down) handler(e); });
+  ['pointerup','pointercancel','pointerleave'].forEach(ev => svg.addEventListener(ev, () => { down=false; if (ev!=='pointerup') hideTip(); }));
+}
+function responsive(id, draw){
+  const box = document.getElementById(id); if (!box) return; const svg = box.querySelector('svg');
+  let t;
+  const render = () => { const W = Math.max(280, Math.floor(box.clientWidth - (parseFloat(getComputedStyle(box).paddingLeft)*2))); const H = draw(svg, W); svg.setAttribute('viewBox', `0 0 ${W} ${H}`); svg.setAttribute('height', H); };
+  render();
+  new ResizeObserver(() => { clearTimeout(t); t = setTimeout(render, 120); }).observe(box);
+}
+
+/* ---------- price ---------- */
+responsive('ch-px', (svg, W) => {
+  const narrow = W < 560;
+  const ML = narrow ? 34 : 50, MR = 10, MT = 24, MB = 26;
+  const Hh = narrow ? 280 : 360; const ph = Hh - MT - MB, pw = W - ML - MR;
+  const D = CD.daily; const n = D.length; const yMax = 60000;
+  const x = i => ML + i/(n-1)*pw; const y = v => MT + (yMax - Math.min(v, yMax))/yMax*ph;
+  let s = '';
+  [0,15000,30000,45000,60000].forEach(v => { s += `<line class="${v===0?'axis':'grid'}" x1="${ML}" x2="${W-MR}" y1="${y(v)}" y2="${y(v)}"/><text x="${ML-4}" y="${y(v)+4}" text-anchor="end" class="mut" style="font-size:${narrow?9.5:11}px">${v ? (narrow ? (v/10000).toFixed(1).replace('.0','') + '만' : fmtN(v)) : '0'}</text>`; });
+  let lastY = '';
+  D.forEach((d,i) => { const yy = d[0].slice(0,4); if (yy !== lastY){ lastY = yy; if (i > 0) s += `<line class="grid" x1="${x(i)}" x2="${x(i)}" y1="${MT}" y2="${MT+ph}"/>`; s += `<text x="${x(i)+3}" y="${Hh-8}" class="mut" style="font-size:${narrow?9:11}px">${yy}</text>`; } });
+  s += `<path d="${CD.kq.map((v,i) => (i?'L':'M') + x(i).toFixed(1) + ' ' + y(v).toFixed(1)).join(' ')}" fill="none" stroke="var(--c4)" stroke-width="1.2"/>`;
+  const path = D.map((d,i) => (i?'L':'M') + x(i).toFixed(1) + ' ' + y(d[1]).toFixed(1)).join(' ');
+  s += `<path d="${path} L${x(n-1).toFixed(1)} ${y(0)} L${x(0)} ${y(0)} Z" fill="var(--c1-soft)"/><path d="${path}" fill="none" stroke="var(--c1)" stroke-width="1.5"/>`;
+  CD.events.forEach(([dt, num, off]) => { let idx = D.findIndex(d => d[0] >= dt); if (idx < 0) idx = n-1; const px = Math.min(Math.max(x(idx), ML+9), W-MR-9), py = y(D[idx][1]); const cy = Math.min(Math.max(MT+9, py+off), MT+ph-9);
+    s += `<line x1="${px}" x2="${px}" y1="${py}" y2="${cy}" stroke="var(--c2)" stroke-width="1"/><circle cx="${px}" cy="${cy}" r="${narrow?7:8.5}" fill="var(--c2)"/><text x="${px}" y="${cy+3.5}" text-anchor="middle" style="font-size:${narrow?8.5:10}px; fill:#fff; font-weight:600">${num}</text>`; });
+  const step = Math.max(1, Math.floor(n / Math.max(60, Math.floor(pw/3))));
+  for (let i = 0; i < n; i += step) s += `<rect data-hit="${i}" x="${x(i) - pw/(n-1)*step/2}" y="${MT}" width="${pw/(n-1)*step}" height="${ph}" fill="transparent"/>`;
+  svg.innerHTML = s;
+  bindHits(svg, (t, e) => { const i = +t.dataset.hit; const d = D[i];
+    showTip(`<b>${d[0].slice(0,4)}-${d[0].slice(4,6)}-${d[0].slice(6)}</b><br>종가 ${fmtN(d[1])}원<br>시총 약 ${fmtN(Math.round(d[1]*CD.shares/1e8))}억 (현재 주식수 기준)<br>10/8 종가 ${fmtN(CD.px)}원 대비 ${sg((CD.px/d[1]-1)*100)}%<br>코스닥 ${CD.kqraw[i].toFixed(1)}`, e.clientX, e.clientY); });
+  return Hh;
+});
+
+/* ---------- annual ---------- */
+responsive('ch-ann', (svg, W) => {
+  const narrow = W < 560; const A = CD.annual;
+  const ML = narrow ? 38 : 48, MR = narrow ? 34 : 44, MT = 18, MB = 28;
+  const Hh = narrow ? 270 : 340; const ph = Hh - MT - MB, pw = W - ML - MR;
+  const yMax = 5000; const y = v => MT + (yMax - v)/yMax*ph;
+  const oMax = 600, oMin = -150; const yo = v => MT + (oMax - v)/(oMax - oMin)*ph;
+  const gw = pw/A.length; const bw = Math.min(narrow ? 22 : 40, gw*0.62);
+  let s = '', labs = '';
+  [0,1000,2000,3000,4000,5000].forEach(v => s += `<line class="${v===0?'axis':'grid'}" x1="${ML}" x2="${W-MR}" y1="${y(v)}" y2="${y(v)}"/><text x="${ML-4}" y="${y(v)+4}" text-anchor="end" class="mut" style="font-size:${narrow?9:11}px">${fmtN(v)}</text>`);
+  [0,200,400,600].forEach(v => s += `<text x="${W-MR+4}" y="${yo(v)+4}" style="font-size:${narrow?9:10.5}px; fill:var(--c2)">${fmtN(v)}</text>`);
+  s += `<line x1="${ML}" x2="${W-MR}" y1="${yo(0)}" y2="${yo(0)}" stroke="var(--c2)" stroke-width="1" stroke-dasharray="2 3" opacity=".6"/>`;
+  A.forEach((a,i) => { const xc = ML + i*gw + gw/2;
+    s += `<rect x="${xc-bw/2}" y="${y(a.rev)}" width="${bw}" height="${y(0)-y(a.rev)}" fill="var(--c1)" opacity="${a.e?0.35:1}" rx="1"/>`;
+    labs += `<text x="${xc}" y="${y(a.rev)-5}" text-anchor="middle" style="font-size:${narrow?8.5:10.5}px; paint-order:stroke; stroke:var(--surface); stroke-width:3px">${fmtN(Math.round(a.rev))}</text>`;
+    s += `<text x="${xc}" y="${Hh-10}" text-anchor="middle" class="mut" style="font-size:${narrow?8:11}px">${"'"+String(a.y).slice(2)}${a.e?'E':''}</text>`;
+    s += `<rect data-hit="${i}" x="${ML+i*gw}" y="${MT}" width="${gw}" height="${ph}" fill="transparent"/>`; });
+  const pts = A.map((a,i) => [ML + i*gw + gw/2, yo(a.op)]);
+  const k = A.findIndex(a => a.e);
+  s += `<path d="${pts.slice(0,k).map((p,i)=>(i?'L':'M')+p[0]+' '+p[1]).join(' ')}" fill="none" stroke="var(--c2)" stroke-width="2"/>`;
+  s += `<path d="${pts.slice(k-1).map((p,i)=>(i?'L':'M')+p[0]+' '+p[1]).join(' ')}" fill="none" stroke="var(--c2)" stroke-width="2" stroke-dasharray="5 3"/>`;
+  pts.forEach(p => s += `<circle cx="${p[0]}" cy="${p[1]}" r="${narrow?2.4:3.2}" fill="var(--c2)"/>`);
+  svg.innerHTML = s + labs;
+  bindHits(svg, (t, e) => { const a = A[+t.dataset.hit]; showTip(`<b>${a.y}${a.e?' (추정)':''}</b><br>매출 ${d1(a.rev)}억<br>영업이익 ${d1(a.op)}억 (이익률 ${(a.op/a.rev*100).toFixed(1)}%)` + (a.ni!=null?`<br>순이익 ${d1(a.ni)}억`:'') + (a.n?`<br>${a.n}`:''), e.clientX, e.clientY); });
+  return Hh;
+});
+
+/* ---------- quarterly ---------- */
+responsive('ch-q', (svg, W) => {
+  const narrow = W < 560; const Q = CD.quarterly;
+  const ML = narrow ? 30 : 40, MR = narrow ? 30 : 38, MT = 18, MB = 30;
+  const Hh = narrow ? 250 : 320; const ph = Hh - MT - MB, pw = W - ML - MR;
+  const yMax = 900; const y = v => MT + (yMax - v)/yMax*ph;
+  const oMax = 40, oMin = -10; const yo = v => MT + (oMax - v)/(oMax - oMin)*ph;
+  const gw = pw/Q.length; const bw = Math.min(narrow ? 14 : 26, gw*0.72);
+  let s = '';
+  [0,300,600,900].forEach(v => s += `<line class="${v===0?'axis':'grid'}" x1="${ML}" x2="${W-MR}" y1="${y(v)}" y2="${y(v)}"/><text x="${ML-4}" y="${y(v)+4}" text-anchor="end" class="mut" style="font-size:${narrow?9:11}px">${v}</text>`);
+  [0,10,20,30,40].forEach(v => s += `<text x="${W-MR+4}" y="${yo(v)+4}" style="font-size:${narrow?9:10.5}px; fill:var(--c2)">${v}%</text>`);
+  s += `<line x1="${ML}" x2="${W-MR}" y1="${yo(0)}" y2="${yo(0)}" stroke="var(--c2)" stroke-width="1" stroke-dasharray="2 3" opacity=".6"/>`;
+  Q.forEach((q,i) => { const xc = ML + i*gw + gw/2;
+    s += `<rect x="${xc-bw/2}" y="${y(q.rev)}" width="${bw}" height="${y(0)-y(q.rev)}" fill="var(--c1)" opacity="${q.q.startsWith('2024')?0.55:1}" rx="1"/>`;
+    s += `<text x="${xc}" y="${Hh-10}" text-anchor="middle" class="mut" style="font-size:${narrow?8.5:10.5}px">${narrow ? q.q.slice(2).replace('Q','') : q.q.replace('Q',' Q')}</text>`;
+    s += `<rect data-hit="${i}" x="${ML+i*gw}" y="${MT}" width="${gw}" height="${ph}" fill="transparent"/>`; });
+  const line = (key, cls) => { let d = '', pen = false; Q.forEach((q,i) => { if (q[key] == null){ pen = false; return; } d += (pen?'L':'M') + (ML+i*gw+gw/2).toFixed(1) + ' ' + yo(q[key]).toFixed(1) + ' '; pen = true; }); return d; };
+  s += `<path d="${line('gpm')}" fill="none" stroke="var(--c3)" stroke-width="1.4" stroke-dasharray="3 3"/>`;
+  s += `<path d="${line('opm')}" fill="none" stroke="var(--c2)" stroke-width="1.8"/>`;
+  Q.forEach((q,i) => { if (q.opm != null) s += `<circle cx="${ML+i*gw+gw/2}" cy="${yo(q.opm)}" r="${narrow?1.8:2.4}" fill="var(--c2)"/>`; });
+  svg.innerHTML = s;
+  bindHits(svg, (t, e) => { const i = +t.dataset.hit; const q = Q[i]; const py = Q[i-4]; showTip(`<b>${q.q.replace('Q',' Q')}</b><br>매출 ${d1(q.rev)}억${py?` (YoY ${sg((q.rev/py.rev-1)*100)}%)`:''}<br>영업이익 ${d1(q.op)}억 (${d1(q.opm)}%)` + (q.gpm!=null?`<br>매출총이익률 ${d1(q.gpm)}%`:'') + `<br>순이익 ${d1(q.ni)}억` + (q.n?`<br>${q.n}`:''), e.clientX, e.clientY); });
+  return Hh;
+});
+
+/* ---------- generic horizontal bars ---------- */
+function hbars(id, rows, opt){
+  responsive(id, (svg, W) => {
+    const narrow = W < 560;
+    const ML = narrow ? opt.mlN : opt.ml, MR = narrow ? 56 : 70, MT = 6, rowH = narrow ? opt.rowN||30 : opt.row||34;
+    const Hh = MT + rows.length*rowH + 18; const pw = W - ML - MR; const min = opt.min||0; const x = v => ML + (v-min)/(opt.max-min)*pw;
+    let s = '';
+    opt.ticks.forEach(v => s += `<line class="${v===0?'axis':'grid'}" x1="${x(v)}" x2="${x(v)}" y1="${MT}" y2="${Hh-18}"/><text x="${x(v)}" y="${Hh-5}" text-anchor="middle" class="mut" style="font-size:${narrow?9:10.5}px">${fmtN(v)}${opt.unit||''}</text>`);
+    rows.forEach((r,i) => { const y0 = MT + i*rowH; const bh = narrow ? 13 : 15; const v = Math.max(Math.min(r.val, opt.max), min);
+      s += `<text x="${ML-6}" y="${y0+rowH/2+4}" text-anchor="end" class="lab" style="font-size:${narrow?10.5:12}px; font-weight:${r.me?700:400}">${narrow && r.short ? r.short : r.label}</text>`;
+      const x0 = Math.min(x(0), x(v)), w = Math.abs(x(v) - x(0));
+      s += `<rect x="${x0}" y="${y0+rowH/2-bh/2}" width="${w}" height="${bh}" fill="${r.fill||'var(--c1)'}" rx="2"/>`;
+      s += `<text x="${(v<0 ? x(0) : x(v))+5}" y="${y0+rowH/2+4}" style="font-size:${narrow?10:11}px">${r.txt}</text>`;
+      s += `<rect data-hit="${i}" x="0" y="${y0}" width="${W}" height="${rowH}" fill="transparent"/>`; });
+    svg.innerHTML = s;
+    bindHits(svg, (t, e) => showTip(rows[+t.dataset.hit].tip, e.clientX, e.clientY));
+    return Hh;
+  });
+}
+hbars('ch-ord', CD.orders.map(m => ({label:m[0], val:m[1], fill:m[0].startsWith('2026Q4')?'var(--c2)':'var(--c1)', me:m[0].startsWith('2026Q4'), txt:f1(m[1])+'억', tip:`<b>${m[0]}</b><br>신규 수주 ${f1(m[1])}억 (USD ${m[2]}M)<br>${m[3]}`})), {ml:116, mlN:84, max:1400, ticks:[0,350,700,1050,1400], row:30, rowN:28});
+hbars('ch-bk', CD.backlog.map(b => ({label:b[0]+' 말', short:b[0], val:b[3], fill:'var(--c1)', txt:'USD '+f1(b[3])+'M', tip:`<b>${b[0]} 말</b><br>수주잔고 USD ${f1(b[3])}M<br>누적 수주총액 ${f1(b[1])}M, 기납품 ${f1(b[2])}M`})), {ml:96, mlN:70, max:130, ticks:[0,30,60,90,120], row:30, rowN:28, unit:'M'});
+hbars('ch-bridge', CD.bridge.map(b => ({label:b[0], short:b[3], val:b[1], fill:b[4]?'var(--c4)':(b[1]<0?'var(--neg)':'var(--c1)'), me:!!b[4], txt:(b[4]?'':(b[1]>0?'+':''))+b[1].toFixed(1)+'억', tip:`<b>${b[0]}</b><br>${b[1].toFixed(1)}억<br>${b[2]}`})), {ml:190, mlN:96, min:-220, max:420, ticks:[-200,0,200,400], row:30, rowN:28});
+hbars('ch-snc', CD.snc.map(b => ({label:b[0], val:b[1], fill:b[3]?'var(--neg)':'var(--c1)', me:!!b[3], txt:f1(b[1])+'억', tip:`<b>${b[0]}</b><br>${f1(b[1])}억<br>${b[2]}`})), {ml:210, mlN:110, max:3300, ticks:[0,1100,2200,3300], row:32, rowN:30});
+hbars('ch-est', CD.est.map(m => ({label:m[0], val:m[1], fill:m[3]?'var(--c2)':'var(--c1)', me:!!m[3], txt:fmtN(m[1])+'억', tip:`<b>${m[0]}</b><br>2026년 영업이익 추정 ${fmtN(m[1])}억<br>${m[2]}`})), {ml:120, mlN:96, max:260, ticks:[0,65,130,195,260], row:28, rowN:26});
+hbars('ch-gpm', CD.gpm.map(m => ({label:m[0], val:m[1], fill:m[3]?'var(--accent)':'var(--c4)', me:!!m[3], txt:d1(m[1])+'%', tip:`<b>${m[0]}</b><br>매출총이익률 ${d1(m[1])}%<br>${m[2]}`})), {ml:200, mlN:118, max:36, ticks:[0,9,18,27,36], row:28, rowN:26, unit:'%'});
+hbars('ch-sh', CD.sh.map(m => ({label:m[0], val:m[1], fill:m[3]?'var(--accent)':'var(--c1)', me:!!m[3], txt:fmtN(Math.round(m[1]))+'만주', tip:`<b>${m[0]}</b><br>발행주식수 ${fmtN(Math.round(m[1]))}만주<br>${m[2]}`})), {ml:170, mlN:104, max:5600, ticks:[0,1400,2800,4200,5600], row:28, rowN:26});
+hbars('ch-pop', CD.pop.map(p => ({label:p[0], short:p[3], val:p[1], me:!!p[4], fill:p[4]?'var(--accent)':'var(--c4)', txt:p[1].toFixed(1)+'배', tip:`<b>${p[0]}</b><br>시총 ÷ 최근 4분기 영업이익 ${p[1].toFixed(1)}배<br>${p[2]}`})), {ml:120, mlN:92, max:270, ticks:[0,90,180,270], row:26, rowN:24, unit:'배'});
+})();
+
+</script>
+</body>
+</html>

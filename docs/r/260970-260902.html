@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<style>
+html{color-scheme:light dark}
+body{margin:0}
+img{max-width:100%}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+<title>에스앤디 환율 민감도</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+KR:wght@300;400;500;600&family=Noto+Serif+KR:wght@500;700&display=swap">
+<style>
+:root{
+  color-scheme: light;
+  --paper:#FAF8F5; --surface:#FFFFFF; --surface-2:#F3EFE8;
+  --ink:#1A1713; --ink-2:#5B554C; --ink-3:#8E8779;
+  --rule:#E5E0D6; --rule-2:#D3CCBE;
+  --accent:#B8481C;
+  --s-fx:#2a78d6; --s-gp:#eb6834; --s-op:#1baf7a;
+  --bar:#C9C2B4;
+  --pos:#1baf7a; --neg:#eb6834;
+  --shadow:0 1px 2px rgba(26,23,19,.05), 0 8px 24px -16px rgba(26,23,19,.25);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme: dark;
+    --paper:#141210; --surface:#1C1915; --surface-2:#24201B;
+    --ink:#F3EFE8; --ink-2:#AEA698; --ink-3:#7D7566;
+    --rule:#302C25; --rule-2:#413C33;
+    --accent:#E8763F;
+    --s-fx:#3987e5; --s-gp:#d95926; --s-op:#199e70;
+    --bar:#4A443A;
+    --pos:#199e70; --neg:#d95926;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -16px rgba(0,0,0,.8);
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme: dark;
+  --paper:#141210; --surface:#1C1915; --surface-2:#24201B;
+  --ink:#F3EFE8; --ink-2:#AEA698; --ink-3:#7D7566;
+  --rule:#302C25; --rule-2:#413C33;
+  --accent:#E8763F;
+  --s-fx:#3987e5; --s-gp:#d95926; --s-op:#199e70;
+  --bar:#4A443A;
+  --pos:#199e70; --neg:#d95926;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -16px rgba(0,0,0,.8);
+}
+
+*{box-sizing:border-box}
+body{
+  background:var(--paper); color:var(--ink);
+  font-family:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+  font-weight:400; font-size:16px; line-height:1.72;
+  -webkit-font-smoothing:antialiased;
+  padding:0 20px 96px;
+}
+.wrap{max-width:1120px;margin:0 auto}
+.col{max-width:760px}
+h1,h2,h3{font-family:"Noto Serif KR",Georgia,serif; text-wrap:balance; margin:0}
+h1{font-weight:700; font-size:clamp(30px,4.6vw,46px); line-height:1.24; letter-spacing:-.02em}
+h2{font-weight:700; font-size:clamp(21px,2.6vw,26px); line-height:1.38; letter-spacing:-.01em}
+h3{font-weight:500; font-size:17px; line-height:1.5}
+p{margin:0}
+b,strong{font-weight:600}
+.mono{font-family:"IBM Plex Mono",ui-monospace,monospace; font-variant-numeric:tabular-nums}
+.num{font-family:"IBM Plex Mono",ui-monospace,monospace; font-variant-numeric:tabular-nums; font-weight:500}
+
+/* ---------- masthead ---------- */
+.mast{padding:64px 0 0}
+.kicker{
+  font-family:"IBM Plex Mono",monospace; font-size:11.5px; font-weight:500;
+  letter-spacing:.18em; text-transform:uppercase; color:var(--accent);
+  display:flex; gap:14px; align-items:center; flex-wrap:wrap;
+}
+.kicker .dot{width:5px;height:5px;border-radius:50%;background:var(--accent);display:inline-block}
+.mast h1{margin:20px 0 0}
+.thesis{
+  margin-top:22px; font-size:19px; line-height:1.68; color:var(--ink-2);
+  max-width:64ch;
+}
+.thesis em{font-style:normal;color:var(--ink);font-weight:600;box-shadow:inset 0 -.5em 0 color-mix(in srgb, var(--accent) 16%, transparent)}
+.mast-rule{height:2px;background:var(--ink);margin:44px 0 0;opacity:.85}
+
+/* ---------- key figures ---------- */
+.figs{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--rule);border-bottom:1px solid var(--rule);margin-bottom:60px}
+.fig{background:var(--paper);padding:22px 20px 24px}
+.fig .lab{font-size:12px;color:var(--ink-3);letter-spacing:.02em;line-height:1.45}
+.fig .val{font-family:"IBM Plex Mono",monospace;font-variant-numeric:tabular-nums;font-size:29px;font-weight:600;letter-spacing:-.02em;margin-top:10px;line-height:1.1}
+.fig .sub{font-size:12.5px;color:var(--ink-3);margin-top:7px;line-height:1.45}
+.fig .val.neg{color:var(--neg)}
+.fig .val.pos{color:var(--pos)}
+@media(max-width:820px){.figs{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:440px){.figs{grid-template-columns:1fr}}
+
+/* ---------- sections ---------- */
+section{margin:0 0 68px}
+.sec-head{display:flex;gap:18px;align-items:baseline;margin-bottom:20px}
+.sec-num{
+  font-family:"IBM Plex Mono",monospace;font-size:12px;font-weight:500;color:var(--accent);
+  letter-spacing:.1em;padding-top:6px;flex:0 0 auto;
+}
+.lede{color:var(--ink-2);font-size:17px;margin-top:14px;max-width:66ch}
+.body p+p{margin-top:16px}
+.body{max-width:70ch}
+.body p{margin-top:16px}
+
+/* ---------- callout / claims ---------- */
+.claims{list-style:none;padding:0;margin:26px 0 0;display:grid;gap:0;border-top:1px solid var(--rule)}
+.claims li{display:grid;grid-template-columns:150px 1fr;gap:24px;padding:18px 0;border-bottom:1px solid var(--rule);align-items:start}
+.claims .tag{font-family:"IBM Plex Mono",monospace;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);padding-top:4px}
+.claims .txt{font-size:15.5px;line-height:1.66}
+.claims .txt b{color:var(--ink)}
+@media(max-width:640px){.claims li{grid-template-columns:1fr;gap:6px}}
+
+.note{
+  border-left:2px solid var(--accent); padding:4px 0 4px 20px; margin-top:28px;
+  color:var(--ink-2); font-size:15px; line-height:1.68; max-width:66ch;
+}
+.note strong{color:var(--ink)}
+
+/* ---------- figure blocks ---------- */
+figure{margin:34px 0 0;background:var(--surface);border:1px solid var(--rule);border-radius:3px;padding:24px 22px 18px;box-shadow:var(--shadow)}
+.fig-title{font-family:"Noto Serif KR",serif;font-weight:700;font-size:17px;line-height:1.4;margin:0}
+.fig-sub{font-size:13px;color:var(--ink-3);margin-top:6px;line-height:1.5}
+figcaption{font-size:13px;color:var(--ink-3);line-height:1.62;margin-top:14px;padding-top:12px;border-top:1px solid var(--rule)}
+.legend{display:flex;gap:18px;flex-wrap:wrap;margin-top:14px}
+.legend span{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;color:var(--ink-2)}
+.legend i{width:14px;height:3px;border-radius:2px;display:inline-block}
+.chart-scroll{overflow-x:auto;margin-top:18px}
+.chart-scroll svg{display:block;width:100%;height:auto;max-width:100%}
+svg text{font-family:"IBM Plex Mono","IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",monospace;font-variant-numeric:tabular-nums}
+
+/* ---------- tooltip ---------- */
+.tip{
+  position:fixed;pointer-events:none;z-index:50;opacity:0;transition:opacity .12s;
+  background:var(--surface);border:1px solid var(--rule-2);border-radius:3px;
+  box-shadow:0 6px 24px -8px rgba(0,0,0,.35);padding:10px 12px;font-size:12.5px;line-height:1.6;
+  min-width:160px; max-width:min(260px, calc(100vw - 20px));
+}
+.tip .t-h{font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:12px;letter-spacing:.06em;color:var(--ink);margin-bottom:6px;padding-bottom:5px;border-bottom:1px solid var(--rule)}
+.tip .t-r{display:flex;justify-content:space-between;gap:16px;color:var(--ink-2)}
+.tip .t-r b{font-family:"IBM Plex Mono",monospace;font-variant-numeric:tabular-nums;font-weight:500;color:var(--ink)}
+.tip .t-k{display:inline-flex;align-items:center;gap:6px}
+.tip .t-k i{width:9px;height:3px;border-radius:2px;display:inline-block}
+
+/* ---------- table ---------- */
+.tbl-scroll{overflow-x:auto;margin-top:22px}
+table{border-collapse:collapse;width:100%;min-width:660px;font-size:14px}
+th,td{padding:11px 12px;text-align:right;border-bottom:1px solid var(--rule);white-space:nowrap}
+th{font-family:"IBM Plex Mono",monospace;font-size:11px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);border-bottom:1px solid var(--rule-2);vertical-align:bottom;line-height:1.4}
+td{font-family:"IBM Plex Mono",monospace;font-variant-numeric:tabular-nums;color:var(--ink)}
+th:first-child,td:first-child{text-align:left}
+tbody tr:last-child td{border-bottom:1px solid var(--rule-2);font-weight:600}
+tbody tr:hover td{background:var(--surface-2)}
+.minibar{display:inline-block;height:7px;border-radius:2px;background:var(--bar);vertical-align:middle;margin-right:8px}
+
+/* ---------- sensitivity cards ---------- */
+.sens{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:3px;overflow:hidden;margin-top:30px}
+.sens > div{background:var(--surface);padding:22px 20px}
+.sens .h{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3)}
+.sens .v{font-family:"IBM Plex Mono",monospace;font-variant-numeric:tabular-nums;font-size:clamp(21px,5.4vw,32px);font-weight:600;margin-top:12px;letter-spacing:-.02em;line-height:1.12;overflow-wrap:anywhere}
+.sens .d{font-size:13.5px;color:var(--ink-2);margin-top:12px;line-height:1.6}
+@media(max-width:640px){.sens{grid-template-columns:1fr}}
+
+.chain{display:grid;gap:0;margin-top:28px;border-top:1px solid var(--rule)}
+.chain .row{display:grid;grid-template-columns:34px 1fr;gap:16px;padding:16px 0;border-bottom:1px solid var(--rule);align-items:start}
+.chain .n{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--ink-3);padding-top:4px}
+.chain .c-t{font-weight:600;font-size:15.5px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.chain .c-b{font-size:14.5px;color:var(--ink-2);margin-top:5px;line-height:1.62}
+.pill{font-family:"IBM Plex Mono",monospace;font-size:11px;font-weight:500;letter-spacing:.06em;padding:2px 8px;border-radius:10px;border:1px solid;white-space:nowrap}
+.pill.no{color:var(--ink-3);border-color:var(--rule-2)}
+.pill.weak{color:var(--s-fx);border-color:color-mix(in srgb,var(--s-fx) 45%,transparent)}
+.pill.yes{color:var(--neg);border-color:color-mix(in srgb,var(--neg) 50%,transparent)}
+
+footer{border-top:1px solid var(--rule);padding-top:22px;font-size:13px;color:var(--ink-3);line-height:1.7;max-width:74ch}
+footer b{color:var(--ink-2);font-weight:500}
+a{color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+
+/* ---------- mobile ---------- */
+@media(max-width:620px){
+  body{padding:0 14px 72px; font-size:15.5px}
+  .mast{padding:40px 0 0}
+  .thesis{font-size:16.5px; margin-top:18px}
+  .mast-rule{margin-top:32px}
+  .figs{margin-bottom:44px}
+  .fig{padding:16px 14px 18px}
+  .fig .val{font-size:clamp(21px,6.6vw,27px)}
+  section{margin-bottom:48px}
+  .sec-head{gap:12px; margin-bottom:16px}
+  figure{padding:16px 12px 14px; margin-top:26px}
+  .fig-title{font-size:15.5px}
+  .legend{gap:12px}
+  .legend span{font-size:11.5px}
+  .chart-scroll{margin-top:14px}
+  figcaption{font-size:12.5px}
+  .note{padding-left:14px; font-size:14.5px}
+  .claims .txt{font-size:14.8px}
+  .sens > div{padding:18px 16px}
+  table{min-width:0; font-size:12.5px}
+  th,td{padding:9px 7px}
+  th{font-size:10px; letter-spacing:.04em}
+  .minibar{display:none}
+  .tbl-scroll{margin-left:-14px; margin-right:-14px; padding:0 14px}
+}
+@media(max-width:400px){
+  body{padding:0 11px 64px}
+  figure{padding:14px 9px 12px}
+  .tbl-scroll{margin-left:-11px; margin-right:-11px; padding:0 11px}
+}
+</style>
+
+<div class="wrap">
+
+<header class="mast">
+  <div class="kicker"><span>에스앤디 · 260970</span><span class="dot"></span><span>DART 원문 기준</span><span class="dot"></span><span>2021Q1 – 2026Q2</span></div>
+  <h1>환율은 에스앤디의 매출을 만들지 않는다.<br>마진만 갉아먹는다.</h1>
+  <p class="thesis">에스앤디는 매출 100%가 국내·원화이고 외화자산·부채가 <em>0</em>이다. 환율이 오를 때 매출이 같이 오르는 건 인과가 아니라 <em>동행</em>이다. 실제로 환율이 닿는 곳은 원재료 원가 한 곳뿐이며, 판가를 못 올리는 구조 탓에 그 부담이 그대로 매출총이익률로 내려온다.</p>
+  <div class="mast-rule"></div>
+</header>
+
+<div class="figs">
+  <div class="fig">
+    <div class="lab">환율 vs 매출액 (분기, 원화 레벨)</div>
+    <div class="val">r = +0.88</div>
+    <div class="sub">둘 다 우상향한 데서 오는 허위상관</div>
+  </div>
+  <div class="fig">
+    <div class="lab">환율 vs 영업이익률 (분기)</div>
+    <div class="val">r = +0.11</div>
+    <div class="sub">사실상 무관계</div>
+  </div>
+  <div class="fig">
+    <div class="lab">환율 YoY변화 vs 매출총이익률 YoY변화</div>
+    <div class="val neg">r = −0.50</div>
+    <div class="sub">추세를 걷어내면 남는 유일한 관계</div>
+  </div>
+  <div class="fig">
+    <div class="lab">외화자산 · 외화부채</div>
+    <div class="val">0</div>
+    <div class="sub">전 사업연도 공시 동일 (환산손익 없음)</div>
+  </div>
+</div>
+
+<section>
+  <div class="sec-head"><span class="sec-num">01</span><h2>먼저, 이 회사가 어떻게 돈을 버는지</h2></div>
+  <div class="body col">
+    <p>에스앤디는 라면·스낵용 조미소재(치킨조제분말, 그릴엑스, 유조제분말, 매운맛베이스)를 만드는 B2B 식품소재 업체다. 2025년 매출 1,509억 원 중 일반기능식품소재가 92.4%, 건강기능식품소재(감태추출물 등)가 5.9%다. 전량 국내 직판이고, 매출의 80% 안팎이 삼양식품 한 곳에서 나온다. 즉 <b>삼양식품 불닭 계열의 글로벌 판매량이 에스앤디의 사실상 유일한 매출 동인</b>이다.</p>
+    <p>환율 이야기를 하기 전에 이 세 가지를 못 박아야 한다. 사업보고서에 그대로 적혀 있는 사실들이다.</p>
+  </div>
+
+  <ul class="claims col">
+    <li>
+      <span class="tag">매출 지역</span>
+      <span class="txt"><b>국내 100%.</b> 2025년 매출액 주석의 “주요 지리적 시장” 항목은 국내 150,937백만 원 단일 행이다. 수출 매출이 한 푼도 없다. 판매경로 표의 모든 품목이 “국내 / 직판 / 100%”.</span>
+    </li>
+    <li>
+      <span class="tag">외환 익스포저</span>
+      <span class="txt"><b>외화자산·외화부채 없음.</b> 금융위험관리 주석은 “해외에서 영업활동을 영위하고 있지 않으며 당기말과 전기말 현재 외화자산, 외화부채가 존재하지 않아 외환위험에 노출되어 있지 않습니다”라고 2021년부터 매년 동일하게 기재한다. 외환차손익·환산손익이 손익계산서에 잡힐 여지 자체가 없다.</span>
+    </li>
+    <li>
+      <span class="tag">판가</span>
+      <span class="txt"><b>고정, 일부는 인하.</b> 치킨조제분말은 kg당 7,843원(’23) → 7,800원(’24) → 7,680원(’25)으로 <i>내려갔고</i>, 야채분말·매운치즈소스는 3년째 8,300원·7,800원에 묶여 있다. 원가가 올라도 전가할 통로가 없다는 뜻이다.</span>
+    </li>
+  </ul>
+
+  <p class="note"><strong>그래서 매출 성장은 전부 물량(Q)이다.</strong> 판가가 그대로인데 매출이 2021년 614억에서 2025년 1,509억으로 2.5배가 됐다는 건, 늘어난 게 오직 톤수라는 뜻이다. 환율이 이 톤수를 늘려주는지가 뒤에서 볼 핵심 질문이다.</p>
+</section>
+
+<section>
+  <div class="sec-head"><span class="sec-num">02</span><h2>환율이 통과할 수 있는 경로는 셋뿐이다</h2></div>
+  <div class="body col"><p>회사 구조상 환율이 손익에 닿을 수 있는 길은 아래 세 개로 전부다. 하나씩 데이터로 열어본다.</p></div>
+
+  <div class="chain col">
+    <div class="row">
+      <span class="n">A</span>
+      <div>
+        <div class="c-t">환산·거래 손익 <span class="pill no">경로 없음</span></div>
+        <div class="c-b">외화자산·부채가 0이므로 평가손익이 발생하지 않는다. 수출도 없어 외화 매출채권도 없다. 이 경로는 닫혀 있다.</div>
+      </div>
+    </div>
+    <div class="row">
+      <span class="n">B</span>
+      <div>
+        <div class="c-t">원재료 원가 <span class="pill yes">유효 · 마이너스</span></div>
+        <div class="c-b">원재료·부재료 매입액이 매출의 <b>68%</b>(2025년 1,041억/1,509억)를 차지한다. 직수입 비중은 아직 작지만 유크림·아미노산·전분분해물 등 국내 매입분의 상당수가 수입 원료다. 환율 상승분이 판가로 전가되지 않으므로 전액 매출총이익률에서 차감된다.</div>
+      </div>
+    </div>
+    <div class="row">
+      <span class="n">C</span>
+      <div>
+        <div class="c-t">고객사(삼양식품) 물량 <span class="pill weak">통계적으로 확인 안 됨</span></div>
+        <div class="c-b">“환율↑ → 삼양 수출 원화환산 개선 → 소스 발주 확대”라는 스토리는 그럴듯하지만, 회귀에서 계수는 오히려 <b>음(−0.53)</b>이고 유의하지 않다(t = −1.33). 삼양의 매출 성장률만 남기면 설명력이 다 흡수된다.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="sec-head"><span class="sec-num">03</span><h2>같은 시간축 위에 올려놓기</h2></div>
+  <div class="body col"><p>환율과 마진을 하나의 이중축 그래프에 겹치면 아무 말이나 만들 수 있다. 세 개의 패널로 분리해 같은 x축을 공유시켰다. 매출(맨 아래)은 환율과 무관하게 계단식으로 오르고, 마진(가운데)은 환율(맨 위)이 계단을 올라설 때마다 눌린다.</p></div>
+
+  <figure class="wide">
+    <p class="fig-title">원/달러 환율 · 수익성 · 매출액 — 22개 분기</p>
+    <p class="fig-sub">환율은 분기 평균, 수익성·매출은 DART 별도 재무제표 3개월 실적. 2026Q2가 최신 확정치.</p>
+    <div class="legend">
+      <span><i style="background:var(--s-fx)"></i>원/달러 분기평균</span>
+      <span><i style="background:var(--s-gp)"></i>매출총이익률</span>
+      <span><i style="background:var(--s-op)"></i>영업이익률</span>
+      <span><i style="background:var(--bar);height:9px;width:9px;border-radius:1px"></i>분기 매출액</span>
+    </div>
+    <div class="chart-scroll"><svg id="c1" viewBox="0 0 1080 520" role="img" aria-label="원달러 환율, 수익성, 매출액 3단 패널 차트"></svg></div>
+    <figcaption>2022년 환율이 1,100원대에서 1,360원까지 뛰던 4개 분기 동안 매출총이익률은 26.4% → 20.6%로 5.8%p 무너졌다. 반대로 2023Q3~2024Q4는 환율이 계속 올랐음에도 마진이 버텼는데, 이 구간은 불닭 물량이 폭증하며 가동률 레버리지가 환율 부담을 덮은 시기다. 2025년 환율이 1,450원대로 재차 올라서자 마진은 다시 21%대로 내려앉았다.</figcaption>
+  </figure>
+</section>
+
+<section>
+  <div class="sec-head"><span class="sec-num">04</span><h2>추세를 걷어내면 관계가 드러난다</h2></div>
+  <div class="body col">
+    <p>환율도 오르고 매출도 오른 5년이라, 레벨끼리의 상관계수(+0.88)는 아무것도 말해주지 않는다. 양쪽 다 전년동기 대비 변화로 바꾸면 시간 추세가 사라진다. 이때 남는 건 <b>환율 변화와 매출총이익률 변화 사이의 뚜렷한 음(−)의 관계</b> 하나다.</p>
+  </div>
+
+  <figure class="wide">
+    <p class="fig-title">환율 YoY 변화 vs 매출총이익률 YoY 변화</p>
+    <p class="fig-sub">각 점은 한 분기. x축은 전년 동분기 대비 평균환율 변화(원), y축은 같은 기간 매출총이익률 변화(%p). n = 18, r = −0.50.</p>
+    <div class="chart-scroll"><svg id="c2" viewBox="0 0 1080 430" role="img" aria-label="환율 변화와 매출총이익률 변화의 산점도"></svg></div>
+    <figcaption>회귀식은 ΔGPM(%p) = 0.59 − 0.0239 × Δ환율(원), t = −2.31, R² = 0.25. 해석하면 <b>환율이 전년 대비 100원 오를 때 매출총이익률이 약 2.4%p 낮아진다</b>는 뜻이다. 다만 이 크기는 뒤에서 보듯 회계적으로 설명 가능한 수준의 열 배가 넘는다.</figcaption>
+  </figure>
+</section>
+
+<section>
+  <div class="sec-head"><span class="sec-num">05</span><h2>−2.4%p는 환율만의 것이 아니다</h2></div>
+  <div class="body col">
+    <p>관측된 민감도를 그대로 믿으면 안 된다. 회사가 실제로 달러로 결제하는 금액을 놓고 계산해보면 숫자가 전혀 맞지 않는다.</p>
+  </div>
+
+  <div class="sens col">
+    <div>
+      <div class="h">이론치 — 직수입만 반영</div>
+      <div class="v pos" style="color:var(--ink)">−0.15 ~ −0.26 %p</div>
+      <div class="d">직수입 원재료가 매출의 2.1%(2025년) ~ 3.9%(2026 상반기). 환율 +100원(약 +7%)이면 원가는 매출의 0.15~0.26%만큼 늘어난다. 이게 회계상 직접 영향의 전부다.</div>
+    </div>
+    <div>
+      <div class="h">관측치 — 회귀 계수</div>
+      <div class="v" style="color:var(--neg)">−2.39 %p</div>
+      <div class="d">실제 데이터가 보여주는 크기. 이론치의 약 10~16배다. 차액은 환율이 만든 게 아니라, 환율과 같이 움직이는 다른 것들이 만든 것이다.</div>
+    </div>
+  </div>
+
+  <p class="note"><strong>차액의 정체.</strong> 첫째, 국내에서 원화로 사지만 원료 자체가 수입인 품목들(유크림·아미노산·전분분해물)의 단가가 환율과 국제 시세를 함께 반영해 계단식으로 오른다. 유크림 kg 단가는 7,900원(’21) → 9,552원(’22, +20.9%) → 11,746원(’25)으로 뛰었다. 둘째, 국제 유제품·곡물 가격 자체의 변동이 회귀에 통제되지 않은 채 환율 계수로 흡수된다. <b>환율은 원인의 전부가 아니라, 원가 압력을 대신 읽어주는 대리지표(proxy)에 가깝다.</b> 보수적으로는 환율 100원당 GPM −1.0 ~ −1.5%p 정도를 실효 민감도로 보는 게 안전하다.</p>
+
+  <figure>
+    <p class="fig-title">원재료 매입액 / 매출액 — 환율 레벨과 함께 계단을 오른다</p>
+    <p class="fig-sub">연간 기준. 매입 비중이 오르면 매출총이익률은 그만큼 내려간다 (둘의 상관 r = −0.82).</p>
+    <div class="chart-scroll"><svg id="c3" viewBox="0 0 780 300" role="img" aria-label="연도별 원재료 매입 비중과 연평균 환율"></svg></div>
+    <figcaption>연평균 환율과 원재료매입/매출 비중의 상관은 r = +0.97이지만 표본이 6년뿐이고 둘 다 단조 증가라, 이 수치 자체는 근거라기보다 정황이다.</figcaption>
+  </figure>
+</section>
+
+<section>
+  <div class="sec-head"><span class="sec-num">06</span><h2>그런데 왜 영업이익률은 멀쩡한가</h2></div>
+  <div class="body col">
+    <p>여기가 이 회사를 볼 때 가장 중요한 지점이다. 매출총이익률은 2021년 26.3%에서 2025년 21.6%로 4.8%p 무너졌는데, 같은 기간 영업이익률은 14.95% → 15.24%로 오히려 소폭 올랐다. 환율과 영업이익률의 상관이 +0.11로 잡힌 이유가 이것이다.</p>
+    <p>차이는 판매관리비다. 매출이 2.5배가 되는 동안 판관비율이 11.4%에서 6.3%로 내려갔다. <b>환율·원재료가 뜯어간 마진을 규모의 경제가 거의 정확히 되메운 것</b>이다.</p>
+  </div>
+
+  <figure>
+    <p class="fig-title">2021 → 2025 영업이익률 브리지</p>
+    <p class="fig-sub">단위 %p. 원가에서 잃은 만큼을 판관비 레버리지가 상쇄했다.</p>
+    <div class="chart-scroll"><svg id="c4" viewBox="0 0 780 260" role="img" aria-label="2021년에서 2025년 영업이익률 변화 요인 분해"></svg></div>
+    <figcaption>2026년 상반기는 판관비율이 5.11%까지 더 내려가며 영업이익률 17.2%를 기록했다. 다만 판관비 레버리지는 무한하지 않다 — 이 완충재가 얇아진 뒤에 환율이 오르면, 그때는 영업이익률이 직접 맞는다.</figcaption>
+  </figure>
+</section>
+
+<section>
+  <div class="sec-head"><span class="sec-num">07</span><h2>매출은 삼양식품이, 마진은 환율이 결정한다</h2></div>
+  <div class="body col">
+    <p>매출 성장률을 삼양식품 매출 성장률과 환율 변동률에 동시에 회귀시키면 그림이 깔끔해진다.</p>
+    <p class="mono" style="background:var(--surface-2);border:1px solid var(--rule);border-radius:3px;padding:16px 18px;font-size:13.5px;line-height:1.9;margin-top:20px;overflow-x:auto">에스앤디 매출<sub>YoY%</sub> = −8.34 + <b style="color:var(--s-op)">1.176</b> × 삼양식품 매출<sub>YoY%</sub> <b style="color:var(--ink-3)">− 0.527</b> × 환율<sub>YoY%</sub><br><span style="color:var(--ink-3)">t값: 삼양 <b style="color:var(--s-op)">+4.28</b>, 환율 <b style="color:var(--ink-3)">−1.33</b> · R² = 0.586 · n = 18</span></p>
+    <p>삼양식품 매출이 1% 늘면 에스앤디 매출은 1.18% 늘어난다. 소스는 라면보다 빠르게 팔리는 고성장 카테고리라 베타가 1을 넘는다. 반면 환율 계수는 부호가 음이고 통계적으로 0과 구분되지 않는다. <b>환율이 매출을 밀어올린다는 증거는 없다.</b></p>
+    <p>덧붙일 관찰 하나. 삼양식품 매출 대비 에스앤디 매출 비율은 2021년 9.7%에서 2026Q2 7.8%로 완만히 내려가고 있다. 삼양의 해외 현지 생산 확대가 소스 조달 구조에 어떤 영향을 주는지는 환율과 별개로 계속 봐야 할 부분이다.</p>
+  </div>
+</section>
+
+<section>
+  <div class="sec-head"><span class="sec-num">08</span><h2>연간 팩트시트</h2></div>
+  <div class="body col"><p>DART 사업보고서·반기보고서 원문에서 직접 추출했다. 2026년은 상반기 누적 기준이다.</p></div>
+  <div class="tbl-scroll">
+    <table>
+      <thead>
+        <tr>
+          <th>연도</th><th>연평균<br>환율(원)</th><th>매출액<br>(억원)</th><th>원재료매입<br>/매출</th><th>직수입<br>/원재료</th><th>매출<br>총이익률</th><th>판관<br>비율</th><th>영업<br>이익률</th>
+        </tr>
+      </thead>
+      <tbody id="tb"></tbody>
+    </table>
+  </div>
+  <p class="note" style="margin-top:26px"><strong>직수입 비중이 빠르게 커지고 있다.</strong> 원재료 매입 중 직수입은 2023년 0.8% → 2024년 2.8% → 2025년 3.1% → 2026 상반기 5.7%다. 금액으로도 2026년 상반기에만 $2,351천으로, 2025년 연간($2,144천)을 반년 만에 넘겼다. 지금까지 “직접 환노출은 무시해도 된다”던 전제가 앞으로도 유효할지는 매 반기 이 표를 다시 봐야 한다.</p>
+</section>
+
+<section>
+  <div class="sec-head"><span class="sec-num">09</span><h2>결론과 확인할 것</h2></div>
+  <ul class="claims col">
+    <li><span class="tag">매출</span><span class="txt">환율은 <b>중립</b>. 삼양식품 물량이 유일한 동인이며 베타는 1.18. 원화 약세를 에스앤디의 매출 호재로 읽으면 안 된다.</span></li>
+    <li><span class="tag">매출총이익률</span><span class="txt">환율은 <b>역방향</b>. 관측 민감도는 100원당 −2.4%p이나 순수 환율분은 그보다 훨씬 작다. 국제 원자재가와 묶어 보수적으로 <b>100원당 −1.0~−1.5%p</b>로 잡는 게 합리적이다.</span></li>
+    <li><span class="tag">영업이익률</span><span class="txt">지금까지는 <b>무관</b>. 원가에서 잃은 것을 판관비 레버리지가 메워왔기 때문이며, 관계가 없는 게 아니라 <i>가려져</i> 있는 것이다.</span></li>
+    <li><span class="tag">지켜볼 것 1</span><span class="txt">판관비율이 5% 초반에서 더 내려갈 여지가 줄었다. 레버리지가 소진된 상태에서 환율이 1,550원을 넘어서면 영업이익률이 처음으로 직접 눌릴 수 있다.</span></li>
+    <li><span class="tag">지켜볼 것 2</span><span class="txt">직수입 비중(현재 5.7%)과 유크림 kg 단가. 이 둘이 다음 사업보고서에서 함께 뛰면 환율의 직접 경로가 실제로 열리고 있다는 신호다.</span></li>
+    <li><span class="tag">지켜볼 것 3</span><span class="txt">판가. 3년째 동결·인하 중인 kg 단가가 처음 인상되면, 그것이 이 회사가 원가를 전가할 힘을 얻었다는 가장 강한 증거가 된다.</span></li>
+  </ul>
+</section>
+
+<footer>
+  <p><b>데이터 출처</b> — 재무수치는 금융감독원 DART 전자공시 원문(에스앤디 사업보고서 2021~2025, 반기보고서 2026.06, 별도재무제표)에서 직접 파싱. 삼양식품 매출은 DART 연결재무제표. 환율은 원/달러 일별 종가의 분기·연 평균.</p>
+  <p style="margin-top:12px"><b>분석의 한계</b> — 표본이 22개 분기(YoY 분석은 18개)로 작고, 환율과 국제 원자재 가격이 서로 상관되어 있어 회귀 계수에 두 효과가 섞여 있다. 상장 이전 구간(2021Q1~Q2)은 후속 보고서의 전년동기 비교란에서 복원한 값이다. 본 문서는 공시 기반 분석이며 투자 권유가 아니다.</p>
+</footer>
+
+</div>
+<div class="tip" id="tip"></div>
+
+<script>
+const Q = [
+["2021Q1",133.7,28.09,17.02,11.06,1112.5],["2021Q2",149.6,27.32,16.99,10.33,1120.3],
+["2021Q3",153.2,25.45,14.28,11.18,1157.9],["2021Q4",177.5,24.92,12.24,12.67,1183.4],
+["2022Q1",173.7,26.43,17.56,8.86,1204.7],["2022Q2",195.5,24.75,16.17,8.58,1259.5],
+["2022Q3",171.6,23.19,14.31,8.87,1338.7],["2022Q4",192.4,20.59,11.84,8.76,1359.2],
+["2023Q1",182.1,19.64,11.20,8.44,1274.9],["2023Q2",218.1,21.45,11.26,10.19,1314.8],
+["2023Q3",233.1,24.89,18.10,6.79,1312.7],["2023Q4",249.4,23.35,16.70,6.65,1318.7],
+["2024Q1",238.2,24.03,14.75,9.28,1327.9],["2024Q2",288.2,24.03,17.91,6.13,1369.6],
+["2024Q3",288.6,24.28,17.42,6.86,1355.3],["2024Q4",346.4,24.38,18.52,5.86,1394.3],
+["2025Q1",357.1,21.43,15.06,6.37,1449.1],["2025Q2",381.3,22.23,15.72,6.51,1399.0],
+["2025Q3",390.2,21.49,15.63,5.86,1385.0],["2025Q4",380.7,21.10,14.54,6.56,1447.0],
+["2026Q1",454.7,23.08,17.88,5.20,1462.3],["2026Q2",499.2,21.65,16.63,5.02,1500.2]];
+
+const SC = [[92.2,-1.66,"2022Q1"],[139.2,-2.58,"2022Q2"],[180.8,-2.27,"2022Q3"],[175.8,-4.32,"2022Q4"],
+[70.3,-6.78,"2023Q1"],[55.3,-3.30,"2023Q2"],[-26.0,1.70,"2023Q3"],[-40.5,2.75,"2023Q4"],
+[53.0,4.38,"2024Q1"],[54.8,2.59,"2024Q2"],[42.7,-0.61,"2024Q3"],[75.5,1.03,"2024Q4"],
+[121.2,-2.60,"2025Q1"],[29.4,-1.80,"2025Q2"],[29.7,-2.79,"2025Q3"],[52.7,-3.28,"2025Q4"],
+[13.2,1.65,"2026Q1"],[101.2,-0.58,"2026Q2"]];
+
+const ANN = [
+ {y:"2020",fx:1178,rev:565.4,rm:61.2,imp:0.35,gpm:27.2,sga:null,opm:16.1},
+ {y:"2021",fx:1144,rev:614.0,rm:58.6,imp:0.26,gpm:26.3,sga:11.38,opm:14.95},
+ {y:"2022",fx:1291,rev:733.2,rm:65.5,imp:0.59,gpm:23.7,sga:8.76,opm:14.93},
+ {y:"2023",fx:1305,rev:882.8,rm:63.8,imp:0.80,gpm:22.5,sga:7.93,opm:14.59},
+ {y:"2024",fx:1362,rev:1161.4,rm:66.2,imp:2.80,gpm:24.2,sga:6.88,opm:17.32},
+ {y:"2025",fx:1420,rev:1509.4,rm:68.2,imp:3.05,gpm:21.6,sga:6.32,opm:15.24},
+ {y:"2026 H1",fx:1481,rev:953.9,rm:68.5,imp:5.68,gpm:22.3,sga:5.11,opm:17.23}];
+
+const NS="http://www.w3.org/2000/svg";
+function el(p,t,a){const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);p.appendChild(e);return e}
+function txt(p,x,y,s,o){o=o||{};const e=el(p,"text",{x:x,y:y,fill:o.fill||"var(--ink-3)","font-size":o.fs||10.5,"text-anchor":o.a||"middle","font-weight":o.w||400});e.textContent=s;return e}
+function path(p,d,o){o=o||{};return el(p,"path",{d:d,fill:"none",stroke:o.stroke||"none","stroke-width":o.sw||2,"stroke-linejoin":"round","stroke-linecap":"round","stroke-dasharray":o.dash||"none",opacity:o.op==null?1:o.op})}
+const nice=(v,d)=>v.toLocaleString("ko-KR",{minimumFractionDigits:d==null?1:d,maximumFractionDigits:d==null?1:d});
+const sgn=(v,d)=>(v>0?"+":v<0?"−":"")+nice(Math.abs(v),d);
+
+/* ---------- tooltip: viewport-clamped, pointer(mouse+touch) driven ---------- */
+const tip=document.getElementById("tip");
+function showTip(ev,html){
+  tip.innerHTML=html;
+  tip.style.opacity="1";
+  const r=tip.getBoundingClientRect(), tw=r.width||200, th=r.height||96;
+  let x=ev.clientX+16;
+  if(x+tw>innerWidth-8) x=ev.clientX-tw-16;
+  if(x<8) x=8;
+  let y=ev.clientY-th-18;
+  if(y<8) y=ev.clientY+26;
+  if(y+th>innerHeight-8) y=Math.max(8,innerHeight-th-8);
+  tip.style.left=x+"px"; tip.style.top=y+"px";
+}
+function hideTip(){tip.style.opacity="0"}
+
+/* ---------- responsive mount: 1 SVG unit = 1 CSS px, redraw on resize ---------- */
+function mount(id,draw){
+  const svg=document.getElementById(id), box=svg.parentElement;
+  let lw=0, timer=null;
+  function go(){
+    const w=Math.max(300,Math.round(box.clientWidth||box.getBoundingClientRect().width||640));
+    if(Math.abs(w-lw)<10) return;
+    lw=w;
+    while(svg.firstChild) svg.removeChild(svg.firstChild);
+    const h=draw(svg,w);
+    svg.setAttribute("viewBox","0 0 "+w+" "+h);
+    svg.setAttribute("width",w);
+    svg.setAttribute("height",h);
+    hideTip();
+  }
+  go();
+  addEventListener("resize",function(){clearTimeout(timer);timer=setTimeout(go,120)},{passive:true});
+}
+
+/* attaches pointer handling that works for mouse hover AND touch drag,
+   without stealing vertical page scroll (touch-action: pan-y) */
+function track(target,onMove,onOut){
+  let down=false;
+  target.style.touchAction="pan-y";
+  target.addEventListener("pointerdown",function(e){down=true;onMove(e)});
+  target.addEventListener("pointermove",function(e){if(e.pointerType==="mouse"||down)onMove(e)});
+  ["pointerup","pointercancel","pointerleave"].forEach(function(t){
+    target.addEventListener(t,function(e){down=false;if(t!=="pointerup"||e.pointerType!=="mouse")onOut()});
+  });
+}
+
+/* ============ CHART 1 : three stacked panels, shared x ============ */
+mount("c1",function(svg,W){
+  const nr=W<560;
+  const L=nr?36:58, R=nr?12:16, fs=nr?9.5:10.5;
+  const P=[
+    {t:nr?22:26,h:nr?76:118,title:"원/달러 분기평균",min:1050,max:1550,
+      ticks:nr?[1100,1300,1500]:[1100,1250,1400,1550],f:v=>v.toLocaleString("ko-KR")},
+    {t:0,h:nr?96:132,title:"수익성 (%)",min:8,max:30,
+      ticks:nr?[10,20,30]:[10,15,20,25,30],f:v=>v+"%"},
+    {t:0,h:nr?58:96,title:"분기 매출액 (억원)",min:0,max:520,
+      ticks:nr?[0,500]:[0,250,500],f:v=>v.toLocaleString("ko-KR")}
+  ];
+  const gap=nr?40:54;
+  P[1].t=P[0].t+P[0].h+gap; P[2].t=P[1].t+P[1].h+gap;
+  const bx=P[2].t+P[2].h, H=bx+(nr?30:52);
+
+  const n=Q.length, iw=W-L-R, step=iw/n, xc=i=>L+step*i+step/2;
+  const yf=(p,v)=>p.t+p.h-(v-p.min)/(p.max-p.min)*p.h;
+
+  P.forEach(function(p){
+    txt(svg,L,p.t-(nr?8:9),p.title,{a:"start",fs:nr?10:11,w:500,fill:"var(--ink-2)"});
+    p.ticks.forEach(function(t){
+      const y=yf(p,t);
+      el(svg,"line",{x1:L,x2:W-R,y1:y,y2:y,stroke:"var(--rule)","stroke-width":1});
+      txt(svg,L-7,y+3.5,p.f(t),{a:"end",fs:fs});
+    });
+  });
+
+  const p1=P[0], p2=P[1], p3=P[2], base=p3.t+p3.h;
+  const bw=Math.min(step*0.62,nr?11:20);
+  Q.forEach(function(d,i){
+    const y=yf(p3,d[1]);
+    el(svg,"rect",{x:xc(i)-bw/2,y:y,width:bw,height:Math.max(base-y,1),rx:2,fill:"var(--bar)"});
+  });
+  path(svg,Q.map((d,i)=>(i?"L":"M")+xc(i)+" "+yf(p1,d[5])).join(" "),{stroke:"var(--s-fx)",sw:nr?1.8:2});
+  path(svg,Q.map((d,i)=>(i?"L":"M")+xc(i)+" "+yf(p2,d[2])).join(" "),{stroke:"var(--s-gp)",sw:nr?1.8:2});
+  path(svg,Q.map((d,i)=>(i?"L":"M")+xc(i)+" "+yf(p2,d[3])).join(" "),{stroke:"var(--s-op)",sw:nr?1.8:2});
+
+  const last=n-1;
+  [[p1,5,"var(--s-fx)",nice(Q[last][5],0)+"원"],
+   [p2,2,"var(--s-gp)",nice(Q[last][2],1)+"%"],
+   [p2,3,"var(--s-op)",nice(Q[last][3],1)+"%"]].forEach(function(e){
+    const p=e[0], x=xc(last), y=yf(p,Q[last][e[1]]);
+    el(svg,"circle",{cx:x,cy:y,r:nr?3:4,fill:e[2],stroke:"var(--surface)","stroke-width":2});
+    if(!nr) txt(svg,x-9,y-9,e[3],{a:"end",fs:10.5,w:500,fill:e[2]});
+  });
+
+  Q.forEach(function(d,i){
+    if(d[0].slice(4)==="Q1"){
+      const x=xc(i);
+      el(svg,"line",{x1:x,x2:x,y1:P[0].t,y2:bx,stroke:"var(--rule-2)","stroke-width":1,"stroke-dasharray":"2 4",opacity:.75});
+      txt(svg,x,bx+(nr?15:18),nr?"'"+d[0].slice(2,4):d[0].slice(0,4),{fs:nr?10:11,w:500,fill:"var(--ink-3)"});
+    }
+  });
+  if(!nr) txt(svg,xc(n-1),bx+18,"26Q2",{fs:10,fill:"var(--ink-3)"});
+  if(!nr) txt(svg,L,H-8,"※ 2022년 환율 급등 구간과 2025년 재급등 구간에서 매출총이익률이 눌린다",{a:"start",fs:10.5,fill:"var(--ink-3)"});
+
+  const cl=el(svg,"line",{x1:0,x2:0,y1:P[0].t-6,y2:bx,stroke:"var(--ink-2)","stroke-width":1,opacity:0});
+  const dots=[0,1,2].map(()=>el(svg,"circle",{r:nr?4:4.5,fill:"none",opacity:0}));
+  const hit=el(svg,"rect",{x:L,y:P[0].t-6,width:iw,height:bx-P[0].t+6,fill:"transparent",style:"cursor:crosshair"});
+  const series=[[p1,5,"var(--s-fx)"],[p2,2,"var(--s-gp)"],[p2,3,"var(--s-op)"]];
+  track(hit,function(ev){
+    const r=svg.getBoundingClientRect(), sx=(ev.clientX-r.left)*(W/r.width);
+    let i=Math.round((sx-L-step/2)/step); i=Math.max(0,Math.min(n-1,i));
+    const d=Q[i], x=xc(i);
+    cl.setAttribute("x1",x); cl.setAttribute("x2",x); cl.setAttribute("opacity",.5);
+    series.forEach(function(s,k){
+      dots[k].setAttribute("cx",x); dots[k].setAttribute("cy",yf(s[0],d[s[1]]));
+      dots[k].setAttribute("fill",s[2]); dots[k].setAttribute("stroke","var(--surface)");
+      dots[k].setAttribute("stroke-width",2); dots[k].setAttribute("opacity",1);
+    });
+    showTip(ev,'<div class="t-h">'+d[0]+'</div>'+
+      '<div class="t-r"><span class="t-k"><i style="background:var(--s-fx)"></i>환율</span><b>'+nice(d[5],1)+'</b></div>'+
+      '<div class="t-r"><span class="t-k"><i style="background:var(--s-gp)"></i>매출총이익률</span><b>'+nice(d[2],2)+'%</b></div>'+
+      '<div class="t-r"><span class="t-k"><i style="background:var(--s-op)"></i>영업이익률</span><b>'+nice(d[3],2)+'%</b></div>'+
+      '<div class="t-r"><span class="t-k"><i style="background:var(--bar)"></i>매출액</span><b>'+nice(d[1],1)+'억</b></div>');
+  },function(){
+    hideTip(); cl.setAttribute("opacity",0); dots.forEach(d=>d.setAttribute("opacity",0));
+  });
+  return H;
+});
+
+/* ============ CHART 2 : scatter + fit line ============ */
+mount("c2",function(svg,W){
+  const nr=W<560;
+  const L=nr?36:76, R=nr?16:28, T=nr?26:28, B=nr?48:58;
+  const H=nr?310:430, fs=nr?9.5:10.5;
+  const x0=-60,x1=200,y0=-8,y1=6;
+  const px=v=>L+(v-x0)/(x1-x0)*(W-L-R);
+  const py=v=>T+(y1-v)/(y1-y0)*(H-T-B);
+
+  (nr?[-8,-4,0,4]:[-8,-6,-4,-2,0,2,4,6]).forEach(function(t){
+    const y=py(t);
+    el(svg,"line",{x1:L,x2:W-R,y1:y,y2:y,stroke:t===0?"var(--rule-2)":"var(--rule)","stroke-width":1});
+    txt(svg,L-7,y+3.5,(t>0?"+":"")+t,{a:"end",fs:fs});
+  });
+  (nr?[-50,0,100,200]:[-50,0,50,100,150,200]).forEach(function(t){
+    const x=px(t);
+    el(svg,"line",{x1:x,x2:x,y1:T,y2:H-B,stroke:t===0?"var(--rule-2)":"var(--rule)","stroke-width":1});
+    txt(svg,x,H-B+18,(t>0?"+":"")+t,{fs:fs});
+  });
+  txt(svg,L,T-11,nr?"GPM 변화 (%p, YoY)":"매출총이익률 변화 (%p, 전년동기 대비)",{a:"start",fs:nr?10:11,w:500,fill:"var(--ink-2)"});
+  txt(svg,(L+W-R)/2,H-B+(nr?36:42),nr?"환율 변화 (원, YoY)":"평균환율 변화 (원, 전년동기 대비)",{fs:nr?10:11,w:500,fill:"var(--ink-2)"});
+  if(!nr){
+    txt(svg,W-R-8,py(5.2),"환율 ↑ · 마진 ↑",{a:"end",fs:10,fill:"var(--ink-3)"});
+    txt(svg,W-R-8,py(-7.0),"환율 ↑ · 마진 ↓",{a:"end",fs:10,fill:"var(--ink-3)"});
+  }
+
+  const f=v=>0.5917-0.02385*v;
+  path(svg,"M"+px(x0)+" "+py(f(x0))+" L"+px(x1)+" "+py(f(x1)),{stroke:"var(--ink-2)",sw:1.5,dash:"6 5",op:.65});
+  txt(svg,px(nr?190:178),py(f(nr?190:178))-11,nr?"r = −0.50":"회귀선  r = −0.50",{a:"end",fs:fs,w:500,fill:"var(--ink-2)"});
+
+  const r0=nr?5:6;
+  SC.forEach(function(d){
+    const cx=px(d[0]), cy=py(d[1]);
+    const c=el(svg,"circle",{cx:cx,cy:cy,r:r0,fill:"var(--s-gp)",stroke:"var(--surface)","stroke-width":2,opacity:.92});
+    const h=el(svg,"circle",{cx:cx,cy:cy,r:16,fill:"transparent",style:"cursor:pointer"});
+    track(h,function(ev){
+      c.setAttribute("r",r0+2.5);
+      showTip(ev,'<div class="t-h">'+d[2]+'</div>'+
+        '<div class="t-r"><span>환율 변화</span><b>'+sgn(d[0],1)+'원</b></div>'+
+        '<div class="t-r"><span>GPM 변화</span><b>'+sgn(d[1],2)+'%p</b></div>');
+    },function(){ c.setAttribute("r",r0); hideTip(); });
+  });
+  if(!nr){
+    txt(svg,px(70.3),py(-6.78)+20,"2023Q1",{fs:10,fill:"var(--ink-3)"});
+    txt(svg,px(53.0),py(4.38)-14,"2024Q1",{fs:10,fill:"var(--ink-3)"});
+  }
+  return H;
+});
+
+/* ============ CHART 3 : annual FX + raw-material ratio ============ */
+mount("c3",function(svg,W){
+  const nr=W<560;
+  const L=nr?34:54, R=nr?14:54, fs=nr?9.5:10.5;
+  const rows=ANN.slice(0,6), n=rows.length;
+  const iw=W-L-R, step=iw/n, xc=i=>L+step*i+step/2;
+  const pA={t:nr?20:24,h:nr?62:78};
+  const pB={t:0,h:nr?70:88};
+  pB.t=pA.t+pA.h+(nr?40:48);
+  const base=pB.t+pB.h, H=base+(nr?30:62);
+  const yA=v=>pA.t+pA.h-(v-1100)/350*pA.h;
+  const yB=v=>pB.t+pB.h-(v-55)/15*pB.h;
+
+  txt(svg,L,pA.t-9,"연평균 원/달러 (원)",{a:"start",fs:nr?10:11,w:500,fill:"var(--ink-2)"});
+  [1100,1250,1400].forEach(function(t){
+    const y=yA(t);
+    el(svg,"line",{x1:L,x2:W-R,y1:y,y2:y,stroke:"var(--rule)","stroke-width":1});
+    txt(svg,L-7,y+3.5,t.toLocaleString("ko-KR"),{a:"end",fs:fs});
+  });
+  path(svg,rows.map((d,i)=>(i?"L":"M")+xc(i)+" "+yA(d.fx)).join(" "),{stroke:"var(--s-fx)",sw:2});
+  rows.forEach((d,i)=>el(svg,"circle",{cx:xc(i),cy:yA(d.fx),r:3.5,fill:"var(--s-fx)",stroke:"var(--surface)","stroke-width":1.5}));
+
+  txt(svg,L,pB.t-9,"원재료 매입액 / 매출액 (%)",{a:"start",fs:nr?10:11,w:500,fill:"var(--ink-2)"});
+  (nr?[55,60,65,70]:[55,60,65,70]).forEach(function(t){
+    const y=yB(t);
+    el(svg,"line",{x1:L,x2:W-R,y1:y,y2:y,stroke:"var(--rule)","stroke-width":1});
+    txt(svg,L-7,y+3.5,t+"%",{a:"end",fs:fs});
+  });
+  const bw=Math.min(step*0.5,nr?22:34);
+  rows.forEach(function(d,i){
+    const y=yB(d.rm);
+    el(svg,"rect",{x:xc(i)-bw/2,y:y,width:bw,height:Math.max(base-y,1),rx:3,fill:"var(--s-gp)",opacity:.85});
+    txt(svg,xc(i),y-6,nice(d.rm,1),{fs:fs,w:500,fill:"var(--ink-2)"});
+    txt(svg,xc(i),base+(nr?15:19),nr?"'"+d.y.slice(2):d.y,{fs:fs});
+  });
+  if(!nr) txt(svg,L,H-8,"※ 2022년(환율 +12.9%)과 2025년에 매입 비중이 계단식으로 올라선다",{a:"start",fs:10.5,fill:"var(--ink-3)"});
+  return H;
+});
+
+/* ============ CHART 4 : OPM bridge ============ */
+mount("c4",function(svg,W){
+  const nr=W<520;
+  const items=[
+    {k:"매출총이익률",v:-4.77,note:"26.33% → 21.56%"},
+    {k:"판관비 레버리지",v:5.06,note:"11.38% → 6.32%"},
+    {k:"영업이익률 순변화",v:0.29,note:"14.95% → 15.24%",tot:true}
+  ];
+  if(nr){
+    const pad=10, T=26, B=44, rowH=72;
+    const H=T+rowH*items.length+B;
+    const half=(W-pad*2)/2, x0=pad+half;
+    const sc=(half-46)/5.3;
+    [-4,0,4].forEach(function(t){
+      const x=x0+t*sc;
+      el(svg,"line",{x1:x,x2:x,y1:T-6,y2:T+rowH*items.length-8,stroke:t===0?"var(--rule-2)":"var(--rule)","stroke-width":1});
+      txt(svg,x,T+rowH*items.length+8,(t>0?"+":"")+t,{fs:9.5});
+    });
+    txt(svg,x0,T+rowH*items.length+26,"영업이익률 기여 (%p)",{fs:10,w:500,fill:"var(--ink-2)"});
+    txt(svg,pad,T-12,"2021 → 2025",{a:"start",fs:10,w:500,fill:"var(--ink-2)"});
+    items.forEach(function(it,i){
+      const top=T+rowH*i;
+      txt(svg,pad,top+14,it.k,{a:"start",fs:12,w:it.tot?600:500,fill:"var(--ink)"});
+      txt(svg,pad,top+29,it.note,{a:"start",fs:9.5,fill:"var(--ink-3)"});
+      const cy=top+50, h=19, w2=Math.abs(it.v)*sc, x=it.v<0?x0-w2:x0;
+      el(svg,"rect",{x:x,y:cy-h/2,width:Math.max(w2,2),height:h,rx:3,
+        fill:it.v<0?"var(--neg)":"var(--pos)",opacity:it.tot?.45:.9});
+      txt(svg,it.v<0?x-7:x+w2+7,cy+4,sgn(it.v,2)+"%p",{a:it.v<0?"end":"start",fs:11,w:600,
+        fill:it.v<0?"var(--neg)":"var(--pos)"});
+      if(it.tot) el(svg,"line",{x1:pad,x2:W-pad,y1:top-6,y2:top-6,stroke:"var(--rule-2)","stroke-width":1});
+    });
+    return H;
+  }
+  const L=150, R=90, T=34, B=52, H=260;
+  const x0=L+(W-L-R)*0.5, sc=(W-L-R)*0.5/6;
+  const rowH=(H-T-B)/items.length;
+  el(svg,"line",{x1:x0,x2:x0,y1:T-8,y2:H-B+4,stroke:"var(--rule-2)","stroke-width":1});
+  [-6,-4,-2,0,2,4,6].forEach(function(t){
+    const x=x0+t*sc;
+    if(t!==0) el(svg,"line",{x1:x,x2:x,y1:T-8,y2:H-B+4,stroke:"var(--rule)","stroke-width":1});
+    txt(svg,x,H-B+22,(t>0?"+":"")+t,{fs:10.5});
+  });
+  txt(svg,x0,H-B+40,"영업이익률 기여 (%p)",{fs:11,w:500,fill:"var(--ink-2)"});
+  txt(svg,L,T-16,"2021 → 2025",{a:"start",fs:11,w:500,fill:"var(--ink-2)"});
+  items.forEach(function(it,i){
+    const cy=T+rowH*i+rowH/2, h=Math.min(rowH*0.44,24);
+    const w2=Math.abs(it.v)*sc, x=it.v<0?x0-w2:x0;
+    el(svg,"rect",{x:x,y:cy-h/2,width:Math.max(w2,2),height:h,rx:3,
+      fill:it.v<0?"var(--neg)":"var(--pos)",opacity:it.tot?.45:.9});
+    txt(svg,L-14,cy-2,it.k,{a:"end",fs:12.5,w:it.tot?600:500,fill:"var(--ink)"});
+    txt(svg,L-14,cy+13,it.note,{a:"end",fs:10.5,fill:"var(--ink-3)"});
+    txt(svg,it.v<0?x-9:x+w2+9,cy+4,sgn(it.v,2)+"%p",{a:it.v<0?"end":"start",fs:12,w:600,
+      fill:it.v<0?"var(--neg)":"var(--pos)"});
+  });
+  el(svg,"line",{x1:L-10,x2:W-R+10,y1:T+rowH*2-2,y2:T+rowH*2-2,stroke:"var(--rule-2)","stroke-width":1});
+  return H;
+});
+
+/* ============ TABLE ============ */
+(function(){
+  const tb=document.getElementById("tb");
+  ANN.forEach(function(d){
+    const tr=document.createElement("tr");
+    const bw=Math.round(d.rm/70*40);
+    tr.innerHTML='<td>'+d.y+'</td><td>'+d.fx.toLocaleString("ko-KR")+'</td><td>'+nice(d.rev,1)+'</td>'+
+      '<td><span class="minibar" style="width:'+bw+'px"></span>'+nice(d.rm,1)+'%</td>'+
+      '<td>'+nice(d.imp,2)+'%</td><td>'+nice(d.gpm,1)+'%</td>'+
+      '<td>'+(d.sga===null?"—":nice(d.sga,2)+"%")+'</td><td>'+nice(d.opm,2)+'%</td>';
+    tb.appendChild(tr);
+  });
+})();
+
+/* dismiss tooltip when the reader scrolls or taps elsewhere */
+addEventListener("scroll",hideTip,{passive:true});
+addEventListener("pointerdown",function(e){
+  if(!e.target.closest || !e.target.closest(".chart-scroll")) hideTip();
+},true);
+</script>
+
+</body>
+</html>

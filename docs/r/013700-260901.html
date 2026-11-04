@@ -1,0 +1,1047 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="format-detection" content="telephone=no">
+<title>까뮤이앤씨 해부</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@500;700;800;900&family=IBM+Plex+Sans+KR:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+
+<style>
+/* ============ tokens ============ */
+:root{
+  --paper:#E8E7E2; --panel:#FBFAF8; --sunk:#DEDCD6; --plate:#15171A; --plate-ink:#F2F1EC;
+  --ink:#15171A; --ink2:#43474C; --muted:#74787D;
+  --rule:#CBC8C1; --hair:#DFDCD5;
+  --accent:#C0442A; --steel:#1F6FB2; --moss:#0E8A6E;
+  --good:#1F6B4E; --warn:#8E6410; --bad:#A63A2C;
+  --mark:rgba(192,68,42,.16);
+  --shadow:0 1px 0 rgba(21,23,26,.05), 0 14px 34px -26px rgba(21,23,26,.55);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#101215; --panel:#181B1F; --sunk:#0A0C0E; --plate:#E9E9E5; --plate-ink:#101215;
+    --ink:#E9E9E5; --ink2:#B4B7BA; --muted:#868A8F;
+    --rule:#2E3238; --hair:#22262B;
+    --accent:#D9603F; --steel:#4A90D0; --moss:#1CA57F;
+    --good:#45BB8E; --warn:#D9A93A; --bad:#E8705F;
+    --mark:rgba(217,96,63,.24);
+    --shadow:0 1px 0 rgba(0,0,0,.4), 0 16px 38px -28px #000;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#101215; --panel:#181B1F; --sunk:#0A0C0E; --plate:#E9E9E5; --plate-ink:#101215;
+  --ink:#E9E9E5; --ink2:#B4B7BA; --muted:#868A8F;
+  --rule:#2E3238; --hair:#22262B;
+  --accent:#D9603F; --steel:#4A90D0; --moss:#1CA57F;
+  --good:#45BB8E; --warn:#D9A93A; --bad:#E8705F;
+  --mark:rgba(217,96,63,.24);
+  --shadow:0 1px 0 rgba(0,0,0,.4), 0 16px 38px -28px #000;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+body{
+  margin:0; background:var(--paper); color:var(--ink);
+  font-family:"IBM Plex Sans KR","Malgun Gothic","맑은 고딕",-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
+  font-size:16px; line-height:1.78; font-weight:400;
+  word-break:keep-all; overflow-wrap:break-word;
+  -webkit-text-size-adjust:100%; text-size-adjust:100%;
+  -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+}
+h1,h2,h3,h4{font-family:"Gothic A1","IBM Plex Sans KR","Malgun Gothic",sans-serif; margin:0; text-wrap:balance}
+.mono{font-family:"IBM Plex Mono",ui-monospace,Consolas,monospace; font-variant-numeric:tabular-nums}
+:focus-visible{outline:2px solid var(--accent); outline-offset:3px}
+
+.wrap{max-width:1080px; margin:0 auto; padding:0 26px 110px}
+.col{max-width:720px}
+
+/* ============ masthead ============ */
+.mast{padding:62px 0 0}
+.formline{display:flex; gap:3px; height:7px; margin-bottom:30px}
+.formline i{flex:1; background:var(--rule); border-radius:1px}
+.formline i:nth-child(3),.formline i:nth-child(4),.formline i:nth-child(5){background:var(--accent)}
+.formline i:nth-child(9){background:var(--steel)}
+.eyebrow{font-family:"IBM Plex Mono",monospace; font-size:11px; letter-spacing:.2em; color:var(--muted); text-transform:uppercase}
+.mast h1{font-size:clamp(40px,7vw,72px); line-height:.98; letter-spacing:-.04em; font-weight:900; margin:18px 0 0}
+.mast h1 .sm{display:block; font-size:.44em; letter-spacing:-.02em; font-weight:700; color:var(--ink2); margin-top:14px; line-height:1.25; max-width:20ch}
+.mast .meta{margin-top:30px; display:flex; flex-wrap:wrap; gap:6px 22px; font-size:12.5px; color:var(--muted)}
+.mast .meta b{color:var(--ink2); font-weight:500}
+
+/* ============ tiles ============ */
+.tiles{display:grid; grid-template-columns:repeat(auto-fit,minmax(168px,1fr)); gap:1px; background:var(--rule);
+  border:1px solid var(--rule); margin:36px 0 0; box-shadow:var(--shadow)}
+.tile{background:var(--panel); padding:15px 16px 14px; display:flex; flex-direction:column; gap:4px; min-width:0}
+.tile .k{font-family:"IBM Plex Mono",monospace; font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:var(--muted)}
+.tile .v{font-family:"Gothic A1",sans-serif; font-size:25px; font-weight:800; letter-spacing:-.03em; font-variant-numeric:tabular-nums; line-height:1.15}
+.tile .n{font-size:11.5px; color:var(--muted); line-height:1.45}
+.up{color:var(--accent)} .dn{color:var(--steel)}
+
+/* ============ ticker strip ============ */
+.strip{margin:40px 0 0; border:1px solid var(--rule); background:var(--panel); box-shadow:var(--shadow)}
+.strip-h{padding:13px 18px; border-bottom:1px solid var(--rule); display:flex; align-items:baseline; gap:12px; flex-wrap:wrap}
+.strip-h b{font-family:"Gothic A1",sans-serif; font-size:15px; font-weight:800; letter-spacing:-.02em}
+.strip-h span{font-size:12px; color:var(--muted)}
+.evs{display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:1px; background:var(--hair)}
+.ev{background:var(--panel); padding:16px 18px 18px; display:flex; flex-direction:column; gap:7px}
+.ev .d{font-family:"IBM Plex Mono",monospace; font-size:11.5px; letter-spacing:.06em; color:var(--muted)}
+.ev .t{font-family:"Gothic A1",sans-serif; font-weight:800; font-size:16.5px; letter-spacing:-.02em; line-height:1.32}
+.ev .b{font-size:13.5px; line-height:1.62; color:var(--ink2)}
+.ev.pos{border-top:3px solid var(--moss)} .ev.neg{border-top:3px solid var(--accent)} .ev.warnb{border-top:3px solid var(--warn)}
+
+/* ============ sections ============ */
+section{padding:78px 0 0}
+.shead{display:flex; gap:16px; align-items:flex-start; border-top:2px solid var(--ink); padding-top:16px}
+.plate{flex:0 0 auto; background:var(--plate); color:var(--plate-ink); font-family:"IBM Plex Mono",monospace;
+  font-size:11px; font-weight:600; letter-spacing:.1em; padding:3px 8px 2px; margin-top:6px}
+.shead h2{font-size:clamp(23px,3.1vw,32px); font-weight:900; letter-spacing:-.035em; line-height:1.16}
+.dek{color:var(--ink2); font-size:17px; margin:12px 0 30px; max-width:60ch; line-height:1.68}
+h3{font-size:19px; font-weight:800; letter-spacing:-.025em; margin:44px 0 12px}
+h4{font-size:14.5px; font-weight:700; margin:28px 0 8px; letter-spacing:-.01em}
+p{margin:0 0 17px; max-width:66ch}
+strong{font-weight:600}
+em{font-style:normal; background:linear-gradient(transparent 60%, var(--mark) 60%); font-weight:500; padding:0 1px}
+a{color:var(--steel); text-underline-offset:3px}
+ul,ol{margin:0 0 20px; padding-left:22px; max-width:66ch}
+li{margin:0 0 10px}
+li::marker{color:var(--muted)}
+
+/* ============ callout ============ */
+.call{border-left:3px solid var(--accent); background:var(--panel); padding:18px 20px; margin:26px 0; max-width:66ch;
+  box-shadow:var(--shadow)}
+.call.cool{border-left-color:var(--steel)}
+.call .lb{font-family:"IBM Plex Mono",monospace; font-size:10.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); display:block; margin-bottom:7px}
+.call p:last-child{margin-bottom:0}
+
+/* ============ figures ============ */
+figure{margin:32px 0 34px}
+.fbox{background:var(--panel); border:1px solid var(--rule); padding:18px 18px 10px; overflow-x:auto;
+  -webkit-overflow-scrolling:touch; overscroll-behavior-x:contain; box-shadow:var(--shadow)}
+.figttl{font-family:"Gothic A1",sans-serif; font-size:13.5px; font-weight:800; letter-spacing:-.01em; margin:0 0 10px; padding:0 2px}
+figcaption{font-size:12.5px; color:var(--muted); margin-top:11px; line-height:1.6; max-width:74ch}
+svg{display:block; width:100%; height:auto}
+.fbox svg{min-width:560px}
+.fbox.narrow svg{min-width:340px}
+.grid line{stroke:var(--hair); stroke-width:1}
+.grid line.zero{stroke:var(--rule); stroke-width:1.4}
+.ax{font-family:"IBM Plex Mono",monospace; font-size:10.5px; fill:var(--muted)}
+.ax.sm{font-size:10px}
+.ax.hot{fill:var(--accent)}
+.val{font-family:"IBM Plex Mono",monospace; font-size:10.5px; fill:var(--ink2); font-weight:500}
+.val.hot{fill:var(--accent); font-weight:600}
+.val.dimv{fill:var(--muted); font-weight:400}
+.note{font-family:"IBM Plex Sans KR",sans-serif; font-size:10.5px; fill:var(--muted)}
+.panel-lb{font-family:"Gothic A1",sans-serif; font-size:11.5px; font-weight:700; fill:var(--ink2); letter-spacing:.01em}
+.rowlb{font-family:"IBM Plex Sans KR",sans-serif; font-size:12.5px; font-weight:500; fill:var(--ink)}
+.bar.c1{fill:var(--steel)} .bar.c2{fill:var(--accent)} .bar.c3{fill:var(--moss)}
+.bar.dim{opacity:.72} .bar.dim2{opacity:.44}
+.bar.pf{fill:none; stroke:var(--accent); stroke-width:2; stroke-dasharray:4 3}
+.dot{fill:var(--steel); opacity:.8} .dot.hot{fill:var(--accent); opacity:1}
+.dotlb{font-family:"IBM Plex Sans KR",sans-serif; font-size:10.5px; fill:var(--muted)}
+.dotlb.hot{fill:var(--accent); font-weight:600; font-size:11.5px}
+.sep{stroke:var(--rule); stroke-width:1; stroke-dasharray:3 3}
+.legend{display:flex; flex-wrap:wrap; gap:7px 20px; font-size:11.5px; color:var(--muted); padding:10px 2px 0}
+.sw{display:inline-block; width:11px; height:11px; border-radius:2px; vertical-align:-1px; margin-right:7px}
+
+/* ============ tables ============ */
+.tw{overflow-x:auto; -webkit-overflow-scrolling:touch; overscroll-behavior-x:contain;
+  margin:24px 0 10px; border:1px solid var(--rule); background:var(--panel); box-shadow:var(--shadow)}
+table{border-collapse:collapse; width:100%; min-width:560px; font-size:13.5px}
+caption{caption-side:top; text-align:left; font-family:"Gothic A1",sans-serif; font-size:13.5px; font-weight:800;
+  padding:14px 16px 0; letter-spacing:-.01em}
+th,td{padding:9px 13px; text-align:right; border-bottom:1px solid var(--hair); white-space:nowrap; font-variant-numeric:tabular-nums}
+th{font-family:"IBM Plex Mono",monospace; font-size:10.5px; letter-spacing:.06em; color:var(--muted); font-weight:500;
+  text-transform:uppercase; border-bottom:1px solid var(--rule); vertical-align:bottom}
+th:first-child,td:first-child{text-align:left; white-space:normal; font-variant-numeric:normal}
+tbody tr:last-child td{border-bottom:none}
+tr.tot td{font-weight:600; background:var(--sunk)}
+tr.hl td{background:var(--mark)}
+td.pos{color:var(--good)} td.neg{color:var(--bad)}
+.tnote{font-size:12px; color:var(--muted); margin:9px 0 0; max-width:74ch; line-height:1.6}
+
+/* ============ two-column verdict ============ */
+.duo{display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--rule); border:1px solid var(--rule); margin:26px 0; box-shadow:var(--shadow)}
+.duo>div{background:var(--panel); padding:18px 20px}
+.duo h4{margin:0 0 12px; font-family:"IBM Plex Mono",monospace; font-size:10.5px; letter-spacing:.14em; text-transform:uppercase}
+.duo .for h4{color:var(--moss)} .duo .against h4{color:var(--accent)}
+.duo ul{margin:0; padding-left:19px; font-size:14px}
+.duo li{margin-bottom:11px; line-height:1.62}
+@media (max-width:720px){ .duo{grid-template-columns:1fr} }
+
+/* ============ risk list ============ */
+.risks{border:1px solid var(--rule); background:var(--panel); margin:26px 0; box-shadow:var(--shadow)}
+.risk{display:grid; grid-template-columns:76px 1fr; gap:16px; padding:16px 18px; border-bottom:1px solid var(--hair)}
+.risk:last-child{border-bottom:none}
+.sev{font-family:"IBM Plex Mono",monospace; font-size:10px; letter-spacing:.1em; text-transform:uppercase; font-weight:600;
+  padding:3px 0 3px 9px; border-left:3px solid; height:fit-content; margin-top:3px}
+.sev.hi{color:var(--bad); border-color:var(--bad)}
+.sev.md{color:var(--warn); border-color:var(--warn)}
+.sev.lo{color:var(--muted); border-color:var(--rule)}
+.risk b{display:block; font-family:"Gothic A1",sans-serif; font-weight:800; font-size:15px; letter-spacing:-.015em; margin-bottom:5px}
+.risk p{margin:0; font-size:13.5px; color:var(--ink2); line-height:1.65; max-width:none}
+
+/* ============ checklist ============ */
+.check{border:1px solid var(--rule); background:var(--panel); margin:26px 0; box-shadow:var(--shadow)}
+.check ol{margin:0; padding:0; list-style:none; max-width:none; counter-reset:ck}
+.check li{display:grid; grid-template-columns:20px 1fr; column-gap:15px; align-items:start;
+  margin:0; padding:15px 22px 16px; border-bottom:1px solid var(--hair)}
+.check li:last-child{border-bottom:none}
+.check .box{width:15px; height:15px; margin-top:5px; border:1.5px solid var(--rule); border-radius:2px;
+  background:var(--sunk); flex:none}
+.check .ck-t{font-family:"Gothic A1",sans-serif; font-weight:800; font-size:15.5px; letter-spacing:-.02em;
+  line-height:1.45; margin-bottom:6px; counter-increment:ck}
+.check .ck-t::before{content:counter(ck,decimal-leading-zero); font-family:"IBM Plex Mono",monospace;
+  font-size:11px; font-weight:600; color:var(--accent); letter-spacing:.06em; margin-right:9px; vertical-align:1px}
+.check .ck-d{font-size:13.5px; color:var(--ink2); line-height:1.68; max-width:62ch}
+.check .ck-w{font-family:"IBM Plex Mono",monospace; font-size:10.5px; letter-spacing:.05em; color:var(--muted);
+  display:inline-block; margin-top:9px; padding:2px 8px; border:1px solid var(--hair); background:var(--sunk)}
+
+/* ============ notes / disclaimer ============ */
+.notes{margin-top:56px; padding-top:22px; border-top:1px solid var(--rule); font-size:12.5px; color:var(--muted); line-height:1.72; max-width:78ch}
+.notes h3{font-size:14px; font-weight:800; color:var(--ink2); margin:0 0 12px}
+.notes ol{padding-left:20px; max-width:none}
+.notes li{margin-bottom:9px}
+.disc{margin-top:34px; padding:16px 18px; border:1px dashed var(--rule); font-size:12px; color:var(--muted); line-height:1.7}
+
+/* ============ mobile ============ */
+@media (max-width:900px){
+  .wrap{padding:0 20px 88px}
+  section{padding:62px 0 0}
+}
+
+@media (max-width:640px){
+  body{font-size:15.5px; line-height:1.74}
+  .wrap{padding:0 15px 72px; max-width:100%}
+  .col{max-width:100%}
+
+  /* masthead */
+  .mast{padding:34px 0 0}
+  .formline{height:6px; margin-bottom:22px}
+  .mast h1{font-size:clamp(30px,8.4vw,42px); letter-spacing:-.035em; line-height:1.02; margin-top:14px}
+  .mast h1 .sm{font-size:.5em; margin-top:11px; max-width:none; line-height:1.35}
+  .mast .meta{margin-top:20px; gap:4px 14px; font-size:11.5px}
+
+  /* tiles / events */
+  .tiles{grid-template-columns:repeat(2,1fr); margin-top:28px}
+  .tile{padding:12px 12px 11px}
+  .tile .v{font-size:20px}
+  .tile .k{font-size:9.5px; letter-spacing:.1em}
+  .tile .n{font-size:11px}
+  .strip{margin-top:30px}
+  .strip-h{padding:11px 14px}
+  .evs{grid-template-columns:1fr}
+  .ev{padding:14px 15px 16px}
+  .ev .t{font-size:15.5px}
+  .ev .b{font-size:13px}
+
+  /* sections */
+  section{padding:52px 0 0}
+  .shead{gap:10px; padding-top:13px}
+  .plate{font-size:10px; padding:3px 7px 2px; margin-top:4px}
+  .shead h2{font-size:21.5px; letter-spacing:-.03em}
+  .dek{font-size:15.5px; margin:10px 0 22px; max-width:none}
+  h3{font-size:17.5px; margin:34px 0 10px}
+  h4{margin:22px 0 7px}
+  p,ul,ol{max-width:none}
+
+  /* callout / duo / risk / check */
+  .call{padding:15px 16px; margin:22px 0; max-width:none}
+  .duo>div{padding:15px 16px}
+  .duo ul{padding-left:17px}
+  .risk{grid-template-columns:1fr; gap:9px; padding:14px 15px}
+  .sev{justify-self:start; margin-top:0}
+  .check li{padding:13px 15px 14px; column-gap:11px}
+  .check .ck-t{font-size:14.5px}
+  .check .ck-d{font-size:13px; max-width:none}
+
+  /* figures: 가로 스크롤 + 스크롤 그림자 */
+  figure{margin:26px 0 28px}
+  .fbox{padding:14px 14px 8px}
+  .fbox svg{min-width:500px}
+  .fbox.narrow svg{min-width:300px}
+  figcaption{font-size:12px; max-width:none}
+  .legend{font-size:11px; gap:6px 14px}
+
+  /* tables */
+  table{min-width:500px; font-size:12.5px}
+  th,td{padding:8px 10px}
+  caption{font-size:12.5px; padding:12px 14px 0}
+  .tnote{font-size:11.5px; max-width:none}
+
+  .tw, .fbox{
+    background-image:
+      linear-gradient(to right, var(--panel), rgba(0,0,0,0) 24px),
+      linear-gradient(to left,  var(--panel), rgba(0,0,0,0) 24px),
+      linear-gradient(to right, rgba(21,23,26,.13), rgba(0,0,0,0) 12px),
+      linear-gradient(to left,  rgba(21,23,26,.13), rgba(0,0,0,0) 12px);
+    background-repeat:no-repeat;
+    background-size:24px 100%, 24px 100%, 12px 100%, 12px 100%;
+    background-position:0 0, 100% 0, 0 0, 100% 0;
+    background-attachment:local, local, scroll, scroll;
+  }
+
+  .notes{margin-top:44px; max-width:none}
+  .disc{padding:14px 15px; margin-top:28px}
+}
+
+@media (max-width:380px){
+  .wrap{padding:0 13px 64px}
+  .tiles{grid-template-columns:1fr}
+  .tile .v{font-size:22px}
+  .fbox svg{min-width:440px}
+  table{min-width:440px}
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+<header class="mast">
+  <div class="formline"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  <div class="eyebrow">까뮤이앤씨 · 013700 · KOSPI</div>
+  <h1>한 개의 팹이<br>회사 전체다
+    <span class="sm">PC 건설사 까뮤이앤씨를 SK하이닉스 현장 단위로 뜯어본 기록</span>
+  </h1>
+  <div class="meta">
+    <span>작성 <b>2026년 9월 1일</b></span>
+    <span>근거 <b>DART 정기보고서 12기(FY2014~FY2025) + 2026년 반기</b></span>
+    <span>공시 <b>2015~2026년 698건 전수</b></span>
+    <span>증권사 커버리지 <b>0건</b></span>
+  </div>
+
+  <div class="tiles">
+    <div class="tile"><span class="k">주가 / 시총</span><span class="v mono">1,707<span style="font-size:.55em;font-weight:600"> 원</span></span><span class="n">9/1 12:57 장중 · 시총 1,020억<br>전일 종가 1,544원 · 장중 고가 2,005원</span></div>
+    <div class="tile"><span class="k">PER (TTM)</span><span class="v mono">3.6<span style="font-size:.55em;font-weight:600"> 배</span></span><span class="n">PBR 0.80배 · ROE 22.6%<br>EV/EBIT 4.4배</span></div>
+    <div class="tile"><span class="k">26년 상반기 매출</span><span class="v mono up">+82<span style="font-size:.55em;font-weight:600"> %</span></span><span class="n">2,142억 (전년 1,176억)<br>영업이익률 10.8%</span></div>
+    <div class="tile"><span class="k">수주잔고</span><span class="v mono">5,699<span style="font-size:.55em;font-weight:600"> 억</span></span><span class="n">6/30 3,742억 + 9/1 공시 1,957억<br>TTM 매출의 1.45년치</span></div>
+    <div class="tile"><span class="k">최대 고객 비중</span><span class="v mono">66<span style="font-size:.55em;font-weight:600"> %</span></span><span class="n">26년 상반기 A사 1,422억<br>SK에코플랜트로 추정</span></div>
+    <div class="tile"><span class="k">부채비율</span><span class="v mono dn">133<span style="font-size:.55em;font-weight:600"> %</span></span><span class="n">1년 전 190% → 현재 133%<br>순차입금 533억</span></div>
+  </div>
+</header>
+
+<div class="strip">
+  <div class="strip-h"><b>최근 5일, 세 개의 공시</b><span>이 종목을 지금 봐야 하는 이유가 이 안에 다 있다</span></div>
+  <div class="evs">
+    <div class="ev neg">
+      <div class="d">08.27 → 08.28 공시</div>
+      <div class="t">천안 PC공장 사망사고</div>
+      <div class="b">PC기둥 거푸집 볼팅 작업 중 몰드가 전도돼 60대 하청 근로자 1명 사망. 대전지방고용노동청 천안지청이 <strong>사업장 내 PC기둥 거푸집 조립작업 일체에 부분 작업중지</strong>를 명령했다.</div>
+    </div>
+    <div class="ev warnb">
+      <div class="d">08.31 공시</div>
+      <div class="t">불성실공시법인 지정예고</div>
+      <div class="b">중대재해 발생 사실을 8/27 확인하고 8/28 공시해 <strong>공시불이행</strong>으로 지정예고. 최근 1년 벌점 누계는 0점. 이의신청 기한은 2026년 9월 9일.</div>
+    </div>
+    <div class="ev pos">
+      <div class="d">09.01 공시 (계약일 08.31)</div>
+      <div class="t">SK하이닉스 용인 Ph-4, 1,957억</div>
+      <div class="b">용인 클러스터 1기 Ph-4 IBL FAB 2공구 PC 자재납품·설치. <strong>작년 연결매출의 65.8%</strong> 규모. 발주처는 SK에코플랜트, 공기는 2028년 5월까지.</div>
+    </div>
+  </div>
+</div>
+
+<main>
+
+<section>
+  <div class="shead"><span class="plate">01</span><h2>결론부터</h2></div>
+  <p class="dek">까뮤이앤씨는 2026년 상반기에 매출이 두 배로 뛰고 영업이익률 10.8%를 냈다. 중소 건설사에서 거의 볼 수 없는 숫자다. 그런데 그 숫자의 77%는 <strong>현장 하나</strong>에서 나왔고, 그 현장은 이미 84% 끝났다.</p>
+
+  <p>2026년 상반기 연결 매출 2,141.7억은 전년 동기 1,176.4억의 1.82배다. 건축부문 매출 1,742.5억 중 <em>1,342억이 SK하이닉스 용인 클러스터 UT동 2공구 한 현장</em>에서 인식됐다. 회사 전체 매출의 63%다. 그 현장의 진행률은 6월 말 기준 84.0%, 남은 잔고는 426억뿐이다.</p>
+
+  <p>그래서 8월 31일에 계약한 <strong>Ph-4 IBL FAB 1,957억</strong>은 호재라기보다 <strong>필수</strong>였다. 이게 없었다면 2027년 매출은 절반으로 꺾였을 것이다. 6월 말 잔고 3,742억에 이 계약을 더하면 5,699억, TTM 매출의 1.45년치가 된다. 매출 속도를 2027년 말까지 유지할 재료는 확보됐다.</p>
+
+  <div class="call">
+    <span class="lb">이 리포트의 논지</span>
+    <p>싼 것은 맞다. TTM PER 3.6배, PBR 0.80배, EV/EBIT 4.4배. 하지만 이 회사의 진짜 질문은 밸류에이션이 아니라 <strong>"이 이익률이 SK하이닉스 물량이 아니라 PC 기술에서 나온 것인가"</strong>다. 답은 대체로 부정적이다. 매출의 66%가 단일 고객이고, 그 고객의 주주는 오너 2세 회사이며, 대표이사는 그 고객의 전신에서 왔다. 이익의 질과 지배구조의 질이 같은 방향을 가리키지 않는다.</p>
+  </div>
+
+  <p>여기에 8월 27일 사망사고가 겹쳤다. <strong>천안 PC공장의 PC기둥 거푸집 조립작업이 통째로 중지</strong>됐고, 그 공장은 이천과 함께 회사의 두 개뿐인 생산기지다. 중지 범위와 기간을 회사가 밝히지 않았기 때문에, 3분기 실적에 미칠 영향은 현재 계산 불가능하다.</p>
+</section>
+
+<section>
+  <div class="shead"><span class="plate">02</span><h2>무엇을 팔아서 버는가</h2></div>
+  <p class="dek">이름은 종합건설사인데 실체는 PC 부재 공장 두 곳과 그 부재를 설치하는 시공팀이다. 밸류체인에서 서 있는 칸이 이익률을 설명한다.</p>
+
+  <p>1978년 설립, 1989년 유가증권시장 상장, 옛 상호는 삼환까뮤. 2015년 지금 이름으로 바꿨다. 본사는 경기 이천이고 <strong>이천(52,619㎡)과 천안(75,182㎡) 두 곳에 PC 생산공장</strong>을 직접 보유한다. 별도 기준 직원은 159명이며, 이 중 <strong>PC 부문 72명, 건설 부문 59명</strong>이다.</p>
+
+  <p>PC(Precast Concrete)는 기둥·보·슬래브를 공장에서 미리 찍어 현장으로 옮겨 조립하는 공법이다. 현장 타설 대비 공기가 짧고 인력이 덜 든다. 원래는 지하 구조물 위주였지만 최근 반도체 팹과 대형 물류센터의 지상 구조물로 적용이 넓어졌다. 회사는 <strong>하이브리드 PC기둥 공법으로 국토부 건설신기술 제853호</strong>를 받았고, 반도체 공장에 초대형 PC 코어 공법을 국내 처음 적용했다고 사업보고서에 적고 있다.</p>
+
+  <h3>매출은 세 갈래로 갈린다</h3>
+  <p>연결 실체는 <strong>까뮤이앤씨(건설) + 한국알미늄(알루미늄박·포장재, 지분 100%)</strong> 두 개다. 한국알미늄은 2023년 12월 27일 모회사 ㈜베이스로부터 145.3억에 사들여 자회사로 편입했다.</p>
+
+  <div class="tw">
+    <table>
+      <caption>연결 부문별 매출과 매출총이익 (억원)</caption>
+      <thead><tr><th>부문</th><th>FY2024 매출</th><th>GP</th><th>GPM</th><th>FY2025 매출</th><th>GP</th><th>GPM</th><th>26.1H 매출</th><th>GP</th><th>GPM</th></tr></thead>
+      <tbody>
+        <tr><td>건축 (PC·일반건축)</td><td>2,035.3</td><td>6.3</td><td>0.3%</td><td>2,322.6</td><td>542.6</td><td>23.4%</td><td>1,742.5</td><td>324.5</td><td>18.6%</td></tr>
+        <tr><td>토목·조경</td><td>38.8</td><td>3.6</td><td>9.3%</td><td>22.6</td><td>1.4</td><td>6.0%</td><td>12.7</td><td>0.8</td><td>6.3%</td></tr>
+        <tr><td>제조 (한국알미늄)</td><td>529.5</td><td>10.4</td><td>2.0%</td><td>628.6</td><td>28.4</td><td>4.5%</td><td>378.2</td><td>33.1</td><td>8.7%</td></tr>
+        <tr><td>기타 (임대 등)</td><td>0.2</td><td>−0.1</td><td>—</td><td>0.7</td><td>−1.9</td><td>—</td><td>8.4</td><td>−3.5</td><td>—</td></tr>
+        <tr class="tot"><td>합계</td><td>2,603.8</td><td>20.2</td><td>0.8%</td><td>2,974.5</td><td>570.5</td><td>19.2%</td><td>2,141.7</td><td>354.9</td><td>16.6%</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="tnote">출처: 사업보고서·반기보고서 영업부문 주석. GPM은 매출총이익÷매출로 직접 계산했다.</p>
+
+  <p>표가 말하는 것은 하나다. <em>이 회사의 손익은 건축부문 원가율 한 줄로 결정된다</em>. FY2024에 건축 GPM이 0.3%였을 때 회사는 영업손실 181억을 냈고, FY2025에 23.4%가 되자 영업이익 238억을 냈다. 매출은 2,604억에서 2,975억으로 14% 늘었을 뿐이다.</p>
+
+  <div class="call cool">
+    <span class="lb">한국알미늄은 이익에 기여하지 않는다</span>
+    <p>매출의 21%를 차지하지만 손익 기여는 사실상 0이다. 연결 영업이익에서 별도 영업이익을 뺀 값은 FY2024 −46.9억, FY2025 −19.3억, 26년 상반기 +1.0억이다. 별도 재무제표에서는 <strong>2년 연속 손상차손</strong>(FY2024 42.2억, FY2025 29.6억, 누적 71.8억)을 인식해, 누적 취득원가 172.0억이 장부가 100.2억으로 줄었다. FY2025 한국알미늄 자체 순손실은 24.0억이다.</p>
+  </div>
+</section>
+
+<section>
+  <div class="shead"><span class="plate">03</span><h2>실적: 무엇이 바뀌었나</h2></div>
+  <p class="dek">2024년 4분기에 한 번에 털고, 2025년 4분기부터 매출이 계단식으로 올라섰다. 두 변곡점 모두 특정 현장에서 왔다.</p>
+
+  <figure>
+    <div class="fbox">
+      <div class="figttl">분기별 연결 실적 — 2024.1Q ~ 2026.2Q</div>
+      <svg viewBox="0 0 760 306" role="img" aria-label="분기별 연결 매출액과 영업이익">
+<g class="grid">
+<line x1="46" y1="156.0" x2="746" y2="156.0"/>
+<text class="ax" x="40" y="159.5" text-anchor="end">0</text>
+<line x1="46" y1="121.5" x2="746" y2="121.5"/>
+<text class="ax" x="40" y="125.0" text-anchor="end">300</text>
+<line x1="46" y1="87.0" x2="746" y2="87.0"/>
+<text class="ax" x="40" y="90.5" text-anchor="end">600</text>
+<line x1="46" y1="52.5" x2="746" y2="52.5"/>
+<text class="ax" x="40" y="56.0" text-anchor="end">900</text>
+<line x1="46" y1="18.0" x2="746" y2="18.0"/>
+<text class="ax" x="40" y="21.5" text-anchor="end">1,200</text>
+</g>
+<rect class="bar c1 dim2" x="60.0" y="86.3" width="42.0" height="69.7" rx="3"><title>24.1Q 매출 606.3억</title></rect>
+<text class="val" x="81.0" y="81.3" text-anchor="middle">606</text>
+<rect class="bar c1 dim2" x="130.0" y="78.1" width="42.0" height="77.9" rx="3"><title>24.2Q 매출 677.3억</title></rect>
+<text class="val" x="151.0" y="73.1" text-anchor="middle">677</text>
+<rect class="bar c1 dim2" x="200.0" y="80.5" width="42.0" height="75.5" rx="3"><title>24.3Q 매출 656.7억</title></rect>
+<text class="val" x="221.0" y="75.5" text-anchor="middle">657</text>
+<rect class="bar c1 dim2" x="270.0" y="79.7" width="42.0" height="76.3" rx="3"><title>24.4Q 매출 663.5억</title></rect>
+<text class="val" x="291.0" y="74.7" text-anchor="middle">664</text>
+<rect class="bar c1 dim" x="340.0" y="91.6" width="42.0" height="64.4" rx="3"><title>25.1Q 매출 559.6억</title></rect>
+<text class="val" x="361.0" y="86.6" text-anchor="middle">560</text>
+<rect class="bar c1 dim" x="410.0" y="85.1" width="42.0" height="70.9" rx="3"><title>25.2Q 매출 616.8억</title></rect>
+<text class="val" x="431.0" y="80.1" text-anchor="middle">617</text>
+<rect class="bar c1 dim" x="480.0" y="82.1" width="42.0" height="73.9" rx="3"><title>25.3Q 매출 642.3억</title></rect>
+<text class="val" x="501.0" y="77.1" text-anchor="middle">642</text>
+<rect class="bar c1 dim" x="550.0" y="23.1" width="42.0" height="132.9" rx="3"><title>25.4Q 매출 1,155.9억</title></rect>
+<text class="val" x="571.0" y="18.1" text-anchor="middle">1,156</text>
+<rect class="bar c1" x="620.0" y="35.3" width="42.0" height="120.7" rx="3"><title>26.1Q 매출 1,049.2억</title></rect>
+<text class="val" x="641.0" y="30.3" text-anchor="middle">1,049</text>
+<rect class="bar c1" x="690.0" y="30.4" width="42.0" height="125.6" rx="3"><title>26.2Q 매출 1,092.5억</title></rect>
+<text class="val" x="711.0" y="25.4" text-anchor="middle">1,092</text>
+<text class="panel-lb" x="46" y="13">연결 매출액 (억원)</text>
+<g class="grid">
+<line x1="46" y1="300.0" x2="746" y2="300.0" class=""/>
+<text class="ax" x="40" y="303.5" text-anchor="end">-180</text>
+<line x1="46" y1="273.0" x2="746" y2="273.0" class=""/>
+<text class="ax" x="40" y="276.5" text-anchor="end">-90</text>
+<line x1="46" y1="246.0" x2="746" y2="246.0" class="zero"/>
+<text class="ax" x="40" y="249.5" text-anchor="end">0</text>
+<line x1="46" y1="219.0" x2="746" y2="219.0" class=""/>
+<text class="ax" x="40" y="222.5" text-anchor="end">90</text>
+</g>
+<rect class="bar c2" x="60.0" y="246.0" width="42.0" height="4.3" rx="3"><title>24.1Q 영업이익 -14.5억</title></rect>
+<text class="val" x="81.0" y="262.4" text-anchor="middle">-14</text>
+<text class="ax sm" x="81.0" y="319.0" text-anchor="middle">24.1Q</text>
+<rect class="bar c2" x="130.0" y="246.0" width="42.0" height="1.5" rx="3"><title>24.2Q 영업이익 -1.9억</title></rect>
+<text class="val" x="151.0" y="258.6" text-anchor="middle">-2</text>
+<text class="ax sm" x="151.0" y="319.0" text-anchor="middle">24.2Q</text>
+<rect class="bar c2" x="200.0" y="246.0" width="42.0" height="1.5" rx="3"><title>24.3Q 영업이익 -4.0억</title></rect>
+<text class="val" x="221.0" y="259.2" text-anchor="middle">-4</text>
+<text class="ax sm" x="221.0" y="319.0" text-anchor="middle">24.3Q</text>
+<rect class="bar c2" x="270.0" y="246.0" width="42.0" height="48.1" rx="3"><title>24.4Q 영업이익 -160.5억</title></rect>
+<text class="val" x="291.0" y="306.1" text-anchor="middle">-160</text>
+<text class="ax sm" x="291.0" y="319.0" text-anchor="middle">24.4Q</text>
+<rect class="bar c3" x="340.0" y="235.1" width="42.0" height="10.9" rx="3"><title>25.1Q 영업이익 36.5억</title></rect>
+<text class="val" x="361.0" y="230.1" text-anchor="middle">36</text>
+<text class="ax sm" x="361.0" y="319.0" text-anchor="middle">25.1Q</text>
+<rect class="bar c3" x="410.0" y="220.6" width="42.0" height="25.4" rx="3"><title>25.2Q 영업이익 84.6억</title></rect>
+<text class="val" x="431.0" y="215.6" text-anchor="middle">85</text>
+<text class="ax sm" x="431.0" y="319.0" text-anchor="middle">25.2Q</text>
+<rect class="bar c3" x="480.0" y="229.6" width="42.0" height="16.4" rx="3"><title>25.3Q 영업이익 54.6억</title></rect>
+<text class="val" x="501.0" y="224.6" text-anchor="middle">55</text>
+<text class="ax sm" x="501.0" y="319.0" text-anchor="middle">25.3Q</text>
+<rect class="bar c3" x="550.0" y="227.2" width="42.0" height="18.8" rx="3"><title>25.4Q 영업이익 62.7억</title></rect>
+<text class="val" x="571.0" y="222.2" text-anchor="middle">63</text>
+<text class="ax sm" x="571.0" y="319.0" text-anchor="middle">25.4Q</text>
+<rect class="bar c3" x="620.0" y="212.9" width="42.0" height="33.1" rx="3"><title>26.1Q 영업이익 110.4억</title></rect>
+<text class="val" x="641.0" y="207.9" text-anchor="middle">110</text>
+<text class="ax sm" x="641.0" y="319.0" text-anchor="middle">26.1Q</text>
+<rect class="bar c3" x="690.0" y="209.4" width="42.0" height="36.6" rx="3"><title>26.2Q 영업이익 121.9억</title></rect>
+<text class="val" x="711.0" y="204.4" text-anchor="middle">122</text>
+<text class="ax sm" x="711.0" y="319.0" text-anchor="middle">26.2Q</text>
+<text class="panel-lb" x="46" y="197.0">연결 영업이익 (억원)</text>
+</svg>
+      <div class="legend"><span><i class="sw" style="background:var(--steel)"></i>매출액</span><span><i class="sw" style="background:var(--moss)"></i>영업이익(흑자)</span><span><i class="sw" style="background:var(--accent)"></i>영업이익(적자)</span></div>
+    </div>
+    <figcaption>2024년 4분기 영업손실 160.5억은 안성 물류센터 관련 손실이 몰린 분기다. 2025년 4분기 매출 1,155.9억부터 SK하이닉스 용인 UT동 물량이 본격 인식되기 시작했고, 그 수준이 2026년 1·2분기에도 유지되고 있다.</figcaption>
+  </figure>
+
+  <div class="tw">
+    <table>
+      <caption>연결 손익 요약 (억원)</caption>
+      <thead><tr><th></th><th>FY2023</th><th>FY2024</th><th>FY2025</th><th>25.1H</th><th>26.1H</th><th>TTM</th></tr></thead>
+      <tbody>
+        <tr><td>매출액</td><td>2,788.3</td><td>2,603.8</td><td>2,974.5</td><td>1,176.4</td><td>2,141.7</td><td>3,939.9</td></tr>
+        <tr><td>매출총이익</td><td>153.3</td><td>20.2</td><td>570.5</td><td>203.5</td><td>354.9</td><td>721.9</td></tr>
+        <tr><td>영업이익</td><td>66.5</td><td>−181.0</td><td>238.5</td><td>121.1</td><td>232.4</td><td>349.7</td></tr>
+        <tr><td>영업이익률</td><td>2.4%</td><td>−7.0%</td><td>8.0%</td><td>10.3%</td><td>10.8%</td><td>8.9%</td></tr>
+        <tr><td>당기순이익</td><td>26.1</td><td>−219.2</td><td>200.3</td><td>80.0</td><td>167.5</td><td>287.7</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="tnote">FY2023은 한국알미늄 편입일(2023.12.27) 기준으로 4일치만 연결돼 별도와 사실상 같다. TTM은 FY2025 + 26.1H − 25.1H.</p>
+
+  <p>2024년의 손실은 영업 외적인 사고가 아니라 <strong>공사 원가 자체</strong>였다. 그해 건축부문 매출 2,035.3억에 매출원가 2,028.9억, 즉 원가율 99.7%다. 남긴 마진이 6.3억이다.</p>
+</section>
+
+<section>
+  <div class="shead"><span class="plate">04</span><h2>매출 폭증의 해부</h2></div>
+  <p class="dek">공시된 계약금액과 반기보고서 진행률을 맞물리면, 상반기 매출의 어디에서 왔는지를 현장 단위로 역산할 수 있다.</p>
+
+  <p>SK하이닉스 용인 클러스터 1기 UT동 2공구 PC공사의 도급액은 정정공시를 거치며 세 번 바뀌었다. 부가세를 걷어낸 기준으로 <strong>1,282억(2025.3) → 2,183억(2025.9) → 2,660억(2026.2)</strong>이다. FY2025 사업보고서는 이 현장의 진행률을 <strong>40.84%</strong>(도급 2,183억 기준), 2026년 반기보고서는 기납품액 <strong>2,233.5억</strong>(도급 2,660억 기준)으로 적고 있다.</p>
+
+  <div class="call">
+    <span class="lb">역산</span>
+    <p>FY2025말 누적 인식 = 2,183.5 × 40.84% = <strong>891.7억</strong><br>
+    26년 상반기말 누적 인식 = <strong>2,233.5억</strong><br>
+    → 26년 상반기 인식액 = <strong>1,341.8억</strong> = 건축부문 매출 1,742.5억의 <strong>77.0%</strong>, 연결 매출 2,141.7억의 <strong>62.7%</strong></p>
+  </div>
+
+  <p>같은 반기 주요 고객 주석의 A사 매출이 1,421.6억(연결 매출의 66.4%)이다. UT동 1,341.8억에 같은 발주처의 다른 현장 몇 개를 더하면 딱 맞는 크기다. <em>2026년 상반기 실적은 SK하이닉스 팹 하나의 PC 물량을 몰아 인식한 결과</em>라고 읽는 것이 정확하다.</p>
+
+  <figure>
+    <div class="fbox">
+      <div class="figttl">SK하이닉스 PC 현장 5곳 — 얼마나 남았나</div>
+      <svg viewBox="0 0 760 270" role="img" aria-label="SK하이닉스 PC 현장별 기납품액과 잔고">
+<text class="note" x="0" y="14">단위 억원, 부가세 제외 · 기준일 2026.06.30 (Ph-4는 2026.08.31 계약)</text>
+<text class="ax sm" x="200" y="32">기납품 ▇ / 잔고 ▇</text>
+<text class="ax sm" x="700" y="32">진행률</text>
+<text class="rowlb" x="0" y="52">M15 Ph-3 2공구</text>
+<text class="ax sm" x="0" y="67">2024.06 수주</text>
+<rect class="bar c1" x="200" y="43" width="170.2" height="17" rx="3"><title>M15 Ph-3 2공구 기납품 930억</title></rect>
+<rect class="bar c2" x="372.2" y="43" width="0.9" height="17" rx="3"><title>M15 Ph-3 2공구 잔고 5억</title></rect>
+<text class="val" x="700" y="56">99%</text>
+<text class="val dimv" x="380.1" y="56">936</text>
+<text class="rowlb" x="0" y="96">용인 클러스터 OBL</text>
+<text class="ax sm" x="0" y="111">2024.11 수주</text>
+<rect class="bar c1" x="200" y="87" width="139.4" height="17" rx="3"><title>용인 클러스터 OBL 기납품 762억</title></rect>
+<rect class="bar c2" x="341.4" y="87" width="6.9" height="17" rx="3"><title>용인 클러스터 OBL 잔고 38억</title></rect>
+<text class="val" x="700" y="100">95%</text>
+<text class="val dimv" x="355.3" y="100">800</text>
+<text class="rowlb" x="0" y="140">용인 클러스터 UT동 2공구</text>
+<text class="ax sm" x="0" y="155">2025.03 수주</text>
+<rect class="bar c1" x="200" y="131" width="408.6" height="17" rx="3"><title>용인 클러스터 UT동 2공구 기납품 2,234억</title></rect>
+<rect class="bar c2" x="610.6" y="131" width="78.0" height="17" rx="3"><title>용인 클러스터 UT동 2공구 잔고 426억</title></rect>
+<text class="val" x="700" y="144">84%</text>
+<text class="val dimv" x="695.6" y="144">2,660</text>
+<text class="rowlb" x="0" y="184">청주 P&amp;T7 2공구</text>
+<text class="ax sm" x="0" y="199">2026.06 수주</text>
+<rect class="bar c1" x="200" y="175" width="3.1" height="17" rx="3"><title>청주 P&amp;T7 2공구 기납품 17억</title></rect>
+<rect class="bar c2" x="205.1" y="175" width="118.4" height="17" rx="3"><title>청주 P&amp;T7 2공구 잔고 647억</title></rect>
+<text class="val" x="700" y="188">3%</text>
+<text class="val dimv" x="330.5" y="188">664</text>
+<text class="rowlb" x="0" y="228">용인 클러스터 Ph-4 IBL FAB</text>
+<text class="ax sm" x="0" y="243">2026.08 수주</text>
+<rect class="bar c1" x="200" y="219" width="0.6" height="17" rx="3"><title>용인 클러스터 Ph-4 IBL FAB 기납품 0억</title></rect>
+<rect class="bar c2" x="202.0" y="219" width="358.0" height="17" rx="3"><title>용인 클러스터 Ph-4 IBL FAB 잔고 1,957억</title></rect>
+<text class="val" x="700" y="232">0%</text>
+<text class="val dimv" x="567.0" y="232">1,957</text>
+</svg>
+      <div class="legend"><span><i class="sw" style="background:var(--steel)"></i>기납품액(인식 완료)</span><span><i class="sw" style="background:var(--accent)"></i>잔고(앞으로 인식)</span></div>
+    </div>
+    <figcaption>매출을 만들어 온 앞의 세 현장은 사실상 끝났다. 남은 잔고 3,073억 중 2,604억(85%)이 아직 착수 초기인 청주 P&amp;T7과 8월 31일 계약한 Ph-4다. 2026년 하반기 매출은 이 두 현장이 얼마나 빨리 올라오느냐에 달렸다.</figcaption>
+  </figure>
+
+  <div class="tw">
+    <table>
+      <caption>SK하이닉스 관련 PC 계약 (억원, 부가세 제외)</caption>
+      <thead><tr><th>현장</th><th>계약일</th><th>완공예정</th><th>수주총액</th><th>기납품</th><th>잔고</th><th>진행률</th></tr></thead>
+      <tbody>
+        <tr><td>M15 Ph-3 2공구</td><td>2024.06</td><td>2026.07</td><td>935.5</td><td>930.3</td><td>5.1</td><td>99.5%</td></tr>
+        <tr><td>용인 클러스터 1기 OBL</td><td>2024.11</td><td>2027.06</td><td>799.5</td><td>761.8</td><td>37.7</td><td>95.3%</td></tr>
+        <tr class="hl"><td>용인 클러스터 1기 UT동 2공구</td><td>2025.03</td><td>2027.07</td><td>2,659.6</td><td>2,233.5</td><td>426.1</td><td>84.0%</td></tr>
+        <tr><td>청주 P&amp;T7 2공구</td><td>2026.06</td><td>2028.06</td><td>664.0</td><td>17.0</td><td>647.1</td><td>2.6%</td></tr>
+        <tr><td>용인 클러스터 1기 Ph-4 IBL FAB</td><td>2026.08</td><td>2028.05</td><td>1,956.8</td><td>0.0</td><td>1,956.8</td><td>0.0%</td></tr>
+        <tr class="tot"><td>합계</td><td></td><td></td><td>7,015.4</td><td>3,942.6</td><td>3,072.8</td><td>56.2%</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="tnote">앞의 세 현장은 2026년 반기보고서 수주상황표(부가세 별도), Ph-4는 2026-09-01 단일판매·공급계약 공시(부가세 제외 명시). 공시 원문의 계약금액은 계약별로 부가세 포함·제외가 섞여 있어 <a href="#datanote">데이터 노트</a>의 기준으로 통일했다.</p>
+
+  <h3>"역대 최대 수주"라는 표현은 조심해야 한다</h3>
+  <p>9월 1일 공시된 1,956.8억은 <strong>부가세 제외</strong> 금액이다. 반면 UT동 2공구의 2026년 2월 정정공시 2,925.5억은 <strong>부가세 포함</strong>이다. 같은 기준으로 맞추면 UT동은 2,659.6억, Ph-4는 1,956.8억으로 <em>Ph-4는 UT동의 73.6% 규모</em>다. 회사가 2026년 7월 계약분부터 표기 기준을 바꿨기 때문에 생긴 착시다.</p>
+</section>
+
+<section>
+  <div class="shead"><span class="plate">05</span><h2>마진의 질</h2></div>
+  <p class="dek">영업이익률 10.8%는 훌륭하다. 다만 매출총이익률은 이미 내려오고 있고, 최근 두 기의 영업이익에는 서로 반대 방향의 일회성이 섞여 있다.</p>
+
+  <figure style="max-width:400px">
+    <div class="fbox narrow">
+      <div class="figttl">건축부문 매출총이익률</div>
+      <svg viewBox="0 0 384 200" role="img" aria-label="건축부문 매출총이익률 추이">
+<g class="grid">
+<line x1="42" y1="152.0" x2="372" y2="152.0"/>
+<text class="ax" x="36" y="155.5" text-anchor="end">0%</text>
+<line x1="42" y1="103.5" x2="372" y2="103.5"/>
+<text class="ax" x="36" y="107.0" text-anchor="end">10%</text>
+<line x1="42" y1="55.1" x2="372" y2="55.1"/>
+<text class="ax" x="36" y="58.6" text-anchor="end">20%</text>
+</g>
+<rect class="bar c1" x="63.5" y="150.5" width="39.6" height="1.5" rx="3"><title>FY2024 건축 매출총이익률 0.31%</title></rect>
+<text class="val" x="83.2" y="145.5" text-anchor="middle">0.3</text>
+<text class="ax sm" x="83.2" y="169.0" text-anchor="middle">FY2024</text>
+<rect class="bar c1" x="145.9" y="38.8" width="39.6" height="113.2" rx="3"><title>FY2025 건축 매출총이익률 23.36%</title></rect>
+<text class="val" x="165.8" y="33.8" text-anchor="middle">23.4</text>
+<text class="ax sm" x="165.8" y="169.0" text-anchor="middle">FY2025</text>
+<rect class="bar c1" x="228.4" y="45.1" width="39.6" height="106.9" rx="3"><title>25.1H 건축 매출총이익률 22.05%</title></rect>
+<text class="val" x="248.2" y="40.1" text-anchor="middle">22.1</text>
+<text class="ax sm" x="248.2" y="169.0" text-anchor="middle">25.1H</text>
+<rect class="bar c1" x="310.9" y="61.7" width="39.6" height="90.3" rx="3"><title>26.1H 건축 매출총이익률 18.63%</title></rect>
+<text class="val" x="330.8" y="56.7" text-anchor="middle">18.6</text>
+<text class="ax sm" x="330.8" y="169.0" text-anchor="middle">26.1H</text>
+<line class="sep" x1="207.0" y1="20" x2="207.0" y2="154"/>
+<text class="note" x="48" y="16">연간</text>
+<text class="note" x="215.0" y="16">반기</text>
+</svg>
+    </div>
+    <figcaption>FY2025의 23.4%가 정점이었다. 26년 상반기 18.6%는 전년 동기 22.1% 대비 3.4%p 낮다.</figcaption>
+  </figure>
+
+  <p>물량이 두 배로 늘어난 상반기에 매출총이익률은 오히려 3.4%p 떨어졌다. 매출총이익 증가분(203.5→354.9억, +74%)은 마진이 아니라 <strong>물량</strong>이 만든 것이다. 남은 잔고의 구성을 보면 이 방향은 이어질 가능성이 높다. 6월 말 잔고 3,742억 중 <strong>공공 건축이 1,554억(42%)</strong>이고 그 대부분이 LH 아파트(군포 대야미 819억, 김포 고촌 787억)다. 반도체 팹 PC와 LH 아파트의 마진이 같을 이유는 없다.</p>
+
+  <h3>영업이익에 섞인 두 개의 일회성</h3>
+  <div class="duo">
+    <div class="against">
+      <h4>FY2025 — 이익을 깎은 것</h4>
+      <ul>
+        <li>별도 판매비와관리비 284.3억 중 <strong>대손상각비가 180.0억</strong>(전기 32.8억). 판관비의 63%다.</li>
+        <li>이걸 빼면 별도 영업이익은 257.8억이 아니라 <strong>437.8억</strong>이 된다.</li>
+        <li>같은 기간 연결 대손충당금 잔액은 78.4억 → 102.3억으로 <strong>23.9억만</strong> 늘었다. 차액 약 156억은 그 해에 제각(회수 포기)된 것으로 보인다. 공시 원문은 대상 채권을 특정하지 않는다.</li>
+      </ul>
+    </div>
+    <div class="for">
+      <h4>26년 상반기 — 이익을 깎은 것</h4>
+      <ul>
+        <li>연결 판관비 122.6억(전년 82.4억) 중 <strong>'하자보수비' 36.8억</strong>이 새로 잡혔다.</li>
+        <li>같은 반기 <strong>법적소송충당부채가 5.8억 → 42.6억</strong>으로 36.8억 전입됐다. 두 숫자가 사실상 같아 같은 항목으로 보인다. 라마다앙코르호텔 손해배상 건 19.6억 등이 포함된다.</li>
+        <li>이걸 빼면 상반기 연결 영업이익은 232.4억이 아니라 <strong>269.2억</strong>, 영업이익률은 <strong>12.6%</strong>가 된다.</li>
+      </ul>
+    </div>
+  </div>
+
+  <p>정리하면, 겉으로 보이는 이익률은 최근 두 기 모두 <strong>실제보다 낮게</strong> 나와 있다. 반대로 매출총이익률은 이미 꺾였다. 이익의 방향은 좋고 마진의 방향은 나쁘다 — 이 둘이 만나는 지점이 3분기 실적이다.</p>
+</section>
+
+<section>
+  <div class="shead"><span class="plate">06</span><h2>수주잔고: 회사가 사는 연료</h2></div>
+  <p class="dek">건설사에서 잔고는 미래 매출 그 자체다. 이 회사의 잔고는 지난 10년간 세 번 무너졌고 세 번 회복했다.</p>
+
+  <figure>
+    <div class="fbox">
+      <div class="figttl">연도별 수주잔고 (억원)</div>
+      <svg viewBox="0 0 760 268" role="img" aria-label="연도별 수주잔고 추이">
+<g class="grid">
+<line x1="50" y1="208.0" x2="746" y2="208.0"/>
+<text class="ax" x="44" y="211.5" text-anchor="end">0</text>
+<line x1="50" y1="148.7" x2="746" y2="148.7"/>
+<text class="ax" x="44" y="152.2" text-anchor="end">2,000</text>
+<line x1="50" y1="89.3" x2="746" y2="89.3"/>
+<text class="ax" x="44" y="92.8" text-anchor="end">4,000</text>
+<line x1="50" y1="30.0" x2="746" y2="30.0"/>
+<text class="ax" x="44" y="33.5" text-anchor="end">6,000</text>
+</g>
+<rect class="bar c1" x="62.2" y="163.1" width="33.6" height="44.9" rx="3"><title>FY2016 수주잔고 1,514억</title></rect>
+<text class="val" x="79.0" y="158.1" text-anchor="middle">1,514</text>
+<text class="ax sm" x="79.0" y="225.0" text-anchor="middle">16</text>
+<rect class="bar c1" x="120.2" y="156.1" width="33.6" height="51.9" rx="3"><title>FY2017 수주잔고 1,749억</title></rect>
+<text class="val" x="137.0" y="151.1" text-anchor="middle">1,749</text>
+<text class="ax sm" x="137.0" y="225.0" text-anchor="middle">17</text>
+<rect class="bar c1" x="178.2" y="136.5" width="33.6" height="71.5" rx="3"><title>FY2018 수주잔고 2,410억</title></rect>
+<text class="val" x="195.0" y="131.5" text-anchor="middle">2,410</text>
+<text class="ax sm" x="195.0" y="225.0" text-anchor="middle">18</text>
+<rect class="bar c1" x="236.2" y="183.7" width="33.6" height="24.3" rx="3"><title>FY2019 수주잔고 818억</title></rect>
+<text class="val" x="253.0" y="178.7" text-anchor="middle">818</text>
+<text class="ax sm" x="253.0" y="225.0" text-anchor="middle">19</text>
+<rect class="bar c1" x="294.2" y="150.6" width="33.6" height="57.4" rx="3"><title>FY2020 수주잔고 1,935억</title></rect>
+<text class="val" x="311.0" y="145.6" text-anchor="middle">1,935</text>
+<text class="ax sm" x="311.0" y="225.0" text-anchor="middle">20</text>
+<rect class="bar c1" x="352.2" y="78.6" width="33.6" height="129.4" rx="3"><title>FY2021 수주잔고 4,363억</title></rect>
+<text class="val" x="369.0" y="73.6" text-anchor="middle">4,363</text>
+<text class="ax sm" x="369.0" y="225.0" text-anchor="middle">21</text>
+<rect class="bar c1" x="410.2" y="91.0" width="33.6" height="117.0" rx="3"><title>FY2022 수주잔고 3,945억</title></rect>
+<text class="val" x="427.0" y="86.0" text-anchor="middle">3,945</text>
+<text class="ax sm" x="427.0" y="225.0" text-anchor="middle">22</text>
+<rect class="bar c1" x="468.2" y="149.2" width="33.6" height="58.8" rx="3"><title>FY2023 수주잔고 1,983억</title></rect>
+<text class="val" x="485.0" y="144.2" text-anchor="middle">1,983</text>
+<text class="ax sm" x="485.0" y="225.0" text-anchor="middle">23</text>
+<rect class="bar c1" x="526.2" y="133.6" width="33.6" height="74.4" rx="3"><title>FY2024 수주잔고 2,508억</title></rect>
+<text class="val" x="543.0" y="128.6" text-anchor="middle">2,508</text>
+<text class="ax sm" x="543.0" y="225.0" text-anchor="middle">24</text>
+<rect class="bar c1" x="584.2" y="89.2" width="33.6" height="118.8" rx="3"><title>FY2025 수주잔고 4,005억</title></rect>
+<text class="val" x="601.0" y="84.2" text-anchor="middle">4,005</text>
+<text class="ax sm" x="601.0" y="225.0" text-anchor="middle">25</text>
+<rect class="bar c1" x="642.2" y="97.0" width="33.6" height="111.0" rx="3"><title>FY2026.6 수주잔고 3,742억</title></rect>
+<text class="val" x="659.0" y="92.0" text-anchor="middle">3,742</text>
+<text class="ax sm" x="659.0" y="225.0" text-anchor="middle">26.6</text>
+<rect class="bar pf" x="700.2" y="38.9" width="33.6" height="169.1" rx="3"><title>9월 1일 신규수주 반영 pro-forma 5,699억</title></rect>
+<text class="val hot" x="717.0" y="33.9" text-anchor="middle">5,699</text>
+<text class="ax sm hot" x="717.0" y="225.0" text-anchor="middle">+9/1</text>
+<text class="note" x="50" y="18">단위 억원 · FY2016~FY2025는 각 사업보고서 수주상황표, 26.6은 반기보고서, 오른쪽 끝은 9월 1일 공시분 1,957억을 더한 값</text>
+</svg>
+    </div>
+    <figcaption>2019년 818억, 2023년 1,983억으로 두 번 바닥을 쳤고 그때마다 이듬해 실적이 흔들렸다. 물류센터 붐이 만든 2021년의 4,363억 이후 잔고 구성이 물류센터에서 반도체 팹으로 갈아탔다.</figcaption>
+  </figure>
+
+  <div class="tw">
+    <table>
+      <caption>수주 유입 대비 소진 (Book-to-Bill)</caption>
+      <thead><tr><th></th><th>기초 잔고</th><th>신규 수주</th><th>계약 변경</th><th>기성(매출)</th><th>기말 잔고</th><th>B/B</th></tr></thead>
+      <tbody>
+        <tr><td>FY2025</td><td>2,508.1</td><td>3,743.3</td><td>+98.9</td><td>2,345.2</td><td>4,005.1</td><td>1.64</td></tr>
+        <tr><td>25년 상반기</td><td>2,508.1</td><td>1,378.0</td><td>+91.4</td><td>857.5</td><td>3,119.9</td><td>1.71</td></tr>
+        <tr class="hl"><td>26년 상반기</td><td>4,005.1</td><td>949.5</td><td>+542.4</td><td>1,755.2</td><td>3,741.8</td><td>0.85</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="tnote">별도 기준, 재무제표 주석 '공사계약금액의 변동내역'. B/B = (신규+변경)÷기성. 26년 상반기 계약변경 542억은 대부분 UT동·OBL의 물량 증액이다. 8월 31일 Ph-4 1,957억은 3분기에 반영된다.</p>
+
+  <p>26년 상반기 B/B 0.85는 잔고가 줄고 있었다는 뜻이다. 신규 949.5억 중 664억(70%)이 청주 P&amp;T7 하나였다. <strong>Ph-4 1,957억이 그 흐름을 뒤집었다.</strong> 이걸 반영한 pro-forma 잔고 5,698.6억은 TTM 매출 3,939.9억의 1.45년치, 26년 상반기 연환산 매출 4,283억의 1.33년치다.</p>
+
+  <div class="call cool">
+    <span class="lb">눈여겨볼 패턴</span>
+    <p>SK하이닉스 PC 계약은 <strong>계속 증액된다</strong>. UT동 2공구는 1,282억 → 2,183억 → 2,660억으로 두 배가 됐고, OBL은 691억 → 799억, M15 Ph-3는 918억 → 935억으로 늘었다. 공시 원문은 사유를 적지 않지만, PC 물량이 설계 진행에 따라 증가하는 구조로 보인다. 이 패턴이 유지되면 Ph-4 1,957억도 최종 계약액은 더 클 수 있다. 반대로 발주 방식이 바뀌면(원발주처의 직접 발주 전환) 계약이 분리될 수 있다고 회사 스스로 2025년 3월 공시에 적어 두었다.</p>
+  </div>
+</section>
+
+<section>
+  <div class="shead"><span class="plate">07</span><h2>해자는 PC 기술인가, 관계인가</h2></div>
+  <p class="dek">이 회사에 대해 물어야 할 단 하나의 질문이다. 양쪽 근거를 나란히 놓는다.</p>
+
+  <div class="duo">
+    <div class="for">
+      <h4>해자가 있다는 근거</h4>
+      <ul>
+        <li><strong>국토부 건설신기술 제853호</strong>(하이브리드 PC기둥 공법). 반도체 공장 최적화 PC 코어를 국내 최초로 실용화했다고 사업보고서에 기재.</li>
+        <li><strong>자체 공장 2곳</strong>(이천 5.3만㎡, 천안 7.5만㎡, 토지 장부가 합계 572억). PC는 공장·운송·시공이 일체화돼야 하는 사업이라 진입장벽이 있다.</li>
+        <li>2026년 <strong>시공능력평가 97위</strong>로 2013년 이후 14년 만에 100위권 복귀. 공공 입찰용 기업신용등급은 BBB+(2023) → A−(2024·2025)로 상향.</li>
+        <li>실제로 마진이 난다. 26년 상반기 영업이익률 10.8%는 비교군 10곳 중 2위다.</li>
+        <li>대형 건설사가 산업화 건축시장에 들어오고 있지만, 회사는 삼성이앤에이·현대건설·SK에코플랜트·동원개발 등 <strong>복수의 원청</strong>과 거래한다.</li>
+      </ul>
+    </div>
+    <div class="against">
+      <h4>해자를 의심할 근거</h4>
+      <ul>
+        <li><strong>매출의 66%가 단일 고객</strong>이다. FY2025 A사 1,983억(66.7%), 26년 상반기 1,422억(66.4%). FY2024에는 A~D 4개사로 분산돼 있었다.</li>
+        <li>그 고객(SK에코플랜트)의 주주가 <strong>오너 일가 회사</strong>다. ㈜더블유에이치홀딩스는 베이스그룹 회장 아들이 100% 소유한 법인으로, 2024년 말 SK에코플랜트 주식 119.6만 주를 보유하고 있다고 언론에 보도됐다.</li>
+        <li><strong>대표이사 손병재</strong>는 SK건설(현 SK에코플랜트) 건축영업총괄 전무 출신이며, 현재 계열사 ㈜후니드 대표를 겸직한다.</li>
+        <li>연구개발비가 <strong>매출의 0.13%</strong>(26년 상반기 2.3억)다. 전담 인력 3명. 기술로 방어하는 회사의 지출 구조로 보기 어렵다.</li>
+        <li>회사 스스로 사업보고서에 <em>"기술력·품질관리·공사실적이 수주경쟁력의 핵심"</em>, <em>"다수의 중견 전문기업이 경쟁하는 시장"</em>이라고 적었다. 독점적 지위를 주장하지 않는다.</li>
+        <li>이익률 10.8%가 나온 기간이 사실상 <strong>UT동 한 현장이 전부</strong>인 기간과 겹친다. 다른 현장 구성에서 같은 마진이 나오는지는 아직 검증된 적이 없다.</li>
+      </ul>
+    </div>
+  </div>
+
+  <p>판정: <strong>PC 제조 역량은 실재하지만, 지금의 이익률을 만든 것은 기술 프리미엄이 아니라 특정 발주처와의 관계와 반도체 투자 사이클로 보는 편이 합리적이다.</strong> 이 구분이 중요한 이유는, 관계가 만든 마진은 관계가 변하면 사라지지만 기술이 만든 마진은 그렇지 않기 때문이다. 검증 방법은 하나뿐이다 — LH 아파트 비중이 커지는 2027년에도 건축 GPM이 15%대를 지키는지 보는 것.</p>
+</section>
+
+<section>
+  <div class="shead"><span class="plate">08</span><h2>계열로 흘러나간 돈</h2></div>
+  <p class="dek">까뮤이앤씨는 지난 3년간 자기 자산을 계열사에 팔고, 그 매수 대금을 스스로 빌려주고, 회수를 위해 보증을 섰다. 이 흐름이 재무제표 곳곳에 남아 있다.</p>
+
+  <p>최대주주는 <strong>㈜베이스 44.74%</strong>(특수관계인 포함 53.66%), 소액주주 43.9%(11,875명). 2014년 이후 최대주주 변동은 없다. 그런데 ㈜베이스 자체의 재무는 취약하다. 사업보고서에 실린 2024년 말 연결 기준으로 <strong>자산 6,027억 / 부채 5,093억 / 자본 934억(부채비율 545%), 매출 6,017억, 영업손실 231억, 순손실 600억</strong>이다.</p>
+
+  <div class="tw">
+    <table>
+      <caption>계열 거래 타임라인</caption>
+      <thead><tr><th>시점</th><th>거래</th><th>금액</th><th>상대</th><th>현재 상태</th></tr></thead>
+      <tbody>
+        <tr><td>2023.11.30</td><td>SK에코플랜트 비상장주식 74.65만 주 매각 (주당 75,000원)</td><td>559.9억</td><td>㈜더블유에이치홀딩스 (계열)</td><td>완료</td></tr>
+        <tr><td>2023.11.29~</td><td>위 매수 자금 일부를 대여 (이율 10%)</td><td>215.0억</td><td>㈜더블유에이치홀딩스</td><td class="pos">2026.7.13 회수</td></tr>
+        <tr><td>2023.12.27</td><td>한국알미늄 지분 92.92% 취득</td><td>145.3억</td><td>㈜베이스 (모회사)</td><td class="neg">누적 손상 71.8억</td></tr>
+        <tr><td>2024.10.29</td><td>안성 성은 물류센터 PF 중첩적 채무인수 (책임준공 미이행)</td><td>1,750.0억</td><td>안성성은물류PFV</td><td class="pos">2026.6.30 소멸</td></tr>
+        <tr><td>2025.04~2026.04</td><td>위 PF 이자 재원 대여 (이율 5%)</td><td>78.5억</td><td>안성성은물류PFV</td><td class="pos">회수</td></tr>
+        <tr class="hl"><td>2026.1H 중</td><td>지배기업 대여금 5억 → 77억</td><td>77.0억</td><td>㈜베이스 (모회사)</td><td class="neg">잔존</td></tr>
+        <tr class="hl"><td>2026.07.10</td><td>사모사채 900억 관련 조건부 지급보증</td><td>100.0억</td><td>㈜더블유에이치홀딩스</td><td class="neg">잔존</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="tnote">출처: 주요사항보고서·금전대여결정·채무인수결정·타인에대한채무보증결정 공시 및 2026년 반기보고서 특수관계자 주석.</p>
+
+  <h3>SK에코플랜트 지분 매각 — 판단은 옳았고, 방식은 문제였다</h3>
+  <p>2023년 11월 회사는 보유하던 SK에코플랜트 비상장주식 74.65만 주를 주당 75,000원, 총 559.9억에 계열사 ㈜더블유에이치홀딩스에 팔았다. 외부평가(회계법인 더올, DCF)는 523.8~616.5억 범위를 제시했으니 가격 자체는 범위 안이다. 2026년 7월 K-OTC 시세로 환산하면 주당 약 46,000원이니 <strong>결과적으로 39% 비싼 값에 판 셈</strong>이다.</p>
+  <p>문제는 대금이다. 회사는 <em>매수자에게 215억을 연 10%로 빌려줬고, 그 대여금을 2년 8개월간 회수하지 못했다.</em> 2026년 6월 말 기준 미수이자가 <strong>55.5억</strong> 쌓여 있었다. 매수자인 ㈜더블유에이치홀딩스는 2024년 말 기준 자산 1,006.6억 / 부채 984.7억 / 자본 21.9억, 매출 100만 원, 순손실 74.5억의 사실상 특수목적법인이다.</p>
+  <p>회수 방식도 특이하다. 2026년 7월 13일, ㈜더블유에이치홀딩스가 <strong>SK에코플랜트가 자금보충의무를 지는 사모사채 900억</strong>을 발행했고 그 자금으로 대여금이 상환됐다. 대신 까뮤이앤씨는 SK에코플랜트에 <strong>100억 한도의 조건부 지급보증</strong>을 제공하고 보유 중이던 SK에코플랜트 주식 9,136주(약 4.2억)를 담보로 내놓았다. 현금은 돌아왔지만 <strong>우발부채가 새로 생겼다.</strong></p>
+
+  <div class="call">
+    <span class="lb">3분기 보고서에서 확인할 것</span>
+    <p>① 미수이자 55.5억이 현금으로 회수됐는가, ② 지배기업 ㈜베이스에 대한 대여금 77억이 늘었는가 줄었는가. 이 대여금은 반기 중 5억에서 77억으로 72억 증가했는데 <strong>별도의 금전대여결정 공시가 없다</strong>(단건 기준 공시 요건 미달로 추정). 자기자본 1,275억의 6.0%에 해당하고, 상대는 순손실 600억을 낸 모회사다.</p>
+  </div>
+
+  <h3>안성 물류센터 — 2년을 잡아먹고 정리됐다</h3>
+  <p>2021년 12월 수주한 안성 성은지구 복합물류센터(도급 1,424억)에서 책임준공 기한(2024.10.28)을 못 지켰다. 그 결과 2024년 10월 29일 시행사의 PF 대출 <strong>1,750억을 중첩적으로 인수</strong>했다. 당시 자기자본의 200.5%다. 시행사 안성성은물류PFV는 2025년 말 자본이 −343억으로 완전자본잠식이었고, 회사는 이 회사의 PF 이자 재원까지 대여해 왔다.</p>
+  <p>2026년 6월 26일 물건 매각계약이 체결되고 6월 30일 PF 대출금이 전액 상환되면서 <strong>채무이행 의무가 소멸</strong>했다. 이것이 상반기 재무 개선의 실질적 배경이다. 현금은 48억에서 269억으로 늘었고, 고정이자율 금융부채는 858억에서 375억으로 줄었다.</p>
+</section>
+
+<section>
+  <div class="shead"><span class="plate">09</span><h2>재무 상태</h2></div>
+  <p class="dek">건설사에서 봐야 할 세 가지 — 미청구공사, 차입 구조, 영업현금흐름 — 이 모두 개선 방향이다.</p>
+
+  <div class="tw">
+    <table>
+      <caption>연결 재무 상태 (억원)</caption>
+      <thead><tr><th></th><th>FY2023</th><th>FY2024</th><th>FY2025</th><th>26.1H</th></tr></thead>
+      <tbody>
+        <tr><td>자산총계</td><td>2,555.5</td><td>2,765.4</td><td>2,983.0</td><td>2,969.8</td></tr>
+        <tr><td>부채총계</td><td>1,682.5</td><td>1,810.6</td><td>1,859.3</td><td>1,694.3</td></tr>
+        <tr><td>자본총계</td><td>873.0</td><td>954.9</td><td>1,123.7</td><td>1,275.5</td></tr>
+        <tr><td>부채비율</td><td>192.7%</td><td>189.6%</td><td>165.5%</td><td>132.8%</td></tr>
+        <tr><td>총차입금</td><td>—</td><td>—</td><td>871.9</td><td>802.3</td></tr>
+        <tr><td>현금및현금성자산</td><td>246.4</td><td>45.4</td><td>56.0</td><td>269.6</td></tr>
+        <tr><td>순차입금</td><td>—</td><td>—</td><td>815.9</td><td>532.7</td></tr>
+        <tr><td>계약자산(미청구공사)</td><td>—</td><td>493.0</td><td>436.3</td><td>273.1</td></tr>
+        <tr><td>영업활동현금흐름</td><td>—</td><td>—</td><td>+258.4</td><td>+331.7</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="tnote">FY2023·FY2024 차입금은 XBRL 계정 구조가 달라 동일 기준 비교가 어려워 생략했다. 26.1H 영업현금흐름은 반기 누적이다.</p>
+
+  <ul>
+    <li><strong>미청구공사가 줄고 있다.</strong> 493억 → 436억 → 273억. 건설사에서 이 계정이 매출보다 빠르게 늘면 위험 신호인데, 매출이 두 배로 뛴 반기에 오히려 38% 줄었다. 청구·회수가 정상적으로 돌고 있다는 뜻이다.</li>
+    <li><strong>영업현금흐름이 이익을 넘어선다.</strong> 상반기 순이익 167.5억, 영업현금흐름 +331.7억. 이익의 질이 나쁘지 않다.</li>
+    <li><strong>차입 만기가 길어졌다.</strong> 단기차입금 678억 → 510억, 장기차입금 2.5억 → 259억. 상반기 중 장기차입 290억을 새로 일으켜 유동성장기부채 191억을 갚았다.</li>
+    <li><strong>배당은 12년 연속.</strong> FY2025 주당 30원(결산 25 + 중간 5), 총 17.9억, 배당성향 8.9%, 시가배당률 2.5%. 2016년 이후 매년 중간배당도 했다.</li>
+    <li><strong>담보 여력은 빠듯하다.</strong> 토지·건물 장부가 대부분이 신한·하나은행 등에 담보신탁으로 잡혀 있고(담보설정 744억), 양평 타운하우스 완성주택 재고는 133억 차입의 담보다.</li>
+  </ul>
+
+  <p>감사인은 FY2025부터 <strong>선진회계법인</strong>(직전 3년 삼도회계법인)으로 바뀌었고 적정의견이다. 핵심감사사항 5개는 모두 공사 수익인식 관련이며, 그중 <strong>"미청구공사금액(계약자산) 회수가능성"</strong>이 포함돼 있다.</p>
+</section>
+
+<section>
+  <div class="shead"><span class="plate">10</span><h2>비교군에 놓아 보면</h2></div>
+  <p class="dek">PC를 주업으로 하는 상장 직접 경쟁사는 없다. 삼표피앤씨·한성PC건설은 비상장이다. 그래서 아래는 <strong>밸류체인 인접군</strong>이다 — 탈현장 건축 자재, 반도체 팹 시공, 중소형 종합건설.</p>
+
+  <div class="tw">
+    <table>
+      <caption>비교군 (시총 2026-09-01 장중, 실적 DART 기준, 억원)</caption>
+      <thead><tr><th>종목</th><th>성격</th><th>시총</th><th>FY25 매출</th><th>FY25 OPM</th><th>26.1H 매출</th><th>26.1H OPM</th><th>매출 YoY</th><th>PER</th><th>PBR</th></tr></thead>
+      <tbody>
+        <tr class="hl"><td>까뮤이앤씨</td><td>PC 제조·시공</td><td>1,020</td><td>2,975</td><td>8.0%</td><td>2,142</td><td>10.8%</td><td class="pos">+82%</td><td>3.6</td><td>0.80</td></tr>
+        <tr><td>삼목에스폼</td><td>알루미늄 거푸집</td><td>2,024</td><td>3,170</td><td>2.0%</td><td>1,561</td><td>−5.9%</td><td>−8%</td><td>39.0</td><td>0.30</td></tr>
+        <tr><td>덕신이피씨</td><td>데크플레이트</td><td>360</td><td>1,065</td><td>−0.1%</td><td>582</td><td>−0.6%</td><td>+7%</td><td>—</td><td>0.29</td></tr>
+        <tr><td>한양이엔지</td><td>반도체 팹 설비</td><td>5,215</td><td>11,182</td><td>4.8%</td><td>6,961</td><td>7.3%</td><td>+25%</td><td>8.3</td><td>0.72</td></tr>
+        <tr><td>계룡건설</td><td>종합건설</td><td>1,875</td><td>28,874</td><td>5.8%</td><td>15,108</td><td>7.3%</td><td>+8%</td><td>1.5</td><td>0.19</td></tr>
+        <tr><td>동부건설</td><td>종합건설</td><td>1,703</td><td>17,586</td><td>2.4%</td><td>10,307</td><td>2.7%</td><td>+24%</td><td>2.1</td><td>0.29</td></tr>
+        <tr><td>KCC건설</td><td>종합건설</td><td>1,175</td><td>18,334</td><td>4.8%</td><td>7,358</td><td>5.0%</td><td>−21%</td><td>2.5</td><td>0.19</td></tr>
+        <tr><td>서희건설</td><td>종합건설</td><td>4,660</td><td>11,001</td><td>13.1%</td><td>3,922</td><td>12.0%</td><td>−34%</td><td>2.1</td><td>0.34</td></tr>
+        <tr><td>한신공영</td><td>종합건설</td><td>1,364</td><td>11,492</td><td>5.6%</td><td>5,113</td><td>7.8%</td><td>−15%</td><td>1.6</td><td>0.16</td></tr>
+        <tr><td>아이에스동서</td><td>건설·콘크리트</td><td>4,730</td><td>12,344</td><td>5.5%</td><td>5,508</td><td>22.4%</td><td>−13%</td><td>5.8</td><td>0.33</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="tnote">PER·PBR은 네이버금융 표기(TTM 기준). 까뮤이앤씨의 시총만 당일 급등을 반영하고 있어 다른 종목과 시점이 완전히 같지는 않다. 아이에스동서의 26년 상반기 OPM 22.4%에는 지분법·처분이익 성격이 섞여 있다.</p>
+
+  <figure style="max-width:400px">
+    <div class="fbox narrow">
+      <div class="figttl">ROE 대비 PBR</div>
+      <svg viewBox="0 0 384 250" role="img" aria-label="동종업계 ROE 대비 PBR 산점도">
+<g class="grid">
+<line x1="44" y1="216.0" x2="310" y2="216.0"/>
+<text class="ax" x="38" y="219.5" text-anchor="end">0.0</text>
+<line x1="44" y1="152.7" x2="310" y2="152.7"/>
+<text class="ax" x="38" y="156.2" text-anchor="end">0.3</text>
+<line x1="44" y1="89.3" x2="310" y2="89.3"/>
+<text class="ax" x="38" y="92.8" text-anchor="end">0.6</text>
+<line x1="44" y1="26.0" x2="310" y2="26.0"/>
+<text class="ax" x="38" y="29.5" text-anchor="end">0.9</text>
+<line x1="80.7" y1="26" x2="80.7" y2="216"/>
+<text class="ax sm" x="80.7" y="232" text-anchor="middle">0%</text>
+<line x1="172.4" y1="26" x2="172.4" y2="216"/>
+<text class="ax sm" x="172.4" y="232" text-anchor="middle">10%</text>
+<line x1="264.1" y1="26" x2="264.1" y2="216"/>
+<text class="ax sm" x="264.1" y="232" text-anchor="middle">20%</text>
+</g>
+<circle class="dot hot" cx="287.1" cy="47.1" r="7"><title>까뮤이앤씨 ROE 22.5% / PBR 0.8</title></circle>
+<text class="dotlb hot" x="276.1" y="51.1" text-anchor="end">까뮤이앤씨</text>
+<circle class="dot" cx="88.0" cy="152.7" r="5"><title>삼목에스폼 ROE 0.8% / PBR 0.3</title></circle>
+<text class="dotlb" x="97.0" y="156.2">삼목에스폼</text>
+<circle class="dot" cx="77.0" cy="154.8" r="5"><title>덕신이피씨 ROE -0.4% / PBR 0.29</title></circle>
+<text class="dotlb" x="86.0" y="158.3">덕신이피씨</text>
+<circle class="dot" cx="195.3" cy="175.9" r="5"><title>계룡건설 ROE 12.5% / PBR 0.19</title></circle>
+<text class="dotlb" x="204.3" y="179.4">계룡건설</text>
+<circle class="dot" cx="204.5" cy="154.8" r="5"><title>동부건설 ROE 13.5% / PBR 0.29</title></circle>
+<text class="dotlb" x="213.5" y="158.3">동부건설</text>
+<circle class="dot" cx="151.3" cy="175.9" r="5"><title>KCC건설 ROE 7.7% / PBR 0.19</title></circle>
+<text class="dotlb" x="160.3" y="179.4">KCC건설</text>
+<circle class="dot" cx="226.5" cy="144.2" r="5"><title>서희건설 ROE 15.9% / PBR 0.34</title></circle>
+<text class="dotlb" x="235.5" y="147.7">서희건설</text>
+<circle class="dot" cx="168.7" cy="182.2" r="5"><title>한신공영 ROE 9.6% / PBR 0.16</title></circle>
+<text class="dotlb" x="177.7" y="185.7">한신공영</text>
+<circle class="dot" cx="160.5" cy="64.0" r="5"><title>한양이엔지 ROE 8.7% / PBR 0.72</title></circle>
+<text class="dotlb" x="169.5" y="67.5">한양이엔지</text>
+<circle class="dot" cx="133.9" cy="146.3" r="5"><title>아이에스동서 ROE 5.8% / PBR 0.33</title></circle>
+<text class="dotlb" x="142.9" y="149.8">아이에스동서</text>
+<text class="note" x="44" y="16">가로축 ROE(EPS÷BPS) · 세로축 PBR</text>
+</svg>
+    </div>
+    <figcaption>까뮤이앤씨는 비교군에서 ROE가 가장 높고 PBR도 가장 높다. "건설주는 다 싸다"는 틀에서 보면 이 회사는 <strong>이미 비교군 최상단</strong>이다.</figcaption>
+  </figure>
+
+  <p>비교군 PBR 중앙값은 0.295배, PER 중앙값은 2.5배다. 까뮤이앤씨는 PBR 0.80배로 <strong>중앙값의 2.7배</strong>다. 정당화하는 근거는 ROE 22.6%(비교군 1위)와 매출 +82%(비교군 유일한 두 자릿수 성장)다. PER만 보고 "건설주 중에서도 싸다"고 읽으면 그림의 절반을 놓친다.</p>
+</section>
+
+<section>
+  <div class="shead"><span class="plate">11</span><h2>얼마인가</h2></div>
+  <p class="dek">이익이 급변하는 구간이라 배수 하나로 답이 나오지 않는다. 세 개의 기준으로 나란히 본다.</p>
+
+  <div class="tw">
+    <table>
+      <caption>밸류에이션 (발행주식 59,750,830주, 자기주식 없음)</caption>
+      <thead><tr><th>기준</th><th>매출</th><th>영업이익</th><th>순이익</th><th>PER</th><th>PSR</th><th>EV/EBIT</th></tr></thead>
+      <tbody>
+        <tr><td>FY2025 확정</td><td>2,974.5</td><td>238.5</td><td>200.3</td><td>5.1</td><td>0.34</td><td>6.5</td></tr>
+        <tr><td>TTM (25.3Q~26.2Q)</td><td>3,939.9</td><td>349.7</td><td>287.7</td><td>3.6</td><td>0.26</td><td>4.4</td></tr>
+        <tr class="hl"><td>26년 상반기 연환산</td><td>4,283.5</td><td>464.8</td><td>335.0</td><td>3.0</td><td>0.24</td><td>3.3</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="tnote">주가 1,707원(9/1 12:57 장중), 시총 1,020억, 순차입금 532.7억, EV 1,553억 기준. 전일 종가 1,544원 기준으로는 시총 923억, TTM PER 3.2배, PBR 0.72배, EV/EBIT 4.2배.</p>
+
+  <p>어느 기준으로 봐도 절대 수준은 낮다. 문제는 <strong>분모의 지속성</strong>이다. 세 시나리오로 나눠 본다.</p>
+
+  <div class="risks">
+    <div class="risk"><span class="sev lo">기저</span><div><b>UT동이 끝나고 Ph-4가 아직 못 올라오는 구간</b><p>UT동 잔여 426억이 소진되고 Ph-4·청주는 착수 초기여서 인식이 적은 3~4분기. 분기 매출이 700~900억대로 되밀릴 수 있다. 이 경우 26년 연간 매출은 3,600~3,900억, 영업이익 380~420억 수준. 현재 주가는 이 시나리오를 이미 반영하고 있다고 보기 어렵다.</p></div></div>
+    <div class="risk"><span class="sev lo">중립</span><div><b>Ph-4가 UT동과 같은 속도로 인식되는 경우</b><p>UT동은 계약 후 15개월 만에 84%를 인식했다. Ph-4(2026.8~2028.5, 21개월)가 비슷한 속도라면 2027년 연간 매출 4,000억대와 영업이익률 10% 전후가 유지된다. 이 경우 27년 EPS 550~600원, 현 주가 PER 3배 내외.</p></div></div>
+    <div class="risk"><span class="sev lo">상방</span><div><b>계약 증액이 반복되고 LH 현장 마진도 지켜지는 경우</b><p>SK하이닉스 PC 계약은 예외 없이 증액돼 왔다(UT동 +108%, OBL +16%). 여기에 용인 클러스터 2기 발주가 이어지면 잔고가 다시 6,000억대로 올라선다. 다만 이 경우에도 <strong>고객 집중은 더 심해진다</strong>는 점이 함께 따라온다.</p></div></div>
+  </div>
+
+  <p>배당은 하방을 조금 받쳐 준다. 12년 연속 배당, 시가배당률 2.5%(FY2025), 배당성향 8.9%. 이익이 유지되면 배당 여력은 넉넉하다. 다만 회사는 지난 3년간 남는 현금을 배당이 아니라 <strong>계열 대여와 PF 이자 대납</strong>에 써 왔다는 이력이 있다.</p>
+</section>
+
+<section>
+  <div class="shead"><span class="plate">12</span><h2>리스크</h2></div>
+  <p class="dek">심각도 순으로. 위의 두 개는 이 종목을 보는 이유 자체를 무효화할 수 있는 항목이다.</p>
+
+  <div class="risks">
+    <div class="risk"><span class="sev hi">높음</span><div><b>단일 고객 66% 집중</b><p>FY2025 A사 1,983억(66.7%), 26년 상반기 1,422억(66.4%). pro-forma 잔고 5,699억 중 SK하이닉스 관련이 3,073억(54%)이다. 반도체 캐펙스 사이클이 꺾이거나 발주 방식이 바뀌면 매출의 절반 이상이 동시에 흔들린다. 회사 스스로 2025년 3월 공시에서 <em>"원발주자가 PC 설치공사를 제외한 자재납품을 직접 발주로 전환하면 계약이 분리되고 금액이 변동될 수 있다"</em>고 적었다.</p></div></div>
+
+    <div class="risk"><span class="sev hi">높음</span><div><b>천안 PC공장 작업중지와 중대재해처벌법</b><p>2026년 8월 27일 사망사고로 <strong>PC기둥 거푸집 조립작업 일체</strong>에 부분 작업중지 명령이 내려졌다. 천안은 두 개뿐인 생산기지 중 하나다. 중지 범위·기간과 생산 영향을 회사가 공시하지 않아 현재로선 3분기 영향을 계산할 수 없다. 중대재해처벌법 수사 결과에 따라 경영책임자 형사책임과 공공 입찰 참가 제한 가능성도 열려 있다.</p></div></div>
+
+    <div class="risk"><span class="sev md">중간</span><div><b>계열·최대주주 익스포저</b><p>지배기업 ㈜베이스 대여금 77억(반기 중 72억 증가, 공시 없음), ㈜더블유에이치홀딩스 관련 조건부 지급보증 100억, 미수이자 55.5억. ㈜베이스는 2024년 말 순손실 600억, 부채비율 545%다. 채무보증 총잔액은 154.2억이다.</p></div></div>
+
+    <div class="risk"><span class="sev md">중간</span><div><b>마진 정상화</b><p>건축 GPM은 FY2025 23.4%에서 26년 상반기 18.6%로 이미 4.7%p 내려왔다. 남은 잔고의 42%가 LH 아파트 등 공공 건축이고, 이 구간의 마진이 반도체 팹 PC와 같을 이유가 없다.</p></div></div>
+
+    <div class="risk"><span class="sev md">중간</span><div><b>불성실공시법인 지정 가능성</b><p>8월 31일 지정예고, 이의신청 기한 9월 9일. 최근 1년 벌점 누계 0점이라 즉시 관리종목 편입 우려는 낮지만, 벌점이 부과되면 향후 12개월간 유사 사안에 누적된다.</p></div></div>
+
+    <div class="risk"><span class="sev md">중간</span><div><b>소송과 하자보수</b><p>26년 상반기 법적소송충당부채가 5.8억 → 42.6억으로 늘었다. 제소 160.2억 / 피소 70.7억이 계류 중이며, 라마다앙코르호텔 손해배상(28억)에 19.6억을 충당했다. 하자보수충당부채는 별도로 52.0억이다.</p></div></div>
+
+    <div class="risk"><span class="sev lo">낮음</span><div><b>한국알미늄</b><p>매출의 21%지만 손익 기여가 0에 가깝고 2년 연속 손상을 인식했다. 다만 26년 상반기 GPM이 5.3% → 8.7%로 개선돼 손익분기에 근접했다. 손상 평가에 적용된 신용등급은 BBB−, WACC 11.78%, 영구성장률 0%다.</p></div></div>
+
+    <div class="risk"><span class="sev lo">낮음</span><div><b>유동성 및 담보</b><p>부채비율 133%로 개선됐고 순차입금 533억, 상반기 영업현금흐름 +332억. 다만 토지·건물이 대부분 담보로 잡혀 있어(설정액 744억) 추가 담보 여력은 제한적이다. 미분양 재고(양평 타운하우스)도 남아 있다.</p></div></div>
+  </div>
+
+  <h3>투자 전 확인할 것</h3>
+  <p>3분기 보고서(2026년 11월 중순 예정)에서 확인할 항목과, 각 항목이 실제로 어디에 실리는지를 함께 적었다.</p>
+  <div class="check">
+    <ol>
+      <li>
+        <span class="box" aria-hidden="true"></span>
+        <div>
+          <div class="ck-t">천안 공장 작업중지가 언제 풀렸는가</div>
+          <div class="ck-d">회사가 해제 사실을 별도 공시하지 않을 수 있다. 3분기 보고서의 생산·매출 실적과 사고 관련 기재를 대조해 중단 기간을 역산해야 한다. 이것이 3분기 실적의 최대 변수다.</div>
+          <span class="ck-w">3분기 보고서 · 사업의 내용</span>
+        </div>
+      </li>
+      <li>
+        <span class="box" aria-hidden="true"></span>
+        <div>
+          <div class="ck-t">3분기 건축부문 매출총이익률이 18%대를 지켰는가</div>
+          <div class="ck-d">UT동 인식이 끝나가는 첫 분기다. 15% 아래로 내려가면 “관계가 만든 마진” 쪽 해석이 강해지고, 20%를 넘기면 PC 기술 프리미엄 쪽 근거가 생긴다.</div>
+          <span class="ck-w">3분기 보고서 · 영업부문 주석</span>
+        </div>
+      </li>
+      <li>
+        <span class="box" aria-hidden="true"></span>
+        <div>
+          <div class="ck-t">Ph-4와 청주 P&amp;T7의 진행률</div>
+          <div class="ck-d">두 현장의 기납품액 합계가 어느 속도로 늘어나는지가 2027년 매출을 결정한다. 합산 잔고 2,604억, 공기는 각각 2028년 5월·6월까지다.</div>
+          <span class="ck-w">3분기 보고서 · 수주상황표</span>
+        </div>
+      </li>
+      <li>
+        <span class="box" aria-hidden="true"></span>
+        <div>
+          <div class="ck-t">㈜베이스 대여금 77억의 증감</div>
+          <div class="ck-d">반기 중 5억에서 77억으로 늘었는데 금전대여결정 공시가 없었다. 더 늘었다면 순손실 600억·부채비율 545%인 모회사의 자금 사정이 회사로 전이되고 있다는 신호다.</div>
+          <span class="ck-w">3분기 보고서 · 특수관계자 주석</span>
+        </div>
+      </li>
+      <li>
+        <span class="box" aria-hidden="true"></span>
+        <div>
+          <div class="ck-t">㈜더블유에이치홀딩스 미수이자 55.5억의 회수 여부</div>
+          <div class="ck-d">대여 원금 215억은 2026년 7월 13일 회수됐다고 공시됐지만 2년 8개월간 쌓인 이자는 별도로 확인해야 한다. 자기자본의 4.4%다.</div>
+          <span class="ck-w">3분기 보고서 · 특수관계자 주석</span>
+        </div>
+      </li>
+      <li>
+        <span class="box" aria-hidden="true"></span>
+        <div>
+          <div class="ck-t">불성실공시법인 지정 결과</div>
+          <div class="ck-d">이의신청 기한은 2026년 9월 9일. 최근 1년 벌점 누계가 0점이라 관리종목 우려는 낮지만, 부과되면 이후 12개월간 누적된다.</div>
+          <span class="ck-w">수시공시 · 9월 중</span>
+        </div>
+      </li>
+      <li>
+        <span class="box" aria-hidden="true"></span>
+        <div>
+          <div class="ck-t">대손상각비가 정상 수준(연 30억 내외)으로 돌아왔는가</div>
+          <div class="ck-d">FY2025의 180억이 안성 관련 일회성이었는지, 아니면 채권 구조 자체의 문제인지를 가르는 지표다. 판관비 주석 한 줄로 확인된다.</div>
+          <span class="ck-w">FY2026 사업보고서 · 판관비 주석</span>
+        </div>
+      </li>
+      <li>
+        <span class="box" aria-hidden="true"></span>
+        <div>
+          <div class="ck-t">SK하이닉스 용인 클러스터 2기 발주 일정</div>
+          <div class="ck-d">Ph-4 이후의 잔고를 채울, 현재로선 유일하게 가시적인 파이프라인이다. 발주가 지연되면 2028년 매출 공백이 생긴다.</div>
+          <span class="ck-w">단일판매·공급계약 공시</span>
+        </div>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<div class="notes" id="datanote">
+  <h3>데이터 노트 — 이 회사의 공시를 읽을 때 걸리는 함정</h3>
+  <ol>
+    <li><strong>계약금액의 부가세 기준이 계약마다 다르다.</strong> SK하이닉스 관련 구계약(UT동·OBL·M15 Ph-3)은 <em>부가세 포함</em>으로 공시됐고, 2026년 7월 청주 P&amp;T7부터는 <em>부가세 제외</em>다. UT동 2026-02-26 정정 292,553.8백만 = 반기보고서 265,958백만 × 1.1로 정확히 떨어진다. 시계열로 더하면 10% 과대계상된다. 이 리포트는 전부 부가세 제외로 통일했다.</li>
+    <li><strong>XBRL의 부문 라벨이 뒤바뀌어 있다.</strong> 2026년 반기보고서 '공사계약금액의 변동내역' 주석에서 '건축부문' 행의 값이 실제로는 토목(658.5 → 727.9억), '토목부문' 행이 실제 건축(3,346.6 → 3,013.9억)이다. 기말 잔고를 수주상황표와 대조해야 방향이 잡힌다.</li>
+    <li><strong>계약변경(증액)을 신규수주와 분리해야 한다.</strong> 26년 상반기 잔고 증가분 1,491.9억 중 542.4억이 기존 계약 증액이다. 단일판매·공급계약 공시만 세면 증액분이 신규처럼 보인다.</li>
+    <li><strong>분기 손익은 컬럼이 두 벌이다.</strong> <code>thstrm_amount</code>는 3개월, <code>thstrm_add_amount</code>는 누적. 4분기 단독 수치는 어디에도 없어 (연간 − 3분기 누적)으로 계산했다.</li>
+    <li><strong>연결 재무제표는 2023년부터만 존재한다.</strong> 한국알미늄 편입이 2023년 12월 27일이라 그 이전 시계열은 별도(OFS)로만 이을 수 있다. 2023~2025년 분기 재무제표도 연결이 XBRL로 제출되지 않은 기간이 있다.</li>
+    <li><strong>2026-07-10 채무보증결정 공시의 '채무자 요약 재무상황'은 채무자(㈜더블유에이치홀딩스)가 아니라 SK에코플랜트의 재무(자산 18조)로 채워져 있다.</strong> 그대로 읽으면 안 된다.</li>
+    <li><strong>시세 확인 시점.</strong> 이 리포트의 주가·시총은 2026년 9월 1일 12시 57분 장중 값이다. 당일 거래량 750만 주는 최근 60거래일 평균(55만 주)의 13.6배로, 종가는 크게 달라질 수 있다. 52주 최저는 997원(2025.11.04), 종가 기준 최고는 1,849원(2026.08.13)이며 당일 장중 2,005원(상한가 근접)을 찍었다.</li>
+    <li><strong>생산능력·가동률 데이터가 없다.</strong> 건설업 분류라 사업보고서에 PC 공장의 캐파·가동률이 기재되지 않는다. 작업중지의 실적 영향을 외부에서 추정할 수 없는 이유이기도 하다.</li>
+  </ol>
+
+  <h3 style="margin-top:26px">출처</h3>
+  <p style="margin:0">DART 전자공시 — 사업보고서 FY2014~FY2025(12기), 반기·분기보고서 35건, 단일판매·공급계약 체결·정정 141건, 주요사항보고서·금전대여결정·채무인수결정·타인에대한채무보증결정·중대재해발생·불성실공시법인지정예고 전수. 재무수치는 <code>fnlttSinglAcntAll</code> API(2015~2026, 연결·별도 54개 기간)와 보고서 원문 <code>document.xml</code>을 교차 검증했다. 시세는 네이버금융 API. 시공능력평가 순위·중대재해 상세·베이스그룹 지배구조는 <a href="https://www.bloter.net/news/articleView.html?idxno=670085">블로터</a>, <a href="https://www.bloter.net/news/articleView.html?idxno=672060">블로터(사고)</a>, <a href="https://m.thebell.co.kr/m/newsview.asp?newskey=202602121602345840109434">더벨</a>, <a href="https://www.newsis.com/view/NISX20260827_0003766087">뉴시스</a> 보도를 참조했다.</p>
+
+  <div class="disc">
+    이 문서는 공개된 공시자료와 시장 데이터를 정리·분석한 개인 참고용 기록이며, 특정 종목의 매수·매도를 권유하지 않습니다. 모든 수치는 작성 시점(2026년 9월 1일) 기준이고 이후 공시로 달라질 수 있습니다. 계산값(연환산·역산·정상화 이익·pro-forma 잔고 등)은 공시 원문에 없는 저자의 추정이며 산출 근거를 본문에 명시했습니다. 투자 판단과 그 결과에 대한 책임은 투자자 본인에게 있습니다.
+  </div>
+</div>
+
+</main>
+</div>
+
+</body>
+</html>

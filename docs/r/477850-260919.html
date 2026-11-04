@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<title>마키나락스 기업리포트</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@600;700&family=Noto+Sans+KR:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+:root{
+  color-scheme:light;
+  --bg:#F3F4F7; --surface:#FFFFFF; --surface2:#F7F8FB; --surface3:#E9EBF2;
+  --ink:#15172B; --ink2:#454A61; --muted:#737A90;
+  --line:#D8DCE6; --line2:#BFC5D3;
+  --accent:#1F5F8B; --accent-soft:#E3EEF7;
+  --pos:#1B6E52; --neg:#B23A2C;
+  --c1:#1F5F8B; --c2:#E8792B; --c3:#1baf7a; --c4:#8B93A7; --c5:#7B4FB3;
+  --c1-soft:rgba(31,95,139,.12); --c2-soft:rgba(232,121,43,.14);
+  --shadow:0 1px 2px rgba(21,23,43,.06), 0 10px 28px rgba(21,23,43,.06);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#0F1118; --surface:#171A24; --surface2:#1D2130; --surface3:#252A3B;
+    --ink:#ECEEF5; --ink2:#B4BACB; --muted:#8D94A8;
+    --line:#2A2F40; --line2:#3B4155;
+    --accent:#7FB5E0; --accent-soft:#1E2E3E;
+    --pos:#4FB58C; --neg:#E07A5F;
+    --c1:#5B9BD5; --c2:#F08A3E; --c3:#2BC48E; --c4:#7C8499; --c5:#A283D6;
+    --c1-soft:rgba(91,155,213,.16); --c2-soft:rgba(240,138,62,.18);
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 28px rgba(0,0,0,.3);
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#0F1118; --surface:#171A24; --surface2:#1D2130; --surface3:#252A3B;
+  --ink:#ECEEF5; --ink2:#B4BACB; --muted:#8D94A8;
+  --line:#2A2F40; --line2:#3B4155;
+  --accent:#7FB5E0; --accent-soft:#1E2E3E;
+  --pos:#4FB58C; --neg:#E07A5F;
+  --c1:#5B9BD5; --c2:#F08A3E; --c3:#2BC48E; --c4:#7C8499; --c5:#A283D6;
+  --c1-soft:rgba(91,155,213,.16); --c2-soft:rgba(240,138,62,.18);
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 28px rgba(0,0,0,.3);
+}
+html{color-scheme:light dark}
+*{box-sizing:border-box}
+body{margin:0; background:var(--bg); color:var(--ink);
+  font-family:"Noto Sans KR","Malgun Gothic",system-ui,sans-serif; font-size:15.5px; line-height:1.75;
+  -webkit-text-size-adjust:100%}
+img{max-width:100%} [hidden]{display:none!important}
+.mono{font-family:"IBM Plex Mono","Consolas",ui-monospace,monospace; font-variant-numeric:tabular-nums}
+.serif{font-family:"Noto Serif KR","Noto Serif","Batang",serif}
+.wrap{max-width:920px; margin:0 auto; padding:0 22px 90px}
+a{color:var(--accent)}
+p{margin:0 0 14px} .lede{font-size:16.5px; color:var(--ink2)}
+ul,ol{margin:0 0 14px; padding-left:20px} li{margin-bottom:7px}
+strong,b{font-weight:700}
+.small{font-size:13px; color:var(--muted); line-height:1.6}
+.pos{color:var(--pos)} .neg{color:var(--neg)}
+
+.mast{background:var(--surface); border-bottom:1px solid var(--line)}
+.mast-in{max-width:920px; margin:0 auto; padding:34px 22px 26px}
+.eyebrow{font-family:"IBM Plex Mono",monospace; font-size:11.5px; letter-spacing:.06em; color:var(--muted)}
+h1{font-family:"Noto Serif KR",serif; font-size:clamp(30px,6.6vw,48px); line-height:1.18; margin:.3em 0 .15em; font-weight:700; letter-spacing:-.015em; text-wrap:balance}
+h1 .em{color:var(--accent)}
+.sub{color:var(--ink2); font-size:15.5px; max-width:64ch; margin:.4em 0 0}
+.tickerline{display:flex; flex-wrap:wrap; gap:6px 16px; align-items:baseline; margin-top:14px; font-family:"IBM Plex Mono",monospace; font-size:12.5px; color:var(--muted)}
+.tickerline b{color:var(--ink); font-weight:600}
+.stats{display:grid; grid-template-columns:repeat(auto-fit,minmax(138px,1fr)); gap:1px; background:var(--line); border:1px solid var(--line); margin-top:24px}
+.stat{background:var(--surface); padding:13px 14px 14px; min-width:0}
+.stat .k{font-family:"IBM Plex Mono",monospace; font-size:11px; letter-spacing:.02em; color:var(--muted)}
+.stat .v{font-family:"IBM Plex Mono",monospace; font-weight:600; font-size:clamp(19px,4.6vw,24px); line-height:1.25; margin-top:5px; overflow-wrap:anywhere}
+.stat .n{font-size:11.5px; color:var(--muted); margin-top:2px; line-height:1.4}
+.toc{display:flex; flex-wrap:wrap; gap:8px; margin:22px 0 0}
+.toc a{font-size:12.5px; text-decoration:none; color:var(--ink2); background:var(--surface); border:1px solid var(--line); padding:5px 11px; border-radius:999px}
+.toc a:hover{border-color:var(--accent); color:var(--accent)}
+
+section{margin-top:56px; scroll-margin-top:16px}
+.sec-h{display:flex; gap:14px; align-items:baseline; border-bottom:2px solid var(--ink); padding-bottom:9px; margin-bottom:20px}
+.sec-n{font-family:"IBM Plex Mono",monospace; font-size:12px; font-weight:600; color:var(--accent); letter-spacing:.06em; padding-top:4px}
+.sec-h h2{margin:0; font-family:"Noto Serif KR",serif; font-size:clamp(20px,4.2vw,26px); font-weight:700; letter-spacing:-.01em; text-wrap:balance; flex:1; min-width:0}
+h3{font-size:17px; font-weight:700; margin:32px 0 8px; letter-spacing:-.01em}
+h4{font-size:14.5px; font-weight:700; margin:20px 0 6px; color:var(--ink2)}
+
+.take{border-left:3px solid var(--accent); background:var(--surface2); padding:14px 16px; margin:18px 0; font-size:14.5px}
+.take .lbl{font-family:"IBM Plex Mono",monospace; font-size:11px; letter-spacing:.03em; color:var(--accent); display:block; margin-bottom:5px; font-weight:600}
+.take p:last-child{margin-bottom:0}
+.keypoints{display:grid; gap:1px; background:var(--line); border:1px solid var(--line); margin:22px 0}
+.kp{background:var(--surface); padding:15px 17px; display:grid; grid-template-columns:30px 1fr; gap:12px}
+.kp .num{font-family:"IBM Plex Mono",monospace; font-size:12px; color:var(--accent); font-weight:600; padding-top:3px}
+.kp .txt{min-width:0} .kp .t{font-weight:700; margin-bottom:2px} .kp .d{font-size:14px; color:var(--ink2)}
+.grid2{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:16px 0}
+.pane{background:var(--surface); border:1px solid var(--line); padding:14px 16px; min-width:0}
+.pane h4{margin-top:0}
+.pane.yes{border-top:3px solid var(--pos)} .pane.no{border-top:3px solid var(--neg)}
+.pane ul{margin-bottom:0; padding-left:18px} .pane li{font-size:14px; margin-bottom:6px}
+
+.vc{display:grid; grid-template-columns:repeat(6,1fr); gap:6px; margin:16px 0}
+.vc .c{background:var(--surface); border:1px solid var(--line); padding:10px 9px; font-size:12.5px; line-height:1.45; min-width:0}
+.vc .c b{display:block; font-size:13px; margin-bottom:3px}
+.vc .c.me{border:2px solid var(--accent); background:var(--accent-soft)}
+.vc .c .who{color:var(--muted); font-size:11.5px; margin-top:4px}
+
+.tbl-scroll{overflow-x:auto; margin:16px -22px 20px; padding:0 22px; -webkit-overflow-scrolling:touch}
+table{border-collapse:collapse; width:100%; min-width:560px; font-size:13.5px}
+caption{caption-side:top; text-align:left; font-family:"IBM Plex Mono",monospace; font-size:11.5px; letter-spacing:.02em; color:var(--muted); padding-bottom:8px}
+th,td{padding:8px 10px; border-bottom:1px solid var(--line); text-align:left; vertical-align:top}
+th.num,td.num{text-align:right; white-space:nowrap; font-family:"IBM Plex Mono",monospace; font-variant-numeric:tabular-nums}
+thead th{border-bottom:1.5px solid var(--line2); font-weight:600; color:var(--ink2); font-size:12.5px}
+tbody tr:hover{background:var(--surface2)}
+tfoot td{border-top:1.5px solid var(--line2); font-weight:600}
+td.hl{background:var(--accent-soft)}
+tr.sum td{font-weight:700; background:var(--surface2)}
+.tnote{font-size:12.5px; color:var(--muted); margin-top:-10px; margin-bottom:16px; line-height:1.55}
+.bar{display:inline-block; height:9px; background:var(--c1); vertical-align:middle; border-radius:2px; margin-right:6px}
+.bar.o{background:var(--c2)}
+
+.chart{background:var(--surface); border:1px solid var(--line); padding:14px 14px 10px; margin:16px 0 8px}
+.chart .ct{font-weight:700; font-size:14.5px; margin:0 0 2px}
+.chart .cs{font-size:12.5px; color:var(--muted); margin:0 0 8px}
+.chart svg{display:block; width:100%; height:auto; touch-action:pan-y}
+.chart text{font-family:"IBM Plex Mono",monospace; font-size:11px; fill:var(--ink2)}
+.chart text.lab{font-family:"Noto Sans KR",sans-serif; fill:var(--ink)}
+.chart text.mut{fill:var(--muted)}
+.chart .grid{stroke:var(--line); stroke-width:1}
+.chart .axis{stroke:var(--line2); stroke-width:1}
+.legend{display:flex; flex-wrap:wrap; gap:6px 16px; font-size:12px; color:var(--ink2); margin:6px 0 4px}
+.legend i{display:inline-block; width:12px; height:12px; border-radius:2px; vertical-align:-1px; margin-right:6px}
+.tip{position:fixed; z-index:50; pointer-events:none; background:var(--ink); color:var(--bg); font-size:12px; line-height:1.5; padding:7px 10px; border-radius:4px; max-width:min(260px,calc(100vw - 20px)); box-shadow:var(--shadow); display:none; font-family:"IBM Plex Mono",monospace}
+.tip b{font-weight:600}
+
+.risk{display:grid; gap:10px; margin:14px 0}
+.risk .r{display:grid; grid-template-columns:64px 1fr; gap:12px; background:var(--surface); border:1px solid var(--line); padding:12px 14px}
+.chip{font-family:"IBM Plex Mono",monospace; font-size:10.5px; letter-spacing:.08em; padding:3px 7px; border-radius:3px; display:inline-block; text-align:center; align-self:start; white-space:nowrap}
+.chip.h{background:var(--neg); color:#fff} .chip.m{background:var(--c2); color:#fff} .chip.l{background:var(--c4); color:#fff} .chip.u{background:var(--pos); color:#fff}
+.risk .t{font-weight:700} .risk .d{font-size:14px; color:var(--ink2)}
+
+.qs{display:grid; gap:12px; margin:16px 0}
+.q{background:var(--surface); border:1px solid var(--line); border-left:4px solid var(--accent); padding:13px 16px}
+.q .qh{display:flex; gap:10px; align-items:baseline}
+.q .qn{font-family:"IBM Plex Mono",monospace; font-size:12px; color:var(--accent); font-weight:600}
+.q .qt{font-weight:700; font-size:15px}
+.q .why{font-size:13.5px; color:var(--ink2); margin:6px 0 0}
+.q .why b{color:var(--ink)}
+.tl{list-style:none; padding:0; margin:14px 0}
+.tl li{display:grid; grid-template-columns:96px 1fr; gap:12px; padding:8px 0; border-bottom:1px solid var(--line); font-size:14px}
+.tl .d{font-family:"IBM Plex Mono",monospace; font-size:12px; color:var(--muted); padding-top:3px}
+.check li{margin-bottom:9px}
+.src{font-size:12.5px; color:var(--muted); line-height:1.6} .src li{margin-bottom:4px}
+.foot{margin-top:60px; padding-top:18px; border-top:1px solid var(--line); font-size:12.5px; color:var(--muted); line-height:1.6}
+
+@media (max-width:620px){
+  body{font-size:14.5px}
+  .wrap{padding:0 14px 70px} .mast-in{padding:26px 14px 20px}
+  table{min-width:0; font-size:12.5px} th,td{padding:7px 7px}
+  .tbl-scroll{margin:14px -14px 18px; padding:0 14px}
+  .grid2{grid-template-columns:1fr}
+  .vc{grid-template-columns:repeat(2,1fr)}
+  .risk .r{grid-template-columns:56px 1fr}
+  .kp{grid-template-columns:24px 1fr; gap:9px}
+  .chart{padding:12px 10px 8px}
+  .tl li{grid-template-columns:78px 1fr}
+  .bar{display:none}
+}
+@media (max-width:400px){
+  .wrap{padding:0 11px 60px} .mast-in{padding:22px 11px 18px}
+  .tbl-scroll{margin:14px -11px 18px; padding:0 11px}
+  .stats{grid-template-columns:repeat(2,1fr)}
+}
+@media (prefers-reduced-motion:reduce){ *{transition:none!important; animation:none!important} }
+</style>
+</head>
+<body>
+<div class="tip" id="tip"></div>
+<header class="mast"><div class="mast-in">
+  <div class="eyebrow">기업리포트 · 마키나락스 477850 · 2026-09-19 · 기준가 9/18 종가</div>
+  <h1 class="serif">마키나락스, <span class="em">수주 200억과 매출 70억</span> 사이의 값</h1>
+  <p class="sub">제조·국방의 폐쇄망 현장에서 돌아가는 AI 운영체제 'Runway'를 파는 회사다. 5월 20일 공모가 15,000원으로 상장해 사흘 만에 83,600원, 한 달 뒤 13,420원, 지금 21,300원이다. 상반기 매출은 70억(+168%)이고 회사가 증권신고서에 적은 올해 매출은 225억이다. 남은 155억이 하반기에 찍히느냐가 시가총액 3,782억의 전제다. 투자설명서·반기보고서 원문, IR Book(8월), 증권사 리포트 70건의 본문 언급을 대조해 확인되는 것과 탐방에서 물어야 할 것을 나눴다.</p>
+  <div class="tickerline"><span>종가 <b>21,300원</b> (9/18)</span><span>시가총액 <b>3,782억</b></span><span>발행주식 <b>1,775.5만주</b></span><span>공모가 <b>15,000원</b> (+42%)</span><span>순현금 <b>444억</b></span><span>PBR <b>7.4배</b></span></div>
+  <div class="stats">
+    <div class="stat"><div class="k">상장 후 고점 대비</div><div class="v neg">-74.5%</div><div class="n">83,600원 (5/22 장중)</div></div>
+    <div class="stat"><div class="k">상장 후 저점 대비</div><div class="v pos">+58.7%</div><div class="n">13,420원 (6/24 장중, 공모가 하회)</div></div>
+    <div class="stat"><div class="k">1H26 매출</div><div class="v">70.3억</div><div class="n">+168.2% YoY. 2Q 39.9억</div></div>
+    <div class="stat"><div class="k">1H26 영업손익</div><div class="v neg">-42.4억</div><div class="n">전년 동기 -59.3억. 2Q OPM -45%</div></div>
+    <div class="stat"><div class="k">2026 회사 추정</div><div class="v">225억</div><div class="n">하반기 필요 155억 = 상반기의 2.2배</div></div>
+    <div class="stat"><div class="k">수주잔고 (6/30)</div><div class="v">148억</div><div class="n">상반기 신규 수주 200억(IR)</div></div>
+  </div>
+  <nav class="toc">
+    <a href="#s1">한 장 요약</a><a href="#s2">바로잡을 숫자</a><a href="#s3">주가</a><a href="#s4">비즈니스 모델</a><a href="#s5">실적</a><a href="#s6">225억 해부</a><a href="#s7">성장 엔진</a><a href="#s8">경쟁사</a><a href="#s9">해자 검증</a><a href="#s10">주주·오버행</a><a href="#s11">리스크</a><a href="#s12"><b>탐방 질문 30</b></a><a href="#s13">체크리스트</a><a href="#s14">출처</a>
+  </nav>
+</div></header>
+
+<main class="wrap">
+
+<section id="s1">
+  <div class="sec-h"><span class="sec-n">01</span><h2>한 장 요약</h2></div>
+  <p class="lede">마키나락스는 2017년 말 SK텔레콤·삼성전자 출신 물리학·전산학 박사 3인이 세운 <b>산업 특화 AI 소프트웨어</b> 회사다. 인터넷이 끊긴 공장과 군 폐쇄망 안에서 AI 모델을 개발·배포·운영하는 플랫폼 <b>Runway</b>(회사 표현 '엔터프라이즈 AI OS')와, 그 위에서 돌아가는 맞춤형 AI 모델 개발 용역을 판다. 현대차·SKT·네이버(Seed), LG·Applied Materials·산업은행(Series A), GS·한화(Series B)가 주주이자 고객으로 들어와 있다. 설립 이후 한 해도 흑자를 낸 적이 없고 누적 결손금은 692억이지만, 5월 IPO로 395억을 공모해 <b>현금 464억·차입 20억</b>이 됐다.</p>
+  <div class="keypoints">
+    <div class="kp"><span class="num">1</span><div class="txt"><div class="t">성장은 진짜다: 같은 기간 국내 AI 소프트웨어 상장사 매출은 줄었다</div><div class="d">1H26 매출 70.3억(+168%), 영업손실 -42.4억(전년 -59.3억). 상반기 신규 수주는 회사 발표 기준 200억으로 2025년 연간(205억)과 같다. 같은 반기에 씨이랩 31억, 심플랫폼 27억, 코난테크놀로지 80억은 모두 2025년 연간의 1/4~1/3 수준에 그쳤고 영업적자가 커졌다. 매출처는 26 → 37 → 49개사로 늘었고 10% 이상 고객은 1H25 네 곳(합계 52%)에서 1H26 한 곳(12%)으로 줄었다.</div></div></div>
+    <div class="kp"><span class="num">2</span><div class="txt"><div class="t">가격은 2028년을 산다: PSR 33배, 회사 추정 2027년 PER 77배, 2028년 24배</div><div class="d">시가총액 3,782억은 2025년 매출 114.6억의 33.0배, 회사 추정 2026년 매출 225억의 16.8배다. 공모가 산정에 쓰인 비교기업 4곳(엑셈·와이즈넛·슈어소프트테크·비아이매트릭스)의 PSR은 1.4~2.4배, 같은 'AI 플랫폼' 적자 기업인 씨이랩이 11.1배다. 증권사 목표주가는 한 곳도 없다(전부 Not Rated). 지금 주가를 설명하는 유일한 숫자 체계는 <b>회사가 증권신고서에 직접 쓴 추정치</b>(2027년 영업이익 49억, 2028년 159억, 2030년 490억)다.</div></div></div>
+    <div class="kp"><span class="num">3</span><div class="txt"><div class="t">그 추정의 첫 관문이 넉 달 뒤에 판정된다: 하반기 155억</div><div class="d">225억 중 상반기에 70억을 했다. 남은 155억은 상반기의 2.2배다. 전례는 있다. 2025년은 4분기 한 분기에 연매출의 57%(65.4억), 하반기에 77%가 찍혔다. 반대 근거도 있다. 3월 말 기준 '2026년에 인식될 확정 수주'는 131억(58.5%)이었고, 나머지는 수주확률 70%·50%를 곱한 파이프라인이며 그 상위 건이 국방부·산업부 과제다. 회사 스스로 제시한 Worst 시나리오가 185억이다.</div></div></div>
+    <div class="kp"><span class="num">4</span><div class="txt"><div class="t">'Runway 제품 매출'의 질은 아직 확인되지 않는다</div><div class="d">회사는 Runway 비중을 2025년 36% → 2026년 49% → 2030년 76%로 올려 영업이익률 46%에 도달한다고 썼다. 그런데 (a) 재무제표상 이 항목의 이름은 '하드웨어 및 라이선스 판매'이고 ADD 계약 18.2억 중 4.9억(27%)이 하드웨어였다. (b) 추정 매출은 혼합 계약을 제품 6 : 용역 4(2027년 8:2)로 <b>일괄 배분</b>해 만든 숫자다. (c) 1H26 실제 AI OS 매출은 10.6억으로 연간 추정 110억의 9.6%다. 2025년에도 Runway 매출의 97%가 하반기에 몰렸으니 단정할 수는 없지만, 갱신율 94%의 모수·순수 라이선스 매출·반복매출(ARR)은 어디에도 공개돼 있지 않다.</div></div></div>
+    <div class="kp"><span class="num">5</span><div class="txt"><div class="t">회사가 말하는 '수주액'은 매출로 가는 돈과 같지 않다</div><div class="d">2025년 말 잔고 71.5억 + 상반기 수주 200억 − 상반기 매출 70.3억 = 201억이어야 하는데 반기보고서 잔고는 147.8억이다. 53억이 빈다. 2025년도 마찬가지로 수주 205억에서 매출 114.6억을 빼면 90억인데 연말 잔고는 71.5억이었다. 투자설명서에 단서가 있다. 수주의 16.1%(2025년)는 국가 R&amp;D 과제이고 "국가 R&amp;D 지원금은 매출로 인식되지 않는다." 그런데 같은 문서의 매출 추정표에는 산업부·중기부 R&amp;D 건이 매출로 들어가 있다. 탐방에서 가장 먼저 풀어야 할 매듭이다.</div></div></div>
+    <div class="kp"><span class="num">6</span><div class="txt"><div class="t">11월 20일, 네이버·SKT·GS·한화세미텍의 6개월 보호예수가 풀린다</div><div class="d">SI 4곳 156만주, 주관사 26만주, 수요예측 때 기관이 6개월 확약한 84만주를 합쳐 약 267만주(상장주식의 15.2%)다. 실질 유통가능 물량이 49.9%에서 65.2%로 늘어난다. 11.4%가 풀린 2개월 해제일(7/20)에 주가는 하루 -19.1%였다. Applied Ventures(3.3%)·LG CNS(2.5%)·산업은행(4.1%)은 처음부터 의무보유가 없었고 현대차는 상장 전 전량 매각했다. HB인베스트먼트는 이미 2.7배로 회수했다. 같은 달 중순에 3분기 실적이 나온다. 실적과 수급 이벤트가 한 주에 겹친다.</div></div></div>
+  </div>
+  <div class="take"><span class="lbl">결론</span><p><b>사업의 실체는 국내 AI 소프트웨어 상장사 중 가장 단단한 편이고, 가격은 그 실체의 3년 뒤 모습을 이미 샀다.</b> 폐쇄망·국방이라는 칸은 글로벌 클라우드 사업자가 들어오기 어렵고, 합참 실증 기술평가에서 차점자를 15점 앞선 기록과 ADD·삼성·현대차 레퍼런스는 돈으로 단기간에 살 수 없다. 반면 주가가 기대는 추정은 회사 자신의 것이고, 그 추정은 ① 4분기 검수 집중, ② 확률 가중 국방·정부 과제, ③ 혼합 계약의 6:4 배분이라는 세 가정 위에 서 있다. 다음 넉 달에 확인할 것은 세 가지다. (1) 3Q 매출이 50억을 넘고 Runway(AI OS) 항목이 분기 20억 이상 찍히는가, (2) 국방부 IITP 108억·국방지능형플랫폼 70억 등 대형 건이 실제 계약 공시로 나오는가, (3) 11/20 해제 물량을 SI 주주가 파는가. 하방 앵커는 공모가 15,000원(시총 2,663억)과 6월 저점 13,420원, 상방은 회사 추정 2028년 순이익 159억이 실현될 때의 PER 24배다. 본 리포트는 투자 권유가 아니다.</p></div>
+</section>
+
+<section id="s2">
+  <div class="sec-h"><span class="sec-n">02</span><h2>분석에 앞서 바로잡을 숫자 다섯 개</h2></div>
+  <p>원자료끼리 대조하다 나온 불일치다. 회사 자료를 그대로 인용한 기사·블로그에 같은 오류가 퍼져 있으므로 먼저 정리한다. 탐방 때 IR 담당자에게 알려주면 좋은 항목이기도 하다.</p>
+  <div class="tbl-scroll"><table>
+    <caption>자료 간 불일치와 재계산 값</caption>
+    <thead><tr><th>어디에</th><th>적힌 값</th><th>재계산·원문 값</th><th>근거</th></tr></thead>
+    <tbody>
+      <tr><td>IR Book(8월) p.29<br>1H26 YoY 열</td><td class="num">매출 268.2%<br>AI OS 797.7%<br>솔루션 950.0%<br>연구개발 188.4%</td><td class="num hl">+168.2%<br>+697.4%<br>+849.3%<br>+88.5%</td><td>7,027 ÷ 2,620 = 2.682<b>배</b>를 증가율로 표기. 전 항목이 100%p씩 높다. 같은 표의 영업손실 -28.6%는 맞다. 회사 보도자료(+168%)는 정확</td></tr>
+      <tr><td>IR Book p.30<br>부채비율</td><td class="num">1H26 53.9%<br>2025 270.8%</td><td class="num hl">12.0%<br>52.8%</td><td>같은 표의 부채총계 6,161 ÷ 자본총계 51,416. 유동비율(905.6%, 246.5%)은 맞다. 회사 보도자료는 "53% → 12%"로 맞게 썼다</td></tr>
+      <tr><td>반기보고서<br>수주 현황 표</td><td class="num">AI연구개발 잔고 6,177<br>기납품 합계 8,884</td><td class="num hl">9,177<br>8,909</td><td>14,152 − 4,975 = 9,177. 세 품목 합 1,098 + 4,502 + 9,177 = 14,777로 합계와 일치. 오기는 두 칸이고 <b>합계 147.8억은 맞다</b></td></tr>
+      <tr><td>투자설명서<br>추정 근거</td><td class="num">2025년 Runway 비중 36.9%</td><td class="num hl">36.1%</td><td>4,135 ÷ 11,459. 같은 문서의 매출 실적표 기준</td></tr>
+      <tr><td>투자설명서<br>상장일 유통가능</td><td class="num">38.5%</td><td class="num hl">29.4%</td><td>오류는 아니다. 설명서는 기관 의무보유확약 전 기준이고, 증권발행실적보고서의 확약 159.8만주를 빼면 실질 29.4%. 해제 일정도 같이 달라진다(10장)</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">단위 백만원. 유진투자증권 IPO 리포트의 "2028년 추정 순이익 159백만원"도 15,871백만원의 오기다. 분기 매출은 투자설명서(2Q25 1,480)와 반기보고서(2Q25 1,486) 사이에 6백만원 차이가 있는데 재분류로 보이며 본문은 연간 합계가 맞는 투자설명서 값을 썼다.</p>
+</section>
+
+<section id="s3">
+  <div class="sec-h"><span class="sec-n">03</span><h2>주가: 넉 달 동안 시가총액이 1.47조에서 2,383억까지</h2></div>
+  <div class="chart" id="ch-px"><p class="ct">상장 이후 일별 종가와 사건</p><p class="cs">2026-05-20 ~ 09-18, 84거래일. 점선은 공모가 15,000원. 번호는 아래 표</p><svg></svg></div>
+  <ul class="tl">
+    <li><span class="d">① 05-20</span><span>상장. 수요예측 1,196:1, 의무보유확약 78.2%(코스닥 IPO 역대 최고), 일반청약 2,808:1. 첫날 60,000원(+300%) 단일가, 시총 1조 525억</span></li>
+    <li><span class="d">② 05-22</span><span>장중 83,600원(시총 1.47조) 후 -30% 마감. 이후 9거래일 중 7일 하락</span></li>
+    <li><span class="d">③ 06-18</span><span>임직원 55명이 5/29 행사한 스톡옵션 213,096주(행사가 4,062~13,750원) 신주 상장. 6/15에는 15일 확약분 해제</span></li>
+    <li><span class="d">④ 06-24</span><span>장중 13,420원. 공모가 -10.5%, 고점 -84%. 시총 2,383억</span></li>
+    <li><span class="d">⑤ 07-06</span><span>상한가 30,400원. 7/1 파트너 프로그램, 7/2 "상반기 수주 200억" 보도, 7/7 AWS 국방 AI MOU. 거래소 조회공시 요구에 "미확정" 답변</span></li>
+    <li><span class="d">⑥ 07-20</span><span>2개월 보호예수 해제(FI 약 200만주, 11.4%). 하루 -19.1%</span></li>
+    <li><span class="d">⑦ 08-05</span><span>상한가 29,800원. 전일 HD한국조선해양 용접로봇 이상탐지 AI 시험 적용 발표. 8/10 종가 32,850원</span></li>
+    <li><span class="d">⑧ 08-14</span><span>반기 실적. 8/20 3개월 확약 해제, 8/26 23.5억 공급계약 공시(상대방 비공개)와 IR 개최</span></li>
+    <li><span class="d">⑨ 09-18</span><span>21,300원. 8월 고점 대비 -35%, 거래량은 8월 초의 1/10 이하(34.8만주)</span></li>
+  </ul>
+  <h3>지금 가격이 담고 있는 가정</h3>
+  <div class="tbl-scroll"><table>
+    <caption>시가총액 3,782억 기준 배수. 추정치는 전부 회사가 증권신고서에 기재한 Base 시나리오</caption>
+    <thead><tr><th>기준</th><th class="num">매출</th><th class="num">영업이익</th><th class="num">순이익</th><th class="num">PSR</th><th class="num">PER</th><th>비고</th></tr></thead>
+    <tbody>
+      <tr><td>2025 실적</td><td class="num">114.6</td><td class="num neg">-80.4</td><td class="num neg">-137.7</td><td class="num">33.0</td><td class="num">-</td><td>순손실에 RCPS 파생평가손 47.7억 포함</td></tr>
+      <tr><td>2026E</td><td class="num">224.9</td><td class="num neg">-22.6</td><td class="num neg">-22.0</td><td class="num">16.8</td><td class="num">-</td><td>EV/매출 14.8배 (순현금 444억 차감)</td></tr>
+      <tr><td>2027E</td><td class="num">373.8</td><td class="num">49.0</td><td class="num">49.3</td><td class="num">10.1</td><td class="num">76.7</td><td>흑자전환 목표 연도</td></tr>
+      <tr class="sum"><td>2028E</td><td class="num">586.8</td><td class="num">158.8</td><td class="num">158.7</td><td class="num">6.4</td><td class="num">23.8</td><td>공모가 산정 기준 연도</td></tr>
+      <tr><td>2030E</td><td class="num">1,066.5</td><td class="num">490.3</td><td class="num">489.1</td><td class="num">3.5</td><td class="num">7.7</td><td>OPM 46.0%, 법인세 0 가정</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">단위 억원, 배. 회사 추정은 5년 내내 법인세비용을 0으로 놓았다(이월결손금). 정상 세율을 넣으면 2028년 이후 PER은 표보다 20~25% 높아진다.</p>
+  <h3>공모가 산식을 오늘 주가로 다시 돌리면</h3>
+  <p>공모가는 "2028년 추정 순이익 158.7억을 연 15%로 3년 할인한 104.4억 ÷ 희석주식수 1,825.5만주 = 주당 572원"에 비교기업 4곳의 평균 PER 40.5배를 곱한 23,143원에서 35.2%를 깎아 15,000원이 됐다. 그 비교기업들의 주가가 4월 3일 기준일 이후 크게 내렸다.</p>
+  <div class="tbl-scroll"><table>
+    <caption>비교기업 PER 재계산: EPS는 증권신고서 값(2025년 지배순이익 ÷ 희석주식수) 그대로, 주가만 9/18 종가로 교체</caption>
+    <thead><tr><th>비교기업</th><th class="num">EPS(원)</th><th class="num">기준주가 4/3</th><th class="num">PER</th><th class="num">종가 9/18</th><th class="num">PER</th><th class="num">주가 변화</th></tr></thead>
+    <tbody>
+      <tr><td>엑셈</td><td class="num">87</td><td class="num">1,762</td><td class="num">20.3</td><td class="num">1,333</td><td class="num">15.3</td><td class="num neg">-24.3%</td></tr>
+      <tr><td>와이즈넛</td><td class="num">132</td><td class="num">9,900</td><td class="num">74.7</td><td class="num">5,550</td><td class="num">42.0</td><td class="num neg">-43.9%</td></tr>
+      <tr><td>슈어소프트테크</td><td class="num">159</td><td class="num">6,804</td><td class="num">42.9</td><td class="num">4,195</td><td class="num">26.4</td><td class="num neg">-38.3%</td></tr>
+      <tr><td>비아이매트릭스</td><td class="num">324</td><td class="num">7,780</td><td class="num">24.0</td><td class="num">5,950</td><td class="num">18.4</td><td class="num neg">-23.5%</td></tr>
+      <tr class="sum"><td>평균 PER → 주당 평가가액</td><td class="num">572</td><td class="num"></td><td class="num">40.5 → 23,143원</td><td class="num"></td><td class="num">25.5 → 14,600원</td><td class="num"></td></tr>
+    </tbody>
+  </table></div>
+  <div class="take"><span class="lbl">읽는 법</span><p>같은 산식에 오늘 비교기업 주가를 넣으면 <b>할인 전 평가가액이 14,600원</b>으로 공모가 아래다. 지금 주가 21,300원은 주당 572원의 37.2배로, 마키나락스는 비교기업이 디레이팅되는 동안 프리미엄을 유지하고 있다. 시장이 이 회사를 '국내 B2B 소프트웨어'가 아니라 '피지컬 AI·국방 AI' 테마(교보증권이 9월 리포트에서 묶은 씨메스로보틱스·클로봇·뉴로메카·레인보우로보틱스 군)로 값 매긴다는 뜻이다. 그 분류가 유지되는 동안은 배수 논쟁이 무의미하고, 분류가 흔들리면 하방이 깊다.</p></div>
+</section>
+
+<section id="s4">
+  <div class="sec-h"><span class="sec-n">04</span><h2>비즈니스 모델: 밸류체인 어느 칸에서 무엇을 파는가</h2></div>
+  <p>산업 AI의 밸류체인을 여섯 칸으로 나누면 마키나락스는 네 번째와 다섯 번째 칸에 걸쳐 있다. 파운데이션 모델을 직접 만들지 않고(업스테이지 컨소시엄의 확산 파트너), GPU도 팔지 않으며, 고객 공장의 MES·PLC를 대체하지도 않는다. <b>고객이 가진 GPU와 데이터 위에, 외부 인터넷 없이 AI를 개발·배포·감시하는 층</b>을 깔고, 그 위에 올릴 모델을 같이 만들어 준다.</p>
+  <div class="vc">
+    <div class="c"><b>① 칩·서버</b>GPU, NPU, 엣지 디바이스<div class="who">엔비디아, 어드밴텍</div></div>
+    <div class="c"><b>② 클라우드·인프라</b>IaaS, GPU 자원 관리<div class="who">AWS, 래블업, 베슬AI</div></div>
+    <div class="c"><b>③ 파운데이션 모델</b>LLM, 비전 모델<div class="who">업스테이지, SKT, LG</div></div>
+    <div class="c me"><b>④ AI 운영체제</b>폐쇄망 MLSecOps, 배포·모니터링·거버넌스<div class="who">Runway · 팔란티어, Dataiku, C3</div></div>
+    <div class="c me"><b>⑤ 특화 모델·에이전트</b>이상탐지, 제어최적화, PLC·도면 에이전트<div class="who">마키나락스 FDE 본부 · 심플랫폼</div></div>
+    <div class="c"><b>⑥ 현장 시스템</b>MES, PLC, 로봇, 무기체계<div class="who">지멘스, 로크웰, 현대오토에버, 한화시스템</div></div>
+  </div>
+  <h3>세 가지 공급 형태와 돈이 들어오는 방식</h3>
+  <div class="tbl-scroll"><table>
+    <thead><tr><th>형태</th><th>무엇을 주는가</th><th>대상 고객</th><th>수익 인식</th><th class="num">1H26 매출</th><th class="num">6/30 잔고</th></tr></thead>
+    <tbody>
+      <tr><td><b>AI OS (Runway)</b></td><td>플랫폼 라이선스(구독·연간·영구+유지보수). 일부 계약은 서버 등 하드웨어 포함</td><td>자체 AI 인력이 있고 클라우드를 못 쓰는 곳(연구소, ADD)</td><td>한 시점(납품·검수)</td><td class="num">10.6억 (15%)</td><td class="num">11.0억</td></tr>
+      <tr><td><b>AI 솔루션 공급</b></td><td>Runway + 학습된 특화 모델을 묶어 구축</td><td>AI를 쓰고 싶지만 운영 환경이 없는 제조사</td><td>기간(투입원가 진행률)</td><td class="num">16.0억 (23%)</td><td class="num">45.0억</td></tr>
+      <tr><td><b>AI 연구개발</b></td><td>문제 정의부터 모델 개발까지 용역. 신규 고객의 첫 계약, PoC</td><td>새 분야에 AI를 시험하려는 대기업, 정부·국방 과제</td><td>기간(진행률)</td><td class="num">43.7억 (62%)</td><td class="num">91.8억</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">반기보고서부터 3분류. 그 전 공시는 'Runway(하드웨어 및 라이선스 판매)'와 'AI 컨설팅(용역)' 2분류였고, 옛 Runway = 지금의 AI OS, 옛 컨설팅 = 솔루션 공급 + 연구개발이다(2025년 4,135 / 757 + 6,567 = 7,324로 일치).</p>
+  <p>회사가 그리는 선순환은 <b>용역으로 들어가서(⑤) 플랫폼을 남기고(④), 플랫폼 위에서 모델 수가 늘면 라이선스가 커진다</b>는 것이다. 팔란티어가 FDE(Forward Deployed Engineer)를 고객사에 심는 방식과 같고, 실제로 연구개발 조직 이름이 'FDE 본부'다. 현대차 산업용 로봇 이상탐지는 한 공장 PoC에서 시작해 국내외 900~1,400대로 확대 적용 중이고, 태양광 발전량 예측 모델은 3,000개 이상 운영된다. 회사가 말하는 "현장 적용 모델 6,000개"의 대부분이 이 두 사례에서 나온다는 점은 기억해 둘 만하다.</p>
+  <h3>고객과 계약의 크기</h3>
+  <div class="grid2">
+    <div class="pane"><h4>고객 구성 (확인된 것)</h4><ul>
+      <li>매출처 수 2023년 26 → 2024년 37 → 2025년 49개사</li>
+      <li>2025년 상위 5곳 47.7%: 기업J 16.2억, 기업K 12.1억, 기업L 10.1억, <b>국내기관A 9.3억</b>, 기업M 6.9억</li>
+      <li>IR Book: 5대 제조 대기업 + 국방이 매출의 67%, 국방만 22%(약 25억)</li>
+      <li>SI 주주 그룹 A에서 누적 38건, 그룹 B에서 21건 수주(실명 비공개)</li>
+      <li>수출 2025년 8.2억(7%) → 1H26 11.4억(16%). 일본 4건, 유럽 3건</li>
+    </ul></div>
+    <div class="pane"><h4>계약 단가 (계산)</h4><ul>
+      <li>2025년 73건 114.6억 → 건당 1.57억</li>
+      <li>Runway 14건 41.4억 → 건당 2.95억. 단 ADD 한 건이 18.2억(HW 4.9억 포함)이라 나머지 13건 평균은 1.78억</li>
+      <li>1H26 Runway 11건 10.6억 → 건당 0.96억</li>
+      <li>진행 중 주요 계약 5건의 계약자산 합계 7.9억. 최대 건은 '물류 AI 시스템 모델 개발'(진행률 63%)</li>
+      <li>8/26 공시 계약 23.5억(Runway+솔루션, ~2027-12)은 단일 건으로 최대급</li>
+    </ul></div>
+  </div>
+</section>
+
+<section id="s5">
+  <div class="sec-h"><span class="sec-n">05</span><h2>실적: 8년 연속 적자, 그리고 처음으로 비용보다 매출이 빨리 자란 반기</h2></div>
+  <div class="chart" id="ch-ann"><p class="ct">연간 매출·영업이익: 실적과 회사 추정</p><p class="cs">억원. 진한 막대 실적(2021~2025), 옅은 막대 증권신고서 Base 추정(2026~2030). 선은 영업이익</p><div class="legend"><span><i style="background:var(--c1)"></i>매출 실적</span><span><i style="background:var(--c1);opacity:.35"></i>매출 추정</span><span><i style="background:var(--c2)"></i>영업이익</span></div><svg></svg></div>
+  <div class="tbl-scroll"><table>
+    <caption>연간 실적 (억원). 2021~22년 K-GAAP 별도(2021 미감사), 2023년~ K-IFRS 연결</caption>
+    <thead><tr><th>연도</th><th class="num">매출</th><th class="num">YoY</th><th class="num">영업비용</th><th class="num">급여·상여</th><th class="num">경상연구개발</th><th class="num">주식보상</th><th class="num">영업이익</th><th class="num">순이익</th><th class="num">영업CF</th><th class="num">현금+단기금융</th></tr></thead>
+    <tbody>
+      <tr><td>2021</td><td class="num">15.6</td><td class="num">-</td><td class="num">48.3</td><td class="num">22.1</td><td class="num">0.5</td><td class="num">-</td><td class="num neg">-32.8</td><td class="num neg">-39.8</td><td class="num neg">-31.7</td><td class="num">43.8</td></tr>
+      <tr><td>2022</td><td class="num">30.2</td><td class="num pos">+93.8%</td><td class="num">85.1</td><td class="num">41.6</td><td class="num">0.9</td><td class="num">-</td><td class="num neg">-55.0</td><td class="num neg">-59.6</td><td class="num neg">-53.3</td><td class="num">156.3</td></tr>
+      <tr><td>2023</td><td class="num">52.1</td><td class="num pos">+72.7%</td><td class="num">163.6</td><td class="num">68.6</td><td class="num">27.2</td><td class="num">10.2</td><td class="num neg">-111.6</td><td class="num neg">-183.4</td><td class="num neg">-101.8</td><td class="num">80.9</td></tr>
+      <tr><td>2024</td><td class="num">82.9</td><td class="num pos">+59.3%</td><td class="num">191.9</td><td class="num">69.8</td><td class="num">32.4</td><td class="num">14.5</td><td class="num neg">-109.0</td><td class="num neg">-60.7</td><td class="num neg">-106.4</td><td class="num">153.2</td></tr>
+      <tr class="sum"><td>2025</td><td class="num">114.6</td><td class="num pos">+38.2%</td><td class="num">195.0</td><td class="num">59.7</td><td class="num">33.1</td><td class="num">6.4</td><td class="num neg">-80.4</td><td class="num neg">-137.7</td><td class="num neg">-78.0</td><td class="num">98.7</td></tr>
+      <tr><td>1H26</td><td class="num">70.3</td><td class="num pos">+168.2%</td><td class="num">112.6</td><td class="num">43.6</td><td class="num">19.3</td><td class="num">0.5</td><td class="num neg">-42.4</td><td class="num neg">-39.2</td><td class="num neg">-30.5</td><td class="num">464.1</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">2023·2025년 순손실이 영업손실보다 큰 것은 전환상환우선주(RCPS) 파생상품평가손실(각 -48.2억, -47.7억) 때문이고, 2024년은 평가이익 +58.7억이 들어갔다. RCPS는 2025-11-11 전량 보통주로 전환돼 앞으로는 이 항목이 없다. 2023년 말 자본총계는 -360억(완전자본잠식)이었다. 2022년 연결 매출은 31.7억.</p>
+  <h3>2025년이 말해 주는 것: 구조조정 뒤의 성장</h3>
+  <p>2024년 10월 회사는 첫 번째 상장예비심사를 철회했다. 그 직후 1년 동안 연구개발 인력 22명이 나가고 10명이 들어와 연말 69명이 됐다(퇴사율 29.0%, 2024~25년 정규직 퇴사자 54명 중 팀리더 6명). 급여·상여는 69.8억에서 59.7억으로 14.5% 줄었는데 매출은 38.2% 늘었다. 의도한 효율화였는지 이탈이었는지는 공시만으로 구분되지 않지만, 결과적으로 <b>영업비용을 195억에 묶어 둔 채 매출을 82.9억에서 114.6억으로 올렸다</b>. 한편 Runway 매출은 37.9억 → 41.4억(+9%)에 건수는 17 → 14건으로 줄었고, 성장은 컨설팅(45.0억 → 73.2억, +63%)에서 나왔다. 회사가 가려는 방향과 2025년 실적의 방향은 반대였다.</p>
+  <div class="chart" id="ch-q"><p class="ct">분기 매출: 4분기에 몰린다</p><p class="cs">억원. 주황은 4분기. 2025년 4분기 65.4억은 연매출의 57.0%</p><svg></svg></div>
+  <div class="tbl-scroll"><table>
+    <caption>최근 6개 분기 (억원)</caption>
+    <thead><tr><th>분기</th><th class="num">매출</th><th class="num">YoY</th><th class="num">영업비용</th><th class="num">영업이익</th><th class="num">OPM</th></tr></thead>
+    <tbody>
+      <tr><td>1Q25</td><td class="num">11.3</td><td class="num neg">-42.8%</td><td class="num">43.6</td><td class="num neg">-32.3</td><td class="num neg">-284.8%</td></tr>
+      <tr><td>2Q25</td><td class="num">14.9</td><td class="num neg">-16.0%</td><td class="num">41.9</td><td class="num neg">-27.0</td><td class="num neg">-182.0%</td></tr>
+      <tr><td>2H25 (3Q+4Q)</td><td class="num">88.4</td><td class="num pos">+94.6%</td><td class="num">109.5</td><td class="num neg">-21.1</td><td class="num neg">-23.8%</td></tr>
+      <tr><td>1Q26</td><td class="num">30.3</td><td class="num pos">+167.6%</td><td class="num">54.7</td><td class="num neg">-24.3</td><td class="num neg">-80.2%</td></tr>
+      <tr class="sum"><td>2Q26</td><td class="num">39.9</td><td class="num pos">+168.6%</td><td class="num">57.9</td><td class="num neg">-18.0</td><td class="num neg">-45.1%</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">분기별 영업손익은 상장 전 기간이라 3Q25·4Q25를 나눌 수 없어 하반기로 묶었다. 2Q25 매출은 반기보고서 값(14.9억).</p>
+  <h3>비용 구조: 사람이 59%, 그리고 지급수수료가 빠르게 는다</h3>
+  <div class="tbl-scroll"><table>
+    <caption>1H26 성격별 영업비용 (억원)</caption>
+    <thead><tr><th>항목</th><th class="num">1H26</th><th class="num">1H25</th><th class="num">증감률</th><th class="num">비중</th><th>메모</th></tr></thead>
+    <tbody>
+      <tr><td>종업원급여 합계</td><td class="num">66.7</td><td class="num">53.8</td><td class="num">+24.0%</td><td class="num">59.2%</td><td>급여·상여 43.6(+51.9%), 경상연구개발 19.3, 주식보상 0.5(전년 2.7)</td></tr>
+      <tr><td>지급수수료</td><td class="num">20.3</td><td class="num">12.0</td><td class="num">+68.6%</td><td class="num">18.0%</td><td>외주·클라우드·상장 관련. 2Q만 12.5억</td></tr>
+      <tr><td>소모품비</td><td class="num">3.4</td><td class="num">1.2</td><td class="num">+184.6%</td><td class="num">3.1%</td><td>HW 동반 납품 시 원가가 여기 잡힌다. 2025년 연간 19.6억(2024년 2.4억)</td></tr>
+      <tr><td>여비·광고선전</td><td class="num">6.8</td><td class="num">3.5</td><td class="num">+91.0%</td><td class="num">6.0%</td><td>해외 영업, 전시회</td></tr>
+      <tr><td>상각비·임차·기타</td><td class="num">15.4</td><td class="num">15.0</td><td class="num">+3.1%</td><td class="num">13.7%</td><td></td></tr>
+      <tr class="sum"><td>합계</td><td class="num">112.6</td><td class="num">85.5</td><td class="num">+31.7%</td><td class="num">100%</td><td>회사 연간 추정 247.5억의 45.5%</td></tr>
+    </tbody>
+  </table></div>
+  <p>매출 +168%에 비용 +32%이니 레버리지는 분명하다. 다만 <b>6월 말 직원은 162명</b>(정규 135 + 기간제 27)으로, 투자설명서 기준 118명에서 넉 달 만에 44명이 늘었다. 회사 인력계획은 2026년 말 133명, 2027년 말 160명이었다. 이미 2027년 계획치에 와 있다. 기간제 27명 중 18명이 '연구-프로젝트' 소속이어서 프로젝트 단위 계약직일 가능성이 있지만, 하반기 영업비용이 추정 잔여분(134.9억, 분기 67억)을 넘을 위험은 열려 있다.</p>
+  <h3>현금과 운전자본</h3>
+  <p>현금성자산 441억 + 단기금융상품 23억 = 464억, 단기차입 20억. 상반기 영업현금흐름은 -30.5억으로 영업손실(-42.4억)보다 적게 나갔다. 매출채권이 42.4억에서 12.9억으로 줄어든(4분기 매출분 회수) 덕이다. 반대로 <b>계약자산(미청구 용역)은 40.7억에서 58.6억으로 늘었고 상반기 매출의 83%</b>에 해당한다. 진행률로 매출은 잡았지만 아직 청구하지 못한 돈이다. 회사 설명대로 "검수와 대금청구가 하반기에 집중"된다면 4분기에 매출채권으로 바뀌고 내년 1분기에 현금이 된다. 지금 소진 속도(반기 30억)의 두 배를 가정해도 현금은 7년 이상 버틴다. 유동성은 이 회사의 문제가 아니다.</p>
+</section>
+
+<section id="s6">
+  <div class="sec-h"><span class="sec-n">06</span><h2>225억 해부: 회사 추정은 어떻게 만들어졌고 어디까지 왔나</h2></div>
+  <p>증권사 컨센서스가 없는 종목이라 시장이 쓰는 숫자는 전부 투자설명서의 회사 추정이다. 한국투자증권(7/21, Not Rated)도 2026년 매출 225억·영업손실 23억을 그대로 옮겼다. 이 숫자가 만들어진 방식을 알아야 3분기 실적을 읽을 수 있다.</p>
+  <h3>만드는 법: 영업 파이프라인 × 등급별 수주확률</h3>
+  <p>회사는 영업기회와 이월 계약 152건 중 D등급 64건을 빼고 88건(계약금액 812억, 그중 등급별 2026년 인식 대상 합계 374억)을 놓고, 등급별 확률을 곱해 더했다. 고객 수 × 라이선스 단가로 쌓은 숫자가 아니다.</p>
+  <div class="chart" id="ch-pipe"><p class="ct">2026년 매출 추정의 등급별 구성</p><p class="cs">억원. 회색은 2026년 인식 대상 금액, 파랑은 확률을 곱해 추정 매출에 넣은 금액</p><svg></svg></div>
+  <div class="tbl-scroll"><table>
+    <thead><tr><th>등급</th><th class="num">인식 대상</th><th class="num">적용 확률</th><th class="num">추정 매출</th><th class="num">비중</th><th class="num">과거 실제 성사율</th></tr></thead>
+    <tbody>
+      <tr><td>계약완료·S</td><td class="num">112.0</td><td class="num">95%</td><td class="num">106.4</td><td class="num">47.3%</td><td class="num">97.7%</td></tr>
+      <tr><td>A</td><td class="num">93.3</td><td class="num">70%</td><td class="num">65.3</td><td class="num">29.0%</td><td class="num">68.7%</td></tr>
+      <tr><td>B</td><td class="num">106.3</td><td class="num">50%</td><td class="num">53.2</td><td class="num">23.6%</td><td class="num">44.1%</td></tr>
+      <tr><td>C</td><td class="num">62.2</td><td class="num">0%</td><td class="num">0</td><td class="num">-</td><td class="num">20.2%</td></tr>
+      <tr class="sum"><td>합계</td><td class="num">373.9</td><td class="num"></td><td class="num">224.9</td><td class="num">100%</td><td class="num"></td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">과거 성사율은 2024~25년 합산. B등급에 50%를 곱했는데 실제는 44.1%였다. 그 차이(5.9%p × 106.3억 = 6.3억)는 C등급을 0으로 둔 보수성(62.2억 × 20.2% = 12.6억)으로 상쇄된다. 확률 자체는 과하지 않다. 문제는 확률이 아니라 <b>건이 크고 적다</b>는 데 있다.</p>
+  <div class="tbl-scroll"><table>
+    <caption>추정에 들어간 대형 건 (억원). 다섯 건이 2026년 추정 매출의 37.5%</caption>
+    <thead><tr><th>발주처·사업</th><th class="num">계약 규모</th><th class="num">확률</th><th class="num">2026E 반영</th><th>성격</th></tr></thead>
+    <tbody>
+      <tr><td>국방부 IITP 국방ICT연구센터</td><td class="num">108.3</td><td class="num">70%</td><td class="num">31.5</td><td>국방·정부</td></tr>
+      <tr><td>국방지능형플랫폼 성능개량</td><td class="num">70.0</td><td class="num">50%</td><td class="num">15.2</td><td>국방</td></tr>
+      <tr><td>ADD MLSecOps 2단계</td><td class="num">20.0</td><td class="num">70%</td><td class="num">14.0</td><td>국방 (1단계 수행사)</td></tr>
+      <tr><td>산업부 열공정 파운데이션 모델 R&amp;D</td><td class="num">100.0</td><td class="num">50%</td><td class="num">12.5</td><td>정부 R&amp;D, 4개년</td></tr>
+      <tr><td>SL AX 실증산단 (중기부 R&amp;D)</td><td class="num">30.0</td><td class="num">50%</td><td class="num">11.3</td><td>정부 R&amp;D</td></tr>
+      <tr class="sum"><td>소계</td><td class="num">328.3</td><td class="num"></td><td class="num">84.5</td><td></td></tr>
+    </tbody>
+  </table></div>
+  <p>산업별로는 국방 76.9억(34.2%), 정부·R&amp;D 38.6억(17.1%), 반도체·디스플레이 37.3억, 에너지·화학 27.7억, 자동차 21.0억, 중공업 13.7억, 기타 9.7억이다. <b>2026년 추정 매출의 51%가 국방과 정부 과제</b>이고 2027년은 국방만 52%(194억)다. 2025년 국방 비중은 22%였다. 회사의 성장 스토리는 'Runway 전환'으로 포장돼 있지만 숫자로 보면 앞의 2년은 <b>국방 수주 스토리</b>다.</p>
+  <h3>어디까지 왔나</h3>
+  <div class="chart" id="ch-gap"><p class="ct">연간 추정 대비 상반기 진척</p><p class="cs">억원. 진한 부분이 상반기 실적, 옅은 부분이 하반기에 필요한 금액</p><svg></svg></div>
+  <div class="tbl-scroll"><table>
+    <thead><tr><th>항목</th><th class="num">2026E</th><th class="num">1H26 실적</th><th class="num">진척률</th><th class="num">하반기 필요</th><th class="num">1H 대비</th><th>2025년 전례</th></tr></thead>
+    <tbody>
+      <tr><td>매출 합계</td><td class="num">224.9</td><td class="num">70.3</td><td class="num">31.2%</td><td class="num">154.7</td><td class="num">2.2배</td><td>상반기 22.9% / 하반기 77.1%</td></tr>
+      <tr><td>Runway 제품매출</td><td class="num">110.1</td><td class="num">10.6</td><td class="num">9.6%</td><td class="num">99.5</td><td class="num">9.4배</td><td>상반기 1.3억(3.2%) / 하반기 40.0억</td></tr>
+      <tr><td>AI 컨설팅 용역매출</td><td class="num">114.9</td><td class="num">59.7</td><td class="num">51.9%</td><td class="num">55.2</td><td class="num">0.9배</td><td>상반기 24.9억(34.0%)</td></tr>
+      <tr><td>영업비용</td><td class="num">247.5</td><td class="num">112.6</td><td class="num">45.5%</td><td class="num">134.9</td><td class="num">1.2배</td><td>하반기 109.5억</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">Runway 실적은 재무제표 'AI OS (Runway)' 항목. 회사 추정의 Runway 110억에는 혼합 계약의 60%가 배분돼 있어, 재무제표의 'AI 솔루션 공급'(1H 16.0억) 일부가 회사 기준으로는 Runway에 속할 수 있다. 솔루션 공급을 전부 Runway로 쳐도 26.6억, 진척률 24.1%다.</p>
+  <div class="grid2">
+    <div class="pane yes"><h4>달성 쪽 근거</h4><ul>
+      <li>2025년 하반기 비중 77%, 4분기 57%. 같은 계절성이면 상반기 70억은 연 300억에 해당</li>
+      <li>3월 말 확정 수주 중 2026년 인식분 131.4억(58.5%). 1~4월 매출 40억을 빼도 91억이 남아 있었다</li>
+      <li>상반기 신규 수주 200억(1Q 75억 19건, 2Q 125억 28건)으로 전년 동기 64억의 3배</li>
+      <li>계약자산 58.6억은 검수만 나면 청구되는 돈. 회사 설명 "검수·대금청구 하반기 집중"</li>
+      <li>8/26 23.5억(Runway+솔루션), 삼성디스플레이 베트남 PLC 코드 최적화 연내 양산 적용 목표</li>
+    </ul></div>
+    <div class="pane no"><h4>미달 쪽 근거</h4><ul>
+      <li>6월 말 수주잔고 147.8억 &lt; 하반기 필요 154.7억. 잔고가 전부 연내 인식돼도 모자라고, 8/26 건은 2027년 말까지다</li>
+      <li>AI OS 잔고는 11.0억. Runway 추정을 채우려면 하반기에 신규 수주와 납품·검수가 같은 분기에 끝나야 한다</li>
+      <li>대형 국방·정부 건 5개(84.5억 반영) 중 상장 이후 계약 공시로 확인된 것이 없다. 공시 의무 기준(매출의 10% = 11.5억)을 넘는 건이면 공시가 나와야 한다</li>
+      <li>회사 Worst 시나리오 185.2억. Base와의 차이 39.7억은 영업손실로 직결돼 -22.6억이 -60억대가 된다</li>
+      <li>직원 162명으로 비용 쪽도 계획을 앞서 가고 있다</li>
+    </ul></div>
+  </div>
+  <h3>수주·잔고·매출의 식이 맞지 않는다</h3>
+  <div class="tbl-scroll"><table>
+    <caption>수주잔고 흐름 검산 (억원): 기초 잔고 + 신규 수주 − 매출 = 기말 잔고여야 한다</caption>
+    <thead><tr><th>기간</th><th class="num">기초 잔고</th><th class="num">+ 신규 수주</th><th class="num">− 매출</th><th class="num">= 산식상 기말</th><th class="num">공시된 기말</th><th class="num">차이</th></tr></thead>
+    <tbody>
+      <tr><td>2025년</td><td class="num">?</td><td class="num">205.0</td><td class="num">114.6</td><td class="num">90.4 + 기초</td><td class="num">71.5</td><td class="num neg">-18.9 이상</td></tr>
+      <tr><td>1Q26</td><td class="num">71.5</td><td class="num">75.0</td><td class="num">30.3</td><td class="num">116.1</td><td class="num">146.4 / 151.9</td><td class="num pos">+30.3 / +35.8</td></tr>
+      <tr><td>2Q26</td><td class="num">151.9</td><td class="num">125.0</td><td class="num">39.9</td><td class="num">237.0</td><td class="num">147.8</td><td class="num neg">-89.2</td></tr>
+      <tr class="sum"><td>1H26 합산</td><td class="num">71.5</td><td class="num">200.0</td><td class="num">70.3</td><td class="num">201.2</td><td class="num">147.8</td><td class="num neg">-53.4</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">신규 수주는 IR Book(2025년 205억, 1Q26 75억, 2Q26 125억). 2025년 말 잔고 71.5억과 3월 말 146.4억은 투자설명서, 3월 말 151.9억은 1분기보고서, 6월 말 147.8억은 반기보고서. 투자설명서는 3월 말 잔고를 "전기 이월 71.5 + 1분기 신규 75.0 = 146.4"로 적어 1분기 매출 30.3억을 빼지 않았다.</p>
+  <p>세 문서의 '수주'가 서로 다른 것을 세고 있다. 가능한 설명은 셋이다. ① IR의 수주액에는 매출로 인식되지 않는 <b>국가 R&amp;D 과제 지원금</b>이 들어 있다(투자설명서: 2025년 수주의 16.1%, "국가 R&amp;D 지원금은 매출로 인식되지 않는다"). ② 반기보고서 잔고는 "납품이 진행 중인 품목"만 센다고 주석에 적혀 있어, 계약은 했지만 착수 전인 건이 빠진다. ③ 다년 계약의 총액을 수주로 잡되 잔고에는 일부만 넣는다. 어느 쪽이든 결론은 같다. <b>"상반기 수주 200억"을 하반기 매출의 선행지표로 그대로 쓰면 안 된다.</b> 그리고 ①이 맞다면 위 대형 건 표의 산업부·중기부 R&amp;D 23.8억이 매출 추정에 들어가 있는 것과 충돌한다.</p>
+</section>
+
+<section id="s7">
+  <div class="sec-h"><span class="sec-n">07</span><h2>성장 엔진 네 개와 각각의 확인 시점</h2></div>
+  <h3>① 국방 AI: 가장 크고 가장 빨리 판정된다</h3>
+  <p>레퍼런스는 ADD '무기체계용 MLSecOps 환경 구축'(약 20억, Runway 최대 계약), 합참 AI 플랫폼 실증(기술평가 86.79점, 차점 71.96점), 국군지휘통신사령부 생성형 AI 실증, 해군 1함대 함정 장비 운용 에이전트(방사청 과제 2억), <b>K-AIP 기반 지능화 GOP 작전지원체계</b>(2025-12 ~ 2028-10, 정부지원금 23.1억, 보도된 총사업비 약 44억, 주관)다. 방위사업청 '방산혁신기업 100'에 AI 플랫폼 회사로는 유일하게 들어 있고, 윤성호 대표는 국가AI전략위원회 국방·안보 분과 위원이다. 상장 후에는 AWS(7/7, 국방 AI·해외 공동판매), 한화시스템(7/28, 제조 AX 3년), LIG D&amp;A(4월) MOU가 이어졌다. 정책 쪽에서는 2026년 AI 예산 9.9조(전년의 약 3배)와 10조 방산 AI 정책펀드가 거론된다.</p>
+  <p>국방 사업의 성격은 양면이다. 폐쇄망·보안 인증·획득 절차가 해외 업체와 후발주자를 막아 주지만, 발주가 예산 회기와 사업 공고 일정에 묶여 있어 <b>회사가 시점을 통제할 수 없다</b>. IITP 국방ICT연구센터(108억)와 국방지능형플랫폼 성능개량(70억)이 언제 공고되고 누구와 경쟁하는지가 2026~27년 추정의 절반을 결정한다.</p>
+  <h3>② Runway 전환: 서사의 핵심이지만 증거가 가장 얇다</h3>
+  <p>회사가 공개한 지표는 넷이다. 2025년 라이선스 고객 갱신율 94%, 후속 계약 매출 비중 37%(DB증권 리포트 인용), 타사 플랫폼 대비 ML 작업 단계 64 → 30개·소요시간 218 → 60분, 폐쇄망 소프트웨어 반입·검증 4일 → 1시간. 공개하지 않은 것이 더 중요하다. 라이선스 고객 수, 연간·영구 비중, 고객당 연 매출, 순수 소프트웨어 매출과 하드웨어 매출의 분리, 그리고 매출총이익률이다(손익계산서에 매출원가 구분이 없다). 2030년 영업이익률 46%는 Runway가 고마진 반복매출이라는 전제에서만 나온다. 1H26 'AI OS' 11건 10.6억은 건당 1억이 안 된다.</p>
+  <p>하반기에 볼 제품 확장은 세 가지다. PLC 코드 분석·도면 검토 에이전트의 제품화(삼성디스플레이 베트남, 두산에너빌리티 설계도서 검토), 온디바이스 경량화(모바일 칩셋 탑재 과제 "26년 출시 기기 탑재 예정", 모델 크기 1/4), 7월 출범한 파트너 프로그램(다겸, 에너토크, 스피어AX)을 통한 중견기업 간접 판매다.</p>
+  <h3>③ 해외: 일본이 먼저</h3>
+  <p>수출은 2025년 8.2억에서 1H26 11.4억(매출의 16.2%)으로 늘었고 상반기 해외 수주는 약 30억이다. 일본 법인(2025-04 설립)은 혼다 중앙연구소, 나치-후지코시, 요코가와전기 등과 4건을 계약했고 미쓰비시상사·후지소프트와 협의 중이다. 유럽은 KUKA 자회사 Device Insight와 레달을 통한 간접 영업으로 3건(반도체 장비, 풍력, 배터리 헝가리 법인). 다만 전례가 있다. 2018년 세운 미국 법인은 2023년 매출 4.4억에 순손실 10.5억, 2024년 순손실 8.2억을 내고 지금은 휴면·완전자본잠식이며 본사 대여금은 전액 손상 처리됐다. 공모자금의 해외진출 몫 83.2억 중 60.8억이 2028년에 배정돼 있어 회사도 서두르지는 않는다.</p>
+  <h3>④ 독자 AI 파운데이션 모델과 제조 AX 정책</h3>
+  <p>업스테이지 컨소시엄은 8/18 2차 평가를 SKT·LG와 함께 통과했고(모티프 탈락) 내년 초 2개 팀이 최종 선정된다. 마키나락스의 역할은 제조·국방 도메인 확산(공정 운영자 보조, CAD 등 비정형 문서 활용 시범서비스)이다. 직접 매출은 확인되지 않는다. 관련된 돈은 NIA 데이터 과제 0.5억, 파이프라인 B등급의 산업부 '열공정 특화 파운데이션 모델' 100억(4개년), 그리고 <b>공모자금 중 97.3억을 '파운데이션 모델 기반 지능형 플랫폼' 개발에 쓰겠다</b>는 계획이다. 산업부 M.AX 얼라이언스, 창원 AI 스튜디오(8/31) 같은 지역 제조 AX 사업도 같은 축이다.</p>
+  <ul class="tl">
+    <li><span class="d">2026-11 중순</span><span>3분기 보고서. 분기 매출, AI OS 항목, 수주잔고 표, 직원 수</span></li>
+    <li><span class="d">2026-11-20</span><span>6개월 보호예수·기관 확약 해제 약 267만주. 실질 유통가능 49.9% → 65.2%</span></li>
+    <li><span class="d">2026-12</span><span>국방 대형 과제 계약 여부(공시 기준 11.5억 이상), 2027년 국방·AI 예산 확정</span></li>
+    <li><span class="d">2027 초</span><span>독자 AI 파운데이션 모델 최종 2개 팀 선정. 주관사 신주인수권(263,500주) 행사 가능 기간 중</span></li>
+    <li><span class="d">2027-03</span><span>사업보고서. 225억 추정의 판정, 2027년 373.8억·흑자전환 가이던스 재확인 여부</span></li>
+    <li><span class="d">2027-05-20</span><span>1년 보호예수 해제(CFO·CBO, 우리사주). 유통가능 68.8%</span></li>
+  </ul>
+</section>
+
+<section id="s8">
+  <div class="sec-h"><span class="sec-n">08</span><h2>경쟁사 비교: 직접 경쟁자는 비상장이고, 상장 비교군과는 값이 한 자릿수 다르다</h2></div>
+  <p>회사가 거래소에 낸 경쟁사는 팔란티어·C3 ai·데이터이쿠(해외), 베슬에이아이·래블업·에이프리카(국내)다. 국내 셋은 모두 비상장이라 재무를 나란히 놓을 수 없다. 아래 표는 <b>직접 경쟁자가 아니라 시장이 비교에 쓰는 상장사 묶음</b>이다. 위 넷은 공모가 산정 비교기업, 아래 넷은 AI 플랫폼·산업 AI 인접군이다.</p>
+  <div class="tbl-scroll"><table>
+    <caption>국내 상장 비교군 (억원, 배). 시가총액·PBR은 9/18 네이버 시세, 실적은 DART 연결(심플랫폼·코난은 별도)</caption>
+    <thead><tr><th>회사</th><th>성격</th><th class="num">시총</th><th class="num">2025 매출</th><th class="num">영업이익</th><th class="num">OPM</th><th class="num">GPM</th><th class="num">1H26 매출</th><th class="num">1H26 영업이익</th><th class="num">PSR</th><th class="num">PER</th><th class="num">PBR</th></tr></thead>
+    <tbody>
+      <tr class="sum"><td>마키나락스</td><td>산업·국방 AI OS</td><td class="num">3,782</td><td class="num">114.6</td><td class="num neg">-80.4</td><td class="num neg">-70.2%</td><td class="num">구분 없음</td><td class="num">70.3</td><td class="num neg">-42.4</td><td class="num">33.0</td><td class="num">적자</td><td class="num">7.4</td></tr>
+      <tr><td>슈어소프트테크</td><td>SW 검증 (공모 비교)</td><td class="num">2,243</td><td class="num">939.4</td><td class="num">126.0</td><td class="num">13.4%</td><td class="num">-</td><td class="num">466.7</td><td class="num">23.4</td><td class="num">2.4</td><td class="num">19.5</td><td class="num">2.0</td></tr>
+      <tr><td>엑셈</td><td>DB·IT 성능관리 (공모 비교)</td><td class="num">900</td><td class="num">477.6</td><td class="num">36.5</td><td class="num">7.6%</td><td class="num">43.7%</td><td class="num">238.2</td><td class="num">3.6</td><td class="num">1.9</td><td class="num">3.5*</td><td class="num">0.7</td></tr>
+      <tr><td>와이즈넛</td><td>검색·챗봇 AI (공모 비교)</td><td class="num">656</td><td class="num">347.3</td><td class="num">1.1</td><td class="num">0.3%</td><td class="num">51.0%</td><td class="num">146.5</td><td class="num neg">-15.9</td><td class="num">1.9</td><td class="num">22.5</td><td class="num">1.2</td></tr>
+      <tr><td>비아이매트릭스</td><td>BI·로우코드 (공모 비교)</td><td class="num">429</td><td class="num">314.5</td><td class="num">8.7</td><td class="num">2.8%</td><td class="num">59.1%</td><td class="num">161.1</td><td class="num neg">-9.6</td><td class="num">1.4</td><td class="num">53.1</td><td class="num">1.3</td></tr>
+      <tr><td>씨이랩</td><td>GPU 관리·비전 AI 플랫폼</td><td class="num">1,136</td><td class="num">102.7</td><td class="num neg">-32.3</td><td class="num neg">-31.4%</td><td class="num">23.8%</td><td class="num">31.3</td><td class="num neg">-46.5</td><td class="num">11.1</td><td class="num">적자</td><td class="num">5.4</td></tr>
+      <tr><td>심플랫폼</td><td>산업 AIoT 플랫폼</td><td class="num">307</td><td class="num">104.0</td><td class="num neg">-26.6</td><td class="num neg">-25.6%</td><td class="num">-</td><td class="num">27.2</td><td class="num neg">-38.1</td><td class="num">3.0</td><td class="num">적자</td><td class="num">2.7</td></tr>
+      <tr><td>코난테크놀로지</td><td>LLM·국방 AI</td><td class="num">1,642</td><td class="num">339.8</td><td class="num neg">-98.7</td><td class="num neg">-29.0%</td><td class="num">14.6%</td><td class="num">80.5</td><td class="num neg">-68.1</td><td class="num">4.8</td><td class="num">적자</td><td class="num">7.4</td></tr>
+      <tr><td>솔트룩스</td><td>LLM·지식그래프</td><td class="num">1,928</td><td class="num">416.4</td><td class="num neg">-80.4</td><td class="num neg">-19.3%</td><td class="num">-</td><td class="num">204.7</td><td class="num neg">-83.8</td><td class="num">4.6</td><td class="num">적자</td><td class="num">3.1</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">PSR = 시총 ÷ 2025년 매출. PER은 네이버 표기(최근 4분기). *엑셈은 1H26에 일회성 이익(지배순이익 187.9억)이 있어 PER이 왜곡돼 있다. GPM '-'는 손익계산서에 매출원가 구분이 없는 회사.</p>
+  <div class="chart" id="ch-psr"><p class="ct">PSR 비교 (시가총액 ÷ 2025년 매출)</p><p class="cs">배. 마키나락스는 2026년 회사 추정 매출 기준(16.8배)도 함께 표시</p><svg></svg></div>
+  <p>표에서 읽을 것은 두 가지다. 첫째, <b>매출 100억대 적자 AI 플랫폼 세 곳(마키나락스·씨이랩·심플랫폼) 가운데 상반기에 매출이 늘어난 곳은 마키나락스뿐</b>이다. 씨이랩과 심플랫폼의 1H26 매출은 2025년 연간의 30%, 26%이고 마키나락스는 61%다. 둘째, 그래서 값이 다르다고 해도 PSR 33배는 씨이랩의 3배, 심플랫폼의 11배다. 신한투자증권은 5월 심플랫폼 리포트에서 두 회사 매출 규모가 같고 마키나락스의 손익분기 매출을 250~260억(심플랫폼 130~140억)으로 추정했다. 본 리포트 계산으로도 2Q26 영업비용 57.9억을 연환산하면 232억이고 직원 증가를 감안하면 250억 안팎이다.</p>
+  <h3>진짜 경쟁자들</h3>
+  <div class="tbl-scroll"><table>
+    <thead><tr><th>상대</th><th>무엇으로 부딪히나</th><th>마키나락스의 주장</th><th>반론</th></tr></thead>
+    <tbody>
+      <tr><td><b>팔란티어</b></td><td>온톨로지 기반 의사결정 플랫폼, 폐쇄망 지원, 국방. 2026년 1월 HD현대와 전사 계약</td><td>팔란티어는 '상위 의사결정 레이어', 자사는 '제어·실행 레이어'. 중견 이하 기업은 팔란티어 접근이 어렵다</td><td>마키나락스 로드맵(온톨로지·멀티 에이전트, 'Defense OS')이 정확히 팔란티어의 칸으로 올라가는 방향이다. HD한국조선해양에서 이미 같은 고객을 두고 있다</td></tr>
+      <tr><td><b>그룹 SI</b> (삼성SDS, LG CNS, 현대오토에버, 포스코DX, 한화시스템)</td><td>계열사 공장의 AI 구축을 내재화</td><td>SI가 갖지 못한 산업 횡단 포트폴리오. 현대오토에버·한화시스템은 파트너</td><td>LG CNS는 주주이면서 의무보유 없이 상장. 캡티브 물량은 결국 SI를 거친다. 하도급 구조면 마진이 눌린다</td></tr>
+      <tr><td><b>베슬AI·래블업·에이프리카</b></td><td>MLOps·GPU 오케스트레이션</td><td>클라우드 기반 범용 접근. 폐쇄망·보안 자동화가 없다</td><td>래블업은 같은 업스테이지 컨소시엄 소속이고 온프레미스 GPU 관리에 강하다. 공공·국방 입찰에서 만난다</td></tr>
+      <tr><td><b>지멘스·로크웰</b></td><td>Industrial Copilot 등 OT 벤더의 자체 AI</td><td>MOU 파트너. 제조 엣지 생태계는 있으나 커스텀 AI 운영은 지원하지 않는다</td><td>PLC 코드 생성·분석은 OT 벤더가 가장 공들이는 영역이다</td></tr>
+      <tr><td><b>범용 LLM·코딩 에이전트</b></td><td>고객이 직접 모델을 만들고 운영</td><td>"정확도 80%로는 현장에 못 간다"(윤 대표 9/3). 폐쇄망에는 못 들어온다</td><td>오픈웨이트 모델 + 사내 GPU면 폐쇄망에서도 돈다. 플랫폼의 가치가 '모델 개발'에서 '보안·거버넌스·배포'로 좁혀진다</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="s9">
+  <div class="sec-h"><span class="sec-n">09</span><h2>해자 검증: 찬성 근거와 반증을 나란히</h2></div>
+  <div class="grid2">
+    <div class="pane yes"><h4>해자가 있다는 근거</h4><ul>
+      <li><b>폐쇄망 네이티브.</b> 경쟁 제품은 클라우드용으로 만들고 온프레미스 옵션을 붙였다. Runway는 처음부터 외부 의존 없이 도는 구조이고 합참 실증에서 소프트웨어 반입·검증을 4일에서 1시간으로 줄였다. 기술평가 15점 차는 입찰에서 뒤집기 어렵다</li>
+      <li><b>데이터 접근권.</b> 제조·국방 데이터는 밖으로 나오지 않는다. 현대차·LG·SK·GS·한화·Applied가 주주로 들어와 초기 데이터 장벽을 넘겨 줬고, NDA 113개사·누적 프로젝트 153건·공정 데이터 25TB가 쌓였다</li>
+      <li><b>전환비용.</b> 공장은 검증된 시스템을 건드릴 때의 다운타임을 가장 두려워한다. 로봇 이상탐지가 1,400대로 퍼진 뒤에 플랫폼을 바꾸려면 모델 재학습과 라인 재검증이 따라온다</li>
+      <li><b>국방 자격.</b> 방산혁신기업 100, 군 출신 영업 인력, ADD·합참·해군 레퍼런스. 해외 업체는 구조적으로 못 들어온다</li>
+      <li><b>특허 87건 등록.</b> AI 기반 설계·최적화 분야 국내 2위(1위 삼성전자)</li>
+      <li><b>집중도 하락.</b> 10% 이상 고객이 4곳(52%)에서 1곳(12%)으로. 특정 고객이 끊겨도 버틴다</li>
+    </ul></div>
+    <div class="pane no"><h4>반증과 약한 고리</h4><ul>
+      <li><b>8년째 용역 회사의 손익.</b> 매출의 62%가 연구개발 용역이고 매출 1억당 인건비가 0.95억이다(1H26 종업원급여 66.7억 ÷ 매출 70.3억). 플랫폼 해자가 있다면 나와야 할 매출총이익률을 회사는 공시하지 않는다</li>
+      <li><b>Runway가 자라지 않았다.</b> 2025년 +9%, 건수 감소. 갱신율 94%는 모수(14~17건)가 작아 한 곳만 빠져도 6~7%p 움직인다</li>
+      <li><b>사람이 해자인데 사람이 나갔다.</b> 연구개발 퇴사율 2021~25년 19.5~31.9%, 평균 근속 2.4년. 공동창업 대표 한 명(이재혁)은 2023~24년에 물러났다. 도메인 지식이 문서가 아니라 사람에 있다면 25TB는 해자가 아니다</li>
+      <li><b>주주=고객의 이면.</b> 현대차는 상장 전에 전량 팔았다. Applied·LG CNS는 보호예수 없이 상장했다. SI 주주향 매출 비중을 회사는 밝히지 않는다. "5대 제조 대기업+국방 67%"가 곧 주주 그룹이라면 지분 매각 뒤에도 발주가 유지되는지가 검증 대상이다</li>
+      <li><b>6,000개 모델의 구성.</b> 태양광 예측 3,000개, 로봇 1,400대가 대부분이다. 폭이 아니라 두 사례의 깊이다</li>
+      <li><b>위에서 누르는 팔란티어.</b> HD현대 전사 계약처럼 그룹 단위로 표준이 정해지면 '실행 레이어'는 그 아래 부품이 된다</li>
+    </ul></div>
+  </div>
+  <div class="take"><span class="lbl">판정</span><p><b>국방·폐쇄망이라는 '자리'의 해자는 확인되고, Runway라는 '제품'의 해자는 아직 증명되지 않았다.</b> 앞의 것은 수주로, 뒤의 것은 라이선스 반복매출과 매출총이익률로 드러난다. 회사가 뒤의 숫자를 공개하기 시작하면 그것 자체가 자신감의 신호다.</p></div>
+</section>
+
+<section id="s10">
+  <div class="sec-h"><span class="sec-n">10</span><h2>주주와 자본: 창업자 지분 24%, 유통물량은 계속 늘어난다</h2></div>
+  <div class="tbl-scroll"><table>
+    <caption>주요 주주 (반기보고서 2026-06-30, 발행주식 17,754,736주. SI·FI는 투자설명서의 공모 후 주식수를 현 발행주식수로 나눈 값)</caption>
+    <thead><tr><th>주주</th><th>관계</th><th class="num">주식수</th><th class="num">지분율</th><th>보호예수</th></tr></thead>
+    <tbody>
+      <tr><td>윤성호</td><td>대표이사, 공동창업</td><td class="num">1,824,000</td><td class="num">10.27%</td><td>3년 (~2029-05)</td></tr>
+      <tr><td>심상우 / 임용섭</td><td>CTO / CAIO, 공동창업</td><td class="num">각 1,216,000</td><td class="num">각 6.85%</td><td>3년</td></tr>
+      <tr><td>이재혁</td><td>전 공동대표 (2023-12 대표 사임, 2024-03 이사 사임)</td><td class="num">1,221,016</td><td class="num">6.88%</td><td>3년, 공동목적보유확약</td></tr>
+      <tr><td>박민수 / 허영신</td><td>CFO / CBO</td><td class="num">194,300 / 120,000</td><td class="num">1.09% / 0.68%</td><td>1년</td></tr>
+      <tr class="sum"><td>최대주주등 + 이재혁</td><td></td><td class="num">5,791,316</td><td class="num">32.62%</td><td>대량보유보고(6/18) 33.16%는 미행사 옵션 포함</td></tr>
+      <tr><td>산업은행</td><td>FI</td><td class="num">713,080</td><td class="num">4.02%</td><td><b>없음</b></td></tr>
+      <tr><td>네이버</td><td>SI (Seed)</td><td class="num">640,000</td><td class="num">3.60%</td><td>6개월 (~11-20)</td></tr>
+      <tr><td>SK텔레콤</td><td>SI (Seed)</td><td class="num">576,000</td><td class="num">3.24%</td><td>6개월</td></tr>
+      <tr><td>Applied Ventures I·II</td><td>SI (어플라이드 머티어리얼즈)</td><td class="num">578,464</td><td class="num">3.26%</td><td><b>없음</b></td></tr>
+      <tr><td>LG CNS Fund I</td><td>SI</td><td class="num">441,376</td><td class="num">2.49%</td><td><b>없음</b></td></tr>
+      <tr><td>GS / 한화세미텍</td><td>SI (Series B)</td><td class="num">각 174,040</td><td class="num">각 0.98%</td><td>6개월</td></tr>
+      <tr><td>우리사주조합</td><td></td><td class="num">256,901</td><td class="num">1.45%</td><td>1년 (배정 349,300주)</td></tr>
+      <tr><td>소액주주 58,922명</td><td></td><td class="num">7,926,240</td><td class="num">44.64%</td><td></td></tr>
+    </tbody>
+  </table></div>
+  <div class="chart" id="ch-lock"><p class="ct">보호예수 해제에 따른 실질 유통가능 물량</p><p class="cs">상장주식 17,541,640주 대비 %. 투자설명서의 해제 일정에 증권발행실적보고서의 기관 의무보유확약(15일 8.3만 · 1개월 15.1만 · 3개월 52.0만 · 6개월 84.3만주)을 더해 다시 계산</p><svg></svg></div>
+  <ul>
+    <li><b>투자설명서 표는 실제보다 빡빡해 보인다.</b> 설명서의 '상장일 유통가능 38.5%'는 기관 확약 전 숫자다. 기관 배정 162.7만주 중 159.8만주(98.2%)가 확약에 묶여 상장일 실질 유통물량은 29.4%였다. 첫날 따따블의 수급 배경이다.</li>
+    <li><b>지나간 것.</b> 1개월(6/20) +3.5%p, 2개월(7/20) +11.4%p, 3개월(8/20) +5.2%p. 2개월 해제일 -19.1%, 3개월은 "무난히 소화"(당일 +5.3%). HB인베스트먼트는 50억 투자에 135억을 회수했고 얼머스는 1/3을 팔았다.</li>
+    <li><b>남은 것.</b> 11/20에 +15.2%p(2,667,769주)로 상장 후 최대다. 네이버·SKT·GS·한화세미텍 1,564,080주, 미래에셋증권 260,869주, 기관 6개월 확약 842,820주. SI 4곳이 팔지 않으면 실질 부담은 110만주(6.3%)로 줄어든다.</li>
+    <li><b>희석.</b> 미행사 스톡옵션 279,148주(1.57%). 4·7차 98,148주의 행사가는 4,062원, 9~12차 181,000주는 13,750원으로 전부 내가격이다. 주관사 신주인수권 263,500주(상장 후 3~18개월 행사)를 더하면 542,648주, 3.06%.</li>
+    <li><b>공모자금 363.9억의 용처.</b> 연구개발 280.7억(그중 인건비·운영비 184.1억, 인프라 48.3억), 해외진출 83.2억. 사실상 3년치 인건비다. 시설투자나 M&amp;A 계획은 없다.</li>
+    <li><b>관리종목 유예.</b> 기술특례로 매출액 요건은 2031년부터, 법인세차감전손실 요건은 2029년부터 적용. 자본잠식 요건은 유예가 없지만 자본총계 514억으로 여유가 크다.</li>
+  </ul>
+</section>
+
+<section id="s11">
+  <div class="sec-h"><span class="sec-n">11</span><h2>리스크</h2></div>
+  <div class="risk">
+    <div class="r"><span class="chip h">HIGH</span><div><div class="t">2026년 매출 추정 미달</div><div class="d">하반기 155억은 잔고(148억)보다 크고, Runway 99.5억은 상반기의 9.4배다. 미달 폭이 Worst(185억) 수준이면 영업손실은 -60억대. 시장이 쓰는 숫자가 회사 추정 하나뿐이라 첫 미스의 충격이 크다. 판정 시점 2027년 2~3월.</div></div></div>
+    <div class="r"><span class="chip h">HIGH</span><div><div class="t">밸류에이션과 테마 의존</div><div class="d">PSR 33배. 비교기업 PER로 다시 계산한 할인 전 평가가액 14,600원. 상장 넉 달 동안 종가 기준 일간 변동률이 ±10% 이상인 날이 84거래일 중 29일이다. 피지컬 AI·국방 AI 테마가 식으면 실적과 무관하게 재평가된다.</div></div></div>
+    <div class="r"><span class="chip h">HIGH</span><div><div class="t">국방·정부 과제 집중</div><div class="d">2026E의 51%, 2027E는 국방만 52%. 예산 지연, 사업 공고 순연, 컨소시엄 탈락 한 번에 연매출의 10~15%가 움직인다. 2019년 국책과제 시험성적서 지연 제출로 제재부가금 1.94억을 냈고 국가 R&amp;D 참여제한 1년 처분은 집행정지 상태에서 본안 소송 중이다. 패소 시 정부 과제 파이프라인 전체에 영향.</div></div></div>
+    <div class="r"><span class="chip m">MID</span><div><div class="t">오버행</div><div class="d">11/20 +15.2%p(267만주), 보호예수 없는 산업은행·Applied·LG CNS 합계 9.8%, 내가격 옵션과 신주인수권 3.1%.</div></div></div>
+    <div class="r"><span class="chip m">MID</span><div><div class="t">인력: 이탈과 급증이 동시에</div><div class="d">연구개발 퇴사율 29%(2025) 직후 넉 달에 44명 채용. 평균 근속 2.4년, 영업 31명의 근속은 1.2~1.5년. 신규 인력이 납기를 맞추지 못하면 4분기 검수가 밀린다. 인건비는 계획을 1년 앞서 간다.</div></div></div>
+    <div class="r"><span class="chip m">MID</span><div><div class="t">매출 인식의 질</div><div class="d">매출의 85%가 진행률 인식, 계약자산 58.6억(상반기 매출의 83%), 대손충당금 0. 검수 거절이나 범위 분쟁이 나면 환입된다. 'Runway' 매출에 하드웨어 포함.</div></div></div>
+    <div class="r"><span class="chip m">MID</span><div><div class="t">팔란티어·그룹 SI의 상위 표준화</div><div class="d">그룹 단위로 플랫폼이 정해지면 하위 실행 레이어는 가격 협상력이 없다. 투자설명서도 '협상력 열위'를 사업위험으로 적었다.</div></div></div>
+    <div class="r"><span class="chip l">LOW</span><div><div class="t">유동성·재무</div><div class="d">순현금 444억, 부채비율 12%. RCPS 전환 완료로 평가손익 변동 소멸.</div></div></div>
+    <div class="r"><span class="chip l">LOW</span><div><div class="t">IR 자료의 정확도</div><div class="d">02장의 오기들은 악의가 아니라 부주의로 보인다. 다만 상장 넉 달에 임원·주요주주 지분 공시 7건, 정정공시 3건이라는 지적(데일리연합)과 함께 공시 역량은 지켜볼 항목이다.</div></div></div>
+    <div class="r"><span class="chip u">UPSIDE</span><div><div class="t">추정을 넘는 경우</div><div class="d">회사 Best 287억. 국방 대형 건 2개가 연내 계약되고 4분기 계절성이 2025년과 같으면 가능하다. AWS 공동판매로 해외 국방·제조 레퍼런스가 생기면 '한국판 팔란티어' 서사가 숫자를 얻는다.</div></div></div>
+  </div>
+</section>
+
+<section id="s12">
+  <div class="sec-h"><span class="sec-n">12</span><h2>탐방 질문 30: 다음 주 IR 미팅에서 확인할 것</h2></div>
+  <p>공시와 IR 자료로 답이 나오는 것은 뺐다. 아래는 <b>문서로는 풀리지 않고 회사만 답할 수 있는 것</b>이다. 각 질문에 왜 묻는지와 답을 어떻게 읽을지를 붙였다. 시간이 30분이면 ★ 표시 10개만 물어도 된다. 회사는 공정공시 대상이 아닌 미공개 중요정보(분기 실적 수치, 미공시 계약 상대방)는 답할 수 없으므로, 숫자 자체보다 <b>정의·구조·방향</b>을 묻는 식으로 질문을 짰다.</p>
+
+  <h3>A. 하반기 실적과 225억</h3>
+  <div class="qs">
+    <div class="q"><div class="qh"><span class="qn">★ Q1</span><span class="qt">6월 말 수주잔고 148억 중 연내 매출로 인식될 금액은 얼마입니까? 2027년 이후로 넘어가는 다년 계약은 어느 정도입니까?</span></div><p class="why"><b>왜:</b> 하반기 필요 매출 155억이 잔고보다 크다. 3월 말에는 "잔고 146억 중 131억이 2026년 인식"이라고 증권신고서에 적었으니 같은 기준의 6월 말 숫자가 있을 것이다. <b>읽는 법:</b> 연내 인식분이 120억 이상이면 가이던스 근접, 100억 미만이면 4분기 신규 수주·당기 검수에 40~50억을 의존한다는 뜻이다.</p></div>
+    <div class="q"><div class="qh"><span class="qn">★ Q2</span><span class="qt">작년 4분기에 연매출의 57%(65억)가 몰린 이유는 무엇이었고, 올해도 같은 패턴입니까? 3분기와 4분기의 비중을 어떻게 보십니까?</span></div><p class="why"><b>왜:</b> 계절성이 가이던스 달성 논리의 전부다. 고객 예산 집행·검수 관행 때문인지, 특정 대형 건(ADD 18억) 때문이었는지에 따라 재현 가능성이 다르다. <b>읽는 법:</b> "대기업·국방 고객의 연말 검수"라는 구조적 답이면 긍정, 일회성 대형 건이었다면 올해는 그 자리를 무엇이 채우는지 되물을 것.</p></div>
+    <div class="q"><div class="qh"><span class="qn">Q3</span><span class="qt">계약자산(미청구 용역) 58.6억이 상반기 매출의 83%입니다. 검수가 지연되거나 거절돼 매출을 환입한 사례가 있습니까? 평균 검수 소요 기간은?</span></div><p class="why"><b>왜:</b> 매출의 85%가 진행률 인식이고 대손충당금은 0이다. <b>읽는 법:</b> 환입 사례가 없고 마일스톤 청구가 계약서에 명시돼 있다면 질 좋은 계약자산. "고객 사정으로 검수가 밀리는 경우가 있다"면 4분기 현금흐름을 다시 확인.</p></div>
+    <div class="q"><div class="qh"><span class="qn">Q4</span><span class="qt">증권신고서의 Worst 185억 / Base 225억 / Best 287억 중 현재 어느 쪽에 가깝다고 보십니까? 가이던스를 공식적으로 갱신할 계획이 있습니까?</span></div><p class="why"><b>왜:</b> 상장 후 회사가 225억을 다시 확인한 발언이 없다. <b>읽는 법:</b> 답의 온도를 본다. "Base 유지"를 분명히 말하는지, "수주 기준으로 봐 달라"로 화제를 돌리는지.</p></div>
+    <div class="q"><div class="qh"><span class="qn">Q5</span><span class="qt">8/26 공시한 23.5억 계약(2027년 말까지)의 연도별 인식 스케줄과 Runway 라이선스·솔루션 비중은 어떻게 됩니까?</span></div><p class="why"><b>왜:</b> 상장 후 첫 공시 계약이자 Runway+솔루션 혼합 건의 실물 사례다. 회사의 6:4 배분 가정을 검증할 수 있다. 상대방(언론 추정 삼성디스플레이)은 답하지 않을 것이므로 구조만 묻는다.</p></div>
+  </div>
+
+  <h3>B. '수주'의 정의</h3>
+  <div class="qs">
+    <div class="q"><div class="qh"><span class="qn">★ Q6</span><span class="qt">IR에서 말하는 '신규 수주 200억'과 반기보고서 수주잔고 148억은 어떻게 연결됩니까? 기초 잔고 71억 + 수주 200억 − 매출 70억이면 201억인데 53억이 차이 납니다.</span></div><p class="why"><b>왜:</b> 06장 검산표. 수주액에 (a) 정부 R&amp;D 지원금, (b) 미착수 계약, (c) 다년 계약 총액, (d) 부가세 중 무엇이 들어가는지 확인해야 수주를 선행지표로 쓸 수 있다. <b>읽는 법:</b> 명쾌한 브리지가 나오면 IR 신뢰도 상승. 답이 모호하면 앞으로는 수주 보도자료가 아니라 분기보고서 잔고 표만 본다.</p></div>
+    <div class="q"><div class="qh"><span class="qn">★ Q7</span><span class="qt">국가 R&amp;D 과제(GOP 작전지원체계 23억, 디지털트윈 14억, Manufacturing-X 14억 등)는 매출로 인식합니까, 비용 차감입니까? 증권신고서에는 "지원금은 매출이 아니다"라고 돼 있는데 매출 추정표에는 산업부 열공정 FM(12.5억), 중기부 R&amp;D(11.3억)가 들어 있습니다.</span></div><p class="why"><b>왜:</b> 2026년 추정의 17%(38.6억)가 '정부·R&amp;D'다. 회계처리에 따라 매출이 아니라 비용 감소로 나타날 수 있다. <b>읽는 법:</b> "용역 형태 발주는 매출, 출연금 형태는 비용 차감"처럼 기준이 분명하면 된다. 그 경우 각각의 규모를 묻는다.</p></div>
+    <div class="q"><div class="qh"><span class="qn">Q8</span><span class="qt">상반기 수주 구성이 국방·항공 27%, 중공업 23%, 첨단제조 22%, 일반제조 21%라고 하셨는데, 이 중 Runway 라이선스가 포함된 계약의 비중과 기존 고객 재계약 비중은 얼마입니까?</span></div><p class="why"><b>왜:</b> 증권신고서는 2026년 매출의 63.6%를 기존 거래처에서, 36.4%를 신규에서 잡았다. 수주의 질(반복성)을 본다.</p></div>
+  </div>
+
+  <h3>C. Runway 제품 매출의 질</h3>
+  <div class="qs">
+    <div class="q"><div class="qh"><span class="qn">★ Q9</span><span class="qt">갱신율 94%의 분모와 분자는 무엇입니까? 고객 수 기준입니까 금액 기준입니까? 현재 유료 라이선스 고객은 몇 곳이고, 그중 연간 구독과 영구 라이선스는 각각 몇 곳입니까?</span></div><p class="why"><b>왜:</b> 이 회사 밸류에이션의 핵심 지표인데 정의가 공개된 적이 없다. 2025년 Runway 매출 건수는 14건이다. <b>읽는 법:</b> 금액 기준 순매출유지율(NRR)을 관리하고 있고 100%를 넘는다면 SaaS형 평가가 정당화된다. 고객 수 기준에 모수 15곳 안팎이면 통계적 의미가 약하다.</p></div>
+    <div class="q"><div class="qh"><span class="qn">★ Q10</span><span class="qt">AI OS 매출에서 하드웨어(서버·GPU) 재판매를 빼면 순수 소프트웨어 매출은 얼마입니까? 매출총이익률을 내부적으로 관리하십니까?</span></div><p class="why"><b>왜:</b> ADD 계약의 27%가 하드웨어였고, 회사 추정은 2027년 HW 동반 계약 144억의 30%(43억)를 원가로 잡았다. 2027년 Runway 매출 231억 중 상당 부분이 서버 매출일 수 있다. <b>읽는 법:</b> 순수 SW 기준 GPM 70% 이상이면 플랫폼, 50% 이하이면 SI.</p></div>
+    <div class="q"><div class="qh"><span class="qn">★ Q11</span><span class="qt">상반기 AI OS 매출이 10.6억으로 연간 추정 110억의 10%입니다. 하반기에 100억 가까이 인식되려면 어떤 계약들이 검수돼야 합니까? 회사 기준 'Runway 제품매출'과 재무제표의 'AI OS', 'AI 솔루션 공급'은 어떻게 대응됩니까?</span></div><p class="why"><b>왜:</b> 06장 진척률 표. 작년에도 Runway의 97%가 하반기였으니 가능성은 열려 있지만, AI OS 잔고는 11억뿐이다. <b>읽는 법:</b> 분류 기준이 다르다(솔루션 공급의 60%가 Runway)는 답이면 실질 진척률은 약 18%(10.6 + 16.0 × 0.6 = 20.2억)로 올라간다. 그래도 하반기 90억이 필요하다.</p></div>
+    <div class="q"><div class="qh"><span class="qn">Q12</span><span class="qt">혼합 계약을 2026년 6:4, 2027년 8:2로 나눈 근거는 무엇입니까? 실제 계약서에 라이선스와 용역 금액이 구분 기재됩니까?</span></div><p class="why"><b>왜:</b> Runway 비중 49% → 62% 전망의 상당 부분이 이 배분 가정이다. <b>읽는 법:</b> 계약서상 구분이 있고 과거 실적 평균이 6:4였다면 수용. 목표치라면 할인.</p></div>
+    <div class="q"><div class="qh"><span class="qn">Q13</span><span class="qt">Runway 라이선스 과금 단위는 무엇입니까(사용자, GPU 노드, 배포 모델 수, 사이트)? 현대차 로봇 이상탐지처럼 적용 대수가 900대에서 1,400대로 늘 때 라이선스 매출이 따라 늡니까?</span></div><p class="why"><b>왜:</b> "고객의 AI 활용이 늘면 Runway 매출이 함께 는다"는 선순환 주장의 실체다. 사이트 단위 영구 라이선스면 확산돼도 매출은 유지보수료뿐이다.</p></div>
+    <div class="q"><div class="qh"><span class="qn">Q14</span><span class="qt">2025년 Runway 매출이 +9%에 그치고 건수가 17 → 14건으로 줄어든 이유는 무엇입니까?</span></div><p class="why"><b>왜:</b> 전환 서사와 반대 방향의 실적. 상장 철회 후 영업 공백인지, 제품 문제인지, 의도적으로 대형 건에 집중했는지.</p></div>
+    <div class="q"><div class="qh"><span class="qn">Q15</span><span class="qt">PLC 코드 분석·도면 검토 에이전트는 별도 제품(가격표)으로 팝니까, 프로젝트마다 다시 만듭니까? 삼성디스플레이 베트남 건이 양산 적용되면 과금 구조는?</span></div><p class="why"><b>왜:</b> 용역을 제품으로 바꾸는 첫 실제 사례. 반복 판매가 가능한 SKU가 생겼는지 본다.</p></div>
+  </div>
+
+  <h3>D. 국방</h3>
+  <div class="qs">
+    <div class="q"><div class="qh"><span class="qn">★ Q16</span><span class="qt">증권신고서 추정에 넣은 국방부 IITP 국방ICT연구센터(108억), 국방지능형플랫폼 성능개량(70억), ADD MLSecOps 2단계(20억)는 각각 지금 어느 단계입니까(공고 전, 제안, 우선협상, 계약)? 연내 계약이 가능합니까?</span></div><p class="why"><b>왜:</b> 세 건이 2026년 추정에 60.7억, 전체의 27%다. 상장 후 넉 달간 관련 공시가 없다. <b>읽는 법:</b> 하나라도 '계약 완료·공시 기준 미달'이면 안심, 전부 '공고 대기'면 2026년 미달 가능성이 높고 2027년으로 이연된다.</p></div>
+    <div class="q"><div class="qh"><span class="qn">Q17</span><span class="qt">국방 사업에서 주계약자입니까, 체계업체(한화시스템·LIG·KAI)의 협력사입니까? 협력사일 때 Runway 라이선스는 누구 명의로 납품되고 마진은 어떻게 다릅니까?</span></div><p class="why"><b>왜:</b> 2027년 매출의 52%가 국방이다. 방산은 체계업체가 마진을 가져가는 구조가 일반적이다. 한화시스템 MOU가 '제조 AX'로 한정된 이유도 물어볼 만하다.</p></div>
+    <div class="q"><div class="qh"><span class="qn">Q18</span><span class="qt">국방 입찰에서 실제로 맞붙는 상대는 누구입니까? 합참 실증의 차점자(71.96점)는 어떤 유형의 회사였습니까?</span></div><p class="why"><b>왜:</b> 코난테크놀로지·솔트룩스(LLM), 래블업·베슬AI(MLOps), 그룹 SI 중 누가 실질 경쟁자인지 회사 시각을 듣는다.</p></div>
+    <div class="q"><div class="qh"><span class="qn">Q19</span><span class="qt">중기부 과제 제재(국가 R&amp;D 참여제한 1년) 본안 소송의 일정과 전망은? 패소하면 진행 중인 과제 4건(29억)과 신규 과제 참여에 어떤 영향이 있습니까?</span></div><p class="why"><b>왜:</b> 집행정지로 버티는 중이다. 정부·R&amp;D가 추정의 17%라 꼬리위험으로는 작지 않다.</p></div>
+  </div>
+
+  <h3>E. 비용과 사람</h3>
+  <div class="qs">
+    <div class="q"><div class="qh"><span class="qn">★ Q20</span><span class="qt">6월 말 직원이 162명으로 증권신고서의 2026년 말 계획(133명)을 이미 넘었습니다. 기간제 27명은 어떤 인력이고, 연말 목표 인원과 하반기 영업비용 수준은 어떻게 보십니까?</span></div><p class="why"><b>왜:</b> 회사 추정 영업손실 -22.6억은 영업비용 247.5억이 전제다. 상반기 112.6억을 썼고 인원은 37% 늘었다. <b>읽는 법:</b> 기간제가 프로젝트 매출에 연동된 변동비라면 괜찮다. 정규 전환 예정이면 2027년 흑자전환 매출 기준선이 373억에서 올라간다.</p></div>
+    <div class="q"><div class="qh"><span class="qn">Q21</span><span class="qt">2025년 연구개발 인력 퇴사율이 29%였고 팀리더 6명이 나갔습니다. 상장 후 이직률은 어떻습니까? 스톡옵션 279,148주 외에 추가 부여 계획이 있습니까?</span></div><p class="why"><b>왜:</b> 도메인 지식이 사람에 있다. 9~12차 옵션(13,750원)은 내가격이라 행사 후 이탈 유인도 있다. 회사 추정은 2027년부터 주식보상비용을 0으로 놓았다.</p></div>
+    <div class="q"><div class="qh"><span class="qn">Q22</span><span class="qt">2분기 지급수수료가 12.5억으로 전년 동기의 2.3배입니다. 외주 개발비, 클라우드·GPU 비용, 상장 관련 일회성 비용의 구성은?</span></div><p class="why"><b>왜:</b> 인건비 다음으로 큰 비용이고 가장 빨리 는다. 외주 비중이 커지면 '자체 플랫폼으로 납기 단축'이라는 주장과 어긋난다.</p></div>
+    <div class="q"><div class="qh"><span class="qn">Q23</span><span class="qt">엔지니어 1인이 연간 소화하는 프로젝트 수(또는 매출)는 어떻게 변해 왔습니까? Runway 덕분에 납기가 줄었다는 것을 보여주는 내부 지표가 있습니까?</span></div><p class="why"><b>왜:</b> 2025년 직원 1인당 매출은 약 1억(114.6억 ÷ 118명)이다. 영업이익률 46%가 되려면 1인당 매출이 4억대(2030E 1,067억 ÷ 250명)가 돼야 한다.</p></div>
+  </div>
+
+  <h3>F. 고객과 경쟁</h3>
+  <div class="qs">
+    <div class="q"><div class="qh"><span class="qn">★ Q24</span><span class="qt">"5대 제조 대기업 + 국방이 매출의 67%"에서 주주사 그룹(SK, LG, GS, 한화, 네이버, Applied)이 차지하는 비중은 얼마입니까? 현대차는 지분을 전량 매각했는데 발주는 유지되고 있습니까?</span></div><p class="why"><b>왜:</b> 주주=고객 구조의 지속성. 11/20에 SI 4곳의 보호예수가 풀린다. <b>읽는 법:</b> 현대차 매출이 매각 후에도 늘었다면 "지분이 아니라 성과로 거래한다"는 증거다.</p></div>
+    <div class="q"><div class="qh"><span class="qn">Q25</span><span class="qt">HD현대는 1월에 팔란티어와 전사 계약을 맺었는데 8월에 HD한국조선해양이 마키나락스의 용접로봇 이상탐지를 시험 적용했습니다. 한 고객 안에서 팔란티어와 어떻게 역할이 나뉩니까? 경쟁에서 진 사례가 있습니까?</span></div><p class="why"><b>왜:</b> "팔란티어는 의사결정, 우리는 실행"이라는 구분이 실제 현장에서 성립하는지 확인할 수 있는 유일한 공개 사례다.</p></div>
+    <div class="q"><div class="qh"><span class="qn">Q26</span><span class="qt">삼성SDS·LG CNS·현대오토에버 같은 그룹 SI를 거쳐 납품하는 매출과 최종 고객과 직접 계약하는 매출의 비중은? 하도급일 때 단가 차이는?</span></div><p class="why"><b>왜:</b> 투자설명서가 '협상력 열위'를 위험으로 적었다. 판매경로는 "직접 판매"로만 공시돼 있다.</p></div>
+    <div class="q"><div class="qh"><span class="qn">Q27</span><span class="qt">AWS와의 국방 AI MOU에서 '해외 공동판매'는 구체적으로 무엇입니까? 폐쇄망 온프레미스가 강점인 제품이 클라우드 사업자와 손잡는 논리는?</span></div><p class="why"><b>왜:</b> 7월 급등의 재료였다. AWS Marketplace 등재 수준인지, 실제 공동 제안 파이프라인이 있는지.</p></div>
+  </div>
+
+  <h3>G. 해외·자본</h3>
+  <div class="qs">
+    <div class="q"><div class="qh"><span class="qn">Q28</span><span class="qt">미국 법인은 5년 만에 휴면·자본잠식이 됐습니다. 일본에서는 무엇을 다르게 합니까? 일본 4건의 계약 규모와 PoC → 본계약 전환 현황은?</span></div><p class="why"><b>왜:</b> 2025년 일본 법인 매출 2.4억, 순손실 2.2억. 공모자금 83억이 해외에 배정돼 있다.</p></div>
+    <div class="q"><div class="qh"><span class="qn">★ Q29</span><span class="qt">11/20 보호예수 해제를 앞두고 네이버·SKT·GS·한화세미텍과 보유 의사를 확인하셨습니까? 보호예수가 없는 Applied Ventures·LG CNS·산업은행은 상장 후 지분을 줄였습니까?</span></div><p class="why"><b>왜:</b> 267만주(15.2%)가 풀리는 최대 이벤트. 5% 미만 주주라 매각해도 공시되지 않는다. 회사가 파악하고 있는 범위라도 듣는다.</p></div>
+    <div class="q"><div class="qh"><span class="qn">Q30</span><span class="qt">현금 464억의 사용 우선순위는? 증권신고서대로 3년간 인건비로 쓰는 것 외에 M&amp;A나 GPU 인프라 투자 계획이 있습니까? 공동창업자 이재혁 전 대표(6.9%)는 3년 확약 이후에도 우호 지분으로 남습니까?</span></div><p class="why"><b>왜:</b> 창업자 3인 지분은 24.0%, 이재혁 포함 30.9%다. 2029년 5월 확약이 끝나면 경영권 방어선이 얇다.</p></div>
+  </div>
+
+  <div class="take"><span class="lbl">현장에서 볼 것</span><p>가능하면 <b>Runway 데모</b>를 요청해 폐쇄망 반입·배포 과정을 직접 본다. "64단계 → 30단계"가 화면에서 어떻게 보이는지, 고객 엔지니어가 혼자 쓸 수 있는 수준인지, 마키나락스 엔지니어가 붙어야 돌아가는지가 제품 회사와 용역 회사를 가르는 지점이다. 미팅 상대가 CFO(박민수)라면 A·B·E를, CBO(허영신)라면 C·D·F를 먼저 묻는다.</p></div>
+</section>
+
+<section id="s13">
+  <div class="sec-h"><span class="sec-n">13</span><h2>투자 전 확인할 것 10가지</h2></div>
+  <ol class="check">
+    <li><b>3분기 보고서(11월 중순)의 분기 매출.</b> 50억 이상이면 4분기에 105억이 남는다(작년 4분기 65억의 1.6배). 40억 미만이면 4분기에 115억 이상이 필요해 Base 달성은 어렵다고 본다.</li>
+    <li><b>같은 보고서의 'AI OS (Runway)' 항목.</b> 누적 30억(3분기 단독 약 20억)을 넘는지. 넘지 못하면 110억은 4분기 한 분기에 80억이 필요하다.</li>
+    <li><b>수주잔고 표의 합계와 AI OS 잔고.</b> 6월 말 147.8억 / 11.0억에서 늘었는지. IR의 '수주액' 보도자료보다 이 표를 우선한다.</li>
+    <li><b>단일판매·공급계약 공시.</b> 11.5억(2025년 매출의 10%) 이상은 의무 공시다. 국방 대형 건이 계약되면 여기에 나온다. 정정공시(계약 축소·기간 연장)도 함께 본다.</li>
+    <li><b>직원 수와 분기 영업비용.</b> 162명, 분기 57.9억에서 출발. 분기 비용이 67억을 넘으면 회사 추정 비용을 초과한다.</li>
+    <li><b>계약자산 → 매출채권 → 현금 전환.</b> 계약자산 58.6억이 3분기에 줄고 영업현금흐름이 개선되는지.</li>
+    <li><b>11/20 전후 수급.</b> 해제 물량 267만주. 7/20(-19.1%)과 8/20(+5.3%)의 차이는 해제 직전 주가 위치였다. 해제 전에 주가가 오른 상태일수록 위험하다.</li>
+    <li><b>탐방 Q6·Q7·Q9·Q10의 답.</b> 수주 정의, 정부 과제 회계처리, 갱신율 모수, 하드웨어 제외 매출. 이 넷에 회사가 숫자로 답하면 이 종목의 분석 가능성이 한 단계 올라간다.</li>
+    <li><b>증권사 정식 커버리지 개시 여부.</b> 지금은 전부 Not Rated이고 추정치는 회사 것이다. 독립 추정치가 나오고 그것이 회사 추정보다 낮게 형성되는지.</li>
+    <li><b>테마의 온도.</b> 교보증권이 묶은 국내 피지컬 AI 상장사(씨메스로보틱스·클로봇·뉴로메카·레인보우로보틱스)의 주가와 같이 움직이는지. 이 종목의 단기 주가는 실적보다 분류에 반응해 왔다.</li>
+  </ol>
+</section>
+
+<section id="s14">
+  <div class="sec-h"><span class="sec-n">14</span><h2>데이터 출처와 계산 근거</h2></div>
+  <h4>원문 (직접 파싱)</h4>
+  <ul class="src">
+    <li>DART: [기재정정]투자설명서(2026-05-08), 증권발행실적보고서(05-14), 분기보고서 2026.03(05-28), 주식매수선택권행사(05-29), 주식등의대량보유상황보고서(06-18), 반기보고서 2026.06(08-14), 단일판매·공급계약체결(08-26), 조회공시 답변(07-07, 08-07), 연결감사보고서 FY2023~2025, 감사보고서 FY2022. document.xml 평문화 후 검색. 상장 5개월차라 사업보고서가 없어 과거 실적은 투자설명서와 감사보고서로 구성했다(메모: 통상의 10년치 시계열은 이 회사에 해당 없음, 설립 2017-12).</li>
+    <li>마키나락스 IR Book 2026.08(KRX 제출본), 회사 보도자료(상반기 실적, 파트너 프로그램, MOU).</li>
+    <li>시세: 네이버 금융 API(integration, basic, siseJson) 2026-09-18 종가. 일별 84거래일 전체로 고점·저점·변동일수를 직접 계산.</li>
+    <li>비교기업 재무: DART fnlttSinglAcntAll(2025 사업보고서, 2026 반기보고서). 반기 손익은 누적 컬럼 사용.</li>
+  </ul>
+  <h4>증권사·리서치 (개인 아카이브 93,987건 본문 검색, '마키나락스' 70건 적중)</h4>
+  <ul class="src">
+    <li>IPO 리포트: 유진투자증권 박종선(04-29), DB증권(04-28), 삼성증권 강영훈(04-29), 다인자산운용(04-28). 상장 후: KB증권 성현동(05-29, NR), 한국투자증권 윤철환(07-21, NR). 목표주가 제시 증권사 없음.</li>
+    <li>타 종목·산업 리포트 속 언급: 신한투자증권 심플랫폼(05-28, 양사 비교·BEP 추정), 교보증권 핑거(09-10, 피지컬 AI 상장사 묶음), NH투자증권 비상장 리포트(2024-04-30, 펀딩 히스토리), 흥국증권 IPO 중간점검(08-04, 2024-10-11 심사 철회 기록), 신한 SK네트웍스·NH HB인베스트먼트(주주 관련).</li>
+  </ul>
+  <h4>언론</h4>
+  <ul class="src">
+    <li><a href="https://aimatters.co.kr/news-report/42008/">AI매터스 수요예측</a> · <a href="https://www.sedaily.com/article/20043144">서울경제 청약</a> · <a href="https://zdnet.co.kr/view/?no=20260520173441">ZDNet 상장일</a> · <a href="https://marketin.edaily.co.kr/News/ReadE?newsId=05635046645485328">이데일리 스톡옵션·급락</a> · <a href="https://www.mt.co.kr/stock/2026/07/02/2026070208370538302">머니투데이 수주 200억</a> · <a href="https://www.widedaily.com/news/articleView.html?idxno=298869">와이드경제 HD한국조선해양</a> · <a href="https://zdnet.co.kr/view/?no=20260814151058">ZDNet 상반기 실적</a> · <a href="https://www.venturesquare.net/1106257">벤처스퀘어</a> · <a href="https://v.daum.net/v/20260826095209218">삼성디스플레이 베트남 협력</a> · <a href="https://www.dailyan.com/news/article.html?no=776661">데일리연합 23.5억 계약</a> · <a href="https://zdnet.co.kr/view/?no=20260624162935">ZDNet 해외 수주</a> · <a href="https://nwww.newsis.com/view/NISX20260728_0003725723">뉴시스 한화시스템</a> · <a href="https://www.greened.kr/news/articleView.html?idxno=345559">녹색경제 2개월 해제</a> · <a href="https://www.ibtomato.com/ExternalView.aspx?type=1&amp;no=19116">IB토마토 VC 회수</a> · <a href="https://m.thebell.co.kr/m/newsview.asp?newskey=202604021835246160104322">더벨 주주 구성</a> · <a href="https://dealsite.co.kr/articles/167396">딜사이트 독파모 2차 평가</a> · <a href="https://www.hankyung.com/article/202512180942i">한경 GOP 과제</a> · <a href="https://www.ajunews.com/view/20260903140211060">아주경제 대표 인터뷰</a> · <a href="https://www.newspim.com/news/view/20260721000298">뉴스핌 한국투자증권 리포트</a></li>
+  </ul>
+  <h4>본 리포트에서 계산한 값과 근거</h4>
+  <div class="tbl-scroll"><table>
+    <thead><tr><th>값</th><th>산식</th></tr></thead>
+    <tbody>
+      <tr><td>시가총액 3,782억</td><td>21,300원 × 17,754,736주(반기보고서 발행주식). 5월의 시총은 당시 상장주식 17,541,640주 기준</td></tr>
+      <tr><td>순현금 444억</td><td>현금성자산 441.1 + 단기금융상품 23.0 − 단기차입금 20.0. 리스부채 5.5억은 제외</td></tr>
+      <tr><td>PSR·PER·EV/매출</td><td>분자 시총 3,782억(EV는 순현금 차감 3,338억), 분모는 03장 표의 실적·회사 추정</td></tr>
+      <tr><td>분기 실적</td><td>1Q26 = 반기 누적 − 2분기 3개월. 2H25 = 연간 − 반기. 1Q25 = 1H25 누적 − 2Q25</td></tr>
+      <tr><td>하반기 필요 매출 154.7억</td><td>22,493 − 7,027백만원. Runway 99.5억 = 11,008 − 1,061. 컨설팅 실적 59.7억 = 솔루션 공급 1,596 + 연구개발 4,371</td></tr>
+      <tr><td>비교기업 PER 재계산 25.5배 → 14,600원</td><td>증권신고서 EPS(87·132·159·324원)에 9/18 종가를 나눈 4사 단순평균 × 주당 572원. 572원 = 15,871 ÷ 1.15³ ÷ 18,255,368주</td></tr>
+      <tr><td>수주잔고 검산</td><td>기초 + IR 신규 수주 − 재무제표 매출. 06장 표</td></tr>
+      <tr><td>실질 유통물량</td><td>투자설명서 유통가능 주식수 − 기관 의무보유확약 잔여분(15일 83,150 / 1개월 151,465 / 3개월 520,076 / 6개월 842,820주). 11/20 해제 = 1,824,949 + 842,820 = 2,667,769주</td></tr>
+      <tr><td>1인당 매출</td><td>2025년 114.6억 ÷ 118명(투자설명서 기준 인원). 2030E 1,066.5억 ÷ 250명 = 4.3억</td></tr>
+      <tr><td>±10% 변동일 29일</td><td>종가 기준 전일 대비(상장일은 공모가 대비), 84거래일</td></tr>
+    </tbody>
+  </table></div>
+  <h4>확인하지 못한 것</h4>
+  <ul class="src">
+    <li>8/26 계약 상대방(언론 추정만 있음), Runway 라이선스 고객 수·단가·ARR, 매출총이익률, SI 주주향 매출 비중, 연도별 국방 매출액, 3Q25·4Q25 분기별 영업손익, 산업은행·Applied·LG CNS의 상장 후 지분 변동. 글로벌 경쟁사(팔란티어 등)의 현재 시가총액·배수는 검증하지 못해 표에 넣지 않았다.</li>
+    <li>IR Book의 "후속계약 매출 비중 37%"는 DB증권 리포트 인용이며 투자설명서 원문에서는 찾지 못했다.</li>
+  </ul>
+  <div class="foot">본 자료는 공개된 공시·IR 자료·증권사 리포트·언론 보도를 정리한 개인 연구 메모이며 특정 종목의 매수·매도를 권유하지 않는다. 회사 추정치는 증권신고서에 기재된 회사의 전망으로 실현을 보장하지 않는다. 수치는 2026-09-19 기준으로 교차 검증했으나 원문과 다를 경우 원문이 우선한다. 투자 판단과 그 결과의 책임은 투자자 본인에게 있다.</div>
+</section>
+
+</main>
+<script type="application/json" id="cd">{"daily": [["20260520", 60000], ["20260521", 78000], ["20260522", 54600], ["20260526", 45200], ["20260527", 38600], ["20260528", 36000], ["20260529", 37900], ["20260601", 33600], ["20260602", 27700], ["20260604", 26450], ["20260605", 26700], ["20260608", 22150], ["20260609", 21900], ["20260610", 20150], ["20260611", 20100], ["20260612", 18900], ["20260615", 22100], ["20260616", 19850], ["20260617", 20050], ["20260618", 19070], ["20260619", 16550], ["20260622", 15490], ["20260623", 13750], ["20260624", 14050], ["20260625", 16430], ["20260626", 18400], ["20260629", 18210], ["20260630", 16740], ["20260701", 16410], ["20260702", 21300], ["20260703", 23400], ["20260706", 30400], ["20260707", 24500], ["20260708", 27100], ["20260709", 29650], ["20260710", 29600], ["20260713", 24600], ["20260714", 27950], ["20260715", 30150], ["20260716", 26200], ["20260720", 21200], ["20260721", 19660], ["20260722", 22600], ["20260723", 23450], ["20260724", 24250], ["20260727", 26750], ["20260728", 23500], ["20260729", 23950], ["20260730", 19500], ["20260731", 19990], ["20260803", 20000], ["20260804", 22950], ["20260805", 29800], ["20260806", 31900], ["20260807", 29050], ["20260810", 32850], ["20260811", 31150], ["20260812", 30000], ["20260813", 28600], ["20260814", 28550], ["20260818", 26700], ["20260819", 26500], ["20260820", 27900], ["20260821", 27550], ["20260824", 26750], ["20260825", 24400], ["20260826", 25200], ["20260827", 24600], ["20260828", 24600], ["20260831", 24050], ["20260901", 24000], ["20260902", 24550], ["20260903", 22950], ["20260904", 23300], ["20260907", 23450], ["20260908", 23250], ["20260909", 22750], ["20260910", 23000], ["20260911", 23300], ["20260914", 21700], ["20260915", 21650], ["20260916", 21100], ["20260917", 20850], ["20260918", 21300]], "annual": [{"y": 2021, "rev": 15.6, "op": -32.8}, {"y": 2022, "rev": 30.2, "op": -55.0, "rw": 6.6}, {"y": 2023, "rev": 52.1, "op": -111.6, "rw": 16.6}, {"y": 2024, "rev": 82.9, "op": -109.0, "rw": 37.9}, {"y": 2025, "rev": 114.6, "op": -80.4, "rw": 41.4}, {"y": 2026, "rev": 224.9, "op": -22.6, "rw": 110.1, "e": 1}, {"y": 2027, "rev": 373.8, "op": 49.0, "rw": 231.1, "e": 1}, {"y": 2028, "rev": 586.8, "op": 158.8, "rw": 413.6, "e": 1}, {"y": 2029, "rev": 822.4, "op": 314.4, "rw": 612.4, "e": 1}, {"y": 2030, "rev": 1066.5, "op": 490.3, "rw": 811.8, "e": 1}], "quarterly": [["2023Q1", 4.6], ["2023Q2", 14.0], ["2023Q3", 11.3], ["2023Q4", 22.2], ["2024Q1", 19.8], ["2024Q2", 17.7], ["2024Q3", 20.6], ["2024Q4", 24.8], ["2025Q1", 11.3], ["2025Q2", 14.8], ["2025Q3", 23.1], ["2025Q4", 65.4], ["2026Q1", 30.3], ["2026Q2", 39.9]], "pipe": [["계약완료·S", 112.0, 106.4, 95, 97.7], ["A등급", 93.3, 65.3, 70, 68.7], ["B등급", 106.3, 53.2, 50, 44.1], ["C등급", 62.2, 0.0, 0, 20.2]], "gap": [["2026E 매출 합계", 70.3, 224.9, 0, "26E 매출"], ["2025 매출 (실적)", 26.2, 114.6, 1, "25 매출"], ["2026E Runway", 10.6, 110.1, 0, "26E Runway"], ["2025 Runway (실적)", 1.3, 41.4, 1, "25 Runway"], ["2026E 컨설팅", 59.7, 114.9, 0, "26E 컨설팅"], ["2025 컨설팅 (실적)", 24.9, 73.2, 1, "25 컨설팅"]], "psr": [["마키나락스 (2025 매출)", 33.0, "시총 3,782억 ÷ 114.6억"], ["마키나락스 (2026 회사추정)", 16.8, "시총 3,782억 ÷ 224.9억"], ["씨이랩", 11.1, "1,136억 ÷ 102.7억"], ["코난테크놀로지", 4.8, "1,642억 ÷ 339.8억"], ["솔트룩스", 4.6, "1,928억 ÷ 416.4억"], ["심플랫폼", 3.0, "307억 ÷ 104.0억"], ["슈어소프트테크", 2.4, "2,243억 ÷ 939.4억"], ["엑셈", 1.9, "900억 ÷ 477.6억"], ["와이즈넛", 1.9, "656억 ÷ 347.3억"], ["비아이매트릭스", 1.4, "429억 ÷ 314.5억"]], "lock": [["상장일", "05-20", 29.4, 1, "기관 확약 159.8만주 제외"], ["1개월", "06-20", 33.3, 1, "15일·1개월 확약 + 소액 FI"], ["2개월", "07-20", 44.7, 1, "FI 199.5만주. 당일 -19.1%"], ["3개월", "08-20", 49.9, 1, "기관 3개월 확약 52.0만 + 39.9만주"], ["6개월", "11-20", 65.2, 2, "네이버·SKT·GS·한화세미텍 156.4만 + 미래에셋 26.1만 + 기관 84.3만주"], ["1년", "27-05", 68.8, 0, "CFO·CBO, 우리사주 등 63.6만주"], ["3년", "29-05", 100.0, 0, "창업자 3인 + 이재혁 547.7만주"]]}</script>
+<script>
+(function(){
+const CD = JSON.parse(document.getElementById('cd').textContent);
+const tip = document.getElementById('tip');
+function showTip(html, x, y){
+  tip.innerHTML = html; tip.style.display='block';
+  const r = tip.getBoundingClientRect();
+  let L = x + 14, T = y + 14;
+  if (L + r.width > window.innerWidth - 8) L = x - r.width - 14;
+  if (L < 8) L = 8;
+  if (T + r.height > window.innerHeight - 8) T = y - r.height - 14;
+  if (T < 8) T = 8;
+  tip.style.left = L + 'px'; tip.style.top = T + 'px';
+}
+function hideTip(){ tip.style.display='none'; }
+window.addEventListener('scroll', hideTip, {passive:true});
+document.addEventListener('pointerdown', e => { if (!e.target.closest('.chart svg')) hideTip(); });
+const fmtN = v => v == null ? '-' : v.toLocaleString('ko-KR');
+const d1 = v => v == null ? '-' : v.toFixed(1);
+function bindHits(svg, onHit){
+  if (svg._bound) { svg._onHit = onHit; return; }
+  svg._bound = true; svg._onHit = onHit;
+  let down = false;
+  const handler = e => { const t = e.target.closest('[data-hit]'); if (!t){ hideTip(); return; } svg._onHit(t, e); };
+  svg.addEventListener('pointerdown', e => { down = true; handler(e); });
+  svg.addEventListener('pointermove', e => { if (e.pointerType === 'mouse' || down) handler(e); });
+  ['pointerup','pointercancel','pointerleave'].forEach(ev => svg.addEventListener(ev, () => { down=false; if (ev!=='pointerup') hideTip(); }));
+}
+function responsive(id, draw){
+  const box = document.getElementById(id); if (!box) return; const svg = box.querySelector('svg');
+  let t;
+  const render = () => { const W = Math.max(280, Math.floor(box.clientWidth - (parseFloat(getComputedStyle(box).paddingLeft)*2))); const H = draw(svg, W); svg.setAttribute('viewBox', `0 0 ${W} ${H}`); svg.setAttribute('height', H); };
+  render();
+  new ResizeObserver(() => { clearTimeout(t); t = setTimeout(render, 120); }).observe(box);
+}
+
+/* ---------- price ---------- */
+responsive('ch-px', (svg, W) => {
+  const narrow = W < 560;
+  const ML = narrow ? 34 : 46, MR = 10, MT = 24, MB = 26;
+  const Hh = narrow ? 260 : 340; const ph = Hh - MT - MB, pw = W - ML - MR;
+  const D = CD.daily; const n = D.length; const yMax = 80000;
+  const x = i => ML + i/(n-1)*pw; const y = v => MT + (yMax - v)/yMax*ph;
+  let s = '';
+  [0,20000,40000,60000,80000].forEach(v => { s += `<line class="${v===0?'axis':'grid'}" x1="${ML}" x2="${W-MR}" y1="${y(v)}" y2="${y(v)}"/><text x="${ML-4}" y="${y(v)+4}" text-anchor="end" class="mut" style="font-size:${narrow?9.5:11}px">${v? v/10000+'만':'0'}</text>`; });
+  let lastM = '';
+  D.forEach((d,i) => { const m = d[0].slice(4,6); if (m !== lastM){ lastM = m; s += `<line class="grid" x1="${x(i)}" x2="${x(i)}" y1="${MT}" y2="${MT+ph}"/><text x="${x(i)+3}" y="${Hh-8}" class="mut" style="font-size:${narrow?9:11}px">${+m}월</text>`; } });
+  s += `<line x1="${ML}" x2="${W-MR}" y1="${y(15000)}" y2="${y(15000)}" stroke="var(--c2)" stroke-dasharray="4 3" stroke-width="1.2"/><text x="${W-MR-2}" y="${y(15000)+12}" text-anchor="end" style="font-size:${narrow?9:10.5}px; fill:var(--c2)">공모가 15,000</text>`;
+  const path = D.map((d,i) => (i?'L':'M') + x(i).toFixed(1) + ' ' + y(d[1]).toFixed(1)).join(' ');
+  s += `<path d="${path} L${x(n-1).toFixed(1)} ${y(0)} L${x(0)} ${y(0)} Z" fill="var(--c1-soft)"/><path d="${path}" fill="none" stroke="var(--c1)" stroke-width="1.7"/>`;
+  const EV = [['20260520',1,18],['20260521',2,-14],['20260618',3,-20],['20260623',4,18],['20260706',5,-14],['20260720',6,18],['20260805',7,-16],['20260814',8,-18],['20260918',9,-16]];
+  EV.forEach(([dt, num, off]) => { let idx = D.findIndex(d => d[0] >= dt); if (idx < 0) idx = n-1; const px = Math.min(Math.max(x(idx), ML+8), W-MR-8), py = y(D[idx][1]);
+    s += `<line x1="${px}" x2="${px}" y1="${py}" y2="${py+off}" stroke="var(--c2)" stroke-width="1"/><circle cx="${px}" cy="${py+off}" r="${narrow?7:8}" fill="var(--c2)"/><text x="${px}" y="${py+off+3.5}" text-anchor="middle" style="font-size:${narrow?8.5:10}px; fill:#fff; font-weight:600">${num}</text>`; });
+  D.forEach((d,i) => { s += `<rect data-hit="${i}" x="${x(i) - pw/(n-1)/2}" y="${MT}" width="${pw/(n-1)}" height="${ph}" fill="transparent"/>`; });
+  svg.innerHTML = s;
+  bindHits(svg, (t, e) => { const i = +t.dataset.hit; const d = D[i]; const p = i ? D[i-1][1] : 15000; const ch = (d[1]/p-1)*100;
+    showTip(`<b>${d[0].slice(0,4)}-${d[0].slice(4,6)}-${d[0].slice(6)}</b><br>종가 ${fmtN(d[1])}원 (${ch>0?'+':''}${ch.toFixed(1)}%)<br>공모가 대비 ${(d[1]/15000*100-100>0?'+':'')+(d[1]/15000*100-100).toFixed(0)}%`, e.clientX, e.clientY); });
+  return Hh;
+});
+
+/* ---------- annual ---------- */
+responsive('ch-ann', (svg, W) => {
+  const narrow = W < 560; const A = CD.annual;
+  const ML = narrow ? 38 : 48, MR = 10, MT = 18, MB = 28;
+  const Hh = narrow ? 260 : 330; const ph = Hh - MT - MB, pw = W - ML - MR;
+  const yMax = 1100, yMin = -200; const y = v => MT + (yMax - v)/(yMax - yMin)*ph;
+  const gw = pw/A.length; const bw = Math.min(narrow ? 18 : 34, gw*0.62);
+  let s = '';
+  [-200,0,200,400,600,800,1000].forEach(v => s += `<line class="${v===0?'axis':'grid'}" x1="${ML}" x2="${W-MR}" y1="${y(v)}" y2="${y(v)}"/><text x="${ML-4}" y="${y(v)+4}" text-anchor="end" class="mut" style="font-size:${narrow?9:11}px">${v}</text>`);
+  A.forEach((a,i) => { const xc = ML + i*gw + gw/2;
+    s += `<rect x="${xc-bw/2}" y="${y(a.rev)}" width="${bw}" height="${y(0)-y(a.rev)}" fill="var(--c1)" opacity="${a.e?0.35:1}" rx="1"/>`;
+    if (!narrow || i%2===0 || i===A.length-1) s += `<text x="${xc}" y="${y(a.rev)-5}" text-anchor="middle" style="font-size:${narrow?9:10.5}px">${Math.round(a.rev)}</text>`;
+    s += `<text x="${xc}" y="${Hh-10}" text-anchor="middle" class="mut" style="font-size:${narrow?9:11}px">${narrow? "'"+String(a.y).slice(2) : a.y}${a.e?'E':''}</text>`;
+    s += `<rect data-hit="${i}" x="${ML+i*gw}" y="${MT}" width="${gw}" height="${ph}" fill="transparent"/>`; });
+  const pts = A.map((a,i) => [ML + i*gw + gw/2, y(a.op)]);
+  s += `<path d="${pts.slice(0,5).map((p,i)=>(i?'L':'M')+p[0]+' '+p[1]).join(' ')}" fill="none" stroke="var(--c2)" stroke-width="2"/>`;
+  s += `<path d="${pts.slice(4).map((p,i)=>(i?'L':'M')+p[0]+' '+p[1]).join(' ')}" fill="none" stroke="var(--c2)" stroke-width="2" stroke-dasharray="5 3"/>`;
+  pts.forEach(p => s += `<circle cx="${p[0]}" cy="${p[1]}" r="3.2" fill="var(--c2)"/>`);
+  svg.innerHTML = s;
+  bindHits(svg, (t, e) => { const a = A[+t.dataset.hit]; showTip(`<b>${a.y}${a.e?' (회사 추정)':''}</b><br>매출 ${d1(a.rev)}억<br>영업이익 ${d1(a.op)}억 (OPM ${(a.op/a.rev*100).toFixed(1)}%)${a.rw!=null?`<br>Runway 비중 ${(a.rw/a.rev*100).toFixed(1)}%`:''}`, e.clientX, e.clientY); });
+  return Hh;
+});
+
+/* ---------- quarterly ---------- */
+responsive('ch-q', (svg, W) => {
+  const narrow = W < 560; const Q = CD.quarterly;
+  const ML = narrow ? 30 : 40, MR = 8, MT = 18, MB = 30;
+  const Hh = narrow ? 230 : 290; const ph = Hh - MT - MB, pw = W - ML - MR;
+  const yMax = 70; const y = v => MT + (yMax - v)/yMax*ph;
+  const gw = pw/Q.length; const bw = Math.min(narrow ? 13 : 26, gw*0.66);
+  let s = '';
+  [0,10,20,30,40,50,60,70].forEach(v => s += `<line class="${v===0?'axis':'grid'}" x1="${ML}" x2="${W-MR}" y1="${y(v)}" y2="${y(v)}"/><text x="${ML-4}" y="${y(v)+4}" text-anchor="end" class="mut" style="font-size:${narrow?9:11}px">${v}</text>`);
+  Q.forEach((q,i) => { const xc = ML + i*gw + gw/2; const is4 = q[0].endsWith('Q4');
+    s += `<rect x="${xc-bw/2}" y="${y(q[1])}" width="${bw}" height="${y(0)-y(q[1])}" fill="${is4?'var(--c2)':'var(--c1)'}" rx="1"/>`;
+    if (!narrow || is4 || i >= Q.length-2) s += `<text x="${xc}" y="${y(q[1])-4}" text-anchor="middle" style="font-size:${narrow?9:10.5}px">${q[1].toFixed(1)}</text>`;
+    if (q[0].endsWith('Q1')) s += `<text x="${xc}" y="${Hh-10}" text-anchor="middle" class="mut" style="font-size:${narrow?9:11}px">${q[0].slice(0,4)}</text>`;
+    s += `<rect data-hit="${i}" x="${ML+i*gw}" y="${MT}" width="${gw}" height="${ph}" fill="transparent"/>`; });
+  svg.innerHTML = s;
+  bindHits(svg, (t, e) => { const i = +t.dataset.hit; const q = Q[i]; const py = Q[i-4]; showTip(`<b>${q[0].replace('Q',' Q')}</b><br>매출 ${q[1].toFixed(1)}억${py?`<br>YoY ${(q[1]/py[1]*100-100>0?'+':'')+(q[1]/py[1]*100-100).toFixed(1)}%`:''}`, e.clientX, e.clientY); });
+  return Hh;
+});
+
+/* ---------- generic horizontal pair bars ---------- */
+function hbars(id, rows, opt){
+  responsive(id, (svg, W) => {
+    const narrow = W < 560;
+    const ML = narrow ? opt.mlN : opt.ml, MR = narrow ? 46 : 60, MT = 6, rowH = narrow ? opt.rowN||34 : opt.row||38;
+    const Hh = MT + rows.length*rowH + 18; const pw = W - ML - MR; const x = v => ML + v/opt.max*pw;
+    let s = '';
+    opt.ticks.forEach(v => s += `<line class="${v===0?'axis':'grid'}" x1="${x(v)}" x2="${x(v)}" y1="${MT}" y2="${Hh-18}"/><text x="${x(v)}" y="${Hh-5}" text-anchor="middle" class="mut" style="font-size:${narrow?9:10.5}px">${v}${opt.unit||''}</text>`);
+    rows.forEach((r,i) => { const y0 = MT + i*rowH; const bh = narrow ? 13 : 15;
+      s += `<text x="${ML-6}" y="${y0+rowH/2+4}" text-anchor="end" class="lab" style="font-size:${narrow?10.5:12}px; font-weight:${r.me?700:400}">${narrow && r.short ? r.short : r.label}</text>`;
+      if (r.total != null) s += `<rect x="${ML}" y="${y0+rowH/2-bh/2}" width="${Math.max(0,x(r.total)-ML)}" height="${bh}" fill="${r.totalFill||'var(--c4)'}" opacity="${r.totalOp||0.35}" rx="2"/>`;
+      s += `<rect x="${ML}" y="${y0+rowH/2-bh/2}" width="${Math.max(0,x(r.val)-ML)}" height="${bh}" fill="${r.fill||'var(--c1)'}" rx="2"/>`;
+      s += `<text x="${x(Math.max(r.val, r.total||0))+5}" y="${y0+rowH/2+4}" style="font-size:${narrow?10:11}px">${r.txt}</text>`;
+      s += `<rect data-hit="${i}" x="0" y="${y0}" width="${W}" height="${rowH}" fill="transparent"/>`; });
+    svg.innerHTML = s;
+    bindHits(svg, (t, e) => showTip(rows[+t.dataset.hit].tip, e.clientX, e.clientY));
+    return Hh;
+  });
+}
+hbars('ch-pipe', CD.pipe.map(p => ({label:p[0], val:p[2], total:p[1], txt:`${p[2].toFixed(1)} / ${p[1].toFixed(1)}`, tip:`<b>${p[0]}</b><br>2026년 인식 대상 ${p[1].toFixed(1)}억<br>× 확률 ${p[3]}% = 추정 반영 ${p[2].toFixed(1)}억<br>과거 실제 성사율 ${p[4]}%`})), {ml:96, mlN:78, max:140, ticks:[0,40,80,120], unit:''});
+hbars('ch-gap', CD.gap.map(g => ({label:g[0], short:g[4], val:g[1], total:g[2], totalFill:'var(--c1)', totalOp:0.28, fill:g[3]?'var(--c4)':'var(--c1)', txt:`${g[1].toFixed(1)} / ${g[2].toFixed(1)} (${(g[1]/g[2]*100).toFixed(0)}%)`, tip:`<b>${g[0]}</b><br>상반기 ${g[1].toFixed(1)}억 / 연간 ${g[2].toFixed(1)}억<br>상반기 비중 ${(g[1]/g[2]*100).toFixed(1)}%<br>하반기 ${(g[2]-g[1]).toFixed(1)}억 = 상반기의 ${((g[2]-g[1])/g[1]).toFixed(1)}배`})), {ml:150, mlN:92, max:320, ticks:[0,100,200,300], row:36, rowN:32});
+hbars('ch-psr', CD.psr.map(p => ({label:p[0], val:p[1], me:p[0].startsWith('마키나락스'), fill:p[0].startsWith('마키나락스')?'var(--accent)':'var(--c4)', txt:p[1].toFixed(1)+'배', tip:`<b>${p[0]}</b><br>PSR ${p[1].toFixed(1)}배<br>${p[2]}`})), {ml:150, mlN:104, max:40, ticks:[0,10,20,30,40], row:28, rowN:26});
+
+/* ---------- lockup ---------- */
+responsive('ch-lock', (svg, W) => {
+  const narrow = W < 560; const L = CD.lock;
+  const ML = narrow ? 30 : 40, MR = 8, MT = 22, MB = 40;
+  const Hh = narrow ? 230 : 280; const ph = Hh - MT - MB, pw = W - ML - MR;
+  const y = v => MT + (100 - v)/100*ph; const gw = pw/L.length; const bw = Math.min(narrow ? 24 : 46, gw*0.7);
+  let s = '';
+  [0,25,50,75,100].forEach(v => s += `<line class="${v===0?'axis':'grid'}" x1="${ML}" x2="${W-MR}" y1="${y(v)}" y2="${y(v)}"/><text x="${ML-4}" y="${y(v)+4}" text-anchor="end" class="mut" style="font-size:${narrow?9:11}px">${v}</text>`);
+  L.forEach((l,i) => { const xc = ML + i*gw + gw/2; const past = l[3] === 1; const next = l[3] === 2;
+    s += `<rect x="${xc-bw/2}" y="${y(l[2])}" width="${bw}" height="${y(0)-y(l[2])}" fill="${next?'var(--c2)':'var(--c1)'}" opacity="${past||next?1:0.35}" rx="1"/>`;
+    s += `<text x="${xc}" y="${y(l[2])-5}" text-anchor="middle" style="font-size:${narrow?9:10.5}px">${l[2].toFixed(1)}</text>`;
+    s += `<text x="${xc}" y="${Hh-24}" text-anchor="middle" class="lab" style="font-size:${narrow?9:11}px">${l[0]}</text><text x="${xc}" y="${Hh-9}" text-anchor="middle" class="mut" style="font-size:${narrow?8.5:10}px">${l[1]}</text>`;
+    s += `<rect data-hit="${i}" x="${ML+i*gw}" y="${MT}" width="${gw}" height="${ph+MB}" fill="transparent"/>`; });
+  svg.innerHTML = s;
+  bindHits(svg, (t, e) => { const i = +t.dataset.hit; const l = L[i]; const inc = i ? l[2]-L[i-1][2] : null; showTip(`<b>${l[0]} (${l[1]})</b><br>실질 유통가능 ${l[2].toFixed(1)}%${inc!=null?`<br>직전 대비 +${inc.toFixed(1)}%p`:''}<br>${l[4]}`, e.clientX, e.clientY); });
+  return Hh;
+});
+})();
+
+</script>
+</body>
+</html>
