@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>KT Research Archive</title>
+<title>MyungIn Research Archive</title>
 <meta name="description" content="직접 작성한 기업·산업 리포트 아카이브">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
 <style>
@@ -94,7 +94,7 @@ iframe{flex:1;border:0;width:100%;background:var(--bg)}
   <aside>
     <div class="top" id="top">
       <div class="brand">
-        <div><h1>KT Research Archive</h1><div class="sub">기업 · 산업 · 시장 리포트</div></div>
+        <div><h1>MyungIn Research Archive</h1><div class="sub">기업 · 산업 · 시장 리포트</div></div>
         <div class="count"><b id="total">0</b>건</div>
       </div>
       <div class="search">
@@ -206,7 +206,7 @@ function show(id, push=true){
   $("vbadge").className = `badge b-${r.type}`; $("vbadge").textContent = TYPES[r.type];
   $("vtitle").textContent = r.title || r.name;
   $("vmeta").textContent = [r.code, r.sector.join(", "), r.date].filter(Boolean).join(" · ");
-  document.title = `${r.name} — KT Research Archive`;
+  document.title = `${r.name} — MyungIn Research Archive`;
   if (push) history.replaceState(null, "", "#" + id);
   document.querySelectorAll(".item").forEach(e => e.setAttribute("aria-current", e.dataset.id === id));
 }

@@ -1,4 +1,4 @@
-# KT Research Archive
+# MyungIn Research Archive
 직접 작성한 기업·산업·시장 리포트 모음 — https://hoee213.github.io/research-archive/
 
 - 원본: `Desktop\기업리포트\*.html`
