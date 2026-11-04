@@ -2,6 +2,7 @@
 <html lang="ko" data-theme="light">
 <head>
 <meta charset="utf-8">
+<meta http-equiv="Cache-Control" content="no-cache">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>MyungIn Research Archive</title>
 <meta name="description" content="직접 작성한 기업·산업 리포트 아카이브">
@@ -11,21 +12,21 @@
   --bg:#F3F4F1; --panel:#FFFFFF; --panel-2:#F7F8F5; --line:#DDE1DA; --line-soft:#E9ECE6;
   --ink:#161B18; --ink-2:#3C463F; --muted:#6B756E; --faint:#959E97;
   --accent:#1F6F5C; --accent-soft:#E0EEE9; --hl:#FFE8A3;
-  --c-company:#1F6F5C; --c-call:#9A3D6B; --c-industry:#8A5A12; --c-market:#4B57A6;
+  --c-company:#1F6F5C; --c-call:#9A3D6B; --c-visit:#2F6FA3; --c-industry:#8A5A12; --c-market:#4B57A6;
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
     --bg:#0A0C0B; --panel:#101311; --panel-2:#171B18; --line:#232925; --line-soft:#1A1F1C;
     --ink:#E6EBE7; --ink-2:#BCC5BF; --muted:#86918A; --faint:#5F6963;
     --accent:#5CC0A3; --accent-soft:#1D3530; --hl:#5A4A12;
-    --c-company:#5CC0A3; --c-call:#E58AB5; --c-industry:#E0A954; --c-market:#9BA6F0;
+    --c-company:#5CC0A3; --c-call:#E58AB5; --c-visit:#7DB4E8; --c-industry:#E0A954; --c-market:#9BA6F0;
   }
 }
 :root[data-theme="dark"]{
   --bg:#0A0C0B; --panel:#101311; --panel-2:#171B18; --line:#232925; --line-soft:#1A1F1C;
   --ink:#E6EBE7; --ink-2:#BCC5BF; --muted:#86918A; --faint:#5F6963;
   --accent:#5CC0A3; --accent-soft:#1D3530; --hl:#5A4A12;
-  --c-company:#5CC0A3; --c-call:#E58AB5; --c-industry:#E0A954; --c-market:#9BA6F0;
+  --c-company:#5CC0A3; --c-call:#E58AB5; --c-visit:#7DB4E8; --c-industry:#E0A954; --c-market:#9BA6F0;
 }
 *{box-sizing:border-box}
 html,body{height:100%}
@@ -71,6 +72,14 @@ mark{background:var(--hl);color:inherit;border-radius:2px;padding:0 1px}
 .none{padding:6px 18px 12px;color:var(--faint);font-size:12.5px}
 .group{border-top:1px solid var(--line-soft);font-size:12.5px;color:var(--ink-2)}
 .list .group:first-child{border-top:0}
+.co .subs{display:none;padding-bottom:4px}
+.co.open .subs{display:block}
+.chev{display:inline-block;width:10px;color:var(--faint);transition:transform .15s;font-weight:700}
+.co.open .chev{transform:rotate(90deg)}
+.cnt{font-size:11px;font-weight:700;color:var(--accent);background:var(--accent-soft);border-radius:999px;padding:1px 7px}
+.item.sub{padding:6px 18px 6px 40px}
+.stitle{font-size:13px;color:var(--ink-2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+.b-visit{color:var(--c-visit)}
 .empty{padding:40px 18px;text-align:center;color:var(--muted)}
 main{display:flex;flex-direction:column;min-width:0;min-height:0}
 .vbar{display:flex;align-items:center;gap:10px;padding:10px 18px;border-bottom:1px solid var(--line);background:var(--panel);min-height:52px}
@@ -98,7 +107,7 @@ iframe{flex:1;border:0;width:100%;background:var(--bg)}
   <aside>
     <div class="top" id="top">
       <div class="brand">
-        <div><h1>MyungIn Research Archive</h1><div class="sub">기업분석 · 컨콜 · 산업 · 시장</div></div>
+        <div><h1>MyungIn Research Archive</h1><div class="sub">기업분석 · 컨콜 · 탐방·콥데이 · 산업 · 시장</div></div>
         <div class="count"><b id="total">0</b>건</div>
       </div>
       <div class="search">
@@ -128,8 +137,9 @@ iframe{flex:1;border:0;width:100%;background:var(--bg)}
   </main>
 </div>
 <script>
-const TYPES = {all:"전체", company:"기업분석", call:"컨콜", industry:"산업", market:"시장"};
-const SECTIONS = ["company", "call", "industry", "market"];
+const TYPES = {all:"전체", company:"기업분석", call:"컨콜", visit:"탐방·콥데이", industry:"산업", market:"시장"};
+const SECTIONS = ["company", "call", "visit", "industry", "market"];
+const OPEN = new Set();
 const st = {type:"all", sort:"abc", q:"", cur:null};
 let R = [], TEXT = null, textLoading = null;
 const $ = id => document.getElementById(id);
@@ -152,7 +162,7 @@ function cmpName(a, b){
 
 function loadText(){
   if (TEXT || textLoading) return textLoading;
-  textLoading = fetch("data/search.json").then(r => r.json()).then(j => { TEXT = j; render(); });
+  textLoading = fetch("data/search.json?t=" + Date.now(), {cache:"no-store"}).then(r => r.json()).then(j => { TEXT = j; render(); });
   return textLoading;
 }
 function hl(s, q){
@@ -192,6 +202,25 @@ function itemHTML(m, withBadge){
     ${m.snip?`<div class="snip">${hl(m.snip,q)}</div>`:""}
   </${end}>`;
 }
+function companyHTML(sec, name, ms){
+  ms.sort((a,b) => b.r.date.localeCompare(a.r.date));
+  const key = sec + "|" + name, q = st.q.trim();
+  const open = OPEN.has(key) || !!q || ms.some(m => m.r.id === st.cur);
+  const r0 = ms[0].r;
+  const subs = ms.map(m => {
+    const r = m.r;
+    const tag = mobile() ? `a href="r/${r.id}.html"` : `button type="button"`;
+    const end = mobile() ? "a" : "button";
+    return `<${tag} class="item sub" data-id="${r.id}" aria-current="${st.cur===r.id}">
+      <div class="it-top"><span class="stitle">${hl(r.title || r.name, q)}</span><span class="date">${r.date.slice(2).replace(/-/g,".")}</span></div>
+      ${m.snip?`<div class="snip">${hl(m.snip,q)}</div>`:""}</${end}>`;
+  }).join("");
+  return `<div class="co${open?" open":""}"><button type="button" class="item cohead" data-co="${esc(key)}" aria-expanded="${open}">
+    <div class="it-top"><span class="chev">›</span><span class="name">${hl(name,q)}</span>${r0.code?`<span class="code">${hl(r0.code,q)}</span>`:""}
+      <span class="cnt">${ms.length}건</span><span class="date">${r0.date.slice(2).replace(/-/g,".")}</span></div>
+    ${r0.sector.filter(x => x !== "미분류").length?`<div class="desc">${esc(r0.sector.filter(x => x !== "미분류").join(" · "))}</div>`:""}
+  </button><div class="subs">${subs}</div></div>`;
+}
 function render(){
   const hits = R.map(matches).filter(Boolean);
   const cnt = {all:R.length}; SECTIONS.forEach(k => cnt[k] = 0);
@@ -209,11 +238,13 @@ function render(){
     html = secs.map(sec => {
       const arr = hits.filter(m => m.r.type === sec).sort((a,b) => cmpName(a.r, b.r));
       if (!arr.length && st.q.trim()) return "";
+      const byName = new Map();
+      arr.forEach(m => { const k = m.r.name.trim(); if (!byName.has(k)) byName.set(k, []); byName.get(k).push(m); });
       let body = "", last = null;
-      arr.forEach(m => {
-        const k = initial(m.r.name).k;
+      byName.forEach((ms, name) => {
+        const k = initial(name).k;
         if (k !== last){ body += `<div class="ini">${k}</div>`; last = k; }
-        body += itemHTML(m, false);
+        body += ms.length === 1 ? itemHTML(ms[0], false) : companyHTML(sec, name, ms);
       });
       if (!arr.length) body = `<div class="none">아직 등록된 항목이 없습니다</div>`;
       return `<div class="group"><span>${TYPES[sec]}</span><span>${arr.length}</span></div>` + body;
@@ -227,7 +258,7 @@ function show(id, push=true){
   if (!r) return;
   if (mobile()){ location.href = `r/${id}.html`; return; }
   st.cur = id;
-  $("frame").src = `r/${id}.html`;
+  $("frame").src = `r/${id}.html?v=${encodeURIComponent(r.date)}`;
   $("vopen").href = `r/${id}.html`;
   $("vbadge").className = `badge b-${r.type}`; $("vbadge").textContent = TYPES[r.type];
   $("vtitle").textContent = r.title || r.name;
@@ -257,6 +288,9 @@ function syncFrame(){
 }
 $("frame").addEventListener("load", syncFrame);
 $("list").addEventListener("click", e => {
+  const co = e.target.closest(".cohead");
+  if (co){ const k = co.dataset.co; OPEN.has(k) ? OPEN.delete(k) : OPEN.add(k);
+    co.parentElement.classList.toggle("open"); co.setAttribute("aria-expanded", co.parentElement.classList.contains("open")); return; }
   const it = e.target.closest(".item");
   if (!it || mobile()) return;
   e.preventDefault(); show(it.dataset.id);
@@ -291,7 +325,7 @@ try {
 } catch(_){}
 const setTopH = () => document.documentElement.style.setProperty("--topH", $("top").offsetHeight + "px");
 addEventListener("resize", () => { setTopH(); render(); });
-fetch("data/reports.json").then(r => r.json()).then(j => {
+fetch("data/reports.json?t=" + Date.now(), {cache:"no-store"}).then(r => r.json()).then(j => {
   R = j.reports;
   $("updated").textContent = "갱신 " + j.updated;
   render(); setTopH();

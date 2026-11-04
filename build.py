@@ -4,8 +4,9 @@
   python build.py          # Desktop\\기업리포트 → docs/ 재생성 (새 파일은 catalog.json에 자동 등록)
   python build.py --push   # 재생성 후 GitHub에 커밋·푸시 (1~2분 뒤 사이트 반영)
 
-type: company(기업분석) / call(컨콜) / industry(산업) / market(시장)
-새 리포트 추가 = 기업리포트\기업분석|컨콜|산업|시장 폴더에 HTML 저장 → build.py --push.
+type: company(기업분석) / call(컨콜) / visit(탐방·콥데이) / industry(산업) / market(시장)
+새 리포트 추가 = 기업리포트/(기업분석|컨콜|탐방&콥데이|산업|시장) 폴더에 HTML 저장 → build.py --push.
+같은 회사 파일이 여러 개면 catalog.json의 name을 똑같이 맞추면 사이트에서 한 회사로 묶인다.
   (폴더가 곧 구분. 기업리포트 바로 아래에 둔 파일은 파일명으로 구분을 추정)
 자동 등록된 항목은 sector가 "미분류"이므로 catalog.json에서 섹터만 고치면 된다.
 공개하지 않을 파일은 catalog.json에 {"src": "...", "exclude": "사유"} 로 남긴다.
@@ -14,6 +15,7 @@ import html
 import json
 import re
 import subprocess
+import zlib
 import sys
 from datetime import datetime
 from pathlib import Path
@@ -25,7 +27,7 @@ DOCS = ROOT / "docs"
 OUT_R = DOCS / "r"
 OUT_DATA = DOCS / "data"
 TEXT_CAP = 40000
-FOLDERS = {"기업분석": "company", "컨콜": "call", "산업": "industry", "시장": "market"}
+FOLDERS = {"기업분석": "company", "컨콜": "call", "탐방&콥데이": "visit", "산업": "industry", "시장": "market"}
 
 
 def load_catalog():
@@ -39,17 +41,26 @@ def save_catalog(cat):
 
 def guess_entry(path: Path, raw: str):
     stem = path.stem
-    m_code = re.search(r"(?<![0-9A-Z])(\d{6}|\d{4}[A-Z]\d)(?![0-9A-Z])", stem)
-    m_date = re.search(r"(?<!\d)(2[5-9][01]\d[0-3]\d)(?!\d)", stem)
-    if m_date:
-        d = m_date.group(1)
+    six = re.findall(r"(?<![0-9A-Z])(\d{6}|\d{4}[A-Z]\d)(?![0-9A-Z])", stem)
+    dates = [x for x in six if re.fullmatch(r"2[5-9](0[1-9]|1[0-2])(0[1-9]|[12]\d|3[01])", x)]
+    codes = [x for x in six if x not in dates]
+    if len(dates) > 1 and not codes:  # 둘 다 날짜처럼 보이면 마지막을 날짜로
+        codes, dates = dates[:-1], dates[-1:]
+    m_code = codes[0] if codes else None
+    m_ym = re.search(r"(?<!\d)(2[5-9])(0[1-9]|1[0-2])(?!\d)", stem)
+    if dates:
+        d = dates[-1]
         date = f"20{d[:2]}-{d[2:4]}-{d[4:]}"
+    elif m_ym:
+        date = f"20{m_ym.group(1)}-{m_ym.group(2)}-01"
     else:
         date = datetime.fromtimestamp(path.stat().st_mtime).strftime("%Y-%m-%d")
     title = extract_title(raw) or stem
-    name = re.split(r"[_\s(]", stem)[0] if m_code else title
-    code = m_code.group(1) if m_code else None
-    if re.search(r"컨콜|컨퍼런스콜|어닝콜|실적발표|IR|미팅|콥데이|탐방", stem + title):
+    code = m_code
+    tokens = [t for t in re.split(r"[_\s(),]+", stem) if t and not re.fullmatch(r"[\d.-]+", t)]
+    if re.search(r"탐방|콥데이|코퍼레이트|미팅|IR", stem + title):
+        typ = "visit"
+    elif re.search(r"컨콜|컨퍼런스콜|어닝콜|실적발표", stem + title):
         typ = "call"
     elif code:
         typ = "company"
@@ -57,8 +68,10 @@ def guess_entry(path: Path, raw: str):
         typ = "industry"
     else:
         typ = "company"
+    name = tokens[0] if (tokens and typ in ("company", "call", "visit")) else title
+    name = re.sub(r"(IR|미팅노트|미팅|탐방|콥데이)$", "", name) or name
     ymd = date.replace("-", "")[2:]
-    ident = f"{code}-{ymd}" if code else f"x-{abs(hash(stem)) % 10**8:08d}-{ymd}"
+    ident = f"{code}-{ymd}" if code else f"x-{zlib.crc32(stem.encode()) % 10**8:08d}-{ymd}"
     e = {"id": ident, "src": path.name, "name": name, "type": typ, "sector": ["미분류"], "date": date}
     if code:
         e["code"] = code
@@ -104,6 +117,14 @@ def ensure_head(raw):
 def build():
     cat = load_catalog()
     by_name = {Path(e["src"]).name: e for e in cat}
+    ids = {e.get("id") for e in cat}
+
+    def uniq(e):
+        base, n = e["id"], 2
+        while e["id"] in ids:
+            e["id"] = f"{base}-{n}"; n += 1
+        ids.add(e["id"])
+        return e
     added, moved = [], []
 
     # 1) 분류 폴더(기업분석·컨콜·산업·시장)에 넣은 파일: 폴더가 곧 구분이고, 넣는 것 자체가 '공개' 의사
@@ -117,11 +138,11 @@ def build():
             if e is None:
                 e = guess_entry(p, p.read_text(encoding="utf-8", errors="replace"))
                 e.update(src=rel, type=typ)
-                cat.append(e); by_name[p.name] = e; added.append(e)
+                uniq(e); cat.append(e); by_name[p.name] = e; added.append(e)
             elif e["src"] != rel or e.get("type") != typ or e.get("exclude"):
                 if "id" not in e:  # 예전에 제외만 해둔 항목
                     g = guess_entry(p, p.read_text(encoding="utf-8", errors="replace"))
-                    e.update({k: v for k, v in g.items() if k not in e})
+                    e.update({k: v for k, v in g.items() if k not in e}); uniq(e)
                 e.update(src=rel, type=typ)
                 e.pop("exclude", None)
                 moved.append(e)
@@ -129,7 +150,7 @@ def build():
     # 2) 기업리포트 폴더 바로 아래 파일: 이름으로 구분 추정
     for p in sorted(SRC_DIR.glob("*.html")):
         if p.name not in by_name:
-            e = guess_entry(p, p.read_text(encoding="utf-8", errors="replace"))
+            e = uniq(guess_entry(p, p.read_text(encoding="utf-8", errors="replace")))
             cat.append(e); by_name[p.name] = e; added.append(e)
     if added or moved:
         save_catalog(cat)
