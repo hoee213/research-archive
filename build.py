@@ -47,7 +47,7 @@ def guess_entry(path: Path, raw: str):
     if len(dates) > 1 and not codes:  # 둘 다 날짜처럼 보이면 마지막을 날짜로
         codes, dates = dates[:-1], dates[-1:]
     m_code = codes[0] if codes else None
-    m_ym = re.search(r"(?<!\d)(2[5-9])(0[1-9]|1[0-2])(?!\d)", stem)
+    m_ym = re.search(r"(?<!\d)(?:20)?(2[5-9])[-.]?(0[1-9]|1[0-2])(?!\d)", stem)
     if dates:
         d = dates[-1]
         date = f"20{d[:2]}-{d[2:4]}-{d[4:]}"
