@@ -4,6 +4,7 @@
   python build.py          # Desktop\\기업리포트 → docs/ 재생성 (새 파일은 catalog.json에 자동 등록)
   python build.py --push   # 재생성 후 GitHub에 커밋·푸시 (1~2분 뒤 사이트 반영)
 
+type: company(기업분석) / call(컨콜) / industry(산업) / market(시장)
 새 리포트 추가 = 기업리포트 폴더에 HTML 저장 → build.py --push.
 자동 등록된 항목은 sector가 "미분류"이므로 catalog.json에서 섹터만 고치면 된다.
 공개하지 않을 파일은 catalog.json에 {"src": "...", "exclude": "사유"} 로 남긴다.
@@ -46,7 +47,14 @@ def guess_entry(path: Path, raw: str):
     title = extract_title(raw) or stem
     name = re.split(r"[_\s(]", stem)[0] if m_code else title
     code = m_code.group(1) if m_code else None
-    typ = "company" if code else ("industry" if re.search(r"산업|섹터|밸류체인", stem + title) else "company")
+    if re.search(r"컨콜|컨퍼런스콜|어닝콜|실적발표|IR|미팅|콥데이|탐방", stem + title):
+        typ = "call"
+    elif code:
+        typ = "company"
+    elif re.search(r"산업|섹터|밸류체인", stem + title):
+        typ = "industry"
+    else:
+        typ = "company"
     ymd = date.replace("-", "")[2:]
     ident = f"{code}-{ymd}" if code else f"x-{abs(hash(stem)) % 10**8:08d}-{ymd}"
     e = {"id": ident, "src": path.name, "name": name, "type": typ, "sector": ["미분류"], "date": date}

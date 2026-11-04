@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ko" data-theme="dark">
+<html lang="ko" data-theme="light">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -11,21 +11,21 @@
   --bg:#F3F4F1; --panel:#FFFFFF; --panel-2:#F7F8F5; --line:#DDE1DA; --line-soft:#E9ECE6;
   --ink:#161B18; --ink-2:#3C463F; --muted:#6B756E; --faint:#959E97;
   --accent:#1F6F5C; --accent-soft:#E0EEE9; --hl:#FFE8A3;
-  --c-company:#1F6F5C; --c-industry:#8A5A12; --c-market:#4B57A6;
+  --c-company:#1F6F5C; --c-call:#9A3D6B; --c-industry:#8A5A12; --c-market:#4B57A6;
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
     --bg:#0A0C0B; --panel:#101311; --panel-2:#171B18; --line:#232925; --line-soft:#1A1F1C;
     --ink:#E6EBE7; --ink-2:#BCC5BF; --muted:#86918A; --faint:#5F6963;
     --accent:#5CC0A3; --accent-soft:#1D3530; --hl:#5A4A12;
-    --c-company:#5CC0A3; --c-industry:#E0A954; --c-market:#9BA6F0;
+    --c-company:#5CC0A3; --c-call:#E58AB5; --c-industry:#E0A954; --c-market:#9BA6F0;
   }
 }
 :root[data-theme="dark"]{
   --bg:#0A0C0B; --panel:#101311; --panel-2:#171B18; --line:#232925; --line-soft:#1A1F1C;
   --ink:#E6EBE7; --ink-2:#BCC5BF; --muted:#86918A; --faint:#5F6963;
   --accent:#5CC0A3; --accent-soft:#1D3530; --hl:#5A4A12;
-  --c-company:#5CC0A3; --c-industry:#E0A954; --c-market:#9BA6F0;
+  --c-company:#5CC0A3; --c-call:#E58AB5; --c-industry:#E0A954; --c-market:#9BA6F0;
 }
 *{box-sizing:border-box}
 html,body{height:100%}
@@ -63,10 +63,14 @@ h1{margin:0;font-size:19px;letter-spacing:-.02em;font-weight:750}
 .code{color:var(--faint);font-size:12px;font-variant-numeric:tabular-nums}
 .date{margin-left:auto;color:var(--faint);font-size:12px;font-variant-numeric:tabular-nums;white-space:nowrap}
 .badge{font-size:10.5px;font-weight:700;padding:1px 6px;border-radius:4px;border:1px solid currentColor;line-height:1.4}
-.b-company{color:var(--c-company)} .b-industry{color:var(--c-industry)} .b-market{color:var(--c-market)}
+.b-call{color:var(--c-call)} .b-company{color:var(--c-company)} .b-industry{color:var(--c-industry)} .b-market{color:var(--c-market)}
 .desc{color:var(--muted);font-size:12.5px;margin-top:2px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .snip{color:var(--ink-2);font-size:12px;margin-top:4px;background:var(--panel-2);border-radius:6px;padding:4px 7px}
 mark{background:var(--hl);color:inherit;border-radius:2px;padding:0 1px}
+.ini{padding:8px 18px 2px;font-size:11px;font-weight:700;color:var(--accent);opacity:.85}
+.none{padding:6px 18px 12px;color:var(--faint);font-size:12.5px}
+.group{border-top:1px solid var(--line-soft);font-size:12.5px;color:var(--ink-2)}
+.list .group:first-child{border-top:0}
 .empty{padding:40px 18px;text-align:center;color:var(--muted)}
 main{display:flex;flex-direction:column;min-width:0;min-height:0}
 .vbar{display:flex;align-items:center;gap:10px;padding:10px 18px;border-bottom:1px solid var(--line);background:var(--panel);min-height:52px}
@@ -94,7 +98,7 @@ iframe{flex:1;border:0;width:100%;background:var(--bg)}
   <aside>
     <div class="top" id="top">
       <div class="brand">
-        <div><h1>MyungIn Research Archive</h1><div class="sub">기업 · 산업 · 시장 리포트</div></div>
+        <div><h1>MyungIn Research Archive</h1><div class="sub">기업분석 · 컨콜 · 산업 · 시장</div></div>
         <div class="count"><b id="total">0</b>건</div>
       </div>
       <div class="search">
@@ -104,7 +108,7 @@ iframe{flex:1;border:0;width:100%;background:var(--bg)}
       <div class="row" id="types"></div>
       <div class="row">
         <div class="seg" id="sort" style="margin-left:0">
-          <button data-v="sector" aria-pressed="true">섹터별</button>
+          <button data-v="abc" aria-pressed="true">가나다순</button>
           <button data-v="date" aria-pressed="false">최신순</button>
         </div>
       </div>
@@ -124,13 +128,27 @@ iframe{flex:1;border:0;width:100%;background:var(--bg)}
   </main>
 </div>
 <script>
-const TYPES = {all:"전체", company:"기업", industry:"산업", market:"시장"};
-const ORDER = {industry:0, market:1, company:2};
-const st = {type:"all", sort:"sector", q:"", cur:null};
+const TYPES = {all:"전체", company:"기업분석", call:"컨콜", industry:"산업", market:"시장"};
+const SECTIONS = ["company", "call", "industry", "market"];
+const st = {type:"all", sort:"abc", q:"", cur:null};
 let R = [], TEXT = null, textLoading = null;
 const $ = id => document.getElementById(id);
 const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const mobile = () => matchMedia("(max-width:900px)").matches;
+
+// ㄱ~ㅎ → A~Z → 숫자·기타 순
+const CHO = "ㄱㄲㄴㄷㄸㄹㅁㅂㅃㅅㅆㅇㅈㅉㅊㅋㅌㅍㅎ";
+const BASE = {"ㄲ":"ㄱ","ㄸ":"ㄷ","ㅃ":"ㅂ","ㅆ":"ㅅ","ㅉ":"ㅈ"};
+function initial(name){
+  const c = (name || "").trim().charAt(0), code = c.charCodeAt(0);
+  if (code >= 0xAC00 && code <= 0xD7A3){ const ch = CHO[Math.floor((code - 0xAC00) / 588)]; return {g:0, k:BASE[ch] || ch}; }
+  if (/[a-z]/i.test(c)) return {g:1, k:c.toUpperCase()};
+  return {g:2, k:"#"};
+}
+function cmpName(a, b){
+  const ia = initial(a.name), ib = initial(b.name);
+  return ia.g - ib.g || a.name.localeCompare(b.name, ia.g === 1 ? "en" : "ko", {sensitivity:"base", numeric:true}) || b.date.localeCompare(a.date);
+}
 
 function loadText(){
   if (TEXT || textLoading) return textLoading;
@@ -161,36 +179,44 @@ function matches(r){
   }
   return null;
 }
-function itemHTML(m){
+function itemHTML(m, withBadge){
   const r = m.r, q = st.q.trim();
   const tag = mobile() ? `a href="r/${r.id}.html"` : `button type="button"`;
   const end = mobile() ? "a" : "button";
+  const sub = [r.sector.filter(s => s !== "미분류").join(" · "), r.title && r.title !== r.name ? r.title : ""].filter(Boolean).join("  —  ");
   return `<${tag} class="item" data-id="${r.id}" aria-current="${st.cur===r.id}">
-    <div class="it-top"><span class="badge b-${r.type}">${TYPES[r.type]}</span>
+    <div class="it-top">${withBadge?`<span class="badge b-${r.type}">${TYPES[r.type]}</span>`:""}
       <span class="name">${hl(r.name,q)}</span>${r.code?`<span class="code">${hl(r.code,q)}</span>`:""}
       <span class="date">${r.date.slice(2).replace(/-/g,".")}</span></div>
-    ${r.desc||r.title?`<div class="desc">${hl(r.desc||r.title,q)}</div>`:""}
+    ${sub?`<div class="desc">${hl(sub,q)}</div>`:""}
     ${m.snip?`<div class="snip">${hl(m.snip,q)}</div>`:""}
   </${end}>`;
 }
 function render(){
   const hits = R.map(matches).filter(Boolean);
-  const cnt = {all:0, company:0, industry:0, market:0};
-  R.forEach(r => { cnt.all++; cnt[r.type]++; });
-  $("types").innerHTML = Object.keys(TYPES).filter(k => k==="all" || cnt[k]).map(k =>
-    `<button class="chip" data-t="${k}" aria-pressed="${st.type===k}">${TYPES[k]}<span class="n">${cnt[k]}</span></button>`).join("");
+  const cnt = {all:R.length}; SECTIONS.forEach(k => cnt[k] = 0);
+  R.forEach(r => cnt[r.type] = (cnt[r.type] || 0) + 1);
+  $("types").innerHTML = Object.keys(TYPES).map(k =>
+    `<button class="chip" data-t="${k}" aria-pressed="${st.type===k}">${TYPES[k]}<span class="n">${cnt[k]||0}</span></button>`).join("");
   let html = "";
-  if (!hits.length){
-    html = `<div class="empty">${st.q && !TEXT && st.q.trim().length>=2 ? "본문 색인 불러오는 중…" : "검색 결과가 없습니다"}</div>`;
+  if (!hits.length && st.q.trim()){
+    html = `<div class="empty">${!TEXT && st.q.trim().length>=2 ? "본문 색인 불러오는 중…" : "검색 결과가 없습니다"}</div>`;
   } else if (st.sort === "date"){
-    html = hits.map(itemHTML).join("");
+    html = hits.sort((a,b) => b.r.date.localeCompare(a.r.date)).map(m => itemHTML(m, true)).join("")
+      || `<div class="empty">아직 등록된 항목이 없습니다</div>`;
   } else {
-    const g = {};
-    hits.forEach(m => m.r.sector.forEach(s => (g[s] ||= []).push(m)));
-    const keys = Object.keys(g).sort((a,b) => (a==="미분류")-(b==="미분류") || g[b].length-g[a].length || a.localeCompare(b,"ko"));
-    html = keys.map(k => {
-      const arr = g[k].sort((a,b) => ORDER[a.r.type]-ORDER[b.r.type] || b.r.date.localeCompare(a.r.date));
-      return `<div class="group"><span>${esc(k)}</span><span>${arr.length}</span></div>` + arr.map(itemHTML).join("");
+    const secs = st.type === "all" ? SECTIONS : [st.type];
+    html = secs.map(sec => {
+      const arr = hits.filter(m => m.r.type === sec).sort((a,b) => cmpName(a.r, b.r));
+      if (!arr.length && st.q.trim()) return "";
+      let body = "", last = null;
+      arr.forEach(m => {
+        const k = initial(m.r.name).k;
+        if (k !== last){ body += `<div class="ini">${k}</div>`; last = k; }
+        body += itemHTML(m, false);
+      });
+      if (!arr.length) body = `<div class="none">아직 등록된 항목이 없습니다</div>`;
+      return `<div class="group"><span>${TYPES[sec]}</span><span>${arr.length}</span></div>` + body;
     }).join("");
   }
   $("list").innerHTML = html;
@@ -213,17 +239,15 @@ function show(id, push=true){
 function syncFrame(){
   try {
     const d = $("frame").contentDocument; if (!d || !d.documentElement) return;
-    const th = document.documentElement.dataset.theme || "dark";
+    const th = document.documentElement.dataset.theme || "light";
     d.documentElement.dataset.theme = th;
     d.documentElement.style.colorScheme = th;
-    // 다크모드 미지원(밝은 배경) 리포트는 반전으로 어둡게
     let inv = d.getElementById("ra-invert");
     if (inv) inv.remove();
     if (th === "dark"){
       const bgOf = el => { const m = getComputedStyle(el).backgroundColor.match(/[\d.]+/g) || []; return m.length >= 3 && (m[3] === undefined || +m[3] > 0) ? m.slice(0,3).map(Number) : null; };
       const c = (d.body && bgOf(d.body)) || bgOf(d.documentElement) || [255,255,255];
-      const lum = (0.299*c[0] + 0.587*c[1] + 0.114*c[2]) / 255;
-      if (lum > 0.6){
+      if ((0.299*c[0] + 0.587*c[1] + 0.114*c[2]) / 255 > 0.6){
         inv = d.createElement("style"); inv.id = "ra-invert";
         inv.textContent = "html{filter:invert(.92) hue-rotate(180deg);background:#fff}img,video,picture,canvas{filter:invert(1) hue-rotate(180deg)}";
         d.head.appendChild(inv);
@@ -245,7 +269,7 @@ $("sort").addEventListener("click", e => {
   const b = e.target.closest("button"); if (!b) return;
   st.sort = b.dataset.v;
   $("sort").querySelectorAll("button").forEach(x => x.setAttribute("aria-pressed", x === b));
-  try { localStorage.setItem("ra-sort", st.sort); } catch(_){}
+  try { localStorage.setItem("ra-sort2", st.sort); } catch(_){}
   render();
 });
 let t;
@@ -255,14 +279,14 @@ $("q").addEventListener("input", e => {
   clearTimeout(t); t = setTimeout(render, 120);
 });
 $("theme").addEventListener("click", () => {
-  const dark = document.documentElement.dataset.theme !== "light";
+  const dark = document.documentElement.dataset.theme === "dark";
   document.documentElement.dataset.theme = dark ? "light" : "dark";
   syncFrame();
-  try { localStorage.setItem("ra-theme", document.documentElement.dataset.theme); } catch(_){}
+  try { localStorage.setItem("ra-theme2", document.documentElement.dataset.theme); } catch(_){}
 });
 try {
-  const th = localStorage.getItem("ra-theme"); if (th) document.documentElement.dataset.theme = th;
-  const so = localStorage.getItem("ra-sort");
+  const th = localStorage.getItem("ra-theme2"); if (th) document.documentElement.dataset.theme = th;
+  const so = localStorage.getItem("ra-sort2");
   if (so){ st.sort = so; $("sort").querySelectorAll("button").forEach(x => x.setAttribute("aria-pressed", x.dataset.v === so)); }
 } catch(_){}
 const setTopH = () => document.documentElement.style.setProperty("--topH", $("top").offsetHeight + "px");
@@ -272,7 +296,8 @@ fetch("data/reports.json").then(r => r.json()).then(j => {
   $("updated").textContent = "갱신 " + j.updated;
   render(); setTopH();
   const h = decodeURIComponent(location.hash.slice(1));
-  if (!mobile()) show(R.some(r => r.id === h) ? h : R[0]?.id, false);
+  const latest = [...R].sort((a,b) => b.date.localeCompare(a.date))[0];
+  if (!mobile()) show(R.some(r => r.id === h) ? h : latest?.id, false);
 });
 </script>
 </body>
